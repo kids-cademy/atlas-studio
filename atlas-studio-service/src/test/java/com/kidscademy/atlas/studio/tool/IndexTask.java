@@ -20,15 +20,15 @@ import js.log.LogFactory;
 public class IndexTask {
     private static final Log log = LogFactory.getLog(IndexTask.class);
 
-    private final List<AtlasObject> instruments;
-    private final Map<String, AtlasObject> instrumentsMap = new HashMap<>();
+    private final List<AtlasObject> objects;
+    private final Map<String, AtlasObject> objectsMap = new HashMap<>();
     private final WordSteams wordSteams = new WordSteams();
     private final StopWords stopWords = new StopWords();
 
-    public IndexTask(List<AtlasObject> instruments) {
-	this.instruments = instruments;
-	for (AtlasObject instrument : instruments) {
-	    instrumentsMap.put(instrument.getName(), instrument);
+    public IndexTask(List<AtlasObject> objects) {
+	this.objects = objects;
+	for (AtlasObject instrument : objects) {
+	    objectsMap.put(instrument.getName(), instrument);
 	}
     }
 
@@ -40,7 +40,7 @@ public class IndexTask {
 
     private Map<String, Map<String, Integer>> createDirectIndices() throws IOException {
 	Map<String, Map<String, Integer>> directIndices = new HashMap<>();
-	for (AtlasObject instrument : instruments) {
+	for (AtlasObject instrument : objects) {
 	    log.debug("build index for %s", instrument.getName());
 	    // direct index is per atlas object
 	    // it stores all keywords and their relevance
@@ -63,7 +63,7 @@ public class IndexTask {
     private List<SearchIndex> createInvertedIndex(Map<String, Map<String, Integer>> directIndices) throws IOException {
 	Map<String, SearchIndex> invertedIndexMap = new HashMap<>();
 
-	for (AtlasObject instrument : instruments) {
+	for (AtlasObject instrument : objects) {
 	    Map<String, Integer> directIndex = directIndices.get(instrument.getName());
 	    for (String keyword : directIndex.keySet()) {
 		SearchIndex searchIndex = invertedIndexMap.get(keyword);
@@ -73,7 +73,8 @@ public class IndexTask {
 		}
 		searchIndex.setKeywordRelevance(directIndex.get(keyword));
 		// TODO: ignored repository index
-		// searchIndex.addObject(instrument.getRepositoryIndex(), directIndex.get(keyword));
+		// searchIndex.addObject(instrument.getRepositoryIndex(),
+		// directIndex.get(keyword));
 		searchIndex.addObject(0, directIndex.get(keyword));
 	    }
 	}
@@ -181,7 +182,7 @@ public class IndexTask {
     private Iterable<String> relatedNames(List<Related> relatedNames) throws IOException {
 	List<String> names = new ArrayList<>();
 	for (Related relatedName : relatedNames) {
-	    AtlasObject instrument = instrumentsMap.get(relatedName.getName());
+	    AtlasObject instrument = objectsMap.get(relatedName.getName());
 	    if (instrument != null) {
 		// instrument can be null for not published objects
 		names.add(instrument.getDisplay());

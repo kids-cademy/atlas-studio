@@ -17,7 +17,7 @@ import js.rmi.BusinessException;
 
 @Service
 public interface AtlasService {
-    List<AtlasItem> getAtlasObjects();
+    List<AtlasItem> getCollectionItems(String collectionName);
 
     /**
      * Get AtlasObject entity. If ID is zero returns an empty instance.

@@ -314,11 +314,11 @@ public class AtlasDaoTest {
     }
 
     public void getInstrumentsByCategory() {
-	List<AtlasItem> objects = dao.getAtlasObjects();
-	assertThat(objects, notNullValue());
-	assertThat(objects, hasSize(2));
+	List<AtlasItem> items = dao.getCollectionItems("instrument");
+	assertThat(items, notNullValue());
+	assertThat(items, hasSize(2));
 
-	AtlasItem object = objects.get(0);
+	AtlasItem object = items.get(0);
 	assertThat(object, notNullValue());
 	assertThat(object, not(instanceOf(AtlasObject.class)));
 	assertThat(object.getId(), equalTo(1));
@@ -330,11 +330,11 @@ public class AtlasDaoTest {
     }
 
     public void getInstruments() {
-	List<AtlasItem> objects = dao.getAtlasObjects();
-	assertThat(objects, notNullValue());
-	assertThat(objects, hasSize(3));
+	List<AtlasItem> items = dao.getCollectionItems("instrument");
+	assertThat(items, notNullValue());
+	assertThat(items, hasSize(3));
 
-	AtlasItem object = objects.get(0);
+	AtlasItem object = items.get(0);
 	assertThat(object, notNullValue());
 	assertThat(object, not(instanceOf(AtlasObject.class)));
 	assertThat(object.getId(), equalTo(1));

@@ -11,7 +11,7 @@
 	<name>Web Application</name>
 
 	<build>
-		<finalName>atlas-studio</finalName>
+		<finalName>${app.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -35,7 +35,7 @@
 				<configuration>
 					<url>http://localhost/manager/text</url>
 					<server>tomcat</server>
-					<path>/${project.name}</path>
+					<path>/${app.name}</path>
 				</configuration>
 				<executions>
 					<execution>
@@ -76,7 +76,7 @@
 						<version>${maven.tomcat7.version}</version>
 						<configuration>
 							<!-- deploy preview WAR on different context so that we can use both web application and preview contexts -->
-							<path>/${project.name}-preview</path>
+							<path>/${app.name}-preview</path>
 						</configuration>
 					</plugin>
 				</plugins>

@@ -48,10 +48,10 @@ public class AtlasDaoImpl implements AtlasDao {
 		.setParameter("collectionName", collectionName).setParameter("name", name).getSingleResult();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<AtlasItem> getAtlasObjects() {
-	return em.createQuery("select o from UIObject o where o.dtype='AtlasObject'").getResultList();
+    public List<AtlasItem> getCollectionItems(String collectionName) {
+	return em.createQuery("select i from AtlasItem i where i.collectionName=:collectionName", AtlasItem.class)
+		.setParameter("collectionName", collectionName).getResultList();
     }
 
     @Override
@@ -96,15 +96,17 @@ public class AtlasDaoImpl implements AtlasDao {
 	return em.createQuery(jpql, AtlasItem.class).setParameter("category", category).setParameter("names", names)
 		.getResultList();
     }
-//
-//    @Override
-//    public List<AtlasItem> getObjectsByCategory(String category) {
-//	String jpql = "select i.id from AtlasObject i where i.category=:category";
-//	List<Integer> ids = em.createQuery(jpql, Integer.class).setParameter("category", category).getResultList();
-//
-//	jpql = "select o from UIObject o where o.id in :ids";
-//	return em.createQuery(jpql, AtlasItem.class).setParameter("ids", ids).getResultList();
-//    }
+    //
+    // @Override
+    // public List<AtlasItem> getObjectsByCategory(String category) {
+    // String jpql = "select i.id from AtlasObject i where i.category=:category";
+    // List<Integer> ids = em.createQuery(jpql,
+    // Integer.class).setParameter("category", category).getResultList();
+    //
+    // jpql = "select o from UIObject o where o.id in :ids";
+    // return em.createQuery(jpql, AtlasItem.class).setParameter("ids",
+    // ids).getResultList();
+    // }
 
     @Override
     @Mutable

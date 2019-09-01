@@ -15,7 +15,7 @@
 	</modules>
 
 	<properties>
-		<project.name>atlas-studio</project.name>
+		<app.name>atlas-studio</app.name>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

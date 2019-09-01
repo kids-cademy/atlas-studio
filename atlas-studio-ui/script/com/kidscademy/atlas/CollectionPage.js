@@ -20,7 +20,8 @@ com.kidscademy.atlas.CollectionPage = class extends com.kidscademy.page.Page {
 			"&new-object": this._onNewObject
 		});
 
-		AtlasService.getInstruments(instruments => this._listView.setObject(instruments));
+		const collectionName = "musical-instruments";
+		AtlasService.getCollectionItems(collectionName, items => this._listView.setObject(items));
 	}
 
 	_onListClick(ev) {

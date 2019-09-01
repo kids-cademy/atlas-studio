@@ -43,7 +43,7 @@ public class AtlasServiceImpl implements AtlasService {
     private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
 
     private final AppContext context;
-    private final AtlasDao dao;
+    private final AtlasDao atlasDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
     private final Wikipedia wikipedia;
@@ -51,15 +51,15 @@ public class AtlasServiceImpl implements AtlasService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
 
-    public AtlasServiceImpl(AppContext context, AtlasDao dao, AudioProcessor audio, ImageProcessor image,
-	    Wikipedia wikipedia, SoftSchools softSchools, TheFreeDictionary freeDictionary,
-	    CambridgeDictionary cambridgeDictionary) {
+    public AtlasServiceImpl(AppContext context, AtlasDao atlasDao, AudioProcessor audioProcessor,
+	    ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
+	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) {
 	log.trace(
 		"AtlasServiceImpl(AppContext,AtlasDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
 	this.context = context;
-	this.dao = dao;
-	this.audioProcessor = audio;
-	this.imageProcessor = image;
+	this.atlasDao = atlasDao;
+	this.audioProcessor = audioProcessor;
+	this.imageProcessor = imageProcessor;
 	this.wikipedia = wikipedia;
 	this.softSchools = softSchools;
 	this.freeDictionary = freeDictionary;
@@ -67,8 +67,8 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<AtlasItem> getAtlasObjects() {
-	return dao.getAtlasObjects();
+    public List<AtlasItem> getCollectionItems(String collectionName) {
+	return atlasDao.getCollectionItems(collectionName);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class AtlasServiceImpl implements AtlasService {
 	    // TODO: null placeholder
 	    return AtlasObject.create(user, null);
 	}
-	AtlasObject object = dao.getObjectById(objectId);
+	AtlasObject object = atlasDao.getObjectById(objectId);
 
 	if (object.getSampleSrc() != null) {
 	    File sampleFile = Files.mediaFile(object.getSampleSrc());
@@ -93,7 +93,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AtlasObject getAtlasObjectByName(String name) {
-	//return dao.getObjectByName(name);
+	// return dao.getObjectByName(name);
 	// TODO null placeholder
 	return null;
     }
@@ -114,22 +114,22 @@ public class AtlasServiceImpl implements AtlasService {
 	    }
 	}
 
-	dao.saveObject(AtlasObject);
+	atlasDao.saveObject(AtlasObject);
 	return AtlasObject;
     }
 
     @Override
     public List<AtlasItem> getRelatedAtlasObjects(List<String> names) {
-	//return dao.findObjectsByName(AtlasObject.class, names);
+	// return dao.findObjectsByName(AtlasObject.class, names);
 	// TODO empty placeholder
 	return Collections.EMPTY_LIST;
     }
 
     @Override
     public List<AtlasItem> getAvailableAtlasObjects(String category, List<AtlasItem> related) {
-//	List<AtlasItem> AtlasObjects = dao.getAtlasObjectsByCategory(category);
-//	AtlasObjects.removeAll(related);
-//	return AtlasObjects;
+	// List<AtlasItem> AtlasObjects = dao.getAtlasObjectsByCategory(category);
+	// AtlasObjects.removeAll(related);
+	// return AtlasObjects;
 	// TODO empty placeholder
 	return Collections.EMPTY_LIST;
     }
@@ -230,7 +230,7 @@ public class AtlasServiceImpl implements AtlasService {
 	picture.setWidth(imageInfo.getWidth());
 	picture.setHeight(imageInfo.getHeight());
 
-	dao.addObjectPicture(objectId, picture);
+	atlasDao.addObjectPicture(objectId, picture);
 
 	picture.setSrc(Files.mediaSrc(object, targetFile.getName()));
 	return picture;
@@ -246,7 +246,7 @@ public class AtlasServiceImpl implements AtlasService {
 
 	picture.setUploadDate(new Date());
 	picture.setFileName(targetFile.getName());
-	dao.addObjectPicture(object.getId(), picture);
+	atlasDao.addObjectPicture(object.getId(), picture);
 
 	updateImage(picture, targetFile, Files.mediaSrc(object, targetFile.getName()));
 	return picture;
@@ -290,7 +290,7 @@ public class AtlasServiceImpl implements AtlasService {
 	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
 	handler.delete();
 	picture.removeIcon(object);
-	dao.removeObjectPicture(object.getId(), picture);
+	atlasDao.removeObjectPicture(object.getId(), picture);
     }
 
     @Override
@@ -388,7 +388,7 @@ public class AtlasServiceImpl implements AtlasService {
 	if (!sampleFile.exists()) {
 	    log.error("Database not consistent. Missing sample file |%s|. Reset sample and waveform for object |%s|.",
 		    sampleFile, object.getName());
-	    dao.resetObjectSample(object.getId());
+	    atlasDao.resetObjectSample(object.getId());
 	    return null;
 	}
 	return generateWaveform(object, sampleFile);
@@ -414,14 +414,15 @@ public class AtlasServiceImpl implements AtlasService {
 
 	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
 	handler.delete();
-	dao.resetObjectSample(object.getId());
+	atlasDao.resetObjectSample(object.getId());
 	Files.mediaFile(object, "sample.mp3").delete();
 	Files.mediaFile(object, "waveform.png").delete();
     }
 
     // ----------------------------------------------------------------------------------------------
 
-    private AudioSampleInfo getAudioSampleInfo(CollectionObject object, File file, MediaSRC mediaSrc) throws IOException {
+    private AudioSampleInfo getAudioSampleInfo(CollectionObject object, File file, MediaSRC mediaSrc)
+	    throws IOException {
 	AudioSampleInfo info = audioProcessor.getAudioFileInfo(file);
 	info.setSampleSrc(mediaSrc);
 	info.setWaveformSrc(generateWaveform(object, file));

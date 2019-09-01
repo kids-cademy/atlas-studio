@@ -39,7 +39,7 @@ public interface AtlasDao {
 
     AtlasObject getObjectByName(String collectionName, String name);
 
-    List<AtlasItem> getAtlasObjects();
+    List<AtlasItem> getCollectionItems(String collectionName);
 
     List<Link> getObjectLinks(AtlasItem object);
 
