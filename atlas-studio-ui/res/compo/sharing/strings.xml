@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<string>
+	<facebook>Post @string/logo-type on your Facebook wall.</facebook>
+	<twitter>Send a tweet about @string/logo-type.</twitter>
+	<email>Send email to friend about @string/logo-type.</email>
+</string>

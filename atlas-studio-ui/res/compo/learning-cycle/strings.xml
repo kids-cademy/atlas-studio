@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<string>
+	<play-title>play</play-title>
+	<play-description>Play on apps adapted to user profile.</play-description>
+	<quiz-title>quiz</quiz-title>
+	<quiz-description>Take the quiz and store results.</quiz-description>
+	<analyze-title>analyze</analyze-title>
+	<analyze-description>Results are analyzed by analytic automaton or by tutor.</analyze-description>
+	<adapt-title>adapt</adapt-title>
+	<adapt-description>Update user profile and adapt apps behavior.</adapt-description>
+	<repeat-title>repeat</repeat-title>
+
+	<learning-cycle-quote><![CDATA[Latin well knew <q>repetitio est mater studiorum</q>. What they did not know is that the optimal moment to repeat is just before forgetting.]]></learning-cycle-quote>
+	<latin-quotes>Latin Quotes</latin-quotes>
+</string>

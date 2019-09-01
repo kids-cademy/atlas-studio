@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style>
+	<ellipsis>
+		<white-space>nowrap</white-space>
+		<overflow>hidden</overflow>
+		<text-overflow>ellipsis</text-overflow>
+	</ellipsis>
+</style>

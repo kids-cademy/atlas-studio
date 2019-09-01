@@ -1,0 +1,11 @@
+.facts {
+	
+}
+
+.facts dt {
+	cursor: pointer;
+}
+
+.facts:not(.hidden) .list-view {
+	margin-top: 20px;
+}

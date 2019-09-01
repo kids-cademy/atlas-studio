@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<string>
+	<logo-type>kids (a)cademy</logo-type>
+	<slogan>learn by playing</slogan>
+
+	<collection>collection</collection>
+	<account>account</account>
+	<media>media</media>
+	<logout>Logout</logout>
+
+	<submit>Submit</submit>
+	<join>Join</join>
+	<ok>OK</ok>
+	<save>Save</save>
+	<reset>Reset</reset>
+	<cancel>Cancel</cancel>
+	<three-no>3xNO</three-no>
+	<message>Mesage for script variable.</message>
+	<confirm-picture-remove>Please confirm object picture remove.</confirm-picture-remove>
+	<confirm-picture-rollback>Please confirm object picture rollback.</confirm-picture-rollback>
+
+	<published-object>Published Object</published-object>
+
+	<object-identity>Identity</object-identity>
+	<object-definition>Definition</object-definition>
+	<object-description>Description</object-description>
+	<graphic-assets>Graphic Assets</graphic-assets>
+	<audio-assets>Audio Assets</audio-assets>
+	<object-facts>Facts</object-facts>
+	<object-spreading>Spreading</object-spreading>
+	<object-related>Related</object-related>
+	<object-links>Links</object-links>
+</string>

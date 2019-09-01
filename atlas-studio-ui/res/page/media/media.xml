@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Media Repository</title>
+	<description>Manager for media repository.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/atlas/MediaPage.js</script>
+	</scripts>
+</page>

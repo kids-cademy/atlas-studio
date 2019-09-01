@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Graphics Assets</title>
+	<description>Graphic assets field set from object form.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/FormData.js</script>
+		<script>script/com/kidscademy/atlas/PicturesControl.js</script>
+		<script>script/com/kidscademy/atlas/CropMask.js</script>
+		<script>script/com/kidscademy/atlas/GraphicAssets.js</script>
+	</scripts>
+</page>

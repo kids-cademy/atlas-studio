@@ -1,0 +1,39 @@
+<fieldset class="facts" data-class="com.kidscademy.atlas.FactsControl">
+	<div class="header container">
+		<h2>@String/object-facts</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/facts" />
+		</div>
+		<div class="container">
+			<dl class="facts-view" data-map=".">
+				<dt></dt>
+				<dd></dd>
+			</dl>
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/facts-import" />
+				<img name="add" src="@image/action/add" title="@tip/facts-add" />
+				<img name="done" src="@image/action/done" title="@tip/facts-done" />
+				<img name="remove" src="@image/action/remove" title="@tip/facts-remove" />
+				<img name="close" src="@image/action/close" title="@tip/facts-close" class="rfloat" />
+				<img name="remove-all" src="@image/action/remove-all" title="@tip/facts-remove-all" class="rfloat" />
+			</div>
+			<div class="editor hidden">
+				<div>
+					<div>
+						<input name="term" maxlength="64" />
+					</div>
+					<div>
+						<textarea name="definition" class="mini"></textarea>
+					</div>
+				</div>
+			</div>
+			<ul class="list-view hidden" data-list="." data-class="com.kidscademy.atlas.LinkSelect">
+				<li data-id="id"><img data-src="icon-src" data-title="url" />
+					<h4 data-text="display"></h4></li>
+			</ul>
+		</div>
+	</div>
+</fieldset>

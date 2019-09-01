@@ -1,0 +1,26 @@
+<fieldset name="definition" class="definition" data-class="com.kidscademy.atlas.DefinitionControl">
+	<div class="header container">
+		<h2>@string/object-definition</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/definition" />
+		</div>
+		<div class="container">
+			<div>
+				<textarea class="optional"></textarea>
+			</div>
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/description-import" />
+				
+				<img name="close" src="@image/action/close" title="@tip/link-close" class="rfloat" />
+				<img name="remove" src="@image/action/remove" title="@tip/link-remove" class="rfloat" /> 
+			</div>
+			<ul class="list-view hidden" data-list="." data-class="com.kidscademy.atlas.LinkSelect">
+				<li data-id="id"><img data-src="icon-src" data-title="url" />
+					<h4 data-text="display"></h4></li>
+			</ul>
+		</div>
+	</div>
+</fieldset>

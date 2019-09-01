@@ -1,0 +1,73 @@
+.object-form {
+}
+
+.object-form .form {
+	width: 100%;
+}
+
+.object-form.side-bar {
+}
+
+.object-form.side-bar .header {
+	xbackground-color: @color/teal-50;
+	padding: 20px 10px;
+	margin-bottom: 10px;
+}
+
+.object-form.side-bar .header img {
+	float: left;
+	width: 64px;
+	margin-right: 10px;
+	padding: 1px;
+	border: solid 1px @color/border-muted;
+	xborder-radius: 32px;
+}
+
+.object-form.side-bar .side-name {
+	margin: 0;
+	border-bottom: solid 1px @color/border-muted;
+	font-size: 2.0rem;
+	color: black;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.object-form.side-bar .last-updated {
+	margin: 8px 0;
+	font-size: 1.3rem;
+	xcolor: @color/black;
+}
+
+.object-form.side-bar .published-object {
+	display: block;
+	padding: 0;
+	margin: 40px 0 0 0;
+	font-size: 1.8rem;
+}
+
+.object-form.side-bar .published-object span {
+	color: black;
+}
+
+.object-form.side-bar .developers {
+	padding: 10px;
+	border-bottom: solid 1px @color/border-muted;
+}
+
+.object-form.side-bar .developers img {
+	width: 64px;
+	height: 64px;
+	cursor: pointer;
+}
+
+.header p {
+	display: none;
+}
+
+.object-form .list-view.related {
+	min-height: 120px;
+}
+
+.object-form .buttons-bar {
+	margin: 20px 0;
+}

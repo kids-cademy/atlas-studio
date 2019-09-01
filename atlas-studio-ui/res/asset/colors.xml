@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<color>
+	<page-header-bg>#000000</page-header-bg>
+	<page-header-link>#80A0A0</page-header-link>
+	<page-header-link-hover>#000000</page-header-link-hover>
+	<page-header-active>#FFFFFF</page-header-active>
+
+	<sys-message-bg>#5F9EA0</sys-message-bg>
+	<sys-message-text>#FAFAD2</sys-message-text>
+	<sys-message-border>#709fa0</sys-message-border>
+
+	<join-button>#367297</join-button>
+	<button-backgroundx>#367297</button-backgroundx>
+	<primaryx>#123456</primaryx>
+
+	<primary-header>#18527C</primary-header>
+	<primary-text>#18527C</primary-text>
+	<secondary-header>#2E7D32</secondary-header>
+	<secondary-text>#2E7D32</secondary-text>
+	<accent-header>yellow</accent-header>
+	<accent-text>yellow</accent-text>
+	
+	<border>@color/grey-700</border>
+	<border-accent>@color/blue-100</border-accent>
+	<border-muted>@color/grey-300</border-muted>
+	<border-alert>@color/red-300</border-alert>
+</color>

@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.kidscademy</groupId>
+		<artifactId>atlas-studio</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>atlas-studio-ui</artifactId>
+	<packaging>wood</packaging>
+
+	<name>User Interface</name>
+
+	<properties>
+		<wood.version>1.1.2</wood.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.js-lib</groupId>
+				<artifactId>wood-maven-plugin</artifactId>
+				<version>${wood.version}</version>
+				<extensions>true</extensions>
+				<!-- default output directory of WOOD plugin is target/site -->
+				<!-- this folder is known by WAR module when create embedded web application -->
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<!-- on preview mode WOOD processing is disabled since files are served directly from source directory -->
+			<id>preview</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.js-lib</groupId>
+						<artifactId>wood-maven-plugin</artifactId>
+						<version>${wood.version}</version>
+						<configuration>
+							<disabled>true</disabled>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

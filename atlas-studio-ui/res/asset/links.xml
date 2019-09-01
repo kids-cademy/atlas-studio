@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<link>
+	<index>index.htm</index>
+	
+	<admin-collection>collection.htm</admin-collection>
+	<admin-object>form.htm</admin-object>
+	<admin-media>media.htm</admin-media>
+	<admin-account>account.htm</admin-account>
+	
+	<instruments-quiz>musical-instruments-quiz.htm</instruments-quiz>
+	<instruments-quiz-store>https://play.google.com/store/apps/details?id=com.kidscademy.instruments.quiz&amp;amp;hl=en</instruments-quiz-store>
+	
+</link>

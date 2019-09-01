@@ -1,0 +1,36 @@
+<fieldset class="links" data-class="com.kidscademy.atlas.LinksControl">
+	<div class="header container">
+		<h2>@string/object-links</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/link" />
+		</div>
+		<div class="container">
+			<ul class="list-view" data-list=".">
+				<li data-id="id"><img data-src="icon-src" data-title="url" />
+					<h4 data-text="display"></h4></li>
+			</ul>
+
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="add" src="@image/action/add" title="@tip/link-add" />
+				<img name="browse" src="@image/action/browse" title="@tip/link-browse" /> 
+				<img name="done" data-key="ENTER" src="@image/action/done" title="@tip/link-done" /> 
+				<img name="remove" data-key="DELETE" src="@image/action/remove" title="@tip/link-remove" /> 
+				<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/link-close" class="rfloat" />
+			</div>
+
+			<div class="editor hidden">
+				<div data-class="com.kidscademy.FormData">
+					<div>
+						<label>URL</label> <input name="url" data-value="url" />
+					</div>
+					<div>
+						<label>Description</label> <input name="description" data-value="description" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</fieldset>

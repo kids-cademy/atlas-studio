@@ -1,0 +1,60 @@
+.buttons-bar {
+	padding-top: @dimen/buttons-top;
+}
+
+.buttons-bar button {
+	margin-left: @dimen/button-space;	
+}
+
+.buttons-bar button:first-child {
+	margin-left: 0;
+}
+
+button {
+	position: relative;
+	box-sizing: border-box;
+	font-size: 1.6em;
+	padding: 0.2em 1.8em;
+	color: @color/button-text;
+	border: solid 1px @color/button-background;
+	background-color: @color/button-background;
+	cursor: pointer;
+	overflow: hidden;
+	transition: background-color .3s;
+}
+
+button:active {
+	background-color: @color/button-active-background;
+	box-shadow: none;
+}
+
+button:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background-color: @color/button-ripple-background;
+	border-radius: 9999px;
+	transform: translate(-50%, -50%);
+}
+
+button:active:before {
+	width: 140%;
+	height: 200%;
+	transition: width .2s ease-out, height .2s ease-out;
+}
+
+button.inverse {
+	text-transform: none;
+	background-color: transparent;
+	border: solid 1px @color/button-background;
+	color: @color/button-background;	
+}
+
+button.inverse:hover {
+	background-color: @color/button-background;
+	color: white;
+}

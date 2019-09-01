@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Object Spreading</title>
+	<description>Spreading field set from object form.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/atlas/SpreadingControl.js</script>
+	</scripts>
+</page>

@@ -1,0 +1,67 @@
+.container {
+	box-sizing: border-box;
+	max-width: @dimen/container-width;
+	padding: 0 10px;
+	margin: 0 auto;
+}
+
+.container::after {
+	content: "";
+	display: block;
+	clear: both;	
+}
+
+.float-right, .rfloat {
+	float: right;
+}
+
+.float-left, .lfloat {
+	float: left;
+}
+
+.inline {
+	display: inline-block;	
+}
+
+.inline.hidden {
+	display: none;
+}
+
+.upload-image {
+	position: relative;
+	display: inline-block;
+}
+
+.upload-icon {
+	position: relative;
+	display: inline-block;
+	width: auto;
+	height: auto;
+	background: 0;
+	border-radius: unset;
+	opacity: 0.2;
+}
+
+.upload-icon.hidden {
+	display: none;
+}
+
+.upload-icon:hover {
+	opacity: 0.6;
+}
+
+.upload-image input, .upload-icon input  {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.upload-icon img {
+	opacity: 1;
+}

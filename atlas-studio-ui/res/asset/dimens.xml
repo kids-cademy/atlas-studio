@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dimen>
+	<page-header-height>80px</page-header-height>
+	<sys-message-height>60px</sys-message-height>
+	
+	<container-width>1200px</container-width>
+	
+	<column-margin>30px</column-margin>
+	
+	<section-margin>70px</section-margin>
+	<section-padding>50px</section-padding>
+	<section-icon-size>80px</section-icon-size>
+	<section-icon-big-size>100px</section-icon-big-size>
+	
+	<buttons-margin-top>20px</buttons-margin-top>
+	<button-space>40px</button-space>
+	
+	<hexagon-view-width>180px</hexagon-view-width>
+	
+	<!-- vertical space between paragraphs -->
+	<p-space>20px</p-space>
+	
+	<!-- DL dimensions -->
+	<!-- space between dt and dd when displayed vertically -->
+	<dt-head-space>4px</dt-head-space>
+	
+	<!-- side menu -->
+	<side-menu-item-height>48px</side-menu-item-height>
+	<side-menu-icon-size>32px</side-menu-icon-size>
+	<side-menu-bullet-size>20px</side-menu-bullet-size>
+	
+	<!-- actions -->
+	<action-icon-size>48px</action-icon-size>
+	<action-margin>20px</action-margin>
+</dimen>

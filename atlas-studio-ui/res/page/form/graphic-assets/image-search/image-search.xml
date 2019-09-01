@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Image Search</title>
+	<description>Image search for atlas graphic assets.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/atlas/ImageSearch.js</script>
+	</scripts>
+</page>

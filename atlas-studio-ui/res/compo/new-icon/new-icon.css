@@ -1,0 +1,32 @@
+.compo.new {
+	position: relative;
+	width: 0;
+	height: 0;
+	z-index: 100;
+	cursor: pointer;
+}
+
+.compo.new span {
+	position:absolute;
+	display: block;
+	box-sizing: border-box;
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	vertical-align: middle;
+	border-radius: 50%;
+	background-color: #9e5f26;	
+	padding-top: 20px;
+	text-align: center;
+	text-decoration: none;
+	xtransform: rotate(45deg);
+	z-index: 200;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-size: 22px;
+	xmargin: 0;
+	padding: 0;
+	color: #FFFFFF;
+	cursor: pointer;
+	box-shadow: 0 0 15px #9e5f26;
+}

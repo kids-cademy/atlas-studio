@@ -1,0 +1,48 @@
+<div w:template="page/template#body" class="object-form" xmlns:w="js-lib.com/wood">
+	<form data-class="com.kidscademy.Form">
+		<fieldset id="identity" w:widget="page/form/identity"></fieldset>
+		<fieldset id="definition" w:widget="page/form/definition"></fieldset>
+		<fieldset id="description" w:widget="page/form/description"></fieldset>
+		<fieldset id="graphic-assets" w:widget="page/form/graphic-assets"></fieldset>
+		<fieldset id="audio-assets" w:widget="page/form/audio-assets"></fieldset>
+		<fieldset id="facts" name="facts" w:widget="page/form/facts"></fieldset>
+		<fieldset id="spreading" name="spreading" w:widget="page/form/spreading"></fieldset>
+		<fieldset id="related" name="related" w:widget="page/form/related"></fieldset>
+		<fieldset id="links" name="links" w:widget="page/form/links"></fieldset>
+	</form>
+</div>
+
+<div w:template="page/template#side-bar" class="object-form" xmlns:w="js-lib.com/wood">
+	<div class="header">
+		<img data-src="pictures.0.src" />
+		<h1 class="side-name" data-text="display"></h1>
+		<h2 class="last-updated" data-text="last-updated" data-format="js.format.StandardDateTime"></h2>
+		<h3 class="checkbox published-object" data-class="com.kidscademy.Checkbox" data-text="state">
+			<span class="control"></span><span>@string/published-object</span>
+		</h3>
+	</div>
+	
+	<ul class="developers inline hidden">
+		<li><img src="/media/home/ioana/icon.png" /></li>
+		<li><img src="/media/home/octavian/icon.png" /></li>
+		<li><img src="/media/home/lucian/icon.png" /></li>
+	</ul>
+	
+	<ul class="side-menu quick-links">
+		<li data-name="identity"><img src="@image/action/identity" />@string/object-identity<span class="state"></span></li>
+		<li data-name="definition"><img src="@image/action/definition" />@string/object-definition<span class="state"></span></li>
+		<li data-name="description"><img src="@image/action/description" />@string/object-description<span class="state"></span></li>
+		<li data-name="graphic-assets"><img src="@image/action/graphic-asset" />@string/graphic-assets<span class="state"></span></li>
+		<li data-name="audio-assets"><img src="@image/action/audio-asset" />@string/audio-assets<span class="state"></span></li>
+		<li data-name="facts"><img src="@image/action/facts" />@String/object-facts<span class="state"></span></li>
+		<li data-name="spreading"><img src="@image/action/spreading" />@string/object-spreading<span class="state"></span></li>
+		<li data-name="related"><img src="@image/action/related" />@string/object-related<span class="state"></span></li>
+		<li data-name="links"><img src="@image/action/link" />@string/object-links<span class="state"></span></li>
+	</ul>
+	
+	<div class="container buttons-bar">
+		<button name="save">@string/save</button>
+		<button name="reset" class="inverse">@string/reset</button>
+		<button name="cancel" class="inverse">@string/cancel</button>
+	</div>
+</div>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-set>
+	<user>
+		<id>1</id>
+		<emailAddress>john.doe@email.com</emailAddress>
+		<password>secret</password>
+	</user>
+</data-set>

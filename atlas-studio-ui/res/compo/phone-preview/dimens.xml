@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dimen>
+	<phone-width>250px</phone-width>
+	<phone-height>474px</phone-height>
+	<phone-padding-top>38px</phone-padding-top>
+	<phone-padding-bottom>34px</phone-padding-bottom>
+	<phone-padding-left>12px</phone-padding-left>
+	<phone-padding-right>14px</phone-padding-right>
+	<phone-screen-width>226.75px</phone-screen-width>
+</dimen>

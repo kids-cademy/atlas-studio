@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-set>
+	<app>
+		<id>1</id>
+		<name>com.kidscademy.atlas.birds</name>
+	</app>
+	<model>
+		<id>1</id>
+		<manufacturer>SAMSUNG</manufacturer>
+		<model>GT-I9300</model>
+		<version>4.3.1</version>
+		<apiLevel>18</apiLevel>
+	</model>
+	<likecounter>
+		<id>1</id>
+		<timestamp>2019-01-01 15:57:00</timestamp>
+		<ip>192.168.1.3</ip>
+		<value>1</value>
+	</likecounter>
+	<likecounter>
+		<id>2</id>
+		<timestamp>2019-01-01 16:02:00</timestamp>
+		<ip>192.168.1.3</ip>
+		<value>0</value>
+	</likecounter>
+	<likecounter_reasons>
+		<id>1</id>
+		<likecounter_id>2</likecounter_id>
+		<reasons>NOT_INTUITIVE</reasons>
+	</likecounter_reasons>
+</data-set>

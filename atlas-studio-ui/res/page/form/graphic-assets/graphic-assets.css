@@ -1,0 +1,209 @@
+.graphic-assets {
+}
+
+.graphic-assets .view {
+}
+
+.graphic-assets .view .item {
+	display: inline-block;
+	margin-right: 40px;
+}
+
+.graphic-assets .view img {
+	display: inline-block;
+	height: 96px;
+	cursor: pointer;
+}
+
+.graphic-assets .view img:not([src]) {
+	min-width: 96px;
+	cursor: pointer;
+	border: solid 1px #76be76;
+}
+
+.graphic-assets .view img.invalid {
+	border-color: @color/control-invalid-border;
+}
+
+.graphic-assets .view .item h4 {
+	color: black;
+}
+
+.graphic-assets .view .item h3, .graphic-assets .view .item h4, .graphic-assets .view .item h5 {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}
+
+.graphic-assets .image-editor {
+	display: flex;
+	margin-top: 20px;
+}
+
+.graphic-assets .image-editor.hidden {
+	display: none;
+}
+
+.graphic-assets .image-editor .info {
+	display: inline-block;
+	max-width: 240px;
+	flex: 0 0 240px;
+	border: solid 1px @color/border-muted;
+	padding: 20px;
+	margin-right: 10px;
+	background-color: white;
+}
+
+.graphic-assets .image-editor .preview {
+	display: inline-block;
+	position: relative;
+	border: solid 1px @color/border-muted;
+	flex-grow: 1;
+	background-image: url(@image/preview-bg);
+}
+
+.graphic-assets .image-editor .preview canvas {
+	display: none;
+}
+
+.graphic-assets .image-editor .file-info h3 {
+	border-bottom: solid 1px @color/border-muted;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.graphic-assets .image-editor .crop-info {
+	margin-top: 40px;
+}
+
+.graphic-assets .image-editor dt {
+	width: 80px;
+	xmargin-top: 10px;
+	height: 30px;
+}
+
+.graphic-assets .image-editor dd {
+	xmargin-top: 10px;
+}
+
+.graphic-assets .image-editor .preview img {
+	max-width: 100%;
+	max-height: 600px;
+	border: dashed 1px @color/border;
+}
+
+/** ----------------------------------------------------------------------------------------------- */
+/** CROP MASK */
+
+.graphic-assets .crop-mask {
+	position: absolute;
+	display: flex;
+	flex-flow: row;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.graphic-assets .crop-mask.hidden {
+	display: none;
+}
+
+.graphic-assets .crop-mask .outer {
+	background-color: rgba(255,255,255,0.6);
+}
+
+/** outer rectangle for horizontal offset */
+/** this element width is crop area X offset */
+.graphic-assets .crop-mask .x-offset {
+	flex-grow: 0;
+	flex-shrink: 0;
+	/** this style determine element width */
+	/** it is controlled by mouse to move crop area horizontally, that is, to adjust X offset */
+	flex-basis: 0;
+	height: 100%;
+}
+
+/** horizontal column containing crop area */
+/** this element width is crop area width */
+.graphic-assets .crop-mask .crop-column {
+	display: flex;
+	flex-flow: column;
+	flex-grow: 0;
+	flex-shrink: 0;
+	/** this styles determine element width */
+	/** it is controlled by resize W and E to adjust crop rectangle width */
+	flex-basis: 0;
+	height: 100%;
+}
+
+.graphic-assets .crop-mask .x-span {
+	flex-grow: 1;
+	height: 100%;
+}
+
+.graphic-assets .crop-mask .y-offset {
+	width: 100%;
+	flex-grow: 0;
+	flex-shrink: 0;
+	/** this styles determine element height */
+	/** it is controlled by mouse to move crop area vertically, that is, to adjust Y offset */
+	flex-basis: 0;
+}
+
+.graphic-assets .crop-mask .crop-rect {
+	position: relative;
+	width: 100%;
+	flex-grow: 0;
+	flex-shrink: 0;
+	/** this styles determine element height */
+	/** it is controlled by resize N and S to adjust crop rectangle height */
+	flex-basis: 0;
+	border: dotted 1px white;
+	cursor: move;
+}
+
+.graphic-assets .crop-mask .y-span {
+	width: 100%;
+	flex-grow: 1;
+}
+
+.graphic-assets .crop-mask .x-resize {
+	position: absolute;
+	width: 40px;
+	height: 100%;
+}
+
+.graphic-assets .crop-mask .x-resize.w {
+	cursor: w-resize;
+}
+
+.graphic-assets .crop-mask .x-resize.e {
+	right: 0;
+	cursor: e-resize;
+}
+
+.graphic-assets .crop-mask .y-resize {
+	position: absolute;
+	width: 100%;
+	height: 40px;
+}
+
+.graphic-assets .crop-mask .y-resize.n {
+	cursor: n-resize;
+}
+
+.graphic-assets .crop-mask .y-resize.s {
+	bottom: 0;
+	cursor: s-resize;
+}
+
+.graphic-assets .crop-mask .x-resize:hover, .graphic-assets .crop-mask .y-resize:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}

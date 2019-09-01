@@ -1,0 +1,32 @@
+.image-search {
+}
+
+.image-search .actions {
+	margin-bottom: 20px;
+}
+
+.image-search .result-images {
+	display: inline-block;
+	width: 660px;
+	margin-right: 20px;
+	padding: 20px 0;
+	border-right: solid 1px white;
+}
+
+.image-search .result-images img {
+	max-width: 150px;
+	max-height: 150px;
+	margin: 20px 10px 20px 0;
+	padding: 1px;
+	border: solid 1px green;
+	cursor: pointer;
+}
+
+.image-search .image-preview {
+	max-width: 480px;
+	max-height: 480px;
+	vertical-align: top;
+	padding: 1px;
+	border: solid 1px green;
+	cursor: pointer;
+}

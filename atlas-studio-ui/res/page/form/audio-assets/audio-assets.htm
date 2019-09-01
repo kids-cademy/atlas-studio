@@ -1,0 +1,60 @@
+<fieldset class="audio-assets" data-class="com.kidscademy.atlas.AudioAssets">
+	<div class="header container">
+		<h2>@string/audio-assets</h2>
+		<p>@string/sample-text</p>
+	</div>
+	
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/audio-asset" />
+		</div>
+		<div class="container">
+			<div>
+				<label>sample title</label> <input name="sample-title" class="optional" />
+			</div>
+			<div id="sample-src" class="waveform" data-class="com.kidscademy.atlas.AudioPlayer">
+				<input name="sample-src" type="hidden" class="optional" />
+				<img name="waveform-src" class="optional" data-class="js.dom.ImageControl" data-default="@image/waveform" />
+				<div class="progress"></div>
+				<h1 class="processing hidden">processing... please wait</h1>
+			</div>
+			
+			<div class="sample-info">
+				<dl class="inline">
+					<dt>Codec</dt>
+					<dd data-text="codec"></dd>
+					<dt>File Size</dt>
+					<dd data-text="file-size" data-format="js.format.FileSize"></dd>
+					<dt>Duration</dt>
+					<dd data-text="duration" data-format="js.format.Duration"></dd>
+				</dl>
+				<dl class="inline">
+					<dt>Channels</dt>
+					<dd data-text="channels"></dd>
+					<dt>Sample Rate</dt>
+					<dd data-text="sample-rate"></dd>
+					<dt>Bit Rate</dt>
+					<dd data-text="bit-rate" data-format="js.format.BitRate"></dd>
+				</dl>
+			</div>
+			
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<span data-name="upload" class="upload-icon">
+					<img src="@image/action/upload" />
+					<input class="sample-file" type="file" accept="audio/*" title="@tip/audio-upload" />
+				</span>
+				<img name="cut" src="@image/action/crop" title="@tip/audio-cut" />
+				<img name="mono" src="@image/action/mono" title="@tip/audio-mono" />
+				<img name="normalize" src="@image/action/normalize" title="@tip/audio-normalize" />
+				<img name="trim" src="@image/action/trim" title="@tip/audio-trim" />
+				<img name="fade-in" src="@image/action/fade-in" title="@tip/audio-fade-in" />
+				<img name="fade-out" src="@image/action/fade-out" title="@tip/audio-fade-out" />
+				<span class="separator"></span>
+				<img name="play" src="@image/action/play" title="@tip/audio-play" />
+				<img name="undo" src="@image/action/undo" title="@tip/audio-undo" />
+				<img name="clear" src="@image/action/clear" title="@tip/audio-clear" />
+				<img name="remove" src="@image/action/remove" title="@tip/audio-remove" />
+			</div>
+		</div>
+	</div>
+</fieldset>

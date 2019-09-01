@@ -1,0 +1,178 @@
+.compo.learning-cycle {
+	max-width: 1000px;
+	margin: 0 auto;	
+}
+
+.compo.learning-cycle::after {
+	content: "";
+	display: block;
+	clear: both;	
+}
+
+.compo.learning-cycle .column {
+	float: left;
+}
+
+.compo.learning-cycle .circle-frame {
+	position: relative;
+	width: 298px;
+	height: 300px;
+	margin: 150px 200px 100px 0;
+	border-radius: 150px;
+	background: radial-gradient(circle at 150px 150px, #FFFFFF, #c0d2ea);
+	animation-name: rotate-graph;
+	animation-duration: 10s;
+	animation-timing-function: linear;
+    transform-origin: center center; 
+}
+
+.compo.learning-cycle .icon {
+	position: absolute;
+	width: 200px;
+	height: 200px;
+	border: solid 1px #c0d2ea;
+	border-radius: 100px;	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #FFFFFF;
+}
+
+.compo.learning-cycle .icon img {
+	margin: 20px;
+}
+
+.compo.learning-cycle .icon.play {
+	left: 50px;
+	top: -100px;
+}
+
+.compo.learning-cycle .icon.quiz {
+	left: 200px;
+	top: 50px;
+	transform: rotate(90deg);
+}
+
+.compo.learning-cycle .icon.analyze {
+	left: 50px;
+	top: 200px;
+	transform: rotate(180deg);
+}
+
+.compo.learning-cycle .icon.adapt {
+	left: -100px;
+	top: 50px;
+	transform: rotate(-90deg);
+}
+
+.compo.learning-cycle .overview {
+	animation-name: display-overview;
+	animation-duration: 1.5s;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+    opacity: 0; 
+    transform: translateY(-400px); 
+}
+
+.compo.learning-cycle .overview.play {
+	animation-delay: 1s;	
+}
+
+.compo.learning-cycle .overview.quiz {
+	animation-delay: 3s;	
+}
+
+.compo.learning-cycle .overview.analyze {
+	animation-delay: 5s;	
+}
+
+.compo.learning-cycle .overview.adapt {
+	animation-delay: 7s;	
+}
+
+.compo.learning-cycle .overview.repeat {
+	animation-delay: 9s;
+	margin-top: 120px;	
+}
+
+.compo.learning-cycle .overview.repeat span {
+	display: inline-block;
+	padding: 0 10px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 18px;
+	text-transform: uppercase;
+}
+
+.compo.learning-cycle .overview.repeat span:first-child {
+	padding-left: 0;
+}
+
+.compo.learning-cycle .overview h2 {
+	padding: 0 0 6px;
+	margin: 40px 0 6px;
+	border-bottom: solid 1px #c0d2ea;
+	text-transform: uppercase;
+	font-size: 18px;
+	color: #000000;	
+}
+
+.compo.learning-cycle .overview .play h2 {
+	margin-top: 0;
+}
+
+.compo.learning-cycle .overview p {
+	width: 500px;
+	margin: 0;
+	font-size: 12px;
+}
+
+@keyframes rotate-graph { 
+    0% { 
+        transform: rotate(0);
+        border-radius: 0px; 
+    }
+    20% { 
+        transform: rotate(0);
+        border-radius: 150px; 
+    }
+    30% {
+        transform: rotate(0); 
+    }
+    40% {
+        transform: rotate(-90deg); 
+    }
+    50% {
+        transform: rotate(-90deg); 
+    }
+    60% {
+        transform: rotate(-180deg); 
+    }
+    70% {
+        transform: rotate(-180deg); 
+    } 
+    80% { 
+        transform: rotate(-270deg); 
+    }
+    90% { 
+        transform: rotate(-270deg); 
+    }
+    100% {
+        transform: rotate(-360deg); 
+    } 
+} 
+
+@keyframes display-overview { 
+    0% { 
+    } 
+    60% { 
+       
+        transform: translateY(30px); 
+    } 
+    80% { 
+        transform: translateY(-10px); 
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0); 
+    } 
+} 

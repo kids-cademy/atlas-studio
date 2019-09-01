@@ -1,0 +1,47 @@
+.references {
+	box-sizing: border-box;
+	padding: @dimen/section-padding 0;
+}
+
+.references dl {
+	display: inline-block;
+	float: left;
+	margin: 0 0 0 @dimen/column-margin;
+}
+
+.references dl:first-child {
+	margin-left: 0;
+}
+
+.references dl:first-child {
+	margin-left: 0;
+}
+
+.references dl dt {
+	margin-bottom: 10px;
+	font-size: 18px;
+	text-transform: uppercase;
+	cursor: default;
+	border-bottom: solid 1px #D8D8D8;
+}
+
+.references dl dd {
+	margin-bottom: 4px;
+	transition: .6s ease-in-out;
+}
+
+.references dl dd * {
+	font-size: 14px;
+}
+
+.references dl.right {
+	float: right;
+}
+
+.references dl.right a {
+	color: #49B6B6;
+}
+
+.references dl.right a:hover {
+	color: #000000;
+}

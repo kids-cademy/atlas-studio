@@ -1,0 +1,144 @@
+body {
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;	
+}
+
+body>header {
+	width: 100%;
+	height: @dimen/page-header-height;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: @dimen/page-header-height;
+	border-bottom: solid 1px white;
+	background-color: #cdf3f6;
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #41b5bd);
+}
+
+body>.flex-content {
+	width: 100%;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+}
+
+body>.flex-content .side-bar {
+	height: 100%;
+	margin-right: 20px;
+	border-right: solid 1px @color/border-muted;
+	background-color: #f8f8f8;
+	overflow: hidden;
+}
+
+body>.flex-content .body {
+	height: 100%;
+	flex-grow: 1;
+	overflow-y: scroll;
+}
+
+/* header */
+
+body>header .logo {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin: -20px 20px 0;
+	cursor: pointer;
+}
+
+body>header .developer {
+	float: right;
+	width: 64px;
+	height: 64px;
+	padding: 10px;
+	margin-right: 40px;
+}
+
+body header .content {
+	white-space: nowrap;
+}
+
+body>header .top-menu-button {
+	display: none;
+	float: right;
+	padding: 10px;
+	margin: 8px 15px 8px 0;
+	cursor: pointer;
+}
+
+body>header .top-menu-button span {
+	display: block;
+	width: 40px;
+	height: 2px;
+	background-color: green;
+	margin-top: 8px;
+	cursor: pointer;
+}
+
+body>header .top-menu {
+	display: inline-block;
+}
+
+body>header .top-menu ul {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+body>header .top-menu ul li {
+	display: inline-block;
+	xborder-bottom: solid 4px transparent;
+}
+
+body>header .top-menu a {
+	display: inline-block;
+	height: @dimen/page-header-height;
+	line-height: @dimen/page-header-height;
+	margin: 0 20px;
+	padding: 0;
+	font-size: 2.2rem;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: @color/page-header-link;
+}
+
+body>header .top-menu a:nth-child(1) {
+	color: @color/red-500;
+}
+
+body>header .top-menu a:nth-child(2) {
+	color: @color/blue-500;
+}
+
+body>header .top-menu a:nth-child(3) {
+	color: @color/brown-500;
+}
+
+body>header .top-menu a:nth-child(4) {
+	color: @color/yellow-500;
+}
+
+body>header .top-menu a:nth-child(5) {
+	color: @color/teal-500;
+}
+
+body>header .top-menu a:hover {
+	color: @color/page-header-link-hover;
+}
+
+body>header .top-menu .no-ads-action {
+	display: none;
+}
+
+body>header .logo-type, body>footer .logo-type {
+	font-size: 2.8em;
+	height: @dimen/page-header-height;
+	line-height: @dimen/page-header-height;
+	margin: 0 80px 0 0;
+	padding: 0;
+	text-transform: lowercase;
+	color: green;
+}

@@ -1,0 +1,12 @@
+.definition {
+	
+}
+
+.definition:not(.hidden) .list-view {
+	margin-top: 20px;
+}
+
+.definition textarea {
+	height: 100px;
+	min-height: 100px;
+}

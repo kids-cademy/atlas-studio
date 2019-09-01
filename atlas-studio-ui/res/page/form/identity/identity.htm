@@ -1,0 +1,51 @@
+<fieldset class="identity" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-identity</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/identity" />
+		</div>
+		<div class="container">
+			<div>
+				<label>rank</label> <input name="rank" class="mini" />
+			</div>
+			<div>
+				<label>name</label> <input name="name" />
+			</div>
+			<div>
+				<label>display</label> <input name="display" />
+			</div>
+			<div>
+				<label>aliases</label> <input name="aliases" class="optional" data-class="com.kidscademy.atlas.AliasesControl" />
+			</div>
+			<div>
+				<label>category</label> <select name="category" w:widget="compo/instrument-category-select"></select>
+			</div>
+			<div data-name="date" data-class="com.kidscademy.atlas.HDateControl">
+				<label>date</label><input name="value" class="mini optional" /><select name="format" class="optional">
+					<option selected="selected"></option>
+					<option value="0">DATE</option>
+					<option value="1">YEAR</option>
+					<option value="2">DECADE</option>
+					<option value="3">CENTURY</option>
+					<option value="4">MILLENNIA</option>
+					<option value="5">KYA</option>
+					<option value="6">MYA</option>
+					<option value="7">BYA</option>
+				</select> <select name="period" class="optional">
+					<option selected="selected"></option>
+					<option value="0">FULL</option>
+					<option value="256">BEGINNING</option>
+					<option value="512">MIDDLE</option>
+					<option value="768">END</option>
+				</select> <select name="era" class="optional">
+					<option selected="selected"></option>
+					<option value="0">CE</option>
+					<option value="65536">BCE</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</fieldset>

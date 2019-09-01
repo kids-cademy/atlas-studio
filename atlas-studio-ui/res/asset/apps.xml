@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<string>
+
+	<apps-atlas>atlas</apps-atlas>
+	<apps-quiz>quiz</apps-quiz>
+	<apps-tecky>tecky</apps-tecky>
+	<apps-edutainment>edutainment</apps-edutainment>
+	
+	<app-animals>Animals Atlas</app-animals>
+	
+	<app-birds>Birds Atlas</app-birds>
+	<app-cars>Car Brands Quiz</app-cars>
+	<app-fables>Fables</app-fables>
+	<app-colors>Learn Colors</app-colors>
+	
+	<app-instruments>Musical Instruments Atlas</app-instruments>
+	<app-instruments-intro>Musical instruments from all over the world, some of which you never heard about. Music is part of human culture defining our evolution throughout history. Musical Instruments Atlas shows a glimpse on the variety of musical instruments used around the world.</app-instruments-intro>
+
+	<app-instruments-quiz>Musical Instruments Quiz</app-instruments-quiz>
+	<app-instruments-quiz-intro>Musical Instruments Quiz is a trivia game that challenges you to recognize musical instruments existing all over the world, from well know guitar or piano to esoteric didgeridoo.</app-instruments-quiz-intro>
+	
+	<app-sounds>Sounds Quiz</app-sounds>
+	<app-arduino-primer>Arduino Primer</app-arduino-primer>
+
+</string>

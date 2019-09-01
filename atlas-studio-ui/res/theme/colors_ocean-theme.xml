@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<color>
+	<gray-darker>#222</gray-darker>
+	<gray-dark>#333</gray-dark>
+	<gray>#555</gray>
+	<gray-light>#777</gray-light>
+	<gray-lighter>#EEE</gray-lighter>
+
+	<primary>#337AB7</primary>
+	<success>#5CB85C</success>
+	<info>#5BC0DE</info>
+	<warning>#F0AD4E</warning>
+	<danger>#D9534F</danger>
+
+	<h1-text>#18527C</h1-text>
+	<h2-text>#18527C</h2-text>
+	<h3-text>#18527C</h3-text>
+	<h4-text>#18527C</h4-text>
+	<h5-text>#18527C</h5-text>
+	<h6-text>#18527C</h6-text>
+	<p-text>#000000</p-text>
+
+	<button-background>#62A30C</button-background>
+	<button-active-background>#7CBC27</button-active-background>
+	<button-before-background>rgba(236, 240, 241, .3)</button-before-background>
+	<button-text>#FFFFFF</button-text>
+
+	<fieldset-background>linear-gradient(to bottom, #F0F0F0, #FFFFFF)</fieldset-background>
+	<fieldset-border>#E0E0E0 #E6E6E6 #E6E6E6 #E6E6E6</fieldset-border>
+	<fieldset-collapsed-border>#A7E2AF #E6E6E6 #E6E6E6 #E6E6E6</fieldset-collapsed-border>
+	<legend-text>#000000</legend-text>
+
+	<control-border>#E6E6E6</control-border>
+	<control-hover-border>#00A000</control-hover-border>
+	<control-invalid-border>#A00000</control-invalid-border>
+	<control-focus-border>#B0B0B0</control-focus-border>
+	<control-background>linear-gradient(#FAFAFA, #FFFFFF, #FAFAFA)</control-background>
+
+	<quote-text>#5F9EA0</quote-text>
+	<quote-before>#7A7A7A</quote-before>
+	<quote-cite>#999999</quote-cite>
+</color>

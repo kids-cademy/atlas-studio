@@ -1,0 +1,55 @@
+{
+	"category": "STRINGS",
+	"sampleTitle": "Banjo solo",
+	"samplePath": "sample.mp3",
+	"date": {
+		"value": 1821,
+		"mask": 513
+	},
+	"id": 1,
+	"dtype": null,
+	"rank": 9999,
+	"name": "banjo",
+	"display": "Banjo",
+	"description": "Banjo description.",
+	"iconPath": "icon.png",
+	"thumbnailPath": "thumbnail.png",
+	"picturePath": "picture.jpg",
+	"aliases": [
+		"Banjo Alias #1",
+		"Banjo Alias #2"
+	],
+	"spreading": [
+		{
+			"id": 0,
+			"name": "Europe",
+			"area": "SOUTH"
+		},
+		{
+			"id": 0,
+			"name": "Africa",
+			"area": "NORTH"
+		}
+	],
+	"facts": {
+		"Banjo Fact #2": "Banjo fact #2 description.",
+		"Banjo Fact #1": "Banjo fact #1 description."
+	},
+	"links": [
+		{
+			"id": 0,
+			"url": "https://en.wikipedia.org/wiki/AccordionXXX",
+			"name": "Wikipedia-xxx",
+			"description": "Accordion article on wikipedia.",
+			"iconPath": "wikipedia.png"
+		},
+		{
+			"id": 0,
+			"url": "http://en.wikipedia.org:443/wiki/Accordion",
+			"name": "Wikipedia-www",
+			"description": "Accordion article on wikipedia.",
+			"iconPath": "wikipedia.png"
+		}
+	],
+	"related": null
+}

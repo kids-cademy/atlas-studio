@@ -1,0 +1,78 @@
+.collection {
+	
+}
+
+.collection.side-menu .actions {
+	padding-top: 20px;
+}
+
+.collection.side-menu .actions li {
+	height: 48px;
+	line-height: 48px;
+	padding: 0 40px 0 20px;
+	margin-left: 1px;
+	margin-top: 1px;
+	border-left: solid 4px;
+	cursor: pointer;
+	color: black;
+	text-transform: uppercase;
+}
+
+.collection.side-menu .actions li .state {
+	display: inline-block;
+	vertical-align: middle;
+	float: right;
+	width: 20px;
+	height: 20px;
+	margin-top: 12px;
+	margin-right: 10px;
+	border-radius: 10px;
+}
+
+.collection.side-menu .actions li.invalid .state {
+	background-color: @color/danger;
+}
+
+.collection.side-menu .actions li:hover {
+	color: black;
+}
+
+.collection.side-menu .actions li:nth-child(1) {
+	border-left-color: @color/red-300;
+	background-color: @color/red-50;
+}
+
+.collection.side-menu .actions li:nth-child(2) {
+	border-left-color: @color/pink-300;
+	background-color: @color/pink-50;
+}
+
+.collection.side-menu .actions li:nth-child(3) {
+	border-left-color: @color/purple-300;
+	background-color: @color/purple-50;
+}
+
+.collection.side-menu .actions li:nth-child(4) {
+	border-left-color: @color/deep-purple-300;
+	background-color: @color/deep-purple-50;
+}
+
+.collection.side-menu .actions li:nth-child(5) {
+	border-left-color: @color/indigo-300;
+	background-color: @color/indigo-50;
+}
+
+.collection.side-menu .actions li:nth-child(6) {
+	border-left-color: @color/blue-300;
+	background-color: @color/blue-50;
+}
+
+.collection.side-menu .actions li:nth-child(7) {
+	border-left-color: @color/light-blue-300;
+	background-color: @color/light-blue-50;
+}
+
+.collection.side-menu .actions li:nth-child(8) {
+	border-left-color: @color/cyan-300;
+	background-color: @color/cyan-50;
+}

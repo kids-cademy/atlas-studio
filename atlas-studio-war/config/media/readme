@@ -1,0 +1,9 @@
+it seems tomcat has a cache for static files - somethig about 5 seconds, and if file is requested 
+while cache is active the stored version is returned, not even testing for changing on file system
+
+media repository context should disable tomcat cache
+otherwise waveform.png is not updated correctly
+
+<Context reloadable="true" cachingAllowed="false"></Context>
+
+configuring cache expiration on web.xml is optional since javascript uses timestamp to render url as unique

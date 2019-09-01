@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Object Form</title>
+	<description>Object form page.</description>
+	<scripts>
+		<script>script/com/kidscademy/Checkbox.js</script>
+		<script>script/com/kidscademy/Form.js</script>
+		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/atlas/FormPage.js</script>
+	</scripts>
+</page>

@@ -1,0 +1,21 @@
+.references {
+}
+
+.references dl {
+	display: block;
+	float: none;
+	margin-top: @dimen/column-margin;
+	margin-left: 0;
+}
+
+.references dl:first-child {
+	margin-top: 0;
+}
+
+.references dl.right {
+	float: none;
+}
+
+.references dl dd {
+	margin-bottom: 10px;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Captcha Component</title>
+	<description>Custom CAPTCHA with revealed with checkbox.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>lib/captcha/captcha.js</script>
+		<script>script/com/kidscademy/Checkbox.js</script>
+		<script>script/com/kidscademy/CheckboxCaptcha.js</script>
+	</scripts>
+</page>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-set>
+	<user>
+		<id>1</id>
+		<emailAddress>john.doe@email.com</emailAddress>
+		<password>secret</password>
+	</user>
+
+	<atlascollection>
+		<id>1</id>
+		<name>instrument</name>
+	</atlascollection>
+	<atlascollection>
+		<id>2</id>
+		<name>bird</name>
+	</atlascollection>
+	
+	<atlasobject>
+		<id>1</id>
+		<user_id>1</user_id>
+		<collection_id>1</collection_id>
+		<state>DEVELOPMENT</state>
+		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<rank>1234</rank>
+		<name>accordion</name>
+		<display>Accordion</display>
+		<description>Accordion description.</description>
+		<sampleTitle>Sample</sampleTitle>
+		<sampleName>sample.mp3</sampleName>
+		<waveformName>waveform.png</waveformName>
+		<start_date_value>1234567890</start_date_value>
+		<start_date_mask>0</start_date_mask>
+	</atlasobject>
+	<atlasobject>
+		<id>2</id>
+		<user_id>1</user_id>
+		<collection_id>1</collection_id>
+		<state>DEVELOPMENT</state>
+		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<rank>4321</rank>
+		<name>eagle</name>
+		<display>Eagle</display>
+		<description>Eagle description.</description>
+		<sampleTitle>Sample</sampleTitle>
+		<sampleName>sample.mp3</sampleName>
+		<waveformName>waveform.png</waveformName>
+		<start_date_value>1234567890</start_date_value>
+		<start_date_mask>0</start_date_mask>
+	</atlasobject>
+	<atlasobject>
+		<id>3</id>
+		<user_id>1</user_id>
+		<collection_id>2</collection_id>
+		<state>PUBLISHED</state>
+		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<rank>1235</rank>
+		<name>bandoneon</name>
+		<display>Bandoneon</display>
+		<description>Bandonenon description.</description>
+		<sampleTitle>Sample</sampleTitle>
+		<sampleName>sample.mp3</sampleName>
+		<waveformName>waveform.png</waveformName>
+		<start_date_value>1234567890</start_date_value>
+		<start_date_mask>0</start_date_mask>
+	</atlasobject>
+	<atlasobject>
+		<id>4</id>
+		<user_id>1</user_id>
+		<collection_id>2</collection_id>
+		<state>PUBLISHED</state>
+		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<rank>1236</rank>
+		<name>cimbalom</name>
+		<display>Cimbalom</display>
+		<description>Cimbalom description.</description>
+		<sampleTitle>Sample</sampleTitle>
+		<sampleName>sample.mp3</sampleName>
+		<waveformName>waveform.png</waveformName>
+		<start_date_value>1234567890</start_date_value>
+		<start_date_mask>0</start_date_mask>
+	</atlasobject>
+
+	<atlasobject_aliases>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<aliases>Squeezebox</aliases>
+	</atlasobject_aliases>
+
+	<image>
+		<id>1</id>
+		<images_id>1</images_id>
+		<images_order>0</images_order>
+		<name>icon</name>
+		<uploadDate>2019-03-10 21:11:00</uploadDate>
+		<source>https://upload.wikimedia.org/wikipedia/commons/f/f5/Paris_-_Accordion_Player_-_0956.jpg</source>
+		<fileName>icon.jpg</fileName>
+		<fileSize>12345</fileSize>
+		<width>96</width>
+		<height>96</height>
+	</image>
+	<image>
+		<id>2</id>
+		<images_id>1</images_id>
+		<images_order>1</images_order>
+		<name>piano-accordion</name>
+		<uploadDate>2019-03-10 21:11:00</uploadDate>
+		<source> </source>
+		<fileName>piano-accordion.png</fileName>
+		<fileSize>12345</fileSize>
+		<width>560</width>
+		<height>400</height>
+	</image>
+	<image>
+		<id>3</id>
+		<images_id>1</images_id>
+		<images_order>2</images_order>
+		<name>button-accordion</name>
+		<uploadDate>2019-03-10 21:11:00</uploadDate>
+		<source> </source>
+		<fileName>button-accordion.png</fileName>
+		<fileSize>12345</fileSize>
+		<width>560</width>
+		<height>400</height>
+	</image>
+	<image>
+		<id>4</id>
+		<images_id>1</images_id>
+		<images_order>3</images_order>
+		<name>image</name>
+		<uploadDate>2019-03-10 21:11:00</uploadDate>
+		<source>https://upload.wikimedia.org/wikipedia/commons/f/f5/Paris_-_Accordion_Player_-_0956.jpg</source>
+		<fileName>image.jpg</fileName>
+		<fileSize>12345</fileSize>
+		<width>920</width>
+		<height>560</height>
+	</image>
+
+	<atlasobject_facts>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<facts_key>Fact #1</facts_key>
+		<facts>Fact #1 description.</facts>
+	</atlasobject_facts>
+
+	<atlasobject_links>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<url>https://en.wikipedia.org/wiki/Accordion</url>
+		<domain>wikipedia.org</domain>
+		<display>Wikipedia</display>
+		<description>Wikipedia article about accordion.</description>
+		<iconName>wikipedia.png</iconName>
+		<features>description</features>
+	</atlasobject_links>
+
+	<atlasobject_spreading>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<name>RO</name>
+		<area>1</area>
+	</atlasobject_spreading>
+
+	<atlasobject_related>
+		<atlasobject_id>1</atlasobject_id>
+		<name>bandoneon</name>
+		<relevance>0</relevance>
+	</atlasobject_related>
+	<atlasobject_related>
+		<atlasobject_id>1</atlasobject_id>
+		<name>cimbalom</name>
+		<relevance>0</relevance>
+	</atlasobject_related>
+</data-set>

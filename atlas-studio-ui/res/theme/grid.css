@@ -1,0 +1,26 @@
+.c2, .c3, .c4, .c5 {
+	float: left;
+}
+
+.c2 {
+	width: 50%;
+}
+
+.c3 {
+	width: 33.3%;
+}
+
+.c4 {
+	width: 25%;
+}
+
+.c5 {
+	width: 20%;
+}
+
+.t3 {
+	font-size: 12px;
+	color: #408080;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}

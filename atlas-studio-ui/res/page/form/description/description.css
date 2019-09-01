@@ -1,0 +1,7 @@
+.description {
+	
+}
+
+.description:not(.hidden) .list-view {
+	margin-top: 20px;
+}

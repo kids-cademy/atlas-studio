@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true" cachingAllowed="false" antiResourceLocking="false" cacheTTL="0">
+	<Parameter name="image.magick.convert" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe" />
+</Context>

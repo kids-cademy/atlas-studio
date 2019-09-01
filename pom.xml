@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.kidscademy</groupId>
+	<artifactId>atlas-studio</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+
+	<name>Atlas Studio</name>
+	<description>Online tool for atlas collections management.</description>
+
+	<modules>
+		<module>atlas-studio-service</module>
+		<module>atlas-studio-ui</module>
+		<module>atlas-studio-war</module>
+	</modules>
+
+	<properties>
+		<project.name>atlas-studio</project.name>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.compiler.version>3.5.1</maven.compiler.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<!-- use older version for surefire plugin for compatibility with maven version from server -->
+		<maven.surefire.version>2.22.2</maven.surefire.version>
+		<maven.javadoc.version>3.0.1</maven.javadoc.version>
+		<maven.war.version>3.2.3</maven.war.version>
+		<maven.tomcat7.version>2.2</maven.tomcat7.version>
+
+		<!-- relative path used by annotation processor from service module to store generate remote services script stubs -->
+		<gen-script-path>../atlas-studio-ui/gen</gen-script-path>
+		<!-- relative path used by WAR module to retrieve UI static content; used only by embedded WAR -->
+		<wood-site-path>../atlas-studio-ui/target/site</wood-site-path>
+	</properties>
+
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app-descriptor>
+	<managed-classes>
+		<constants class="com.kidscademy.atlas.studio.CT" />
+
+		<admin-service interface="com.kidscademy.atlas.studio.AdminService" class="com.kidscademy.atlas.studio.impl.AdminServiceImpl" />
+		<atlas-service interface="com.kidscademy.atlas.studio.AtlasService" class="com.kidscademy.atlas.studio.impl.AtlasServiceImpl" />
+
+		<entity-manager interface="javax.persistence.EntityManager" class="js.transaction.eclipselink.EntityManagerImpl" />
+		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />
+		<atlas-dao interface="com.kidscademy.atlas.studio.dao.AtlasDao" class="com.kidscademy.atlas.studio.dao.AtlasDaoImpl" type="PROXY" />
+
+		<audio-processor interface="com.kidscademy.atlas.studio.tool.AudioProcessor" class="com.kidscademy.atlas.studio.tool.AudioProcessorImpl" />
+		<image-processor interface="com.kidscademy.atlas.studio.tool.ImageProcessor" class="com.kidscademy.atlas.studio.tool.ImageProcessorImpl" />
+		<identify-process class="com.kidscademy.atlas.studio.tool.IdentifyProcess" />
+		<convert-process class="com.kidscademy.atlas.studio.tool.ConvertProcess" />
+
+		<wikipedia interface="com.kidscademy.atlas.studio.www.Wikipedia" type="REMOTE" url="https:rest://en.wikipedia.org/api/rest_v1/" />
+		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="http:xpath://www.softschools.com/" />
+		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
+		<cambridge-dictionary interface="com.kidscademy.atlas.studio.www.CambridgeDictionary" type="REMOTE" url="https:xpath://dictionary.cambridge.org/" />
+	</managed-classes>
+	<observer period="60000" />
+	<views>
+		<repository path="${catalina.base}/webapps/atlas-studio/" files-pattern="*.htm" />
+	</views>
+</app-descriptor>

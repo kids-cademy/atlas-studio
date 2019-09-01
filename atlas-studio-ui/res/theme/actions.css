@@ -1,0 +1,40 @@
+.actions {
+	margin-top: 40px;
+	padding-top: 10px;
+	border-top: solid 1px white;
+}
+
+.actions img {
+	display: inline-block;
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	margin-right: @dimen/action-margin;
+	border: solid 1px @color/border;
+	background-color: white;
+	opacity: 0.2;
+	cursor: pointer;
+}
+
+.actions img.hidden {
+	display: none;
+}
+
+.actions img.last {
+	float: right;
+}
+
+.actions img:hover {
+	opacity: 0.6;
+}
+
+.actions .separator {
+	display: inline-block;
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	margin-right: @dimen/action-margin;
+}
+
+.actions input {
+	vertical-align: bottom;
+	margin-top: 0;
+}

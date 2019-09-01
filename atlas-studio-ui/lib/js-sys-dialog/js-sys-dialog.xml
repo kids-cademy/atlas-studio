@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compo>
+	<name>js-sys-dialog</name>
+	<version>1.0.0</version>
+	<dependencies>js-box</dependencies>
+</compo>

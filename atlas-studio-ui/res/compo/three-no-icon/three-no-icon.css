@@ -1,0 +1,34 @@
+.compo.three-no {
+	position: relative;
+	width: 0;
+	height: 0;
+}
+
+.compo.three-no .icon {
+	position:absolute;
+	display: block;
+	width: 120px;
+	height: 120px;
+	border-radius: 60px;
+	background-color: red;
+	text-align: center;
+	transform: rotate(45deg);
+	box-shadow: 0 0 15px #408080;
+}
+
+.compo.three-no .icon span {
+	display: block;
+	text-transform: uppercase;
+	font-size: 10px;
+	color: #E0E0E0;
+}
+
+.compo.three-no .icon span:first-child {
+	text-transform: none;
+}
+
+.compo.three-no .icon span:first-child {
+	font-size: 24px;
+	padding: 20px 0 10px;
+	color: #FFFFFF;
+}

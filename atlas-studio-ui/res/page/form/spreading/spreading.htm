@@ -1,0 +1,33 @@
+<fieldset class="spreading" data-class="com.kidscademy.atlas.SpreadingControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-spreading</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/spreading" />
+		</div>
+		<div class="container">
+			<ul class="regions-view" data-list=".">
+				<li><span data-text="area"></span> <span data-text="name"></span></li>
+			</ul>
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="add" src="@image/action/add" title="@tip/spreading-add" />
+				<img name="import" src="@image/action/import" title="@tip/spreading-import" />
+				<img name="done" src="@image/action/done" title="@tip/spreading-done" />
+				<img name="remove" src="@image/action/remove" title="@tip/spreading-remove" />
+				<img name="close" src="@image/action/close" title="@tip/spreading-close" class="rfloat" />
+			</div>
+			<div class="editor hidden">
+				<div>
+					<div>
+						<label>Region</label><input name="region-name" class="medium" />
+					</div>
+					<div>
+						<label>Area</label><select name="area" w:widget="compo/region-select"></select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</fieldset>
