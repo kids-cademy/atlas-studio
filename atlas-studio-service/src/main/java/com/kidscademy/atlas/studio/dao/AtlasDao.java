@@ -11,9 +11,14 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 
 public interface AtlasDao {
+    List<AtlasCollection> getCollections();
+
+    List<AtlasItem> getCollectionItems(int collectionId);
+    
     /**
      * Persist or merge AtlasObject entity, depending on ID value. If ID is zero
      * instance is considered never created into database and
@@ -38,8 +43,6 @@ public interface AtlasDao {
     AtlasObject getObjectById(int objectId);
 
     AtlasObject getObjectByName(String collectionName, String name);
-
-    List<AtlasItem> getCollectionItems(String collectionName);
 
     List<Link> getObjectLinks(AtlasItem object);
 

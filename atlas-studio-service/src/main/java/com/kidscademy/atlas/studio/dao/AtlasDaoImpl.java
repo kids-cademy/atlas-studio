@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasObject.State;
@@ -22,6 +23,17 @@ public class AtlasDaoImpl implements AtlasDao {
 
     public AtlasDaoImpl(EntityManager em) {
 	this.em = em;
+    }
+
+    @Override
+    public List<AtlasCollection> getCollections() {
+	return em.createQuery("select c from AtlasCollection c", AtlasCollection.class).getResultList();
+    }
+
+    @Override
+    public List<AtlasItem> getCollectionItems(int collectionId) {
+	return em.createQuery("select i from AtlasItem i where i.collectionId=:collectionId", AtlasItem.class)
+		.setParameter("collectionId", collectionId).getResultList();
     }
 
     @Override
@@ -46,12 +58,6 @@ public class AtlasDaoImpl implements AtlasDao {
 		.createQuery("select o from AtlasObject o where o.collection.name=:collectionName and o.name=:name",
 			AtlasObject.class)
 		.setParameter("collectionName", collectionName).setParameter("name", name).getSingleResult();
-    }
-
-    @Override
-    public List<AtlasItem> getCollectionItems(String collectionName) {
-	return em.createQuery("select i from AtlasItem i where i.collectionName=:collectionName", AtlasItem.class)
-		.setParameter("collectionName", collectionName).getResultList();
     }
 
     @Override

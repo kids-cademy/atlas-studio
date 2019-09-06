@@ -9,6 +9,6 @@
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/PageHeader.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
-		<script>script/com/kidscademy/atlas/CollectionPage.js</script>
+		<script>script/com/kidscademy/page/CollectionPage.js</script>
 	</scripts>
 </page>

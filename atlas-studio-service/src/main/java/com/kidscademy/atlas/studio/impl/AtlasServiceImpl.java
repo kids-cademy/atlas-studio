@@ -12,6 +12,7 @@ import java.util.Map;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.CollectionObject;
@@ -67,8 +68,13 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<AtlasItem> getCollectionItems(String collectionName) {
-	return atlasDao.getCollectionItems(collectionName);
+    public List<AtlasCollection> getCollections() {
+	return atlasDao.getCollections();
+    }
+
+    @Override
+    public List<AtlasItem> getCollectionItems(int collectionId) {
+	return atlasDao.getCollectionItems(collectionId);
     }
 
     @Override

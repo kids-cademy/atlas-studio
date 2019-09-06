@@ -55,6 +55,8 @@ ul.list-view li {
 }
 
 ul.list-view li img {
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
 	padding: 1px;
 	border: solid 1px #E6E6E6;
 	cursor: pointer;
@@ -95,6 +97,9 @@ ul.side-menu li img {
 	height: @dimen/side-menu-icon-size;
 	vertical-align: middle;
 	margin-right: 20px;
+	border: none;
+	background: none;
+	opacity: 1;
 }
 
 ul.side-menu li .state {

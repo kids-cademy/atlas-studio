@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
+
+import com.kidscademy.atlas.studio.util.Files;
 
 /**
  * Atlas collection groups together {@link AtlasObject} that have something in
@@ -22,6 +26,10 @@ public class AtlasCollection {
 
     private String name;
     private String display;
+    private String iconName;
+
+    @Transient
+    private MediaSRC iconSrc;
 
     public AtlasCollection() {
     }
@@ -33,6 +41,11 @@ public class AtlasCollection {
      */
     public AtlasCollection(String name) {
 	this.name = name;
+    }
+
+    @PostLoad
+    public void postLoad() {
+	iconSrc = Files.collectionSrc(iconName);
     }
 
     public int getId() {

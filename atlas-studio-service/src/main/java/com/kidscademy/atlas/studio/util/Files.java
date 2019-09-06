@@ -38,6 +38,10 @@ public final class Files extends js.util.Files {
 	return new MediaSRC("/media/link/" + iconName);
     }
 
+    public static MediaSRC collectionSrc(String iconName) {
+	return new MediaSRC("/media/collection/" + iconName);
+    }
+
     private static File REPOSIOTRY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
     public static File mediaFile(MediaSRC mediaSrc) {

@@ -1,11 +1,11 @@
-$package("com.kidscademy.atlas");
+$package("com.kidscademy.page");
 
 /**
  * FormPage class.
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.atlas.FormPage = class extends com.kidscademy.page.Page {
+com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	/**
 	 * Construct an instance of FormPage class.
 	 */
@@ -13,6 +13,10 @@ com.kidscademy.atlas.FormPage = class extends com.kidscademy.page.Page {
 		super();
 
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
+
+		// current selected collection and object ID are stored on global context
+		this._collection = this._getContextAttr("collection");
+		this._objectId = Number(this._getContextAttr("objectId"));
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
@@ -28,7 +32,6 @@ com.kidscademy.atlas.FormPage = class extends com.kidscademy.page.Page {
 		const actions = this.getByCssClass("buttons-bar");
 		actions.on(this, {
 			"&save": this._onSave,
-			"&reset": this._onReset,
 			"&cancel": this._onCancel
 		});
 
@@ -112,10 +115,6 @@ com.kidscademy.atlas.FormPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
-	_onReset() {
-		this._loadObject();
-	}
-
 	_onCancel() {
 		WinMain.back();
 	}
@@ -128,14 +127,18 @@ com.kidscademy.atlas.FormPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
+    _onBack() {
+		WinMain.assign("collection.htm");
+	}
+	
 	/**
 	 * Class string representation.
 	 * 
 	 * @return this class string representation.
 	 */
 	toString() {
-		return "com.kidscademy.atlas.FormPage";
+		return "com.kidscademy.page.FormPage";
 	}
 };
 
-WinMain.createPage(com.kidscademy.atlas.FormPage);
+WinMain.createPage(com.kidscademy.page.FormPage);

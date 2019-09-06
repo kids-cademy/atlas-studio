@@ -21,6 +21,7 @@ public class AtlasItem implements CollectionObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
+    private int collectionId;
     private String collectionName;
     private String name;
     private String display;
@@ -63,6 +64,10 @@ public class AtlasItem implements CollectionObject {
 
     public int getId() {
 	return id;
+    }
+
+    public int getCollectionId() {
+        return collectionId;
     }
 
     @Override

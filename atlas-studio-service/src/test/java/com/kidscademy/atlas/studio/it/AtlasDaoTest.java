@@ -314,7 +314,7 @@ public class AtlasDaoTest {
     }
 
     public void getInstrumentsByCategory() {
-	List<AtlasItem> items = dao.getCollectionItems("instrument");
+	List<AtlasItem> items = dao.getCollectionItems(1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(2));
 
@@ -330,7 +330,7 @@ public class AtlasDaoTest {
     }
 
     public void getInstruments() {
-	List<AtlasItem> items = dao.getCollectionItems("instrument");
+	List<AtlasItem> items = dao.getCollectionItems(1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(3));
 

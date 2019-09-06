@@ -1,11 +1,11 @@
-$package("com.kidscademy.atlas");
+$package("com.kidscademy.page");
 
 /**
  * MediaPage class.
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.atlas.MediaPage = class extends com.kidscademy.page.Page {
+com.kidscademy.page.MediaPage = class extends com.kidscademy.page.Page {
 	/**
 	 * Construct an instance of MediaPage class.
 	 */
@@ -19,8 +19,8 @@ com.kidscademy.atlas.MediaPage = class extends com.kidscademy.page.Page {
 	 * @return this class string representation.
 	 */
 	toString() {
-		return "com.kidscademy.atlas.MediaPage";
+		return "com.kidscademy.page.MediaPage";
 	}
 };
 
-WinMain.createPage(com.kidscademy.atlas.MediaPage);
+WinMain.createPage(com.kidscademy.page.MediaPage);

@@ -4,20 +4,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
-import com.kidscademy.atlas.studio.model.Image;
-import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
+import js.annotation.Public;
 import js.annotation.Service;
 import js.http.form.Form;
 import js.rmi.BusinessException;
 
 @Service
+@Public
 public interface AtlasService {
-    List<AtlasItem> getCollectionItems(String collectionName);
+    List<AtlasCollection> getCollections();
+    
+    List<AtlasItem> getCollectionItems(int collectionId);
 
     /**
      * Get AtlasObject entity. If ID is zero returns an empty instance.

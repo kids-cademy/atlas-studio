@@ -1,11 +1,11 @@
-$package("com.kidscademy.atlas");
+$package("com.kidscademy.page");
 
 /**
  * AccountPage class.
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.atlas.AccountPage = class extends com.kidscademy.page.Page {
+com.kidscademy.page.AccountPage = class extends com.kidscademy.page.Page {
 	/**
 	 * Construct an instance of AccountPage class.
 	 */
@@ -19,8 +19,8 @@ com.kidscademy.atlas.AccountPage = class extends com.kidscademy.page.Page {
 	 * @return this class string representation.
 	 */
 	toString() {
-		return "com.kidscademy.atlas.AccountPage";
+		return "com.kidscademy.page.AccountPage";
 	}
 };
 
-WinMain.createPage(com.kidscademy.atlas.AccountPage);
+WinMain.createPage(com.kidscademy.page.AccountPage);

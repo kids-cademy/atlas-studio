@@ -48,6 +48,7 @@ public class AtlasObject implements CollectionObject {
     private Date lastUpdated;
 
     private int rank;
+    
     /**
      * Object name unique per its parent collection. This value is used internally
      * and is not meant to be displayed to user.
@@ -99,17 +100,15 @@ public class AtlasObject implements CollectionObject {
     @ElementCollection
     private List<Region> spreading;
 
-    @ElementCollection
-    private Map<String, String> facts;
+    @Embedded
+    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "start_date_value")),
+	    @AttributeOverride(name = "mask", column = @Column(name = "start_date_mask")) })
+    private HDate startDate;
 
-    @ElementCollection
-    private Map<String, String> features;
-
-    @ElementCollection
-    private List<Link> links;
-
-    @ElementCollection
-    private List<Related> related;
+    @Embedded
+    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "end_date_value")),
+	    @AttributeOverride(name = "mask", column = @Column(name = "end_date_mask")) })
+    private HDate endDate;
 
     /**
      * Audio sample title is the name of the instrumental work from which sample is
@@ -134,15 +133,17 @@ public class AtlasObject implements CollectionObject {
      */
     private String waveformName;
 
-    @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "start_date_value")),
-	    @AttributeOverride(name = "mask", column = @Column(name = "start_date_mask")) })
-    private HDate startDate;
+    @ElementCollection
+    private Map<String, String> facts;
 
-    @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "end_date_value")),
-	    @AttributeOverride(name = "mask", column = @Column(name = "end_date_mask")) })
-    private HDate endDate;
+    @ElementCollection
+    private Map<String, String> features;
+
+    @ElementCollection
+    private List<Link> links;
+
+    @ElementCollection
+    private List<Related> related;
 
     @Transient
     private AudioSampleInfo sampleInfo;

@@ -2,6 +2,48 @@
 	
 }
 
+
+
+
+.collection.side-bar {
+}
+
+.collection.side-bar .header {
+	xbackground-color: @color/teal-50;
+	padding: 20px 10px;
+	margin-bottom: 10px;
+}
+
+.collection.side-bar .header img {
+	float: left;
+	width: 64px;
+	margin-right: 10px;
+	padding: 1px;
+	border: solid 1px @color/border-muted;
+	xborder-radius: 32px;
+}
+
+.collection.side-bar .side-name {
+	margin: 0;
+	border-bottom: solid 1px @color/border-muted;
+	font-size: 2.0rem;
+	color: black;
+	text-transform: uppercase;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.collection.side-bar .last-updated {
+	margin: 8px 0;
+	font-size: 1.3rem;
+	xcolor: @color/black;
+}
+
+
+
+
+
 .collection.side-menu .actions {
 	padding-top: 20px;
 }

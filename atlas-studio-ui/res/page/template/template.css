@@ -26,6 +26,7 @@ body>.flex-content {
 }
 
 body>.flex-content .side-bar {
+	width: @dimen/page-sidebar-width;
 	height: 100%;
 	margin-right: 20px;
 	border-right: solid 1px @color/border-muted;
@@ -46,6 +47,14 @@ body>header .logo {
 	display: inline-block;
 	vertical-align: middle;
 	margin: -20px 20px 0;
+	cursor: pointer;
+}
+
+body>header .action {
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	margin: @eval(mul (sub @dimen/page-header-height @dimen/action-icon-size) 0.5);
+	vertical-align: bottom;
 	cursor: pointer;
 }
 

@@ -5,17 +5,39 @@ $package("com.kidscademy.atlas.studio");
  */
 com.kidscademy.atlas.studio.AtlasService = {
 	/**
+	 * Get collections.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.AtlasCollection>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getCollections: function() {
+		var __callback__ = arguments[0];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getCollections", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getCollections", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getCollections");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get collection items.
 	 *
-	 * @param java.lang.String collectionName,
+	 * @param int collectionId,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return java.util.List<com.kidscademy.atlas.studio.model.AtlasItem>
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 getCollectionItems: function(collectionName) {
-		$assert(typeof collectionName !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionItems", "Collection name argument is undefined.");
-		$assert(collectionName === null || js.lang.Types.isString(collectionName), "com.kidscademy.atlas.studio.AtlasService#getCollectionItems", "Collection name argument is not a string.");
+	 getCollectionItems: function(collectionId) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionItems", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#getCollectionItems", "Collection id argument is not a number.");
 
 		var __callback__ = arguments[1];
 		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getCollectionItems", "Callback is not a function.");
@@ -27,7 +49,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getCollectionItems");
-		rmi.setParameters(collectionName);
+		rmi.setParameters(collectionId);
 		rmi.exec(__callback__, __scope__);
 	},
 

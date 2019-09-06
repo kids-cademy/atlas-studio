@@ -20,6 +20,8 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         window.onscroll = () => {
             WinMain.doc.getByTag("body").addCssClass("scroll", window.pageYOffset > 40);
         }
+
+        this.getByCss("header .back.action").on("click", this._onBack, this);
     }
 
     onServerFail(er) {
@@ -33,6 +35,17 @@ com.kidscademy.page.Page = class extends js.ua.Page {
             return;
         }
         js.ua.System.error(this.ERRORS[er.errorCode]);
+    }
+
+    _setContextAttr(name, object) {
+        localStorage.setItem(name, js.lang.JSON.stringify(object));
+    }
+
+    _getContextAttr(name) {
+        return js.lang.JSON.parse(localStorage.getItem(name));
+    }
+
+    _onBack() {
     }
 
     /**
