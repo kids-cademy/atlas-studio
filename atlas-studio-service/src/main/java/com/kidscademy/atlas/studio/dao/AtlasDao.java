@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.User;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -38,9 +39,11 @@ public interface AtlasDao {
      * @param AtlasObject
      *            atlasObject instance.
      */
-    void saveObject(AtlasObject object);
+    void saveAtlasObject(AtlasObject object);
 
-    AtlasObject getObjectById(int objectId);
+    AtlasItem getAtlasItem(int objectId);
+    
+    AtlasObject getAtlasObject(int objectId);
 
     AtlasObject getObjectByName(String collectionName, String name);
 
@@ -52,7 +55,7 @@ public interface AtlasDao {
 
     void removeObject(Object object);
 
-    List<AtlasItem> findObjectsByNames(String category, List<String> names);
+    List<AtlasItem> findObjectsByNames(int collectionId, List<String> objectNames);
 
     void resetObjectSample(int objectId);
 
@@ -61,4 +64,8 @@ public interface AtlasDao {
     void addObjectPicture(int objectId, Image picture);
 
     Image getPictureByName(int objectId, String name);
+
+    User getUserById(int userId);
+
+    AtlasCollection getCollectionById(int collectionId);
 }

@@ -198,7 +198,7 @@ com.kidscademy.atlas.AudioPlayer = class extends js.dom.Element {
 	 * @param {js.event.Event} ev - error event. 
 	 */
 	_onMissingWaveform(ev) {
-		const object = this._formPage.getUIObject();
+		const object = this._formPage.getAtlasItem();
 		if (object.name) {
 			// allows only one request for waveform generation
 			this._waveformImage.un("error", this._onMissingWaveform);

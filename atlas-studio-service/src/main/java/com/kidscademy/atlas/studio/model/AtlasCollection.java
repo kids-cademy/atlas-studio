@@ -37,9 +37,11 @@ public class AtlasCollection {
     /**
      * Test constructor.
      * 
+     * @param id
      * @param name
      */
-    public AtlasCollection(String name) {
+    public AtlasCollection(int id, String name) {
+	this.id = id;
 	this.name = name;
     }
 
@@ -58,5 +60,13 @@ public class AtlasCollection {
 
     public String getDisplay() {
 	return display;
+    }
+
+    public String getIconName() {
+	return iconName;
+    }
+
+    public MediaSRC getIconSrc() {
+        return iconSrc;
     }
 }

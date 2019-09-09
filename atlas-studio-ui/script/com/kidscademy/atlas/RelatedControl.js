@@ -37,9 +37,9 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 	// --------------------------------------------------------------------------------------------
 	// CONTROL INTERFACE
 
-	setValue(related) {
-		const names = related.map(object => object.name);
-		AtlasService.getRelatedInstruments(names, objects => {
+	setValue(names) {
+		const collectionId = this._formPage.getCollection().id;
+		AtlasService.getRelatedAtlasObjects(collectionId, names, objects => {
 			objects.forEach(object => object.href = `@link/admin-object?id=${object.id}`);
 			this._relatedView.setObject(objects)
 		});
@@ -47,10 +47,10 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 
 	getValue() {
 		const related = [];
-		this._relatedView.getChildren().forEach(instrumentView => {
+		this._relatedView.getChildren().forEach(objectView => {
 			// template item has no id attribute
-			if (instrumentView.getAttr("id") !== null) {
-				related.push({ name: instrumentView.getUserData("value").name });
+			if (objectView.getAttr("id") !== null) {
+				related.push(objectView.getUserData("value").name);
 			}
 		});
 		return related;
@@ -65,20 +65,20 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 
 	_onEdit() {
 		this._actions.show("close");
-		const instrument = this._formPage.getObject();
-		if (!instrument.category) {
+		const object = this._formPage.getObject();
+		if (!object.category) {
 			js.ua.System.alert("Pleae select category.");
 			return;
 		}
 
-		const instruments = [];
-		this._relatedView.getChildren().forEach(view => instruments.push({ id: view.getAttr("id") }));
+		const objects = [];
+		this._relatedView.getChildren().forEach(view => objects.push({ id: view.getAttr("id") }));
 
-		instruments.push({
-			id: instrument.id
+		objects.push({
+			id: object.id
 		});
 
-		AtlasService.getAvailableInstruments(instrument.category, instruments, collection => {
+		AtlasService.getAvailableInstruments(object.category, objects, collection => {
 			this._collectionView.show();
 			this._collectionView.setObject(collection);
 		});
@@ -91,7 +91,7 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 
 	// --------------------------------------------------------------------------------------------
 	// DRAG AND DROP
-	
+
 	_onDragStart(ev) {
 		const li = ev.target.getParentByTag("li");
 		ev.setData("index", li.getChildIndex());

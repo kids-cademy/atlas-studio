@@ -24,10 +24,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
@@ -37,20 +37,17 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 
-import js.core.AppContext;
 import js.http.form.Form;
 import js.util.Classes;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminServiceTest {
     @Mock
-    private AppContext context;
+    private AtlasDao atlasDao;
     @Mock
-    private AtlasDao dao;
+    private AudioProcessor audioProcessor;
     @Mock
-    private AudioProcessor audio;
-    @Mock
-    private ImageProcessor image;
+    private ImageProcessor imageProcessor;
     @Mock
     private Wikipedia wikipedia;
     @Mock
@@ -69,7 +66,7 @@ public class AdminServiceTest {
 
     @Before
     public void beforeTest() {
-	service = new AtlasServiceImpl(context, dao, audio, image, wikipedia, softSchools, freeDictionary,
+	service = new AtlasServiceImpl(atlasDao, audioProcessor, imageProcessor, wikipedia, softSchools, freeDictionary,
 		cambridgeDictionary);
 	file("sample.mp3").delete();
 	file("sample_1.mp3").delete();
@@ -79,14 +76,18 @@ public class AdminServiceTest {
     @Test
     public void uploadAudioSample() throws IOException {
 	Form form = Mockito.mock(Form.class);
-	when(form.getValue("dtype")).thenReturn("instrument");
-	when(form.getValue("name")).thenReturn("test");
+	when(form.getValue("atlas-object-id")).thenReturn("1");
+
+	AtlasCollection collection = new AtlasCollection(1, "instrument");
+	AtlasItem atlasItem = new AtlasItem(collection, 1, "test");
+	when(atlasDao.getAtlasItem(1)).thenReturn(atlasItem);
+
 	File uploadFile = new File("fixture/upload.mp3");
 	Files.copy(new File("fixture/audio/sample.mp3"), uploadFile);
 	when(form.getFile("file")).thenReturn(uploadFile);
 
 	AudioSampleInfo info = new AudioSampleInfo();
-	when(audio.getAudioFileInfo(any(File.class))).thenReturn(info);
+	when(audioProcessor.getAudioFileInfo(any(File.class))).thenReturn(info);
 
 	info = service.uploadAudioSample(form);
 	assertFalse(uploadFile.exists());
@@ -95,7 +96,7 @@ public class AdminServiceTest {
 	ArgumentCaptor<File> sampleFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).generateWaveform(sampleFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(sampleFile.capture(), waveformFile.capture());
 	assertThat(sampleFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -109,19 +110,19 @@ public class AdminServiceTest {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 
 	AudioSampleInfo info = new AudioSampleInfo();
-	when(audio.getAudioFileInfo(any(File.class))).thenReturn(info);
+	when(audioProcessor.getAudioFileInfo(any(File.class))).thenReturn(info);
 
-	info = service.normalizeAudioSample(new AtlasItem("instrument", "test"));
+	info = service.normalizeAudioSample(atlasItem());
 
 	ArgumentCaptor<File> audioFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> targetFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).normalizeLevel(audioFile.capture(), targetFile.capture());
+	verify(audioProcessor).normalizeLevel(audioFile.capture(), targetFile.capture());
 	assertThat(audioFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(targetFile.getValue(), equalTo(file("sample_1.mp3")));
 
-	verify(audio).generateWaveform(targetFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(targetFile.capture(), waveformFile.capture());
 	assertThat(targetFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -135,19 +136,19 @@ public class AdminServiceTest {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 
 	AudioSampleInfo info = new AudioSampleInfo();
-	when(audio.getAudioFileInfo(any(File.class))).thenReturn(info);
+	when(audioProcessor.getAudioFileInfo(any(File.class))).thenReturn(info);
 
-	info = service.convertAudioSampleToMono(new AtlasItem("instrument", "test"));
+	info = service.convertAudioSampleToMono(atlasItem());
 
 	ArgumentCaptor<File> audioFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> targetFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).convertToMono(audioFile.capture(), targetFile.capture());
+	verify(audioProcessor).convertToMono(audioFile.capture(), targetFile.capture());
 	assertThat(audioFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(targetFile.getValue(), equalTo(file("sample_1.mp3")));
 
-	verify(audio).generateWaveform(targetFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(targetFile.capture(), waveformFile.capture());
 	assertThat(targetFile.getValue(), equalTo(file("sample_1.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -161,19 +162,19 @@ public class AdminServiceTest {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 
 	AudioSampleInfo info = new AudioSampleInfo();
-	when(audio.getAudioFileInfo(any(File.class))).thenReturn(info);
+	when(audioProcessor.getAudioFileInfo(any(File.class))).thenReturn(info);
 
-	info = service.trimAudioSampleSilence(new AtlasItem("instrument", "test"));
+	info = service.trimAudioSampleSilence(atlasItem());
 
 	ArgumentCaptor<File> audioFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> targetFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).trimSilence(audioFile.capture(), targetFile.capture());
+	verify(audioProcessor).trimSilence(audioFile.capture(), targetFile.capture());
 	assertThat(audioFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(targetFile.getValue(), equalTo(file("sample_1.mp3")));
 
-	verify(audio).generateWaveform(targetFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(targetFile.capture(), waveformFile.capture());
 	assertThat(targetFile.getValue(), equalTo(file("sample_1.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -186,7 +187,7 @@ public class AdminServiceTest {
     public void generateWaveform() throws IOException {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 
-	MediaSRC waveformSrc = service.generateWaveform(new AtlasItem(1, "instrument", "test"));
+	MediaSRC waveformSrc = service.generateWaveform(atlasItem());
 
 	assertThat(waveformSrc, notNullValue());
 	assertThat(waveformSrc, equalTo(src("waveform.png")));
@@ -199,14 +200,14 @@ public class AdminServiceTest {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample_2.mp3"));
 
 	AudioSampleInfo info = new AudioSampleInfo();
-	when(audio.getAudioFileInfo(any(File.class))).thenReturn(info);
+	when(audioProcessor.getAudioFileInfo(any(File.class))).thenReturn(info);
 
-	info = service.undoAudioSampleProcessing(new AtlasItem("instrument", "test"));
+	info = service.undoAudioSampleProcessing(atlasItem());
 
 	ArgumentCaptor<File> audioFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).generateWaveform(audioFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(audioFile.capture(), waveformFile.capture());
 	assertThat(audioFile.getValue(), equalTo(file("sample_1.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -225,7 +226,7 @@ public class AdminServiceTest {
 	info.setSampleSrc(src("sample.mp3"));
 	info.setWaveformSrc(src("waveform.png"));
 
-	AtlasCollection collection = new AtlasCollection("instrument");
+	AtlasCollection collection = new AtlasCollection(1, "instrument");
 	AtlasObject object = new AtlasObject(collection);
 	object.setName("test");
 	object.setSampleSrc(src("sample.mp3"));
@@ -241,7 +242,7 @@ public class AdminServiceTest {
 	ArgumentCaptor<File> audioFile = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFile = ArgumentCaptor.forClass(File.class);
 
-	verify(audio).generateWaveform(audioFile.capture(), waveformFile.capture());
+	verify(audioProcessor).generateWaveform(audioFile.capture(), waveformFile.capture());
 	assertThat(audioFile.getValue(), equalTo(file("sample.mp3")));
 	assertThat(waveformFile.getValue(), equalTo(file("waveform.png")));
 
@@ -255,13 +256,18 @@ public class AdminServiceTest {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 	Files.copy(new File("fixture/image/waveform.png"), file("waveform.png"));
 
-	service.removeAudioSample(new AtlasItem(1, "instrument", "test"));
+	service.removeAudioSample(atlasItem());
 
 	assertFalse(file("sample.mp3").exists());
 	assertFalse(file("waveform.png").exists());
     }
 
     // ----------------------------------------------------------------------------------------------
+
+    private static AtlasItem atlasItem() {
+	AtlasCollection collection = new AtlasCollection(1, "instrument");
+	return new AtlasItem(collection, 1, "test");
+    }
 
     private static File file(String fileName) {
 	File dir = new File("fixture/tomcat/webapps/media/atlas/instrument/test/");

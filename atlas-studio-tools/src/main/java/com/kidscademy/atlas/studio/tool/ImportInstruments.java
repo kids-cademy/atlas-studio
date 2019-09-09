@@ -9,23 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
-import com.kidscademy.atlas.studio.model.InstrumentCategory;
-import com.kidscademy.atlas.studio.model.HDate;
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.MediaSRC;
-import com.kidscademy.atlas.studio.model.Region;
-
 import js.json.Json;
 import js.transaction.TransactionFactory;
 import js.transaction.eclipselink.TransactionFactoryImpl;
 import js.util.Classes;
 
-public class ImportInstrument {
-    private static final File SOURCE_DIR = new File(
-	    "D:\\docs\\workspaces\\kids-cademy\\data\\instruments\\build\\collection");
+public class ImportInstruments {
+    private static final File SOURCE_DIR = new File("D:\\work\\atlas\\musical-instruments");
 
     public static void main(String... args) throws Exception {
 	Json json = Classes.loadService(Json.class);
@@ -56,10 +46,11 @@ public class ImportInstrument {
 	    instrument.setDescription(object.description);
 
 	    // TODO: add pictures
-	    
+
 	    instrument.setSampleTitle(object.sampleTitle);
 	    instrument.setSampleName(object.samplePath);
-	    instrument.setStartDate(new HDate(object.date.value, object.date.format, object.date.period, object.date.era));
+	    instrument.setStartDate(
+		    new HDate(object.date.value, object.date.format, object.date.period, object.date.era));
 
 	    instrument.setAliases(Arrays.asList(object.aliases));
 
@@ -72,7 +63,7 @@ public class ImportInstrument {
 	    List<Link> links = new ArrayList<>();
 	    for (ExternalSource source : object.sources) {
 		// TODO: add description
-		links.add(new Link(source.url, source.name, "", new MediaSRC("/media/link/" + source.icon.getName())));
+		links.add(new Link(source.url, source.name, "", "/media/link/" + source.icon.getName()));
 	    }
 	    instrument.setLinks(links);
 

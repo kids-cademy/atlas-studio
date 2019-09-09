@@ -27,19 +27,17 @@ public interface AtlasService {
     /**
      * Get AtlasObject entity. If ID is zero returns an empty instance.
      * 
-     * @param AtlasObjectId
+     * @param objectId
      * @return AtlasObject instance, possible empty or null.
      * @throws IOException
      */
-    AtlasObject getAtlasObject(int AtlasObjectId) throws IOException;
+    AtlasObject getAtlasObject(int objectId) throws IOException;
 
     AtlasObject getAtlasObjectByName(String name);
 
-    AtlasObject saveAtlasObject(AtlasObject AtlasObject) throws IOException;
+    AtlasObject saveAtlasObject(AtlasObject object) throws IOException;
 
-    List<AtlasItem> getRelatedAtlasObjects(List<String> names);
-
-    List<AtlasItem> getAvailableAtlasObjects(String category, List<AtlasItem> related);
+    List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames);
 
     Link createLink(Link link);
 
@@ -52,7 +50,7 @@ public interface AtlasService {
     // ----------------------------------------------------------------------------------------------
     // OBJECT IMAGE SERVICES
 
-    Image uploadPicture(Form form) throws IOException, BusinessException;
+    Image uploadImage(Form form) throws IOException, BusinessException;
 
     /**
      * Upload picture, identified by its URL, from third party server.
@@ -62,17 +60,17 @@ public interface AtlasService {
      * @throws IOException
      * @throws BusinessException
      */
-    Image uploadPictureBySource(Form form) throws IOException, BusinessException;
+    Image uploadImageBySource(Form form) throws IOException, BusinessException;
 
-    Image duplicatePicture(AtlasItem object, Image picture) throws IOException;
+    Image duplicateImage(AtlasItem object, Image image) throws IOException;
     
-    Image trimPicture(AtlasItem object, Image picture) throws IOException;
+    Image trimImage(AtlasItem object, Image image) throws IOException;
 
-    Image flopPicture(AtlasItem object, Image picture) throws IOException;
+    Image flopImage(AtlasItem object, Image image) throws IOException;
 
-    Image flipPicture(AtlasItem object, Image picture) throws IOException;
+    Image flipImage(AtlasItem object, Image image) throws IOException;
 
-    Image cropPicture(AtlasItem object, Image picture, int width, int height, int xoffset, int yoffset)
+    Image cropImage(AtlasItem object, Image image, int width, int height, int xoffset, int yoffset)
 	    throws IOException;
 
     /**
@@ -84,13 +82,13 @@ public interface AtlasService {
      *             if picture instance is null.
      * @throws IOException
      */
-    void removePicture(AtlasItem object, Image picture) throws IOException;
+    void removeImage(AtlasItem object, Image image) throws IOException;
 
-    Image undoPicture(AtlasItem object, Image picture) throws IOException;
+    Image undoImage(AtlasItem object, Image image) throws IOException;
 
-    Image commitPicture(AtlasItem object, Image picture) throws IOException;
+    Image commitImage(AtlasItem object, Image image) throws IOException;
 
-    void rollbackPicture(AtlasItem object, Image picture) throws IOException;
+    void rollbackImage(AtlasItem object, Image image) throws IOException;
 
     // ----------------------------------------------------------------------------------------------
     // OBJECT AUDIO SAMPLE SERVICES

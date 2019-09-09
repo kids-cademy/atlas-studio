@@ -10,16 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Region;
-import com.kidscademy.atlas.studio.model.Related;
-
-import js.log.Log;
-import js.log.LogFactory;
-
 public class IndexTask {
-    private static final Log log = LogFactory.getLog(IndexTask.class);
-
     private final List<AtlasObject> objects;
     private final Map<String, AtlasObject> objectsMap = new HashMap<>();
     private final WordSteams wordSteams = new WordSteams();
@@ -33,7 +24,6 @@ public class IndexTask {
     }
 
     public List<SearchIndex> createSearchIndex() throws IOException {
-	log.trace("exec()");
 	Map<String, Map<String, Integer>> directIndex = createDirectIndices();
 	return createInvertedIndex(directIndex);
     }
@@ -41,7 +31,6 @@ public class IndexTask {
     private Map<String, Map<String, Integer>> createDirectIndices() throws IOException {
 	Map<String, Map<String, Integer>> directIndices = new HashMap<>();
 	for (AtlasObject instrument : objects) {
-	    log.debug("build index for %s", instrument.getName());
 	    // direct index is per atlas object
 	    // it stores all keywords and their relevance
 	    Map<String, Integer> directIndex = new HashMap<>();
@@ -91,7 +80,6 @@ public class IndexTask {
 	    searchIndex.updateObjectIds();
 	}
 
-	log.info("Index table size: %d", invertedIndex.size());
 	return invertedIndex;
     }
 
@@ -179,10 +167,10 @@ public class IndexTask {
 	return words;
     }
 
-    private Iterable<String> relatedNames(List<Related> relatedNames) throws IOException {
+    private Iterable<String> relatedNames(List<String> relatedNames) throws IOException {
 	List<String> names = new ArrayList<>();
-	for (Related relatedName : relatedNames) {
-	    AtlasObject instrument = objectsMap.get(relatedName.getName());
+	for (String relatedName : relatedNames) {
+	    AtlasObject instrument = objectsMap.get(relatedName);
 	    if (instrument != null) {
 		// instrument can be null for not published objects
 		names.add(instrument.getDisplay());

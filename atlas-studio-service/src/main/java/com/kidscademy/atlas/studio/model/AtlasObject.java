@@ -30,7 +30,7 @@ import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
 
 @Entity
-public class AtlasObject implements CollectionObject {
+public class AtlasObject implements CollectionItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -48,7 +48,7 @@ public class AtlasObject implements CollectionObject {
     private Date lastUpdated;
 
     private int rank;
-    
+
     /**
      * Object name unique per its parent collection. This value is used internally
      * and is not meant to be displayed to user.
@@ -143,7 +143,7 @@ public class AtlasObject implements CollectionObject {
     private List<Link> links;
 
     @ElementCollection
-    private List<Related> related;
+    private List<String> related;
 
     @Transient
     private AudioSampleInfo sampleInfo;
@@ -200,13 +200,16 @@ public class AtlasObject implements CollectionObject {
 
 	if (links != null) {
 	    for (int i = 0; i < links.size(); ++i) {
-		final MediaSRC iconSrc = source.links.get(i).getIconSrc();
-		links.get(i).setIconName(iconSrc != null ? iconSrc.fileName() : null);
+		links.get(i).postMerge(source.links.get(i));
 	    }
 	}
 
-	sampleName = source.sampleSrc != null ? source.sampleSrc.fileName() : null;
-	waveformName = source.waveformSrc != null ? source.waveformSrc.fileName() : null;
+	if (sampleName == null && source.sampleSrc != null) {
+	    sampleName = source.sampleSrc.fileName();
+	}
+	if (waveformName == null && source.waveformSrc != null) {
+	    waveformName = source.waveformSrc.fileName();
+	}
     }
 
     /**
@@ -238,12 +241,12 @@ public class AtlasObject implements CollectionObject {
 	    picture.postLoad(this);
 	}
 
+	for (Link link : links) {
+	    link.postLoad();
+	}
+
 	sampleSrc = Files.mediaSrc(this, sampleName);
 	waveformSrc = Files.mediaSrc(this, waveformName);
-
-	for (Link link : links) {
-	    link.setIconSrc(Files.linkSrc(link.getIconName()));
-	}
     }
 
     /**
@@ -257,6 +260,10 @@ public class AtlasObject implements CollectionObject {
 
     public Integer getId() {
 	return id;
+    }
+
+    public void setCollection(AtlasCollection collection) {
+	this.collection = collection;
     }
 
     public AtlasCollection getCollection() {
@@ -389,11 +396,11 @@ public class AtlasObject implements CollectionObject {
 	this.links = links;
     }
 
-    public List<Related> getRelated() {
+    public List<String> getRelated() {
 	return related;
     }
 
-    public void setRelated(List<Related> related) {
+    public void setRelated(List<String> related) {
 	this.related = related;
     }
 
@@ -413,8 +420,8 @@ public class AtlasObject implements CollectionObject {
 	return sampleName;
     }
 
-    public void setSampleName(String samplePath) {
-	this.sampleName = samplePath;
+    public void setSampleName(String sampleName) {
+	this.sampleName = sampleName;
     }
 
     public String getWaveformName() {

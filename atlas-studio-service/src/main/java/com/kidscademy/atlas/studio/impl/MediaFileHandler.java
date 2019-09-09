@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.kidscademy.atlas.studio.model.MediaSRC;
-import com.kidscademy.atlas.studio.model.CollectionObject;
+import com.kidscademy.atlas.studio.model.CollectionItem;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.BugError;
@@ -91,16 +91,16 @@ public class MediaFileHandler {
      * Initialize internal state from given arguments and version value by scanning
      * file system.
      * 
-     * @param object
-     *            object encapsulating media file,
+     * @param collectionItem
+     *            collection item owning media file,
      * @param mediaFile
      *            media file name.
      * @throws IllegalArgumentException
      *             if arguments are null or media file has no extension.
      */
-    public MediaFileHandler(CollectionObject object, String mediaFile) {
-	Params.notNull(object, "Wrapper object");
-	MediaSRC mediaSrc = Files.mediaSrc(object.getCollectionName(), object.getName(), mediaFile);
+    public MediaFileHandler(CollectionItem collectionItem, String mediaFile) {
+	Params.notNull(collectionItem, "Collection item");
+	MediaSRC mediaSrc = Files.mediaSrc(collectionItem.getCollectionName(), collectionItem.getName(), mediaFile);
 	// infer base path from path in order to avoid hard coded path dependency
 	basePath = mediaSrc.basePath();
 

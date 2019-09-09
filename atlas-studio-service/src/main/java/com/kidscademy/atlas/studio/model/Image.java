@@ -149,7 +149,9 @@ public class Image {
     }
 
     public void postMerge(Image source) {
-	fileName = source.src != null ? source.src.fileName() : null;
+	if (fileName == null && source.src != null) {
+	    fileName = source.src.fileName();
+	}
     }
 
     public void updateIcon(AtlasItem object) throws IOException {

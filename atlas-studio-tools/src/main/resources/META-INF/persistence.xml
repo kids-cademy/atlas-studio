@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2" xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+		<!-- disable cache on tests since create dependencies between test cases -->
+		<shared-cache-mode>NONE</shared-cache-mode>
+
+		<class>com.kidscademy.atlas.studio.tool.UrlConverter</class>
+		<class>com.kidscademy.atlas.studio.tool.AtlasObjectStateConverter</class>
+
+		<class>com.kidscademy.atlas.studio.tool.Link</class>
+		<class>com.kidscademy.atlas.studio.tool.HDate</class>
+		<class>com.kidscademy.atlas.studio.toll.Region</class>
+
+		<class>com.kidscademy.atlas.studio.tool.AtlasObject</class>
+		<class>com.kidscademy.atlas.studio.tool.AtlasItem</class>
+		<class>com.kidscademy.atlas.studio.tool.Image</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/atlas_test" />
+			<property name="javax.persistence.jdbc.user" value="kids_cademy" />
+			<property name="javax.persistence.jdbc.password" value="kids_cademy" />
+			<property name="javax.persistence.jdbc.show_sql" value="true" />
+
+			<property name="eclipselink.logging.level.sql" value="FINE" />
+		</properties>
+	</persistence-unit>
+</persistence>

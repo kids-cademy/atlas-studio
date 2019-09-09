@@ -87,6 +87,16 @@ public class Link {
 	this.features = "description";
     }
 
+    public void postLoad() {
+	iconSrc = Files.linkSrc(iconName);
+    }
+
+    public void postMerge(Link source) {
+	if (iconName == null && source.iconSrc != null) {
+	    iconName = source.iconSrc.fileName();
+	}
+    }
+
     public void setIconName(String iconName) {
 	this.iconName = iconName;
     }
@@ -199,6 +209,7 @@ public class Link {
 	DOMAINS.put("wikihow.com", new String[] { "wikiHow", "howto" });
 	DOMAINS.put("thefreedictionary.com", new String[] { "The Free Dictionary", "definition" });
 	DOMAINS.put("cambridge.org", new String[] { "Cambridge Dictionary", "definition" });
+	DOMAINS.put("youtube.com", new String[] { "YouTube", "audio" });
     }
 
     /**

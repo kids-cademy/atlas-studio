@@ -16,7 +16,10 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		// current selected collection and object ID are stored on global context
 		this._collection = this._getContextAttr("collection");
-		this._objectId = Number(this._getContextAttr("objectId"));
+		this._atlasItem = {
+			id: Number(this._getContextAttr("objectId")),
+			collection: this._collection
+		}
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
@@ -57,13 +60,15 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		return this._object;
 	}
 
-	getUIObject() {
-		const object = this.getObject();
-		return {
-			id: object.id,
-			dtype: object.dtype,
-			name: object.name
-		}
+	getCollection() {
+		return this._collection;
+	}
+
+	getAtlasItem() {
+		this._form.getObject(this._object);
+		this._atlasItem.id = this._object.id;
+		this._atlasItem.name = this._object.name;
+		return this._atlasItem;
 	}
 
 	getLinks(feature) {
@@ -75,9 +80,8 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_loadObject() {
-		if (typeof WinMain.url.parameters.id != "undefined") {
-			var id = Number(WinMain.url.parameters.id);
-			AtlasService.getInstrument(id, this._onObjectLoaded, this);
+		if (this._atlasItem.id !== 0) {
+			AtlasService.getAtlasObject(this._atlasItem.id, this._onObjectLoaded, this);
 		}
 		else {
 			this._object = {};
@@ -111,7 +115,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		const object = this.getObject();
 		if (this._form.isValid(updateQuickLink)) {
-			AtlasService.saveInstrument(object, this._onObjectLoaded, this);
+			AtlasService.saveAtlasObject(object, this._onObjectLoaded, this);
 		}
 	}
 
@@ -127,10 +131,10 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
-    _onBack() {
+	_onBack() {
 		WinMain.assign("collection.htm");
 	}
-	
+
 	/**
 	 * Class string representation.
 	 * 

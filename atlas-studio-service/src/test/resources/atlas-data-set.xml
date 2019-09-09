@@ -9,12 +9,16 @@
 	<atlascollection>
 		<id>1</id>
 		<name>instrument</name>
+		<display>Instrument</display>
+		<iconName>instrument.png</iconName>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
+		<display>Bird</display>
+		<iconName>bird.png</iconName>
 	</atlascollection>
-	
+
 	<atlasobject>
 		<id>1</id>
 		<user_id>1</user_id>
@@ -86,6 +90,13 @@
 		<aliases>Squeezebox</aliases>
 	</atlasobject_aliases>
 
+	<atlasobject_classification>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<classification_key>Classification</classification_key>
+		<classification>WOODWIND</classification>
+	</atlasobject_classification>
+
 	<image>
 		<id>1</id>
 		<images_id>1</images_id>
@@ -104,7 +115,8 @@
 		<images_order>1</images_order>
 		<name>piano-accordion</name>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
-		<source> </source>
+		<source>
+		</source>
 		<fileName>piano-accordion.png</fileName>
 		<fileSize>12345</fileSize>
 		<width>560</width>
@@ -116,7 +128,8 @@
 		<images_order>2</images_order>
 		<name>button-accordion</name>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
-		<source> </source>
+		<source>
+		</source>
 		<fileName>button-accordion.png</fileName>
 		<fileSize>12345</fileSize>
 		<width>560</width>
@@ -142,6 +155,27 @@
 		<facts>Fact #1 description.</facts>
 	</atlasobject_facts>
 
+	<atlasobject_facts>
+		<id>2</id>
+		<atlasobject_id>1</atlasobject_id>
+		<facts_key>Fact #2</facts_key>
+		<facts>Fact #2 description.</facts>
+	</atlasobject_facts>
+
+	<atlasobject_features>
+		<id>1</id>
+		<atlasobject_id>1</atlasobject_id>
+		<features_key>Feature #1</features_key>
+		<features>Feature #1 value.</features>
+	</atlasobject_features>
+
+	<atlasobject_features>
+		<id>2</id>
+		<atlasobject_id>1</atlasobject_id>
+		<features_key>Feature #2</features_key>
+		<features>Feature #2 value.</features>
+	</atlasobject_features>
+
 	<atlasobject_links>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
@@ -156,18 +190,16 @@
 	<atlasobject_spreading>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
-		<name>RO</name>
+		<name>Romania</name>
 		<area>1</area>
 	</atlasobject_spreading>
 
 	<atlasobject_related>
 		<atlasobject_id>1</atlasobject_id>
-		<name>bandoneon</name>
-		<relevance>0</relevance>
+		<related>bandoneon</related>
 	</atlasobject_related>
 	<atlasobject_related>
 		<atlasobject_id>1</atlasobject_id>
-		<name>cimbalom</name>
-		<relevance>0</relevance>
+		<related>cimbalom</related>
 	</atlasobject_related>
 </data-set>

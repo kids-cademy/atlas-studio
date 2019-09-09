@@ -13,8 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.kidscademy.atlas.studio.impl.MediaFileHandler;
-import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.BugError;
@@ -217,7 +218,8 @@ public class MediFileHandlerTest {
     // ----------------------------------------------------------------------------------------------
 
     private static MediaFileHandler handler(String fileName) {
-	return new MediaFileHandler(new AtlasItem("instrument", "object"), fileName);
+	AtlasCollection collection = new AtlasCollection(1, "instrument");
+	return new MediaFileHandler(new AtlasItem(collection, 1, "object"), fileName);
     }
 
     private static File file(String fileName) {

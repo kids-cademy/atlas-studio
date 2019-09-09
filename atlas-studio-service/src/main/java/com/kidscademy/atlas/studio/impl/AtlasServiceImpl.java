@@ -3,7 +3,6 @@ package com.kidscademy.atlas.studio.impl;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +14,10 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.CollectionObject;
+import com.kidscademy.atlas.studio.model.CollectionItem;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
-import com.kidscademy.atlas.studio.model.User;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
@@ -32,9 +30,9 @@ import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 import com.kidscademy.atlas.studio.www.WikipediaPageSummary;
 
-import js.core.AppContext;
 import js.http.form.Form;
 import js.http.form.UploadedFile;
+import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 import js.rmi.BusinessException;
@@ -43,7 +41,6 @@ import js.util.Params;
 public class AtlasServiceImpl implements AtlasService {
     private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
 
-    private final AppContext context;
     private final AtlasDao atlasDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
@@ -52,12 +49,11 @@ public class AtlasServiceImpl implements AtlasService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
 
-    public AtlasServiceImpl(AppContext context, AtlasDao atlasDao, AudioProcessor audioProcessor,
-	    ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
-	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) {
+    public AtlasServiceImpl(AtlasDao atlasDao, AudioProcessor audioProcessor, ImageProcessor imageProcessor,
+	    Wikipedia wikipedia, SoftSchools softSchools, TheFreeDictionary freeDictionary,
+	    CambridgeDictionary cambridgeDictionary) {
 	log.trace(
-		"AtlasServiceImpl(AppContext,AtlasDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
-	this.context = context;
+		"AtlasServiceImpl(AtlasDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
 	this.atlasDao = atlasDao;
 	this.audioProcessor = audioProcessor;
 	this.imageProcessor = imageProcessor;
@@ -79,12 +75,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AtlasObject getAtlasObject(int objectId) throws IOException {
-	if (objectId == 0) {
-	    User user = context.getUserPrincipal();
-	    // TODO: null placeholder
-	    return AtlasObject.create(user, null);
-	}
-	AtlasObject object = atlasDao.getObjectById(objectId);
+	AtlasObject object = atlasDao.getAtlasObject(objectId);
 
 	if (object.getSampleSrc() != null) {
 	    File sampleFile = Files.mediaFile(object.getSampleSrc());
@@ -120,24 +111,13 @@ public class AtlasServiceImpl implements AtlasService {
 	    }
 	}
 
-	atlasDao.saveObject(AtlasObject);
+	atlasDao.saveAtlasObject(AtlasObject);
 	return AtlasObject;
     }
 
     @Override
-    public List<AtlasItem> getRelatedAtlasObjects(List<String> names) {
-	// return dao.findObjectsByName(AtlasObject.class, names);
-	// TODO empty placeholder
-	return Collections.EMPTY_LIST;
-    }
-
-    @Override
-    public List<AtlasItem> getAvailableAtlasObjects(String category, List<AtlasItem> related) {
-	// List<AtlasItem> AtlasObjects = dao.getAtlasObjectsByCategory(category);
-	// AtlasObjects.removeAll(related);
-	// return AtlasObjects;
-	// TODO empty placeholder
-	return Collections.EMPTY_LIST;
+    public List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames) {
+	return atlasDao.findObjectsByNames(collectionId, objectNames);
     }
 
     @Override
@@ -193,133 +173,132 @@ public class AtlasServiceImpl implements AtlasService {
     // OBJECT IMAGE SERVICES
 
     @Override
-    public Image uploadPicture(Form form) throws IOException, BusinessException {
-	UploadedFile uploadedFile = form.getUploadedFile("media-file");
-	return upload(form, uploadedFile.getFile());
+    public Image uploadImage(Form imageForm) throws IOException, BusinessException {
+	UploadedFile uploadedFile = imageForm.getUploadedFile("media-file");
+	return uploadImage(imageForm, uploadedFile.getFile());
     }
 
     @Override
-    public Image uploadPictureBySource(Form form) throws IOException, BusinessException {
-	Params.notNull(form.getValue("source"), "Picture source");
-	URL url = new URL(form.getValue("source"));
-	return upload(form, Files.copy(url));
+    public Image uploadImageBySource(Form imageForm) throws IOException, BusinessException {
+	Params.notNull(imageForm.getValue("source"), "Picture source");
+	URL url = new URL(imageForm.getValue("source"));
+	return uploadImage(imageForm, Files.copy(url));
     }
 
-    private Image upload(Form form, File file) throws IOException, BusinessException {
-	int objectId = Integer.parseInt(form.getValue("object-id"));
-	String pictureName = form.getValue("name");
+    private Image uploadImage(Form imageForm, File imageFile) throws IOException, BusinessException {
+	AtlasItem atlasItem = getAtlasItem(imageForm);
+	String imageName = imageForm.getValue("name");
 
-	Params.notZero(objectId, "Object ID");
-	Params.notNullOrEmpty(pictureName, "Picture name");
+	Params.notZero(atlasItem.getId(), "Atlas item ID");
+	Params.notNullOrEmpty(imageName, "Image name");
 
-	BusinessRules.uniquePictureName(objectId, pictureName);
-	BusinessRules.transparentFeaturedPicture(pictureName, file);
+	BusinessRules.uniquePictureName(atlasItem.getId(), imageName);
+	BusinessRules.transparentFeaturedPicture(imageName, imageFile);
 
-	ImageInfo imageInfo = imageProcessor.getImageInfo(file);
+	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 
-	AtlasItem object = new AtlasItem(form.getValue("object-dtype"), form.getValue("object-name"));
-	File targetFile = Files.mediaFile(object, pictureName, imageInfo.getType().extension());
+	File targetFile = Files.mediaFile(atlasItem, imageName, imageInfo.getType().extension());
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
-	if (!file.renameTo(targetFile)) {
+	if (!imageFile.renameTo(targetFile)) {
 	    throw new IOException("Unable to upload " + targetFile);
 	}
 
-	Image picture = new Image();
-	picture.setName(pictureName);
-	picture.setUploadDate(new Date());
-	picture.setSource(form.getValue("source"));
-	picture.setFileName(targetFile.getName());
+	Image image = new Image();
+	image.setName(imageName);
+	image.setUploadDate(new Date());
+	image.setSource(imageForm.getValue("source"));
+	image.setFileName(targetFile.getName());
 
-	picture.setFileSize(imageInfo.getFileSize());
-	picture.setWidth(imageInfo.getWidth());
-	picture.setHeight(imageInfo.getHeight());
+	image.setFileSize(imageInfo.getFileSize());
+	image.setWidth(imageInfo.getWidth());
+	image.setHeight(imageInfo.getHeight());
 
-	atlasDao.addObjectPicture(objectId, picture);
+	atlasDao.addObjectPicture(atlasItem.getId(), image);
 
-	picture.setSrc(Files.mediaSrc(object, targetFile.getName()));
-	return picture;
+	image.setSrc(Files.mediaSrc(atlasItem, targetFile.getName()));
+	return image;
     }
 
     @Override
-    public Image duplicatePicture(AtlasItem object, Image picture) throws IOException {
-	File targetFile = Files.mediaFile(object, picture.getName(), Files.getExtension(picture.getFileName()));
+    public Image duplicateImage(AtlasItem atlasItem, Image image) throws IOException {
+	File targetFile = Files.mediaFile(atlasItem, image.getName(), Files.getExtension(image.getFileName()));
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
-	Files.copy(Files.mediaFile(picture.getSrc()), targetFile);
+	Files.copy(Files.mediaFile(image.getSrc()), targetFile);
 
-	picture.setUploadDate(new Date());
-	picture.setFileName(targetFile.getName());
-	atlasDao.addObjectPicture(object.getId(), picture);
+	image.setUploadDate(new Date());
+	image.setFileName(targetFile.getName());
+	atlasDao.addObjectPicture(atlasItem.getId(), image);
 
-	updateImage(picture, targetFile, Files.mediaSrc(object, targetFile.getName()));
-	return picture;
+	updateImage(image, targetFile, Files.mediaSrc(atlasItem, targetFile.getName()));
+	return image;
     }
 
     @Override
-    public Image trimPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public Image trimImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	imageProcessor.trim(handler.source(), handler.target());
-	updateImage(picture, handler.target(), handler.targetSrc());
-	return picture;
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
     }
 
     @Override
-    public Image flopPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public Image flopImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	imageProcessor.flop(handler.source(), handler.target());
-	updateImage(picture, handler.target(), handler.targetSrc());
-	return picture;
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
     }
 
     @Override
-    public Image flipPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public Image flipImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	imageProcessor.flip(handler.source(), handler.target());
-	updateImage(picture, handler.target(), handler.targetSrc());
-	return picture;
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
     }
 
     @Override
-    public Image cropPicture(AtlasItem object, Image picture, int width, int height, int xoffset, int yoffset)
+    public Image cropImage(AtlasItem atlasItem, Image image, int width, int height, int xoffset, int yoffset)
 	    throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	imageProcessor.crop(handler.source(), handler.target(), width, height, xoffset, yoffset);
-	updateImage(picture, handler.target(), handler.targetSrc());
-	return picture;
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
     }
 
     @Override
-    public void removePicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public void removeImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.delete();
-	picture.removeIcon(object);
-	atlasDao.removeObjectPicture(object.getId(), picture);
+	image.removeIcon(atlasItem);
+	atlasDao.removeObjectPicture(atlasItem.getId(), image);
     }
 
     @Override
-    public Image commitPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public Image commitImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.commit();
-	picture.updateIcon(object);
-	updateImage(picture, handler.source(), handler.sourceSrc());
-	return picture;
+	image.updateIcon(atlasItem);
+	updateImage(image, handler.source(), handler.sourceSrc());
+	return image;
     }
 
     @Override
-    public void rollbackPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public void rollbackImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.rollback();
     }
 
     @Override
-    public Image undoPicture(AtlasItem object, Image picture) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
+    public Image undoImage(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.undo();
-	updateImage(picture, handler.source(), handler.sourceSrc());
-	return picture;
+	updateImage(image, handler.source(), handler.sourceSrc());
+	return image;
     }
 
     private void updateImage(Image image, File file, MediaSRC src) throws IOException {
@@ -334,109 +313,121 @@ public class AtlasServiceImpl implements AtlasService {
     // OBJECT AUDIO SAMPLE SERVICES
 
     @Override
-    public AudioSampleInfo uploadAudioSample(Form form) throws IOException {
-	AtlasItem object = new AtlasItem(form.getValue("dtype"), form.getValue("name"));
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
-	handler.upload(form.getFile("file"));
-	return getAudioSampleInfo(object, handler.source(), handler.sourceSrc());
+    public AudioSampleInfo uploadAudioSample(Form audioSampleForm) throws IOException {
+	AtlasItem atlasItem = getAtlasItem(audioSampleForm);
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
+	handler.upload(audioSampleForm.getFile("file"));
+	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
     }
 
     @Override
-    public AudioSampleInfo normalizeAudioSample(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo normalizeAudioSample(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.normalizeLevel(handler.source(), handler.target());
 	if (handler.target().exists()) {
-	    return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	    return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
 	}
-	return getAudioSampleInfo(object, handler.source(), handler.sourceSrc());
+	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
     }
 
     @Override
-    public AudioSampleInfo convertAudioSampleToMono(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo convertAudioSampleToMono(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.convertToMono(handler.source(), handler.target());
-	return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
     }
 
     @Override
-    public AudioSampleInfo trimAudioSampleSilence(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo trimAudioSampleSilence(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.trimSilence(handler.source(), handler.target());
-	return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
     }
 
     @Override
-    public AudioSampleInfo cutAudioSample(AtlasItem object, float start) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo cutAudioSample(AtlasItem atlasItem, float start) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.cutSegment(handler.source(), handler.target(), start, start + 30);
-	return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
     }
 
     @Override
-    public AudioSampleInfo fadeInAudioSample(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo fadeInAudioSample(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.fadeIn(handler.source(), handler.target(), 1.5F);
-	return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
     }
 
     @Override
-    public AudioSampleInfo fadeOutAudioSample(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo fadeOutAudioSample(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	audioProcessor.fadeOut(handler.source(), handler.target(), 1.5F);
-	return getAudioSampleInfo(object, handler.target(), handler.targetSrc());
+	return getAudioSampleInfo(atlasItem, handler.target(), handler.targetSrc());
     }
 
     @Override
-    public MediaSRC generateWaveform(AtlasItem object) throws IOException {
-	Params.notZero(object.getId(), "Object ID");
+    public MediaSRC generateWaveform(AtlasItem atlasItem) throws IOException {
+	Params.notZero(atlasItem.getId(), "Atlas item ID");
 
-	File sampleFile = Files.mediaFile(object, "sample.mp3");
+	File sampleFile = Files.mediaFile(atlasItem, "sample.mp3");
 	if (!sampleFile.exists()) {
 	    log.error("Database not consistent. Missing sample file |%s|. Reset sample and waveform for object |%s|.",
-		    sampleFile, object.getName());
-	    atlasDao.resetObjectSample(object.getId());
+		    sampleFile, atlasItem.getName());
+	    atlasDao.resetObjectSample(atlasItem.getId());
 	    return null;
 	}
-	return generateWaveform(object, sampleFile);
+	return generateWaveform(atlasItem, sampleFile);
     }
 
     @Override
-    public AudioSampleInfo undoAudioSampleProcessing(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo undoAudioSampleProcessing(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	handler.undo();
-	return getAudioSampleInfo(object, handler.source(), handler.sourceSrc());
+	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
     }
 
     @Override
-    public AudioSampleInfo rollbackAudioSampleProcessing(AtlasItem object) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+    public AudioSampleInfo rollbackAudioSampleProcessing(AtlasItem atlasItem) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	handler.rollback();
-	return getAudioSampleInfo(object, handler.source(), handler.sourceSrc());
+	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
     }
 
     @Override
-    public void removeAudioSample(AtlasItem object) throws IOException {
-	Params.notZero(object.getId(), "Object ID");
+    public void removeAudioSample(AtlasItem atlasItem) throws IOException {
+	Params.notZero(atlasItem.getId(), "Atlas item ID");
 
-	MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	handler.delete();
-	atlasDao.resetObjectSample(object.getId());
-	Files.mediaFile(object, "sample.mp3").delete();
-	Files.mediaFile(object, "waveform.png").delete();
+	atlasDao.resetObjectSample(atlasItem.getId());
+	Files.mediaFile(atlasItem, "sample.mp3").delete();
+	Files.mediaFile(atlasItem, "waveform.png").delete();
     }
 
     // ----------------------------------------------------------------------------------------------
 
-    private AudioSampleInfo getAudioSampleInfo(CollectionObject object, File file, MediaSRC mediaSrc)
+    private AtlasItem getAtlasItem(Form mediaForm) {
+	String objectId = mediaForm.getValue("atlas-object-id");
+	if (objectId == null) {
+	    throw new BugError("Media form should have <atlas-object-id> field.");
+	}
+	try {
+	    return atlasDao.getAtlasItem(Integer.parseInt(objectId));
+	} catch (NumberFormatException unused) {
+	    throw new BugError("Media form <atlas-object-id> field should be numeric.");
+	}
+    }
+
+    private AudioSampleInfo getAudioSampleInfo(CollectionItem collectionItem, File file, MediaSRC mediaSrc)
 	    throws IOException {
 	AudioSampleInfo info = audioProcessor.getAudioFileInfo(file);
 	info.setSampleSrc(mediaSrc);
-	info.setWaveformSrc(generateWaveform(object, file));
+	info.setWaveformSrc(generateWaveform(collectionItem, file));
 	return info;
     }
 
-    private MediaSRC generateWaveform(CollectionObject object, File audioFile) throws IOException {
-	MediaSRC waveformSrc = Files.mediaSrc(object, "waveform.png");
+    private MediaSRC generateWaveform(CollectionItem collectionItem, File audioFile) throws IOException {
+	MediaSRC waveformSrc = Files.mediaSrc(collectionItem, "waveform.png");
 	File waveformFile = Files.mediaFile(waveformSrc);
 	audioProcessor.generateWaveform(audioFile, waveformFile);
 	return waveformSrc;

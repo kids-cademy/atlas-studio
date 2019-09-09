@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
@@ -16,13 +17,14 @@ import com.kidscademy.atlas.studio.util.Files;
  * @author Iulian Rotaru
  */
 @Entity
-public class AtlasItem implements CollectionObject {
+public class AtlasItem implements CollectionItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    private int collectionId;
-    private String collectionName;
+    @ManyToOne
+    private AtlasCollection collection;
+
     private String name;
     private String display;
     
@@ -38,20 +40,16 @@ public class AtlasItem implements CollectionObject {
     public AtlasItem() {
     }
 
-    public AtlasItem(String collectionName, String name) {
-	this.collectionName = collectionName;
-	this.name = name;
-    }
-
     /**
      * Test constructor.
      * 
+     * @param collection
      * @param id
      * @param name
      */
-    public AtlasItem(int id, String collectionName, String name) {
+    public AtlasItem(AtlasCollection collection, int id, String name) {
+	this.collection = collection;
 	this.id = id;
-	this.collectionName = collectionName;
 	this.name = name;
     }
 
@@ -66,13 +64,13 @@ public class AtlasItem implements CollectionObject {
 	return id;
     }
 
-    public int getCollectionId() {
-        return collectionId;
+    public AtlasCollection getCollection() {
+        return collection;
     }
 
     @Override
     public String getCollectionName() {
-	return collectionName;
+	return collection.getName();
     }
 
     @Override

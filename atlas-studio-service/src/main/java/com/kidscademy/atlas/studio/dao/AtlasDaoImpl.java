@@ -11,6 +11,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasObject.State;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.User;
 
 import js.transaction.Immutable;
 import js.transaction.Mutable;
@@ -32,13 +33,13 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getCollectionItems(int collectionId) {
-	return em.createQuery("select i from AtlasItem i where i.collectionId=:collectionId", AtlasItem.class)
+	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId", AtlasItem.class)
 		.setParameter("collectionId", collectionId).getResultList();
     }
 
     @Override
     @Mutable
-    public void saveObject(AtlasObject object) {
+    public void saveAtlasObject(AtlasObject object) {
 	if (object.getId() == 0) {
 	    em.persist(object);
 	} else {
@@ -47,9 +48,13 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public AtlasObject getObjectById(int objectId) {
-	return em.createQuery("select o from AtlasObject o where o.id=:id", AtlasObject.class)
-		.setParameter("id", objectId).getSingleResult();
+    public AtlasItem getAtlasItem(int objectId) {
+	return em.find(AtlasItem.class, objectId);
+    }
+
+    @Override
+    public AtlasObject getAtlasObject(int objectId) {
+	return em.find(AtlasObject.class, objectId);
     }
 
     @Override
@@ -94,14 +99,15 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<AtlasItem> findObjectsByNames(String category, List<String> names) {
-	if (names.isEmpty()) {
+    public List<AtlasItem> findObjectsByNames(int collectionId, List<String> objectNames) {
+	if (objectNames.isEmpty()) {
 	    return Collections.emptyList();
 	}
-	String jpql = "select o from UIObject o where o.category=:category and o.name in :names";
-	return em.createQuery(jpql, AtlasItem.class).setParameter("category", category).setParameter("names", names)
-		.getResultList();
+	String jpql = "select i from AtlasItem i where i.collection.id=:collectionId and i.name in :objectNames";
+	return em.createQuery(jpql, AtlasItem.class).setParameter("collectionId", collectionId)
+		.setParameter("objectNames", objectNames).getResultList();
     }
+
     //
     // @Override
     // public List<AtlasItem> getObjectsByCategory(String category) {
@@ -143,5 +149,15 @@ public class AtlasDaoImpl implements AtlasDao {
 	List<Image> pictures = em.createQuery(jpql, Image.class).setParameter("id", objectId).setParameter("name", name)
 		.getResultList();
 	return pictures.isEmpty() ? null : pictures.get(0);
+    }
+
+    @Override
+    public User getUserById(int userId) {
+	return em.find(User.class, 1);
+    }
+
+    @Override
+    public AtlasCollection getCollectionById(int collectionId) {
+	return em.find(AtlasCollection.class, 1);
     }
 }

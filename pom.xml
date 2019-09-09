@@ -12,6 +12,7 @@
 		<module>atlas-studio-service</module>
 		<module>atlas-studio-ui</module>
 		<module>atlas-studio-war</module>
+		<module>atlas-studio-tools</module>
 	</modules>
 
 	<properties>

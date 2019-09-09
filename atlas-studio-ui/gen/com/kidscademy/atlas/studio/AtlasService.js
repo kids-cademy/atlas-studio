@@ -56,16 +56,16 @@ com.kidscademy.atlas.studio.AtlasService = {
 	/**
 	 * Get atlas object.
 	 *
-	 * @param int AtlasObjectId,
+	 * @param int objectId,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.AtlasObject
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 getAtlasObject: function(AtlasObjectId) {
-		$assert(typeof AtlasObjectId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getAtlasObject", "Atlas object id argument is undefined.");
-		$assert(js.lang.Types.isNumber(AtlasObjectId), "com.kidscademy.atlas.studio.AtlasService#getAtlasObject", "Atlas object id argument is not a number.");
+	 getAtlasObject: function(objectId) {
+		$assert(typeof objectId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getAtlasObject", "Object id argument is undefined.");
+		$assert(js.lang.Types.isNumber(objectId), "com.kidscademy.atlas.studio.AtlasService#getAtlasObject", "Object id argument is not a number.");
 
 		var __callback__ = arguments[1];
 		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getAtlasObject", "Callback is not a function.");
@@ -77,7 +77,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getAtlasObject");
-		rmi.setParameters(AtlasObjectId);
+		rmi.setParameters(objectId);
 		rmi.exec(__callback__, __scope__);
 	},
 
@@ -111,15 +111,15 @@ com.kidscademy.atlas.studio.AtlasService = {
 	/**
 	 * Save atlas object.
 	 *
-	 * @param com.kidscademy.atlas.studio.model.AtlasObject AtlasObject,
+	 * @param com.kidscademy.atlas.studio.model.AtlasObject object,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.AtlasObject
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 saveAtlasObject: function(AtlasObject) {
-		$assert(typeof AtlasObject !== "undefined", "com.kidscademy.atlas.studio.AtlasService#saveAtlasObject", "Atlas object argument is undefined.");
+	 saveAtlasObject: function(object) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#saveAtlasObject", "Object argument is undefined.");
 
 		var __callback__ = arguments[1];
 		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#saveAtlasObject", "Callback is not a function.");
@@ -131,25 +131,28 @@ com.kidscademy.atlas.studio.AtlasService = {
 
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "saveAtlasObject");
-		rmi.setParameters(AtlasObject);
+		rmi.setParameters(object);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
 	 * Get related atlas objects.
 	 *
-	 * @param java.util.List<java.lang.String> names,
+	 * @param int collectionId,
+	 * @param java.util.List<java.lang.String> objectNames,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return java.util.List<com.kidscademy.atlas.studio.model.AtlasItem>
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 getRelatedAtlasObjects: function(names) {
-		$assert(typeof names !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Names argument is undefined.");
+	 getRelatedAtlasObjects: function(collectionId, objectNames) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Collection id argument is not a number.");
+		$assert(typeof objectNames !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Object names argument is undefined.");
 
-		var __callback__ = arguments[1];
+		var __callback__ = arguments[2];
 		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Callback is not a function.");
-		var __scope__ = arguments[2];
+		var __scope__ = arguments[3];
 		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getRelatedAtlasObjects", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
@@ -157,36 +160,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getRelatedAtlasObjects");
-		rmi.setParameters(names);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
-	 * Get available atlas objects.
-	 *
-	 * @param java.lang.String category,
-	 * @param java.util.List<com.kidscademy.atlas.studio.model.AtlasItem> related,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.List<com.kidscademy.atlas.studio.model.AtlasItem>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 getAvailableAtlasObjects: function(category, related) {
-		$assert(typeof category !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getAvailableAtlasObjects", "Category argument is undefined.");
-		$assert(category === null || js.lang.Types.isString(category), "com.kidscademy.atlas.studio.AtlasService#getAvailableAtlasObjects", "Category argument is not a string.");
-		$assert(typeof related !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getAvailableAtlasObjects", "Related argument is undefined.");
-
-		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getAvailableAtlasObjects", "Callback is not a function.");
-		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getAvailableAtlasObjects", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getAvailableAtlasObjects");
-		rmi.setParameters(category, related);
+		rmi.setParameters(collectionId, objectNames);
 		rmi.exec(__callback__, __scope__);
 	},
 
@@ -295,7 +269,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Upload picture.
+	 * Upload image.
 	 *
 	 * @param js.http.form.Form form,
 	 * @param Function callback function to invoke on RMI completion,
@@ -305,25 +279,25 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @throws js.rmi.BusinessException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 uploadPicture: function(form) {
-		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#uploadPicture", "Form argument is undefined.");
+	 uploadImage: function(form) {
+		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#uploadImage", "Form argument is undefined.");
 
 		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#uploadPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#uploadImage", "Callback is not a function.");
 		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#uploadPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#uploadImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "uploadPicture");
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "uploadImage");
 		rmi.setParameters(form);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Upload picture by source.
+	 * Upload image by source.
 	 *
 	 * @param js.http.form.Form form,
 	 * @param Function callback function to invoke on RMI completion,
@@ -333,144 +307,144 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @throws js.rmi.BusinessException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 uploadPictureBySource: function(form) {
-		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#uploadPictureBySource", "Form argument is undefined.");
+	 uploadImageBySource: function(form) {
+		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#uploadImageBySource", "Form argument is undefined.");
 
 		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#uploadPictureBySource", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#uploadImageBySource", "Callback is not a function.");
 		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#uploadPictureBySource", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#uploadImageBySource", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "uploadPictureBySource");
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "uploadImageBySource");
 		rmi.setParameters(form);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Duplicate picture.
+	 * Duplicate image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 duplicatePicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicatePicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicatePicture", "Picture argument is undefined.");
+	 duplicateImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#duplicatePicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#duplicatePicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "duplicatePicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "duplicateImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Trim picture.
+	 * Trim image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 trimPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#trimPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#trimPicture", "Picture argument is undefined.");
+	 trimImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#trimImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#trimImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#trimPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#trimImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#trimPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#trimImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "trimPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "trimImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Flop picture.
+	 * Flop image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 flopPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flopPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flopPicture", "Picture argument is undefined.");
+	 flopImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flopImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flopImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#flopPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#flopImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#flopPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#flopImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "flopPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "flopImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Flip picture.
+	 * Flip image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 flipPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flipPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flipPicture", "Picture argument is undefined.");
+	 flipImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flipImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#flipImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#flipPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#flipImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#flipPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#flipImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "flipPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "flipImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Crop picture.
+	 * Crop image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param int width,
 	 * @param int height,
 	 * @param int xoffset,
@@ -481,37 +455,37 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 cropPicture: function(object, picture, width, height, xoffset, yoffset) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Picture argument is undefined.");
-		$assert(typeof width !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Width argument is undefined.");
-		$assert(js.lang.Types.isNumber(width), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Width argument is not a number.");
-		$assert(typeof height !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Height argument is undefined.");
-		$assert(js.lang.Types.isNumber(height), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Height argument is not a number.");
-		$assert(typeof xoffset !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Xoffset argument is undefined.");
-		$assert(js.lang.Types.isNumber(xoffset), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Xoffset argument is not a number.");
-		$assert(typeof yoffset !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Yoffset argument is undefined.");
-		$assert(js.lang.Types.isNumber(yoffset), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Yoffset argument is not a number.");
+	 cropImage: function(object, image, width, height, xoffset, yoffset) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Image argument is undefined.");
+		$assert(typeof width !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Width argument is undefined.");
+		$assert(js.lang.Types.isNumber(width), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Width argument is not a number.");
+		$assert(typeof height !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Height argument is undefined.");
+		$assert(js.lang.Types.isNumber(height), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Height argument is not a number.");
+		$assert(typeof xoffset !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Xoffset argument is undefined.");
+		$assert(js.lang.Types.isNumber(xoffset), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Xoffset argument is not a number.");
+		$assert(typeof yoffset !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cropImage", "Yoffset argument is undefined.");
+		$assert(js.lang.Types.isNumber(yoffset), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Yoffset argument is not a number.");
 
 		var __callback__ = arguments[6];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Callback is not a function.");
 		var __scope__ = arguments[7];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#cropPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#cropImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "cropPicture");
-		rmi.setParameters(object, picture, width, height, xoffset, yoffset);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "cropImage");
+		rmi.setParameters(object, image, width, height, xoffset, yoffset);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Remove picture.
+	 * Remove image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return void
@@ -519,87 +493,87 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
 	 * @note since method return type is void, callback, and hence scope too, is optional.
 	 */
-	 removePicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removePicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removePicture", "Picture argument is undefined.");
+	 removeImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removeImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removeImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#removePicture", "Callback is not a function.");
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#removeImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#removePicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#removeImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removePicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removeImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Undo picture.
+	 * Undo image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 undoPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#undoPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#undoPicture", "Picture argument is undefined.");
+	 undoImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#undoImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#undoImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#undoPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#undoImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#undoPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#undoImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "undoPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "undoImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Commit picture.
+	 * Commit image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 commitPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#commitPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#commitPicture", "Picture argument is undefined.");
+	 commitImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#commitImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#commitImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#commitPicture", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#commitImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#commitPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#commitImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "commitPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "commitImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 
 	/**
-	 * Rollback picture.
+	 * Rollback image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
-	 * @param com.kidscademy.atlas.studio.model.Image picture,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return void
@@ -607,21 +581,21 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
 	 * @note since method return type is void, callback, and hence scope too, is optional.
 	 */
-	 rollbackPicture: function(object, picture) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rollbackPicture", "Object argument is undefined.");
-		$assert(typeof picture !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rollbackPicture", "Picture argument is undefined.");
+	 rollbackImage: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rollbackImage", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rollbackImage", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#rollbackPicture", "Callback is not a function.");
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#rollbackImage", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#rollbackPicture", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#rollbackImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "rollbackPicture");
-		rmi.setParameters(object, picture);
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "rollbackImage");
+		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},
 

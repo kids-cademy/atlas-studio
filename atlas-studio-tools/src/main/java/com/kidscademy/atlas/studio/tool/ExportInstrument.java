@@ -16,18 +16,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
-import com.kidscademy.atlas.studio.model.HDate;
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.Image;
-import com.kidscademy.atlas.studio.model.Region;
-import com.kidscademy.atlas.studio.tool.ConvertProcess;
-import com.kidscademy.atlas.studio.tool.IdentifyProcess;
-import com.kidscademy.atlas.studio.tool.ImageProcessor;
-import com.kidscademy.atlas.studio.tool.ImageProcessorImpl;
-
 import js.json.Json;
 import js.lang.ConfigException;
 import js.transaction.TransactionFactory;
@@ -53,9 +41,6 @@ public class ExportInstrument {
 
 	for (int i = 0, repositoryIndex = 0; i < instruments.size(); ++i) {
 	    AtlasObject instrument = instruments.get(i);
-	    if (!instrument.isPublished()) {
-		continue;
-	    }
 
 	    InstrumentDTO dto = new InstrumentDTO();
 	    dto.repositoryIndex = repositoryIndex;
@@ -89,7 +74,7 @@ public class ExportInstrument {
 	    }
 
 	    for (int j = 0, l = instrument.getRelated().size(); j < l; ++j) {
-		String relatedName = instrument.getRelated().get(j).getName();
+		String relatedName = instrument.getRelated().get(j);
 		if (objectNames.contains(relatedName)) {
 		    dto.related.add(relatedName);
 		}
@@ -170,14 +155,14 @@ public class ExportInstrument {
 	    return null;
 	}
 
-	Classes.setFieldValue(ConvertProcess.class, "BIN", "C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe");
-	Classes.setFieldValue(IdentifyProcess.class, "BIN",
-		"C://Program Files/ImageMagick-6.9.9-Q16-HDRI/identify.exe");
-	ImageProcessor processor = new ImageProcessorImpl();
+//	Classes.setFieldValue(ConvertProcess.class, "BIN", "C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe");
+//	Classes.setFieldValue(IdentifyProcess.class, "BIN",
+//		"C://Program Files/ImageMagick-6.9.9-Q16-HDRI/identify.exe");
+//	ImageProcessor processor = new ImageProcessorImpl();
 
 	File targetFile = File.createTempFile("picture", picture.getFileName());
 	targetFile.deleteOnExit();
-	processor.resize(file(instrument.getName(), picture.getFileName()), targetFile, width, height);
+//	processor.resize(file(instrument.getName(), picture.getFileName()), targetFile, width, height);
 	return targetFile;
     }
 
