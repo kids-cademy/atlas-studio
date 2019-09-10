@@ -11,11 +11,11 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		this._formPage = null;
 
 		/**
-		 * List control for pictures.
-		 * @type {com.kidscademy.atlas.PicturesControl}
+		 * Custom list control for images.
+		 * @type {com.kidscademy.atlas.ImagesControl}
 		 */
-		this._picturesControl = this.getByClass(com.kidscademy.atlas.PicturesControl);
-		this._picturesControl.on("picture-selected", this._onPictureSelected, this);
+		this._imagesControl = this.getByClass(com.kidscademy.atlas.ImagesControl);
+		this._imagesControl.on("image-selected", this._onImageSelected, this);
 
 		/**
 		 * Form data that holds meta about image, like name, source and caption.
@@ -62,7 +62,7 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		this._currentImage = null;
 
 		/**
-		 * Number for transforms perfomed on current picture per current working session. This value is incremented for each 
+		 * Number of transforms perfomed on current image per current working session. This value is incremented for each 
 		 * transform and decresed on undo.
 		 * @type {Number}
 		 */
@@ -97,7 +97,7 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		this._actions.show("upload", "link", "close");
 		this._imageEditor.hide();
 		this._metaFormData.open();
-		this._metaFormData.enable("name");
+		this._metaFormData.enable("image-key");
 	}
 
 	_onUpload(ev) {
@@ -130,10 +130,10 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		formData.append("atlas-object-id", object.id);
 		formData.append("media-file", ev.target._node.files[0]);
 
-		AtlasService.uploadImage(formData, picture => {
-			this._currentImage = picture;
-			this._picturesControl.addPicture(picture);
-			this._previewImage.setSrc(picture.src);
+		AtlasService.uploadImage(formData, image => {
+			this._currentImage = image;
+			this._imagesControl.addImage(image);
+			this._previewImage.setSrc(image.src);
 		});
 	}
 
@@ -155,15 +155,15 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 
 		formData.append("atlas-object-id", object.id);
 
-		AtlasService.uploadImageBySource(formData, picture => {
-			this._currentImage = picture;
-			this._picturesControl.addPicture(picture);
-			this._previewImage.setSrc(picture.src);
+		AtlasService.uploadImageBySource(formData, image => {
+			this._currentImage = image;
+			this._imagesControl.addImage(image);
+			this._previewImage.setSrc(image.src);
 		});
 	}
 
 	_onDuplicate() {
-		this._metaFormData.enable("name");
+		this._metaFormData.enable("image-key");
 		this._metaFormData.show();
 	}
 
@@ -173,7 +173,7 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 
 	_onCrop() {
 		var aspectRatio = 0;
-		switch (this._currentImage.name) {
+		switch (this._currentImage.imageKey) {
 			case "icon":
 				aspectRatio = 1;
 				break;
@@ -221,12 +221,12 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 	_onDone() {
 		switch (this._actions.getPreviousAction()) {
 			case "duplicate":
-				const duplicatePicture = this._metaFormData.getObject();
-				duplicatePicture.fileName = this._currentImage.fileName;
-				duplicatePicture.src = this._currentImage.src;
-				AtlasService.duplicateImage(this._formPage.getAtlasItem(), duplicatePicture, picture => {
-					this._currentImage = picture;
-					this._picturesControl.addPicture(picture);
+				const duplicateImage = this._metaFormData.getObject();
+				duplicateImage.fileName = this._currentImage.fileName;
+				duplicateImage.src = this._currentImage.src;
+				AtlasService.duplicateImage(this._formPage.getAtlasItem(), duplicateImage, image => {
+					this._currentImage = image;
+					this._imagesControl.addImage(image);
 					this._metaFormData.hide();
 					this._closeImageEditor();
 				});
@@ -240,10 +240,10 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 
 			default:
 				this._metaFormData.getObject(this._currentImage);
-				AtlasService.commitImage(this._formPage.getAtlasItem(), this._currentImage, picture => {
+				AtlasService.commitImage(this._formPage.getAtlasItem(), this._currentImage, image => {
 					this._metaFormData.hide();
 					this._closeImageEditor();
-					this._picturesControl.updatePicture(picture);
+					this._imagesControl.updateImage(image);
 				})
 		}
 	}
@@ -262,7 +262,7 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 			this._closeImageEditor();
 			return;
 		}
-		js.ua.System.confirm("@string/confirm-picture-rollback", answer => {
+		js.ua.System.confirm("@string/confirm-image-rollback", answer => {
 			if (answer === true) {
 				AtlasService.rollbackImage(this._formPage.getAtlasItem(), this._currentImage, this._closeImageEditor, this);
 			}
@@ -270,11 +270,11 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 	}
 
 	_onRemove() {
-		js.ua.System.confirm("@string/confirm-picture-remove", answer => {
+		js.ua.System.confirm("@string/confirm-image-remove", answer => {
 			if (answer === true) {
 				AtlasService.removeImage(this._formPage.getAtlasItem(), this._currentImage, () => {
 					this._closeImageEditor();
-					this._picturesControl.removePicture(this._currentImage);
+					this._imagesControl.removeImage(this._currentImage);
 				});
 			}
 		});
@@ -289,14 +289,14 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 	}
 
 	/**
-	 * Callback invoked when server picture processing is complete.
+	 * Callback invoked when server image processing is complete.
 	 * 
-	 * @param {Object} picture picture returned by server.
+	 * @param {Object} image image returned by server.
 	 */
-	_onProcessingDone(picture) {
+	_onProcessingDone(image) {
 		++this._transformsCount;
-		this._currentImage = picture;
-		this._previewImage.reload(picture.src);
+		this._currentImage = image;
+		this._previewImage.reload(image.src);
 	}
 
 	_onPreviewImageLoad(ev) {
@@ -308,11 +308,11 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		this._fileInfoView.setObject(this._currentImage);
 	}
 
-	_onPictureSelected(picture) {
+	_onImageSelected(image) {
 		this._actions.show("remove");
-		this._metaFormData.disable("name");
-		this._currentImage = picture;
-		this._previewImage.setSrc(picture.src);
+		this._metaFormData.disable("image-key");
+		this._currentImage = image;
+		this._previewImage.setSrc(image.src);
 	}
 
 	/**

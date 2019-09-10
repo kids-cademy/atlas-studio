@@ -129,26 +129,30 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     @Mutable
-    public void removeObjectPicture(int objectId, Image picture) {
+    public void removeObjectImage(int objectId, Image image) {
 	AtlasObject object = (AtlasObject) em.createQuery("select o from AtlasObject o where o.id=:id")
 		.setParameter("id", objectId).getSingleResult();
-	object.getImages().remove(picture);
+	// object entity is managed in this scope and altering it will be synchronized
+	// on database
+	object.getImages().remove(image.getImageKey());
     }
 
     @Override
     @Mutable
-    public void addObjectPicture(int objectId, Image picture) {
+    public void addObjectImage(int objectId, Image image) {
 	AtlasObject object = (AtlasObject) em.createQuery("select o from AtlasObject o where o.id=:id")
 		.setParameter("id", objectId).getSingleResult();
-	object.getImages().add(picture);
+	// object entity is managed in this scope and altering it will be synchronized
+	// on database
+	object.getImages().put(image.getImageKey(), image);
     }
 
     @Override
-    public Image getPictureByName(int objectId, String name) {
-	String jpql = "select i from AtlasObject o join o.images i where o.id=:id and i.name=:name";
-	List<Image> pictures = em.createQuery(jpql, Image.class).setParameter("id", objectId).setParameter("name", name)
-		.getResultList();
-	return pictures.isEmpty() ? null : pictures.get(0);
+    public Image getImageByKey(int objectId, String imageKey) {
+	String jpql = "select i from AtlasObject o join o.images i where o.id=:id and KEY(i)=:key";
+	List<Image> images = em.createQuery(jpql, Image.class).setParameter("id", objectId)
+		.setParameter("key", imageKey).getResultList();
+	return images.isEmpty() ? null : images.get(0);
     }
 
     @Override

@@ -105,7 +105,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	if (AtlasObject.getImages() != null) {
-	    for (Image picture : AtlasObject.getImages()) {
+	    for (Image picture : AtlasObject.getImages().values()) {
 		MediaFileHandler handler = new MediaFileHandler(AtlasObject, picture.getFileName());
 		handler.commit();
 	    }
@@ -187,17 +187,17 @@ public class AtlasServiceImpl implements AtlasService {
 
     private Image uploadImage(Form imageForm, File imageFile) throws IOException, BusinessException {
 	AtlasItem atlasItem = getAtlasItem(imageForm);
-	String imageName = imageForm.getValue("name");
+	String imageKey = imageForm.getValue("image-key");
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
-	Params.notNullOrEmpty(imageName, "Image name");
+	Params.notNullOrEmpty(imageKey, "Image key");
 
-	BusinessRules.uniquePictureName(atlasItem.getId(), imageName);
-	BusinessRules.transparentFeaturedPicture(imageName, imageFile);
+	BusinessRules.uniqueImage(atlasItem.getId(), imageKey);
+	BusinessRules.transparentImage(imageKey, imageFile);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 
-	File targetFile = Files.mediaFile(atlasItem, imageName, imageInfo.getType().extension());
+	File targetFile = Files.mediaFile(atlasItem, imageKey, imageInfo.getType().extension());
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
@@ -206,7 +206,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	Image image = new Image();
-	image.setName(imageName);
+	image.setImageKey(imageKey);
 	image.setUploadDate(new Date());
 	image.setSource(imageForm.getValue("source"));
 	image.setFileName(targetFile.getName());
@@ -215,7 +215,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setWidth(imageInfo.getWidth());
 	image.setHeight(imageInfo.getHeight());
 
-	atlasDao.addObjectPicture(atlasItem.getId(), image);
+	atlasDao.addObjectImage(atlasItem.getId(), image);
 
 	image.setSrc(Files.mediaSrc(atlasItem, targetFile.getName()));
 	return image;
@@ -223,7 +223,8 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public Image duplicateImage(AtlasItem atlasItem, Image image) throws IOException {
-	File targetFile = Files.mediaFile(atlasItem, image.getName(), Files.getExtension(image.getFileName()));
+	// by convention image key is used as image file base name
+	File targetFile = Files.mediaFile(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
@@ -231,7 +232,7 @@ public class AtlasServiceImpl implements AtlasService {
 
 	image.setUploadDate(new Date());
 	image.setFileName(targetFile.getName());
-	atlasDao.addObjectPicture(atlasItem.getId(), image);
+	atlasDao.addObjectImage(atlasItem.getId(), image);
 
 	updateImage(image, targetFile, Files.mediaSrc(atlasItem, targetFile.getName()));
 	return image;
@@ -275,7 +276,7 @@ public class AtlasServiceImpl implements AtlasService {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.delete();
 	image.removeIcon(atlasItem);
-	atlasDao.removeObjectPicture(atlasItem.getId(), image);
+	atlasDao.removeObjectImage(atlasItem.getId(), image);
     }
 
     @Override

@@ -15,7 +15,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,11 +108,11 @@ public class AtlasDaoTest {
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 
-	List<Image> pictures = new ArrayList<>();
+	Map<String, Image> pictures = new HashMap<>();
 	object.setImages(pictures);
-	pictures.add(new Image(src("banjo", "icon.jpg")));
-	pictures.add(new Image(src("banjo", "thumbnail.png")));
-	pictures.add(new Image(src("banjo", "picture.jpg")));
+	pictures.put("icon", new Image(src("banjo", "icon.jpg")));
+	pictures.put("cover", new Image(src("banjo", "cover.png")));
+	pictures.put("contextual", new Image(src("banjo", "contextual.jpg")));
 
 	object.setSampleSrc(src("banjo", "sample.mp3"));
 	object.setWaveformSrc(src("banjo", "waveform.png"));
@@ -122,9 +121,9 @@ public class AtlasDaoTest {
 
 	AtlasObject persistedInstrument = dao.getAtlasObject(object.getId());
 
-	assertThat(persistedInstrument.getImages().get(0).getFileName(), equalTo("icon.jpg"));
-	assertThat(persistedInstrument.getImages().get(1).getFileName(), equalTo("thumbnail.png"));
-	assertThat(persistedInstrument.getImages().get(2).getFileName(), equalTo("picture.jpg"));
+	assertThat(persistedInstrument.getImages().get("icon").getFileName(), equalTo("icon.jpg"));
+	assertThat(persistedInstrument.getImages().get("cover").getFileName(), equalTo("cover.png"));
+	assertThat(persistedInstrument.getImages().get("contextual").getFileName(), equalTo("contextual.jpg"));
 
 	assertThat(persistedInstrument.getSampleName(), equalTo("sample.mp3"));
 	assertThat(persistedInstrument.getWaveformName(), equalTo("waveform.png"));
@@ -146,17 +145,18 @@ public class AtlasDaoTest {
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 
-	List<Image> pictures = new ArrayList<>();
-	object.setImages(pictures);
-	pictures.add(new Image(src("banjo", "icon.jpg")));
-	pictures.add(new Image(src("banjo", "thumbnail.png")));
-	pictures.add(new Image(src("banjo", "picture.jpg")));
+	Map<String, Image> images = new HashMap<>();
+	object.setImages(images);
+	images.put("icon", new Image(src("banjo", "icon.jpg")));
+	images.put("cover", new Image(src("banjo", "cover.png")));
+	images.put("featured", new Image(src("banjo", "featured.png")));
+	images.put("contextual", new Image(src("banjo", "contextual.jpg")));
 
 	dao.saveAtlasObject(object);
 
-	AtlasObject dbInstrument = dao.getAtlasObject(object.getId());
-	assertThat(dbInstrument.getSampleName(), nullValue());
-	assertThat(dbInstrument.getWaveformName(), nullValue());
+	AtlasObject dbObject = dao.getAtlasObject(object.getId());
+	assertThat(dbObject.getSampleName(), nullValue());
+	assertThat(dbObject.getWaveformName(), nullValue());
 
 	object.setSampleSrc(src("banjo", "sample.mp3"));
 	object.setWaveformSrc(src("banjo", "waveform.png"));
@@ -164,14 +164,15 @@ public class AtlasDaoTest {
 	assertThat(object.getId(), not(equalTo(0)));
 	dao.saveAtlasObject(object);
 
-	dbInstrument = dao.getAtlasObject(object.getId());
+	dbObject = dao.getAtlasObject(object.getId());
 
-	assertThat(dbInstrument.getImages().get(0).getFileName(), equalTo("icon.jpg"));
-	assertThat(dbInstrument.getImages().get(1).getFileName(), equalTo("thumbnail.png"));
-	assertThat(dbInstrument.getImages().get(2).getFileName(), equalTo("picture.jpg"));
+	assertThat(dbObject.getImage("icon").getFileName(), equalTo("icon.jpg"));
+	assertThat(dbObject.getImage("cover").getFileName(), equalTo("cover.png"));
+	assertThat(dbObject.getImage("featured").getFileName(), equalTo("featured.png"));
+	assertThat(dbObject.getImage("contextual").getFileName(), equalTo("contextual.jpg"));
 
-	assertThat(dbInstrument.getSampleName(), equalTo("sample.mp3"));
-	assertThat(dbInstrument.getWaveformName(), equalTo("waveform.png"));
+	assertThat(dbObject.getSampleName(), equalTo("sample.mp3"));
+	assertThat(dbObject.getWaveformName(), equalTo("waveform.png"));
     }
 
     @Test
@@ -180,10 +181,10 @@ public class AtlasDaoTest {
 
 	assertThat(instrument.getImages(), notNullValue());
 	assertThat(instrument.getImages().size(), equalTo(4));
-	assertThat(instrument.getImages().get(0).getSrc(), equalTo(src("accordion", "icon.jpg")));
-	assertThat(instrument.getImages().get(1).getSrc(), equalTo(src("accordion", "piano-accordion.png")));
-	assertThat(instrument.getImages().get(2).getSrc(), equalTo(src("accordion", "button-accordion.png")));
-	assertThat(instrument.getImages().get(3).getSrc(), equalTo(src("accordion", "image.jpg")));
+	assertThat(instrument.getImage("icon").getSrc(), equalTo(src("accordion", "icon.jpg")));
+	assertThat(instrument.getImage("cover").getSrc(), equalTo(src("accordion", "piano-accordion.png")));
+	assertThat(instrument.getImage("featured").getSrc(), equalTo(src("accordion", "button-accordion.png")));
+	assertThat(instrument.getImage("contextual").getSrc(), equalTo(src("accordion", "image.jpg")));
 
 	assertThat(instrument.getSampleSrc(), equalTo(src("accordion", "sample.mp3")));
 	assertThat(instrument.getWaveformSrc(), equalTo(src("accordion", "waveform.png")));
@@ -232,14 +233,14 @@ public class AtlasDaoTest {
 
 	assertThat(object.getImages(), notNullValue());
 	assertThat(object.getImages().size(), equalTo(4));
-	assertThat(object.getImages().get(0).getFileName(), equalTo("icon.jpg"));
-	assertThat(object.getImages().get(0).getSrc(), equalTo(src("accordion", "icon.jpg")));
-	assertThat(object.getImages().get(1).getFileName(), equalTo("piano-accordion.png"));
-	assertThat(object.getImages().get(1).getSrc(), equalTo(src("accordion", "piano-accordion.png")));
-	assertThat(object.getImages().get(2).getFileName(), equalTo("button-accordion.png"));
-	assertThat(object.getImages().get(2).getSrc(), equalTo(src("accordion", "button-accordion.png")));
-	assertThat(object.getImages().get(3).getFileName(), equalTo("image.jpg"));
-	assertThat(object.getImages().get(3).getSrc(), equalTo(src("accordion", "image.jpg")));
+	assertThat(object.getImages().get("icon").getFileName(), equalTo("icon.jpg"));
+	assertThat(object.getImages().get("icon").getSrc(), equalTo(src("accordion", "icon.jpg")));
+	assertThat(object.getImages().get("cover").getFileName(), equalTo("piano-accordion.png"));
+	assertThat(object.getImages().get("cover").getSrc(), equalTo(src("accordion", "piano-accordion.png")));
+	assertThat(object.getImages().get("featured").getFileName(), equalTo("button-accordion.png"));
+	assertThat(object.getImages().get("featured").getSrc(), equalTo(src("accordion", "button-accordion.png")));
+	assertThat(object.getImages().get("contextual").getFileName(), equalTo("image.jpg"));
+	assertThat(object.getImages().get("contextual").getSrc(), equalTo(src("accordion", "image.jpg")));
 
 	assertThat(object.getClassification(), notNullValue());
 	assertThat(object.getClassification().keySet(), not(empty()));
@@ -321,12 +322,12 @@ public class AtlasDaoTest {
 	object.setSampleSrc(src("banjo", "sample.mp3"));
 	object.setWaveformSrc(src("banjo", "waveform.png"));
 
-	List<Image> pictures = new ArrayList<>();
-	object.setImages(pictures);
-	pictures.add(new Image(src("banjo", "icon.jpg")));
-	pictures.add(new Image(src("banjo", "contextual.jpg")));
-	pictures.add(new Image(src("banjo", "cover.png")));
-	pictures.add(new Image(src("banjo", "featured.png")));
+	Map<String, Image> images = new HashMap<>();
+	object.setImages(images);
+	images.put("icon", new Image(src("banjo", "icon.jpg")));
+	images.put("cover", new Image(src("banjo", "cover.png")));
+	images.put("contextual", new Image(src("banjo", "contextual.jpg")));
+	images.put("featured", new Image(src("banjo", "featured.png")));
 
 	Map<String, String> classification = new HashMap<>();
 	classification.put("Classification", InstrumentCategory.STRINGS.name());
@@ -393,14 +394,14 @@ public class AtlasDaoTest {
 
 	assertThat(expected.getImages(), notNullValue());
 	assertThat(expected.getImages().size(), equalTo(4));
-	assertThat(expected.getImages().get(0).getFileName(), equalTo("icon.jpg"));
-	assertThat(expected.getImages().get(0).getSrc(), equalTo(src("banjo", "icon.jpg")));
-	assertThat(expected.getImages().get(1).getFileName(), equalTo("contextual.jpg"));
-	assertThat(expected.getImages().get(1).getSrc(), equalTo(src("banjo", "contextual.jpg")));
-	assertThat(expected.getImages().get(2).getFileName(), equalTo("cover.png"));
-	assertThat(expected.getImages().get(2).getSrc(), equalTo(src("banjo", "cover.png")));
-	assertThat(expected.getImages().get(3).getFileName(), equalTo("featured.png"));
-	assertThat(expected.getImages().get(3).getSrc(), equalTo(src("banjo", "featured.png")));
+	assertThat(expected.getImage("icon").getFileName(), equalTo("icon.jpg"));
+	assertThat(expected.getImage("icon").getSrc(), equalTo(src("banjo", "icon.jpg")));
+	assertThat(expected.getImage("contextual").getFileName(), equalTo("contextual.jpg"));
+	assertThat(expected.getImage("contextual").getSrc(), equalTo(src("banjo", "contextual.jpg")));
+	assertThat(expected.getImage("cover").getFileName(), equalTo("cover.png"));
+	assertThat(expected.getImage("cover").getSrc(), equalTo(src("banjo", "cover.png")));
+	assertThat(expected.getImage("featured").getFileName(), equalTo("featured.png"));
+	assertThat(expected.getImage("featured").getSrc(), equalTo(src("banjo", "featured.png")));
 
 	assertThat(expected.getClassification(), notNullValue());
 	assertThat(expected.getClassification().keySet(), not(empty()));
@@ -484,7 +485,6 @@ public class AtlasDaoTest {
 	assertThat(object.getIconSrc(), equalTo(src("accordion", "icon_96x96.jpg")));
     }
 
-
     @Test
     public void findObjectsByName_EmptyNames() {
 	List<String> emptyNames = new ArrayList<>(0);
@@ -492,7 +492,7 @@ public class AtlasDaoTest {
 	assertThat(objects, notNullValue());
 	assertThat(objects, empty());
     }
-    
+
     public void getInstrumentsByCategory() {
 	List<AtlasItem> items = dao.getCollectionItems(1);
 	assertThat(items, notNullValue());
@@ -547,44 +547,16 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void getPictureByFileName() {
-	Image picture = dao.getPictureByName(1, "icon");
-	assertThat(picture, notNullValue());
-	assertThat(picture.getName(), equalTo("icon"));
-	assertThat(picture.getSource(),
+    public void getImageByKey() {
+	Image image = dao.getImageByKey(1, "icon");
+	assertThat(image, notNullValue());
+	assertThat(image.getImageKey(), equalTo("icon"));
+	assertThat(image.getSource(),
 		equalTo("https://upload.wikimedia.org/wikipedia/commons/f/f5/Paris_-_Accordion_Player_-_0956.jpg"));
-	assertThat(picture.getFileName(), equalTo("icon.jpg"));
-	assertThat(picture.getFileSize(), equalTo(12345));
-	assertThat(picture.getWidth(), equalTo(96));
-	assertThat(picture.getHeight(), equalTo(96));
-    }
-
-    @Test
-    public void pictureReoder() {
-	AtlasObject instrument = dao.getAtlasObject(1);
-	assertThat(instrument, notNullValue());
-
-	List<Image> pictures = instrument.getImages();
-	assertThat(pictures, notNullValue());
-	assertThat(pictures.size(), equalTo(4));
-	assertThat(pictures.get(0).getName(), equalTo("icon"));
-	assertThat(pictures.get(1).getName(), equalTo("piano-accordion"));
-	assertThat(pictures.get(2).getName(), equalTo("button-accordion"));
-	assertThat(pictures.get(3).getName(), equalTo("image"));
-
-	Collections.swap(pictures, 0, 2);
-	dao.saveAtlasObject(instrument);
-
-	instrument = dao.getAtlasObject(1);
-	assertThat(instrument, notNullValue());
-
-	pictures = instrument.getImages();
-	assertThat(pictures, notNullValue());
-	assertThat(pictures.size(), equalTo(4));
-	assertThat(pictures.get(0).getName(), equalTo("button-accordion"));
-	assertThat(pictures.get(1).getName(), equalTo("piano-accordion"));
-	assertThat(pictures.get(2).getName(), equalTo("icon"));
-	assertThat(pictures.get(3).getName(), equalTo("image"));
+	assertThat(image.getFileName(), equalTo("icon.jpg"));
+	assertThat(image.getFileSize(), equalTo(12345));
+	assertThat(image.getWidth(), equalTo(96));
+	assertThat(image.getHeight(), equalTo(96));
     }
 
     // ----------------------------------------------------------------------------------------------

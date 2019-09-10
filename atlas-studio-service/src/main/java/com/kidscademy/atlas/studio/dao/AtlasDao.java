@@ -19,7 +19,7 @@ public interface AtlasDao {
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(int collectionId);
-    
+
     /**
      * Persist or merge AtlasObject entity, depending on ID value. If ID is zero
      * instance is considered never created into database and
@@ -42,7 +42,7 @@ public interface AtlasDao {
     void saveAtlasObject(AtlasObject object);
 
     AtlasItem getAtlasItem(int objectId);
-    
+
     AtlasObject getAtlasObject(int objectId);
 
     AtlasObject getObjectByName(String collectionName, String name);
@@ -59,11 +59,21 @@ public interface AtlasDao {
 
     void resetObjectSample(int objectId);
 
-    void removeObjectPicture(int objectId, Image picture);
+    void removeObjectImage(int objectId, Image image);
 
-    void addObjectPicture(int objectId, Image picture);
+    void addObjectImage(int objectId, Image image);
 
-    Image getPictureByName(int objectId, String name);
+    /**
+     * Get atlas object image identified by its key. Key value is unique per atlas
+     * object. Return null if atlas object has no image with requested key value.
+     * 
+     * @param objectId
+     *            database primary key for atlas object owning the image,
+     * @param imageKey
+     *            image key value, unique per atlas object.
+     * @return atlas object image or null.
+     */
+    Image getImageByKey(int objectId, String imageKey);
 
     User getUserById(int userId);
 

@@ -16,8 +16,8 @@
 	<cancel>Cancel</cancel>
 	<three-no>3xNO</three-no>
 	<message>Mesage for script variable.</message>
-	<confirm-picture-remove>Please confirm object picture remove.</confirm-picture-remove>
-	<confirm-picture-rollback>Please confirm object picture rollback.</confirm-picture-rollback>
+	<confirm-image-remove>Please confirm object picture remove.</confirm-image-remove>
+	<confirm-image-rollback>Please confirm object picture rollback.</confirm-image-rollback>
 
 	<published-object>Published Object</published-object>
 

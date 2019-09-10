@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.persistence.Cacheable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
@@ -16,20 +14,17 @@ import com.kidscademy.atlas.studio.util.Files;
 
 import js.core.Factory;
 
-@Entity
+@Embeddable
 @Cacheable
 public class Image {
-    public static final String TYPE_ICON = "icon";
-    public static final String TYPE_COVER = "cover";
-    public static final String TYPE_FEATURED = "featured";
-    public static final String TYPE_CONTEXTUAL = "contextual";
+    public static final String KEY_ICON = "icon";
+    public static final String KEY_COVER = "cover";
+    public static final String KEY_FEATURED = "featured";
+    public static final String KEY_CONTEXTUAL = "contextual";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    /** Picture name, unique per atlas object. */
-    private String name;
+    /** Image key is unique per atlas object. */
+    @Column(insertable = false, updatable = false)
+    private String imageKey;
 
     private Date uploadDate;
 
@@ -68,16 +63,26 @@ public class Image {
      */
     public Image(MediaSRC src) {
 	this.src = src;
-	this.name = Files.basename(src.fileName());
+	this.imageKey = Files.basename(src.fileName());
 	this.uploadDate = new Date();
     }
 
-    public String getName() {
-	return name;
+    public void postLoad(AtlasObject object) {
+	src = Files.mediaSrc(object, fileName);
     }
 
-    public void setName(String name) {
-	this.name = name;
+    public void postMerge(Image source) {
+	if (fileName == null && source.src != null) {
+	    fileName = source.src.fileName();
+	}
+    }
+
+    public String getImageKey() {
+	return imageKey;
+    }
+
+    public void setImageKey(String imageKey) {
+	this.imageKey = imageKey;
     }
 
     public Date getUploadDate() {
@@ -144,18 +149,8 @@ public class Image {
 	return src;
     }
 
-    public void postLoad(AtlasObject object) {
-	src = Files.mediaSrc(object, fileName);
-    }
-
-    public void postMerge(Image source) {
-	if (fileName == null && source.src != null) {
-	    fileName = source.src.fileName();
-	}
-    }
-
     public void updateIcon(AtlasItem object) throws IOException {
-	if (TYPE_ICON.equals(name)) {
+	if (KEY_ICON.equals(imageKey)) {
 	    File pictureFile = Files.mediaFile(object, fileName);
 	    File iconFile = icon(object, fileName);
 	    ImageProcessor image = Factory.getInstance(ImageProcessor.class);
@@ -164,7 +159,7 @@ public class Image {
     }
 
     public void removeIcon(AtlasItem object) throws IOException {
-	if (TYPE_ICON.equals(name)) {
+	if (KEY_ICON.equals(imageKey)) {
 	    File icon = icon(object, fileName);
 	    if (icon.exists() && !icon.delete()) {
 		throw new IOException(String.format("Unable to remove icon file |%s|.", icon.getName()));
@@ -185,7 +180,7 @@ public class Image {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((imageKey == null) ? 0 : imageKey.hashCode());
 	return result;
     }
 
@@ -198,16 +193,16 @@ public class Image {
 	if (getClass() != obj.getClass())
 	    return false;
 	Image other = (Image) obj;
-	if (name == null) {
-	    if (other.name != null)
+	if (imageKey == null) {
+	    if (other.imageKey != null)
 		return false;
-	} else if (!name.equals(other.name))
+	} else if (!imageKey.equals(other.imageKey))
 	    return false;
 	return true;
     }
 
     @Override
     public String toString() {
-	return name;
+	return fileName;
     }
 }

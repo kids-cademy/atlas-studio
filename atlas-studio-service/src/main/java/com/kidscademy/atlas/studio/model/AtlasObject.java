@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -16,10 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
@@ -85,10 +82,9 @@ public class AtlasObject implements CollectionItem {
      * instrument it contains a player using the instrument. It has 16:9 aspect
      * ration and usually is 920x560 pixels.
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    @OrderColumn
-    private List<Image> images;
+    @ElementCollection
+    @MapKeyColumn(name = "imageKey")
+    private Map<String, Image> images;
 
     @ElementCollection
     private Map<String, String> classification;
@@ -187,28 +183,28 @@ public class AtlasObject implements CollectionItem {
      * context. Source instrument has media SRC properly initialized; it is not
      * attached to persistence context.
      * 
-     * @param source
+     * @param sourceObject
      *            unmanaged source atlas object.
      * @see Instrument
      */
-    public void postMerge(AtlasObject source) {
+    public void postMerge(AtlasObject sourceObject) {
 	if (images != null) {
-	    for (int i = 0; i < images.size(); ++i) {
-		images.get(i).postMerge(source.getImages().get(i));
+	    for (Map.Entry<String, Image> entry : images.entrySet()) {
+		entry.getValue().postMerge(sourceObject.getImage(entry.getKey()));
 	    }
 	}
 
 	if (links != null) {
 	    for (int i = 0; i < links.size(); ++i) {
-		links.get(i).postMerge(source.links.get(i));
+		links.get(i).postMerge(sourceObject.links.get(i));
 	    }
 	}
 
-	if (sampleName == null && source.sampleSrc != null) {
-	    sampleName = source.sampleSrc.fileName();
+	if (sampleName == null && sourceObject.sampleSrc != null) {
+	    sampleName = sourceObject.sampleSrc.fileName();
 	}
-	if (waveformName == null && source.waveformSrc != null) {
-	    waveformName = source.waveformSrc.fileName();
+	if (waveformName == null && sourceObject.waveformSrc != null) {
+	    waveformName = sourceObject.waveformSrc.fileName();
 	}
     }
 
@@ -237,7 +233,7 @@ public class AtlasObject implements CollectionItem {
     public void postLoad() {
 	// database contains only media file names; convert to root-relative URLs, aka
 	// SRC
-	for (Image picture : images) {
+	for (Image picture : images.values()) {
 	    picture.postLoad(this);
 	}
 
@@ -316,11 +312,15 @@ public class AtlasObject implements CollectionItem {
 	this.name = name;
     }
 
-    public List<Image> getImages() {
+    public Image getImage(String imageName) {
+	return images.get(imageName);
+    }
+
+    public Map<String, Image> getImages() {
 	return images;
     }
 
-    public void setImages(List<Image> pictures) {
+    public void setImages(Map<String, Image> pictures) {
 	this.images = pictures;
     }
 
