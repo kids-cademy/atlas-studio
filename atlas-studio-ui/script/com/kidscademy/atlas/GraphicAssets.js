@@ -162,9 +162,18 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 		});
 	}
 
-	_onDuplicate() {
-		this._metaFormData.enable("image-key");
-		this._metaFormData.show();
+	_onCloneToIcon() {
+		AtlasService.cloneImageToIcon(this._formPage.getAtlasItem(), this._currentImage, image => {
+			this._imagesControl.addImage(image);
+			this._onImageSelected(image);
+			
+			// before firering 'crop' action wait for image loading
+			// timeout value is determined heuristically
+			// better solution would be 'load' event on image
+			setTimeout(function () {
+				this._actions.fire("crop");
+			}.bind(this), 500);
+		});
 	}
 
 	_onEdit() {
@@ -220,18 +229,6 @@ com.kidscademy.atlas.GraphicAssets = class extends js.dom.Element {
 	 */
 	_onDone() {
 		switch (this._actions.getPreviousAction()) {
-			case "duplicate":
-				const duplicateImage = this._metaFormData.getObject();
-				duplicateImage.fileName = this._currentImage.fileName;
-				duplicateImage.src = this._currentImage.src;
-				AtlasService.duplicateImage(this._formPage.getAtlasItem(), duplicateImage, image => {
-					this._currentImage = image;
-					this._imagesControl.addImage(image);
-					this._metaFormData.hide();
-					this._closeImageEditor();
-				});
-				break;
-
 			case "crop":
 				const crop = this._cropMask.getCropArea();
 				this._cropMask.hide();

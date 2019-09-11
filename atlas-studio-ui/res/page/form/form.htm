@@ -14,12 +14,14 @@
 
 <div w:template="page/template#side-bar" class="object-form" xmlns:w="js-lib.com/wood">
 	<div class="header">
-		<img data-src="images.icon.src" data-default="@image/default-icon" />
-		<h1 class="side-name" data-text="display"></h1>
-		<h2 class="last-updated" data-text="last-updated" data-format="js.format.StandardDateTime"></h2>
-		<h3 class="checkbox published-object" data-class="com.kidscademy.Checkbox" data-text="state">
+		<div class="clear">
+			<img data-src="images.icon.src" data-default="@image/default-icon" />
+			<h4 class="side-name" data-text="display"></h4>
+			<h5 class="last-updated" data-text="last-updated" data-format="js.format.StandardDateTime"></h5>
+		</div>
+		<h4 class="checkbox published-object" data-class="com.kidscademy.Checkbox" data-text="state">
 			<span class="control"></span><span>@string/published-object</span>
-		</h3>
+		</h4>
 	</div>
 	
 	<ul class="developers inline hidden">
@@ -38,6 +40,7 @@
 		<li data-name="spreading"><img src="@image/action/spreading" />@string/object-spreading<span class="state"></span></li>
 		<li data-name="related"><img src="@image/action/related" />@string/object-related<span class="state"></span></li>
 		<li data-name="links"><img src="@image/action/link" />@string/object-links<span class="state"></span></li>
+		<li class="preview"><img src="@image/action/preview" />@string/object-preview<span class="state"></span></li>
 	</ul>
 	
 	<div class="container buttons-bar">

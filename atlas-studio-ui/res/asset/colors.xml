@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <color>
+	<text>white</text>
+	<mute>#E0E0E0</mute>
+	<accent>yellow</accent>
+	<rule>rgba(255, 255, 255, 0.5)</rule>
+	<white-t50>rgba(255, 255, 255, 0.5)</white-t50>
+	<black-t10>rgba(0, 0, 0, 0.0625)</black-t10>
+	<black-t20>rgba(0, 0, 0, 0.125)</black-t20>
+	<black-t50>rgba(0, 0, 0, 0.312)</black-t50>
+	<black-t80>rgba(0, 0, 0, 0.5)</black-t80>
+	<hexa-icon>rgba(100, 199, 204, 0.7)</hexa-icon>
+	
+	<palette-1>#006064</palette-1>
+	<palette-2>#00838f</palette-2>
+	<palette-3>#0097a7</palette-3>
+	<palette-4>#00acc1</palette-4>
+	<palette-5>#00bcd4</palette-5>
+	<palette-6>#26c6da</palette-6>
+	<palette-7>#4dd0e1</palette-7>
+	<palette-8>#80deea</palette-8>
+	<palette-9>#b2ebf2</palette-9>
+	<palette-10>#e0f7fa</palette-10>
+
 	<page-header-bg>#000000</page-header-bg>
 	<page-header-link>#80A0A0</page-header-link>
 	<page-header-link-hover>#000000</page-header-link-hover>

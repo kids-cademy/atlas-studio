@@ -62,7 +62,7 @@ public interface AtlasService {
      */
     Image uploadImageBySource(Form form) throws IOException, BusinessException;
 
-    Image duplicateImage(AtlasItem object, Image image) throws IOException;
+    Image cloneImageToIcon(AtlasItem object, Image image) throws IOException;
     
     Image trimImage(AtlasItem object, Image image) throws IOException;
 

@@ -27,6 +27,8 @@ public class AtlasItem implements CollectionItem {
 
     private String name;
     private String display;
+    private String definition;
+    private AtlasObject.State state;
     
     /**
      * Media file name for object icon. Object icon has a small dimension and has
@@ -80,6 +82,14 @@ public class AtlasItem implements CollectionItem {
 
     public String getDisplay() {
 	return display;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public AtlasObject.State getState() {
+        return state;
     }
 
     public String getIconName() {

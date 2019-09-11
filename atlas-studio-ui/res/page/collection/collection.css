@@ -2,9 +2,6 @@
 	
 }
 
-
-
-
 .collection.side-bar {
 }
 
@@ -39,10 +36,6 @@
 	font-size: 1.3rem;
 	xcolor: @color/black;
 }
-
-
-
-
 
 .collection.side-menu .actions {
 	padding-top: 20px;
@@ -117,4 +110,8 @@
 .collection.side-menu .actions li:nth-child(8) {
 	border-left-color: @color/cyan-300;
 	background-color: @color/cyan-50;
+}
+
+.collection .list-view li.published img {
+	border-color: green;
 }

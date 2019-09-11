@@ -16,7 +16,7 @@
 
 .object-form.side-bar .header img {
 	float: left;
-	width: 64px;
+	width: @dimen/icon-size;
 	margin-right: 10px;
 	padding: 1px;
 	border: solid 1px @color/border-muted;
@@ -26,7 +26,7 @@
 .object-form.side-bar .side-name {
 	margin: 0;
 	border-bottom: solid 1px @color/border-muted;
-	font-size: 2.0rem;
+	xfont-size: 1.8rem;
 	color: black;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -34,7 +34,7 @@
 
 .object-form.side-bar .last-updated {
 	margin: 8px 0;
-	font-size: 1.3rem;
+	xfont-size: 1.3rem;
 	xcolor: @color/black;
 }
 
@@ -42,7 +42,7 @@
 	display: block;
 	padding: 0;
 	margin: 40px 0 0 0;
-	font-size: 1.8rem;
+	xfont-size: 1.8rem;
 }
 
 .object-form.side-bar .published-object span {

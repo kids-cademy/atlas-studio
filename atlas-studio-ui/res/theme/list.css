@@ -58,7 +58,7 @@ ul.list-view li img {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
-	border: solid 1px #E6E6E6;
+	border: solid 2px #E6E6E6;
 	cursor: pointer;
 }
 
@@ -164,4 +164,19 @@ ul.side-menu li:nth-child(8) {
 ul.side-menu li:nth-child(9) {
 	border-right-color: @color/teal-300;
 	background-color: @color/teal-50;
+}
+
+ul.side-menu li:nth-child(10) {
+	border-right-color: @color/green-300;
+	background-color: @color/green-50;
+}
+
+ul.side-menu li:nth-child(11) {
+	border-right-color: @color/light-green-300;
+	background-color: @color/light-green-50;
+}
+
+ul.side-menu li:nth-child(12) {
+	border-right-color: @color/lime-300;
+	background-color: @color/lime-50;
 }

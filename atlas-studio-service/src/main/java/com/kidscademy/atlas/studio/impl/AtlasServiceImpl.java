@@ -222,19 +222,21 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Image duplicateImage(AtlasItem atlasItem, Image image) throws IOException {
-	// by convention image key is used as image file base name
-	File targetFile = Files.mediaFile(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
-	targetFile.getParentFile().mkdirs();
-	targetFile.delete();
+    public Image cloneImageToIcon(AtlasItem atlasItem, Image image) throws IOException {
+	image.setImageKey(Image.KEY_ICON);
 
-	Files.copy(Files.mediaFile(image.getSrc()), targetFile);
+	// by convention image key is used as image file base name
+	File iconFile = Files.mediaFile(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
+	iconFile.getParentFile().mkdirs();
+	iconFile.delete();
+
+	Files.copy(Files.mediaFile(image.getSrc()), iconFile);
 
 	image.setUploadDate(new Date());
-	image.setFileName(targetFile.getName());
+	image.setFileName(iconFile.getName());
 	atlasDao.addObjectImage(atlasItem.getId(), image);
 
-	updateImage(image, targetFile, Files.mediaSrc(atlasItem, targetFile.getName()));
+	updateImage(image, iconFile, Files.mediaSrc(atlasItem, iconFile.getName()));
 	return image;
     }
 

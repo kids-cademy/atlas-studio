@@ -1,0 +1,19 @@
+.description {
+	width: 600px;
+}
+
+.description .section {
+	padding-right: @dimen/paragraph-space;
+}
+
+.description .circle.large {
+	width: 265px;
+	height: 265px;
+	top: 20%;
+	right: 0;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.description p:first-of-type {
+	margin: 0;
+}

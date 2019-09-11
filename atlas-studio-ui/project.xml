@@ -30,6 +30,7 @@
 		<font>http://fonts.googleapis.com/css?family=Helvetica+Neue</font>
 		<font>http://fonts.googleapis.com/css?family=Open+Sans</font>
 		<font>http://fonts.googleapis.com/css?family=Great+Vibes</font>
+		<font>https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap</font>
 	</fonts>
 
 	<excludes>page/account, page/media</excludes>

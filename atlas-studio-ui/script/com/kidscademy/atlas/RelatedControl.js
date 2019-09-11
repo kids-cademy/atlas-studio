@@ -41,7 +41,7 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 		const collectionId = this._formPage.getCollection().id;
 		AtlasService.getRelatedAtlasObjects(collectionId, names, objects => {
 			objects.forEach(object => object.href = `@link/admin-object?id=${object.id}`);
-			this._relatedView.setObject(objects)
+			this._relatedView.setObject(objects);
 		});
 	}
 

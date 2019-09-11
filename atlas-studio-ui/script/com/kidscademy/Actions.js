@@ -16,6 +16,8 @@ com.kidscademy.Actions = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		this._actionHandlers = {};
+
 		/**
 		 * Name of the action executed previous to current one, possible null if no operation was invoked yet. This value is updated
 		 * after every action handler invocation.
@@ -52,6 +54,8 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			}.bind(container);
 
 			child.on("click", actionHandler, container);
+
+			this._actionHandlers[name] = actionHandler;
 		});
 		return this;
 	}
@@ -103,6 +107,10 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 	getPreviousAction() {
 		return this._previousAction;
+	}
+
+	fire(name) {
+		this._actionHandlers[name]();
 	}
 
 	_isAction(child) {

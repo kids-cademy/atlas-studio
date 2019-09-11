@@ -325,7 +325,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Duplicate image.
+	 * Clone image to icon.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
 	 * @param com.kidscademy.atlas.studio.model.Image image,
@@ -335,20 +335,20 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 duplicateImage: function(object, image) {
-		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Object argument is undefined.");
-		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Image argument is undefined.");
+	 cloneImageToIcon: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cloneImageToIcon", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#cloneImageToIcon", "Image argument is undefined.");
 
 		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#cloneImageToIcon", "Callback is not a function.");
 		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#duplicateImage", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#cloneImageToIcon", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "duplicateImage");
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "cloneImageToIcon");
 		rmi.setParameters(object, image);
 		rmi.exec(__callback__, __scope__);
 	},

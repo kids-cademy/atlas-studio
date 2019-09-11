@@ -1,0 +1,87 @@
+.facts {
+	width: 750px;	
+}
+
+.facts .item {
+	list-style: none;
+	position: relative;
+	width: 100%;
+	padding-top: 10px;	
+	margin-bottom: @dimen/divider-size;
+	background: none !important;
+}
+
+.facts .item .rule {
+	position: absolute;
+	left: @eval(mul @dimen/bullet-size 0.55);	
+}
+
+.facts .item .circle {
+	position: absolute;
+	width: @dimen/bullet-size;
+	height: @dimen/bullet-size;
+	margin-top: 10px;
+	background-color: @color/white-t50;
+}
+
+.facts .item:nth-child(1) .circle {
+	background-color: @color/palette-1;
+}
+
+.facts .item:nth-child(2) .circle {
+	background-color: @color/palette-2;
+}
+
+.facts .item:nth-child(3) .circle {
+	background-color: @color/palette-3;
+}
+
+.facts .item:nth-child(4) .circle {
+	background-color: @color/palette-4;
+}
+
+.facts .item:nth-child(5) .circle {
+	background-color: @color/palette-5;
+}
+
+.facts .item:nth-child(6) .circle {
+	background-color: @color/palette-6;
+}
+
+.facts .item:nth-child(7) .circle {
+	background-color: @color/palette-7;
+}
+
+.facts .item:nth-child(8) .circle {
+	background-color: @color/palette-8;
+}
+
+.facts .item:nth-child(9) .circle {
+	background-color: @color/palette-9;
+}
+
+.facts .item:nth-child(10) .circle {
+	background-color: @color/palette-10;
+}
+
+.facts .item .name {
+	height: @dimen/bullet-size;
+	line-height: @dimen/bullet-size;
+	margin: 10px 0 10px 0;
+	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
+	color: @color/text;
+	font-size: 1.8rem;
+	font-weight: lighter;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: left;
+}
+
+.facts .item .value {
+	margin: 0;
+	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
+	color: @color/mute;
+	font-size: 1.4rem;
+	text-align: left;
+}

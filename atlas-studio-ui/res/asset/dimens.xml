@@ -2,7 +2,7 @@
 <dimen>
 	<page-header-height>80px</page-header-height>
 	<sys-message-height>60px</sys-message-height>
-	<page-sidebar-width>320px</page-sidebar-width>
+	<page-sidebar-width>360px</page-sidebar-width>
 	
 	<container-width>1200px</container-width>
 	
@@ -33,6 +33,21 @@
 	<!-- actions -->
 	<action-icon-size>48px</action-icon-size>
 	<action-margin>20px</action-margin>
+	
+		<action-size>64px</action-size>
+	<page-padding>32px</page-padding>
+	<section-space>100px</section-space>
+	<paragraph-space>40px</paragraph-space>
+	<paragraph-indent>60px</paragraph-indent>
+	<infobox-padding>40px</infobox-padding>
+	
+	<contextual-width>860px</contextual-width>
+	<sample-title-height>85px</sample-title-height>
+	
+	<bullet-size>60px</bullet-size>
+	
+	<divider-size>4px</divider-size>
+	<hexa-icon-size>96px</hexa-icon-size>
 	
 	<icon-size>96px</icon-size>
 </dimen>

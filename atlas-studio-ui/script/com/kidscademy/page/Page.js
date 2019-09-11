@@ -37,15 +37,29 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         js.ua.System.error(this.ERRORS[er.errorCode]);
     }
 
-    _setContextAttr(name, object) {
+    setContextAttr(name, object) {
         localStorage.setItem(name, js.lang.JSON.stringify(object));
     }
 
-    _getContextAttr(name) {
-        return js.lang.JSON.parse(localStorage.getItem(name));
+    getContextAttr(name) {
+        var value = localStorage.getItem(name);
+        if (value == null) {
+            // value can be missing on development in preview mode
+            switch (name) {
+                case "objectId":
+                    value = "1";
+                    break;
+
+                case "collection":
+                    value = '{"id":1}';
+                    break;
+            }
+        }
+        return js.lang.JSON.parse(value);
     }
 
     _onBack() {
+        WinMain.back();
     }
 
     /**

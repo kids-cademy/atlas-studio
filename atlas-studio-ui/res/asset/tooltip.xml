@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tip>
 	<description-import>import object description</description-import>
-	<description-insert-picture>insert picture</description-insert-picture>
+	<description-insert-image>insert image</description-insert-image>
 
-	<graphic-add>add new picture to object</graphic-add>
-	<graphic-upload>upload picture from local storage</graphic-upload>
-	<graphic-search>search for object picture</graphic-search>
-	<graphic-link>upload object picture from internet</graphic-link>
-	<graphic-duplicate>duplicate object picture</graphic-duplicate>
-	<graphic-edit>edit meta-data for object picture</graphic-edit>
+	<graphic-add>add new image to object</graphic-add>
+	<graphic-upload>upload image from local storage</graphic-upload>
+	<graphic-search>search for object image</graphic-search>
+	<graphic-link>upload object image from internet</graphic-link>
+	<graphic-clone-to-icon>clone selected image to object icon</graphic-clone-to-icon>
+	<graphic-edit>edit meta-data for object image</graphic-edit>
 	<graphic-trim>trim unused space from image</graphic-trim>
 	<graphic-crop>crop image</graphic-crop>
-	<graphic-icon>create object icon from picture</graphic-icon>
+	<graphic-icon>create object icon from image</graphic-icon>
 	<graphic-flop>flop, mirror image vertically</graphic-flop>
 	<graphic-flip>flip, mirror image horizontally</graphic-flip>
 	<graphic-done>commit current operation</graphic-done>
 	<graphic-undo>undo last image processing</graphic-undo>
-	<graphic-close>close image editor and cancel all picture transforms</graphic-close>
-	<graphic-remove>remove picture</graphic-remove>
+	<graphic-close>close image editor and cancel all image transforms</graphic-close>
+	<graphic-remove>remove image</graphic-remove>
 
 	<audio-upload>upload audio sample</audio-upload>
 	<audio-cut>cut 30 seconds sample from current progress position</audio-cut>

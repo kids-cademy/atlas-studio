@@ -1,0 +1,30 @@
+/* original source code https://csshexagon.com/ */
+/* magic numbers are computed using values from site */
+/* this style file uses @dimen/hexa-icon-size and @color/hexa-icon variables */
+
+.hexagon {
+	position: relative;
+  	width: @dimen/hexa-icon-size; 
+  	height: @eval(mul @dimen/hexa-icon-size 0.57739583);
+  	background-color: @color/hexa-icon;
+  	margin: @eval(mul @dimen/hexa-icon-size 0.28864583) 0;
+}
+
+.hexagon:before, .hexagon:after {
+  	position: absolute;
+  	width: 0;
+	content: "";
+  	border-left: @eval(mul @dimen/hexa-icon-size 0.5) solid transparent;
+  	border-right: @eval(mul @dimen/hexa-icon-size 0.5) solid transparent;
+}
+
+.hexagon:before {
+  	bottom: 100%;
+  	border-bottom: @eval(mul @dimen/hexa-icon-size 0.28864583) solid @color/hexa-icon;
+}
+
+.hexagon:after {
+  	top: 100%;
+  	width: 0;
+  	border-top: @eval(mul @dimen/hexa-icon-size 0.28864583) solid @color/hexa-icon;
+}

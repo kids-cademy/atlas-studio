@@ -15,9 +15,9 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
 
 		// current selected collection and object ID are stored on global context
-		this._collection = this._getContextAttr("collection");
+		this._collection = this.getContextAttr("collection");
 		this._atlasItem = {
-			id: Number(this._getContextAttr("objectId")),
+			id: Number(this.getContextAttr("objectId")),
 			collection: this._collection
 		}
 
@@ -84,7 +84,11 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			AtlasService.getAtlasObject(this._atlasItem.id, this._onObjectLoaded, this);
 		}
 		else {
-			this._object = {};
+			this._object = {
+				// TODO: hard coded user
+				user: { id: 1 },
+				collection: this._collection
+			};
 		}
 	}
 
@@ -127,7 +131,16 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		const quickLink = ev.target.getParentByTag("li");
 		if (quickLink != null) {
 			// by convention quick link name is fieldset ID
-			this.getById(quickLink.getAttr("data-name")).scrollIntoView();
+			const fieldsetID = quickLink.getAttr("data-name");
+			if (fieldsetID != null) {
+				this.getById(fieldsetID).scrollIntoView();
+				return;
+			}
+
+			// special handling for preview link			
+			if (ev.target.hasCssClass("preview")) {
+				WinMain.assign("reader.htm");
+			}
 		}
 	}
 

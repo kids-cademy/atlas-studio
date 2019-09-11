@@ -1,0 +1,88 @@
+.contextual {
+	width: @dimen/contextual-width;
+}
+
+.contextual .container {
+	width: 100%;
+	height: 100%;
+}
+
+.contextual .image-frame {
+	position: absolute;
+	width: 100%;
+	height: 80%;
+}
+
+.contextual .image {
+	margin-bottom: @eval(mul @dimen/sample-title-height 0.5);	
+}
+
+.contextual .title {
+	position: absolute;
+	width: 100%;
+	height: @dimen/sample-title-height;
+	line-height: @dimen/sample-title-height;
+	bottom: 20px;
+	padding: 0 10px;
+	margin: 0;
+	background: @color/black-t50;	
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.contextual .play {
+	position: absolute;
+	width: @dimen/sample-title-height;
+	height: @dimen/sample-title-height;
+	bottom: 20px;
+	right: 20px;
+}
+
+.contextual .graphics {
+	position: absolute;
+	width: 100%;
+	top: 80%;
+	bottom: 0;
+	margin: auto;
+} 
+
+.contextual .graphics .group {
+	position: absolute;
+	width: 100%;
+	height: 70%;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+	
+.contextual .rule {
+	position: absolute;
+	top: 50%;
+}
+
+.contextual .graphic {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+.contextual .graphic.i1 {
+	height: 100%;
+}
+
+.contextual .graphic.i2 {
+	height: 80%;
+}
+
+.contextual .graphic.i3 {
+	height: 60%;
+}
+
+.contextual .graphic.i4 {
+	height: 40%;
+}
+
+.contextual .graphic.i5 {
+	height: 20%;
+}

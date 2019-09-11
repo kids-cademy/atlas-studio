@@ -19,6 +19,12 @@
 	float: left;
 }
 
+.clear::after {
+	content: "";
+	display: block;
+	clear: both;	
+}
+
 .inline {
 	display: inline-block;	
 }

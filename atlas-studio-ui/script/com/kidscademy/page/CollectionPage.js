@@ -12,7 +12,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	constructor() {
 		super();
 		// current selected collection is stored on global context
-		const collection = this._getContextAttr("collection");
+		const collection = this.getContextAttr("collection");
 
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onListClick, this);
@@ -54,7 +54,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_openObjectForm(objectId) {
 		// store selected object ID on global context to make it available to form page
-		this._setContextAttr("objectId", objectId);
+		this.setContextAttr("objectId", objectId);
 		WinMain.assign("form.htm");
 	}
 

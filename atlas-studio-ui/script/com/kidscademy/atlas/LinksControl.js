@@ -20,7 +20,8 @@ com.kidscademy.atlas.LinksControl = class extends js.dom.Control {
 		 * Link objects collection.
 		 * @type {Array}
 		 */
-		this._links = null;
+		this._links = [];
+		
 		/**
 		 * Index on link objects collection for currently edited link, -1 if not in edit mode.
 		 */

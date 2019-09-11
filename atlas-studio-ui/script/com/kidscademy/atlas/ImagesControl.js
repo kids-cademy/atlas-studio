@@ -35,7 +35,11 @@ com.kidscademy.atlas.ImagesControl = class extends js.dom.Control {
 		var images = {};
 		this.getChildren().map(element => {
 			const image = element.getUserData();
-			images[image.imageKey] = image;
+			// image can be null if atlas object is just created and its images list is empty
+			// in this case element is the image view template
+			if (image != null) {
+				images[image.imageKey] = image;
+			}
 		});
 		return images;
 	}
@@ -43,12 +47,17 @@ com.kidscademy.atlas.ImagesControl = class extends js.dom.Control {
 	addImage(image) {
 		const images = this.getValue();
 		images[image.imageKey] = image;
-		this.setObject(images);
+		this.setValue(images);
 	}
 
 	updateImage(image) {
 		const element = this.findChild(element => element.getUserData().fileName === image.fileName);
-		element.setObject(image);
+		if (element == null) {
+			this.addImage(image);
+		}
+		else {
+			element.setObject(image);
+		}
 	}
 
 	removeImage(image) {

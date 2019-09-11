@@ -1,0 +1,29 @@
+<body class="reader" w:script="com.kidscademy.page.ReaderPage" xmlns:w="js-lib.com/wood">
+	<header class="top-menu">
+		<img class="action back" src="@image/action/back" />
+		<span class="title" data-text="display"></span>
+		<span class="rfloat">
+			<img class="action" src="@image/action/search" />
+			<img class="action" src="@image/action/index" />
+			<img class="action" src="@image/action/previous" />
+			<img class="action" src="@image/action/next" />
+			<img class="action" src="@image/action/menu" />
+		</span>
+	</header>
+
+	<div class="h-scroll">
+		<div class="object-view h-linear">
+			<div w:widget="page/reader/intro"></div>
+			<div w:widget="page/reader/description"></div>
+			<div w:widget="page/reader/featured"></div>
+			<div w:widget="page/reader/infobox"></div>
+			<div w:widget="page/reader/contextual"></div>
+			<div w:widget="page/reader/facts"></div>
+			<!--<div w:widget="page/reader/features-xp"></div>-->
+			<div w:widget="page/reader/related"></div>
+			<div w:widget="page/reader/links"></div>
+		</div>
+	</div>
+	
+	<div class="scroll-mask hidden"></div>
+</body>
