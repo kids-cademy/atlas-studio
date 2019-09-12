@@ -33,10 +33,10 @@ public interface AtlasService {
      */
     AtlasObject getAtlasObject(int objectId) throws IOException;
 
-    AtlasObject getAtlasObjectByName(String name);
-
     AtlasObject saveAtlasObject(AtlasObject object) throws IOException;
 
+    void removeAtlasObject(int objectId);
+    
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames);
 
     Link createLink(Link link);

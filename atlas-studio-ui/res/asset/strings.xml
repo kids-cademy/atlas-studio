@@ -16,8 +16,11 @@
 	<cancel>Cancel</cancel>
 	<three-no>3xNO</three-no>
 	<message>Mesage for script variable.</message>
-	<confirm-image-remove>Please confirm object picture remove.</confirm-image-remove>
-	<confirm-image-rollback>Please confirm object picture rollback.</confirm-image-rollback>
+
+	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
+	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
+	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
+	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
 
 	<published-object>Published Object</published-object>
 
@@ -30,5 +33,8 @@
 	<object-spreading>Spreading</object-spreading>
 	<object-related>Related</object-related>
 	<object-links>Links</object-links>
+
 	<object-preview>Preview</object-preview>
+	<object-save>Save</object-save>
+	<object-remove>Remove</object-remove>
 </string>

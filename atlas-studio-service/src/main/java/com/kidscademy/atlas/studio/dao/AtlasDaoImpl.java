@@ -91,11 +91,11 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     @Mutable
-    public void removeObject(Object object) {
-	if (!em.contains(object)) {
-	    object = em.merge(object);
+    public void removeAtlasObject(int objectId) {
+	AtlasObject object = em.find(AtlasObject.class, objectId);
+	if (object != null) {
+	    em.remove(object);
 	}
-	em.remove(object);
     }
 
     @Override
@@ -107,18 +107,6 @@ public class AtlasDaoImpl implements AtlasDao {
 	return em.createQuery(jpql, AtlasItem.class).setParameter("collectionId", collectionId)
 		.setParameter("objectNames", objectNames).getResultList();
     }
-
-    //
-    // @Override
-    // public List<AtlasItem> getObjectsByCategory(String category) {
-    // String jpql = "select i.id from AtlasObject i where i.category=:category";
-    // List<Integer> ids = em.createQuery(jpql,
-    // Integer.class).setParameter("category", category).getResultList();
-    //
-    // jpql = "select o from UIObject o where o.id in :ids";
-    // return em.createQuery(jpql, AtlasItem.class).setParameter("ids",
-    // ids).getResultList();
-    // }
 
     @Override
     @Mutable

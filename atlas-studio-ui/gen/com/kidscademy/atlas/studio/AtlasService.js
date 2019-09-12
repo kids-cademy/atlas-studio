@@ -82,33 +82,6 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Get atlas object by name.
-	 *
-	 * @param java.lang.String name,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return com.kidscademy.atlas.studio.model.AtlasObject
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 getAtlasObjectByName: function(name) {
-		$assert(typeof name !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getAtlasObjectByName", "Name argument is undefined.");
-		$assert(name === null || js.lang.Types.isString(name), "com.kidscademy.atlas.studio.AtlasService#getAtlasObjectByName", "Name argument is not a string.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getAtlasObjectByName", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getAtlasObjectByName", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getAtlasObjectByName");
-		rmi.setParameters(name);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
 	 * Save atlas object.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasObject object,
@@ -132,6 +105,34 @@ com.kidscademy.atlas.studio.AtlasService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "saveAtlasObject");
 		rmi.setParameters(object);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Remove atlas object.
+	 *
+	 * @param int objectId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 removeAtlasObject: function(objectId) {
+		$assert(typeof objectId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removeAtlasObject", "Object id argument is undefined.");
+		$assert(js.lang.Types.isNumber(objectId), "com.kidscademy.atlas.studio.AtlasService#removeAtlasObject", "Object id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#removeAtlasObject", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#removeAtlasObject", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removeAtlasObject");
+		rmi.setParameters(objectId);
 		rmi.exec(__callback__, __scope__);
 	},
 

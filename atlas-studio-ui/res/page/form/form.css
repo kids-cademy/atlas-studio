@@ -6,6 +6,7 @@
 }
 
 .object-form.side-bar {
+	position: relative;
 }
 
 .object-form.side-bar .header {
@@ -27,6 +28,7 @@
 	margin: 0;
 	border-bottom: solid 1px @color/border-muted;
 	xfont-size: 1.8rem;
+	min-height: 1.8rem;
 	color: black;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -49,25 +51,13 @@
 	color: black;
 }
 
-.object-form.side-bar .developers {
-	padding: 10px;
-	border-bottom: solid 1px @color/border-muted;
-}
-
-.object-form.side-bar .developers img {
-	width: 64px;
-	height: 64px;
-	cursor: pointer;
-}
-
+/* experimental section description */
 .header p {
 	display: none;
 }
 
-.object-form .list-view.related {
-	min-height: 120px;
-}
-
-.object-form .buttons-bar {
-	margin: 20px 0;
+.side-bar .actions {
+	position:absolute;
+	width:100%;
+	bottom: 2px;
 }

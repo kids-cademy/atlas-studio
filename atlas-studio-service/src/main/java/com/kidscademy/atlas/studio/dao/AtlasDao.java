@@ -53,7 +53,7 @@ public interface AtlasDao {
 
     List<AtlasObject> findPublishedObjects(String category);
 
-    void removeObject(Object object);
+    void removeAtlasObject(int objectId);
 
     List<AtlasItem> findObjectsByNames(int collectionId, List<String> objectNames);
 

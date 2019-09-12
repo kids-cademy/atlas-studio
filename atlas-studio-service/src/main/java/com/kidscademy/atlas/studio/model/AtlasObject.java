@@ -164,6 +164,10 @@ public class AtlasObject implements CollectionItem {
     public AtlasObject() {
     }
 
+    public AtlasObject(int id) {
+	this.id = id;
+    }
+
     /**
      * Test constructor.
      * 

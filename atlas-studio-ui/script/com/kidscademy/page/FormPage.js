@@ -16,10 +16,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		// current selected collection and object ID are stored on global context
 		this._collection = this.getContextAttr("collection");
-		this._atlasItem = {
-			id: Number(this.getContextAttr("objectId")),
-			collection: this._collection
-		}
+		this._objectId = Number(this.getContextAttr("objectId"));
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
@@ -32,10 +29,11 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._relatedControl = this._form.getByClass(com.kidscademy.atlas.RelatedControl);
 		this._linksControl = this._form.getByClass(com.kidscademy.atlas.LinksControl);
 
-		const actions = this.getByCssClass("buttons-bar");
+		const actions = this.getByCss(".side-bar .actions");
 		actions.on(this, {
+			"&preview": this._onPreview,
 			"&save": this._onSave,
-			"&cancel": this._onCancel
+			"&remove": this._onRemove
 		});
 
 		this._definitionControl.onCreate(this);
@@ -49,14 +47,11 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		const quickLinks = this.getByCssClass("quick-links");
 		quickLinks.on("click", this._onQuickLinks, this);
 
-		this._publishedCheckbox = this.getByCssClass("published-object");
-
 		this._loadObject();
 	}
 
 	getObject() {
 		this._form.getObject(this._object);
-		this._object.state = this._publishedCheckbox.checked() ? "PUBLISHED" : "DEVELOPMENT";
 		return this._object;
 	}
 
@@ -66,9 +61,12 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 	getAtlasItem() {
 		this._form.getObject(this._object);
-		this._atlasItem.id = this._object.id;
-		this._atlasItem.name = this._object.name;
-		return this._atlasItem;
+		const atlasItem = {
+			id: this._object.id,
+			collection: this._collection,
+			name: this._object.name
+		}
+		return atlasItem;
 	}
 
 	getLinks(feature) {
@@ -80,19 +78,21 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_loadObject() {
-		if (this._atlasItem.id !== 0) {
-			AtlasService.getAtlasObject(this._atlasItem.id, this._onObjectLoaded, this);
+		if (this._objectId !== 0) {
+			AtlasService.getAtlasObject(this._objectId, this._onObjectLoaded, this);
 		}
 		else {
 			this._object = {
-				// TODO: hard coded user
-				user: { id: 1 },
+				id: 0,
 				collection: this._collection
 			};
 		}
 	}
 
 	_onObjectLoaded(object) {
+		// take care to update this object ID on global context
+		this.setContextAttr("objectId", object.id);
+
 		this.findByCss(".quick-links li").removeCssClass(this.CSS_INVALID);
 		this._form.reset();
 
@@ -109,6 +109,14 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._linksControl.onStart();
 	}
 
+	_onPreview() {
+		if (this._object.id === 0) {
+			js.ua.System.alert("@string/object-not-saved");
+			return;
+		}
+		WinMain.assign("reader.htm");
+	}
+
 	_onSave() {
 		this.findByCss(".quick-links li").removeCssClass(this.CSS_INVALID);
 		const updateQuickLink = control => {
@@ -123,8 +131,12 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
-	_onCancel() {
-		WinMain.back();
+	_onRemove() {
+		js.ua.System.confirm("@string/confirm-object-remove", (ok) => {
+			if (ok) {
+				AtlasService.removeAtlasObject(this._object.id, () => this._onBack());
+			}
+		});
 	}
 
 	_onQuickLinks(ev) {
@@ -135,11 +147,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			if (fieldsetID != null) {
 				this.getById(fieldsetID).scrollIntoView();
 				return;
-			}
-
-			// special handling for preview link			
-			if (ev.target.hasCssClass("preview")) {
-				WinMain.assign("reader.htm");
 			}
 		}
 	}

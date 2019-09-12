@@ -26,7 +26,7 @@ com.kidscademy.page.Page = class extends js.ua.Page {
 
     onServerFail(er) {
         $error(`com.kidscademy.page.Page#onServerFail ${er.cause}: ${er.message}`);
-        js.ua.System.error("Server error. Please contact administrator.");
+        js.ua.System.error(`${er.cause}: ${er.message}`);
     }
 
     onBusinessFail(er) {

@@ -75,6 +75,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AtlasObject getAtlasObject(int objectId) throws IOException {
+	Params.notZero(objectId, "Atlas object ID");
 	AtlasObject object = atlasDao.getAtlasObject(objectId);
 
 	if (object.getSampleSrc() != null) {
@@ -86,13 +87,6 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	return object;
-    }
-
-    @Override
-    public AtlasObject getAtlasObjectByName(String name) {
-	// return dao.getObjectByName(name);
-	// TODO null placeholder
-	return null;
     }
 
     @Override
@@ -113,6 +107,12 @@ public class AtlasServiceImpl implements AtlasService {
 
 	atlasDao.saveAtlasObject(AtlasObject);
 	return AtlasObject;
+    }
+
+    
+    @Override
+    public void removeAtlasObject(int objectId) {
+	atlasDao.removeAtlasObject(objectId);
     }
 
     @Override
