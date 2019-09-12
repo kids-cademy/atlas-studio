@@ -33,9 +33,6 @@ public class AtlasObject implements CollectionItem {
     private int id;
 
     @ManyToOne
-    protected User user;
-
-    @ManyToOne
     private AtlasCollection collection;
 
     /** Object state, for now only in development and published. */
@@ -290,14 +287,6 @@ public class AtlasObject implements CollectionItem {
 	this.rank = relevanceRank;
     }
 
-    public User getUser() {
-	return user;
-    }
-
-    public void setUser(User user) {
-	this.user = user;
-    }
-
     @Override
     public String getCollectionName() {
 	return collection.getName();
@@ -506,7 +495,6 @@ public class AtlasObject implements CollectionItem {
 
     public static AtlasObject create(User user, AtlasCollection collection) {
 	AtlasObject object = new AtlasObject();
-	object.user = user;
 	object.collection = collection;
 	object.state = AtlasObject.State.DEVELOPMENT;
 	object.aliases = Collections.emptyList();

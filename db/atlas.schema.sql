@@ -59,7 +59,6 @@ DROP TABLE IF EXISTS `atlasobject`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `atlasobject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
   `collection_id` int(11) NOT NULL,
   `state` enum('DEVELOPMENT','PUBLISHED') NOT NULL,
   `lastUpdated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -77,11 +76,9 @@ CREATE TABLE `atlasobject` (
   `end_date_mask` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_name` (`name`,`collection_id`),
-  KEY `fk_atlasobject_user1_idx` (`user_id`),
   KEY `fk_atlasobject_atlascategory1_idx` (`collection_id`),
-  CONSTRAINT `fk_atlasobject_atlascategory1` FOREIGN KEY (`collection_id`) REFERENCES `atlascollection` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_atlasobject_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_atlasobject_atlascategory1` FOREIGN KEY (`collection_id`) REFERENCES `atlascollection` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +178,7 @@ CREATE TABLE `atlasobject_images` (
   UNIQUE KEY `UQ_IMAGE_KEY` (`atlasobject_id`,`imageKey`),
   KEY `IX_IMAGE_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `FK_ATLASOBJECT_IMAGES_ATLASOBJECT_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=503 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=549 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +201,7 @@ CREATE TABLE `atlasobject_links` (
   UNIQUE KEY `uq_link_url` (`url`,`atlasobject_id`),
   KEY `idx_link_atlasobject_id` (`atlasobject_id`),
   CONSTRAINT `fk_link_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,4 +285,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-11 16:50:38
+-- Dump completed on 2019-09-12  8:19:59

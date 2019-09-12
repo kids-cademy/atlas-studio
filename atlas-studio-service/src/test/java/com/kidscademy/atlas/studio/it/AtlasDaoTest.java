@@ -36,7 +36,6 @@ import com.kidscademy.atlas.studio.model.InstrumentCategory;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Region;
-import com.kidscademy.atlas.studio.model.User;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.json.Json;
@@ -101,7 +100,6 @@ public class AtlasDaoTest {
     @Test
     public void prePersistObject() {
 	AtlasObject object = new AtlasObject();
-	object.setUser(new User(1));
 	object.setCollection(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setRank(9999);
@@ -138,7 +136,6 @@ public class AtlasDaoTest {
     @Test
     public void postMergeInstrument() {
 	AtlasObject object = new AtlasObject();
-	object.setUser(new User(1));
 	object.setCollection(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setRank(9999);
@@ -212,11 +209,6 @@ public class AtlasDaoTest {
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
-
-	assertThat(object.getUser(), notNullValue());
-	assertThat(object.getUser().getId(), equalTo(1));
-	assertThat(object.getUser().getEmailAddress(), equalTo("john.doe@email.com"));
-	assertThat(object.getUser().getPassword(), equalTo("secret"));
 
 	assertThat(object.getCollection(), notNullValue());
 	assertThat(object.getCollection().getId(), equalTo(1));
@@ -308,7 +300,6 @@ public class AtlasDaoTest {
     @Test
     public void saveAtlasObject() throws MalformedURLException {
 	AtlasObject object = new AtlasObject();
-	object.setUser(new User(1));
 	object.setCollection(new AtlasCollection(1, "instrument"));
 
 	object.setState(AtlasObject.State.DEVELOPMENT);
@@ -373,11 +364,6 @@ public class AtlasDaoTest {
 	AtlasObject expected = dao.getAtlasObject(object.getId());
 	assertThat(expected, notNullValue());
 	assertThat(expected.getId(), not(equalTo(0)));
-
-	assertThat(expected.getUser(), notNullValue());
-	assertThat(expected.getUser().getId(), equalTo(1));
-	assertThat(expected.getUser().getEmailAddress(), equalTo("john.doe@email.com"));
-	assertThat(expected.getUser().getPassword(), equalTo("secret"));
 
 	assertThat(expected.getCollection(), notNullValue());
 	assertThat(expected.getCollection().getId(), equalTo(1));

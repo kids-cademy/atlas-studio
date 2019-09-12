@@ -9,7 +9,6 @@ import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.User;
 
 import js.json.Json;
 import js.transaction.TransactionFactory;
@@ -25,7 +24,6 @@ public class ImportCollection {
 	TransactionFactory factory = new TransactionFactoryImpl("import");
 	AtlasDao dao = factory.newInstance(AtlasDaoImpl.class);
 
-	User user = dao.getUserById(1);
 	AtlasCollection collection = dao.getCollectionById(1);
 
 	Map<AtlasObject, List<String>> objects = new HashMap<>();
@@ -34,7 +32,6 @@ public class ImportCollection {
 	    AtlasObject object = json.parse(new FileReader(new File(objectDir, "object.json")), AtlasObject.class);
 	    System.out.println(object.getDisplay());
 
-	    object.setUser(user);
 	    object.setCollection(collection);
 	    object.setState(AtlasObject.State.DEVELOPMENT);
 
