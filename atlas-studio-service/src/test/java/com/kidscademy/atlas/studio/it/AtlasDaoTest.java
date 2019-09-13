@@ -32,10 +32,11 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
-import com.kidscademy.atlas.studio.model.InstrumentCategory;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Region;
+import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonomyClass;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.json.Json;
@@ -134,7 +135,7 @@ public class AtlasDaoTest {
      * media file names from already set SRC values.
      */
     @Test
-    public void postMergeInstrument() {
+    public void postMergeAtlasObject() {
 	AtlasObject object = new AtlasObject();
 	object.setCollection(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
@@ -173,7 +174,7 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void postLoadInstrument() {
+    public void postLoadAtlasObjectt() {
 	AtlasObject instrument = dao.getAtlasObject(1);
 
 	assertThat(instrument.getImages(), notNullValue());
@@ -195,17 +196,6 @@ public class AtlasDaoTest {
 	assertAtlasItem(items.get(0));
     }
 
-    @Test
-    public void findObjectByType_Instrument() throws MalformedURLException {
-	List<AtlasObject> instruments = dao.findObjectsByCategory("instrument");
-
-	assertThat(instruments, notNullValue());
-	assertThat(instruments, not(empty()));
-	assertThat(instruments, hasSize(2));
-
-	assertAtlasObject(instruments.get(0));
-    }
-
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
@@ -215,6 +205,7 @@ public class AtlasDaoTest {
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
 	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
 	assertThat(object.getCollection().getIconName(), equalTo("instrument.png"));
+	assertThat(object.getCollection().getTaxonomyClass(), equalTo(TaxonomyClass.FAMILY));
 
 	assertThat(object.getRank(), equalTo(1234));
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
@@ -234,10 +225,13 @@ public class AtlasDaoTest {
 	assertThat(object.getImages().get("contextual").getFileName(), equalTo("image.jpg"));
 	assertThat(object.getImages().get("contextual").getSrc(), equalTo(src("accordion", "image.jpg")));
 
-	assertThat(object.getClassification(), notNullValue());
-	assertThat(object.getClassification().keySet(), not(empty()));
-	assertThat(object.getClassification().keySet(), hasSize(1));
-	assertThat(object.getClassification().get("Classification"), equalTo("WOODWIND"));
+	assertThat(object.getTaxonomy(), notNullValue());
+	assertThat(object.getTaxonomy(), not(empty()));
+	assertThat(object.getTaxonomy(), hasSize(2));
+	assertThat(object.getTaxonomy().get(0).getName(), equalTo("Group"));
+	assertThat(object.getTaxonomy().get(0).getValue(), equalTo("WOODEN"));
+	assertThat(object.getTaxonomy().get(1).getName(), equalTo("Family"));
+	assertThat(object.getTaxonomy().get(1).getValue(), equalTo("WOODWIND"));
 
 	assertThat(object.getSampleTitle(), equalTo("Sample"));
 	assertThat(object.getSampleName(), equalTo("sample.mp3"));
@@ -320,9 +314,9 @@ public class AtlasDaoTest {
 	images.put("contextual", new Image(src("banjo", "contextual.jpg")));
 	images.put("featured", new Image(src("banjo", "featured.png")));
 
-	Map<String, String> classification = new HashMap<>();
-	classification.put("Classification", InstrumentCategory.STRINGS.name());
-	object.setClassification(classification);
+	List<Taxon> taxonomy = new ArrayList<Taxon>();
+	taxonomy.add(new Taxon("Classification", "STRINGS"));
+	object.setTaxonomy(taxonomy);
 
 	List<String> aliases = new ArrayList<String>();
 	aliases.add("Banjo Alias #1");
@@ -389,10 +383,11 @@ public class AtlasDaoTest {
 	assertThat(expected.getImage("featured").getFileName(), equalTo("featured.png"));
 	assertThat(expected.getImage("featured").getSrc(), equalTo(src("banjo", "featured.png")));
 
-	assertThat(expected.getClassification(), notNullValue());
-	assertThat(expected.getClassification().keySet(), not(empty()));
-	assertThat(expected.getClassification().keySet(), hasSize(1));
-	assertThat(expected.getClassification().get("Classification"), equalTo("STRINGS"));
+	assertThat(expected.getTaxonomy(), notNullValue());
+	assertThat(expected.getTaxonomy(), not(empty()));
+	assertThat(expected.getTaxonomy(), hasSize(1));
+	assertThat(expected.getTaxonomy().get(0).getName(), equalTo("Classification"));
+	assertThat(expected.getTaxonomy().get(0).getValue(), equalTo("STRINGS"));
 
 	assertThat(expected.getSampleTitle(), equalTo("Banjo Solo"));
 	assertThat(expected.getSampleName(), equalTo("sample.mp3"));

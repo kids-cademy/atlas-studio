@@ -51,7 +51,7 @@ com.kidscademy.page.Page = class extends js.ua.Page {
                     break;
 
                 case "collection":
-                    value = '{"id":1}';
+                    value = '{"id":1,"taxonomyClass":"FAMILY"}';
                     break;
             }
         }

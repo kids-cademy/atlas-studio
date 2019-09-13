@@ -1,0 +1,44 @@
+<fieldset class="taxonomy" data-class="com.kidscademy.atlas.TaxonomyControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@String/object-taxonomy</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/taxonomy" />
+		</div>
+		<div class="container">
+			<table>
+				<tbody class="taxonomy-view" data-list=".">
+					<tr>
+						<td data-text="name"></td>
+						<td class="separator">:</td>
+						<td data-text="value"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> 
+				<img name="done" src="@image/action/done" title="@tip/taxonomy-done" />
+				<img name="remove" src="@image/action/remove" title="@tip/taxonomy-remove" />
+				<img name="close" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+			</div>
+			
+			<div class="editor taxonomy-class hidden">
+				<label>Taxonomy Class</label> <select name="taxonomy-class">
+					<option selected="selected"></option>
+					<option>@string/taxonomy-class-family</option>
+					<option>@string/taxonomy-class-biological</option>
+				</select>
+			</div>
+			
+			<div class="editor taxon-value family hidden">
+				<label data-name="name"></label> <select name="value"></select>
+			</div>
+			<div class="editor taxon-value biological hidden">
+				<label data-name="name"></label> <input name="value" />
+			</div>
+		</div>
+	</div>
+</fieldset>

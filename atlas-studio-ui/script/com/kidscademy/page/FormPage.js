@@ -21,6 +21,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
 
+		this._taxonomyControl = this.getByClass(com.kidscademy.atlas.TaxonomyControl);
 		this._definitionControl = this.getByClass(com.kidscademy.atlas.DefinitionControl);
 		this._descriptionControl = this.getByClass(com.kidscademy.atlas.DescriptionControl);
 		this._graphicAssets = this.getByClass(com.kidscademy.atlas.GraphicAssets);
@@ -36,6 +37,10 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			"&remove": this._onRemove
 		});
 
+		const quickLinks = this.getByCssClass("quick-links");
+		quickLinks.on("click", this._onQuickLinks, this);
+
+		this._taxonomyControl.onCreate(this);
 		this._definitionControl.onCreate(this);
 		this._descriptionControl.onCreate(this);
 		this._graphicAssets.onCreate(this);
@@ -43,9 +48,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._factsControl.onCreate(this);
 		this._relatedControl.onCreate(this);
 		this._linksControl.onCreate(this);
-
-		const quickLinks = this.getByCssClass("quick-links");
-		quickLinks.on("click", this._onQuickLinks, this);
 
 		this._loadObject();
 	}
@@ -100,6 +102,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form.setObject(object);
 		this._sidebar.setObject(object);
 
+		this._taxonomyControl.onStart();
 		this._definitionControl.onStart();
 		this._descriptionControl.onStart();
 		this._graphicAssets.onStart();

@@ -76,12 +76,6 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<AtlasObject> findObjectsByCategory(String collectionName) {
-	return em.createQuery("select o from AtlasObject o where o.collection.name=:collectionName", AtlasObject.class)
-		.setParameter("collectionName", collectionName).getResultList();
-    }
-
-    @Override
     public List<AtlasObject> findPublishedObjects(String collectionName) {
 	return em
 		.createQuery("select o from AtlasObject o where o.collection.name=:collectionName and o.state=:state",

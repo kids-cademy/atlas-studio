@@ -32,6 +32,11 @@
 	<audio-done>commit all audio sample processing</audio-done>
 	<audio-remove>remove audio sample</audio-remove>
 
+	<taxonomy-add>add new taxonomy</taxonomy-add>
+	<taxonomy-done>accept taxonomy edits</taxonomy-done>
+	<taxonomy-remove>remove taxon record</taxonomy-remove>
+	<taxonomy-close>close taxonomy editor</taxonomy-close>
+
 	<facts-add>add new facts</facts-add>
 	<facts-import>import facts is not yet implemented</facts-import>
 	<facts-done>accept facts edits</facts-done>

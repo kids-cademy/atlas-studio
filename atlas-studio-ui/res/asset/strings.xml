@@ -25,11 +25,13 @@
 	<published-object>Published Object</published-object>
 
 	<object-identity>Identity</object-identity>
+	<object-taxonomy>Taxonomy</object-taxonomy>
 	<object-definition>Definition</object-definition>
 	<object-description>Description</object-description>
 	<graphic-assets>Graphic Assets</graphic-assets>
 	<audio-assets>Audio Assets</audio-assets>
 	<object-facts>Facts</object-facts>
+	<object-features>Features</object-features>
 	<object-spreading>Spreading</object-spreading>
 	<object-related>Related</object-related>
 	<object-links>Links</object-links>
@@ -37,4 +39,7 @@
 	<object-preview>Preview</object-preview>
 	<object-save>Save</object-save>
 	<object-remove>Remove</object-remove>
+	
+	<taxonomy-class-family>FAMILY</taxonomy-class-family>
+	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
 </string>

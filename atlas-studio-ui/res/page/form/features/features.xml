@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Object Features</title>
+	<description>Object features field set from object form.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/atlas/FeaturesControl.js</script>
+	</scripts>
+</page>

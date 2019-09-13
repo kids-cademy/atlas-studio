@@ -13,7 +13,7 @@
 
 .collection.side-bar .header img {
 	float: left;
-	width: 64px;
+	width: @dimen/header-icon-size;
 	margin-right: 10px;
 	padding: 1px;
 	border: solid 1px @color/border-muted;

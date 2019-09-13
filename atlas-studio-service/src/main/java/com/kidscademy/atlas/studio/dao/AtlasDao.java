@@ -49,8 +49,6 @@ public interface AtlasDao {
 
     List<Link> getObjectLinks(AtlasItem object);
 
-    List<AtlasObject> findObjectsByCategory(String category);
-
     List<AtlasObject> findPublishedObjects(String category);
 
     void removeAtlasObject(int objectId);

@@ -11,12 +11,14 @@
 		<name>instrument</name>
 		<display>Instrument</display>
 		<iconName>instrument.png</iconName>
+		<taxonomyClass>0</taxonomyClass>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
 		<display>Bird</display>
 		<iconName>bird.png</iconName>
+		<taxonomyClass>1</taxonomyClass>
 	</atlascollection>
 
 	<atlasobject>
@@ -86,12 +88,20 @@
 		<aliases>Squeezebox</aliases>
 	</atlasobject_aliases>
 
-	<atlasobject_classification>
+	<atlasobject_taxonomy>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
-		<classification_key>Classification</classification_key>
-		<classification>WOODWIND</classification>
-	</atlasobject_classification>
+		<taxonomy_ORDER>0</taxonomy_ORDER>
+		<name>Group</name>
+		<value>WOODEN</value>
+	</atlasobject_taxonomy>
+	<atlasobject_taxonomy>
+		<id>2</id>
+		<atlasobject_id>1</atlasobject_id>
+		<taxonomy_ORDER>1</taxonomy_ORDER>
+		<name>Family</name>
+		<value>WOODWIND</value>
+	</atlasobject_taxonomy>
 
 	<atlasobject_images>
 		<id>1</id>

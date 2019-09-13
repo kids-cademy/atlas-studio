@@ -25,6 +25,8 @@
 	<!-- space between dt and dd when displayed vertically -->
 	<dt-head-space>4px</dt-head-space>
 	
+	<header-icon-size>64px</header-icon-size>
+	
 	<!-- side menu -->
 	<side-menu-item-height>44px</side-menu-item-height>
 	<side-menu-icon-size>32px</side-menu-icon-size>

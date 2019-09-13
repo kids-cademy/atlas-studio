@@ -30,7 +30,6 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		}
 		// ECMA Script has no builtin support for dictionaries and emulation with object properties is limited
 		// so, for presentation purposes, we need to convert atlas object dictionaries into lists
-		object.classification = list(object.classification);
 		object.facts = list(object.facts);
 
 		this._objectView.setObject(object);

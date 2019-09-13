@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
@@ -84,7 +85,8 @@ public class AtlasObject implements CollectionItem {
     private Map<String, Image> images;
 
     @ElementCollection
-    private Map<String, String> classification;
+    @OrderColumn
+    private List<Taxon> taxonomy;
 
     @ElementCollection
     private List<String> aliases;
@@ -349,12 +351,12 @@ public class AtlasObject implements CollectionItem {
 	this.description = description;
     }
 
-    public Map<String, String> getClassification() {
-	return classification;
+    public List<Taxon> getTaxonomy() {
+        return taxonomy;
     }
 
-    public void setClassification(Map<String, String> classification) {
-	this.classification = classification;
+    public void setTaxonomy(List<Taxon> taxonomy) {
+        this.taxonomy = taxonomy;
     }
 
     public Map<String, String> getFeatures() {
