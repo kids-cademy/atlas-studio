@@ -40,7 +40,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		const quickLinks = this.getByCssClass("quick-links");
 		quickLinks.on("click", this._onQuickLinks, this);
 
-		this._taxonomyControl.onCreate(this);
 		this._definitionControl.onCreate(this);
 		this._descriptionControl.onCreate(this);
 		this._graphicAssets.onCreate(this);
@@ -102,14 +101,14 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form.setObject(object);
 		this._sidebar.setObject(object);
 
-		this._taxonomyControl.onStart();
-		this._definitionControl.onStart();
-		this._descriptionControl.onStart();
-		this._graphicAssets.onStart();
-		this._audioAssets.onStart();
-		this._factsControl.onStart();
-		this._relatedControl.onStart();
-		this._linksControl.onStart();
+		this._taxonomyControl.onStart(this);
+		this._definitionControl.onStart(this);
+		this._descriptionControl.onStart(this);
+		this._graphicAssets.onStart(this);
+		this._audioAssets.onStart(this);
+		this._factsControl.onStart(this);
+		this._relatedControl.onStart(this);
+		this._linksControl.onStart(this);
 	}
 
 	_onPreview() {

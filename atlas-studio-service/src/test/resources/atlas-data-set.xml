@@ -11,14 +11,14 @@
 		<name>instrument</name>
 		<display>Instrument</display>
 		<iconName>instrument.png</iconName>
-		<taxonomyClass>0</taxonomyClass>
+		<taxonomyClass>MUSICAL_INSTRUMENT</taxonomyClass>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
 		<display>Bird</display>
 		<iconName>bird.png</iconName>
-		<taxonomyClass>1</taxonomyClass>
+		<taxonomyClass>BIOLOGICAL</taxonomyClass>
 	</atlascollection>
 
 	<atlasobject>

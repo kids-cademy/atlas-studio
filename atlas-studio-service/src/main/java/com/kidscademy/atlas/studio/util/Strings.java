@@ -1,5 +1,7 @@
 package com.kidscademy.atlas.studio.util;
 
+import java.util.List;
+
 public class Strings extends js.util.Strings {
     /**
      * Return an excerpt from given paragraph. Select start substring till first
@@ -25,5 +27,15 @@ public class Strings extends js.util.Strings {
 
     public static String html(String text) {
 	return "<p>" + text.replaceAll("\\. ", ".</p><p>") + "</p>";
+    }
+
+    public static String binomialName(String name) {
+	List<String> parts = split(name, '-');
+	StringBuilder binomialName = new StringBuilder(toTitleCase(parts.get(0)));
+	for (int i = 1; i < parts.size(); ++i) {
+	    binomialName.append(' ');
+	    binomialName.append(parts.get(i));
+	}
+	return binomialName.toString();
     }
 }

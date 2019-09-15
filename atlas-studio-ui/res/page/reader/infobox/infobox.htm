@@ -1,18 +1,20 @@
 <div class="section infobox">
 	<div class="circle"></div>
 	<div class="container">
-		<section data-if="taxonomy.length=1">
+		<section class="taxonomy" data-if="taxonomy.length=1">
 			<h2 data-text="taxonomy.0.name"></h2>
 			<p data-text="taxonomy.0.value"></p>
 		</section>
-		<section data-if="taxonomy.length>1">
+		<section class="taxonomy" data-if="taxonomy.length>1">
 			<h2>Classification</h2>
-			<table data-list="taxonomy">
-				<tr>
-					<td class="name" data-text="name"></td>
-					<td class="separator">:</td>
-					<td class="value" data-text="value"></td>
-				</tr>
+			<table>
+				<tbody data-list="taxonomy">
+					<tr>
+						<td class="name" data-text="name"></td>
+						<td class="separator">:</td>
+						<td class="value" data-text="value"></td>
+					</tr>
+				</tbody>
 			</table>
 		</section>
 

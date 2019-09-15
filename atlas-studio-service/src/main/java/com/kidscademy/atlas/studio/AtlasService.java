@@ -10,6 +10,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
 import js.annotation.Public;
@@ -21,7 +22,7 @@ import js.rmi.BusinessException;
 @Public
 public interface AtlasService {
     List<AtlasCollection> getCollections();
-    
+
     List<AtlasItem> getCollectionItems(int collectionId);
 
     /**
@@ -36,7 +37,7 @@ public interface AtlasService {
     AtlasObject saveAtlasObject(AtlasObject object) throws IOException;
 
     void removeAtlasObject(int objectId);
-    
+
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames);
 
     Link createLink(Link link);
@@ -46,6 +47,8 @@ public interface AtlasService {
     String importObjectDescription(Link link);
 
     Map<String, String> importObjectsFacts(Link link);
+
+    List<Taxon> loadAtlasObjectTaxonomy(String objectName);
 
     // ----------------------------------------------------------------------------------------------
     // OBJECT IMAGE SERVICES
@@ -63,15 +66,14 @@ public interface AtlasService {
     Image uploadImageBySource(Form form) throws IOException, BusinessException;
 
     Image cloneImageToIcon(AtlasItem object, Image image) throws IOException;
-    
+
     Image trimImage(AtlasItem object, Image image) throws IOException;
 
     Image flopImage(AtlasItem object, Image image) throws IOException;
 
     Image flipImage(AtlasItem object, Image image) throws IOException;
 
-    Image cropImage(AtlasItem object, Image image, int width, int height, int xoffset, int yoffset)
-	    throws IOException;
+    Image cropImage(AtlasItem object, Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
     /**
      * Remove object picture from media repository and from database.

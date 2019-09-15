@@ -34,6 +34,7 @@
 	
 	<!-- actions -->
 	<action-icon-size>48px</action-icon-size>
+	<action-small-icon-size>32px</action-small-icon-size>
 	<action-margin>20px</action-margin>
 	
 		<action-size>64px</action-size>

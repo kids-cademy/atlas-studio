@@ -32,9 +32,13 @@
 	<audio-done>commit all audio sample processing</audio-done>
 	<audio-remove>remove audio sample</audio-remove>
 
-	<taxonomy-add>add new taxonomy</taxonomy-add>
+	<taxonomy-add>initialize with empty taxonomy</taxonomy-add>
+	<taxonomy-load>initialize taxonomy from kids (a)cademy database</taxonomy-load>
+	<taxonomy-edit>edit current taxon value</taxonomy-edit>
+	<taxonomy-batch-edit>edit all taxon values in sequence</taxonomy-batch-edit>
 	<taxonomy-done>accept taxonomy edits</taxonomy-done>
-	<taxonomy-remove>remove taxon record</taxonomy-remove>
+	<taxonomy-remove>remove selected taxon value</taxonomy-remove>
+	<taxonomy-remove-all>remove atlas object taxonomy</taxonomy-remove-all>
 	<taxonomy-close>close taxonomy editor</taxonomy-close>
 
 	<facts-add>add new facts</facts-add>

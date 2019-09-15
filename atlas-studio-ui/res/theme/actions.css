@@ -23,7 +23,7 @@
 	float: right;
 }
 
-.actions img:hover {
+.actions img:hover, .action:hover {
 	opacity: 0.6;
 }
 

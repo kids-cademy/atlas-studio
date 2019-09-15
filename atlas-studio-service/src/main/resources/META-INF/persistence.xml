@@ -8,6 +8,7 @@
 		<!-- attribute converters -->
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
 		<!-- support entities -->
 		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
@@ -30,12 +31,18 @@
 		</properties>
 	</persistence-unit>
 
+	<persistence-unit name="itis" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<non-jta-data-source>java:comp/env/jdbc/itis</non-jta-data-source>
+	</persistence-unit>
+
 	<persistence-unit name="import" transaction-type="RESOURCE_LOCAL">
 		<shared-cache-mode>ALL</shared-cache-mode>
 
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
+		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
@@ -66,6 +73,7 @@
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
+		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
@@ -84,6 +92,19 @@
 			<property name="javax.persistence.jdbc.user" value="kids_cademy" />
 			<property name="javax.persistence.jdbc.password" value="kids_cademy" />
 			<property name="javax.persistence.jdbc.show_sql" value="true" />
+
+			<property name="eclipselink.logging.level.sql" value="FINE" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="itis-test" transaction-type="RESOURCE_LOCAL">
+		<shared-cache-mode>NONE</shared-cache-mode>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/itis" />
+			<property name="javax.persistence.jdbc.user" value="kids_cademy" />
+			<property name="javax.persistence.jdbc.password" value="kids_cademy" />
 
 			<property name="eclipselink.logging.level.sql" value="FINE" />
 		</properties>

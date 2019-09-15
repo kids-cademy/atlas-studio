@@ -1,8 +1,25 @@
 .object-form {
 }
 
-.object-form .form {
+.object-form {
 	width: 100%;
+}
+
+.object-form .action {
+	display: inline-block;
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	vertical-align: middle;
+	margin-right: @dimen/action-margin;
+	border: solid 1px @color/border;
+	background-color: white;
+	opacity: 0.2;
+	cursor: pointer;
+}
+
+.object-form .action.small {
+	width: @dimen/action-small-icon-size;
+	height: @dimen/action-small-icon-size;
 }
 
 .object-form.side-bar {

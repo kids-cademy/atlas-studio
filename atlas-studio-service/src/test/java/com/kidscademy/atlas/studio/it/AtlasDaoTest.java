@@ -205,7 +205,7 @@ public class AtlasDaoTest {
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
 	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
 	assertThat(object.getCollection().getIconName(), equalTo("instrument.png"));
-	assertThat(object.getCollection().getTaxonomyClass(), equalTo(TaxonomyClass.FAMILY));
+	assertThat(object.getCollection().getTaxonomyClass(), equalTo(TaxonomyClass.MUSICAL_INSTRUMENT));
 
 	assertThat(object.getRank(), equalTo(1234));
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));

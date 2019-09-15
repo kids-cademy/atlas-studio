@@ -3,6 +3,7 @@ package com.kidscademy.atlas.studio.impl;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -18,6 +20,7 @@ import com.kidscademy.atlas.studio.model.CollectionItem;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
@@ -42,6 +45,7 @@ public class AtlasServiceImpl implements AtlasService {
     private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
 
     private final AtlasDao atlasDao;
+    private final TaxonomyDao taxonomyDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
     private final Wikipedia wikipedia;
@@ -49,12 +53,13 @@ public class AtlasServiceImpl implements AtlasService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
 
-    public AtlasServiceImpl(AtlasDao atlasDao, AudioProcessor audioProcessor, ImageProcessor imageProcessor,
-	    Wikipedia wikipedia, SoftSchools softSchools, TheFreeDictionary freeDictionary,
-	    CambridgeDictionary cambridgeDictionary) {
+    public AtlasServiceImpl(AtlasDao atlasDao, TaxonomyDao taxonomyDao, AudioProcessor audioProcessor,
+	    ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
+	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) {
 	log.trace(
-		"AtlasServiceImpl(AtlasDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
+		"AtlasServiceImpl(AtlasDao,TaxonomyDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
 	this.atlasDao = atlasDao;
+	this.taxonomyDao = taxonomyDao;
 	this.audioProcessor = audioProcessor;
 	this.imageProcessor = imageProcessor;
 	this.wikipedia = wikipedia;
@@ -109,7 +114,6 @@ public class AtlasServiceImpl implements AtlasService {
 	return AtlasObject;
     }
 
-    
     @Override
     public void removeAtlasObject(int objectId) {
 	atlasDao.removeAtlasObject(objectId);
@@ -167,6 +171,21 @@ public class AtlasServiceImpl implements AtlasService {
 	default:
 	    return null;
 	}
+    }
+
+    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Family", "Genus",
+	    "Species", "Subspecies" };
+
+    @Override
+    public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
+	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.binomialName(objectName));
+	List<Taxon> taxonomy = new ArrayList<>(TAXON_NAMES.length);
+	for (String taxonName : TAXON_NAMES) {
+	    if (sourceTaxonomy.containsKey(taxonName)) {
+		taxonomy.add(new Taxon(taxonName, sourceTaxonomy.get(taxonName)));
+	    }
+	}
+	return taxonomy;
     }
 
     // ----------------------------------------------------------------------------------------------

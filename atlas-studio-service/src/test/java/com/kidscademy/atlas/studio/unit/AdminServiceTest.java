@@ -23,6 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -45,6 +46,8 @@ public class AdminServiceTest {
     @Mock
     private AtlasDao atlasDao;
     @Mock
+    private TaxonomyDao taxonomyDao;
+    @Mock
     private AudioProcessor audioProcessor;
     @Mock
     private ImageProcessor imageProcessor;
@@ -66,7 +69,7 @@ public class AdminServiceTest {
 
     @Before
     public void beforeTest() {
-	service = new AtlasServiceImpl(atlasDao, audioProcessor, imageProcessor, wikipedia, softSchools, freeDictionary,
+	service = new AtlasServiceImpl(atlasDao, taxonomyDao, audioProcessor, imageProcessor, wikipedia, softSchools, freeDictionary,
 		cambridgeDictionary);
 	file("sample.mp3").delete();
 	file("sample_1.mp3").delete();
