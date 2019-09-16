@@ -11,7 +11,6 @@ com.kidscademy.format.HDateFormat.Era = [ "CE", "BCE" ];
 
 com.kidscademy.format.HDateFormat.prototype = {
 	format : function(hdate) {
-
 		switch (this.getFormat(hdate)) {
 		case "YEAR":
 			return $format("%d %s", hdate.value, this.getEra(hdate));
