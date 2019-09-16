@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 import js.transaction.Transactional;
+import js.util.Strings;
 
 @Transactional(schema = "itis")
 public class TaxonomyDaoImpl implements TaxonomyDao {
@@ -16,11 +17,11 @@ public class TaxonomyDaoImpl implements TaxonomyDao {
 	this.em = em;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Integer> getObjectHierarchy(String binomialName) {
 	String sql = "SELECT hierarchy FROM object_hierarchy WHERE binomialName=?1";
-	return em.createNativeQuery(sql).setParameter(1, binomialName).getResultList();
+	String hierarchy = (String) em.createNativeQuery(sql).setParameter(1, binomialName).getSingleResult();
+	return Strings.split(hierarchy, ",", Integer.class);
     }
 
     @Override
