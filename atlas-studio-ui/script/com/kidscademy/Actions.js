@@ -38,7 +38,9 @@ com.kidscademy.Actions = class extends js.dom.Element {
 				return;
 			}
 			const name = child.getName();
-			$assert(name != null, "com.kidscademy.Actions#bind", "Action element without name.");
+			if (name == null) {
+				return;
+			}
 
 			const containerHandler = container[handlerName(name)];
 			if (typeof containerHandler !== "function") {

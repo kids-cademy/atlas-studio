@@ -1,0 +1,72 @@
+.action-bar-select {
+	display: inline-block;
+	box-sizing: border-box;
+	height: @dimen/input-height;
+	vertical-align: top;
+}
+
+.action-bar-select.hidden {
+	display: none;
+}
+
+.action-bar-select .abs-control {
+	display: inline-block;
+	width: auto;
+	border: solid 1px @color/mute;
+}
+
+.action-bar-select.invalid .abs-control {
+	border-color: #A00000; 
+}
+
+.action-bar-select.loading .abs-control {
+	border-color: red;
+}
+
+.action-bar-select .abs-input {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: 260px;
+	height: @dimen/input-height;
+	line-height: @dimen/input-height;
+	margin: 0;
+	padding: @dimen/input-padding;
+	border: 0;
+	background: none;
+}
+
+.action-bar-select .abs-icon {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: @dimen/input-height;
+	height: @dimen/input-height;
+	cursor: pointer;
+	margin: 1px;
+}
+
+.action-bar-select .abs-options {
+	position: relative;
+	z-index: 100;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+.action-bar-select.no-name .name {
+	display: none;
+}
+
+.action-bar-select .abs-options th, .action-bar-select .abs-options td {
+	padding: 8px 16px;
+	vertical-align: middle;
+	white-space: nowrap;
+	cursor: default;
+	border: solid 1px @color/mute;
+	font-size: 1.8rem;
+}
+
+.action-bar-select .abs-options tr:hover td {
+	background-color: #5B8A5C;
+	color: #FFF;
+	text-shadow: 1px 1px 0 #000000;
+}

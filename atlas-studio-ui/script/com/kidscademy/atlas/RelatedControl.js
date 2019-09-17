@@ -19,19 +19,24 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 		this._relatedView.on("dragover", this._onDragOver, this);
 		this._relatedView.on("drop", this._onRelatedViewDrop, this);
 
-		this._collectionView = this.getByCss(".list-view.collection");
-		this._collectionView.on("dragstart", this._onDragStart, this);
-		this._collectionView.on("dragover", this._onDragOver, this);
-		this._collectionView.on("drop", this._onCollectionViewDrop, this);
+		this._candidatesView = this.getByCss(".list-view.candidates");
+		this._candidatesView.on("dragstart", this._onDragStart, this);
+		this._candidatesView.on("dragover", this._onDragOver, this);
+		this._candidatesView.on("drop", this._onCandidatesViewDrop, this);
 
-		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).hide("close");
+		this._taxonomySelect = this.getByCssClass("taxonomy-select");
+		this._taxonomySelect.on("change", this._onTaxonomySelectChange, this);
+
+		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).showOnly("search");
 	}
 
 	onCreate(formPage) {
 		this._formPage = formPage;
 	}
 
-	onStart() {
+	onStart(formPage) {
+		const taxonomy = formPage.getObject().taxonomy;
+		this._taxonomySelect.setOptions(taxonomy);
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -63,30 +68,51 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
-	_onEdit() {
+	_onSearch() {
 		this._actions.show("close");
 		const object = this._formPage.getObject();
-		if (!object.category) {
-			js.ua.System.alert("Pleae select category.");
-			return;
+
+		var taxon = null;
+		switch (object.taxonomy.length) {
+			case 0:
+				js.ua.System.alert("Please set atlas object taxonomy. It is needed to filter out related objects.");
+				return;
+
+			case 1:
+				this._getCollectionItemsByTaxon(object.taxonomy[0]);
+				break;
+
+			default:
+				this._candidatesView.hide();
+				this._taxonomySelect.show();
+				this._taxonomySelect.reset();
+			// _getCollectionItemsByTaxon(taxon) is invoked when user make taxon selection, see _onTaxonomySelectChange(ev)
 		}
-
-		const objects = [];
-		this._relatedView.getChildren().forEach(view => objects.push({ id: view.getAttr("id") }));
-
-		objects.push({
-			id: object.id
-		});
-
-		AtlasService.getAvailableInstruments(object.category, objects, collection => {
-			this._collectionView.show();
-			this._collectionView.setObject(collection);
-		});
 	}
 
 	_onClose() {
-		this._collectionView.hide();
+		this._taxonomySelect.hide();
+		this._candidatesView.hide();
 		this._actions.hide("close");
+	}
+
+	_onTaxonomySelectChange(taxon) {
+		this._getCollectionItemsByTaxon(taxon);
+		this._taxonomySelect.hide();
+	}
+
+	_getCollectionItemsByTaxon(taxon) {
+		const excludes = [];
+		this._relatedView.getChildren().forEach(view => excludes.push({ id: view.getAttr("id") }));
+		excludes.push({
+			id: this._formPage.getObject().id
+		});
+
+		const collectionId = this._formPage.getCollection().id;
+		AtlasService.getCollectionItemsByTaxon(collectionId, taxon, excludes, items => {
+			this._candidatesView.show();
+			this._candidatesView.setObject(items);
+		});
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -94,7 +120,10 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 
 	_onDragStart(ev) {
 		const li = ev.target.getParentByTag("li");
-		ev.setData("index", li.getChildIndex());
+		ev.setData({
+			source: li.getParent().getAttr("data-source"),
+			index: li.getChildIndex()
+		});
 	}
 
 	_onDragOver(ev) {
@@ -103,12 +132,20 @@ com.kidscademy.atlas.RelatedControl = class extends js.dom.Control {
 
 	_onRelatedViewDrop(ev) {
 		ev.prevent();
-		this._relatedView.addChild(this._collectionView.getByIndex(ev.getData("index")));
+		const data = ev.getData();
+		if (data.source === "related") {
+			return;
+		}
+		this._relatedView.addChild(this._candidatesView.getByIndex(data.index));
 	}
 
-	_onCollectionViewDrop(ev) {
+	_onCandidatesViewDrop(ev) {
 		ev.prevent();
-		this._collectionView.addChild(this._relatedView.getByIndex(ev.getData("index")));
+		const data = ev.getData();
+		if (data.source === "candidates") {
+			return;
+		}
+		this._candidatesView.addChild(this._relatedView.getByIndex(data.index));
 	}
 
 	/**

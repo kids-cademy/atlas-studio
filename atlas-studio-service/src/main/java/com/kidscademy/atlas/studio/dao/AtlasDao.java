@@ -8,17 +8,20 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.User;
-import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.User;
 
 public interface AtlasDao {
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(int collectionId);
+
+    List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
 
     /**
      * Persist or merge AtlasObject entity, depending on ID value. If ID is zero

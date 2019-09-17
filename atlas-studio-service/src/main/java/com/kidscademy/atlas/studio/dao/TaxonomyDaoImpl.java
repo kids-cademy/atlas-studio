@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import js.util.Strings;
 
 @Transactional(schema = "itis")
 public class TaxonomyDaoImpl implements TaxonomyDao {
+    // base on integrated taxonomic information system - https://www.itis.gov/
+
     private final EntityManager em;
 
     public TaxonomyDaoImpl(EntityManager em) {
@@ -27,7 +30,11 @@ public class TaxonomyDaoImpl implements TaxonomyDao {
     @Override
     public Map<String, String> getObjectTaxonomy(String binomialName) {
 	String sql = "SELECT hierarchy FROM object_hierarchy WHERE binomialName=?1";
-	String hierarchy = (String) em.createNativeQuery(sql).setParameter(1, binomialName).getSingleResult();
+	@SuppressWarnings("unchecked")
+	List<String> hierarchy = em.createNativeQuery(sql).setParameter(1, binomialName).getResultList();
+	if (hierarchy.isEmpty()) {
+	    return Collections.emptyMap();
+	}
 
 	sql = "SELECT DISTINCT " + //
 		"t.rank_name AS taxonName," + //
@@ -38,7 +45,7 @@ public class TaxonomyDaoImpl implements TaxonomyDao {
 		"ORDER BY t.rank_id;";
 
 	@SuppressWarnings("unchecked")
-	List<Object[]> resultSet = em.createNativeQuery(String.format(sql, hierarchy)).getResultList();
+	List<Object[]> resultSet = em.createNativeQuery(String.format(sql, hierarchy.get(0))).getResultList();
 
 	LinkedHashMap<String, String> taxonomy = new LinkedHashMap<>();
 	for (Object[] resultRow : resultSet) {

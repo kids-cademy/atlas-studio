@@ -196,6 +196,15 @@ public class AtlasDaoTest {
 	assertAtlasItem(items.get(0));
     }
 
+    @Test
+    public void getCollectionItemsByTaxon() {
+	Taxon taxon = new Taxon("Family", "WOODWIND");	
+	List<AtlasItem> items = dao.getCollectionItemsByTaxon(1, taxon);
+	assertThat(items, notNullValue());
+	assertThat(items, hasSize(1));
+	assertAtlasItem(items.get(0));
+    }
+
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
@@ -478,22 +487,6 @@ public class AtlasDaoTest {
 	List<AtlasItem> items = dao.getCollectionItems(1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(2));
-
-	AtlasItem object = items.get(0);
-	assertThat(object, notNullValue());
-	assertThat(object, not(instanceOf(AtlasObject.class)));
-	assertThat(object.getId(), equalTo(1));
-	assertThat(object.getCollectionName(), equalTo("instrument"));
-	assertThat(object.getName(), equalTo("accordion"));
-	assertThat(object.getDisplay(), equalTo("Accordion"));
-	assertThat(object.getIconName(), equalTo("icon.jpg"));
-	assertThat(object.getIconSrc(), equalTo(src("accordion", "icon_96x96.jpg")));
-    }
-
-    public void getInstruments() {
-	List<AtlasItem> items = dao.getCollectionItems(1);
-	assertThat(items, notNullValue());
-	assertThat(items, hasSize(3));
 
 	AtlasItem object = items.get(0);
 	assertThat(object, notNullValue());

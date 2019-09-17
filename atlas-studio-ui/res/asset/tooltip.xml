@@ -54,6 +54,9 @@
 	<spreading-remove>remove spreading record</spreading-remove>
 	<spreading-close>close spreading editor</spreading-close>
 
+	<related-search>search for related candidates</related-search>
+	<related-close>close related objects editor</related-close>
+	
 	<link-add>add source link</link-add>
 	<link-browse>browser source link</link-browse>
 	<link-done>save source link</link-done>

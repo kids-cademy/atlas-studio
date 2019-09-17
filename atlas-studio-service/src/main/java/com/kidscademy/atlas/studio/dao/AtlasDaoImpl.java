@@ -11,6 +11,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasObject.State;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.User;
 
 import js.transaction.Immutable;
@@ -35,6 +36,19 @@ public class AtlasDaoImpl implements AtlasDao {
     public List<AtlasItem> getCollectionItems(int collectionId) {
 	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId", AtlasItem.class)
 		.setParameter("collectionId", collectionId).getResultList();
+    }
+
+    @Override
+    public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon) {
+	List<Integer> ids = em.createQuery(
+		"select o.id from AtlasObject o join o.taxonomy t where o.collection.id=:collectionId and t.name=:taxonName and t.value=:taxonValue",
+		Integer.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxon.getName())
+		.setParameter("taxonValue", taxon.getValue()).getResultList();
+	if (ids.isEmpty()) {
+	    return Collections.emptyList();
+	}
+	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class).setParameter("ids", ids)
+		.getResultList();
     }
 
     @Override

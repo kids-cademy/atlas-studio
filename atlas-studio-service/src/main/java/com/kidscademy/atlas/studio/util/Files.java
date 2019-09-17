@@ -44,6 +44,11 @@ public final class Files extends js.util.Files {
 
     private static File REPOSIOTRY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
+    public static File mediaDir(CollectionItem collectionItem) {
+	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", collectionItem.getCollectionName(), "/",
+		collectionItem.getName(), '/'));
+    }
+
     public static File mediaFile(MediaSRC mediaSrc) {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/atlas/instrument/object/file

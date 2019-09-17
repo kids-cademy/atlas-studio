@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Action Bar Select</title>
+	<description>Abstract select integrated into action bars. This select supports options displayed on multiple columns. Concrete component need to define options columns.</description>
+</page>

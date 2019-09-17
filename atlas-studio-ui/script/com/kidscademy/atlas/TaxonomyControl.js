@@ -124,13 +124,17 @@ com.kidscademy.atlas.TaxonomyControl = class extends js.dom.Control {
 		this._taxonomy = taxonomy;
 		this._taxonomyView.setObject(taxonomy);
 
-		if (this._taxonomy.length === 0) {
-			this._actions.showOnly("add", "load");
+		const taxonomySize = taxonomy === null ? 0 : taxonomy.length;
+		if (taxonomySize === 0) {
+			this._actions.showOnly("add");
+			if (this._taxonomyClass === "BIOLOGICAL") {
+				this._actions.show("load");
+			}
 		}
 		else {
 			this._actions.showOnly("remove-all");
 		}
-		if (this._taxonomy.length > 1) {
+		if (taxonomySize > 1) {
 			this._actions.show("batch-edit");
 		}
 		return this;
@@ -226,8 +230,9 @@ com.kidscademy.atlas.TaxonomyControl = class extends js.dom.Control {
 	}
 
 	_onRemoveAll() {
-		this._taxonomy = null;
-		this._taxonomyView.removeChildren();
+		this.setValue(null);
+		// this._taxonomy = null;
+		// this._taxonomyView.removeChildren();
 		this._actions.hide("remove-all");
 		this._actions.show("add");
 	}

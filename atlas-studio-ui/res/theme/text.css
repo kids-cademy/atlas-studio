@@ -73,11 +73,14 @@ a:hover {
 	color: #000000;
 }
 
-
 small, .small {
 	font-size: 1.4rem;
 }
 
 .narrow {
 	max-width: 70%;
+}
+
+.uppercase {
+	text-transform: uppercase;
 }

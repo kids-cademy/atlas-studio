@@ -1,303 +1,313 @@
 __js_debug__ = true;
 if (!Function.prototype.bind) {
-    Function.prototype.bind = function (thisArg) {
-        var _this = this, slice = Array.prototype.slice, args = slice.call(arguments, 1);
-        return function () {
-            return _this.apply(thisArg, args.concat(slice.call(arguments)));
-        };
-    };
+	Function.prototype.bind = function(thisArg) {
+		if (typeof this !== 'function') {
+			throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+		}
+
+		var _this = this, slice = Array.prototype.slice, args = slice.call(arguments, 1);
+		return function() {
+			return _this.apply(thisArg, args.concat(slice.call(arguments)));
+		};
+	};
 }
 
 if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function (suffix) {
-        if (this.length < suffix.length) {
-            return false;
-        }
-        return this.lastIndexOf(suffix) === this.length - suffix.length;
-    };
+	String.prototype.endsWith = function(suffix) {
+		if (this.length < suffix.length) {
+			return false;
+		}
+		return this.lastIndexOf(suffix) === this.length - suffix.length;
+	};
 }
 
 if (!Array.prototype.indexOf) {
-    Array.prototype.indexOf = function (searchItem, fromIndex) {
-        var len = this.length;
-        if (len === 0) {
-            return -1;
-        }
-        var from = (typeof fromIndex !== 'undefined') ? fromIndex : 0;
-        if (from >= len) {
-            return -1;
-        }
-        if (from < 0) {
-            from = len - Math.abs(from);
-            if (from < 0) {
-                from = 0;
-            }
-        }
-        for (var i = from; i < this.length; ++i) {
-            if (this[i] === searchItem) {
-                return i;
-            }
-        }
-        return -1;
-    };
+	Array.prototype.indexOf = function(searchItem, fromIndex) {
+		var len = this.length;
+		if (len === 0) {
+			return -1;
+		}
+		var from = (typeof fromIndex !== 'undefined') ? fromIndex : 0;
+		if (from >= len) {
+			return -1;
+		}
+		if (from < 0) {
+			from = len - Math.abs(from);
+			if (from < 0) {
+				from = 0;
+			}
+		}
+		for (var i = from; i < this.length; ++i) {
+			if (this[i] === searchItem) {
+				return i;
+			}
+		}
+		return -1;
+	};
 }
 
 if (!Array.prototype.lastIndexOf) {
-    Array.prototype.lastIndexOf = function (searchItem, fromIndex) {
-        var len = this.length;
-        if (len === 0) {
-            return -1;
-        }
-        var from = (typeof fromIndex !== 'undefined') ? fromIndex : len;
-        if (from >= 0) {
-            from = Math.min(from, len - 1);
-        }
-        else {
-            from = len - Math.abs(from);
-        }
-        for (var i = from; i >= 0; --i) {
-            if (this[i] === searchItem) {
-                return i;
-            }
-        }
-        return -1;
-    };
+	Array.prototype.lastIndexOf = function(searchItem, fromIndex) {
+		var len = this.length;
+		if (len === 0) {
+			return -1;
+		}
+		var from = (typeof fromIndex !== 'undefined') ? fromIndex : len;
+		if (from >= 0) {
+			from = Math.min(from, len - 1);
+		}
+		else {
+			from = len - Math.abs(from);
+		}
+		for (var i = from; i >= 0; --i) {
+			if (this[i] === searchItem) {
+				return i;
+			}
+		}
+		return -1;
+	};
 }
 
 if (!Array.prototype.findIndex) {
-    Array.prototype.findIndex = function (predicate) {
-        // 1. Let O be ? ToObject(this value).
-        if (this == null) {
-            throw new TypeError('"this" is null or not defined');
-        }
+	Array.prototype.findIndex = function(predicate) {
+		// 1. Let O be ? ToObject(this value).
+		if (this == null) {
+			throw new TypeError('"this" is null or not defined');
+		}
 
-        var o = Object(this);
+		var o = Object(this);
 
-        // 2. Let len be ? ToLength(? Get(O, "length")).
-        var len = o.length >>> 0;
+		// 2. Let len be ? ToLength(? Get(O, "length")).
+		var len = o.length >>> 0;
 
-        // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-        if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-        }
+		// 3. If IsCallable(predicate) is false, throw a TypeError exception.
+		if (typeof predicate !== 'function') {
+			throw new TypeError('predicate must be a function');
+		}
 
-        // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-        var thisArg = arguments[1];
+		// 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+		var thisArg = arguments[1];
 
-        // 5. Let k be 0.
-        var k = 0;
+		// 5. Let k be 0.
+		var k = 0;
 
-        // 6. Repeat, while k < len
-        while (k < len) {
-            // a. Let Pk be ! ToString(k).
-            // b. Let kValue be ? Get(O, Pk).
-            // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-            // d. If testResult is true, return k.
-            var kValue = o[k];
-            if (predicate.call(thisArg, kValue, k, o)) {
-                return k;
-            }
-            // e. Increase k by 1.
-            k++;
-        }
+		// 6. Repeat, while k < len
+		while (k < len) {
+			// a. Let Pk be ! ToString(k).
+			// b. Let kValue be ? Get(O, Pk).
+			// c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+			// d. If testResult is true, return k.
+			var kValue = o[k];
+			if (predicate.call(thisArg, kValue, k, o)) {
+				return k;
+			}
+			// e. Increase k by 1.
+			k++;
+		}
 
-        // 7. Return -1.
-        return -1;
-    };
+		// 7. Return -1.
+		return -1;
+	};
 }
 
 if (!Array.prototype.forEach) {
-    Array.prototype.forEach = function forEach (callback, thisArg) {
-        var T = undefined, k;
+	Array.prototype.forEach = function forEach(callback, thisArg) {
+		var T = undefined, k;
 
-        if (this === null) {
-            throw new TypeError("this is null or not defined");
-        }
+		if (this === null) {
+			throw new TypeError("this is null or not defined");
+		}
 
-        // 1. Let O be the result of calling ToObject passing the |this| value as the argument.
-        var O = Object(this);
+		// 1. Let O be the result of calling ToObject passing the |this| value as the argument.
+		var O = Object(this);
 
-        // 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
-        // 3. Let len be ToUint32(lenValue).
-        var len = O.length >>> 0; // Hack to convert O.length to a UInt32
+		// 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
+		// 3. Let len be ToUint32(lenValue).
+		var len = O.length >>> 0; // Hack to convert O.length to a UInt32
 
-        // 4. If IsCallable(callback) is false, throw a TypeError exception.
-        // See: http://es5.github.com/#x9.11
-        if ({}.toString.call(callback) !== "[object Function]") {
-            throw new TypeError(callback + " is not a function");
-        }
+		// 4. If IsCallable(callback) is false, throw a TypeError exception.
+		// See: http://es5.github.com/#x9.11
+		if ({}.toString.call(callback) !== "[object Function]") {
+			throw new TypeError(callback + " is not a function");
+		}
 
-        // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
-        if (thisArg) {
-            T = thisArg;
-        }
+		// 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+		if (thisArg) {
+			T = thisArg;
+		}
 
-        // 6. Let k be 0
-        k = 0;
+		// 6. Let k be 0
+		k = 0;
 
-        // 7. Repeat, while k < len
-        while (k < len) {
+		// 7. Repeat, while k < len
+		while (k < len) {
 
-            var kValue;
+			var kValue;
 
-            // a. Let Pk be ToString(k).
-            // This is implicit for LHS operands of the in operator
-            // b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
-            // This step can be combined with c
-            // c. If kPresent is true, then
-            if (Object.prototype.hasOwnProperty.call(O, k)) {
+			// a. Let Pk be ToString(k).
+			// This is implicit for LHS operands of the in operator
+			// b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
+			// This step can be combined with c
+			// c. If kPresent is true, then
+			if (Object.prototype.hasOwnProperty.call(O, k)) {
 
-                // i. Let kValue be the result of calling the Get internal method of O with argument Pk.
-                kValue = O[k];
+				// i. Let kValue be the result of calling the Get internal method of O with argument Pk.
+				kValue = O[k];
 
-                // ii. Call the Call internal method of callback with T as the this value and
-                // argument list containing kValue, k, and O.
-                callback.call(T, kValue, k, O);
-            }
-            // d. Increase k by 1.
-            k++;
-        }
-        // 8. return undefined
-    };
+				// ii. Call the Call internal method of callback with T as the this value and
+				// argument list containing kValue, k, and O.
+				callback.call(T, kValue, k, O);
+			}
+			// d. Increase k by 1.
+			k++;
+		}
+		// 8. return undefined
+	};
 }
 
 if (!Array.prototype.find) {
-    Array.prototype.find = function (predicate) {
-        // 1. Let O be ? ToObject(this value).
-        if (this == null) {
-            throw new TypeError('"this" is null or not defined');
-        }
+	Array.prototype.find = function(predicate) {
+		// 1. Let O be ? ToObject(this value).
+		if (this == null) {
+			throw new TypeError('"this" is null or not defined');
+		}
 
-        var o = Object(this);
+		var o = Object(this);
 
-        // 2. Let len be ? ToLength(? Get(O, "length")).
-        var len = o.length >>> 0;
+		// 2. Let len be ? ToLength(? Get(O, "length")).
+		var len = o.length >>> 0;
 
-        // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-        if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-        }
+		// 3. If IsCallable(predicate) is false, throw a TypeError exception.
+		if (typeof predicate !== 'function') {
+			throw new TypeError('predicate must be a function');
+		}
 
-        // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-        var thisArg = arguments[1];
+		// 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+		var thisArg = arguments[1];
 
-        // 5. Let k be 0.
-        var k = 0;
+		// 5. Let k be 0.
+		var k = 0;
 
-        // 6. Repeat, while k < len
-        while (k < len) {
-            // a. Let Pk be ! ToString(k).
-            // b. Let kValue be ? Get(O, Pk).
-            // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-            // d. If testResult is true, return kValue.
-            var kValue = o[k];
-            if (predicate.call(thisArg, kValue, k, o)) {
-                return kValue;
-            }
-            // e. Increase k by 1.
-            k++;
-        }
+		// 6. Repeat, while k < len
+		while (k < len) {
+			// a. Let Pk be ! ToString(k).
+			// b. Let kValue be ? Get(O, Pk).
+			// c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+			// d. If testResult is true, return kValue.
+			var kValue = o[k];
+			if (predicate.call(thisArg, kValue, k, o)) {
+				return kValue;
+			}
+			// e. Increase k by 1.
+			k++;
+		}
 
-        // 7. Return undefined.
-        return undefined;
-    };
+		// 7. Return undefined.
+		return undefined;
+	};
 }
 
 if (!Array.prototype.filter) {
-    Array.prototype.filter = function (fun, thisp) {
-        if (this === null)
-            throw new TypeError();
+	Array.prototype.filter = function(fun, thisp) {
+		if (this === null)
+			throw new TypeError();
 
-        var t = Object(this);
-        var len = t.length >>> 0;
-        if (typeof fun != "function")
-            throw new TypeError();
+		var t = Object(this);
+		var len = t.length >>> 0;
+		if (typeof fun != "function")
+			throw new TypeError();
 
-        var res = [];
-        var thisp = arguments[1];
-        for (var i = 0; i < len; i++) {
-            if (i in t) {
-                var val = t[i]; // in case fun mutates this
-                if (fun.call(thisp, val, i, t))
-                    res.push(val);
-            }
-        }
+		var res = [];
+		var thisp = arguments[1];
+		for (var i = 0; i < len; i++) {
+			if (i in t) {
+				var val = t[i]; // in case fun mutates this
+				if (fun.call(thisp, val, i, t))
+					res.push(val);
+			}
+		}
 
-        return res;
-    };
+		return res;
+	};
 }
 
 if (!Array.prototype.map) {
-    Array.prototype.map = function (callback, thisArg) {
+	Array.prototype.map = function(callback, thisArg) {
 
-        var T, A, k;
+		var T, A, k;
 
-        if (this === null) {
-            throw new TypeError(" this is null or not defined");
-        }
+		if (this === null) {
+			throw new TypeError(" this is null or not defined");
+		}
 
-        // 1. Let O be the result of calling ToObject passing the |this| value as the argument.
-        var O = Object(this);
+		// 1. Let O be the result of calling ToObject passing the |this| value as the argument.
+		var O = Object(this);
 
-        // 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
-        // 3. Let len be ToUint32(lenValue).
-        var len = O.length >>> 0;
+		// 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
+		// 3. Let len be ToUint32(lenValue).
+		var len = O.length >>> 0;
 
-        // 4. If IsCallable(callback) is false, throw a TypeError exception.
-        // See: http://es5.github.com/#x9.11
-        if (typeof callback !== "function") {
-            throw new TypeError(callback + " is not a function");
-        }
+		// 4. If IsCallable(callback) is false, throw a TypeError exception.
+		// See: http://es5.github.com/#x9.11
+		if (typeof callback !== "function") {
+			throw new TypeError(callback + " is not a function");
+		}
 
-        // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
-        if (thisArg) {
-            T = thisArg;
-        }
+		// 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+		if (thisArg) {
+			T = thisArg;
+		}
 
-        // 6. Let A be a new array created as if by the expression new Array(len) where Array is
-        // the standard built-in constructor with that name and len is the value of len.
-        A = new Array(len);
+		// 6. Let A be a new array created as if by the expression new Array(len) where Array is
+		// the standard built-in constructor with that name and len is the value of len.
+		A = new Array(len);
 
-        // 7. Let k be 0
-        k = 0;
+		// 7. Let k be 0
+		k = 0;
 
-        // 8. Repeat, while k < len
-        while (k < len) {
+		// 8. Repeat, while k < len
+		while (k < len) {
 
-            var kValue, mappedValue;
+			var kValue, mappedValue;
 
-            // a. Let Pk be ToString(k).
-            // This is implicit for LHS operands of the in operator
-            // b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
-            // This step can be combined with c
-            // c. If kPresent is true, then
-            if (k in O) {
+			// a. Let Pk be ToString(k).
+			// This is implicit for LHS operands of the in operator
+			// b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
+			// This step can be combined with c
+			// c. If kPresent is true, then
+			if (k in O) {
 
-                // i. Let kValue be the result of calling the Get internal method of O with argument Pk.
-                kValue = O[k];
+				// i. Let kValue be the result of calling the Get internal method of O with argument Pk.
+				kValue = O[k];
 
-                // ii. Let mappedValue be the result of calling the Call internal method of callback
-                // with T as the this value and argument list containing kValue, k, and O.
-                mappedValue = callback.call(T, kValue, k, O);
+				// ii. Let mappedValue be the result of calling the Call internal method of callback
+				// with T as the this value and argument list containing kValue, k, and O.
+				mappedValue = callback.call(T, kValue, k, O);
 
-                // iii. Call the DefineOwnProperty internal method of A with arguments
-                // Pk, Property Descriptor {Value: mappedValue, : true, Enumerable: true, Configurable: true},
-                // and false.
+				// iii. Call the DefineOwnProperty internal method of A with arguments
+				// Pk, Property Descriptor {Value: mappedValue, : true, Enumerable: true, Configurable: true},
+				// and false.
 
-                // In browsers that support Object.defineProperty, use the following:
-                // Object.defineProperty(A, Pk, { value: mappedValue, writable: true, enumerable: true, configurable:
-                // true });
+				// In browsers that support Object.defineProperty, use the following:
+				// Object.defineProperty(A, Pk, { value: mappedValue, writable: true, enumerable: true, configurable:
+				// true });
 
-                // For best browser support, use the following:
-                A[k] = mappedValue;
-            }
-            // d. Increase k by 1.
-            k++;
-        }
+				// For best browser support, use the following:
+				A[k] = mappedValue;
+			}
+			// d. Increase k by 1.
+			k++;
+		}
 
-        // 9. return A
-        return A;
-    };
+		// 9. return A
+		return A;
+	};
+}
+
+if (typeof requestAnimationFrame === "undefined") {
+	requestAnimationFrame = function(frameRequestCallback) {
+		setTimeout(frameRequestCallback, 10);
+	}
 }
 // refrain to use $package operator since is not yet defined
 (function() {
@@ -916,6 +926,112 @@ $e = js.lang.Operator.$element;
 $l = js.lang.Operator.$list;
 
 // dollar name is used by jQuery; it can be configured to not but is not adviseable
+// refrain to use $package operator since is not yet defined
+(function () {
+    if (typeof js === "undefined") {
+        js = {};
+    }
+    if (typeof js.ua === "undefined") {
+        js.ua = {};
+    }
+})();
+
+js.ua.System = {
+    _ERROR_MESSAGE : "Temporary failure. Please refresh the page.",
+
+    print : function (message) {
+        if (typeof console !== "undefined") {
+            console.log(message.replace(/<br \/>/g, " "));
+        }
+    },
+
+    error : function (er) {
+        js.ua.System.print(js.ua.System._getErrorMessage(arguments));
+        js.ua.System.alert(this._ERROR_MESSAGE);
+    },
+
+    alert : function (message) {
+        if (arguments.length > 0) {
+            if (arguments.length > 1) {
+                message = $format(arguments);
+            }
+            window.setTimeout(function () {
+                window.alert(message);
+            }, 1);
+        }
+    },
+
+    toast : function (message) {
+        if (arguments.length > 0) {
+            if (arguments.length > 1) {
+                message = $format(arguments);
+            }
+            window.setTimeout(function () {
+                window.alert(message);
+            }, 1);
+        }
+    },
+
+    prompt : function (message, callback, scope) {
+        if (arguments.length > 0) {
+            if (arguments.length > 1) {
+                message = $format(arguments);
+            }
+            window.setTimeout(function () {
+                var prompt = window.prompt(message);
+                if (prompt === null) {
+                    // user cancel; convert to undefined
+                    prompt = undefined;
+                }
+                else {
+                    // user pressed OK
+                    if (prompt.length === 0) {
+                        // user OK but no input; convert to null
+                        prompt = null;
+                    }
+                }
+                callback.call(scope || window, prompt);
+            }, 1);
+        }
+    },
+
+    confirm : function (message, callback, scope) {
+        if (arguments.length > 0) {
+            if (arguments.length > 1) {
+                message = $format(arguments);
+            }
+            window.setTimeout(function () {
+                callback.call(scope || window, window.confirm(message));
+            }, 1);
+        }
+    },
+
+    _getErrorMessage : function (args) {
+        if (args[0] instanceof Error) {
+            var er = args[0];
+            var s = er.name;
+            if (er.message) {
+                s += ("\r\n" + er.message);
+            }
+            if(er.stack) {
+            	s += ("\r\n\r\n" + er.stack);
+            }
+            return s;
+        }
+        return $format(args);
+    }
+};
+
+(function () {
+    // Replace global error handler with with a more explicit one, if debugging active.
+    if (typeof __js_debug__ !== "undefined") {
+        js.ua.System.error = function (er) {
+            var s = js.ua.System._getErrorMessage(arguments);
+            js.ua.System.print(s);
+            js.ua.System.alert(s);
+        };
+    }
+})();
 $package("js.ua");
 
 js.ua.Engine = {
@@ -1863,112 +1979,6 @@ $legacy(js.ua.Engine.TRIDENT, function() {
 		}
 	};
 });
-// refrain to use $package operator since is not yet defined
-(function () {
-    if (typeof js === "undefined") {
-        js = {};
-    }
-    if (typeof js.ua === "undefined") {
-        js.ua = {};
-    }
-})();
-
-js.ua.System = {
-    _ERROR_MESSAGE : "Temporary failure. Please refresh the page.",
-
-    print : function (message) {
-        if (typeof console !== "undefined") {
-            console.log(message.replace(/<br \/>/g, " "));
-        }
-    },
-
-    error : function (er) {
-        js.ua.System.print(js.ua.System._getErrorMessage(arguments));
-        js.ua.System.alert(this._ERROR_MESSAGE);
-    },
-
-    alert : function (message) {
-        if (arguments.length > 0) {
-            if (arguments.length > 1) {
-                message = $format(arguments);
-            }
-            window.setTimeout(function () {
-                window.alert(message);
-            }, 1);
-        }
-    },
-
-    toast : function (message) {
-        if (arguments.length > 0) {
-            if (arguments.length > 1) {
-                message = $format(arguments);
-            }
-            window.setTimeout(function () {
-                window.alert(message);
-            }, 1);
-        }
-    },
-
-    prompt : function (message, callback, scope) {
-        if (arguments.length > 0) {
-            if (arguments.length > 1) {
-                message = $format(arguments);
-            }
-            window.setTimeout(function () {
-                var prompt = window.prompt(message);
-                if (prompt === null) {
-                    // user cancel; convert to undefined
-                    prompt = undefined;
-                }
-                else {
-                    // user pressed OK
-                    if (prompt.length === 0) {
-                        // user OK but no input; convert to null
-                        prompt = null;
-                    }
-                }
-                callback.call(scope || window, prompt);
-            }, 1);
-        }
-    },
-
-    confirm : function (message, callback, scope) {
-        if (arguments.length > 0) {
-            if (arguments.length > 1) {
-                message = $format(arguments);
-            }
-            window.setTimeout(function () {
-                callback.call(scope || window, window.confirm(message));
-            }, 1);
-        }
-    },
-
-    _getErrorMessage : function (args) {
-        if (args[0] instanceof Error) {
-            var er = args[0];
-            var s = er.name;
-            if (er.message) {
-                s += ("\r\n" + er.message);
-            }
-            if(er.stack) {
-            	s += ("\r\n\r\n" + er.stack);
-            }
-            return s;
-        }
-        return $format(args);
-    }
-};
-
-(function () {
-    // Replace global error handler with with a more explicit one, if debugging active.
-    if (typeof __js_debug__ !== "undefined") {
-        js.ua.System.error = function (er) {
-            var s = js.ua.System._getErrorMessage(arguments);
-            js.ua.System.print(s);
-            js.ua.System.alert(s);
-        };
-    }
-})();
 $include = function () {
 };
 
@@ -2611,6 +2621,8 @@ js.dom.Element.prototype = {
 			if (el._format !== null) {
 				delete el._format;
 			}
+			// delete DOM events instance; this allows garbage collecting for event handlers
+			// rely on browser to clean-up event listeners attached to a removed node
 			delete el._domEvents;
 			if (typeof el._customEvents !== "undefined") {
 				delete el._customEvents;
@@ -4092,71 +4104,75 @@ js.dom.IFrame.prototype = {
 $extends(js.dom.IFrame, js.dom.Element);
 $package('js.dom');
 
-js.dom.Image = function (ownerDoc, node) {
-    this.$super(ownerDoc, node);
-    this._defaultSrc = this.getAttr("data-default");
-    if (this._defaultSrc == null) {
-        this._defaultSrc = this._TRANSPARENT_DOT;
-    }
+js.dom.Image = function(ownerDoc, node) {
+	this.$super(ownerDoc, node);
+	this._defaultSrc = this.getAttr("data-default");
+	if (this._defaultSrc == null) {
+		this._defaultSrc = this._TRANSPARENT_DOT;
+	}
 
-    this.on("error", this._onError, this);
+	this.on("error", this._onError, this);
 };
 
 js.dom.Image.prototype = {
-    _TRANSPARENT_DOT: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+	_TRANSPARENT_DOT : 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
 
-    setSrc: function (src) {
-        if (!src || /^\s+|(?:&nbsp;)+$/g.test(src)) {
-            return this.reset();
-        }
+	setSrc : function(src) {
+		if (!src || /^\s+|(?:&nbsp;)+$/g.test(src)) {
+			return this.reset();
+		}
 
-        if (this._format !== null) {
-            src = this._format.format(src);
-        }
-        this._node.src = src;
-        return this;
-    },
+		if (this._format !== null) {
+			src = this._format.format(src);
+		}
+		this._node.src = src;
+		return this;
+	},
 
-    getSrc: function () {
-        return this._node.src;
-    },
+	getSrc : function() {
+		return this._node.src;
+	},
 
-    reload: function (src) {
-        var i = src.indexOf('?');
-        if (i !== -1) {
-            src = src.substring(0, i);
-        }
-        return this.setSrc(src + '?' + Math.random().toString(36).substr(2));
-    },
+	reload : function(src) {
+		var i = src.indexOf('?');
+		if (i !== -1) {
+			src = src.substring(0, i);
+		}
+		return this.setSrc(src + '?' + Math.random().toString(36).substr(2));
+	},
 
-    reset: function () {
-        this._node.src = this._defaultSrc;
-        return this;
-    },
+	reset : function() {
+		this._node.src = this._defaultSrc;
+		return this;
+	},
 
-    isValid: function () {
-        return this._node.src && this._node.src !== this._defaultSrc;
-    },
+	isValid : function() {
+		return this._node.src && this._node.src !== this._defaultSrc;
+	},
 
-    hasDefault: function () {
-        return !!this._defaultSrc;
-    },
+	hasDefault : function() {
+		return !!this._defaultSrc;
+	},
 
-    setWidth: function (width) {
-        return this.setAttr("width", width.toString());
-    },
+	setWidth : function(width) {
+		return this.setAttr("width", width.toString());
+	},
 
-    setHeight: function (height) {
-        return this.setAttr("height", height.toString());
-    },
+	setHeight : function(height) {
+		return this.setAttr("height", height.toString());
+	},
 
-    _onError: function (ev) {
-        this._node.src = this._defaultSrc;
-    },
+	_onError : function(ev) {
+		// at limit, there is the chance that error handler to be invoked after image object was removed and cleaned
+		// in this case this._node was deleted by Element#_clean() and is undefined
+		if (typeof this._node !== "undefined") {
+			this._node.src = this._defaultSrc;
+		}
+	},
 
-    toString: function () {
-        return 'js.dom.Image';
-    }
+	toString : function() {
+		return 'js.dom.Image';
+	}
 };
 $extends(js.dom.Image, js.dom.Element);
 $package("js.dom");
@@ -5081,11 +5097,11 @@ js.dom.template.ConditionalExpression = function (content, scope, expression) {
 };
 
 js.dom.template.ConditionalExpression.prototype = {
-    value : function () {
+    value: function () {
         return this._value;
     },
 
-    _parse : function () {
+    _parse: function () {
         if (this._expression.charAt(0) === '!') {
             this._not = true;
             this._expression = this._expression.substring(1);
@@ -5097,23 +5113,23 @@ js.dom.template.ConditionalExpression.prototype = {
         for (var i = 0, c; i < this._expression.length; ++i) {
             c = this._expression.charAt(i);
             switch (state) {
-            case js.dom.template.ConditionalExpression.State.PROPERTY_PATH:
-                if (this._isPropertyPathChar(c)) {
+                case js.dom.template.ConditionalExpression.State.PROPERTY_PATH:
+                    if (this._isPropertyPathChar(c)) {
+                        builder += c;
+                        break;
+                    }
+                    this._propertyPath = builder;
+                    builder = "";
+                    this._opcode = js.dom.template.ConditionalExpression.Opcode.forChar(c);
+                    state = js.dom.template.ConditionalExpression.State.OPERAND;
+                    break;
+
+                case js.dom.template.ConditionalExpression.State.OPERAND:
                     builder += c;
                     break;
-                }
-                this._propertyPath = builder;
-                builder = "";
-                this._opcode = js.dom.template.ConditionalExpression.Opcode.forChar(c);
-                state = js.dom.template.ConditionalExpression.State.OPERAND;
-                break;
 
-            case js.dom.template.ConditionalExpression.State.OPERAND:
-                builder += c;
-                break;
-
-            default:
-                }
+                default:
+                    }
         }
 
         if (state == js.dom.template.ConditionalExpression.State.PROPERTY_PATH) {
@@ -5129,13 +5145,13 @@ js.dom.template.ConditionalExpression.prototype = {
         }
     },
 
-    JAVA_IDENTIFIER : /[a-zA-Z0-9._$]/,
+    JAVA_IDENTIFIER: /[a-zA-Z0-9._$]/,
 
-    _isPropertyPathChar : function (char) {
+    _isPropertyPathChar: function (char) {
         return this.JAVA_IDENTIFIER.test(char);
     },
 
-    _evaluate : function (object) {
+    _evaluate: function (object) {
         if (this._opcode === js.dom.template.ConditionalExpression.Opcode.INVALID) {
             $warn("js.dom.template.ConditionalExpression#evaluate", "Invalid conditional expression |%s|. Not supported opcode.", this._expression);
             return false;
@@ -5159,85 +5175,85 @@ js.dom.template.ConditionalExpression.prototype = {
         return this._not ? !value : value;
     },
 
-    _processors : {},
+    _processors: {},
 
-    _getProcessor : function (opcode) {
+    _getProcessor: function (opcode) {
         var processor = this._processors[opcode];
 
         if (typeof processor === "undefined") {
             switch (opcode) {
-            case js.dom.template.ConditionalExpression.Opcode.NOT_EMPTY:
-                processor = new js.dom.template.ConditionalExpression.NotEmptyProcessor();
-                break;
+                case js.dom.template.ConditionalExpression.Opcode.NOT_EMPTY:
+                    processor = new js.dom.template.ConditionalExpression.NotEmptyProcessor();
+                    break;
 
-            case js.dom.template.ConditionalExpression.Opcode.EQUALS:
-                processor = new js.dom.template.ConditionalExpression.EqualsProcessor();
-                break;
+                case js.dom.template.ConditionalExpression.Opcode.EQUALS:
+                    processor = new js.dom.template.ConditionalExpression.EqualsProcessor();
+                    break;
 
-            case js.dom.template.ConditionalExpression.Opcode.LESS_THAN:
-                processor = new js.dom.template.ConditionalExpression.LessThanProcessor();
-                break;
+                case js.dom.template.ConditionalExpression.Opcode.LESS_THAN:
+                    processor = new js.dom.template.ConditionalExpression.LessThanProcessor();
+                    break;
 
-            case js.dom.template.ConditionalExpression.Opcode.GREATER_THAN:
-                processor = new js.dom.template.ConditionalExpression.GreaterThanProcessor();
-                break;
+                case js.dom.template.ConditionalExpression.Opcode.GREATER_THAN:
+                    processor = new js.dom.template.ConditionalExpression.GreaterThanProcessor();
+                    break;
 
-            default:
-                }
+                default:
+                    }
             this._processors[opcode] = processor;
         }
 
         return processor;
     },
 
-    toString : function () {
+    toString: function () {
         return "js.dom.template.ConditionalExpression";
     }
 };
 $extends(js.dom.template.ConditionalExpression, Object);
 
 js.dom.template.ConditionalExpression.Opcode = {
-    NONE : 0,
+    NONE: 0,
 
-    INVALID : 1,
+    INVALID: 1,
 
-    NOT_EMPTY : 2,
+    NOT_EMPTY: 2,
 
-    EQUALS : 3,
+    EQUALS: 3,
 
-    LESS_THAN : 4,
+    LESS_THAN: 4,
 
-    GREATER_THAN : 5
+    GREATER_THAN: 5
 };
 
 js.dom.template.ConditionalExpression.Opcode.forChar = function (code) {
     switch (code) {
-    case '=':
-        return js.dom.template.ConditionalExpression.Opcode.EQUALS;
-    case '<':
-        return js.dom.template.ConditionalExpression.Opcode.LESS_THAN;
-    case '>':
-        return js.dom.template.ConditionalExpression.Opcode.GREATER_THAN;
+        case '=':
+            return js.dom.template.ConditionalExpression.Opcode.EQUALS;
+        case '<':
+            return js.dom.template.ConditionalExpression.Opcode.LESS_THAN;
+        case '>':
+            return js.dom.template.ConditionalExpression.Opcode.GREATER_THAN;
     }
     return js.dom.template.ConditionalExpression.Opcode.INVALID;
 };
 
 js.dom.template.ConditionalExpression.State = {
-    NONE : 0,
+    NONE: 0,
 
-    PROPERTY_PATH : 1,
+    PROPERTY_PATH: 1,
 
-    OPERAND : 2
+    OPERAND: 2
 };
 
 js.dom.template.ConditionalExpression.Processor = {
-    evaluate : function (value, operand) {
+    evaluate: function (value, operand) {
     },
 
-    acceptNullOperand : function () {
+    acceptNullOperand: function () {
     },
 
-    acceptValue : function (value) {
+    acceptValue: function (value) {
     }
 };
 
@@ -5245,18 +5261,26 @@ js.dom.template.ConditionalExpression.NotEmptyProcessor = function () {
 };
 
 js.dom.template.ConditionalExpression.NotEmptyProcessor.prototype = {
-    evaluate : function (value, operand) {
+    evaluate: function (value, operand) {
         if (js.lang.Types.isArray(value)) {
             return value.length > 0;
+        }
+        if (js.lang.Types.isStrictObject(value)) {
+            for (var prop in value) {
+                if (value.hasOwnProperty(prop)) {
+                    return true;
+                }
+            }
+            return JSON.stringify(value) !== JSON.stringify({});
         }
         return Boolean(value);
     },
 
-    acceptNullOperand : function () {
+    acceptNullOperand: function () {
         return true;
     },
 
-    acceptValue : function (value) {
+    acceptValue: function (value) {
         return true;
     }
 };
@@ -5267,7 +5291,7 @@ js.dom.template.ConditionalExpression.EqualsProcessor = function () {
 };
 
 js.dom.template.ConditionalExpression.EqualsProcessor.prototype = {
-    evaluate : function (value, operand) {
+    evaluate: function (value, operand) {
         if (value === null) {
             return operand === "null";
         }
@@ -5280,7 +5304,7 @@ js.dom.template.ConditionalExpression.EqualsProcessor.prototype = {
         return value == operand;
     },
 
-    _evaluateDate : function (date, dateFormat) {
+    _evaluateDate: function (date, dateFormat) {
         var dateItems = js.dom.template.ConditionalExpression.Dates.dateItems(date);
         var matcher = js.dom.template.ConditionalExpression.Dates.dateMatcher(dateFormat);
         for (var i = 0, value; i < dateItems.length; ++i) {
@@ -5295,11 +5319,11 @@ js.dom.template.ConditionalExpression.EqualsProcessor.prototype = {
         return true;
     },
 
-    acceptNullOperand : function () {
+    acceptNullOperand: function () {
         return false;
     },
 
-    acceptValue : function (value) {
+    acceptValue: function (value) {
         return true;
     }
 };
@@ -5310,7 +5334,7 @@ js.dom.template.ConditionalExpression.ComparisonProcessor = function () {
 };
 
 js.dom.template.ConditionalExpression.ComparisonProcessor.prototype = {
-    evaluate : function (value, operand) {
+    evaluate: function (value, operand) {
         if (js.lang.Types.isNumber(value)) {
             return this.compare(value, Number(operand));
         }
@@ -5320,14 +5344,14 @@ js.dom.template.ConditionalExpression.ComparisonProcessor.prototype = {
         return false;
     },
 
-    compare : function (value, operand) {
+    compare: function (value, operand) {
     },
 
-    acceptNullOperand : function () {
+    acceptNullOperand: function () {
         return false;
     },
 
-    acceptValue : function (value) {
+    acceptValue: function (value) {
         if (js.lang.Types.isNumber(value)) {
             return true;
         }
@@ -5344,7 +5368,7 @@ js.dom.template.ConditionalExpression.LessThanProcessor = function () {
 };
 
 js.dom.template.ConditionalExpression.LessThanProcessor.prototype = {
-    compare : function (value, operand) {
+    compare: function (value, operand) {
         return value < operand;
     }
 };
@@ -5354,20 +5378,20 @@ js.dom.template.ConditionalExpression.GreaterThanProcessor = function () {
 };
 
 js.dom.template.ConditionalExpression.GreaterThanProcessor.prototype = {
-    compare : function (value, operand) {
+    compare: function (value, operand) {
         return value > operand;
     }
 };
 $extends(js.dom.template.ConditionalExpression.GreaterThanProcessor, js.dom.template.ConditionalExpression.ComparisonProcessor);
 
 js.dom.template.ConditionalExpression.OperandFormatValidator = {
-    DATE_PATTERN : /^\d{4}(?:-\d{2}(?:-\d{2}(?:T\d{2}(?::\d{2}(?::\d{2}(?:Z)?)?)?)?)?)?$/,
+    DATE_PATTERN: /^\d{4}(?:-\d{2}(?:-\d{2}(?:T\d{2}(?::\d{2}(?::\d{2}(?:Z)?)?)?)?)?)?$/,
 
-    NUMBER_PATTERN : /^[+-]?\d+(?:\.\d+)?$/,
+    NUMBER_PATTERN: /^[+-]?\d+(?:\.\d+)?$/,
 
-    BOOLEAN_PATTERN : /^true|false$/,
+    BOOLEAN_PATTERN: /^true|false$/,
 
-    isValid : function (value, operand) {
+    isValid: function (value, operand) {
         if (!operand) {
             return false;
         }
@@ -5385,15 +5409,15 @@ js.dom.template.ConditionalExpression.OperandFormatValidator = {
 };
 
 js.dom.template.ConditionalExpression.Dates = {
-    DATE_PATTERN : /(\d{4})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2})(?::(\d{2})(?::(\d{2})(?:Z)?)?)?)?)?)?/,
+    DATE_PATTERN: /(\d{4})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2})(?::(\d{2})(?::(\d{2})(?:Z)?)?)?)?)?)?/,
 
-    dateMatcher : function (dateFormat) {
+    dateMatcher: function (dateFormat) {
         // at this point date format is already validated and is safe to ignore null matcher
         var matcher = this.DATE_PATTERN.exec(dateFormat);
         return matcher;
     },
 
-    parse : function (dateFormat) {
+    parse: function (dateFormat) {
         var matcher = this.dateMatcher(dateFormat);
 
         var year = this._group(matcher, 1);
@@ -5407,7 +5431,7 @@ js.dom.template.ConditionalExpression.Dates = {
         return new Date(utc);
     },
 
-    _group : function (matcher, group) {
+    _group: function (matcher, group) {
         var value = matcher[group];
         if (group == 2) {
             // the second group is hard coded to month and should be normalized, January should be 0
@@ -5421,11 +5445,11 @@ js.dom.template.ConditionalExpression.Dates = {
         return this._parseInt(value, 0);
     },
 
-    _parseInt : function (value, defaultValue) {
+    _parseInt: function (value, defaultValue) {
         return value ? parseInt(value) : defaultValue;
     },
 
-    dateItems : function (date) {
+    dateItems: function (date) {
         var items = new Array(6);
 
         items[0] = date.getUTCFullYear();
@@ -6954,18 +6978,18 @@ js.event.Event.prototype = {
 		return this._domEvent.button === 1;
 	},
 
-	setData : function(name, value) {
+	setData : function(value) {
 		if (typeof this._domEvent.dataTransfer !== "undefined") {
-			this._domEvent.dataTransfer.setData(name, value);
+			this._domEvent.dataTransfer.setData("text/plain", js.lang.JSON.stringify(value));
 		}
 	},
 
-	getData : function(name) {
+	getData : function() {
 		if (typeof this._domEvent.dataTransfer === "undefined") {
 			return undefined;
 		}
-		var value = this._domEvent.dataTransfer.getData(name);
-		return value ? value : null;
+		var value = this._domEvent.dataTransfer.getData("text/plain");
+		return value ? js.lang.JSON.parse(value) : null;
 	},
 
 	toString : function() {

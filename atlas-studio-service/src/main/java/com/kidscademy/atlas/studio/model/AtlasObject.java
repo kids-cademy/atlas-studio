@@ -1,5 +1,7 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.Transient;
 import javax.sound.midi.Instrument;
 
@@ -248,6 +251,14 @@ public class AtlasObject implements CollectionItem {
 	waveformSrc = Files.mediaSrc(this, waveformName);
     }
 
+    @PreRemove
+    public void preRemove() throws IOException {
+	File mediaDir = Files.mediaDir(this);
+	Files.removeFilesHierarchy(mediaDir);
+	// Files.removeFilesHierarchy does not remove base directory itself
+	mediaDir.delete();
+    }
+
     /**
      * For testing
      * 
@@ -352,11 +363,11 @@ public class AtlasObject implements CollectionItem {
     }
 
     public List<Taxon> getTaxonomy() {
-        return taxonomy;
+	return taxonomy;
     }
 
     public void setTaxonomy(List<Taxon> taxonomy) {
-        this.taxonomy = taxonomy;
+	this.taxonomy = taxonomy;
     }
 
     public Map<String, String> getFeatures() {

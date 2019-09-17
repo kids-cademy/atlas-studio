@@ -53,4 +53,9 @@
 	<hexa-icon-size>96px</hexa-icon-size>
 	
 	<icon-size>96px</icon-size>
+	
+		<input-height>48px</input-height>
+		<z-index-multi-select>1000</z-index-multi-select>
+	<input-padding>0 10px</input-padding>
+	
 </dimen>

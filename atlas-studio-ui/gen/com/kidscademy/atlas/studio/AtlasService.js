@@ -54,6 +54,37 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Get collection items by taxon.
+	 *
+	 * @param int collectionId,
+	 * @param com.kidscademy.atlas.studio.model.Taxon taxon,
+	 * @param java.util.List<com.kidscademy.atlas.studio.model.AtlasItem> excludes,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.AtlasItem>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getCollectionItemsByTaxon: function(collectionId, taxon, excludes) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Collection id argument is not a number.");
+		$assert(typeof taxon !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Taxon argument is undefined.");
+		$assert(typeof excludes !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Excludes argument is undefined.");
+
+		var __callback__ = arguments[3];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Callback is not a function.");
+		var __scope__ = arguments[4];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getCollectionItemsByTaxon", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getCollectionItemsByTaxon");
+		rmi.setParameters(collectionId, taxon, excludes);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get atlas object.
 	 *
 	 * @param int objectId,

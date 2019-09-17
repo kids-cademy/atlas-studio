@@ -25,6 +25,8 @@ public interface AtlasService {
 
     List<AtlasItem> getCollectionItems(int collectionId);
 
+    List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes);
+
     /**
      * Get AtlasObject entity. If ID is zero returns an empty instance.
      * 

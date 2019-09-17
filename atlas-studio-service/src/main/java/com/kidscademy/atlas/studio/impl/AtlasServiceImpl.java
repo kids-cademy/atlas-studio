@@ -79,6 +79,13 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes) {
+	List<AtlasItem> objects = atlasDao.getCollectionItemsByTaxon(collectionId, taxon);
+	objects.removeAll(excludes);
+	return objects;
+    }
+
+    @Override
     public AtlasObject getAtlasObject(int objectId) throws IOException {
 	Params.notZero(objectId, "Atlas object ID");
 	AtlasObject object = atlasDao.getAtlasObject(objectId);
@@ -173,7 +180,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
     }
 
-    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Family", "Genus",
+    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Suborder", "Family", "Genus",
 	    "Species", "Subspecies" };
 
     @Override
