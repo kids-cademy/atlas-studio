@@ -24,14 +24,13 @@ import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.Transient;
-import javax.sound.midi.Instrument;
 
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
 
 @Entity
-public class AtlasObject implements CollectionItem {
+public class AtlasObject implements RepositoryObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -109,16 +108,15 @@ public class AtlasObject implements CollectionItem {
     private HDate endDate;
 
     /**
-     * Audio sample title is the name of the instrumental work from which sample is
+     * Audio sample title is the name of the audio work from which sample is
      * extracted.
      */
     private String sampleTitle;
 
     /**
-     * Media file name for instrument audio sample. This audio sequence contains a
-     * sample from an instrumental work relevant for this instrument. It usually has
-     * around 30 seconds, but not strictly. See {@link #pictureName} for details
-     * about media file name.
+     * Media file name for audio sample. This audio sequence contains a sample from
+     * an audio work relevant for this object. It usually has around 30 seconds, but
+     * not strictly. See {@link #pictureName} for details about media file name.
      */
     private String sampleName;
 
@@ -153,9 +151,9 @@ public class AtlasObject implements CollectionItem {
      * <p>
      * This field is used by user interface to actually render media file and is not
      * persisted. It is initialized by {@link #postLoad()} immediately after this
-     * instrument instance loaded from persistence. When instrument entity is saved
-     * to persistence this field is used to initialize related media file name, see
-     * {@link #postMerge(Instrument)}.
+     * atlas object instance loaded from persistence. When atlas object entity is
+     * saved to persistence this field is used to initialize related media file
+     * name, see {@link #postMerge(AtlasObject)}.
      */
     @Transient
     private MediaSRC sampleSrc;
@@ -185,13 +183,12 @@ public class AtlasObject implements CollectionItem {
     /**
      * Hook executed after {@link EntityManager.merge()} to initialize media file
      * names from related root-relative media SRC. This method is executed into a
-     * persistent context while this instrument instance is managed, aka attached to
-     * context. Source instrument has media SRC properly initialized; it is not
+     * persistent context while this atlas object instance is managed, aka attached
+     * to context. Source atlas object has media SRC properly initialized; it is not
      * attached to persistence context.
      * 
      * @param sourceObject
      *            unmanaged source atlas object.
-     * @see Instrument
      */
     public void postMerge(AtlasObject sourceObject) {
 	if (images != null) {
@@ -217,10 +214,10 @@ public class AtlasObject implements CollectionItem {
     /**
      * Persistence event listener executed before
      * {@link EntityManager#persist(Object)}. It serves the same purpose as
-     * {@link #postMerge(Instrument)} but is enacted when instrument is created into
-     * database.
+     * {@link #postMerge(AtlasObject)} but is enacted when atlas object is created
+     * into database.
      * 
-     * @see #postMerge(Instrument)
+     * @see #postMerge(AtlasObject)
      */
     @PrePersist
     public void preSave() {
@@ -305,7 +302,7 @@ public class AtlasObject implements CollectionItem {
     }
 
     @Override
-    public String getCollectionName() {
+    public String getRepositoryName() {
 	return collection.getName();
     }
 

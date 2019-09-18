@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.model.CollectionItem;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.RepositoryObject;
 
 import js.util.Params;
 import js.util.Strings;
@@ -14,14 +14,14 @@ public final class Files extends js.util.Files {
     private Files() {
     }
 
-    public static MediaSRC mediaSrc(CollectionItem collecitonItem, String mediaFile) {
-	return mediaSrc(collecitonItem.getCollectionName(), collecitonItem.getName(), mediaFile);
+    public static MediaSRC mediaSrc(RepositoryObject collecitonItem, String mediaFile) {
+	return mediaSrc(collecitonItem.getRepositoryName(), collecitonItem.getName(), mediaFile);
     }
 
-    public static MediaSRC mediaSrc(CollectionItem collectionItem, String mediaFile, String annotation) {
+    public static MediaSRC mediaSrc(RepositoryObject collectionItem, String mediaFile, String annotation) {
 	String basepath = Files.removeExtension(mediaFile);
 	String extension = Files.getExtension(mediaFile);
-	return mediaSrc(collectionItem.getCollectionName(), collectionItem.getName(),
+	return mediaSrc(collectionItem.getRepositoryName(), collectionItem.getName(),
 		Strings.concat(basepath, '_', annotation, '.', extension));
     }
 
@@ -44,20 +44,20 @@ public final class Files extends js.util.Files {
 
     private static File REPOSIOTRY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
-    public static File mediaDir(CollectionItem collectionItem) {
-	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", collectionItem.getCollectionName(), "/",
+    public static File mediaDir(RepositoryObject collectionItem) {
+	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", collectionItem.getRepositoryName(), "/",
 		collectionItem.getName(), '/'));
     }
 
     public static File mediaFile(MediaSRC mediaSrc) {
 	// repository dir := ${catalina.base}/webapps
-	// media SRC := /media/atlas/instrument/object/file
+	// media SRC := /media/atlas/collection/object/file
 	return new File(REPOSIOTRY_DIR, mediaSrc.value());
     }
 
-    public static File mediaFile(CollectionItem object, String mediaFileName) {
+    public static File mediaFile(RepositoryObject object, String mediaFileName) {
 	// repository dir := ${catalina.base}/webapps
-	// path := /media/atlas/instrument/object/file
+	// path := /media/atlas/collection/object/file
 	return new File(REPOSIOTRY_DIR, Files.mediaSrc(object, mediaFileName).value());
     }
 
@@ -73,7 +73,7 @@ public final class Files extends js.util.Files {
      *            media file extension.
      * @return media file path.
      */
-    public static File mediaFile(CollectionItem collectionItem, String basename, String extension) {
+    public static File mediaFile(RepositoryObject collectionItem, String basename, String extension) {
 	String fileName = Strings.concat(basename, '.', extension);
 	return new File(REPOSIOTRY_DIR, Files.mediaSrc(collectionItem, fileName).value());
     }

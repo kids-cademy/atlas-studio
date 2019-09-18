@@ -1,8 +1,7 @@
 package com.kidscademy.atlas.studio.unit;
 
-import static org.hamcrest.Matchers.nullValue;
-
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;

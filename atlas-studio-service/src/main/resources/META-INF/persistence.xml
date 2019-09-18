@@ -10,9 +10,6 @@
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
-		<!-- support entities -->
-		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
-
 		<!-- embeddables -->
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
@@ -41,7 +38,6 @@
 
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
-		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
 		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Link</class>
@@ -72,7 +68,6 @@
 
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.AtlasObjectStateConverter</class>
-		<class>com.kidscademy.atlas.studio.dao.InstrumentSample</class>
 		<class>com.kidscademy.atlas.studio.dao.TaxonomyClassConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Link</class>

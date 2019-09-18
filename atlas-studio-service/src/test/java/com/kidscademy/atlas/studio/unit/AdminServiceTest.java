@@ -255,7 +255,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void removeInstrumentSample() throws IOException {
+    public void removeAudioSample() throws IOException {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 	Files.copy(new File("fixture/image/waveform.png"), file("waveform.png"));
 

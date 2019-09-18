@@ -81,7 +81,7 @@ public class AtlasDaoTest {
 	assertThat(collection.getIconName(), equalTo("instrument.png"));
 	assertThat(collection.getIconSrc(), equalTo(Files.collectionSrc("instrument.png")));
 
-	assertThat(atlasItem.getCollectionName(), equalTo("instrument"));
+	assertThat(atlasItem.getRepositoryName(), equalTo("instrument"));
 	assertThat(atlasItem.getName(), equalTo("accordion"));
 	assertThat(atlasItem.getDisplay(), equalTo("Accordion"));
 	assertThat(atlasItem.getIconName(), equalTo("icon.jpg"));
@@ -95,8 +95,8 @@ public class AtlasDaoTest {
     }
 
     /**
-     * When create new instrument with not null media source values, media files
-     * fields should initialized before actual database persist.
+     * When create new object with not null media source values, media files fields
+     * should initialized before actual database persist.
      */
     @Test
     public void prePersistObject() {
@@ -118,14 +118,14 @@ public class AtlasDaoTest {
 
 	dao.saveAtlasObject(object);
 
-	AtlasObject persistedInstrument = dao.getAtlasObject(object.getId());
+	AtlasObject persistedObject = dao.getAtlasObject(object.getId());
 
-	assertThat(persistedInstrument.getImages().get("icon").getFileName(), equalTo("icon.jpg"));
-	assertThat(persistedInstrument.getImages().get("cover").getFileName(), equalTo("cover.png"));
-	assertThat(persistedInstrument.getImages().get("contextual").getFileName(), equalTo("contextual.jpg"));
+	assertThat(persistedObject.getImages().get("icon").getFileName(), equalTo("icon.jpg"));
+	assertThat(persistedObject.getImages().get("cover").getFileName(), equalTo("cover.png"));
+	assertThat(persistedObject.getImages().get("contextual").getFileName(), equalTo("contextual.jpg"));
 
-	assertThat(persistedInstrument.getSampleName(), equalTo("sample.mp3"));
-	assertThat(persistedInstrument.getWaveformName(), equalTo("waveform.png"));
+	assertThat(persistedObject.getSampleName(), equalTo("sample.mp3"));
+	assertThat(persistedObject.getWaveformName(), equalTo("waveform.png"));
     }
 
     /**
@@ -158,7 +158,7 @@ public class AtlasDaoTest {
 
 	object.setSampleSrc(src("banjo", "sample.mp3"));
 	object.setWaveformSrc(src("banjo", "waveform.png"));
-	// database merge is triggered on DAO because instrument ID is not zero
+	// database merge is triggered on DAO because object ID is not zero
 	assertThat(object.getId(), not(equalTo(0)));
 	dao.saveAtlasObject(object);
 
@@ -175,17 +175,17 @@ public class AtlasDaoTest {
 
     @Test
     public void postLoadAtlasObjectt() {
-	AtlasObject instrument = dao.getAtlasObject(1);
+	AtlasObject object = dao.getAtlasObject(1);
 
-	assertThat(instrument.getImages(), notNullValue());
-	assertThat(instrument.getImages().size(), equalTo(4));
-	assertThat(instrument.getImage("icon").getSrc(), equalTo(src("accordion", "icon.jpg")));
-	assertThat(instrument.getImage("cover").getSrc(), equalTo(src("accordion", "piano-accordion.png")));
-	assertThat(instrument.getImage("featured").getSrc(), equalTo(src("accordion", "button-accordion.png")));
-	assertThat(instrument.getImage("contextual").getSrc(), equalTo(src("accordion", "image.jpg")));
+	assertThat(object.getImages(), notNullValue());
+	assertThat(object.getImages().size(), equalTo(4));
+	assertThat(object.getImage("icon").getSrc(), equalTo(src("accordion", "icon.jpg")));
+	assertThat(object.getImage("cover").getSrc(), equalTo(src("accordion", "piano-accordion.png")));
+	assertThat(object.getImage("featured").getSrc(), equalTo(src("accordion", "button-accordion.png")));
+	assertThat(object.getImage("contextual").getSrc(), equalTo(src("accordion", "image.jpg")));
 
-	assertThat(instrument.getSampleSrc(), equalTo(src("accordion", "sample.mp3")));
-	assertThat(instrument.getWaveformSrc(), equalTo(src("accordion", "waveform.png")));
+	assertThat(object.getSampleSrc(), equalTo(src("accordion", "sample.mp3")));
+	assertThat(object.getWaveformSrc(), equalTo(src("accordion", "waveform.png")));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class AtlasDaoTest {
 
     @Test
     public void getCollectionItemsByTaxon() {
-	Taxon taxon = new Taxon("Family", "WOODWIND");	
+	Taxon taxon = new Taxon("Family", "WOODWIND");
 	List<AtlasItem> items = dao.getCollectionItemsByTaxon(1, taxon);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(1));
@@ -468,7 +468,7 @@ public class AtlasDaoTest {
 	assertThat(object, notNullValue());
 	assertThat(object, not(instanceOf(AtlasObject.class)));
 	assertThat(object.getId(), equalTo(1));
-	assertThat(object.getCollectionName(), equalTo("instrument"));
+	assertThat(object.getRepositoryName(), equalTo("instrument"));
 	assertThat(object.getName(), equalTo("accordion"));
 	assertThat(object.getDisplay(), equalTo("Accordion"));
 	assertThat(object.getIconName(), equalTo("icon.jpg"));
@@ -483,41 +483,25 @@ public class AtlasDaoTest {
 	assertThat(objects, empty());
     }
 
-    public void getInstrumentsByCategory() {
-	List<AtlasItem> items = dao.getCollectionItems(1);
-	assertThat(items, notNullValue());
-	assertThat(items, hasSize(2));
-
-	AtlasItem object = items.get(0);
-	assertThat(object, notNullValue());
-	assertThat(object, not(instanceOf(AtlasObject.class)));
-	assertThat(object.getId(), equalTo(1));
-	assertThat(object.getCollectionName(), equalTo("instrument"));
-	assertThat(object.getName(), equalTo("accordion"));
-	assertThat(object.getDisplay(), equalTo("Accordion"));
-	assertThat(object.getIconName(), equalTo("icon.jpg"));
-	assertThat(object.getIconSrc(), equalTo(src("accordion", "icon_96x96.jpg")));
-    }
-
     @Test
     public void objectState() {
-	AtlasObject instrument = dao.getAtlasObject(1);
-	assertThat(instrument.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
+	AtlasObject object = dao.getAtlasObject(1);
+	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 
-	instrument = dao.getAtlasObject(3);
-	assertThat(instrument.getState(), equalTo(AtlasObject.State.PUBLISHED));
+	object = dao.getAtlasObject(3);
+	assertThat(object.getState(), equalTo(AtlasObject.State.PUBLISHED));
     }
 
     @Test
     public void resetObjectSample() {
 	dao.resetObjectSample(1);
 
-	AtlasObject instrument = dao.getAtlasObject(1);
-	assertThat(instrument.getSampleTitle(), nullValue());
-	assertThat(instrument.getSampleName(), nullValue());
-	assertThat(instrument.getSampleSrc(), nullValue());
-	assertThat(instrument.getWaveformName(), nullValue());
-	assertThat(instrument.getWaveformSrc(), nullValue());
+	AtlasObject object = dao.getAtlasObject(1);
+	assertThat(object.getSampleTitle(), nullValue());
+	assertThat(object.getSampleName(), nullValue());
+	assertThat(object.getSampleSrc(), nullValue());
+	assertThat(object.getWaveformName(), nullValue());
+	assertThat(object.getWaveformSrc(), nullValue());
     }
 
     @Test

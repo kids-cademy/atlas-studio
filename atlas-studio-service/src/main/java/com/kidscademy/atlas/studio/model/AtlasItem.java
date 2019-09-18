@@ -17,7 +17,7 @@ import com.kidscademy.atlas.studio.util.Files;
  * @author Iulian Rotaru
  */
 @Entity
-public class AtlasItem implements CollectionItem {
+public class AtlasItem implements RepositoryObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -71,7 +71,7 @@ public class AtlasItem implements CollectionItem {
     }
 
     @Override
-    public String getCollectionName() {
+    public String getRepositoryName() {
 	return collection.getName();
     }
 

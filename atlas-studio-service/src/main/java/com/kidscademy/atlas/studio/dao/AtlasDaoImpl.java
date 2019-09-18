@@ -85,7 +85,7 @@ public class AtlasDaoImpl implements AtlasDao {
 		.createQuery(
 			"select o.links from AtlasObject o where o.collection.name=:collectionName and o.name=:name",
 			Link.class)
-		.setParameter("collectionName", object.getCollectionName()).setParameter("name", object.getName())
+		.setParameter("collectionName", object.getRepositoryName()).setParameter("name", object.getName())
 		.getResultList();
     }
 

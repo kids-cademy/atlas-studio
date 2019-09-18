@@ -16,10 +16,10 @@ import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.CollectionItem;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
@@ -80,9 +80,9 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes) {
-	List<AtlasItem> objects = atlasDao.getCollectionItemsByTaxon(collectionId, taxon);
-	objects.removeAll(excludes);
-	return objects;
+	List<AtlasItem> items = atlasDao.getCollectionItemsByTaxon(collectionId, taxon);
+	items.removeAll(excludes);
+	return items;
     }
 
     @Override
@@ -102,23 +102,23 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public AtlasObject saveAtlasObject(AtlasObject AtlasObject) throws IOException {
-	if (AtlasObject.getSampleSrc() != null) {
-	    MediaFileHandler handler = new MediaFileHandler(AtlasObject, "sample.mp3");
+    public AtlasObject saveAtlasObject(AtlasObject object) throws IOException {
+	if (object.getSampleSrc() != null) {
+	    MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
 	    handler.commit();
-	    AtlasObject.setSampleSrc(handler.sourceSrc());
-	    AtlasObject.setWaveformSrc(generateWaveform(AtlasObject, handler.source()));
+	    object.setSampleSrc(handler.sourceSrc());
+	    object.setWaveformSrc(generateWaveform(object, handler.source()));
 	}
 
-	if (AtlasObject.getImages() != null) {
-	    for (Image picture : AtlasObject.getImages().values()) {
-		MediaFileHandler handler = new MediaFileHandler(AtlasObject, picture.getFileName());
+	if (object.getImages() != null) {
+	    for (Image picture : object.getImages().values()) {
+		MediaFileHandler handler = new MediaFileHandler(object, picture.getFileName());
 		handler.commit();
 	    }
 	}
 
-	atlasDao.saveAtlasObject(AtlasObject);
-	return AtlasObject;
+	atlasDao.saveAtlasObject(object);
+	return object;
     }
 
     @Override
@@ -447,7 +447,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
     }
 
-    private AudioSampleInfo getAudioSampleInfo(CollectionItem collectionItem, File file, MediaSRC mediaSrc)
+    private AudioSampleInfo getAudioSampleInfo(RepositoryObject collectionItem, File file, MediaSRC mediaSrc)
 	    throws IOException {
 	AudioSampleInfo info = audioProcessor.getAudioFileInfo(file);
 	info.setSampleSrc(mediaSrc);
@@ -455,7 +455,7 @@ public class AtlasServiceImpl implements AtlasService {
 	return info;
     }
 
-    private MediaSRC generateWaveform(CollectionItem collectionItem, File audioFile) throws IOException {
+    private MediaSRC generateWaveform(RepositoryObject collectionItem, File audioFile) throws IOException {
 	MediaSRC waveformSrc = Files.mediaSrc(collectionItem, "waveform.png");
 	File waveformFile = Files.mediaFile(waveformSrc);
 	audioProcessor.generateWaveform(audioFile, waveformFile);
