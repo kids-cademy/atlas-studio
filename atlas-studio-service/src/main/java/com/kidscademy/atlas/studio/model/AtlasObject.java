@@ -250,7 +250,7 @@ public class AtlasObject implements RepositoryObject {
 
     @PreRemove
     public void preRemove() throws IOException {
-	File mediaDir = Files.mediaDir(this);
+	File mediaDir = Files.objectDir(this);
 	Files.removeFilesHierarchy(mediaDir);
 	// Files.removeFilesHierarchy does not remove base directory itself
 	mediaDir.delete();

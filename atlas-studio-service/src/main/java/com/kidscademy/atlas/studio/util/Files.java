@@ -44,9 +44,12 @@ public final class Files extends js.util.Files {
 
     private static File REPOSIOTRY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
-    public static File mediaDir(RepositoryObject collectionItem) {
-	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", collectionItem.getRepositoryName(), "/",
-		collectionItem.getName(), '/'));
+    public static File objectDir(RepositoryObject object) {
+	return objectDir(object.getRepositoryName(), object.getName());
+    }
+
+    public static File objectDir(String repositoryName, String objectName) {
+	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", repositoryName, "/", objectName, '/'));
     }
 
     public static File mediaFile(MediaSRC mediaSrc) {

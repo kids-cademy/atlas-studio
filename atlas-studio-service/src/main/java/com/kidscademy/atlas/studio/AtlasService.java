@@ -40,7 +40,7 @@ public interface AtlasService {
 
     void removeAtlasObject(int objectId);
 
-    List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames);
+    List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
     Link createLink(Link link);
 

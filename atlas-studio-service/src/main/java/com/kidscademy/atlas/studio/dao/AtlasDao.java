@@ -14,9 +14,10 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Taxon;
-import com.kidscademy.atlas.studio.model.User;
 
 public interface AtlasDao {
+    AtlasCollection getCollectionById(int collectionId);
+    
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(int collectionId);
@@ -44,19 +45,19 @@ public interface AtlasDao {
      */
     void saveAtlasObject(AtlasObject object);
 
+    void removeAtlasObject(int objectId);
+
     AtlasItem getAtlasItem(int objectId);
 
     AtlasObject getAtlasObject(int objectId);
 
     AtlasObject getObjectByName(String collectionName, String name);
 
+    String getAtlasObjectName(int objectId);
+
     List<Link> getObjectLinks(AtlasItem object);
 
-    List<AtlasObject> findPublishedObjects(String category);
-
-    void removeAtlasObject(int objectId);
-
-    List<AtlasItem> findObjectsByNames(int collectionId, List<String> objectNames);
+    List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
     void resetObjectSample(int objectId);
 
@@ -75,8 +76,4 @@ public interface AtlasDao {
      * @return atlas object image or null.
      */
     Image getImageByKey(int objectId, String imageKey);
-
-    User getUserById(int userId);
-
-    AtlasCollection getCollectionById(int collectionId);
 }

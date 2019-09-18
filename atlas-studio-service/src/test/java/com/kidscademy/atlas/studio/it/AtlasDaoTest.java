@@ -189,6 +189,13 @@ public class AtlasDaoTest {
     }
 
     @Test
+    public void getAtlasObjectName() {
+	String name = dao.getAtlasObjectName(1);
+	assertThat(name, notNullValue());
+	assertThat(name, equalTo("accordion"));
+    }
+
+    @Test
     public void getCollectionItems() {
 	List<AtlasItem> items = dao.getCollectionItems(1);
 	assertThat(items, notNullValue());
@@ -460,7 +467,7 @@ public class AtlasDaoTest {
 
     @Test
     public void findObjectsByName() {
-	List<AtlasItem> objects = dao.findObjectsByNames(1, Arrays.asList("accordion", "banjo"));
+	List<AtlasItem> objects = dao.getRelatedAtlasObjects(1, Arrays.asList("accordion", "banjo"));
 	assertThat(objects, notNullValue());
 	assertThat(objects, hasSize(1));
 
@@ -478,7 +485,7 @@ public class AtlasDaoTest {
     @Test
     public void findObjectsByName_EmptyNames() {
 	List<String> emptyNames = new ArrayList<>(0);
-	List<AtlasItem> objects = dao.findObjectsByNames(1, emptyNames);
+	List<AtlasItem> objects = dao.getRelatedAtlasObjects(1, emptyNames);
 	assertThat(objects, notNullValue());
 	assertThat(objects, empty());
     }

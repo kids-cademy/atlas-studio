@@ -103,6 +103,16 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AtlasObject saveAtlasObject(AtlasObject object) throws IOException {
+	Params.notNull(object.getName(), "Atlas object name");
+	if (object.getId() != 0) {
+	    String currentObjectName = atlasDao.getAtlasObjectName(object.getId());
+	    if (!currentObjectName.equals(object.getName())) {
+		File currentObjectDir = Files.objectDir(object.getRepositoryName(), currentObjectName);
+		File newObjectDir = Files.objectDir(object);
+		currentObjectDir.renameTo(newObjectDir);
+	    }
+	}
+
 	if (object.getSampleSrc() != null) {
 	    MediaFileHandler handler = new MediaFileHandler(object, "sample.mp3");
 	    handler.commit();
@@ -127,8 +137,8 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> objectNames) {
-	return atlasDao.findObjectsByNames(collectionId, objectNames);
+    public List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames) {
+	return atlasDao.getRelatedAtlasObjects(collectionId, relatedNames);
     }
 
     @Override
@@ -180,8 +190,8 @@ public class AtlasServiceImpl implements AtlasService {
 	}
     }
 
-    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Suborder", "Family", "Genus",
-	    "Species", "Subspecies" };
+    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Suborder",
+	    "Family", "Genus", "Species", "Subspecies" };
 
     @Override
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
