@@ -507,11 +507,13 @@ public class AtlasObject implements RepositoryObject {
 	DEVELOPMENT, PUBLISHED
     }
 
-    public static AtlasObject create(User user, AtlasCollection collection) {
+    public static AtlasObject create(AtlasCollection collection) {
 	AtlasObject object = new AtlasObject();
 	object.collection = collection;
 	object.state = AtlasObject.State.DEVELOPMENT;
 	object.aliases = Collections.emptyList();
+	object.taxonomy = Collections.emptyList();
+	object.images = Collections.emptyMap();
 	object.spreading = Collections.emptyList();
 	object.facts = Collections.emptyMap();
 	object.links = Collections.emptyList();
