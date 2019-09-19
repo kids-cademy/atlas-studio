@@ -6,7 +6,7 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/atlas/LinkSelect.js</script>
-		<script>script/com/kidscademy/atlas/DefinitionControl.js</script>
+		<script>script/com/kidscademy/form/LinkSelect.js</script>
+		<script>script/com/kidscademy/form/DefinitionControl.js</script>
 	</scripts>
 </page>

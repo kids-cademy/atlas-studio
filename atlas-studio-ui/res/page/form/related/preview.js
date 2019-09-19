@@ -1,5 +1,5 @@
 WinMain.on("load", function() {
-	var relatedControl = WinMain.doc.getByClass(com.kidscademy.atlas.RelatedControl);
+	var relatedControl = WinMain.doc.getByClass(com.kidscademy.form.RelatedControl);
 
 	const formPage = {
 		getObject : function() {

@@ -21,6 +21,7 @@
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
 	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
 	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
+	<object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</object-no-name>
 
 	<published-object>Published Object</published-object>
 
@@ -39,7 +40,7 @@
 	<object-preview>Preview</object-preview>
 	<object-save>Save</object-save>
 	<object-remove>Remove</object-remove>
-	
+
 	<taxonomy-class-family>FAMILY</taxonomy-class-family>
 	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
 </string>

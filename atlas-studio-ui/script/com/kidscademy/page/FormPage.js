@@ -21,14 +21,14 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
 
-		this._taxonomyControl = this.getByClass(com.kidscademy.atlas.TaxonomyControl);
-		this._definitionControl = this.getByClass(com.kidscademy.atlas.DefinitionControl);
-		this._descriptionControl = this.getByClass(com.kidscademy.atlas.DescriptionControl);
-		this._graphicAssets = this.getByClass(com.kidscademy.atlas.GraphicAssets);
-		this._audioAssets = this.getByClass(com.kidscademy.atlas.AudioAssets);
-		this._factsControl = this.getByClass(com.kidscademy.atlas.FactsControl);
-		this._relatedControl = this._form.getByClass(com.kidscademy.atlas.RelatedControl);
-		this._linksControl = this._form.getByClass(com.kidscademy.atlas.LinksControl);
+		this._taxonomyControl = this.getByClass(com.kidscademy.form.TaxonomyControl);
+		this._definitionControl = this.getByClass(com.kidscademy.form.DefinitionControl);
+		this._descriptionControl = this.getByClass(com.kidscademy.form.DescriptionControl);
+		this._graphicAssets = this.getByClass(com.kidscademy.form.GraphicAssets);
+		this._audioAssets = this.getByClass(com.kidscademy.form.AudioAssets);
+		this._factsControl = this.getByClass(com.kidscademy.form.FactsControl);
+		this._relatedControl = this._form.getByClass(com.kidscademy.form.RelatedControl);
+		this._linksControl = this._form.getByClass(com.kidscademy.form.LinksControl);
 
 		const actions = this.getByCss(".side-bar .actions");
 		actions.on(this, {

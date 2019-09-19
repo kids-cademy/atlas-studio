@@ -1,5 +1,5 @@
 WinMain.on("load", function() {
-	var factsControl = WinMain.doc.getByClass(com.kidscademy.atlas.FactsControl);
+	var factsControl = WinMain.doc.getByClass(com.kidscademy.form.FactsControl);
 	factsControl.setValue({
 		"First played on Carnegie Hall in 1939" : "The first to play the accordion in New York City's famous Carnegie Hall were Gene von Halberg, Abe Goldman, and Joe Biviano, in 1939.",
 		"Most parts are hand made" : "Accordions are still made with a lot of human hands as opposed to by machinery. Some parts are made by machine but the best are mostly hand made by craftsman.",

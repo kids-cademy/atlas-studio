@@ -7,7 +7,7 @@
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/atlas/AudioPlayer.js</script>
-		<script>script/com/kidscademy/atlas/AudioAssets.js</script>
+		<script>script/com/kidscademy/form/AudioPlayer.js</script>
+		<script>script/com/kidscademy/form/AudioAssets.js</script>
 	</scripts>
 </page>

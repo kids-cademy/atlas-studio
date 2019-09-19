@@ -1,5 +1,5 @@
 WinMain.on("load", function() {
-	var linksControl = WinMain.doc.getByClass(com.kidscademy.atlas.LinksControl);
+	var linksControl = WinMain.doc.getByClass(com.kidscademy.form.LinksControl);
 
 	const formPage = {
 		getObject : function() {

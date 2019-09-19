@@ -100,6 +100,13 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		return this;
 	}
 
+	hideAll() {
+		this.getChildren().forEach(child => {
+			child.hide();
+		});
+		return this;
+	}
+
 	getControl(name) {
 		const control = this.getByName(name);
 		$assert(control != null, "com.kidscademy.Actions#getValue", "Missing control |%s| from actions bar.", name);

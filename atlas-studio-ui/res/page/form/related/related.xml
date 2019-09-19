@@ -7,7 +7,7 @@
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/control/ActionBarSelect.js</script>
-		<script>script/com/kidscademy/atlas/RelatedControl.js</script>
+		<script>script/com/kidscademy/form/ActionBarSelect.js</script>
+		<script>script/com/kidscademy/form/RelatedControl.js</script>
 	</scripts>
 </page>

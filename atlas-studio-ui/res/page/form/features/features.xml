@@ -6,6 +6,6 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/atlas/FeaturesControl.js</script>
+		<script>script/com/kidscademy/form/FeaturesControl.js</script>
 	</scripts>
 </page>

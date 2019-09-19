@@ -1,19 +1,19 @@
 WinMain.on("load", function() {
 	var atlasObject = {
 		display : "Accordion",
-		introImagePath : "sync-preview/res/atlas/accordion/thumbnail.png",
+		introImagePath : "sync-preview/res/form/accordion/thumbnail.png",
 		introText : "The accordion is a musical instrument that has keys similar to a piano, but is small enough for a person to hold.",
 
 		description : [ "The bellows are the section of cloth, cardboard, leather, and metal located in between keyboards and buttons.", "The bellows are expanded and contracted by the accordionist, which creates vacuum and pressure, driving air through the reed chambers that creates the sound.", "The accordion is used in pop music, folk music, cajun music, jazz, classical, zydeco and dance-pop.", "The accordion has also been referred to affectionately as the squeezebox." ],
 
-		featuredImagePath : "sync-preview/res/atlas/accordion/button-accordion.png",
+		featuredImagePath : "sync-preview/res/form/accordion/button-accordion.png",
 		featuredCaption : "There is also a variant that uses buttons to play notes.",
 
 		aliases : [ "Sun-Fin-Chin", "Bayan", "Trekspill", "Fisarmonica" ],
 		date : "XVII-th Century",
 		spreading : [],
 
-		picturePath : "sync-preview/res/atlas/accordion/picture.jpg",
+		picturePath : "sync-preview/res/form/accordion/picture.jpg",
 		sampleTitle : "Vittorio Monti - Csárdás",
 		samplePath : "atlas/accordion/sample.mp3",
 
@@ -49,26 +49,26 @@ WinMain.on("load", function() {
 			url : "https://en.wikipedia.org/wiki/Accordion",
 			display : "Wikipedia",
 			description : "Wikipedia article about accordion.",
-			iconPath : "sync-preview/res/atlas/links/wikipedia.png"
+			iconPath : "sync-preview/res/form/links/wikipedia.png"
 		}, {
 			id : 644,
 			url : "http://www.softschools.com/facts/music_instruments/accordion_facts/3037/",
 			display : "Soft Schools",
 			description : "Soft Schools facts about accordion.",
-			iconPath : "sync-preview/res/atlas/links/softschools.png"
+			iconPath : "sync-preview/res/form/links/softschools.png"
 		} ],
 		related : [ {
 			display : "Bandoneon",
 			description : "The bandoneon is a type of concertina particularly popular in Argentina and Uruguay.",
-			iconPath : "sync-preview/res/atlas/bandoneon/icon.jpg"
+			iconPath : "sync-preview/res/form/bandoneon/icon.jpg"
 		}, {
 			display : "Concertina",
 			description : "A concertina is a free-reed musical instrument, like the various accordions and the harmonica.",
-			iconPath : "sync-preview/res/atlas/concertina/icon.jpg"
+			iconPath : "sync-preview/res/form/concertina/icon.jpg"
 		}, {
 			display : "Harmonium",
 			description : "A harmonium is a keyboard instrument similar to an organ. It blows air through reeds, producing musical notes.",
-			iconPath : "sync-preview/res/atlas/harmonium/icon.jpg"
+			iconPath : "sync-preview/res/form/harmonium/icon.jpg"
 		} ]
 	};
 

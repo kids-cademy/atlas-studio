@@ -7,6 +7,6 @@
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/atlas/TaxonomyControl.js</script>
+		<script>script/com/kidscademy/form/TaxonomyControl.js</script>
 	</scripts>
 </page>
