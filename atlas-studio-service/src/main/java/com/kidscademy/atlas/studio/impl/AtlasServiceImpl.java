@@ -86,6 +86,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public AtlasObject createAtlasObject(AtlasCollection collection) {
+	return AtlasObject.create(collection);
+    }
+
+    @Override
     public AtlasObject getAtlasObject(int objectId) throws IOException {
 	Params.notZero(objectId, "Atlas object ID");
 	AtlasObject object = atlasDao.getAtlasObject(objectId);
@@ -195,6 +200,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
+	Params.notNullOrEmpty(objectName, "Atlas object name");
 	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.binomialName(objectName));
 	List<Taxon> taxonomy = new ArrayList<>(TAXON_NAMES.length);
 	for (String taxonName : TAXON_NAMES) {

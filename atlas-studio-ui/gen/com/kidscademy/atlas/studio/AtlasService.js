@@ -85,6 +85,32 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Create atlas object.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.AtlasCollection collection,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.AtlasObject
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 createAtlasObject: function(collection) {
+		$assert(typeof collection !== "undefined", "com.kidscademy.atlas.studio.AtlasService#createAtlasObject", "Collection argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#createAtlasObject", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#createAtlasObject", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "createAtlasObject");
+		rmi.setParameters(collection);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get atlas object.
 	 *
 	 * @param int objectId,

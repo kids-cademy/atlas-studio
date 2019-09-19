@@ -83,10 +83,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			AtlasService.getAtlasObject(this._objectId, this._onObjectLoaded, this);
 		}
 		else {
-			this._object = {
-				id: 0,
-				collection: this._collection
-			};
+			AtlasService.createAtlasObject(this._collection, this._onObjectLoaded, this);
 		}
 	}
 
