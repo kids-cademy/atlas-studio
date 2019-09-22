@@ -62,6 +62,9 @@ public class Link {
     @Transient
     private MediaSRC iconSrc;
 
+    @Transient
+    private String iconPath;
+    
     public Link() {
     }
 
@@ -164,6 +167,14 @@ public class Link {
      */
     public String getFeatures() {
 	return features;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public String getIconPath() {
+        return iconPath;
     }
 
     @Override

@@ -3,11 +3,11 @@
 	<div class="container">
 		<section class="taxonomy" data-if="taxonomy.length=1">
 			<h2 data-text="taxonomy.0.name"></h2>
-			<p data-text="taxonomy.0.value"></p>
+			<p class="body" data-text="taxonomy.0.value"></p>
 		</section>
 		<section class="taxonomy" data-if="taxonomy.length>1">
 			<h2>Classification</h2>
-			<table>
+			<table class="body">
 				<tbody data-list="taxonomy">
 					<tr>
 						<td class="name" data-text="name"></td>
@@ -20,22 +20,28 @@
 
 		<section data-if="aliases">
 			<h2>Also known as</h2>
-			<ul data-list="aliases">
+			<ul class="body" data-list="aliases">
 				<li class="accent upper-case"></li>
 			</ul>
 		</section>
 
 		<section data-if="spreading">
 			<h2>Spreading</h2>
-			<ul data-list="spreading">
+			<ul class="body" data-list="spreading">
 				<li data-format="com.kidscademy.format.RegionFormat"></li>
 			</ul>
 		</section>
 
-		<!-- TODO: bug on library: data-if does not support dashed case -->
-		<section data-if="startDate">
+		<section data-if="start-date;!end-date">
 			<h2>Dates back to</h2>
-			<p data-text="start-date" data-format="com.kidscademy.format.HDateFormat"></p>
+			<p class="body" data-text="start-date" data-format="com.kidscademy.format.HDateFormat"></p>
+		</section>
+		<section data-if="start-date;end-date">
+			<h2>Period</h2>
+			<ul class="body">
+				<li data-text="start-date" data-format="com.kidscademy.format.HDateFormat"></li>
+				<li data-text="end-date" data-format="com.kidscademy.format.HDateFormat"></li>
+			</ul>
 		</section>
 	</div>
 </div>

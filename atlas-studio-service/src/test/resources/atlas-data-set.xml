@@ -33,8 +33,8 @@
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
-		<start_date_value>1234567890</start_date_value>
-		<start_date_mask>0</start_date_mask>
+		<startDateValue>1234567890</startDateValue>
+		<startDateMask>0</startDateMask>
 	</atlasobject>
 	<atlasobject>
 		<id>2</id>
@@ -48,8 +48,8 @@
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
-		<start_date_value>1234567890</start_date_value>
-		<start_date_mask>0</start_date_mask>
+		<startDateValue>1234567890</startDateValue>
+		<startDateMask>0</startDateMask>
 	</atlasobject>
 	<atlasobject>
 		<id>3</id>
@@ -63,8 +63,8 @@
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
-		<start_date_value>1234567890</start_date_value>
-		<start_date_mask>0</start_date_mask>
+		<startDateValue>1234567890</startDateValue>
+		<startDateMask>0</startDateMask>
 	</atlasobject>
 	<atlasobject>
 		<id>4</id>
@@ -78,8 +78,8 @@
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
-		<start_date_value>1234567890</start_date_value>
-		<start_date_mask>0</start_date_mask>
+		<startDateValue>1234567890</startDateValue>
+		<startDateMask>0</startDateMask>
 	</atlasobject>
 
 	<atlasobject_aliases>

@@ -255,7 +255,7 @@ public class AtlasDaoTest {
 	assertThat(object.getSampleSrc(), equalTo(src("accordion", "sample.mp3")));
 	assertThat(object.getWaveformSrc(), equalTo(src("accordion", "waveform.png")));
 
-	assertThat(object.getStartDate().getValue(), equalTo(1234567890L));
+	assertThat(object.getStartDate().getValue(), equalTo(1234567890.0));
 	assertThat(object.getStartDate().getFormat(), equalTo(HDate.Format.DATE));
 	assertThat(object.getStartDate().getPeriod(), equalTo(HDate.Period.FULL));
 	assertThat(object.getStartDate().getEra(), equalTo(HDate.Era.CE));
@@ -411,7 +411,7 @@ public class AtlasDaoTest {
 	assertThat(expected.getSampleSrc(), equalTo(src("banjo", "sample.mp3")));
 	assertThat(expected.getWaveformSrc(), equalTo(src("banjo", "waveform.png")));
 
-	assertThat(expected.getStartDate().getValue(), equalTo(1821L));
+	assertThat(expected.getStartDate().getValue(), equalTo(1821.0));
 	assertThat(expected.getStartDate().getFormat(), equalTo(HDate.Format.YEAR));
 	assertThat(expected.getStartDate().getPeriod(), equalTo(HDate.Period.MIDDLE));
 	assertThat(expected.getStartDate().getEra(), equalTo(HDate.Era.CE));
@@ -522,6 +522,24 @@ public class AtlasDaoTest {
 	assertThat(image.getFileSize(), equalTo(12345));
 	assertThat(image.getWidth(), equalTo(96));
 	assertThat(image.getHeight(), equalTo(96));
+    }
+
+    @Test
+    public void getCollectionItemsByState() {
+	List<AtlasItem> items = dao.getCollectionItemsByState(2, AtlasObject.State.PUBLISHED);
+	assertThat(items, notNullValue());
+	assertThat(items, not(empty()));
+	assertThat(items, hasSize(2));
+	
+	AtlasItem item = items.get(0);
+	assertThat(item, notNullValue());
+	assertThat(item, not(instanceOf(AtlasObject.class)));
+	assertThat(item.getId(), equalTo(3));
+	assertThat(item.getRepositoryName(), equalTo("bird"));
+	assertThat(item.getName(), equalTo("bandoneon"));
+	assertThat(item.getDisplay(), equalTo("Bandoneon"));
+	assertThat(item.getIconName(), nullValue());
+	assertThat(item.getIconSrc(), nullValue());
     }
 
     // ----------------------------------------------------------------------------------------------

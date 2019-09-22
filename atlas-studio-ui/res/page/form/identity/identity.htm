@@ -21,27 +21,10 @@
 				<label>aliases</label> <input name="aliases" class="optional" data-class="com.kidscademy.form.AliasesControl" />
 			</div>
 			<div data-name="start-date" data-class="com.kidscademy.form.HDateControl">
-				<label>start date</label><input name="value" class="mini optional" /><select name="format" class="optional">
-					<option selected="selected"></option>
-					<option value="0">DATE</option>
-					<option value="1">YEAR</option>
-					<option value="2">DECADE</option>
-					<option value="3">CENTURY</option>
-					<option value="4">MILLENNIA</option>
-					<option value="5">KYA</option>
-					<option value="6">MYA</option>
-					<option value="7">BYA</option>
-				</select> <select name="period" class="optional">
-					<option selected="selected"></option>
-					<option value="0">FULL</option>
-					<option value="256">BEGINNING</option>
-					<option value="512">MIDDLE</option>
-					<option value="768">END</option>
-				</select> <select name="era" class="optional">
-					<option selected="selected"></option>
-					<option value="0">CE</option>
-					<option value="65536">BCE</option>
-				</select>
+				<label>start date</label><input name="value" class="mini optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
+			</div>
+			<div data-name="end-date" data-class="com.kidscademy.form.HDateControl">
+				<label>end date</label><input name="value" class="mini optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
 			</div>
 			<div>
 				<label>state</label> <select name="state">

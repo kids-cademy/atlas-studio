@@ -102,6 +102,11 @@ ul.side-menu li img {
 	opacity: 1;
 }
 
+ul.side-menu li a {
+	text-transform: inherit;
+	color: inherit;
+}
+
 ul.side-menu li .state {
 	display: inline-block;
 	vertical-align: middle;

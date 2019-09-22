@@ -10,30 +10,27 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	constructor() {
 		super();
 		// current selected collection is stored on global context by dashboard
-		const collection = this.getContextAttr("collection");
+		this._collection = this.getContextAttr("collection");
 
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onListClick, this);
 
 		this._sidebar = this.getByCss(".side-bar .header");
-		this._sidebar.setObject(collection);
+		this._sidebar.setObject(this._collection);
 
 		const actions = this.getByCss(".side-bar .actions");
 		actions.on(this, {
 			"&edit-collection": this._onEditCollection,
 			"&new-object": this._onNewObject,
-			"&export-collection": this._onExportCollection,
 			"&remove-collection": this._onRemoveCollection
 		});
-
-		AtlasService.getCollectionItems(collection.id, items => this._listView.setObject(items));
+		const exportAnchor = actions.getByCssClass("export");
+		exportAnchor.setAttr("href", "export-atlas-collection.xsp?id=" + this._collection.id);
+		
+		AtlasService.getCollectionItems(this._collection.id, items => this._listView.setObject(items));
 	}
 
 	_onEditCollection() {
-
-	}
-
-	_onExportCollection() {
 
 	}
 

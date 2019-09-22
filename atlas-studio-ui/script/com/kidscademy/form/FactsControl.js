@@ -108,7 +108,7 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 
 	_onRemoveAll() {
 		const object = this._formPage.getObject();
-		object.links = [];
+		this._facts = null;
 		this._factsView.resetObject();
 	}
 

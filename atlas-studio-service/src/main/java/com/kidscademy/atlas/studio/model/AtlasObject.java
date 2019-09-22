@@ -30,7 +30,7 @@ import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
 
 @Entity
-public class AtlasObject implements RepositoryObject {
+public class AtlasObject implements RepositoryObject, HDateRange {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -98,13 +98,13 @@ public class AtlasObject implements RepositoryObject {
     private List<Region> spreading;
 
     @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "start_date_value")),
-	    @AttributeOverride(name = "mask", column = @Column(name = "start_date_mask")) })
+    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "startDateValue")),
+	    @AttributeOverride(name = "mask", column = @Column(name = "startDateMask")) })
     private HDate startDate;
 
     @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "end_date_value")),
-	    @AttributeOverride(name = "mask", column = @Column(name = "end_date_mask")) })
+    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "endDateValue")),
+	    @AttributeOverride(name = "mask", column = @Column(name = "endDateMask")) })
     private HDate endDate;
 
     /**
@@ -128,6 +128,9 @@ public class AtlasObject implements RepositoryObject {
      * details about media file name.
      */
     private String waveformName;
+
+    @Transient
+    private String samplePath;
 
     @ElementCollection
     private Map<String, String> facts;
@@ -449,6 +452,14 @@ public class AtlasObject implements RepositoryObject {
 
     public void setWaveformSrc(MediaSRC waveformSrc) {
 	this.waveformSrc = waveformSrc;
+    }
+
+    public String getSamplePath() {
+	return samplePath;
+    }
+
+    public void setSamplePath(String samplePath) {
+	this.samplePath = samplePath;
     }
 
     public void setSampleInfo(AudioSampleInfo sampleInfo) {

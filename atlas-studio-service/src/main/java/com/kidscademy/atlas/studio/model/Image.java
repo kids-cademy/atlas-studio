@@ -53,6 +53,9 @@ public class Image {
     @Transient
     private MediaSRC src;
 
+    @Transient
+    private String path;
+    
     public Image() {
     }
 
@@ -147,6 +150,14 @@ public class Image {
 
     public MediaSRC getSrc() {
 	return src;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void updateIcon(AtlasItem object) throws IOException {

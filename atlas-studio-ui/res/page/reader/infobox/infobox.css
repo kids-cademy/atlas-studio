@@ -1,5 +1,5 @@
 .infobox {
-	background: rgba(255, 255, 255, 0.2);
+	xbackground: rgba(255, 255, 255, 0.2);
 	border-radius: 0 0 60px 0;
 }
 
@@ -33,8 +33,11 @@
 	margin-top: 0;
 }
 
-.infobox p, .infobox li {
+.infobox .body {
 	margin: 0 0 0 @dimen/paragraph-indent;
+}
+
+.infobox p, .infobox li {
 	white-space: nowrap;
 	font-size: 1.4rem;
 	color: @color/accent;

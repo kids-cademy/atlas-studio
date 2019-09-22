@@ -29,7 +29,7 @@ public class HDateTest
   {
     HDate date = new HDate(new java.util.Date(0L));
 
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(HDate.Format.DATE));
     assertThat(date.getPeriod(), equalTo(HDate.Period.FULL));
     assertThat(date.getEra(), equalTo(HDate.Era.CE));
@@ -40,7 +40,7 @@ public class HDateTest
   {
     HDate date = new HDate(new java.sql.Date(0L));
 
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(HDate.Format.DATE));
     assertThat(date.getPeriod(), equalTo(HDate.Period.FULL));
     assertThat(date.getEra(), equalTo(HDate.Era.CE));
@@ -51,7 +51,7 @@ public class HDateTest
   {
     HDate date = new HDate(new java.sql.Time(0L));
 
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(HDate.Format.DATE));
     assertThat(date.getPeriod(), equalTo(HDate.Period.FULL));
     assertThat(date.getEra(), equalTo(HDate.Era.CE));
@@ -62,7 +62,7 @@ public class HDateTest
   {
     HDate date = new HDate(0L);
 
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(HDate.Format.DATE));
     assertThat(date.getPeriod(), equalTo(HDate.Period.FULL));
     assertThat(date.getEra(), equalTo(HDate.Era.CE));
@@ -171,7 +171,7 @@ public class HDateTest
 
   private static void assertFormat(HDate date, Format format)
   {
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(format));
     assertThat(date.getPeriod(), equalTo(Period.FULL));
     assertThat(date.getEra(), equalTo(Era.CE));
@@ -179,7 +179,7 @@ public class HDateTest
 
   private static void assertPeriod(HDate date, Period period)
   {
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(Format.CENTURY));
     assertThat(date.getPeriod(), equalTo(period));
     assertThat(date.getEra(), equalTo(Era.CE));
@@ -187,7 +187,7 @@ public class HDateTest
 
   private static void assertEra(HDate date, Era era)
   {
-    assertThat(date.getValue(), equalTo(0L));
+    assertThat(date.getValue(), equalTo(0.0));
     assertThat(date.getFormat(), equalTo(Format.CENTURY));
     assertThat(date.getPeriod(), equalTo(Period.FULL));
     assertThat(date.getEra(), equalTo(era));

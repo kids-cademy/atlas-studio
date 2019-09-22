@@ -17,12 +17,14 @@ import com.kidscademy.atlas.studio.model.Taxon;
 
 public interface AtlasDao {
     AtlasCollection getCollectionById(int collectionId);
-    
+
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(int collectionId);
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
+
+    List<AtlasItem> getCollectionItemsByState(int collectionId, AtlasObject.State state);
 
     /**
      * Persist or merge AtlasObject entity, depending on ID value. If ID is zero

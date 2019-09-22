@@ -55,6 +55,12 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public List<AtlasItem> getCollectionItemsByState(int collectionId, AtlasObject.State state) {
+	return em.createQuery("select i from AtlasItem i where i.collection.id=?1 and i.state=?2", AtlasItem.class)
+		.setParameter(1, collectionId).setParameter(2, state).getResultList();
+    }
+
+    @Override
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
 	if (object.getId() == 0) {

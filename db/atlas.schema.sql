@@ -29,7 +29,7 @@ CREATE TABLE `atlascollection` (
   `iconName` varchar(45) NOT NULL,
   `taxonomyClass` varchar(45) NOT NULL COMMENT 'A collection has a classification type, named taxonomy class, that applies to all collection objects. It is used to determine atlas object taxonomy template. See com.kidscademy.atlas.studio.model.TaxonomyClass enumeration for supported types.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,18 +68,18 @@ CREATE TABLE `atlasobject` (
   `display` varchar(45) NOT NULL COMMENT 'Object name as displayed on user interface. It is subject to internationalization.',
   `definition` text,
   `description` text COMMENT 'Object description is rich text, that is, it can contains images, links and text formatting. It is stored as HTML.',
-  `sampleTitle` varchar(80) DEFAULT NULL,
+  `sampleTitle` varchar(128) DEFAULT NULL,
   `sampleName` varchar(45) DEFAULT NULL,
   `waveformName` varchar(45) DEFAULT NULL,
-  `start_date_value` bigint(20) DEFAULT NULL,
-  `start_date_mask` int(11) DEFAULT NULL,
-  `end_date_value` bigint(20) DEFAULT NULL,
-  `end_date_mask` int(11) DEFAULT NULL,
+  `startDateValue` double DEFAULT NULL,
+  `startDateMask` int(11) DEFAULT NULL,
+  `endDateValue` double DEFAULT NULL,
+  `endDateMask` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_name` (`name`,`collection_id`),
   KEY `fk_atlasobject_atlascategory1_idx` (`collection_id`),
   CONSTRAINT `fk_atlasobject_atlascategory1` FOREIGN KEY (`collection_id`) REFERENCES `atlascollection` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `atlasobject_aliases` (
   PRIMARY KEY (`id`),
   KEY `fk_alias_atlas_object1_idx` (`atlasobject_id`),
   CONSTRAINT `fk_alias_objec_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,13 +109,13 @@ DROP TABLE IF EXISTS `atlasobject_facts`;
 CREATE TABLE `atlasobject_facts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `atlasobject_id` int(11) NOT NULL,
-  `facts_key` varchar(64) NOT NULL,
+  `facts_key` varchar(128) NOT NULL,
   `facts` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`facts_key`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object1` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ DROP TABLE IF EXISTS `atlasobject_features`;
 CREATE TABLE `atlasobject_features` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `atlasobject_id` int(11) NOT NULL,
-  `features_key` varchar(64) NOT NULL,
+  `features_key` varchar(128) NOT NULL,
   `features` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`features_key`),
@@ -160,7 +160,7 @@ CREATE TABLE `atlasobject_images` (
   UNIQUE KEY `UQ_IMAGE_KEY` (`atlasobject_id`,`imageKey`),
   KEY `IX_IMAGE_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `FK_ATLASOBJECT_IMAGES_ATLASOBJECT_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=569 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `atlasobject_links` (
   UNIQUE KEY `uq_link_url` (`url`,`atlasobject_id`),
   KEY `idx_link_atlasobject_id` (`atlasobject_id`),
   CONSTRAINT `fk_link_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=191 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `atlasobject_spreading` (
   UNIQUE KEY `uq_region_area` (`atlasobject_id`,`name`,`area`),
   KEY `idx_region_atlasobject_id` (`atlasobject_id`),
   CONSTRAINT `fk_region_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,13 +234,13 @@ CREATE TABLE `atlasobject_taxonomy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `atlasobject_id` int(11) NOT NULL,
   `taxonomy_ORDER` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `value` varchar(20) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `value` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object11` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,4 +287,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-14  8:23:50
+-- Dump completed on 2019-09-22  6:51:37
