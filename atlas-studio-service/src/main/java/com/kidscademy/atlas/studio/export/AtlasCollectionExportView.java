@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -16,7 +15,6 @@ import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -35,17 +33,23 @@ import js.util.Strings;
 public class AtlasCollectionExportView implements View {
     private final AtlasDao atlasDao;
     private final Json json;
-    private final int collectionId;
+    private final List<ExportItem> items;
+
+    public AtlasCollectionExportView(AtlasDao atlasDao, Json json) {
+	this.atlasDao = atlasDao;
+	this.json = json;
+	this.items = atlasDao.getAllExportItems();
+    }
 
     public AtlasCollectionExportView(AtlasDao atlasDao, Json json, int collectionId) {
 	this.atlasDao = atlasDao;
 	this.json = json;
-	this.collectionId = collectionId;
+	this.items = atlasDao.getCollectionExportItems(collectionId);
     }
 
     @Override
     public View setModel(Object model) {
-	return null;
+	throw new UnsupportedOperationException();
     }
 
     @Override
@@ -56,16 +60,18 @@ public class AtlasCollectionExportView implements View {
 
     public void serialize(OutputStream stream) throws IOException {
 	ZipOutputStream zip = new ZipOutputStream(stream);
-	List<AtlasItem> items = atlasDao.getCollectionItemsByState(collectionId, AtlasObject.State.PUBLISHED);
 	SearchIndexProcessor processor = new SearchIndexProcessor(items);
 
 	List<String> objectNames = new ArrayList<>(items.size());
-	for (AtlasItem item : items) {
+	for (int index = 0; index < items.size(); ++index) {
+	    final ExportItem item = items.get(index);
+	    item.setIndex(index);
 	    objectNames.add(item.getName());
 	}
 
-	for (AtlasItem item : items) {
+	for (ExportItem item : items) {
 	    AtlasObject object = atlasDao.getAtlasObject(item.getId());
+	    object.setIndex(item.getIndex());
 	    processor.createDirectIndex(object);
 
 	    List<String> related = new ArrayList<>();
@@ -101,7 +107,6 @@ public class AtlasCollectionExportView implements View {
 	zip.write(json.stringify(processor.createSearchIndex()).getBytes("UTF-8"));
 	zip.closeEntry();
 
-	Collections.sort(objectNames);
 	entry = new ZipEntry("atlas/objects-list.json");
 	zip.putNextEntry(entry);
 	zip.write(json.stringify(objectNames).getBytes("UTF-8"));

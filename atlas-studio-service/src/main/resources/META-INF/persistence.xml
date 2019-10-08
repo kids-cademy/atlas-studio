@@ -23,6 +23,8 @@
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 
+		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
+
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
 		</properties>
@@ -50,6 +52,8 @@
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
+
+		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -80,6 +84,8 @@
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
+
+		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
