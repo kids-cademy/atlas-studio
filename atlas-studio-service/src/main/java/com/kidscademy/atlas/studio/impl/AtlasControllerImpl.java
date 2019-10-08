@@ -17,6 +17,11 @@ public class AtlasControllerImpl implements AtlasController {
     }
 
     @Override
+    public View exportAllAtlasCollections() {
+	return new AtlasCollectionExportView(atlasDao, json);
+    }
+
+    @Override
     public View exportAtlasCollection(int collectionId) {
 	return new AtlasCollectionExportView(atlasDao, json, collectionId);
     }

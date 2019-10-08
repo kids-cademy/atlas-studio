@@ -7,5 +7,7 @@ import js.mvc.View;
 @Controller
 @Public
 public interface AtlasController {
+    View exportAllAtlasCollections();
+
     View exportAtlasCollection(int collectionId);
 }
