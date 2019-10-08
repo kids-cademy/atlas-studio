@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Atlas Reader</title>
+	<description>Atlas object reader, infobox section.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/format/RegionFormat.js</script>
+		<script>script/com/kidscademy/format/HDateFormat.js</script>
+	</scripts>
+</page>

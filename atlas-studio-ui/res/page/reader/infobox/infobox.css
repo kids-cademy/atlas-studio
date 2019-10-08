@@ -16,8 +16,13 @@
 	width: 100%;
 	height: 100%;
 	padding: @dimen/infobox-padding;
-	padding-right: 100px;
-	margin-left: 60px;
+	xpadding-right: 100px;
+	xmargin-left: 390px;
+	xpadding-left: 80px;
+	xmargin-left: 310px;
+}
+
+.infobox .container.accent {
 	border-left: solid 1px @color/rule;
 }
 

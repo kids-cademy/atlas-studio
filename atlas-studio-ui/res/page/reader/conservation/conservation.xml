@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Atlas Reader</title>
+	<description>Atlas object reader, conservation status section.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/reader/ConservationView.js</script>
+	</scripts>
+</page>

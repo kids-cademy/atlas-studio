@@ -44,6 +44,9 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     /** Last change timestamp. */
     private Date lastUpdated;
 
+    @Transient
+    private int index;
+    
     private int rank;
 
     /**
@@ -107,6 +110,8 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	    @AttributeOverride(name = "mask", column = @Column(name = "endDateMask")) })
     private HDate endDate;
 
+    private ConservationStatus conservation;
+    
     /**
      * Audio sample title is the name of the audio work from which sample is
      * extracted.
@@ -294,6 +299,14 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 
     public void setLastUpdated(Date lastUpdated) {
 	this.lastUpdated = lastUpdated;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public int getRank() {
@@ -484,6 +497,14 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 
     public void setEndDate(HDate endDate) {
 	this.endDate = endDate;
+    }
+
+    public ConservationStatus getConservation() {
+        return conservation;
+    }
+
+    public void setConservation(ConservationStatus conservation) {
+        this.conservation = conservation;
     }
 
     @Override

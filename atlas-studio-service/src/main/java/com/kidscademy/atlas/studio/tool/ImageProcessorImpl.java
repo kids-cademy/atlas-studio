@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import js.annotation.Test;
+import js.annotation.TestConstructor;
 
 public class ImageProcessorImpl implements ImageProcessor {
     private final ImageMagickProcess convert;
@@ -17,7 +17,7 @@ public class ImageProcessorImpl implements ImageProcessor {
 	this.identify = new IdentifyProcess();
     }
 
-    @Test
+    @TestConstructor
     public ImageProcessorImpl(ImageMagickProcess convert, ImageMagickProcess identify) {
 	this.convert = convert;
 	this.identify = identify;

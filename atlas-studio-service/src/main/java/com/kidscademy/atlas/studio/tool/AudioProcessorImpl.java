@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 
 import com.kidscademy.atlas.studio.CT;
 
-import js.annotation.Test;
+import js.annotation.TestConstructor;
 import js.log.Log;
 import js.log.LogFactory;
 import js.util.Files;
@@ -37,7 +37,7 @@ public class AudioProcessorImpl implements AudioProcessor {
      * @param ffmpeg
      * @param ffprobe
      */
-    @Test
+    @TestConstructor
     public AudioProcessorImpl(ToolProcess ffmpeg, ToolProcess ffprobe, Waveform waveform) {
 	this.ffmpeg = ffmpeg;
 	this.ffprobe = ffprobe;

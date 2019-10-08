@@ -8,6 +8,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
+import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -24,7 +25,9 @@ public interface AtlasDao {
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
 
-    List<AtlasItem> getCollectionItemsByState(int collectionId, AtlasObject.State state);
+    List<ExportItem> getCollectionExportItems(int collectionId);
+
+    List<ExportItem> getAllExportItems();
 
     /**
      * Persist or merge AtlasObject entity, depending on ID value. If ID is zero

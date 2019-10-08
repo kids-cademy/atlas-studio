@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -55,9 +56,15 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<AtlasItem> getCollectionItemsByState(int collectionId, AtlasObject.State state) {
-	return em.createQuery("select i from AtlasItem i where i.collection.id=?1 and i.state=?2", AtlasItem.class)
-		.setParameter(1, collectionId).setParameter(2, state).getResultList();
+    public List<ExportItem> getCollectionExportItems(int collectionId) {
+	return em.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name", ExportItem.class)
+		.setParameter(1, collectionId).setParameter(2, AtlasObject.State.PUBLISHED).getResultList();
+    }
+
+    @Override
+    public List<ExportItem> getAllExportItems() {
+	return em.createQuery("select i from ExportItem i where i.state=?1 order by i.name", ExportItem.class)
+		.setParameter(1, AtlasObject.State.PUBLISHED).getResultList();
     }
 
     @Override

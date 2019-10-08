@@ -1,0 +1,35 @@
+.image.fit-center {
+	/* max-width and max-height are used to confine image inside its container */
+	max-width: 100%;
+	max-height: 100%;
+	/* absolute position to all sides and automatic margin to center image both horizontally and vertically */
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+/** the same as fit-center but only on horizontally; vertically is aligned to top */
+.image.fit-top-center {
+	/* max-width and max-height are used to confine image inside its container */
+	max-width: 100%;
+	max-height: 100%;
+	/* absolute position to all sides and automatic margin to center image both horizontally and vertically */
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.image.center-crop {
+	width: 100%;
+	height: auto;	
+}
+
+.circle {
+	position: absolute;
+	border-radius: 50%;
+}

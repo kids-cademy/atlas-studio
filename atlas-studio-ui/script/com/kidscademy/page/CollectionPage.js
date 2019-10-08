@@ -25,8 +25,8 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 			"&remove-collection": this._onRemoveCollection
 		});
 		const exportAnchor = actions.getByCssClass("export");
-		exportAnchor.setAttr("href", "export-atlas-collection.xsp?id=" + this._collection.id);
-		
+		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}`);
+
 		AtlasService.getCollectionItems(this._collection.id, items => this._listView.setObject(items));
 	}
 
