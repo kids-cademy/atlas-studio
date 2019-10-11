@@ -10,7 +10,7 @@ com.kidscademy.format.RegionFormat.prototype = {
 		NORTH: "Northern %s",
 		NORTH_EAST: "Northeastern %s",
 		EAST: "Eastern %s",
-		SOUT_EAST: "Southeastern %s",
+		SOUTH_EAST: "Southeastern %s",
 		SOUTH: "Southern %s",
 		SOUTH_WEST: "Southwestern %s",
 		WEST: "Western %s",

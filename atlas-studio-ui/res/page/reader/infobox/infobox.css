@@ -1,6 +1,4 @@
 .infobox {
-	xbackground: rgba(255, 255, 255, 0.2);
-	border-radius: 0 0 60px 0;
 }
 
 .infobox .circle {
@@ -16,10 +14,6 @@
 	width: 100%;
 	height: 100%;
 	padding: @dimen/infobox-padding;
-	xpadding-right: 100px;
-	xmargin-left: 390px;
-	xpadding-left: 80px;
-	xmargin-left: 310px;
 }
 
 .infobox .container.accent {
@@ -28,7 +22,6 @@
 
 .infobox h2 {
 	margin: @dimen/paragraph-space  0 10px 0;
-	xmargin: 0  0 0 0;
 	font-weight: lighter;
 	font-size: 1.8rem;
 	color: black;

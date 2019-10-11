@@ -133,6 +133,9 @@ com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
 				this._taxonValueControl = this._taxonValueEditor.getByName("value");
 				this._taxonValueControl.on("keydown", this._onTaxonValueKey, this);
 				break;
+
+			default:
+				throw `Invalid taxonony class '${this._taxonomyClass}' on collection '${formPage.getCollection().display}'.`;
 		}
 
 		this._taxonNameLabel = this._taxonValueEditor.getByName("name");

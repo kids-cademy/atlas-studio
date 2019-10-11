@@ -7,8 +7,8 @@ $package("com.kidscademy.page");
  */
 com.kidscademy.page.Page = class extends js.ua.Page {
     /**
-     * Construct an instance of Page class.
-     */
+	 * Construct an instance of Page class.
+	 */
     constructor() {
         super();
 
@@ -44,14 +44,19 @@ com.kidscademy.page.Page = class extends js.ua.Page {
     getContextAttr(name) {
         var value = localStorage.getItem(name);
         if (value == null) {
-            // value can be missing on development in preview mode
+            if (!this._isPreviewMode()) {
+                $debug("com.kidscademy.page.Page#getContextAttr", "Invalid global context. Missing attribute |%s|. Go to home page.", name);
+                WinMain.assign("dashboard.htm");
+                return;
+            }
+            // is legal for value to be missing on development in preview mode
             switch (name) {
                 case "objectId":
                     value = "1";
                     break;
 
                 case "collection":
-                    value = '{"id":1,"taxonomyClass":"FAMILY"}';
+                    value = '{"id":1,"taxonomyClass":"MUSICAL_INSTRUMENT"}';
                     break;
             }
         }
@@ -62,11 +67,16 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         WinMain.back();
     }
 
+    _isPreviewMode() {
+        // by convention all preview contexts contains -preview suffix
+        return WinMain.url.host.includes('-preview');
+    }
+
     /**
-     * Class string representation.
-     * 
-     * @return this class string representation.
-     */
+	 * Class string representation.
+	 * 
+	 * @return this class string representation.
+	 */
     toString() {
         return "com.kidscademy.page.Page";
     }
