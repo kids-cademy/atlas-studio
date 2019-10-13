@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
@@ -30,14 +29,14 @@ public class SearchIndexProcessor {
 	}
     }
 
-    public void createDirectIndex(AtlasObject object) throws IOException {
+    public void createDirectIndex(ExportObject object) throws IOException {
 	// direct index is per atlas object
 	// it stores all keywords and their relevance
 	Map<String, Integer> directIndex = new HashMap<>();
 
 	putIndex(directIndex, object.getDisplay(), 256);
 	putIndex(directIndex, object.getAliases(), 128);
-	putIndex(directIndex, relatedObjectsDisplay(object.getRelated()), 64);
+	putRelatedObjectsIndex(directIndex, object.getRelated(), 64);
 	putTaxonomyIndex(directIndex, object.getTaxonomy(), 32);
 	putConservationIndex(directIndex, object.getConservation(), 16);
 	putSpreadingIndex(directIndex, object.getSpreading(), 8);
@@ -82,42 +81,49 @@ public class SearchIndexProcessor {
     // --------------------------------------------------------------------------------------------
     // UTILITY METHODS
 
-    private void putIndex(Map<String, Integer> index, Iterable<String> words, int keyRelevance) {
+    private void putIndex(Map<String, Integer> directIndex, Iterable<String> words, int keyRelevance) {
 	for (String word : words) {
 	    word = word.toLowerCase();
 	    if (!stopWords.contains(word)) {
-		index.put(wordSteams.getSteam(word), keyRelevance);
+		directIndex.put(wordSteams.getSteam(word), keyRelevance);
 	    }
 	}
     }
 
-    private void putIndex(Map<String, Integer> index, String text, int keyRelevance) {
+    private void putIndex(Map<String, Integer> directIndex, String text, int keyRelevance) {
 	if (text == null) {
 	    return;
 	}
 	for (String word : text.toLowerCase().split("[\\s-+:;.]+")) {
 	    if (!stopWords.contains(word)) {
-		index.put(wordSteams.getSteam(word), keyRelevance);
+		directIndex.put(wordSteams.getSteam(word), keyRelevance);
 	    }
 	}
     }
 
-    private void putSpreadingIndex(Map<String, Integer> index, List<Region> regions, int keyRelevance) {
+    private void putSpreadingIndex(Map<String, Integer> directIndex, List<Region> regions, int keyRelevance) {
 	for (Region region : regions) {
-	    index.put(region.getName().toLowerCase(), keyRelevance);
+	    directIndex.put(region.getName().toLowerCase(), keyRelevance);
 	}
     }
 
-    private void putTaxonomyIndex(Map<String, Integer> index, List<Taxon> taxons, int keyRelevance) {
+    private void putTaxonomyIndex(Map<String, Integer> directIndex, List<Taxon> taxons, int keyRelevance) {
 	for (Taxon token : taxons) {
-	    index.put(token.getName().toLowerCase(), keyRelevance);
-	    index.put(token.getValue().toLowerCase(), keyRelevance);
+	    directIndex.put(token.getName().toLowerCase(), keyRelevance);
+	    directIndex.put(token.getValue().toLowerCase(), keyRelevance);
 	}
     }
 
-    private void putConservationIndex(Map<String, Integer> index, ConservationStatus conservation, int keyRelevance) {
+    private void putConservationIndex(Map<String, Integer> directIndex, ConservationStatus conservation, int keyRelevance) {
 	if (conservation != null) {
-	    putIndex(index, conservation.display(), keyRelevance);
+	    putIndex(directIndex, conservation.display(), keyRelevance);
+	}
+    }
+
+    private void putRelatedObjectsIndex(Map<String, Integer> directIndex, List<ExportRelatedObject> relatedObjects,
+	    int keyRelevance) {
+	for (ExportRelatedObject relatedObject : relatedObjects) {
+	    putIndex(directIndex, relatedObject.getDisplay(), keyRelevance);
 	}
     }
 
@@ -168,17 +174,5 @@ public class SearchIndexProcessor {
 	}
 
 	return words;
-    }
-
-    private Iterable<String> relatedObjectsDisplay(List<String> relatedNames) throws IOException {
-	List<String> names = new ArrayList<>();
-	for (String relatedName : relatedNames) {
-	    ExportItem object = itemsMap.get(relatedName);
-	    if (object != null) {
-		// object can be null for not published objects
-		names.add(object.getDisplay());
-	    }
-	}
-	return names;
     }
 }

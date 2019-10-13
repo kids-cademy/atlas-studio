@@ -44,9 +44,6 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     /** Last change timestamp. */
     private Date lastUpdated;
 
-    @Transient
-    private int index;
-    
     private int rank;
 
     /**
@@ -111,7 +108,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private HDate endDate;
 
     private ConservationStatus conservation;
-    
+
     /**
      * Audio sample title is the name of the audio work from which sample is
      * extracted.
@@ -301,14 +298,6 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.lastUpdated = lastUpdated;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public int getRank() {
 	return rank;
     }
@@ -331,8 +320,9 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.name = name;
     }
 
-    public Image getImage(String imageName) {
-	return images.get(imageName);
+    public Image getImage(String imageKey) {
+	// image key is a public constant, e.g. Image.KEY_ICON
+	return images.get(imageKey);
     }
 
     public Map<String, Image> getImages() {
@@ -500,11 +490,11 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     }
 
     public ConservationStatus getConservation() {
-        return conservation;
+	return conservation;
     }
 
     public void setConservation(ConservationStatus conservation) {
-        this.conservation = conservation;
+	this.conservation = conservation;
     }
 
     @Override

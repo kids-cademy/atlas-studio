@@ -38,7 +38,7 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getCollectionItems(int collectionId) {
-	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.name", AtlasItem.class)
+	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.display", AtlasItem.class)
 		.setParameter("collectionId", collectionId).getResultList();
     }
 

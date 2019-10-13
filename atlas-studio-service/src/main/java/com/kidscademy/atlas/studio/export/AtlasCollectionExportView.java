@@ -7,8 +7,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
-import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
@@ -62,44 +62,38 @@ public class AtlasCollectionExportView implements View {
 	ZipOutputStream zip = new ZipOutputStream(stream);
 	SearchIndexProcessor processor = new SearchIndexProcessor(items);
 
-	List<String> objectNames = new ArrayList<>(items.size());
+	// uses linked hash map to preserve insertion order
+	Map<String, ExportItem> itemsMap = new LinkedHashMap<>(items.size());
 	for (int index = 0; index < items.size(); ++index) {
 	    final ExportItem item = items.get(index);
 	    item.setIndex(index);
-	    objectNames.add(item.getName());
+	    item.setIconPath(Util.path(item.getName(), item.getIconName()));
+	    itemsMap.put(item.getName(), item);
 	}
 
 	for (ExportItem item : items) {
-	    AtlasObject object = atlasDao.getAtlasObject(item.getId());
-	    object.setIndex(item.getIndex());
-	    processor.createDirectIndex(object);
+	    AtlasObject atlasObject = atlasDao.getAtlasObject(item.getId());
+	    ExportObject exportObject = new ExportObject(atlasObject);
+	    exportObject.setIndex(item.getIndex());
+	    processor.createDirectIndex(exportObject);
 
-	    List<String> related = new ArrayList<>();
-	    for (String relatedName : object.getRelated()) {
-		if (objectNames.contains(relatedName)) {
-		    related.add(relatedName);
+	    for (String relatedName : atlasObject.getRelated()) {
+		ExportItem relatedItem = itemsMap.get(relatedName);
+		if (relatedItem != null) {
+		    exportObject.addRelated(new ExportRelatedObject(relatedItem));
 		}
 	    }
-	    object.setRelated(related);
 
-	    object.setSamplePath(path(object.getName(), object.getSampleName()));
-	    for (Image image : object.getImages().values()) {
-		image.setPath(path(object.getName(), image.getFileName()));
-	    }
-	    for (Link link : object.getLinks()) {
-		link.setIconPath(Strings.concat("links/", link.getIconName()));
-	    }
-
-	    ZipEntry entry = entry(object.getName(), "object_en.json");
+	    ZipEntry entry = entry(exportObject.getName(), "object_en.json");
 	    zip.putNextEntry(entry);
-	    zip.write(json.stringify(object).getBytes("UTF-8"));
+	    zip.write(json.stringify(exportObject).getBytes("UTF-8"));
 	    zip.closeEntry();
 
-	    addEntry(zip, object, object.getSampleName());
-	    addEntry(zip, object.getName(), "icon.jpg", pictureFile(object, "icon", 96, 96));
-	    addEntry(zip, object.getName(), "contextual.jpg", pictureFile(object, "contextual", 920, 560));
-	    addEntry(zip, object.getName(), "cover.png", pictureFile(object, "cover", 560, 0));
-	    addEntry(zip, object.getName(), "featured.png", pictureFile(object, "featured", 560, 0));
+	    addEntry(zip, item, atlasObject.getSampleName());
+	    addEntry(zip, exportObject.getName(), "icon.jpg", pictureFile(atlasObject, "icon", 96, 96));
+	    addEntry(zip, exportObject.getName(), "contextual.jpg", pictureFile(atlasObject, "contextual", 920, 560));
+	    addEntry(zip, exportObject.getName(), "cover.png", pictureFile(atlasObject, "cover", 560, 0));
+	    addEntry(zip, exportObject.getName(), "featured.png", pictureFile(atlasObject, "featured", 560, 0));
 	}
 
 	ZipEntry entry = new ZipEntry("atlas/search-index.json");
@@ -109,13 +103,13 @@ public class AtlasCollectionExportView implements View {
 
 	entry = new ZipEntry("atlas/objects-list.json");
 	zip.putNextEntry(entry);
-	zip.write(json.stringify(objectNames).getBytes("UTF-8"));
+	zip.write(json.stringify(itemsMap.keySet()).getBytes("UTF-8"));
 	zip.closeEntry();
 
 	zip.close();
     }
 
-    private static void addEntry(ZipOutputStream zip, AtlasObject object, String fileName) throws IOException {
+    private static void addEntry(ZipOutputStream zip, ExportItem object, String fileName) throws IOException {
 	// test null file name here in order to simplify invoker logic
 	if (fileName != null) {
 	    addEntry(zip, object.getName(), fileName, file(object, fileName));
@@ -134,8 +128,8 @@ public class AtlasCollectionExportView implements View {
 	zip.closeEntry();
     }
 
-    private static File pictureFile(AtlasObject object, String pictureName, int width, int height) throws IOException {
-	Image picture = object.getImage(pictureName);
+    private static File pictureFile(AtlasObject object, String imageKey, int width, int height) throws IOException {
+	Image picture = object.getImage(imageKey);
 	if (picture == null) {
 	    return null;
 	}
@@ -154,10 +148,6 @@ public class AtlasCollectionExportView implements View {
 	targetFile.deleteOnExit();
 	processor.resize(file, targetFile, width, height);
 	return targetFile;
-    }
-
-    private static String path(String objectName, String fileName) {
-	return String.format("atlas/%s/%s", objectName, fileName);
     }
 
     private static ZipEntry entry(String objectName, String fileName) {
