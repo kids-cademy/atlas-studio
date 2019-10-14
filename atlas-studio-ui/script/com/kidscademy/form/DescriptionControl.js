@@ -79,7 +79,7 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 		const links = this._formPage.getLinks("description");
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert("No provider link for description.");
+				js.ua.System.alert("@string/no-description-provider");
 				break;
 
 			case 1:
@@ -95,8 +95,12 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 
 	}
 
-	_onRemove() {
-		this._textarea.reset();
+	_onRemoveAll() {
+		js.ua.System.confirm("@string/confirm-description-remove", ok => {
+			if (ok) {
+				this._textarea.reset();
+			}
+		});
 	}
 
 	_onClose() {

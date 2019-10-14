@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tip>
-	<description-import>import object description</description-import>
-	<description-insert-image>insert image</description-insert-image>
+	<definition-import>import object definition from external source</definition-import>
+	<definition-remove-all>remove object definition</definition-remove-all>
+	<definition-close>close object definition editor</definition-close>
+	
+	<description-import>import object description from external source</description-import>
+	<description-remove-all>remove object description</description-remove-all>
+	<description-close>close object description editor</description-close>
 
 	<graphic-add>add new image to object</graphic-add>
 	<graphic-upload>upload image from local storage</graphic-upload>
@@ -30,7 +35,7 @@
 	<audio-undo>undo last audio sample processing</audio-undo>
 	<audio-clear>clear all audio sample processing</audio-clear>
 	<audio-done>commit all audio sample processing</audio-done>
-	<audio-remove>remove audio sample</audio-remove>
+	<audio-remove-all>remove audio sample</audio-remove-all>
 
 	<taxonomy-add>initialize with empty taxonomy</taxonomy-add>
 	<taxonomy-load>initialize taxonomy from kids (a)cademy database</taxonomy-load>

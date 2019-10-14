@@ -66,7 +66,7 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 		const links = this._formPage.getLinks("definition");
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert("No provider link for definition.");
+				js.ua.System.alert("@string/no-definition-provider");
 				break;
 
 			case 1:
@@ -78,8 +78,12 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 		}
 	}
 
-	_onRemove() {
-		this._textarea.reset();
+	_onRemoveAll() {
+		js.ua.System.confirm("@string/confirm-definition-remove", ok => {
+			if (ok) {
+				this._textarea.reset();
+			}
+		});
 	}
 
 	_onClose() {

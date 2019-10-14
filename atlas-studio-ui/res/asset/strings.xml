@@ -18,8 +18,14 @@
 	<message>Mesage for script variable.</message>
 
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
+	<confirm-definition-remove>Please confirm object definition remove.</confirm-definition-remove>
+	<no-definition-provider>No provider link for object definition.</no-definition-provider>
+	<confirm-description-remove>Please confirm object description remove.</confirm-description-remove>
+	<no-description-provider>No provider link for object description.</no-description-provider>
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
 	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
+	<confirm-audio-remove>Please confirm audio assets remove.</confirm-audio-remove>
+	<confirm-facts-remove>Please confirm all facts remove.</confirm-facts-remove>
 	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
 	<object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</object-no-name>
 

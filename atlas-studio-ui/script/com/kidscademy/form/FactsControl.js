@@ -107,9 +107,13 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 	}
 
 	_onRemoveAll() {
-		const object = this._formPage.getObject();
-		this._facts = null;
-		this._factsView.resetObject();
+		js.ua.System.confirm("@string/confirm-facts-remove", ok => {
+			if (ok) {
+				const object = this._formPage.getObject();
+				this._facts = null;
+				this._factsView.resetObject();
+			}
+		});
 	}
 
 	_onClose() {

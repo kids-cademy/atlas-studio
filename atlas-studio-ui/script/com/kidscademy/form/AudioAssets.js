@@ -131,15 +131,19 @@ com.kidscademy.form.AudioAssets = class extends js.dom.Element {
 
 	}
 
-	_onRemove() {
+	_onRemoveAll() {
 		const atlasItem = this._formPage.getAtlasItem();
 		if (!atlasItem.name) {
 			return;
 		}
-		atlasItem.sampleInfo = null;
-		AtlasService.removeAudioSample(atlasItem, () => {
-			this._audioPlayer.resetObject(false);
-			this._sampleInfoView.resetObject();
+		js.ua.System.confirm("@string/confirm-audio-remove", ok => {
+			if (ok) {
+				atlasItem.sampleInfo = null;
+				AtlasService.removeAudioSample(atlasItem, () => {
+					this._audioPlayer.resetObject(false);
+					this._sampleInfoView.resetObject();
+				});
+			}
 		});
 	}
 
