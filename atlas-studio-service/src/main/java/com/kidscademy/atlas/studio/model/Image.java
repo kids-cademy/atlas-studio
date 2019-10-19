@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 
-import js.core.Factory;
+import js.tiny.container.core.Factory;
 
 @Embeddable
 @Cacheable

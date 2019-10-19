@@ -5,7 +5,7 @@ import com.kidscademy.atlas.studio.dao.AdminDao;
 import com.kidscademy.atlas.studio.model.Login;
 import com.kidscademy.atlas.studio.model.User;
 
-import js.core.AppContext;
+import js.tiny.container.core.AppContext;
 
 public class AdminServiceImpl implements AdminService {
     private final AppContext context;

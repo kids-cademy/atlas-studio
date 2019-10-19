@@ -14,8 +14,8 @@ import org.junit.Test;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.SoftSchoolsFacts;
 
-import js.core.AppContext;
-import js.unit.TestContext;
+import js.tiny.container.core.AppContext;
+import js.tiny.container.unit.TestContext;
 
 public class SoftSchoolsTest {
     private static final String DESCRIPTOR = "" + //

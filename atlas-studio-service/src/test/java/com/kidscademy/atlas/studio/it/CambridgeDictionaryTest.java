@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 
-import js.core.AppContext;
-import js.unit.TestContext;
+import js.tiny.container.core.AppContext;
+import js.tiny.container.unit.TestContext;
 
 public class CambridgeDictionaryTest {
     private static final String DESCRIPTOR = "" + //

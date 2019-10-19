@@ -35,6 +35,7 @@ com.kidscademy.form.LinksControl = class extends js.dom.Control {
 		this._linksView.on("click", this._onLinksViewClick, this);
 
 		this._editor = this.getByCssClass("editor");
+		this._editor.on("keydown", this._onKey, this);
 		this._formData = this.getByClass(com.kidscademy.FormData);
 
 		/**
@@ -134,6 +135,18 @@ com.kidscademy.form.LinksControl = class extends js.dom.Control {
 			this._editIndex = linkView.getChildIndex();
 			this._showEditor(true);
 			this._formData.setObject(linkView.getUserData());
+		}
+	}
+
+	_onKey(ev) {
+		switch (ev.key) {
+			case js.event.Key.ENTER:
+				this._onDone();
+				break;
+
+			case js.event.Key.ESCAPE:
+				this._onClose();
+				break;
 		}
 	}
 

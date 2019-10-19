@@ -5,7 +5,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.export.AtlasCollectionExportView;
 
 import js.json.Json;
-import js.mvc.View;
+import js.tiny.container.mvc.View;
 
 public class AtlasControllerImpl implements AtlasController {
     private final AtlasDao atlasDao;

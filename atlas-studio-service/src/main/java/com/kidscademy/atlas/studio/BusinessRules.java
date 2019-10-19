@@ -7,8 +7,8 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 
-import js.core.Factory;
 import js.rmi.BusinessException;
+import js.tiny.container.core.Factory;
 
 public class BusinessRules {
     private static final int NOT_UNIQUE_PICTURE_FILE_NAME = 0x0001;

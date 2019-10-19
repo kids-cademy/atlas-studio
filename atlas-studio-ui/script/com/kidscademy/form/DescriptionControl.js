@@ -28,6 +28,18 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 	onStart() {
 	}
 
+	addParagraph(paragraph) {
+		var description = this._textarea.getValue();
+		if (!description) {
+			this._textarea.setValue(paragraph);
+			return;
+		}
+
+		description += "\r\n\r\n";
+		description += paragraph;
+		this._textarea.setValue(description);
+	}
+
 	// --------------------------------------------------------------------------------------------
 	// CONTROL INTERFACE
 

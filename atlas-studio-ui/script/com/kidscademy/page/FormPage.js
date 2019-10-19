@@ -108,6 +108,16 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._linksControl.onStart(this);
 	}
 
+	_getDefinitionControl() {
+		return this._definitionControl;
+	}
+
+	_getDescriptionControl() {
+		return this._descriptionControl;
+	}
+
+	// --------------------------------------------------------------------------------------------
+
 	_onPreview() {
 		if (this._object.id === 0) {
 			js.ua.System.alert("@string/object-not-saved");

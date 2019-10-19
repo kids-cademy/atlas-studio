@@ -24,9 +24,9 @@ import com.kidscademy.atlas.studio.tool.IdentifyProcess;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.tool.ImageProcessorImpl;
 
-import js.http.ContentType;
 import js.json.Json;
-import js.mvc.View;
+import js.tiny.container.http.ContentType;
+import js.tiny.container.mvc.View;
 import js.util.Classes;
 import js.util.Strings;
 

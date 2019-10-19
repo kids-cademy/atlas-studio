@@ -38,7 +38,7 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 
-import js.http.form.Form;
+import js.tiny.container.http.form.Form;
 import js.util.Classes;
 
 @RunWith(MockitoJUnitRunner.class)

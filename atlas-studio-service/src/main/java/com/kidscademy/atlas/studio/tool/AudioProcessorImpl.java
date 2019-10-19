@@ -8,9 +8,9 @@ import java.lang.reflect.Type;
 
 import com.kidscademy.atlas.studio.CT;
 
-import js.annotation.TestConstructor;
 import js.log.Log;
 import js.log.LogFactory;
+import js.tiny.container.annotation.TestConstructor;
 import js.util.Files;
 
 public class AudioProcessorImpl implements AudioProcessor {

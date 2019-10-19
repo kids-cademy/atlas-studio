@@ -13,10 +13,10 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
-import js.annotation.Public;
-import js.annotation.Service;
-import js.http.form.Form;
 import js.rmi.BusinessException;
+import js.tiny.container.annotation.Public;
+import js.tiny.container.annotation.Service;
+import js.tiny.container.http.form.Form;
 
 @Service
 @Public

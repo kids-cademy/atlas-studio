@@ -5,6 +5,12 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 		super(ownerDoc, node);
 
 		/**
+		 * Parent form page.
+		 * @type {com.kidscademy.form.FormPage}
+		 */
+		this._formPage = null;
+
+		/**
 		 * Facts dictionary.
 		 * 
 		 * @type {Object}
@@ -16,7 +22,9 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 
 		this._editor = this.getByCssClass("editor");
 		this._termInput = this._editor.getByName("term");
+		this._termInput.on("keydown", this._onKey, this);
 		this._definitionInput = this._editor.getByName("definition");
+		this._definitionInput.on("keydown", this._onKey, this);
 		this._termOnEdit = null;
 
 		this._linkSelect = this.getByClass(com.kidscademy.form.LinkSelect);
@@ -99,6 +107,18 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 		this._showEditor(false);
 	}
 
+	_onMoveToDefinition() {
+		const value = this._facts[this._termInput.getValue()];
+		this._formPage._getDefinitionControl().setValue(value);
+		this._onRemove();
+	}
+
+	_onMoveToDescription() {
+		const value = this._facts[this._termInput.getValue()];
+		this._formPage._getDescriptionControl().addParagraph(value);
+		this._onRemove();
+	}
+
 	_onRemove() {
 		delete this._facts[this._termInput.getValue()];
 		this._termOnEdit = null;
@@ -132,8 +152,20 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 		}
 	}
 
+	_onKey(ev) {
+		switch (ev.key) {
+			case js.event.Key.ENTER:
+				this._onDone();
+				break;
+
+			case js.event.Key.ESCAPE:
+				this._onClose();
+				break;
+		}
+	}
+
 	_showEditor(show) {
-		this._actions.show(show, "done", "remove", "close");
+		this._actions.show(show, "done", "move-to-definition", "move-to-description", "remove", "close");
 		this._editor.show(show);
 		if (show) {
 			this._termInput.focus();

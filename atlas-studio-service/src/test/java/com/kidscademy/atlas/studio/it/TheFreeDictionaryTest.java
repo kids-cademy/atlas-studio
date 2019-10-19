@@ -16,11 +16,11 @@ import org.junit.Test;
 
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 
-import js.core.Factory;
 import js.dom.Document;
 import js.dom.DocumentBuilder;
 import js.dom.Element;
-import js.unit.TestContext;
+import js.tiny.container.core.Factory;
+import js.tiny.container.unit.TestContext;
 import js.util.Classes;
 import js.util.Files;
 

@@ -2,7 +2,7 @@ package com.kidscademy.atlas.studio;
 
 import java.io.File;
 
-import js.annotation.ContextParam;
+import js.tiny.container.annotation.ContextParam;
 
 public class CT {
     @ContextParam("objects.repository.path")

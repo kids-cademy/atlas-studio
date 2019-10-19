@@ -1,8 +1,8 @@
 package com.kidscademy.atlas.studio;
 
-import js.annotation.Controller;
-import js.annotation.Public;
-import js.mvc.View;
+import js.tiny.container.annotation.Controller;
+import js.tiny.container.annotation.Public;
+import js.tiny.container.mvc.View;
 
 @Controller
 @Public

@@ -1,6 +1,6 @@
 package com.kidscademy.atlas.studio.tool;
 
-import js.annotation.ContextParam;
+import js.tiny.container.annotation.ContextParam;
 import js.util.Strings;
 
 public class IdentifyProcess extends ImageMagickProcess {

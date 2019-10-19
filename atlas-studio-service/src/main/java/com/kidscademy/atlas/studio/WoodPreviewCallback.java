@@ -3,8 +3,8 @@ package com.kidscademy.atlas.studio;
 import com.kidscademy.atlas.studio.dao.AdminDao;
 import com.kidscademy.atlas.studio.model.User;
 
-import js.core.AppContext;
 import js.lang.Callback;
+import js.tiny.container.core.AppContext;
 
 public class WoodPreviewCallback implements Callback<AppContext>
 {

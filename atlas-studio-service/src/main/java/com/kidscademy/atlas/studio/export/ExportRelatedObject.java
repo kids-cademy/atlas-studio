@@ -1,8 +1,5 @@
 package com.kidscademy.atlas.studio.export;
 
-import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Image;
-
 @SuppressWarnings("unused")
 public class ExportRelatedObject {
     private final int index;

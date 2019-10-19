@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import js.annotation.TestConstructor;
+import js.tiny.container.annotation.TestConstructor;
 
 public class ImageProcessorImpl implements ImageProcessor {
     private final ImageMagickProcess convert;

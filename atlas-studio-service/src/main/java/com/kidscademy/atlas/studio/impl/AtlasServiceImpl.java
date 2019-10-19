@@ -33,12 +33,12 @@ import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 import com.kidscademy.atlas.studio.www.WikipediaPageSummary;
 
-import js.http.form.Form;
-import js.http.form.UploadedFile;
 import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 import js.rmi.BusinessException;
+import js.tiny.container.http.form.Form;
+import js.tiny.container.http.form.UploadedFile;
 import js.util.Params;
 
 public class AtlasServiceImpl implements AtlasService {
