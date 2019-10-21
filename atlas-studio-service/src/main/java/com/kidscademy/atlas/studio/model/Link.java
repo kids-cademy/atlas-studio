@@ -221,6 +221,7 @@ public class Link {
 	DOMAINS.put("thefreedictionary.com", new String[] { "The Free Dictionary", "definition" });
 	DOMAINS.put("cambridge.org", new String[] { "Cambridge Dictionary", "definition" });
 	DOMAINS.put("youtube.com", new String[] { "YouTube", "audio" });
+	DOMAINS.put("britannica.com", new String[] { "Encyclopædia Britannica", "" });
     }
 
     /**
