@@ -1,6 +1,6 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.SpreadingControl = class extends js.dom.Control {
+com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
@@ -63,6 +63,7 @@ com.kidscademy.form.SpreadingControl = class extends js.dom.Control {
 	}
 
 	_onDone(ev) {
+		this._setDirty();
 		if (this._editingRegionIndex === -1) {
 			// not editing mode, that is, add a new region
 			this._regions.push({
@@ -82,6 +83,7 @@ com.kidscademy.form.SpreadingControl = class extends js.dom.Control {
 	}
 
 	_onRemove(ev) {
+		this._setDirty();
 		this._regions.splice(this._editingRegionIndex, 1);
 		this._updateRegionsView();
 		this._showEditor(false);

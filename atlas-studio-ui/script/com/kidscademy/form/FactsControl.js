@@ -1,14 +1,8 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.FactsControl = class extends js.dom.Control {
+com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
 
 		/**
 		 * Facts dictionary.
@@ -32,13 +26,6 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 
 		this._showEditor(false);
-	}
-
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart() {
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -72,6 +59,7 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 	// ACTION HANDLERS
 
 	_onImport() {
+		this._setDirty();
 		const load = (link) => AtlasService.importObjectsFacts(link, facts => this.setValue(facts));
 
 		const links = this._formPage.getLinks("facts");
@@ -97,6 +85,7 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 	}
 
 	_onDone() {
+		this._setDirty();
 		if (this._termOnEdit) {
 			delete this._facts[this._termOnEdit];
 			this._termOnEdit = null;
@@ -120,6 +109,7 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 	}
 
 	_onRemove() {
+		this._setDirty();
 		delete this._facts[this._termInput.getValue()];
 		this._termOnEdit = null;
 		this._factsView.setObject(this._facts);
@@ -129,6 +119,7 @@ com.kidscademy.form.FactsControl = class extends js.dom.Control {
 	_onRemoveAll() {
 		js.ua.System.confirm("@string/confirm-facts-remove", ok => {
 			if (ok) {
+				this._setDirty();
 				const object = this._formPage.getObject();
 				this._facts = null;
 				this._factsView.resetObject();

@@ -1,16 +1,11 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
+com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
-
 		this._textarea = this.getByTag("textarea");
+		this._textarea.on("change", this._onChange, this);
 
 		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
 
@@ -19,13 +14,6 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 		 * @type {com.kidscademy.Actions}
 		 */
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-	}
-
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart() {
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -57,6 +45,7 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 	 * If there are more than one link display them and let user choose one.
 	 */
 	_onImport() {
+		this._setDirty();
 		const load = (link) => {
 			AtlasService.importObjectDefinition(link, definition => {
 				this._textarea.setValue(definition);
@@ -81,6 +70,7 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 	_onRemoveAll() {
 		js.ua.System.confirm("@string/confirm-definition-remove", ok => {
 			if (ok) {
+				this._setDirty();
 				this._textarea.reset();
 			}
 		});
@@ -91,6 +81,10 @@ com.kidscademy.form.DefinitionControl = class extends js.dom.Control {
 	}
 
 	// --------------------------------------------------------------------------------------------
+
+	_onChange(ev) {
+		this._setDirty();
+	}
 
 	/**
 	 * Class string representation.

@@ -8,6 +8,7 @@
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/FormData.js</script>
+		<script>script/com/kidscademy/form/FormControl.js</script>
 		<script>script/com/kidscademy/form/ImagesControl.js</script>
 		<script>script/com/kidscademy/form/CropMask.js</script>
 		<script>script/com/kidscademy/form/GraphicAssets.js</script>

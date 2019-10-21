@@ -6,6 +6,7 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>script/com/kidscademy/form/HDateControl.js</script>
+		<script>script/com/kidscademy/form/FormControl.js</script>
 		<script>script/com/kidscademy/form/AliasesControl.js</script>
 	</scripts>
 </page>

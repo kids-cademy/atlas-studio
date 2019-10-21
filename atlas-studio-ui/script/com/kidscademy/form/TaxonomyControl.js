@@ -6,15 +6,9 @@ $package("com.kidscademy.form");
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
+com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
 
 		/**
 		 * Atlas object - in fact its lite version, atlas item, for which this taxonomy is applied.
@@ -103,13 +97,10 @@ com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
 	/**
 	 * Handler called by atlas object form just after object loaded. Note that this callback is 
 	 * invoked after {@link #setValue(Object)}.
-	 * 
-	 * @param {com.kidscademy.page.FormPage} formPage 
 	 */
-	onStart(formPage) {
-		this._formPage = formPage;
-		this._atlasItem = formPage.getAtlasItem();
-		this._taxonomyClass = formPage.getCollection().taxonomyClass;
+	onStart() {
+		this._atlasItem = this._formPage.getAtlasItem();
+		this._taxonomyClass = this._formPage.getCollection().taxonomyClass;
 		// update again actions visibility here because we need taxonomy class
 		this._updateActions();
 
@@ -135,7 +126,7 @@ com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
 				break;
 
 			default:
-				throw `Invalid taxonony class '${this._taxonomyClass}' on collection '${formPage.getCollection().display}'.`;
+				throw `Invalid taxonony class '${this._taxonomyClass}' on collection '${this._formPage.getCollection().display}'.`;
 		}
 
 		this._taxonNameLabel = this._taxonValueEditor.getByName("name");
@@ -211,6 +202,8 @@ com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
 	}
 
 	_onDone() {
+		this._setDirty();
+
 		if (this._batchEdit) {
 			this._updateTaxonomyView();
 			if (++this._taxonEditIndex === this._taxonomy.length) {
@@ -227,12 +220,14 @@ com.kidscademy.form.TaxonomyControl = class extends js.dom.Control {
 	}
 
 	_onRemove() {
+		this._setDirty();
 		this._taxonomy[this._taxonEditIndex].value = null;
 		this._taxonomyView.setObject(this._taxonomy);
 		this._onClose();
 	}
 
 	_onRemoveAll() {
+		this._setDirty();
 		this.setValue(null);
 		this._onClose();
 	}

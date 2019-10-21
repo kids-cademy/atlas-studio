@@ -1,14 +1,8 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
+com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-    	/**
-    	 * Parent form page.
-    	 * @type {com.kidscademy.form.FormPage}
-    	 */
-		this._formPage = null;
 
 		/**
 		 * Custom list control for images.
@@ -81,14 +75,6 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 		this.getByName("upload-file").on("change", this._onUploadFile, this);
 	}
 
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart() {
-		const object = this._formPage.getObject();
-	}
-
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
@@ -131,6 +117,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 		formData.append("media-file", ev.target._node.files[0]);
 
 		AtlasService.uploadImage(formData, image => {
+			this._setDirty();
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
 			this._previewImage.setSrc(image.src);
@@ -156,6 +143,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 		formData.append("atlas-object-id", object.id);
 
 		AtlasService.uploadImageBySource(formData, image => {
+			this._setDirty();
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
 			this._previewImage.setSrc(image.src);
@@ -164,6 +152,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 
 	_onCloneToIcon() {
 		AtlasService.cloneImageToIcon(this._formPage.getAtlasItem(), this._currentImage, image => {
+			this._setDirty();
 			this._imagesControl.addImage(image);
 			this._onImageSelected(image);
 			
@@ -208,6 +197,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 	 * @param {Object} cropInfo crop area info. 
 	 */
 	_onCropUpdate(cropInfo) {
+		this._setDirty();
 		this._cropInfoView.setObject(cropInfo);
 	}
 
@@ -238,6 +228,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 			default:
 				this._metaFormData.getObject(this._currentImage);
 				AtlasService.commitImage(this._formPage.getAtlasItem(), this._currentImage, image => {
+					this._setDirty();
 					this._metaFormData.hide();
 					this._closeImageEditor();
 					this._imagesControl.updateImage(image);
@@ -247,6 +238,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 
 	_onUndo() {
 		AtlasService.undoImage(this._formPage.getAtlasItem(), this._currentImage, image => {
+			this._setDirty();
 			--this._transformsCount;
 			this._currentImage = image;
 			this._previewImage.reload(image.src);
@@ -270,6 +262,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 		js.ua.System.confirm("@string/confirm-image-remove", answer => {
 			if (answer === true) {
 				AtlasService.removeImage(this._formPage.getAtlasItem(), this._currentImage, () => {
+					this._setDirty();
 					this._closeImageEditor();
 					this._imagesControl.removeImage(this._currentImage);
 				});
@@ -291,6 +284,7 @@ com.kidscademy.form.GraphicAssets = class extends js.dom.Element {
 	 * @param {Object} image image returned by server.
 	 */
 	_onProcessingDone(image) {
+		this._setDirty();
 		++this._transformsCount;
 		this._currentImage = image;
 		this._previewImage.reload(image.src);

@@ -14,21 +14,19 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
 
+		/**
+		 * Flag true when a form control was changed. Used to signal user changes when leaving the page.
+		 * @type {Boolean}
+		 */
+		this._dirty = false;
+		WinMain.on("pre-unload", this._onPreUnload, this);
+
 		// current selected collection and object ID are stored on global context
 		this._collection = this.getContextAttr("collection");
 		this._objectId = Number(this.getContextAttr("objectId"));
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._sidebar = this.getByCss(".side-bar .header");
-
-		this._taxonomyControl = this.getByClass(com.kidscademy.form.TaxonomyControl);
-		this._definitionControl = this.getByClass(com.kidscademy.form.DefinitionControl);
-		this._descriptionControl = this.getByClass(com.kidscademy.form.DescriptionControl);
-		this._graphicAssets = this.getByClass(com.kidscademy.form.GraphicAssets);
-		this._audioAssets = this.getByClass(com.kidscademy.form.AudioAssets);
-		this._factsControl = this.getByClass(com.kidscademy.form.FactsControl);
-		this._relatedControl = this._form.getByClass(com.kidscademy.form.RelatedControl);
-		this._linksControl = this._form.getByClass(com.kidscademy.form.LinksControl);
 
 		const actions = this.getByCss(".side-bar .actions");
 		actions.on(this, {
@@ -40,11 +38,23 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		const quickLinks = this.getByCssClass("quick-links");
 		quickLinks.on("click", this._onQuickLinks, this);
 
+		this._taxonomyControl = this.getByClass(com.kidscademy.form.TaxonomyControl);
+		this._definitionControl = this.getByClass(com.kidscademy.form.DefinitionControl);
+		this._descriptionControl = this.getByClass(com.kidscademy.form.DescriptionControl);
+		this._graphicAssets = this.getByClass(com.kidscademy.form.GraphicAssets);
+		this._audioAssets = this.getByClass(com.kidscademy.form.AudioAssets);
+		this._factsControl = this.getByClass(com.kidscademy.form.FactsControl);
+		this._spreadingControl = this.getByClass(com.kidscademy.form.SpreadingControl);
+		this._relatedControl = this._form.getByClass(com.kidscademy.form.RelatedControl);
+		this._linksControl = this._form.getByClass(com.kidscademy.form.LinksControl);
+
+		this._taxonomyControl.onCreate(this);
 		this._definitionControl.onCreate(this);
 		this._descriptionControl.onCreate(this);
 		this._graphicAssets.onCreate(this);
 		this._audioAssets.onCreate(this);
 		this._factsControl.onCreate(this);
+		this._spreadingControl.onCreate(this);
 		this._relatedControl.onCreate(this);
 		this._linksControl.onCreate(this);
 
@@ -88,6 +98,8 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onObjectLoaded(object) {
+		this._dirty = false;
+
 		// take care to update this object ID on global context
 		this.setContextAttr("objectId", object.id);
 
@@ -98,14 +110,15 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form.setObject(object);
 		this._sidebar.setObject(object);
 
-		this._taxonomyControl.onStart(this);
-		this._definitionControl.onStart(this);
-		this._descriptionControl.onStart(this);
-		this._graphicAssets.onStart(this);
-		this._audioAssets.onStart(this);
-		this._factsControl.onStart(this);
-		this._relatedControl.onStart(this);
-		this._linksControl.onStart(this);
+		this._taxonomyControl.onStart();
+		this._definitionControl.onStart();
+		this._descriptionControl.onStart();
+		this._graphicAssets.onStart();
+		this._audioAssets.onStart();
+		this._factsControl.onStart();
+		this._spreadingControl.onStart();
+		this._relatedControl.onStart();
+		this._linksControl.onStart();
 	}
 
 	_getDefinitionControl() {
@@ -123,10 +136,20 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			js.ua.System.alert("@string/object-not-saved");
 			return;
 		}
-		WinMain.assign("reader.htm");
+
+		if (!this._dirty) {
+			WinMain.assign("reader.htm");
+			return;
+		}
+
+		js.ua.System.confirm("@string/confirm-object-save", ok => {
+			if (ok) {
+				this._onSave(() => WinMain.assign("reader.htm"));
+			}
+		});
 	}
 
-	_onSave() {
+	_onSave(previewCallback) {
 		this.findByCss(".quick-links li").removeCssClass(this.CSS_INVALID);
 		const updateQuickLink = control => {
 			const fieldset = control.getParentByTag("fieldset");
@@ -136,7 +159,12 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		const object = this.getObject();
 		if (this._form.isValid(updateQuickLink)) {
-			AtlasService.saveAtlasObject(object, this._onObjectLoaded, this);
+			if (typeof previewCallback === "function") {
+				AtlasService.saveAtlasObject(object, previewCallback, this);
+			}
+			else {
+				AtlasService.saveAtlasObject(object, this._onObjectLoaded, this);
+			}
 		}
 	}
 
@@ -161,7 +189,21 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onBack() {
+		if (this._dirty) {
+			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
+				if (ok) {
+					WinMain.assign("collection.htm");
+				}
+			});
+			return;
+		}
 		WinMain.assign("collection.htm");
+	}
+
+	_onPreUnload(ev) {
+		if (this._dirty) {
+			return "@string/confirm-object-not-saved";
+		}
 	}
 
 	/**

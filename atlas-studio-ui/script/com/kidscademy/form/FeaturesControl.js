@@ -1,6 +1,6 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.FeaturesControl = class extends js.dom.Control {
+com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 	}

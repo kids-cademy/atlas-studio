@@ -1,15 +1,8 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.AudioAssets = class extends js.dom.Element {
+com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-		/**
-		 * Parent form page.
-		 * 
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
 
 		/**
 		 * Input control for sample title.
@@ -29,7 +22,7 @@ com.kidscademy.form.AudioAssets = class extends js.dom.Element {
 	}
 
 	onCreate(formPage) {
-		this._formPage = formPage;
+		super.onCreate(formPage);
 		this._audioPlayer.onCreate(formPage);
 	}
 
@@ -138,6 +131,7 @@ com.kidscademy.form.AudioAssets = class extends js.dom.Element {
 		}
 		js.ua.System.confirm("@string/confirm-audio-remove", ok => {
 			if (ok) {
+				this._setDirty();
 				atlasItem.sampleInfo = null;
 				AtlasService.removeAudioSample(atlasItem, () => {
 					this._audioPlayer.resetObject(false);
@@ -150,6 +144,7 @@ com.kidscademy.form.AudioAssets = class extends js.dom.Element {
 	// --------------------------------------------------------------------------------------------
 
 	_update(info) {
+		this._setDirty();
 		this._audioPlayer.setObject(info);
 		this._sampleInfoView.setObject(info);
 	}

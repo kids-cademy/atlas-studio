@@ -1,16 +1,11 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
+com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
-
 		this._textarea = this.getByTag("textarea");
+		this._textarea.on("change", this._onChange, this);
 
 		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
 
@@ -21,14 +16,8 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 	}
 
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart() {
-	}
-
 	addParagraph(paragraph) {
+		this._setDirty();
 		var description = this._textarea.getValue();
 		if (!description) {
 			this._textarea.setValue(paragraph);
@@ -73,6 +62,7 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 	 * If there are more than one link display them and let user choose one.
 	 */
 	_onImport() {
+		this._setDirty();
 		const load = (link) => {
 			AtlasService.importObjectDescription(link, description => {
 				description = description.replace(/<p>/g, "").replace(/<\/p>/g, "\n\n");
@@ -104,12 +94,13 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 	}
 
 	_onInsertPicture() {
-
+		this._setDirty();
 	}
 
 	_onRemoveAll() {
 		js.ua.System.confirm("@string/confirm-description-remove", ok => {
 			if (ok) {
+				this._setDirty();
 				this._textarea.reset();
 			}
 		});
@@ -120,6 +111,10 @@ com.kidscademy.form.DescriptionControl = class extends js.dom.Control {
 	}
 
 	// --------------------------------------------------------------------------------------------
+
+	_onChange(ev) {
+		this._setDirty();
+	}
 
 	/**
 	 * Class string representation.

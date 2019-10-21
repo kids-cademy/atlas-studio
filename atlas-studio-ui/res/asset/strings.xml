@@ -28,6 +28,8 @@
 	<confirm-facts-remove>Please confirm all facts remove.</confirm-facts-remove>
 	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
 	<object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</object-no-name>
+	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
+	<confirm-object-not-saved>Atlas object is changed. Please confirm page leaving.</confirm-object-not-saved>
 
 	<published-object>Published Object</published-object>
 

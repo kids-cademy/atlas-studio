@@ -5,6 +5,7 @@
 	<description>Object form page.</description>
 	<scripts>
 		<script>script/com/kidscademy/Form.js</script>
+		<script>script/com/kidscademy/form/FormControl.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/FormPage.js</script>
 	</scripts>

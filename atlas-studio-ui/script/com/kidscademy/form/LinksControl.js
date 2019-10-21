@@ -6,15 +6,9 @@ $package("com.kidscademy.form");
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.form.LinksControl = class extends js.dom.Control {
+com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
 
 		/**
 		 * Link objects collection.
@@ -45,13 +39,6 @@ com.kidscademy.form.LinksControl = class extends js.dom.Control {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 
 		this._showEditor(false);
-	}
-
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart() {
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -93,6 +80,7 @@ com.kidscademy.form.LinksControl = class extends js.dom.Control {
 			return;
 		}
 
+		this._setDirty();
 		if (this._editIndex === -1) {
 			// edit index is not set therefore we are in append mode
 			AtlasService.createLink(this._formData.getObject(), link => {
@@ -117,6 +105,7 @@ com.kidscademy.form.LinksControl = class extends js.dom.Control {
 
 	_onRemove() {
 		if (this._formData.isValid() && this._editIndex !== -1) {
+			this._setDirty();
 			this._links.splice(this._editIndex, 1);
 			this._updateView();
 			this._showEditor(false);

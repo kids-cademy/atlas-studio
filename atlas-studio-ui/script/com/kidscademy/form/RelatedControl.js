@@ -4,15 +4,9 @@ $package("com.kidscademy.form");
  * Control for related objects. It has two sections: currently selected related objects and a collection with
  * available, not yet selected, objects. Moving from one section to another is performed via drag and drop.
  */
-com.kidscademy.form.RelatedControl = class extends js.dom.Control {
+com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
-		/**
-		 * Parent form page.
-		 * @type {com.kidscademy.form.FormPage}
-		 */
-		this._formPage = null;
 
 		this._relatedView = this.getByCss(".list-view.related");
 		this._relatedView.on("dragstart", this._onDragStart, this);
@@ -30,12 +24,8 @@ com.kidscademy.form.RelatedControl = class extends js.dom.Control {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).showOnly("search");
 	}
 
-	onCreate(formPage) {
-		this._formPage = formPage;
-	}
-
-	onStart(formPage) {
-		const taxonomy = formPage.getObject().taxonomy;
+	onStart() {
+		const taxonomy = this._formPage.getObject().taxonomy;
 		this._taxonomySelect.setOptions(taxonomy);
 	}
 
@@ -150,10 +140,12 @@ com.kidscademy.form.RelatedControl = class extends js.dom.Control {
 				else {
 					targetElement.insertBefore(sourceElement);
 				}
+				this._setDirty();
 			}
 			return;
 		}
 		this._relatedView.addChild(this._candidatesView.getByIndex(data.index));
+		this._setDirty();
 	}
 
 	_onCandidatesViewDrop(ev) {
@@ -163,6 +155,7 @@ com.kidscademy.form.RelatedControl = class extends js.dom.Control {
 			return;
 		}
 		this._candidatesView.addChild(this._relatedView.getByIndex(data.index));
+		this._setDirty();
 	}
 
 	/**
