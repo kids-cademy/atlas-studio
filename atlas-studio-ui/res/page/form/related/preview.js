@@ -2,6 +2,13 @@ WinMain.on("load", function() {
 	var relatedControl = WinMain.doc.getByClass(com.kidscademy.form.RelatedControl);
 
 	const formPage = {
+		getCollection : function() {
+			return {
+				id : 1,
+				taxonomyClass : "MUSICAL_INSTRUMENT"
+			};
+		},
+
 		getObject : function() {
 			return {
 				category : "WOODWIND"
@@ -10,13 +17,7 @@ WinMain.on("load", function() {
 	};
 
 	relatedControl.onCreate(formPage);
-	relatedControl.onStart();
+	relatedControl.onStart(formPage);
 
-	relatedControl.setValue([ {
-		name : "bucium",
-		relevance : 0
-	}, {
-		name : "didgeridoo",
-		relevance : 0
-	} ]);
+	relatedControl.setValue([ "bucium", "didgeridoo", "flute", "violin" ]);
 });

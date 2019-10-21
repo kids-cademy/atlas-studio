@@ -28,7 +28,7 @@
 	</filter-mapping>
 
 	<listener>
-		<listener-class>js.servlet.TinyContainer</listener-class>
+		<listener-class>js.tiny.container.servlet.TinyContainer</listener-class>
 	</listener>
 
 	<servlet>

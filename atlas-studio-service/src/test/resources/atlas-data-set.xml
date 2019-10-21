@@ -199,9 +199,11 @@
 	<atlasobject_related>
 		<atlasobject_id>1</atlasobject_id>
 		<related>bandoneon</related>
+		<related_order>0</related_order>
 	</atlasobject_related>
 	<atlasobject_related>
 		<atlasobject_id>1</atlasobject_id>
 		<related>cimbalom</related>
+		<related_order>1</related_order>
 	</atlasobject_related>
 </data-set>

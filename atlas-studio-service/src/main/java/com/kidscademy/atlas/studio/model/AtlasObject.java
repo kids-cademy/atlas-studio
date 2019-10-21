@@ -144,6 +144,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private List<Link> links;
 
     @ElementCollection
+    @OrderColumn
     private List<String> related;
 
     @Transient

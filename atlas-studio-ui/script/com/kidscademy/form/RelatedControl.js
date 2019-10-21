@@ -134,6 +134,23 @@ com.kidscademy.form.RelatedControl = class extends js.dom.Control {
 		ev.prevent();
 		const data = ev.getData();
 		if (data.source === "related") {
+			// drag from the same related objects view for reordering
+			const sourceElement = this._relatedView.getByIndex(data.index);
+			const targetElement = ev.target.getParentByTag("li");
+			if (targetElement != null && targetElement !== sourceElement) {
+				if (ev.ctrlKey) {
+					const siblingElement = targetElement.getNextSibling();
+					if (siblingElement == null) {
+						targetElement.getParent().addChild(sourceElement);
+					}
+					else {
+						siblingElement.insertBefore(sourceElement);
+					}
+				}
+				else {
+					targetElement.insertBefore(sourceElement);
+				}
+			}
 			return;
 		}
 		this._relatedView.addChild(this._candidatesView.getByIndex(data.index));

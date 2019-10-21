@@ -18,22 +18,22 @@
 	</resource-ref>
 
 	<listener>
-		<listener-class>js.servlet.TinyContainer</listener-class>
+		<listener-class>js.tiny.container.servlet.TinyContainer</listener-class>
 	</listener>
 
 	<servlet>
 		<servlet-name>xsp-servlet</servlet-name>
-		<servlet-class>js.mvc.ResourceServlet</servlet-class>
+		<servlet-class>js.tiny.container.mvc.ResourceServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>rmi-servlet</servlet-name>
-		<servlet-class>js.net.HttpRmiServlet</servlet-class>
+		<servlet-class>js.tiny.container.net.HttpRmiServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>rest-servlet</servlet-name>
-		<servlet-class>js.rest.RestServlet</servlet-class>
+		<servlet-class>js.tiny.container.rest.RestServlet</servlet-class>
 		<load-on-startup>3</load-on-startup>
 	</servlet>
 

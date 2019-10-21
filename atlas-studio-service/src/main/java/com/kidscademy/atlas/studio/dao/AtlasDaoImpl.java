@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,8 +39,8 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getCollectionItems(int collectionId) {
-	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.display", AtlasItem.class)
-		.setParameter("collectionId", collectionId).getResultList();
+	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.display",
+		AtlasItem.class).setParameter("collectionId", collectionId).getResultList();
     }
 
     @Override
@@ -57,7 +58,9 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<ExportItem> getCollectionExportItems(int collectionId) {
-	return em.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name", ExportItem.class)
+	return em
+		.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name",
+			ExportItem.class)
 		.setParameter(1, collectionId).setParameter(2, AtlasObject.State.PUBLISHED).getResultList();
     }
 
@@ -122,12 +125,14 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames) {
-	if (relatedNames.isEmpty()) {
-	    return Collections.emptyList();
+	List<AtlasItem> items = new ArrayList<>();
+	String jpql = "select i from AtlasItem i where i.collection.id=?1 and i.name=?2";
+	for (String relatedName : relatedNames) {
+	    AtlasItem item = em.createQuery(jpql, AtlasItem.class).setParameter(1, collectionId)
+		    .setParameter(2, relatedName).getSingleResult();
+	    items.add(item);
 	}
-	String jpql = "select i from AtlasItem i where i.collection.id=:collectionId and i.name in :objectNames";
-	return em.createQuery(jpql, AtlasItem.class).setParameter("collectionId", collectionId)
-		.setParameter("objectNames", relatedNames).getResultList();
+	return items;
     }
 
     @Override
