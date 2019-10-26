@@ -16,9 +16,7 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 
 		this._editor = this.getByCssClass("editor");
 		this._termInput = this._editor.getByName("term");
-		this._termInput.on("keydown", this._onKey, this);
 		this._definitionInput = this._editor.getByName("definition");
-		this._definitionInput.on("keydown", this._onKey, this);
 		this._termOnEdit = null;
 
 		this._linkSelect = this.getByClass(com.kidscademy.form.LinkSelect);
@@ -109,15 +107,19 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	}
 
 	_onRemove() {
-		this._setDirty();
-		delete this._facts[this._termInput.getValue()];
-		this._termOnEdit = null;
-		this._factsView.setObject(this._facts);
-		this._showEditor(false);
+		js.ua.System.confirm("@string/confirm-fact-remove", ok => {
+			if (ok) {
+				this._setDirty();
+				delete this._facts[this._termInput.getValue()];
+				this._termOnEdit = null;
+				this._factsView.setObject(this._facts);
+				this._showEditor(false);
+			}
+		});
 	}
 
 	_onRemoveAll() {
-		js.ua.System.confirm("@string/confirm-facts-remove", ok => {
+		js.ua.System.confirm("@string/confirm-all-facts-remove", ok => {
 			if (ok) {
 				this._setDirty();
 				const object = this._formPage.getObject();
@@ -140,18 +142,6 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 			this._termOnEdit = ev.target.getText();
 			this._termInput.setValue(ev.target.getText());
 			this._definitionInput.setValue(ev.target.getNextSibling().getText());
-		}
-	}
-
-	_onKey(ev) {
-		switch (ev.key) {
-			case js.event.Key.ENTER:
-				this._onDone();
-				break;
-
-			case js.event.Key.ESCAPE:
-				this._onClose();
-				break;
 		}
 	}
 

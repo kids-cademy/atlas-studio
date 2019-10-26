@@ -25,7 +25,10 @@
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
 	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
 	<confirm-audio-remove>Please confirm audio assets remove.</confirm-audio-remove>
-	<confirm-facts-remove>Please confirm all facts remove.</confirm-facts-remove>
+	<confirm-fact-remove>Please confirm fact remove.</confirm-fact-remove>
+	<confirm-all-facts-remove>Please confirm all facts remove.</confirm-all-facts-remove>
+	<confirm-area-remove>Please confirm geographical area remove.</confirm-area-remove>
+	<confirm-link-remove>Please confirm link remove.</confirm-link-remove>
 	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
 	<object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</object-no-name>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>

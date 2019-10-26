@@ -15,7 +15,7 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		 * @type {Array}
 		 */
 		this._links = [];
-		
+
 		/**
 		 * Index on link objects collection for currently edited link, -1 if not in edit mode.
 		 */
@@ -29,7 +29,6 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		this._linksView.on("click", this._onLinksViewClick, this);
 
 		this._editor = this.getByCssClass("editor");
-		this._editor.on("keydown", this._onKey, this);
 		this._formData = this.getByClass(com.kidscademy.FormData);
 
 		/**
@@ -104,12 +103,17 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	}
 
 	_onRemove() {
-		if (this._formData.isValid() && this._editIndex !== -1) {
-			this._setDirty();
-			this._links.splice(this._editIndex, 1);
-			this._updateView();
-			this._showEditor(false);
+		if (!this._formData.isValid() || this._editIndex === -1) {
+			return;
 		}
+		js.ua.System.confirm("@string/confirm-link-remove", ok => {
+			if (ok) {
+				this._setDirty();
+				this._links.splice(this._editIndex, 1);
+				this._updateView();
+				this._showEditor(false);
+			}
+		});
 	}
 
 	_onClose() {
@@ -124,18 +128,6 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 			this._editIndex = linkView.getChildIndex();
 			this._showEditor(true);
 			this._formData.setObject(linkView.getUserData());
-		}
-	}
-
-	_onKey(ev) {
-		switch (ev.key) {
-			case js.event.Key.ENTER:
-				this._onDone();
-				break;
-
-			case js.event.Key.ESCAPE:
-				this._onClose();
-				break;
 		}
 	}
 

@@ -83,10 +83,14 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 	}
 
 	_onRemove(ev) {
-		this._setDirty();
-		this._regions.splice(this._editingRegionIndex, 1);
-		this._updateRegionsView();
-		this._showEditor(false);
+		js.ua.System.confirm("@string/confirm-area-remove", ok => {
+			if (ok) {
+				this._setDirty();
+				this._regions.splice(this._editingRegionIndex, 1);
+				this._updateRegionsView();
+				this._showEditor(false);
+			}
+		});
 	}
 
 	_onClose(ev) {
@@ -94,7 +98,7 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	_onRegionsViewClick(ev) {
 		const li = ev.target.getParentByTag("li");
 		if (li) {

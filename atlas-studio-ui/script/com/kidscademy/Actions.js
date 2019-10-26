@@ -16,7 +16,24 @@ com.kidscademy.Actions = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		/**
+		 * Parent container initialized by {@link #bind()} method.
+		 * @type {js.dom.Element}
+		 */
+		this._container = null;
+
+		/**
+		 * Dictionary for action handler. Key is the action name and value is mouse click event listener.
+		 * @type {Object}
+		 */
 		this._actionHandlers = {};
+
+		/**
+		 * Dictionary for action key handlers. Map key is the key code from key event and value is the related 
+		 * mouse click event listener. For a list of supported key codes see {@link js.event.Key}.
+		 * @type {Object}
+		 */
+		this._keyHanders = {};
 
 		/**
 		 * Name of the action executed previous to current one, possible null if no operation was invoked yet. This value is updated
@@ -28,10 +45,17 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		this._previousAction = null;
 	}
 
+	/**
+	 * Bind this actions controller to parent container and initialize actions controller internall state.
+	 * @param {js.dom.Element} container parent container.
+	 */
 	bind(container) {
 		function handlerName(name) {
 			return "_on" + name.replace(/(?:^|\-)(\w)/g, (match, capture) => capture.toUpperCase());
 		}
+
+		this._container = container;
+		var keyHandlers = false;
 
 		this.getChildren().forEach(child => {
 			if (!this._isAction(child)) {
@@ -56,9 +80,31 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			}.bind(container);
 
 			child.on("click", actionHandler, container);
-
 			this._actionHandlers[name] = actionHandler;
+
+			var keyName = child.getAttr("data-key");
+			if (keyName != null) {
+				var ctrlKey = false;
+				if(keyName.startsWith("CTRL+")) {
+					ctrlKey = true;
+					keyName = keyName.substring(5);
+				}
+
+				const keyCode = js.event.Key[keyName];
+				if (typeof keyCode === "undefined") {
+					throw `Invalid key name ${keyName} assigned to action ${name}`;
+				}
+				this._keyHanders[keyCode] = {
+					ctrlKey: ctrlKey,
+					method: actionHandler
+				};
+				keyHandlers = true;
+			}
 		});
+
+		if (keyHandlers) {
+			this._container.on("keydown", this._onKey, this);
+		}
 		return this;
 	}
 
@@ -120,6 +166,16 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 	fire(name) {
 		this._actionHandlers[name]();
+	}
+
+	_onKey(ev) {
+		const handler = this._keyHanders[ev.key];
+		if (handler) {
+			if (handler.ctrlKey && !ev.ctrlKey) {
+				return;
+			}
+			handler.method.call(this._container);
+		}
 	}
 
 	_isAction(child) {
