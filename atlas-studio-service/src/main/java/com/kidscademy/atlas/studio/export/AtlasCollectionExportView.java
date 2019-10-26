@@ -19,6 +19,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
+import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;

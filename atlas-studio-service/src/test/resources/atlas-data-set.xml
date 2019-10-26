@@ -85,6 +85,7 @@
 	<atlasobject_aliases>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
+		<aliases_order>0</aliases_order>
 		<aliases>Squeezebox</aliases>
 	</atlasobject_aliases>
 

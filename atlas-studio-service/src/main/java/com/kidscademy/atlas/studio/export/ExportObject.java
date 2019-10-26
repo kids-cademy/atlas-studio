@@ -129,6 +129,10 @@ public class ExportObject {
 	return related;
     }
 
+    public List<ExportFact> getFacts() {
+        return facts;
+    }
+
     public ExportImage getImage(String imageKey) {
 	return images.get(imageKey);
     }

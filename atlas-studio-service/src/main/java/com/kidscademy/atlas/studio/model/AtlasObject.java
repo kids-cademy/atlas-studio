@@ -91,6 +91,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private List<Taxon> taxonomy;
 
     @ElementCollection
+    @OrderColumn
     private List<String> aliases;
 
     /** Optional object spreading, empty list if not applicable. */

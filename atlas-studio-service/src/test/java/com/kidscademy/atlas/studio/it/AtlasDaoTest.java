@@ -466,7 +466,7 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void findObjectsByName() {
+    public void getRelatedAtlasObjects() {
 	List<AtlasItem> objects = dao.getRelatedAtlasObjects(1, Arrays.asList("accordion", "banjo"));
 	assertThat(objects, notNullValue());
 	assertThat(objects, hasSize(1));
@@ -483,7 +483,7 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void findObjectsByName_EmptyNames() {
+    public void getRelatedAtlasObjects_EmptyNames() {
 	List<String> emptyNames = new ArrayList<>(0);
 	List<AtlasItem> objects = dao.getRelatedAtlasObjects(1, emptyNames);
 	assertThat(objects, notNullValue());
@@ -491,7 +491,7 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void objectState() {
+    public void getAtlasObject_ObjectState() {
 	AtlasObject object = dao.getAtlasObject(1);
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 
@@ -500,7 +500,7 @@ public class AtlasDaoTest {
     }
 
     @Test
-    public void resetObjectSample() {
+    public void getAtlasObject_ResetObjectSample() {
 	dao.resetObjectSample(1);
 
 	AtlasObject object = dao.getAtlasObject(1);
@@ -523,24 +523,6 @@ public class AtlasDaoTest {
 	assertThat(image.getWidth(), equalTo(96));
 	assertThat(image.getHeight(), equalTo(96));
     }
-
-//    @Test
-//    public void getCollectionItemsByState() {
-//	List<AtlasItem> items = dao.getCollectionExportItems(2, AtlasObject.State.PUBLISHED);
-//	assertThat(items, notNullValue());
-//	assertThat(items, not(empty()));
-//	assertThat(items, hasSize(2));
-//	
-//	AtlasItem item = items.get(0);
-//	assertThat(item, notNullValue());
-//	assertThat(item, not(instanceOf(AtlasObject.class)));
-//	assertThat(item.getId(), equalTo(3));
-//	assertThat(item.getRepositoryName(), equalTo("bird"));
-//	assertThat(item.getName(), equalTo("bandoneon"));
-//	assertThat(item.getDisplay(), equalTo("Bandoneon"));
-//	assertThat(item.getIconName(), nullValue());
-//	assertThat(item.getIconSrc(), nullValue());
-//    }
 
     // ----------------------------------------------------------------------------------------------
 

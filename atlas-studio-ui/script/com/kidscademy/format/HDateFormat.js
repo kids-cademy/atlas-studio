@@ -31,6 +31,9 @@ com.kidscademy.format.HDateFormat.prototype = {
 			case "YEAR":
 				return `${hdate.value} ${this.getEra(hdate)}`;
 
+			case "DECADE":
+				return `${hdate.value}0s ${this.getEra(hdate)}`;
+
 			case "CENTURY":
 				const value = this.roman(hdate.value);
 				const era = this.getEra(hdate);

@@ -1,7 +1,9 @@
 package com.kidscademy.atlas.studio.export;
 
+import com.kidscademy.atlas.studio.search.SearchWord;
+
 @SuppressWarnings("unused")
-public class ExportRelatedObject {
+public class ExportRelatedObject implements SearchWord {
     private final int index;
     private final String display;
     private final String definition;
@@ -16,5 +18,10 @@ public class ExportRelatedObject {
 
     public String getDisplay() {
         return display;
+    }
+
+    @Override
+    public String toSearchWord() {
+	return display;
     }
 }

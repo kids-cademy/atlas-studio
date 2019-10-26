@@ -128,9 +128,11 @@ public class AtlasDaoImpl implements AtlasDao {
 	List<AtlasItem> items = new ArrayList<>();
 	String jpql = "select i from AtlasItem i where i.collection.id=?1 and i.name=?2";
 	for (String relatedName : relatedNames) {
-	    AtlasItem item = em.createQuery(jpql, AtlasItem.class).setParameter(1, collectionId)
-		    .setParameter(2, relatedName).getSingleResult();
-	    items.add(item);
+	    List<AtlasItem> result = em.createQuery(jpql, AtlasItem.class).setParameter(1, collectionId)
+		    .setParameter(2, relatedName).getResultList();
+	    if (!result.isEmpty()) {
+		items.add(result.get(0));
+	    }
 	}
 	return items;
     }

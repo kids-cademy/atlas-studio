@@ -59,6 +59,10 @@ public class ExportItem implements RepositoryObject {
 	return collection.getName();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String getName() {
 	return name;

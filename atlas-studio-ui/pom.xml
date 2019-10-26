@@ -11,7 +11,7 @@
 	<name>User Interface</name>
 
 	<properties>
-		<wood.version>1.1.3</wood.version>
+		<wood.version>1.1.4</wood.version>
 	</properties>
 
 	<build>
@@ -21,8 +21,6 @@
 				<artifactId>wood-maven-plugin</artifactId>
 				<version>${wood.version}</version>
 				<extensions>true</extensions>
-				<!-- default output directory of WOOD plugin is target/site -->
-				<!-- this folder is known by WAR module when create embedded web application -->
 			</plugin>
 		</plugins>
 	</build>

@@ -300,12 +300,18 @@ com.kidscademy.form.TaxonomyControl.MusicalInstrumentTaxonomy = {
 	values: [
 		// A keyboard instrument is a musical instrument played using a keyboard.
 		"KEYBOARD",
-		// Instrument is sounded by being struck or scraped by a beater.
+		// Instrument is sounded by being struck or scraped by a beater or musician hands.
 		"PERCUSSION",
 		// Produce sound by directing a focused stream of air across the edge of a hole in a cylindrical tube.
 		"WOODWIND",
+		// Produces sound by vibration of air in a tubular resonator in sympathy with the vibration of the player's 
+		// lips. The term "brass instrument" should be defined by the way the sound is made and not by whether the 
+		// instrument is actually made of brass. 
+		"BRASS",
 		// Produce sound from vibrating strings transmitted to the body of the instrument.
-		"STRINGS"
+		"STRINGS",
+		// Instruments with a series of thin plates, each of which is fixed at one end and has the other end free.
+		"LAMELLOPHONE"
 	]
 };
 
