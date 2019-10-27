@@ -38,6 +38,11 @@
 	color: black;
 }
 
+.graphic-assets .meta textarea {
+	height: 100px;
+	min-height: 100px;
+}
+
 .graphic-assets .image-editor {
 	display: flex;
 	margin-top: 20px;
