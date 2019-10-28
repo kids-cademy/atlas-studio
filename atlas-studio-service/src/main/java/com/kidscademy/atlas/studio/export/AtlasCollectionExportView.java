@@ -61,7 +61,7 @@ public class AtlasCollectionExportView implements View {
 
     public void serialize(OutputStream stream) throws IOException {
 	ZipOutputStream zip = new ZipOutputStream(stream);
-	SearchIndexProcessor processor = new SearchIndexProcessor(items);
+	SearchIndexProcessor processor = new SearchIndexProcessor();
 
 	// uses linked hash map to preserve insertion order
 	Map<String, ExportItem> itemsMap = new LinkedHashMap<>(items.size());
@@ -99,7 +99,7 @@ public class AtlasCollectionExportView implements View {
 
 	ZipEntry entry = new ZipEntry("atlas/search-index.json");
 	zip.putNextEntry(entry);
-	zip.write(json.stringify(processor.createSearchIndex()).getBytes("UTF-8"));
+	zip.write(json.stringify(processor.updateSearchIndex()).getBytes("UTF-8"));
 	zip.closeEntry();
 
 	entry = new ZipEntry("atlas/objects-list.json");

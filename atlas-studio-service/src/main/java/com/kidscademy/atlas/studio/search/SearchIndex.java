@@ -1,20 +1,22 @@
 package com.kidscademy.atlas.studio.search;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import js.util.Strings;
 
-public class SearchIndex implements Comparable<SearchIndex> {
+public class SearchIndex<T extends Comparable<T>> implements Keyword, Comparable<SearchIndex<T>> {
     private String keyword;
     private int keywordRelevance;
-    private int[] objectIds;
+    private List<T> objectKeys;
 
-    private transient SortedSet<ObjectId> objects;
+    private transient SortedSet<ObjectKey<T>> objects;
 
     public SearchIndex(String keyword) {
 	this.keyword = keyword;
-	this.objects = new TreeSet<ObjectId>();
+	this.objects = new TreeSet<ObjectKey<T>>();
     }
 
     public void setKeywordRelevance(int keywordRelevance) {
@@ -23,6 +25,7 @@ public class SearchIndex implements Comparable<SearchIndex> {
 	}
     }
 
+    @Override
     public String getKeyword() {
 	return keyword;
     }
@@ -31,20 +34,23 @@ public class SearchIndex implements Comparable<SearchIndex> {
 	return keywordRelevance;
     }
 
-    public void addObject(int objectId, int rank) {
-	objects.add(new ObjectId(objectId, rank));
+    public void addObject(T objectKey, int rank) {
+	objects.add(new ObjectKey<T>(objectKey, rank));
     }
 
-    public void updateObjectIds() {
-	objectIds = new int[objects.size()];
-	int i = 0;
-	for (ObjectId object : objects) {
-	    objectIds[i++] = object.objectId;
+    public void update() {
+	objectKeys = new ArrayList<T>(objects.size());
+	for (ObjectKey<T> object : objects) {
+	    objectKeys.add(object.key);
 	}
     }
 
+    public List<T> getObjectKeys() {
+	return objectKeys;
+    }
+
     @Override
-    public int compareTo(SearchIndex that) {
+    public int compareTo(SearchIndex<T> that) {
 	if (this.keywordRelevance == that.keywordRelevance) {
 	    return this.keyword.compareTo(that.keyword);
 	}
@@ -53,13 +59,13 @@ public class SearchIndex implements Comparable<SearchIndex> {
 
     // --------------------------------------------------------------------------------------------
 
-    private static class ObjectId implements Comparable<ObjectId> {
-	private final int objectId;
+    private static class ObjectKey<T extends Comparable<T>> implements Comparable<ObjectKey<T>> {
+	private final T key;
 	private final int rank;
 
-	ObjectId(int objectId, int rank) {
+	ObjectKey(T key, int rank) {
 	    super();
-	    this.objectId = objectId;
+	    this.key = key;
 	    this.rank = rank;
 	}
 
@@ -67,7 +73,7 @@ public class SearchIndex implements Comparable<SearchIndex> {
 	public int hashCode() {
 	    final int prime = 31;
 	    int result = 1;
-	    result = prime * result + objectId;
+	    result = prime * result + ((key == null) ? 0 : key.hashCode());
 	    result = prime * result + rank;
 	    return result;
 	}
@@ -80,8 +86,12 @@ public class SearchIndex implements Comparable<SearchIndex> {
 		return false;
 	    if (getClass() != obj.getClass())
 		return false;
-	    ObjectId other = (ObjectId) obj;
-	    if (objectId != other.objectId)
+	    @SuppressWarnings("unchecked")
+	    ObjectKey<T> other = (ObjectKey<T>) obj;
+	    if (key == null) {
+		if (other.key != null)
+		    return false;
+	    } else if (!key.equals(other.key))
 		return false;
 	    if (rank != other.rank)
 		return false;
@@ -89,16 +99,16 @@ public class SearchIndex implements Comparable<SearchIndex> {
 	}
 
 	@Override
-	public int compareTo(ObjectId that) {
+	public int compareTo(ObjectKey<T> that) {
 	    if (this.rank == that.rank) {
-		return Integer.compare(this.objectId, that.objectId);
+		return this.key.compareTo(that.key);
 	    }
 	    return Integer.compare(that.rank, this.rank);
 	}
 
 	@Override
 	public String toString() {
-	    return Strings.toString(objectId, rank);
+	    return Strings.toString(key, rank);
 	}
     }
 }

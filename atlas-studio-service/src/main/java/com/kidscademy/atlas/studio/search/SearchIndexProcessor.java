@@ -8,30 +8,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 
-import js.lang.BugError;
-
 public class SearchIndexProcessor {
-    private final List<ExportItem> items;
-    private final Map<String, ExportItem> itemsMap = new HashMap<>();
-    private final Map<String, DirectIndex> directIndices = new HashMap<>();
-
-    public SearchIndexProcessor(List<ExportItem> items) {
-	this.items = items;
-	for (ExportItem item : items) {
-	    itemsMap.put(item.getName(), item);
-	}
-    }
+    private final List<DirectIndex<Integer>> directIndices = new ArrayList<>();
 
     public void createDirectIndex(ExportObject object) throws IOException {
 	// direct index is per atlas object
 	// it stores all keywords and their relevance
-	DirectIndex directIndex = new DirectIndex();
+	DirectIndex<Integer> directIndex = new DirectIndex<>(object.getIndex());
 
 	directIndex.add(object.getDisplay(), 512);
 	directIndex.add(text(object.getAliases()), 256);
@@ -44,38 +32,38 @@ public class SearchIndexProcessor {
 	directIndex.add(facts(object.getFacts()), 2);
 	directIndex.add(object.getDescription(), 1);
 
-	directIndices.put(object.getName(), directIndex);
+	directIndices.add(directIndex);
     }
 
-    public List<SearchIndex> createSearchIndex() throws IOException {
-	Map<String, SearchIndex> invertedIndexMap = new HashMap<>();
+    public List<SearchIndex<Integer>> updateSearchIndex() throws IOException {
+	return createSearchIndex(directIndices);
+    }
 
-	for (ExportItem item : items) {
-	    DirectIndex directIndex = directIndices.get(item.getName());
-	    if (directIndex == null) {
-		throw new BugError("Inconsistent object collections. Object |%s| not found.", item.getName());
-	    }
+    private static List<SearchIndex<Integer>> createSearchIndex(List<DirectIndex<Integer>> directIndices) throws IOException {
+	Map<String, SearchIndex<Integer>> invertedIndexMap = new HashMap<>();
+
+	for (DirectIndex<Integer> directIndex : directIndices) {
 	    for (String word : directIndex) {
-		SearchIndex searchIndex = invertedIndexMap.get(word);
+		SearchIndex<Integer> searchIndex = invertedIndexMap.get(word);
 		if (searchIndex == null) {
-		    searchIndex = new SearchIndex(word);
+		    searchIndex = new SearchIndex<Integer>(word);
 		    invertedIndexMap.put(word, searchIndex);
 		}
 		searchIndex.setKeywordRelevance(directIndex.getRelevance(word));
-		searchIndex.addObject(item.getIndex(), directIndex.getRelevance(word));
+		searchIndex.addObject(directIndex.getObjectKey(), directIndex.getRelevance(word));
 	    }
 	}
 
-	List<SearchIndex> invertedIndex = new ArrayList<>(invertedIndexMap.values());
-	Collections.sort(invertedIndex, new Comparator<SearchIndex>() {
+	List<SearchIndex<Integer>> invertedIndex = new ArrayList<>(invertedIndexMap.values());
+	Collections.sort(invertedIndex, new Comparator<SearchIndex<Integer>>() {
 	    @Override
-	    public int compare(SearchIndex left, SearchIndex right) {
+	    public int compare(SearchIndex<Integer> left, SearchIndex<Integer> right) {
 		return left.compareTo(right);
 	    }
 	});
 
-	for (SearchIndex searchIndex : invertedIndex) {
-	    searchIndex.updateObjectIds();
+	for (SearchIndex<Integer> searchIndex : invertedIndex) {
+	    searchIndex.update();
 	}
 
 	return invertedIndex;

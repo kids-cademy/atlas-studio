@@ -8,11 +8,11 @@ import org.junit.Test;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 
 public class DirectIndexTest {
-    private DirectIndex index;
+    private DirectIndex<Integer> index;
 
     @Before
     public void beforeTest() {
-	index = new DirectIndex();
+	index = new DirectIndex<Integer>(1);
     }
 
     @Test

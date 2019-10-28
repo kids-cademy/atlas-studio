@@ -39,19 +39,19 @@ public class SearchIndexProcessorTest {
 	items.add(item(1, "bandoneon"));
 	items.add(item(2, "melodica"));
 	
-	processor = new SearchIndexProcessor(items);
+	processor = new SearchIndexProcessor();
     }
 
     @Test
     public void create() throws IOException {
-	when(object0.getName()).thenReturn("accordion");
+	when(object0.getIndex()).thenReturn(1);
 	when(object0.getDisplay()).thenReturn("Accordion");
 	
-	when(object1.getName()).thenReturn("bandoneon");
+	when(object1.getIndex()).thenReturn(2);
 	when(object1.getDisplay()).thenReturn("Bandoneon");
 	when(object1.getDescription()).thenReturn("Bandoneon is related to accordion.");
 	
-	when(object2.getName()).thenReturn("melodica");
+	when(object2.getIndex()).thenReturn(3);
 	when(object2.getDisplay()).thenReturn("Melodica");
 	when(object2.getAliases()).thenReturn(Arrays.asList("accordion", "bandoneon"));
 	
@@ -59,7 +59,7 @@ public class SearchIndexProcessorTest {
 	processor.createDirectIndex(object1);
 	processor.createDirectIndex(object2);
 
-	List<SearchIndex> index = processor.createSearchIndex();
+	List<SearchIndex<Integer>> index = processor.updateSearchIndex();
 
 	assertThat(index, notNullValue());
 	assertThat(index, hasSize(4));

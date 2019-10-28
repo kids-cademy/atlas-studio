@@ -18,8 +18,13 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
  * 
  * @author Iulian Rotaru
  */
-public class DirectIndex implements Iterable<String> {
+public class DirectIndex<T extends Comparable<T>> implements Iterable<String> {
+    private final T objectKey;
     private final Map<String, Integer> words = new HashMap<>();
+
+    public DirectIndex(T objectKey) {
+	this.objectKey = objectKey;
+    }
 
     public void add(String text, int relevance) throws IOException {
 	if (text == null || text.isEmpty()) {
@@ -40,15 +45,19 @@ public class DirectIndex implements Iterable<String> {
 		.build();
 
 	TokenStream tokenStream = analyzer.tokenStream("text", text);
-	CharTermAttribute attr = tokenStream.addAttribute(CharTermAttribute.class);
+	CharTermAttribute attribute = tokenStream.addAttribute(CharTermAttribute.class);
 	tokenStream.reset();
 	while (tokenStream.incrementToken()) {
-	    final String word = attr.toString();
+	    final String word = attribute.toString();
 	    int currentRelevance = getRelevance(word);
-	    words.put(attr.toString(), Math.max(currentRelevance, relevance));
+	    words.put(attribute.toString(), Math.max(currentRelevance, relevance));
 	}
 	analyzer.close();
 
+    }
+
+    public T getObjectKey() {
+        return objectKey;
     }
 
     public int getRelevance(String word) {
