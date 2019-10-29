@@ -1,9 +1,9 @@
 package com.kidscademy.atlas.studio.export;
 
-import com.kidscademy.atlas.studio.search.SearchWord;
+import js.lang.Displayable;
 
 @SuppressWarnings("unused")
-public class ExportRelatedObject implements SearchWord {
+public class ExportRelatedObject implements Displayable {
     private final int index;
     private final String display;
     private final String definition;
@@ -16,12 +16,8 @@ public class ExportRelatedObject implements SearchWord {
 	this.iconPath = item.getIconPath();
     }
 
-    public String getDisplay() {
-        return display;
-    }
-
     @Override
-    public String toSearchWord() {
-	return display;
+    public String toDisplay() {
+        return display;
     }
 }

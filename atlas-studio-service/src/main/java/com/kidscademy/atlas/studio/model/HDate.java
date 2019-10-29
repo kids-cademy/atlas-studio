@@ -5,8 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Embeddable;
 
+import js.lang.Displayable;
+
 @Embeddable
-public class HDate implements Comparable<HDate> {
+public class HDate implements Comparable<HDate>, Displayable {
     private Double value;
     private Integer mask;
 
@@ -115,10 +117,18 @@ public class HDate implements Comparable<HDate> {
 	mask |= (period.ordinal() & 0x0000FF00);
     }
 
+    @Override
+    public String toDisplay() {
+	return toString();
+    }
+
     public String toString() {
 	switch (getFormat()) {
 	case YEAR:
 	    return String.format("%d %s", value, getEra());
+
+	case DECADE:
+	    return String.format("%d0s %s", value, getEra());
 
 	case CENTURY:
 	    switch (getPeriod()) {

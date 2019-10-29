@@ -2,11 +2,10 @@ package com.kidscademy.atlas.studio.export;
 
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.search.SearchWord;
-
+import js.lang.Displayable;
 import js.util.Strings;
 
-public class ExportFact implements SearchWord {
+public class ExportFact implements Displayable {
     private final String name;
     private final String value;
 
@@ -16,7 +15,7 @@ public class ExportFact implements SearchWord {
     }
 
     @Override
-    public String toSearchWord() {
+    public String toDisplay() {
 	return Strings.concat(name, ' ', value);
     }
 }

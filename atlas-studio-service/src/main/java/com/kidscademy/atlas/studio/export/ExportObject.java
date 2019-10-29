@@ -39,7 +39,7 @@ public class ExportObject {
     private final Map<String, String> features;
     private final List<ExportRelatedObject> related;
     private final List<ExportLink> links;
-
+    
     public ExportObject(AtlasObject object) {
 	this.rank = object.getRank();
 	this.name = object.getName();

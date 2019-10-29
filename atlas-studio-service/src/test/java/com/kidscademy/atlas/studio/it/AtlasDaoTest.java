@@ -287,7 +287,7 @@ public class AtlasDaoTest {
 
 	Link link = object.getLinks().get(0);
 	assertThat(link, notNullValue());
-	assertThat(link.getDisplay(), equalTo("Wikipedia"));
+	assertThat(link.toDisplay(), equalTo("Wikipedia"));
 	assertThat(link.getIconName(), equalTo("wikipedia.png"));
 	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/wikipedia.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
@@ -447,14 +447,14 @@ public class AtlasDaoTest {
 
 	Link link = expected.getLinks().get(0);
 	assertThat(link, notNullValue());
-	assertThat(link.getDisplay(), equalTo("Wikipedia"));
+	assertThat(link.toDisplay(), equalTo("Wikipedia"));
 	assertThat(link.getIconName(), equalTo("wikipedia.png"));
 	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/wikipedia.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
 
 	link = expected.getLinks().get(1);
 	assertThat(link, notNullValue());
-	assertThat(link.getDisplay(), equalTo("YouTube"));
+	assertThat(link.toDisplay(), equalTo("YouTube"));
 	assertThat(link.getIconName(), equalTo("youtube.png"));
 	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/youtube.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://www.youtube.com/watch?v=kXXhp_bZvck")));

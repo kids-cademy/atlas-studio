@@ -1,8 +1,6 @@
 package com.kidscademy.atlas.studio.search;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,14 +24,7 @@ public class DirectIndex<T extends Comparable<T>> implements Iterable<String> {
 	this.objectKey = objectKey;
     }
 
-    public void add(String text, int relevance) throws IOException {
-	if (text == null || text.isEmpty()) {
-	    return;
-	}
-	add(new StringReader(text), relevance);
-    }
-
-    public void add(Reader text, int relevance) throws IOException {
+    public void add(String fieldName, String text, int relevance) throws IOException {
 	Analyzer analyzer = CustomAnalyzer.builder() //
 		.withTokenizer("standard") //
 		.addTokenFilter("lowercase") //
@@ -44,7 +35,7 @@ public class DirectIndex<T extends Comparable<T>> implements Iterable<String> {
 		.addTokenFilter("decimaldigit") //
 		.build();
 
-	TokenStream tokenStream = analyzer.tokenStream("text", text);
+	TokenStream tokenStream = analyzer.tokenStream(fieldName, text);
 	CharTermAttribute attribute = tokenStream.addAttribute(CharTermAttribute.class);
 	tokenStream.reset();
 	while (tokenStream.incrementToken()) {
@@ -53,16 +44,25 @@ public class DirectIndex<T extends Comparable<T>> implements Iterable<String> {
 	    words.put(attribute.toString(), Math.max(currentRelevance, relevance));
 	}
 	analyzer.close();
-
     }
 
     public T getObjectKey() {
-        return objectKey;
+	return objectKey;
     }
 
     public int getRelevance(String word) {
 	Integer relevance = words.get(word);
 	return relevance != null ? relevance : 0;
+    }
+
+    /**
+     * Return direct index size, that is, the number of indexed words. This method
+     * is designed mainly for tests.
+     * 
+     * @return this index size.
+     */
+    public int size() {
+	return words.size();
     }
 
     @Override

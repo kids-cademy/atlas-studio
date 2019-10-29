@@ -2,8 +2,10 @@ package com.kidscademy.atlas.studio.model;
 
 import javax.persistence.Embeddable;
 
+import js.lang.Displayable;
+
 @Embeddable
-public class Region {
+public class Region implements Displayable {
     private String name;
     private Area area;
 
@@ -27,6 +29,11 @@ public class Region {
 
     public Area getArea() {
 	return area;
+    }
+
+    @Override
+    public String toDisplay() {
+	return name;
     }
 
     @Override

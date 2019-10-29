@@ -61,7 +61,12 @@ public class AtlasCollectionExportView implements View {
 
     public void serialize(OutputStream stream) throws IOException {
 	ZipOutputStream zip = new ZipOutputStream(stream);
-	SearchIndexProcessor processor = new SearchIndexProcessor();
+	SearchIndexProcessor processor;
+	try {
+	    processor = new SearchIndexProcessor();
+	} catch (NoSuchMethodException e) {
+	    throw new IOException(e);
+	}
 
 	// uses linked hash map to preserve insertion order
 	Map<String, ExportItem> itemsMap = new LinkedHashMap<>(items.size());

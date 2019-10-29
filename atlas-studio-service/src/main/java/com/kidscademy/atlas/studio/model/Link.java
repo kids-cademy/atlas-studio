@@ -11,12 +11,13 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
 
+import js.lang.Displayable;
 import js.log.Log;
 import js.log.LogFactory;
 import js.util.Strings;
 
 @Embeddable
-public class Link {
+public class Link implements Displayable {
     /** Class logger. */
     private static final Log log = LogFactory.getLog(Link.class);
 
@@ -116,7 +117,8 @@ public class Link {
 	return domain;
     }
 
-    public String getDisplay() {
+    @Override
+    public String toDisplay() {
 	return display;
     }
 

@@ -12,19 +12,20 @@ public class DirectIndexTest {
 
     @Before
     public void beforeTest() {
-	index = new DirectIndex<Integer>(1);
+	index = new DirectIndex<>(1);
     }
 
     @Test
     public void text() throws IOException {
 	String text = "This is a 1940s text. It is followed by another paragraphs follows paragraph following India Indian.";
-	index.add(text, 1);
+	index.add("text", text, 1);
 	
 	for(String word:index) {
 	    System.out.println(word);
 	}
     }
 }
+
 // java.lang.IllegalArgumentException: A SPI class of type
 // org.apache.lucene.analysis.util.TokenFilterFactory with name 'html' does not
 // exist. You need to add the corresponding JAR file supporting this SPI to your

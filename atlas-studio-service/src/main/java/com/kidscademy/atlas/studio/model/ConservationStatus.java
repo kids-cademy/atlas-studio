@@ -1,6 +1,8 @@
 package com.kidscademy.atlas.studio.model;
 
-public enum ConservationStatus {
+import js.lang.Displayable;
+
+public enum ConservationStatus implements Displayable {
     /**
      * Least Concern. Lowest risk; does not qualify for a higher risk category.
      * Widespread and abundant taxa are included in this category.
@@ -33,7 +35,8 @@ public enum ConservationStatus {
 	this.display = display;
     }
 
-    public String display() {
+    @Override
+    public String toDisplay() {
 	return display;
     }
 

@@ -15,7 +15,7 @@ public class ExportLink {
 
     public ExportLink(Link link) {
 	this.url = link.getUrl();
-	this.display = link.getDisplay();
+	this.display = link.toDisplay();
 	this.description = link.getDescription();
 	this.iconPath = Strings.concat("link/", link.getIconName());
     }
