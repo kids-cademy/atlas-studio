@@ -8,32 +8,32 @@
 			<img src="@image/action/identity" />
 		</div>
 		<div class="container">
-			<div>
-				<label>rank</label> <input name="rank" class="mini optional" />
+			<div class="controlset">
+				<label>rank</label><input name="rank" class="mini optional" />
 			</div>
-			<div>
-				<label>name</label> <input name="name" />
+			<div class="controlset">
+				<label>name</label><input name="name" />
 			</div>
-			<div>
-				<label>display</label> <input name="display" />
+			<div class="controlset">
+				<label>display</label><input name="display" />
 			</div>
-			<div>
-				<label>aliases</label> <input name="aliases" class="optional" data-class="com.kidscademy.form.AliasesControl" />
+			<div class="controlset">
+				<label>aliases</label><input name="aliases" class="optional" data-class="com.kidscademy.form.AliasesControl" />
 			</div>
-			<div data-name="start-date" data-class="com.kidscademy.form.HDateControl">
-				<label>start date</label><input name="value" class="mini optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
+			<div class="controlset" data-name="start-date" data-class="com.kidscademy.form.HDateControl">
+				<label>start date</label><input name="value" class="small optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
 			</div>
-			<div data-name="end-date" data-class="com.kidscademy.form.HDateControl">
-				<label>end date</label><input name="value" class="mini optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
+			<div class="controlset" data-name="end-date" data-class="com.kidscademy.form.HDateControl">
+				<label>end date</label><input name="value" class="small optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
 			</div>
-			<div>
-				<label>state</label> <select name="state">
+			<div class="controlset">
+				<label>state</label><select name="state">
 					<option selected="selected">DEVELOPMENT</option>
 					<option>PUBLISHED</option>
 				</select>
 			</div>
-			<div>
-				<label>conservation status</label> <select name="conservation" class="optional">
+			<div class="controlset">
+				<label>conservation status</label><select name="conservation" class="optional">
 					<option selected="selected"></option>
 					<option value="LC">Least Concern</option>
 					<option value="NT">Near Threatened</option>

@@ -524,6 +524,25 @@ public class AtlasDaoTest {
 	assertThat(image.getHeight(), equalTo(96));
     }
 
+    @Test
+    public void getNextAtlasObject() throws MalformedURLException {
+	AtlasObject object = dao.getNextAtlasObject(0);
+	assertThat(object, notNullValue());
+	assertAtlasObject(object);
+
+	object = dao.getNextAtlasObject(object.getId());
+	assertThat(object.getName(), equalTo("eagle"));
+	
+	object = dao.getNextAtlasObject(object.getId());
+	assertThat(object.getName(), equalTo("bandoneon"));
+	
+	object = dao.getNextAtlasObject(object.getId());
+	assertThat(object.getName(), equalTo("cimbalom"));
+	
+	object = dao.getNextAtlasObject(object.getId());
+	assertThat(object, nullValue());
+    }
+
     // ----------------------------------------------------------------------------------------------
 
     private static MediaSRC src(String objectName, String mediaFile) {

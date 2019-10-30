@@ -72,4 +72,7 @@
 
 	<captcha-reload>reload images puzzle</captcha-reload>
 	<captcha-help>captcha help not yet implemented</captcha-help>
+	
+	<search-submit>perform search by criteria from search input</search-submit>
+	<search-reset>reset search input</search-reset>
 </tip>

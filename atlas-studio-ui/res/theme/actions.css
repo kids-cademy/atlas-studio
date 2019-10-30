@@ -4,8 +4,10 @@
 	border-top: solid 1px white;
 }
 
-.actions img {
+.actions img, .action {
 	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
 	width: @dimen/action-icon-size;
 	height: @dimen/action-icon-size;
 	margin-right: @dimen/action-margin;
@@ -15,7 +17,7 @@
 	cursor: pointer;
 }
 
-.actions img.hidden {
+.actions img.hidden, .action.hidden {
 	display: none;
 }
 

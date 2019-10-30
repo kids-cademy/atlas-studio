@@ -39,19 +39,19 @@ public class SearchIndexProcessor {
 	return directIndex;
     }
 
-    public List<SearchIndex<Integer>> updateSearchIndex() throws IOException {
+    public List<KeywordIndex<Integer>> updateSearchIndex() throws IOException {
 	return createSearchIndex(directIndices);
     }
 
-    private static List<SearchIndex<Integer>> createSearchIndex(List<DirectIndex<Integer>> directIndices)
+    public static List<KeywordIndex<Integer>> createSearchIndex(List<DirectIndex<Integer>> directIndices)
 	    throws IOException {
-	Map<String, SearchIndex<Integer>> invertedIndexMap = new HashMap<>();
+	Map<String, KeywordIndex<Integer>> invertedIndexMap = new HashMap<>();
 
 	for (DirectIndex<Integer> directIndex : directIndices) {
 	    for (String word : directIndex) {
-		SearchIndex<Integer> searchIndex = invertedIndexMap.get(word);
+		KeywordIndex<Integer> searchIndex = invertedIndexMap.get(word);
 		if (searchIndex == null) {
-		    searchIndex = new SearchIndex<Integer>(word);
+		    searchIndex = new KeywordIndex<Integer>(word);
 		    invertedIndexMap.put(word, searchIndex);
 		}
 		searchIndex.setKeywordRelevance(directIndex.getRelevance(word));
@@ -59,15 +59,15 @@ public class SearchIndexProcessor {
 	    }
 	}
 
-	List<SearchIndex<Integer>> invertedIndex = new ArrayList<>(invertedIndexMap.values());
-	Collections.sort(invertedIndex, new Comparator<SearchIndex<Integer>>() {
+	List<KeywordIndex<Integer>> invertedIndex = new ArrayList<>(invertedIndexMap.values());
+	Collections.sort(invertedIndex, new Comparator<KeywordIndex<Integer>>() {
 	    @Override
-	    public int compare(SearchIndex<Integer> left, SearchIndex<Integer> right) {
+	    public int compare(KeywordIndex<Integer> left, KeywordIndex<Integer> right) {
 		return left.compareTo(right);
 	    }
 	});
 
-	for (SearchIndex<Integer> searchIndex : invertedIndex) {
+	for (KeywordIndex<Integer> searchIndex : invertedIndex) {
 	    searchIndex.update();
 	}
 

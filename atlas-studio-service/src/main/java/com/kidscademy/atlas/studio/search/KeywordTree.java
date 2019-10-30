@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import js.lang.BugError;
+import js.util.Params;
 
 /**
  * This immutable tree map uses a single char as key and is optimized for value
@@ -91,6 +92,7 @@ public class KeywordTree<V extends Keyword> {
     }
 
     public List<V> find(String prefix, int count) {
+	Params.notNull(prefix, "Prefix");
 	List<V> indices = new ArrayList<>();
 	if (prefix.isEmpty()) {
 	    return indices;

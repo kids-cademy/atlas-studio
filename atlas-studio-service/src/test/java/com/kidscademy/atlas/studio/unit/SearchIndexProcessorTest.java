@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.search.DirectIndex;
-import com.kidscademy.atlas.studio.search.SearchIndex;
+import com.kidscademy.atlas.studio.search.KeywordIndex;
 import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -73,7 +73,7 @@ public class SearchIndexProcessorTest {
 	processor.createDirectIndex(object1);
 	processor.createDirectIndex(object2);
 
-	List<SearchIndex<Integer>> index = processor.updateSearchIndex();
+	List<KeywordIndex<Integer>> index = processor.updateSearchIndex();
 
 	assertThat(index, notNullValue());
 	assertThat(index, hasSize(4));

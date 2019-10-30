@@ -2,7 +2,8 @@ package com.kidscademy.atlas.studio.search;
 
 import java.io.IOException;
 
-import js.tools.commons.util.Params;
+import js.util.Params;
+
 
 /**
  * Create direct index for an object of a specified type.

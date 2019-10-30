@@ -73,6 +73,56 @@ ul.list-view li h3, ul.list-view li h4 {
 	color: black;
 }
 
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* CARD VIEW */ 
+
+.card-view {
+}
+
+ul.card-view {
+	list-style: none;
+}
+
+ul.card-view li {
+	list-style: none;
+	display: inline-block;
+	position: relative;
+	width: 400px;
+	margin: 10px;
+	padding: 12px;
+	background-color: #f0ffff;
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #41b5bd);
+}
+
+ul.card-view li img {
+	float: left;
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px #41b5bd;
+	margin-right: 12px;
+	margin-bottom: 12px;
+	cursor: pointer;
+}
+
+ul.card-view li h4 {
+	padding-bottom: 4px;
+	border-bottom: solid 1px #41b5bd;
+}
+
+ul.card-view li p {
+	display: block;
+	clear: both;
+	position: relative;
+	height: 66px;
+	line-height: 22px;
+	margin-top: 40px;
+	overflow: hidden;
+	font-size: 16px;
+	color: #606060;
+}
+
 /* ------------------------------------------------------------------------------------------------ */ 
 /* SIDE MENU */ 
 

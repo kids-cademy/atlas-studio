@@ -1,5 +1,39 @@
-input[type="text"].small, input[type="file"].small, input[type="password"].small {
-	width: 80px;
+input {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 600px;
+	max-width: 700px;
+	height: @dimen/input-height;
+	line-height: @dimen/input-height;
+	padding: @dimen/input-padding;
+	background: 0;
+	border: solid 1px #76be76;
+	font-size: 18px;
+}
+
+input.with-actions {
+	height: @dimen/action-icon-size;
+	line-height: @dimen/action-icon-size;
+	margin-right: @dimen/action-margin;
+}
+
+input[disabled] {
+	color: green;
+}
+
+input.large {
+	width: 800px;
+	max-width: 800px;
+}
+
+input.medium {
+	width: 380px;
+	margin-right: 20px;
+}
+
+input.small {
+	width: 180px;
+	margin-right: 20px;
 }
 
 input[type="radio"] {
@@ -28,16 +62,36 @@ input[data-type="time"] {
 	width: 60px;
 }
 
+::-webkit-input-placeholder {
+  color: @color/placeholder;
+}
+
+::-moz-placeholder {
+  color: @color/placeholder;
+}
+
+:-ms-input-placeholder {
+  color: @color/placeholder;
+}
+
+::-ms-input-placeholder {
+  color: @color/placeholder;
+}
+
+/* put standard placeholder syntax after proprietary */
+:placeholder-shown { 
+  color: @color/placeholder;
+}
+
 select {
-	xwidth: 500px;
-	font-size: 18px;
-	padding: 2px 2px 2px 8px;
-	xmargin-bottom: 6px;
-	margin-top: 20px;
-	height: 34px;
-	border-radius: 3px;
+	display: inline-block;
+	box-sizing: border-box;
+	height: @dimen/input-height;
+	line-height: @dimen/input-height;
+	padding: @dimen/input-padding;
 	background: 0;
 	border: solid 1px #76be76;
+	font-size: 18px;
 }
 
 .gecko select {
@@ -54,20 +108,29 @@ select option {
 }
 
 textarea {
+	box-sizing: border-box;
+	width: 800px;
+	max-width: 1100px;
+	height: 400px;
+	min-height: 200px;
+	padding: @dimen/input-padding;
+	overflow:auto;
 	font-size: 18px;
-	width: 500px;
-	height: 120px;
-	padding: 2px 8px;
-	margin-bottom: 6px;
-	overflow: hidden;
-	padding: 2px 8px;
-	border-radius: 3px;
+	line-height: 22px;
+	background: 0;
+	border: solid 1px #76be76;
+	resize: none;
 }
 
-input, textarea, select {
-	xborder: solid 1px @color/control-border;
-	xbackground: @color/control-background;
-	margin-right: 6px;
+textarea.auto-size {
+	height: 22px;
+	min-height: 22px;
+	overflow: hidden; 
+}
+
+textarea.mini {
+	height: 100px;
+	min-height: 100px;
 }
 
 input:hover, textarea:hover, select:hover {

@@ -38,11 +38,14 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 
+import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.util.Classes;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminServiceTest {
+    @Mock
+    AppContext context;
     @Mock
     private AtlasDao atlasDao;
     @Mock
@@ -68,9 +71,12 @@ public class AdminServiceTest {
     }
 
     @Before
-    public void beforeTest() {
-	service = new AtlasServiceImpl(atlasDao, taxonomyDao, audioProcessor, imageProcessor, wikipedia, softSchools, freeDictionary,
-		cambridgeDictionary);
+    public void beforeTest() throws IOException {
+	when(context.getAppFile("search-index"))
+		.thenReturn(new File("fixture/tomcat/work/Applications/test-app/search-index"));
+
+	service = new AtlasServiceImpl(context, atlasDao, taxonomyDao, audioProcessor, imageProcessor, wikipedia,
+		softSchools, freeDictionary, cambridgeDictionary);
 	file("sample.mp3").delete();
 	file("sample_1.mp3").delete();
 	file("sample_2.mp3").delete();
@@ -265,6 +271,11 @@ public class AdminServiceTest {
 	assertFalse(file("waveform.png").exists());
     }
 
+    @Test 
+    public void updateSearchIndex() throws NoSuchMethodException, IOException {
+	service.updateIndex();
+    }
+    
     // ----------------------------------------------------------------------------------------------
 
     private static AtlasItem atlasItem() {

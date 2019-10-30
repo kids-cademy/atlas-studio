@@ -47,10 +47,10 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		const objectId = li.getAttr("id");
 
 		if (ev.ctrlKey) {
-			this._moveToPage("reader.htm", objectId);
+			this._moveToPage("@link/reader", objectId);
 		}
 		else {
-			this._moveToPage("form.htm", objectId);
+			this._moveToPage("@link/form", objectId);
 		}
 	}
 

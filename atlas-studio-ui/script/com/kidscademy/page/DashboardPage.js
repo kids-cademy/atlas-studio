@@ -32,7 +32,7 @@ com.kidscademy.page.DashboardPage = class extends com.kidscademy.page.Page {
 		const collection = li.getUserData();
 		// store selected collection on global context to make it accessible to all descendant pages
 		this.setContextAttr("collection", collection);
-		WinMain.assign("collection.htm");
+		WinMain.assign("@link/collection");
 	}
 
 	_onNewCollection() {

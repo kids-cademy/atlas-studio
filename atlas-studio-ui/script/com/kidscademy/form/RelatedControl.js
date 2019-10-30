@@ -35,7 +35,7 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	setValue(names) {
 		const collectionId = this._formPage.getCollection().id;
 		AtlasService.getRelatedAtlasObjects(collectionId, names, objects => {
-			objects.forEach(object => object.href = `@link/admin-object?id=${object.id}`);
+			objects.forEach(object => object.href = `@link/form?id=${object.id}`);
 			this._relatedView.setObject(objects);
 		});
 	}

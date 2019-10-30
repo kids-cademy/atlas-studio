@@ -81,4 +81,8 @@ public interface AtlasDao {
      * @return atlas object image or null.
      */
     Image getImageByKey(int objectId, String imageKey);
+
+    AtlasObject getNextAtlasObject(int objectId);
+
+    List<AtlasItem> getAtlasItems(List<Integer> objectIds);
 }

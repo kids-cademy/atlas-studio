@@ -983,6 +983,58 @@ com.kidscademy.atlas.studio.AtlasService = {
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removeAudioSample");
 		rmi.setParameters(object);
 		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Update index.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @throws java.lang.NoSuchMethodException
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 updateIndex: function() {
+		var __callback__ = arguments[0];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#updateIndex", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#updateIndex", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "updateIndex");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Search.
+	 *
+	 * @param java.lang.String criterion,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.Set<com.kidscademy.atlas.studio.model.AtlasItem>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 search: function(criterion) {
+		$assert(typeof criterion !== "undefined", "com.kidscademy.atlas.studio.AtlasService#search", "Criterion argument is undefined.");
+		$assert(criterion === null || js.lang.Types.isString(criterion), "com.kidscademy.atlas.studio.AtlasService#search", "Criterion argument is not a string.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#search", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#search", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "search");
+		rmi.setParameters(criterion);
+		rmi.exec(__callback__, __scope__);
 	}
 };
 

@@ -1,13 +1,18 @@
 package com.kidscademy.atlas.studio.impl;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
@@ -21,6 +26,12 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.search.DirectIndex;
+import com.kidscademy.atlas.studio.search.KeywordIndex;
+import com.kidscademy.atlas.studio.search.KeywordTree;
+import com.kidscademy.atlas.studio.search.ObjectFields;
+import com.kidscademy.atlas.studio.search.ObjectIndexer;
+import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
@@ -33,16 +44,23 @@ import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 import com.kidscademy.atlas.studio.www.WikipediaPageSummary;
 
+import js.json.Json;
 import js.lang.BugError;
+import js.lang.GType;
 import js.log.Log;
 import js.log.LogFactory;
 import js.rmi.BusinessException;
+import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.tiny.container.http.form.UploadedFile;
+import js.util.Classes;
 import js.util.Params;
 
 public class AtlasServiceImpl implements AtlasService {
     private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
+
+    private final AppContext context;
+    private final Json json;
 
     private final AtlasDao atlasDao;
     private final TaxonomyDao taxonomyDao;
@@ -53,11 +71,17 @@ public class AtlasServiceImpl implements AtlasService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
 
-    public AtlasServiceImpl(AtlasDao atlasDao, TaxonomyDao taxonomyDao, AudioProcessor audioProcessor,
-	    ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
-	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) {
+    private KeywordTree<KeywordIndex<Integer>> index;
+
+    public AtlasServiceImpl(AppContext context, AtlasDao atlasDao, TaxonomyDao taxonomyDao,
+	    AudioProcessor audioProcessor, ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
+	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) throws IOException {
 	log.trace(
-		"AtlasServiceImpl(AtlasDao,TaxonomyDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
+		"AtlasServiceImpl(AppContext, AtlasDao,TaxonomyDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
+
+	this.context = context;
+	this.json = Classes.loadService(Json.class);
+
 	this.atlasDao = atlasDao;
 	this.taxonomyDao = taxonomyDao;
 	this.audioProcessor = audioProcessor;
@@ -66,6 +90,17 @@ public class AtlasServiceImpl implements AtlasService {
 	this.softSchools = softSchools;
 	this.freeDictionary = freeDictionary;
 	this.cambridgeDictionary = cambridgeDictionary;
+
+	File file = context.getAppFile("search-index");
+	List<KeywordIndex<Integer>> searchIndex;
+	if (file.exists()) {
+	    searchIndex = json.parse(new FileReader(file),
+		    new GType(List.class, new GType(KeywordIndex.class, Integer.class)));
+	} else {
+	    searchIndex = Collections.emptyList();
+	}
+
+	this.index = new KeywordTree<>(searchIndex);
     }
 
     @Override
@@ -476,5 +511,45 @@ public class AtlasServiceImpl implements AtlasService {
 	File waveformFile = Files.mediaFile(waveformSrc);
 	audioProcessor.generateWaveform(audioFile, waveformFile);
 	return waveformSrc;
+    }
+
+    @Override
+    public void updateIndex() throws NoSuchMethodException, IOException {
+	ObjectFields<AtlasObject> fields = new ObjectFields<>(AtlasObject.class);
+	fields.addField("description");
+	fields.addField("facts");
+	fields.addField("definition");
+	fields.addField("sampleTitle");
+	fields.addField("spreading");
+	fields.addField("conservation");
+	fields.addField("taxonomy");
+	fields.addField("related");
+	fields.addField("aliases");
+	fields.addField("display");
+
+	ObjectIndexer<AtlasObject, Integer> indexer = new ObjectIndexer<>(fields);
+	List<DirectIndex<Integer>> indices = new ArrayList<>();
+
+	AtlasObject object = new AtlasObject();
+	while ((object = atlasDao.getNextAtlasObject(object.getId())) != null) {
+	    log.debug("Create direct index for |%s|.", object.getName());
+	    indices.add(indexer.scanObject(object, object.getId()));
+	}
+
+	List<KeywordIndex<Integer>> searchIndex = SearchIndexProcessor.createSearchIndex(indices);
+
+	File file = context.getAppFile("search-index");
+	json.stringify(new FileWriter(file), searchIndex);
+
+	index = new KeywordTree<>(searchIndex);
+    }
+
+    @Override
+    public Set<AtlasItem> search(String criterion) {
+	Set<AtlasItem> items = new LinkedHashSet<>();
+	for (KeywordIndex<Integer> keywordIndex : index.find(criterion)) {
+	    items.addAll(atlasDao.getAtlasItems(keywordIndex.getObjectKeys()));
+	}
+	return items;
     }
 }

@@ -3,6 +3,7 @@ package com.kidscademy.atlas.studio;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -243,4 +244,8 @@ public interface AtlasService {
      *             if processing fail.
      */
     void removeAudioSample(AtlasItem object) throws IOException;
+
+    void updateIndex() throws NoSuchMethodException, IOException;
+
+    Set<AtlasItem> search(String criterion);
 }

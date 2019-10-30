@@ -1,0 +1,15 @@
+.circle {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	right: 20px;
+	bottom: 20px;
+	xborder: solid 1px #41b5bd;
+	background-color: #FFFFFF20;
+	radius: 50%;
+	z-index: 0;
+}
+
+.circle.solid {
+	
+}

@@ -3,7 +3,9 @@
 	<logo-type>kids (a)cademy</logo-type>
 	<slogan>learn by playing</slogan>
 
+	<dashboard>dashboard</dashboard>
 	<collection>collection</collection>
+	<search>search</search>
 	<account>account</account>
 	<media>media</media>
 	<logout>Logout</logout>

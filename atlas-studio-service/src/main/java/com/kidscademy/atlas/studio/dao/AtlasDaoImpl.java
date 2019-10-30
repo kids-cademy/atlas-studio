@@ -171,4 +171,18 @@ public class AtlasDaoImpl implements AtlasDao {
 		.setParameter("key", imageKey).getResultList();
 	return images.isEmpty() ? null : images.get(0);
     }
+
+    @Override
+    public AtlasObject getNextAtlasObject(int objectId) {
+	String jpql = "select o from AtlasObject o where o.id>?1 order by o.id asc";
+	List<AtlasObject> objects = em.createQuery(jpql, AtlasObject.class).setParameter(1, objectId).setMaxResults(1)
+		.getResultList();
+	return objects.isEmpty() ? null : objects.get(0);
+    }
+
+    @Override
+    public List<AtlasItem> getAtlasItems(List<Integer> objectIds) {
+	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class)
+		.setParameter("ids", objectIds).getResultList();
+    }
 }

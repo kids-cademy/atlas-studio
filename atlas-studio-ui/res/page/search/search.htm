@@ -1,0 +1,30 @@
+<div class="search" w:template="page/template#body" xmlns:w="js-lib.com/wood">
+	<section>
+		<form>
+			<input name="search-input" class="with-actions" />
+			<img name="search-submit" src="@image/action/search" class="action" title="@tip/search-submit" />
+			<img name="search-reset" src="@image/action/close" class="action" title="@tip/search-reset" />
+		</form>
+		<div class="buttons-bar hidden">
+			<button name="search-button">submit</button>
+		</div>
+	</section>
+
+	<section>
+		<ul class="card-view search-result" data-list=".">
+			<li data-id="id">
+				<div class="circle small"></div>
+				<div class="circle solid"></div>
+				<img data-src="iconSrc" data-default="@image/default-icon" />
+				<h4 data-text="display"></h4>
+				<p data-text="definition"></p>
+			</li>
+		</ul>
+	</section>
+</div>
+
+<div class="account" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
+	<ul class="side-menu actions">
+		<li data-name="update-index"><img src="@image/action/update-index" />Update Index</li>
+	</ul>
+</div>
