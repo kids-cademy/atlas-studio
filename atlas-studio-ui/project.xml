@@ -11,17 +11,9 @@
 	<naming-strategy>XMLNS</naming-strategy>
 	<script-dependency-strategy>DESCRIPTOR</script-dependency-strategy>
 
-	<analytics>UA-69260432-1</analytics>
-	<facebook>394593050887474</facebook>
-
 	<metas>
 		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<meta property="og:url" content="http://kids-cademy.com" />
-		<meta property="og:title" content="kids (a)cademy is an educational ecosystem targeted at children of all ages." />
-		<meta property="og:image" content="http://kids-cademy.com/media/asset_facebook-sharing.png" />
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="kids (a)cademy" />
 	</metas>
 
 	<fonts>

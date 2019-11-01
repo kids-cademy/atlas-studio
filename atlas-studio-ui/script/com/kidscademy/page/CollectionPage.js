@@ -60,10 +60,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		WinMain.assign(pageName);
 	}
 
-	_onBack() {
-		WinMain.assign("dashboard.htm");
-	}
-
 	/**
 	 * Class string representation.
 	 * 

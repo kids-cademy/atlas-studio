@@ -33,19 +33,22 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 
 	_onItemClick(ev) {
 		const li = ev.target.getParentByTag("li");
-		const objectId = li.getAttr("id");
+		if (li == null) {
+			return;
+		}
+		const object = li.getUserData();
 
 		if (ev.ctrlKey) {
-			this._moveToPage("@link/reader", objectId);
+			this._moveToPage("@link/reader", object);
 		}
 		else {
-			this._moveToPage("@link/form", objectId);
+			this._moveToPage("@link/form", object);
 		}
 	}
 
-	_moveToPage(pageName, objectId) {
-		// store selected object ID on global context to make it available to next pages
-		this.setContextAttr("objectId", objectId);
+	_moveToPage(pageName, object) {
+		this.setContextAttr("collection", object.collection);
+		this.setContextAttr("objectId", object.id);
 		WinMain.assign(pageName);
 	}
 

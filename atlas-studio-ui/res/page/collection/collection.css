@@ -112,6 +112,10 @@
 	background-color: @color/cyan-50;
 }
 
+.collection .list-view li img {
+	border-color: #f74498;
+}
+
 .collection .list-view li.published img {
-	border-color: green;
+	border-color: #1985e2;
 }

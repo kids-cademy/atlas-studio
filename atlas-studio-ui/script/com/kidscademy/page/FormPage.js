@@ -197,7 +197,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			});
 			return;
 		}
-		WinMain.assign("collection.htm");
+		super._onBack();
 	}
 
 	_onPreUnload(ev) {

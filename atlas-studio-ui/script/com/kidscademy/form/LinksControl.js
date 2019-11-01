@@ -29,6 +29,9 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		this._linksView.on("click", this._onLinksViewClick, this);
 
 		this._editor = this.getByCssClass("editor");
+		this._urlInput = this._editor.getByName("url");
+		this._urlInput.on("paste", this._onUrlPaste, this);
+		this._descriptionInput = this._editor.getByName("description");
 		this._formData = this.getByClass(com.kidscademy.FormData);
 
 		/**
@@ -144,6 +147,25 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		}
 	}
 
+	_onUrlPaste(ev) {
+		const objectDisplay = this._formPage.getObject().display;
+		if (!objectDisplay) {
+			js.ua.System.alert("@string/object-no-display");
+			return;
+		}
+
+		const url = ev.getData();
+		const domain = /^(?:http|https|ftp|file):\/\/(?:[^.]+\.)*([^.]+\.[^:/]+).*$/.exec(url)[1];
+		if (!domain) {
+			return;
+		}
+
+		const descriptionHandler = com.kidscademy.form.LinksControl.DomainDescription[domain];
+		if (descriptionHandler) {
+			descriptionHandler(url, objectDisplay, (description) => this._descriptionInput.setValue(description));
+		}
+	}
+
 	/**
 	 * Class string representation.
 	 * 
@@ -151,5 +173,41 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	 */
 	toString() {
 		return "com.kidscademy.form.LinksControl";
+	}
+};
+
+com.kidscademy.form.LinksControl.DomainDescription = {
+	"wikipedia.org": function (url, object, callback) {
+		callback(`Wikipedia article about ${object.toLowerCase()}.`);
+	},
+
+	"britannica.com": function (url, object, callback) {
+		callback(`${object} article on Britannica.`);
+	},
+
+	"thefreedictionary.com": function (url, object, callback) {
+		callback(`${object} definition on dictionary.`);
+	},
+
+	"youtube.com": function (url, object, callback) {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', `https://noembed.com/embed?url=${url}`);
+		xhr.onload = () => {
+			if (xhr.response) {
+				const response = JSON.parse(xhr.response);
+				if (response.title) {
+					callback(response.title);
+				}
+			}
+		};
+		xhr.send();
+	},
+
+	"kiddle.co": function (url, object, callback) {
+		callback(`${object} facts for kids.`);
+	},
+
+	"wikihow.com": function (url, object, callback) {
+		AtlasService.getWikiHowTitle(url, callback);
 	}
 };

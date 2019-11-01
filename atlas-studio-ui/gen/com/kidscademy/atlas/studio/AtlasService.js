@@ -1035,6 +1035,33 @@ com.kidscademy.atlas.studio.AtlasService = {
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "search");
 		rmi.setParameters(criterion);
 		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Get wiki how title.
+	 *
+	 * @param java.net.URL url,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.lang.String
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getWikiHowTitle: function(url) {
+		$assert(typeof url !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getWikiHowTitle", "Url argument is undefined.");
+		$assert(url === null || js.lang.Types.isString(url), "com.kidscademy.atlas.studio.AtlasService#getWikiHowTitle", "Url argument is not a string.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getWikiHowTitle", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getWikiHowTitle", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getWikiHowTitle");
+		rmi.setParameters(url);
+		rmi.exec(__callback__, __scope__);
 	}
 };
 

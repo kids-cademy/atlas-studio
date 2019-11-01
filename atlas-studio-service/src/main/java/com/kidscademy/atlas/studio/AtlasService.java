@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -248,4 +249,6 @@ public interface AtlasService {
     void updateIndex() throws NoSuchMethodException, IOException;
 
     Set<AtlasItem> search(String criterion);
+
+    String getWikiHowTitle(URL url);
 }

@@ -58,7 +58,7 @@ ul.list-view li img {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
-	border: solid 2px #E6E6E6;
+	border: solid 1px #E6E6E6;
 	cursor: pointer;
 }
 
@@ -91,8 +91,13 @@ ul.card-view li {
 	width: 400px;
 	margin: 10px;
 	padding: 12px;
-	background-color: #f0ffff;
-	background: radial-gradient(circle at 30% 50%, #FFFFFF, #41b5bd);
+	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
+	border: solid 1px #f779b4;
+}
+
+ul.card-view li.published {
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
+	border: solid 1px #76b0e2;
 }
 
 ul.card-view li img {
@@ -100,15 +105,25 @@ ul.card-view li img {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
-	border: solid 1px #41b5bd;
+	border: solid 1px #f779b4;
 	margin-right: 12px;
 	margin-bottom: 12px;
 	cursor: pointer;
 }
 
+ul.card-view li.published img {
+	border-color: #5aa3e2
+}
+
 ul.card-view li h4 {
 	padding-bottom: 4px;
-	border-bottom: solid 1px #41b5bd;
+	border-bottom: solid 1px #f779b4;
+	color: #f74498;
+}
+
+ul.card-view li.published h4 {
+	border-color: #5aa3e2;
+	color: #1985e2;
 }
 
 ul.card-view li p {
@@ -120,7 +135,23 @@ ul.card-view li p {
 	margin-top: 40px;
 	overflow: hidden;
 	font-size: 16px;
-	color: #606060;
+	color: #c6005d;
+}
+
+ul.card-view li.published p {
+	color: #005eaf;
+}
+
+ul.card-view .circle {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	right: 20px;
+	bottom: 20px;
+	xborder: solid 1px #41b5bd;
+	background-color: #FFFFFF20;
+	radius: 50%;
+	z-index: 0;
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 

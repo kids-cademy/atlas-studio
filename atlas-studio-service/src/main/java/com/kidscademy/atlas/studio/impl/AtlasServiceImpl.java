@@ -41,6 +41,7 @@ import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
+import com.kidscademy.atlas.studio.www.WikiHow;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 import com.kidscademy.atlas.studio.www.WikipediaPageSummary;
 
@@ -551,5 +552,11 @@ public class AtlasServiceImpl implements AtlasService {
 	    items.addAll(atlasDao.getAtlasItems(keywordIndex.getObjectKeys()));
 	}
 	return items;
+    }
+
+    @Override
+    public String getWikiHowTitle(URL url) {
+	WikiHow wikiHow = context.getInstance(WikiHow.class);
+	return wikiHow.getTitle(url.getPath());
     }
 }

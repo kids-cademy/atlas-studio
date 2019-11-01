@@ -4,7 +4,7 @@
 	border-top: solid 1px white;
 }
 
-.actions img, .action {
+.actions img {
 	display: inline-block;
 	box-sizing: border-box;
 	vertical-align: top;
@@ -17,7 +17,7 @@
 	cursor: pointer;
 }
 
-.actions img.hidden, .action.hidden {
+.actions img.hidden {
 	display: none;
 }
 
@@ -25,7 +25,7 @@
 	float: right;
 }
 
-.actions img:hover, .action:hover {
+.actions img:hover {
 	opacity: 0.6;
 }
 
