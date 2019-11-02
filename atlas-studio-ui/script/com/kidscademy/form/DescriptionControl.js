@@ -5,8 +5,6 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		super(ownerDoc, node);
 
 		this._textarea = this.getByTag("textarea");
-		this._textarea.on("change", this._onChange, this);
-
 		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
 
 		/**
@@ -17,7 +15,6 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	}
 
 	addParagraph(paragraph) {
-		this._setDirty();
 		var description = this._textarea.getValue();
 		if (!description) {
 			this._textarea.setValue(paragraph);
@@ -55,14 +52,26 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
+	_onImport() {
+		if (!this.getValue()) {
+			this._doImport();
+			return;
+		}
+
+		js.ua.System.confirm("@string/confirm-description-overwrite", ok => {
+			if (ok) {
+				this._doImport();
+			}
+		});
+	}
+
 	/**
 	 * Import description from a provider link. 
 	 * 
 	 * Get from parent page all links that provides description. Alert if there is none. 
 	 * If there are more than one link display them and let user choose one.
 	 */
-	_onImport() {
-		this._setDirty();
+	_doImport() {
 		const load = (link) => {
 			AtlasService.importObjectDescription(link, description => {
 				description = description.replace(/<p>/g, "").replace(/<\/p>/g, "\n\n");
@@ -94,13 +103,11 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	}
 
 	_onInsertPicture() {
-		this._setDirty();
 	}
 
 	_onRemoveAll() {
 		js.ua.System.confirm("@string/confirm-description-remove", ok => {
 			if (ok) {
-				this._setDirty();
 				this._textarea.reset();
 			}
 		});
@@ -108,12 +115,6 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 
 	_onClose() {
 		this._linksSelect.close();
-	}
-
-	// --------------------------------------------------------------------------------------------
-
-	_onChange(ev) {
-		this._setDirty();
 	}
 
 	/**

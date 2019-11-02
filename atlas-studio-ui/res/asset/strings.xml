@@ -22,6 +22,7 @@
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
 	<confirm-definition-remove>Please confirm object definition remove.</confirm-definition-remove>
 	<no-definition-provider>No provider link for object definition.</no-definition-provider>
+	<confirm-description-overwrite>Please confirm atlas object description overwrite.</confirm-description-overwrite>
 	<confirm-description-remove>Please confirm object description remove.</confirm-description-remove>
 	<no-description-provider>No provider link for object description.</no-description-provider>
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>

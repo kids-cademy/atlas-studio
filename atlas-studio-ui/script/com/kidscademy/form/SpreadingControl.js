@@ -63,7 +63,6 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 	}
 
 	_onDone(ev) {
-		this._setDirty();
 		if (this._editingRegionIndex === -1) {
 			// not editing mode, that is, add a new region
 			this._regions.push({
@@ -85,7 +84,7 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 	_onRemove(ev) {
 		js.ua.System.confirm("@string/confirm-area-remove", ok => {
 			if (ok) {
-				this._setDirty();
+				this._fireEvent("input");
 				this._regions.splice(this._editingRegionIndex, 1);
 				this._updateRegionsView();
 				this._showEditor(false);

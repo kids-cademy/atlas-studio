@@ -202,8 +202,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	}
 
 	_onDone() {
-		this._setDirty();
-
 		if (this._batchEdit) {
 			this._updateTaxonomyView();
 			if (++this._taxonEditIndex === this._taxonomy.length) {
@@ -220,14 +218,14 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	}
 
 	_onRemove() {
-		this._setDirty();
+		this._fireEvent("input");
 		this._taxonomy[this._taxonEditIndex].value = null;
 		this._taxonomyView.setObject(this._taxonomy);
 		this._onClose();
 	}
 
 	_onRemoveAll() {
-		this._setDirty();
+		this._fireEvent("input");
 		this.setValue(null);
 		this._onClose();
 	}

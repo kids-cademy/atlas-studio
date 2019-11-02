@@ -26,6 +26,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._objectId = Number(this.getContextAttr("objectId"));
 
 		this._form = this.getByClass(com.kidscademy.Form);
+		this._form.on("input", ev => { this._dirty = true });
 		this._sidebar = this.getByCss(".side-bar .header");
 
 		const actions = this.getByCss(".side-bar .actions");

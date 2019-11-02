@@ -140,12 +140,11 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 				else {
 					targetElement.insertBefore(sourceElement);
 				}
-				this._setDirty();
 			}
 			return;
 		}
 		this._relatedView.addChild(this._candidatesView.getByIndex(data.index));
-		this._setDirty();
+		this._fireEvent("input");
 	}
 
 	_onCandidatesViewDrop(ev) {
@@ -155,7 +154,7 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 			return;
 		}
 		this._candidatesView.addChild(this._relatedView.getByIndex(data.index));
-		this._setDirty();
+		this._fireEvent("input");
 	}
 
 	/**

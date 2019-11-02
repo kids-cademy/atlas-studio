@@ -1,6 +1,6 @@
 $package("com.kidscademy.form");
 
-com.kidscademy.form.ImagesControl = class extends js.dom.Control {
+com.kidscademy.form.ImagesControl = class extends com.kidscademy.form.FormControl {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 		this.setAttr("data-list", ".");
@@ -48,7 +48,8 @@ com.kidscademy.form.ImagesControl = class extends js.dom.Control {
 		const images = this.getValue();
 		images[image.imageKey] = image;
 		this.setValue(images);
-	}
+		this._fireEvent("input");
+		}
 
 	updateImage(image) {
 		const element = this.findChild(element => element.getUserData().fileName === image.fileName);
@@ -63,6 +64,7 @@ com.kidscademy.form.ImagesControl = class extends js.dom.Control {
 	removeImage(image) {
 		const element = this.findChild(element => element.getUserData().fileName === image.fileName);
 		element.remove();
+		this._fireEvent("input");
 	}
 
 	isValid() {

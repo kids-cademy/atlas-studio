@@ -117,7 +117,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		formData.append("media-file", ev.target._node.files[0]);
 
 		AtlasService.uploadImage(formData, image => {
-			this._setDirty();
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
 			this._previewImage.setSrc(image.src);
@@ -143,7 +142,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		formData.append("atlas-object-id", object.id);
 
 		AtlasService.uploadImageBySource(formData, image => {
-			this._setDirty();
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
 			this._previewImage.setSrc(image.src);
@@ -152,7 +150,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	_onCloneToIcon() {
 		AtlasService.cloneImageToIcon(this._formPage.getAtlasItem(), this._currentImage, image => {
-			this._setDirty();
 			this._imagesControl.addImage(image);
 			this._onImageSelected(image);
 			
@@ -197,7 +194,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	 * @param {Object} cropInfo crop area info. 
 	 */
 	_onCropUpdate(cropInfo) {
-		this._setDirty();
+		this._fireEvent("input");
 		this._cropInfoView.setObject(cropInfo);
 	}
 
@@ -228,7 +225,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 			default:
 				this._metaFormData.getObject(this._currentImage);
 				AtlasService.commitImage(this._formPage.getAtlasItem(), this._currentImage, image => {
-					this._setDirty();
 					this._metaFormData.hide();
 					this._closeImageEditor();
 					this._imagesControl.updateImage(image);
@@ -238,7 +234,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	_onUndo() {
 		AtlasService.undoImage(this._formPage.getAtlasItem(), this._currentImage, image => {
-			this._setDirty();
+			this._fireEvent("input");
 			--this._transformsCount;
 			this._currentImage = image;
 			this._previewImage.reload(image.src);
@@ -262,7 +258,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		js.ua.System.confirm("@string/confirm-image-remove", answer => {
 			if (answer === true) {
 				AtlasService.removeImage(this._formPage.getAtlasItem(), this._currentImage, () => {
-					this._setDirty();
 					this._closeImageEditor();
 					this._imagesControl.removeImage(this._currentImage);
 				});
@@ -284,7 +279,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	 * @param {Object} image image returned by server.
 	 */
 	_onProcessingDone(image) {
-		this._setDirty();
+		this._fireEvent("input");
 		++this._transformsCount;
 		this._currentImage = image;
 		this._previewImage.reload(image.src);

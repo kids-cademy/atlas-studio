@@ -82,7 +82,6 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 			return;
 		}
 
-		this._setDirty();
 		if (this._editIndex === -1) {
 			// edit index is not set therefore we are in append mode
 			AtlasService.createLink(this._formData.getObject(), link => {
@@ -111,7 +110,6 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		}
 		js.ua.System.confirm("@string/confirm-link-remove", ok => {
 			if (ok) {
-				this._setDirty();
 				this._links.splice(this._editIndex, 1);
 				this._updateView();
 				this._showEditor(false);

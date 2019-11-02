@@ -131,7 +131,7 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 		}
 		js.ua.System.confirm("@string/confirm-audio-remove", ok => {
 			if (ok) {
-				this._setDirty();
+				this._fireEvent("input");
 				atlasItem.sampleInfo = null;
 				AtlasService.removeAudioSample(atlasItem, () => {
 					this._audioPlayer.resetObject(false);
@@ -144,7 +144,7 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 	// --------------------------------------------------------------------------------------------
 
 	_update(info) {
-		this._setDirty();
+		this._fireEvent("input");
 		this._audioPlayer.setObject(info);
 		this._sampleInfoView.setObject(info);
 	}

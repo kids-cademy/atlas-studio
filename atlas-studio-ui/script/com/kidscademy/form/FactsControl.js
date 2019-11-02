@@ -57,7 +57,7 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	// ACTION HANDLERS
 
 	_onImport() {
-		this._setDirty();
+		this._fireEvent("input");
 		const load = (link) => AtlasService.importObjectsFacts(link, facts => this.setValue(facts));
 
 		const links = this._formPage.getLinks("facts");
@@ -83,7 +83,6 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	}
 
 	_onDone() {
-		this._setDirty();
 		if (this._termOnEdit) {
 			delete this._facts[this._termOnEdit];
 			this._termOnEdit = null;
@@ -109,11 +108,11 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	_onRemove() {
 		js.ua.System.confirm("@string/confirm-fact-remove", ok => {
 			if (ok) {
-				this._setDirty();
 				delete this._facts[this._termInput.getValue()];
 				this._termOnEdit = null;
 				this._factsView.setObject(this._facts);
 				this._showEditor(false);
+				this._fireEvent("input");
 			}
 		});
 	}
@@ -121,10 +120,10 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	_onRemoveAll() {
 		js.ua.System.confirm("@string/confirm-all-facts-remove", ok => {
 			if (ok) {
-				this._setDirty();
 				const object = this._formPage.getObject();
 				this._facts = null;
 				this._factsView.resetObject();
+				this._fireEvent("input");
 			}
 		});
 	}
@@ -149,7 +148,7 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 		this._actions.show(show, "done", "move-to-definition", "move-to-description", "remove", "close");
 		this._editor.show(show);
 		if (show) {
-			this._termInput.focus();
+			this._definitionInput.focus();
 		}
 	}
 

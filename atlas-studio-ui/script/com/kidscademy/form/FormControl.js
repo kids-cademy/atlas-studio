@@ -28,8 +28,9 @@ com.kidscademy.form.FormControl = class extends js.dom.Control {
 
     }
 
-    _setDirty() {
-        this._formPage._dirty = true;
+    _fireEvent(eventName) {
+        const event = new Event(eventName, { bubbles: true });
+        this._node.dispatchEvent(event);
     }
 
 	/**
