@@ -142,6 +142,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private Map<String, String> features;
 
     @ElementCollection
+    @OrderColumn
     private List<Link> links;
 
     @ElementCollection

@@ -11,16 +11,37 @@
 	</section>
 
 	<section>
+		<table>
+			<tbody class="search-result table" data-list=".">
+				<tr>
+					<td><img class="item-icon" data-src="iconSrc" data-default="@image/default-icon" /></td>
+					<td data-text="display"></td>
+					<td>				
+						<ul class="links" data-list="links">
+							<li data-id="id"><img class="link-icon" data-src="iconSrc" data-title="description" /></li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	
+	<!--
+	<section>
 		<ul class="card-view search-result" data-list=".">
-			<li data-id="id" data-css-class="state=PUBLISHED:published">
+			<li class="card" data-id="id" data-css-class="state=PUBLISHED:published">
 				<div class="circle small"></div>
 				<div class="circle solid"></div>
-				<img data-src="iconSrc" data-default="@image/default-icon" />
+				<img class="item-icon" data-src="iconSrc" data-default="@image/default-icon" />
 				<h4 data-text="display"></h4>
 				<p data-text="definition"></p>
+				<ul class="links" data-list="links">
+					<li data-id="id"><img class="link-icon" data-src="iconSrc" data-title="description" /></li>
+				</ul>
 			</li>
 		</ul>
 	</section>
+	-->
 </div>
 
 <div class="account" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">

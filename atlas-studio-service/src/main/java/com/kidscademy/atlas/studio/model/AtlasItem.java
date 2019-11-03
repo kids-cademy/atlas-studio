@@ -1,10 +1,16 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
@@ -21,7 +27,7 @@ public class AtlasItem implements RepositoryObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
     private AtlasCollection collection;
 
@@ -29,7 +35,12 @@ public class AtlasItem implements RepositoryObject {
     private String display;
     private String definition;
     private AtlasObject.State state;
-    
+
+    @ElementCollection
+    @CollectionTable(name = "atlasobject_links", joinColumns = @JoinColumn(name = "atlasobject_ID"))
+    @OrderColumn
+    private List<Link> links;
+
     /**
      * Media file name for object icon. Object icon has a small dimension and has
      * 1:1 ratio; usually is 96x96 pixels. This field is optional and can be null.
@@ -60,6 +71,9 @@ public class AtlasItem implements RepositoryObject {
 	if (iconName != null) {
 	    iconSrc = Files.mediaSrc(this, iconName, "96x96");
 	}
+	for (Link link : links) {
+	    link.postLoad();
+	}
     }
 
     public int getId() {
@@ -67,7 +81,7 @@ public class AtlasItem implements RepositoryObject {
     }
 
     public AtlasCollection getCollection() {
-        return collection;
+	return collection;
     }
 
     @Override
@@ -85,11 +99,11 @@ public class AtlasItem implements RepositoryObject {
     }
 
     public String getDefinition() {
-        return definition;
+	return definition;
     }
 
     public AtlasObject.State getState() {
-        return state;
+	return state;
     }
 
     public String getIconName() {

@@ -11,15 +11,10 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		super(ownerDoc, node);
 
 		/**
-		 * Link objects collection.
-		 * @type {Array}
+		 * Link view currently in edit mode or null.
+		 * @type {js.dom.Element}
 		 */
-		this._links = [];
-
-		/**
-		 * Index on link objects collection for currently edited link, -1 if not in edit mode.
-		 */
-		this._editIndex = -1;
+		this._editLink = null;
 
 		/**
 		 * List view for link objects.
@@ -27,6 +22,9 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		 */
 		this._linksView = this.getByCssClass("list-view");
 		this._linksView.on("click", this._onLinksViewClick, this);
+		this._linksView.on("dragstart", this._onDragStart, this);
+		this._linksView.on("dragover", this._onDragOver, this);
+		this._linksView.on("drop", this._onDrop, this);
 
 		this._editor = this.getByCssClass("editor");
 		this._urlInput = this._editor.getByName("url");
@@ -47,14 +45,15 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	// CONTROL INTERFACE
 
 	setValue(links) {
-		this._links = links;
-		this._updateView();
+		this._linksView.setObject(links);
 		// ensure editor is closed
 		this._showEditor(false);
 	}
 
 	getValue() {
-		return typeof this._links === "undefined" ? [] : this._links;
+		const links = [];
+		this._linksView.getChildren().forEach(linkView => links.push(linkView.getUserData("value")));
+		return links;
 	}
 
 	isValid() {
@@ -65,7 +64,7 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	// ACTION HANDLERS
 
 	_onAdd() {
-		this._editIndex = -1;
+		this._editLink = null;
 		this._showEditor(true);
 		this._formData.reset();
 	}
@@ -82,22 +81,17 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 			return;
 		}
 
-		if (this._editIndex === -1) {
-			// edit index is not set therefore we are in append mode
+		if (this._editLink == null) {
+			// edit link is not set therefore we are in append mode
 			AtlasService.createLink(this._formData.getObject(), link => {
-				this._links.push(link);
-				this._updateView();
+				this._linksView.addObject(link);
 			});
 		}
 		else {
-			// edit index is set therefore we are in edit mode
-			const editLink = this._links[this._editIndex];
+			// edit link is set therefore we are in edit mode
+			// since link URL can be changed need to recreate link and update currently edited link view
 			AtlasService.createLink(this._formData.getObject(), link => {
-				editLink.url = link.url;
-				editLink.name = link.name;
-				editLink.description = link.description;
-				editLink.iconPath = link.iconPath;
-				this._updateView();
+				this._editLink.setObject(link);
 			});
 		}
 
@@ -105,13 +99,12 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	}
 
 	_onRemove() {
-		if (!this._formData.isValid() || this._editIndex === -1) {
+		if (!this._formData.isValid() || this._editLink == null) {
 			return;
 		}
 		js.ua.System.confirm("@string/confirm-link-remove", ok => {
 			if (ok) {
-				this._links.splice(this._editIndex, 1);
-				this._updateView();
+				this._editLink.remove();
 				this._showEditor(false);
 			}
 		});
@@ -122,18 +115,56 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	}
 
 	// --------------------------------------------------------------------------------------------
+	// DRAG AND DROP
 
-	_onLinksViewClick(ev) {
-		const linkView = ev.target.getParentByTag("li");
-		if (linkView != null) {
-			this._editIndex = linkView.getChildIndex();
-			this._showEditor(true);
-			this._formData.setObject(linkView.getUserData());
-		}
+
+	_onDragStart(ev) {
+		const li = ev.target.getParentByTag("li");
+		ev.setData({
+			index: li.getChildIndex()
+		});
 	}
 
-	_updateView() {
-		this._linksView.setObject(this._links);
+	_onDragOver(ev) {
+		ev.prevent();
+	}
+
+	_onDrop(ev) {
+		ev.prevent();
+		const data = ev.getData();
+		const sourceElement = this._linksView.getByIndex(data.index);
+		const targetElement = ev.target.getParentByTag("li");
+
+		if (targetElement == null) {
+			return;
+		}
+		if (targetElement === sourceElement) {
+			return;
+		}
+
+		if (ev.ctrlKey) {
+			const siblingElement = targetElement.getNextSibling();
+			if (siblingElement == null) {
+				targetElement.getParent().addChild(sourceElement);
+			}
+			else {
+				siblingElement.insertBefore(sourceElement);
+			}
+		}
+		else {
+			targetElement.insertBefore(sourceElement);
+		}
+		this._fireEvent("input");
+	}
+
+	// --------------------------------------------------------------------------------------------
+
+	_onLinksViewClick(ev) {
+		this._editLink = ev.target.getParentByTag("li");
+		if (this._editLink != null) {
+			this._showEditor(true);
+			this._formData.setObject(this._editLink.getUserData());
+		}
 	}
 
 	_showEditor(show) {

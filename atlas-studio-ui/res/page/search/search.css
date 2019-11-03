@@ -5,3 +5,31 @@
 .search section {
 	margin-top: 40px;
 }
+
+.search .table {
+	border: solid 1px #CCC;
+}
+
+.search .table td {
+	padding: 4px;
+	border: solid 1px #CCC;
+}
+
+.search .table img {
+	width: 56px;
+	height: 56px;
+	xfilter: grayscale(80%);
+	xopacity: 0.8;
+	padding: 1px;
+	border: solid 1px #5aa3e2;
+	xborder-radius: 50%;
+}
+
+.search .table .links {
+	list-style: none;
+}
+
+.search .table .links li {
+	display: inline-block;
+	margin-right: 10px;
+}

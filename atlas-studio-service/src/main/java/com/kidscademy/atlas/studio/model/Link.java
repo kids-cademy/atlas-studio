@@ -65,7 +65,7 @@ public class Link implements Displayable {
 
     @Transient
     private String iconPath;
-    
+
     public Link() {
     }
 
@@ -172,11 +172,11 @@ public class Link implements Displayable {
     }
 
     public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
+	this.iconPath = iconPath;
     }
 
     public String getIconPath() {
-        return iconPath;
+	return iconPath;
     }
 
     @Override

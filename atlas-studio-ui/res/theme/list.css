@@ -84,7 +84,7 @@ ul.card-view {
 	list-style: none;
 }
 
-ul.card-view li {
+ul.card-view .card {
 	list-style: none;
 	display: inline-block;
 	position: relative;
@@ -95,12 +95,12 @@ ul.card-view li {
 	border: solid 1px #f779b4;
 }
 
-ul.card-view li.published {
+ul.card-view .card.published {
 	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
 	border: solid 1px #76b0e2;
 }
 
-ul.card-view li img {
+ul.card-view .card .item-icon {
 	float: left;
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
@@ -111,22 +111,22 @@ ul.card-view li img {
 	cursor: pointer;
 }
 
-ul.card-view li.published img {
+ul.card-view .card.published .item-icon {
 	border-color: #5aa3e2
 }
 
-ul.card-view li h4 {
+ul.card-view .card h4 {
 	padding-bottom: 4px;
 	border-bottom: solid 1px #f779b4;
 	color: #f74498;
 }
 
-ul.card-view li.published h4 {
+ul.card-view .card.published h4 {
 	border-color: #5aa3e2;
 	color: #1985e2;
 }
 
-ul.card-view li p {
+ul.card-view .card p {
 	display: block;
 	clear: both;
 	position: relative;
@@ -138,8 +138,34 @@ ul.card-view li p {
 	color: #c6005d;
 }
 
-ul.card-view li.published p {
+ul.card-view .card.published p {
 	color: #005eaf;
+}
+
+ul.card-view .card .links {
+	list-style: none;
+	font-size: inherit;
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: solid 1px #a2d6fd;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+ul.card-view .card .links li {
+	display: inline-block;
+	list-style: none;
+	margin-right: 8px;
+}
+
+ul.card-view .card .link-icon {
+	width: 42px;
+	height: 42px;
+	filter: grayscale(80%);
+	opacity: 0.8;
+	padding: 2px;
+	border: solid 1px #5aa3e2;
+	border-radius: 50%;
 }
 
 ul.card-view .circle {
