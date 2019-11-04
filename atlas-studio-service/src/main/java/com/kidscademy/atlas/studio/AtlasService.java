@@ -25,7 +25,7 @@ import js.tiny.container.http.form.Form;
 public interface AtlasService {
     List<AtlasCollection> getCollections();
 
-    List<AtlasItem> getCollectionItems(int collectionId);
+    List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes);
 

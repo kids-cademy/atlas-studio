@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -35,6 +36,7 @@ public class AtlasItem implements RepositoryObject {
     private String display;
     private String definition;
     private AtlasObject.State state;
+    private Date lastUpdated;
 
     @ElementCollection
     @CollectionTable(name = "atlasobject_links", joinColumns = @JoinColumn(name = "atlasobject_ID"))
@@ -104,6 +106,10 @@ public class AtlasItem implements RepositoryObject {
 
     public AtlasObject.State getState() {
 	return state;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
     public String getIconName() {

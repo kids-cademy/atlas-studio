@@ -218,6 +218,10 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`${object} definition on dictionary.`);
 	},
 
+	"cambridge.org": function (url, object, callback) {
+		callback(`${object} definition on Cambridge.`);
+	},
+
 	"youtube.com": function (url, object, callback) {
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', `https://noembed.com/embed?url=${url}`);
@@ -230,6 +234,10 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 			}
 		};
 		xhr.send();
+	},
+
+	"softschools.com": function (url, object, callback) {
+		callback(`${object} facts on Soft Schools.`);
 	},
 
 	"kiddle.co": function (url, object, callback) {

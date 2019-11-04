@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PostLoad;
@@ -21,7 +22,7 @@ public interface AtlasDao {
 
     List<AtlasCollection> getCollections();
 
-    List<AtlasItem> getCollectionItems(int collectionId);
+    List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
 

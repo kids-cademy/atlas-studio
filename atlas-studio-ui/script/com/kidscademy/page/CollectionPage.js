@@ -18,17 +18,48 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._sidebar = this.getByCss(".side-bar .header");
 		this._sidebar.setObject(this._collection);
 
-		const actions = this.getByCss(".side-bar .actions");
-		actions.on(this, {
+		const sidebarActions = this.getByCss(".side-bar .actions");
+		sidebarActions.on(this, {
 			"&edit-collection": this._onEditCollection,
 			"&new-object": this._onNewObject,
 			"&remove-collection": this._onRemoveCollection
 		});
-		const exportAnchor = actions.getByCssClass("export");
+		const exportAnchor = sidebarActions.getByCssClass("export");
 		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}`);
 
-		AtlasService.getCollectionItems(this._collection.id, items => this._listView.setObject(items));
+		this._listType = new com.kidscademy.CssFlags("collection-list-type", this._listView, "icons", "cards", "links");
+
+		this._filterForm = this.getByCssClass("form-bar");
+		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+		this._actions.fire("load-items");
 	}
+
+	// --------------------------------------------------------------------------------------------
+	// FILTER ACTION HANDLERS
+
+	_onLoadItems() {
+		const filter = this._filterForm.getObject();
+		AtlasService.getCollectionItems(filter, this._collection.id, items => this._listView.setObject(items));
+	}
+
+	_onResetFilter() {
+
+	}
+
+	_onIconsView() {
+		this._listType.set("icons");
+	}
+
+	_onCardsView() {
+		this._listType.set("cards");
+	}
+
+	_onLinksView() {
+		this._listType.set("links");
+	}
+
+	// --------------------------------------------------------------------------------------------
+	// SIDE MENU HANDLERS
 
 	_onEditCollection() {
 

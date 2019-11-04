@@ -53,6 +53,7 @@
 	<hexa-icon-size>96px</hexa-icon-size>
 
 	<icon-size>96px</icon-size>
+	<icon-size-small>64px</icon-size-small>
 
 	<input-height>42px</input-height>
 	<input-padding>0 10px</input-padding>

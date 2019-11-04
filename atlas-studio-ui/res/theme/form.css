@@ -22,3 +22,9 @@ form label {
 	width: 200px;
 	font-size: 18px;
 }
+
+.form-bar {
+	padding: 20px;
+	background-color: #F8F8F8;
+	border-bottom: solid 1px #E6E6E6;	
+}

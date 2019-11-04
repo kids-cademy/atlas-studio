@@ -11,7 +11,8 @@ input {
 	font-size: 18px;
 }
 
-input.with-actions {
+.with-actions input, .with-actions select {
+	vertical-align: top;
 	height: @dimen/action-icon-size;
 	line-height: @dimen/action-icon-size;
 	margin-right: @dimen/action-margin;

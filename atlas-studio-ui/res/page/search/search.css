@@ -1,9 +1,14 @@
 .search {
-	
+	display: flex;
+	flex-direction: column;
 }
 
-.search section {
-	margin-top: 40px;
+.search .content {
+	overflow-y: auto;
+}
+
+.search .list-view {
+	margin: 40px 20px;
 }
 
 .search .table {

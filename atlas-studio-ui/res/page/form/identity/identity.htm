@@ -27,23 +27,10 @@
 				<label>end date</label><input name="value" class="small optional" /><select w:widget="compo/hdate-format-select"></select> <select w:widget="compo/hdate-period-select"></select> <select w:widget="compo/hdate-era-select"></select>
 			</div>
 			<div class="controlset">
-				<label>state</label><select name="state">
-					<option selected="selected">DEVELOPMENT</option>
-					<option>PUBLISHED</option>
-				</select>
+				<label>state</label><select w:widget="compo/object-state-select" name="state"></select>
 			</div>
 			<div class="controlset">
-				<label>conservation status</label><select name="conservation" class="optional">
-					<option selected="selected"></option>
-					<option value="LC">Least Concern</option>
-					<option value="NT">Near Threatened</option>
-					<option value="VU">Vulnerable</option>
-					<option value="EN">Endangered</option>
-					<option value="CR">Critically Endangered</option>
-					<option value="EW">Extinct in the Wild</option>
-					<option value="EX">Extinct</option>
-					<option value="NA">Not Available</option>
-				</select>
+				<label>conservation status</label><select w:widget="compo/conservation-select" name="conservation" class="optional"></select>
 			</div>
 		</div>
 	</div>

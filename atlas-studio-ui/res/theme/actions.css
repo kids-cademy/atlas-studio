@@ -4,6 +4,21 @@
 	border-top: solid 1px white;
 }
 
+.actions.inline {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.actions .space {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	margin-right: @dimen/action-margin;
+}
+
 .actions img {
 	display: inline-block;
 	box-sizing: border-box;

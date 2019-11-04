@@ -31,7 +31,7 @@ body>.flex-content .side-bar {
 	flex-shrink: 0;
 	flex-grow: 0;
 	flex-basis: @dimen/page-sidebar-width;
-	margin-right: 20px;
+	xmargin-right: 20px;
 	border-right: solid 1px @color/border-muted;
 	background-color: #f8f8f8;
 	overflow: hidden;
@@ -40,7 +40,6 @@ body>.flex-content .side-bar {
 body>.flex-content .body {
 	height: 100%;
 	flex-grow: 1;
-	overflow-y: scroll;
 }
 
 /* header */

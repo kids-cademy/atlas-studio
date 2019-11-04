@@ -110,8 +110,8 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<AtlasItem> getCollectionItems(int collectionId) {
-	return atlasDao.getCollectionItems(collectionId);
+    public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
+	return atlasDao.getCollectionItems(filter, collectionId);
     }
 
     @Override

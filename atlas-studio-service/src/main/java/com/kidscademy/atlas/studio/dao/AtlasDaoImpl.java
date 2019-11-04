@@ -3,8 +3,10 @@ package com.kidscademy.atlas.studio.dao;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
@@ -38,9 +40,19 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<AtlasItem> getCollectionItems(int collectionId) {
-	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.display",
-		AtlasItem.class).setParameter("collectionId", collectionId).getResultList();
+    public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
+	StringBuilder queryBuilder = new StringBuilder();
+	queryBuilder.append("select i from AtlasItem i where i.collection.id=?1 ");
+	if (!filter.get("state").isEmpty()) {
+	    queryBuilder.append("and i.state=?2 ");
+	}
+	queryBuilder.append("order by i.display");
+
+	TypedQuery<AtlasItem> query = em.createQuery(queryBuilder.toString(), AtlasItem.class).setParameter(1, collectionId);
+	if (!filter.get("state").isEmpty()) {
+	    query.setParameter(2, AtlasObject.State.valueOf(filter.get("state")));
+	}
+	return query.getResultList();
     }
 
     @Override

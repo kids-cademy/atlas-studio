@@ -1,5 +1,14 @@
 .collection {
-	
+	display: flex;
+	flex-direction: column;
+}
+
+.collection .content {
+	overflow-y: auto;
+}
+
+.collection .list-view {
+	margin: 40px 20px;
 }
 
 .collection.side-bar {

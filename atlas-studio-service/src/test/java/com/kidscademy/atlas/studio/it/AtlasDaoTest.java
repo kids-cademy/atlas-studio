@@ -15,6 +15,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,7 +198,7 @@ public class AtlasDaoTest {
 
     @Test
     public void getCollectionItems() {
-	List<AtlasItem> items = dao.getCollectionItems(1);
+	List<AtlasItem> items = dao.getCollectionItems(Collections.EMPTY_MAP,1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(2));
 	assertAtlasItem(items.get(0));
