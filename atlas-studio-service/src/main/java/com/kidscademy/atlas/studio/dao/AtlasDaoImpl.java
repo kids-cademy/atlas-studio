@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,8 @@ public class AtlasDaoImpl implements AtlasDao {
 	}
 	queryBuilder.append("order by i.display");
 
-	TypedQuery<AtlasItem> query = em.createQuery(queryBuilder.toString(), AtlasItem.class).setParameter(1, collectionId);
+	TypedQuery<AtlasItem> query = em.createQuery(queryBuilder.toString(), AtlasItem.class).setParameter(1,
+		collectionId);
 	if (!filter.get("state").isEmpty()) {
 	    query.setParameter(2, AtlasObject.State.valueOf(filter.get("state")));
 	}
@@ -85,6 +87,7 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
+	object.setLastUpdated(new Timestamp(System.currentTimeMillis()));
 	if (object.getId() == 0) {
 	    em.persist(object);
 	} else {

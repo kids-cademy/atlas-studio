@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.export;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class ExportObject {
 
     private final Map<String, ExportImage> images;
 
+    private final Date lastUpdated;
     private final List<Taxon> taxonomy;
     private final List<String> aliases;
     private final List<Region> spreading;
@@ -39,7 +41,7 @@ public class ExportObject {
     private final Map<String, String> features;
     private final List<ExportRelatedObject> related;
     private final List<ExportLink> links;
-    
+
     public ExportObject(AtlasObject object) {
 	this.rank = object.getRank();
 	this.name = object.getName();
@@ -52,6 +54,7 @@ public class ExportObject {
 	    this.images.put(entry.getKey(), new ExportImage(object, entry.getValue()));
 	}
 
+	this.lastUpdated = object.getLastUpdated();
 	this.taxonomy = object.getTaxonomy();
 	this.aliases = object.getAliases();
 	this.spreading = object.getSpreading();
@@ -130,7 +133,7 @@ public class ExportObject {
     }
 
     public List<ExportFact> getFacts() {
-        return facts;
+	return facts;
     }
 
     public ExportImage getImage(String imageKey) {
