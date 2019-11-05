@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tip>
+	<identity-copy-name>copy atlas object name to clipboard</identity-copy-name>
+	
 	<definition-import>import object definition from external source</definition-import>
 	<definition-remove-all>remove object definition</definition-remove-all>
 	<definition-close>close object definition editor</definition-close>

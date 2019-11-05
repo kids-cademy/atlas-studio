@@ -14,6 +14,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onListClick, this);
+		this._listView.hide();
 
 		this._sidebar = this.getByCss(".side-bar .header");
 		this._sidebar.setObject(this._collection);
@@ -27,11 +28,18 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		const exportAnchor = sidebarActions.getByCssClass("export");
 		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}`);
 
-		this._listType = new com.kidscademy.CssFlags("collection-list-type", this._listView, "icons", "cards", "links");
-
 		this._filterForm = this.getByCssClass("form-bar");
+		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "cards", "links");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+
+		this._filterForm.setObject(this.getPageAttr("filter-form"));
+		this._listType.set(this.getPageAttr("list-type"));
 		this._actions.fire("load-items");
+	}
+
+	_onUnload() {
+		this.setPageAttr("filter-form", this._filterForm.getObject());
+		this.setPageAttr("list-type", this._listType.get());
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -39,7 +47,16 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onLoadItems() {
 		const filter = this._filterForm.getObject();
-		AtlasService.getCollectionItems(filter, this._collection.id, items => this._listView.setObject(items));
+		AtlasService.getCollectionItems(filter, this._collection.id, items => {
+			this._listView.setObject(items).show()
+
+			var objectId = this.getPageAttr("object-id");
+			if (objectId != null) {
+				var itemView = this.getById(objectId);
+				itemView.scrollIntoView();
+				this.removePageAttr("object-id");
+			}
+		});
 	}
 
 	_onResetFilter() {
@@ -75,7 +92,11 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onListClick(ev) {
 		const li = ev.target.getParentByTag("li");
+		if (li == null) {
+			return;
+		}
 		const objectId = li.getAttr("id");
+		this.setPageAttr("object-id", objectId);
 
 		if (ev.ctrlKey) {
 			this._moveToPage("@link/reader", objectId);

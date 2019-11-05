@@ -82,22 +82,26 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			child.on("click", actionHandler, container);
 			this._actionHandlers[name] = actionHandler;
 
-			var keyName = child.getAttr("data-key");
-			if (keyName != null) {
-				var ctrlKey = false;
-				if(keyName.startsWith("CTRL+")) {
-					ctrlKey = true;
-					keyName = keyName.substring(5);
-				}
+			var dataKey = child.getAttr("data-key");
+			if (dataKey != null) {
+				dataKey.split(',').forEach(keyName => {
+					keyName = keyName.trim();
 
-				const keyCode = js.event.Key[keyName];
-				if (typeof keyCode === "undefined") {
-					throw `Invalid key name ${keyName} assigned to action ${name}`;
-				}
-				this._keyHanders[keyCode] = {
-					ctrlKey: ctrlKey,
-					method: actionHandler
-				};
+					var ctrlKey = false;
+					if (keyName.startsWith("CTRL+")) {
+						ctrlKey = true;
+						keyName = keyName.substring(5);
+					}
+
+					const keyCode = js.event.Key[keyName];
+					if (typeof keyCode === "undefined") {
+						throw `Invalid key name ${keyName} assigned to action ${name}`;
+					}
+					this._keyHanders[keyCode] = {
+						ctrlKey: ctrlKey,
+						method: actionHandler
+					};
+				});
 				keyHandlers = true;
 			}
 		});
@@ -175,6 +179,7 @@ com.kidscademy.Actions = class extends js.dom.Element {
 				return;
 			}
 			handler.method.call(this._container);
+			ev.halt();
 		}
 	}
 

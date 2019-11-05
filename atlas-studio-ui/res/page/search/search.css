@@ -7,8 +7,13 @@
 	overflow-y: auto;
 }
 
+.search .info {
+	margin: 10px 0 0 30px;
+	font-size: 1.8rem;	
+}
+
 .search .list-view {
-	margin: 40px 20px;
+	margin: 20px;
 }
 
 .search .table {

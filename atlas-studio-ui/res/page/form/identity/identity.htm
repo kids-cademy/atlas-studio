@@ -1,4 +1,4 @@
-<fieldset class="identity" xmlns:w="js-lib.com/wood">
+<fieldset class="identity"  data-class="com.kidscademy.form.IdentityFieldSet" xmlns:w="js-lib.com/wood">
 	<div class="header container">
 		<h2>@string/object-identity</h2>
 		<p>@string/sample-text</p>
@@ -16,6 +16,9 @@
 			</div>
 			<div class="controlset">
 				<label>display</label><input name="display" />
+				<span class="actions controlset">
+					<img name="copy-to-clipboard" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+				</span>
 			</div>
 			<div class="controlset">
 				<label>aliases</label><input name="aliases" class="optional" data-class="com.kidscademy.form.AliasesControl" />

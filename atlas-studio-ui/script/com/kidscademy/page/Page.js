@@ -22,7 +22,11 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         }
 
         this.getByCss("header .back.action").on("click", this._onBack, this);
+
+        WinMain.on("unload", this._onUnload, this);
     }
+
+    _onUnload() { }
 
     onServerFail(er) {
         $error(`com.kidscademy.page.Page#onServerFail ${er.cause}: ${er.message}`);
@@ -38,15 +42,42 @@ com.kidscademy.page.Page = class extends js.ua.Page {
     }
 
     setContextAttr(name, object) {
-        localStorage.setItem(name, js.lang.JSON.stringify(object));
+        this._setStorageItem(name, object);
     }
 
     getContextAttr(name) {
+        return this._getStorageItem(name, true);
+    }
+
+    removeContextAttr(name) {
+        localStorage.removeItem(name);
+    }
+
+    setPageAttr(name, object) {
+        this._setStorageItem(this._pageRelativeName(name), object);
+    }
+
+    getPageAttr(name) {
+        return this._getStorageItem(this._pageRelativeName(name), false);
+    }
+
+    removePageAttr(name) {
+        localStorage.removeItem(this._pageRelativeName(name));
+    }
+
+    _setStorageItem(name, object) {
+        localStorage.setItem(name, js.lang.JSON.stringify(object));
+    }
+
+    _getStorageItem(name, strict) {
         var value = localStorage.getItem(name);
         if (value == null) {
+            if (!strict) {
+                return null;
+            }
             if (!this._isPreviewMode()) {
                 $debug("com.kidscademy.page.Page#getContextAttr", "Invalid global context. Missing attribute |%s|. Go to home page.", name);
-                WinMain.assign("dashboard.htm");
+                WinMain.assign("@link/dashboard");
                 return;
             }
             // is legal for value to be missing on development in preview mode
@@ -70,6 +101,10 @@ com.kidscademy.page.Page = class extends js.ua.Page {
     _isPreviewMode() {
         // by convention all preview contexts contains -preview suffix
         return WinMain.url.host.includes('-preview');
+    }
+
+    _pageRelativeName(name) {
+        return `${this.toString()}.${name}`;
     }
 
     /**

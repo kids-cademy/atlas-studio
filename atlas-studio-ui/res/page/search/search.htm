@@ -3,8 +3,8 @@
 		<form class="form-bar with-actions">
 			<input name="search-input" />
 			<div class="actions inline"  data-class="com.kidscademy.Actions">
-				<img name="search-submit" src="@image/action/search" class="action" title="@tip/search-submit" />
-				<img name="search-reset" src="@image/action/close" class="action" title="@tip/search-reset" />
+				<img name="search-submit" data-key="ENTER" src="@image/action/search" class="action" title="@tip/search-submit" />
+				<img name="search-reset" data-key="ESCAPE,DELETE" src="@image/action/close" class="action" title="@tip/search-reset" />
 				<span class="space"></span>
 				<img name="icons-view" src="@image/action/icons-view" class="action" title="@tip/search-reset" />
 				<img name="cards-view" src="@image/action/cards-view" class="action" title="@tip/search-reset" />
@@ -14,27 +14,10 @@
 			<button name="search-button">submit</button>
 		</div>
 	</section>
-
-	<!--
-	<section>
-		<table>
-			<tbody class="search-result table" data-list=".">
-				<tr>
-					<td><img class="item-icon" data-src="iconSrc" data-default="@image/default-icon" /></td>
-					<td data-text="display"></td>
-					<td>				
-						<ul class="links" data-list="links">
-							<li data-id="id"><img class="link-icon" data-src="iconSrc" data-title="description" /></li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
-	-->
 	
 	<section class="content">
-		<ul class="list-view cards search-result" data-list=".">
+		<h1 class="info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
+		<ul class="list-view cards search-result hidden" data-list=".">
 			<li class="item" data-id="id" data-css-class="state=PUBLISHED:published">
 				<div class="circle small"></div>
 				<div class="circle solid"></div>

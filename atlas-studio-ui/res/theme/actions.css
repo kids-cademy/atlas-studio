@@ -10,6 +10,12 @@
 	border: none;
 }
 
+.actions.controlset {
+	margin: 0 0 0 @dimen/action-margin;
+	padding: 0;
+	border: none;
+}
+
 .actions .space {
 	display: inline-block;
 	box-sizing: border-box;
@@ -30,6 +36,15 @@
 	background-color: white;
 	opacity: 0.2;
 	cursor: pointer;
+}
+
+.actions.inline img {
+}
+
+.actions.controlset img {
+	vertical-align: top;
+	width: @dimen/input-height;
+	height: @dimen/input-height;
 }
 
 .actions img.hidden {

@@ -4,18 +4,18 @@
 			<select w:widget="compo/instrument-family-select" name="family"></select>
 			<select w:widget="compo/object-state-select" name="state"></select>
 			<div class="actions inline"  data-class="com.kidscademy.Actions">
-				<img name="load-items" src="@image/action/search" class="action" title="@tip/search-submit" />
-				<img name="reset-filter" src="@image/action/close" class="action" title="@tip/search-reset" />
+				<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
+				<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
 				<span class="space"></span>
-				<img name="icons-view" src="@image/action/icons-view" class="action" title="@tip/search-reset" />
-				<img name="cards-view" src="@image/action/cards-view" class="action" title="@tip/search-reset" />
-				<img name="links-view" src="@image/action/list-view" class="action" title="@tip/search-reset" />
+				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
+				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
+				<img name="links-view" src="@image/action/list-view" title="@tip/search-reset" />
 			</div>
 		</form>
 	</section>
 
 	<section class="content">
-		<ul class="list-view cards" data-list=".">
+		<ul class="list-view cards hidden" data-list=".">
 			<li class="item" data-id="id" data-css-class="state=PUBLISHED:published">
 				<div class="circle small"></div>
 				<div class="circle solid"></div>
