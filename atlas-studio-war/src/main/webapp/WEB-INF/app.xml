@@ -21,6 +21,7 @@
 		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="http:xpath://www.softschools.com/" />
 		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
 		<cambridge-dictionary interface="com.kidscademy.atlas.studio.www.CambridgeDictionary" type="REMOTE" url="https:xpath://dictionary.cambridge.org/" />
+		<merriam-webster interface="com.kidscademy.atlas.studio.www.MerriamWebster" type="REMOTE" url="https:xpath://www.merriam-webster.com/dictionary/" />
 		<wiki-how interface="com.kidscademy.atlas.studio.www.WikiHow" type="REMOTE" url="https:xpath://www.wikihow.com/" />
 	</managed-classes>
 	<observer period="60000" />

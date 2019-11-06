@@ -34,6 +34,7 @@ import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
+import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
@@ -62,6 +63,8 @@ public class AdminServiceTest {
     private TheFreeDictionary freeDictionary;
     @Mock
     private CambridgeDictionary cambridgeDictionary;
+    @Mock
+    private MerriamWebster merriamWebster;
 
     private AtlasService service;
 
@@ -75,8 +78,11 @@ public class AdminServiceTest {
 	when(context.getAppFile("search-index"))
 		.thenReturn(new File("fixture/tomcat/work/Applications/test-app/search-index"));
 
-	service = new AtlasServiceImpl(context, atlasDao, taxonomyDao, audioProcessor, imageProcessor, wikipedia,
-		softSchools, freeDictionary, cambridgeDictionary);
+	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
+	when(context.getInstance(AudioProcessor.class)).thenReturn(audioProcessor);
+
+	service = new AtlasServiceImpl(context);
+
 	file("sample.mp3").delete();
 	file("sample_1.mp3").delete();
 	file("sample_2.mp3").delete();
@@ -271,11 +277,11 @@ public class AdminServiceTest {
 	assertFalse(file("waveform.png").exists());
     }
 
-    @Test 
+    @Test
     public void updateSearchIndex() throws NoSuchMethodException, IOException {
 	service.updateIndex();
     }
-    
+
     // ----------------------------------------------------------------------------------------------
 
     private static AtlasItem atlasItem() {

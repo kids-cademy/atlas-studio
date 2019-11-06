@@ -39,6 +39,7 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
+import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikiHow;
@@ -71,26 +72,25 @@ public class AtlasServiceImpl implements AtlasService {
     private final SoftSchools softSchools;
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
+    private final MerriamWebster merriamWebster;
 
     private KeywordTree<KeywordIndex<Integer>> index;
 
-    public AtlasServiceImpl(AppContext context, AtlasDao atlasDao, TaxonomyDao taxonomyDao,
-	    AudioProcessor audioProcessor, ImageProcessor imageProcessor, Wikipedia wikipedia, SoftSchools softSchools,
-	    TheFreeDictionary freeDictionary, CambridgeDictionary cambridgeDictionary) throws IOException {
-	log.trace(
-		"AtlasServiceImpl(AppContext, AtlasDao,TaxonomyDao,AudioProcessor,ImageProcessor,Wikipedia,SoftSchools,TheFreeDictionary,CambridgeDictionary)");
+    public AtlasServiceImpl(AppContext context) throws IOException {
+	log.trace("AtlasServiceImpl(AppContext)");
 
 	this.context = context;
 	this.json = Classes.loadService(Json.class);
 
-	this.atlasDao = atlasDao;
-	this.taxonomyDao = taxonomyDao;
-	this.audioProcessor = audioProcessor;
-	this.imageProcessor = imageProcessor;
-	this.wikipedia = wikipedia;
-	this.softSchools = softSchools;
-	this.freeDictionary = freeDictionary;
-	this.cambridgeDictionary = cambridgeDictionary;
+	this.atlasDao = context.getInstance(AtlasDao.class);
+	this.taxonomyDao = context.getInstance(TaxonomyDao.class);
+	this.audioProcessor = context.getInstance(AudioProcessor.class);
+	this.imageProcessor = context.getInstance(ImageProcessor.class);
+	this.wikipedia = context.getInstance(Wikipedia.class);
+	this.softSchools = context.getInstance(SoftSchools.class);
+	this.freeDictionary = context.getInstance(TheFreeDictionary.class);
+	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
+	this.merriamWebster = context.getInstance(MerriamWebster.class);
 
 	File file = context.getAppFile("search-index");
 	List<KeywordIndex<Integer>> searchIndex;
@@ -195,6 +195,9 @@ public class AtlasServiceImpl implements AtlasService {
 
 	case "cambridge.org":
 	    return cambridgeDictionary.getDefinition(link.getFileName());
+
+	case "merriam-webster.com":
+	    return merriamWebster.getDefinition(link.getFileName());
 
 	default:
 	    return null;

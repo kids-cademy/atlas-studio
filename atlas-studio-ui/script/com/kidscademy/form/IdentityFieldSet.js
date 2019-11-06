@@ -3,7 +3,6 @@ $package("com.kidscademy.form");
 com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
 		this._nameView = this.getByName("display");
 		this.getByName("copy-to-clipboard").on("click", this._onCopyToClipboard, this);
 	}

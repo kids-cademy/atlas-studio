@@ -49,13 +49,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		const filter = this._filterForm.getObject();
 		AtlasService.getCollectionItems(filter, this._collection.id, items => {
 			this._listView.setObject(items).show()
-
-			var objectId = this.getPageAttr("object-id");
-			if (objectId != null) {
-				var itemView = this.getById(objectId);
-				itemView.scrollIntoView();
-				this.removePageAttr("object-id");
-			}
+			this._autoScroll();
 		});
 	}
 
@@ -106,10 +100,24 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
+	// --------------------------------------------------------------------------------------------
+
 	_moveToPage(pageName, objectId) {
 		// store selected object ID on global context to make it available to next pages
 		this.setContextAttr("objectId", objectId);
 		WinMain.assign(pageName);
+	}
+
+	_autoScroll() {
+		var objectId = this.getPageAttr("object-id");
+		if (objectId == null) {
+			return;
+		}
+		var itemView = this.getById(objectId);
+		if (itemView != null) {
+			itemView.scrollIntoView();
+		}
+		this.removePageAttr("object-id");
 	}
 
 	/**

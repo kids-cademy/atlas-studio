@@ -222,6 +222,10 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`${object} definition on Cambridge.`);
 	},
 
+	"merriam-webster.com": function (url, object, callback) {
+		callback(`${object} definition on Webster.`);
+	},
+	
 	"youtube.com": function (url, object, callback) {
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', `https://noembed.com/embed?url=${url}`);
