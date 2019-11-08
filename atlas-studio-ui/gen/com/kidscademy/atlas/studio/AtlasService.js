@@ -528,6 +528,64 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Rotate image left.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Image
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 rotateImageLeft: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rotateImageLeft", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rotateImageLeft", "Image argument is undefined.");
+
+		var __callback__ = arguments[2];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#rotateImageLeft", "Callback is not a function.");
+		var __scope__ = arguments[3];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#rotateImageLeft", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "rotateImageLeft");
+		rmi.setParameters(object, image);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Rotate image right.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,
+	 * @param com.kidscademy.atlas.studio.model.Image image,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Image
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 rotateImageRight: function(object, image) {
+		$assert(typeof object !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rotateImageRight", "Object argument is undefined.");
+		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.AtlasService#rotateImageRight", "Image argument is undefined.");
+
+		var __callback__ = arguments[2];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#rotateImageRight", "Callback is not a function.");
+		var __scope__ = arguments[3];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#rotateImageRight", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "rotateImageRight");
+		rmi.setParameters(object, image);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Crop image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,

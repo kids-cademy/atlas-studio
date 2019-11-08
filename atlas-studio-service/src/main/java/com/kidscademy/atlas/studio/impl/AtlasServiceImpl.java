@@ -346,6 +346,22 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public Image rotateImageLeft(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
+	imageProcessor.rotate(handler.source(), handler.target(), -22.5F);
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
+    public Image rotateImageRight(AtlasItem atlasItem, Image image) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
+	imageProcessor.rotate(handler.source(), handler.target(), 22.4F);
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
     public Image cropImage(AtlasItem atlasItem, Image image, int width, int height, int xoffset, int yoffset)
 	    throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());

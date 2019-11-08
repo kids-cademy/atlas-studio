@@ -75,6 +75,11 @@ public class ImageProcessorImpl implements ImageProcessor {
     }
 
     @Override
+    public void rotate(File imageFile, File targetFile, float degree) throws IOException {
+	exec("-rotate ${degree} -background transparent ${imageFile} ${targetFile}", degree, imageFile, targetFile);
+    }
+
+    @Override
     public void crop(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset)
 	    throws IOException {
 	exec("${imageFile} -crop ${width}x${height}+${xoffset}+${yoffset} ${targetFile}", imageFile, width, height,

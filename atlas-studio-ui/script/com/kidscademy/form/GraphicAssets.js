@@ -152,7 +152,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		AtlasService.cloneImageToIcon(this._formPage.getAtlasItem(), this._currentImage, image => {
 			this._imagesControl.addImage(image);
 			this._onImageSelected(image);
-			
+
 			// before firering 'crop' action wait for image loading
 			// timeout value is determined heuristically
 			// better solution would be 'load' event on image
@@ -208,6 +208,14 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	_onFlip() {
 		AtlasService.flipImage(this._formPage.getAtlasItem(), this._currentImage, this._onProcessingDone, this);
+	}
+
+	_onRotateLeft() {
+		AtlasService.rotateImageLeft(this._formPage.getAtlasItem(), this._currentImage, this._onProcessingDone, this);
+	}
+
+	_onRotateRight() {
+		AtlasService.rotateImageRight(this._formPage.getAtlasItem(), this._currentImage, this._onProcessingDone, this);
 	}
 
 	/**

@@ -79,6 +79,10 @@ public interface AtlasService {
 
     Image flipImage(AtlasItem object, Image image) throws IOException;
 
+    Image rotateImageLeft(AtlasItem object, Image image) throws IOException;
+
+    Image rotateImageRight(AtlasItem object, Image image) throws IOException;
+
     Image cropImage(AtlasItem object, Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
     /**

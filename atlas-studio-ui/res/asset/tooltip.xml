@@ -21,6 +21,8 @@
 	<graphic-icon>create object icon from image</graphic-icon>
 	<graphic-flop>flop, mirror image vertically</graphic-flop>
 	<graphic-flip>flip, mirror image horizontally</graphic-flip>
+	<graphic-rotate-left>rotate image to left</graphic-rotate-left>
+	<graphic-rotate-right>rotate image to right</graphic-rotate-right>
 	<graphic-done>commit current operation</graphic-done>
 	<graphic-undo>undo last image processing</graphic-undo>
 	<graphic-close>close image editor and cancel all image transforms</graphic-close>

@@ -49,6 +49,8 @@ public interface ImageProcessor {
 
     void flip(File imageFile, File targetFile) throws IOException;
 
+    void rotate(File imageFile, File targetFile, float degree) throws IOException;
+
     void crop(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
 
     void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException;

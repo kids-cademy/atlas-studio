@@ -81,6 +81,27 @@ public class ImageInfoResultTest {
     }
 
     @Test
+    public void formatPattern4() {
+	String line = "picture.png PNG 1723x1853 1723x1853-450-293 8-bit sRGB 946990B 0.000u 0:00.000";
+	Pattern format = Classes.getFieldValue(ImageInfoResult.class, "FORMAT");
+	Matcher matcher = format.matcher(line);
+	assertTrue(matcher.find());
+	assertThat(matcher.groupCount(), equalTo(12));
+	assertThat(matcher.group(1), equalTo("picture.png"));
+	assertThat(matcher.group(2), equalTo("PNG"));
+	assertThat(matcher.group(3), equalTo("1723"));
+	assertThat(matcher.group(4), equalTo("1853"));
+	assertThat(matcher.group(5), equalTo("1723"));
+	assertThat(matcher.group(6), equalTo("1853"));
+	assertThat(matcher.group(7), equalTo("450"));
+	assertThat(matcher.group(8), equalTo("293"));
+	assertThat(matcher.group(9), equalTo("8"));
+	assertThat(matcher.group(10), equalTo("sRGB"));
+	assertThat(matcher.group(11), equalTo("946990"));
+	assertThat(matcher.group(12), equalTo("B"));
+    }
+
+    @Test
     public void getImageInfo1() {
 	String line = "picture.jpg JPEG 920x560 920x560+0+0 8-bit sRGB 178854B 0.047u 0:00.045";
 	ImageInfoResult result = new ImageInfoResult();
