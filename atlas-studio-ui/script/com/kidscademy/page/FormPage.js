@@ -169,14 +169,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		}
 	}
 
-	_onRemove() {
-		js.ua.System.confirm("@string/confirm-object-remove", (ok) => {
-			if (ok) {
-				AtlasService.removeAtlasObject(this._object.id, () => this._onBack());
-			}
-		});
-	}
-
 	_onQuickLinks(ev) {
 		const quickLink = ev.target.getParentByTag("li");
 		if (quickLink != null) {

@@ -5,4 +5,16 @@
 		<overflow>hidden</overflow>
 		<text-overflow>ellipsis</text-overflow>
 	</ellipsis>
+	<image-border>
+		<padding>1px</padding>
+		<border>solid 1px @color/border-image</border>
+	</image-border>
+	<clear-after>
+		<display>block</display>
+		<content>""</content>
+		<clear>both</clear>
+	</clear-after>
+	<tint-white>
+	
+	</tint-white>
 </style>

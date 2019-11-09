@@ -28,10 +28,24 @@
 			</li>
 		</ul>
 	</section>
+
+	<div class="context-menu hidden" data-class="com.kidscademy.ContextMenu">
+		<div class="caption"><img class="close" src="@image/action/close" /></div>
+		<div class="content">
+			<div class="object">
+				<img data-src="icon-src" />
+				<h3 data-text="display"></h3>
+			</div>
+			<ul class="menu">
+				<li data-name="edit-object"><img src="@image/action/edit" /><span>@string/object-edit</span></li>
+				<li data-name="preview-object"><img src="@image/action/preview" /><span>@string/object-preview</span></li>
+			</ul>
+		</div>
+	</div>
 </div>
 
 <div class="account" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
-	<ul class="side-menu actions">
+	<ul class="menu">
 		<li data-name="update-index"><img src="@image/action/update-index" />Update Index</li>
 	</ul>
 </div>

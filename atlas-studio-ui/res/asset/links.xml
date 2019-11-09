@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <link>
-	<dashboard>dashboard.htm</dashboard>
+	<library>library.htm</library>
 	<collection>collection.htm</collection>
 	<search>search.htm</search>
 	<form>form.htm</form>

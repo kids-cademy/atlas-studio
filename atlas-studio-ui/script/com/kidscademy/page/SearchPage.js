@@ -12,8 +12,8 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 	constructor() {
 		super();
 
-		const actions = this.getByCss(".side-bar .actions");
-		actions.on(this, {
+		const menu = this.getByCss(".side-bar .menu");
+		menu.on(this, {
 			"&update-index": this._onUpdateIndex
 		});
 
@@ -24,10 +24,11 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 
 		this._searchResult = this.getByCssClass("search-result");
 		this._searchResult.on("click", this._onItemClick, this);
-		this._searchResult.hide();
+		this._searchResult.on("contextmenu", this._onContextMenu, this);
 
 		this._listType = new com.kidscademy.CssFlags(this._searchResult, "icons", "cards");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
 		this._searchInput.setValue(this.getPageAttr("search-input"));
 		this._listType.set(this.getPageAttr("list-type"));
@@ -72,30 +73,48 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 	}
 
 	// --------------------------------------------------------------------------------------------
+	// SIDE MENU HANDLERS
+
+	_onUpdateIndex() {
+		AtlasService.updateIndex(() => js.ua.System.alert('done'));
+	}
+
+	// --------------------------------------------------------------------------------------------
+	// CONTEXT MENU HANDLERS
+
+	_onEditObject(objectView) {
+		this._moveToPage(objectView, false);
+	}
+
+	_onPreviewObject(objectView) {
+		this._moveToPage(objectView, true);
+	}
+
+	// --------------------------------------------------------------------------------------------
 
 	_onItemClick(ev) {
+		const li = ev.target.getParentByTag("li");
+		if (li != null) {
+			this._moveToPage(li, ev.ctrlKey);
+		}
+	}
+
+	_onContextMenu(ev) {
 		const li = ev.target.getParentByTag("li");
 		if (li == null) {
 			return;
 		}
-		const object = li.getUserData();
-
-		if (ev.ctrlKey) {
-			this._moveToPage("@link/reader", object);
-		}
-		else {
-			this._moveToPage("@link/form", object);
-		}
+		ev.halt();
+		this._contextMenu.open(li);
 	}
 
-	_moveToPage(pageName, object) {
+	_moveToPage(objectView, reader) {
+		const object = objectView.getUserData();
+
 		this.setContextAttr("collection", object.collection);
 		this.setContextAttr("objectId", object.id);
-		WinMain.assign(pageName);
-	}
 
-	_onUpdateIndex() {
-		AtlasService.updateIndex(() => js.ua.System.alert('done'));
+		WinMain.assign(reader ? "@link/reader" : "@link/form");
 	}
 
 	/**

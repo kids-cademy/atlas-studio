@@ -31,10 +31,10 @@
 	vertical-align: top;
 	width: @dimen/action-icon-size;
 	height: @dimen/action-icon-size;
+	@style/image-border
 	margin-right: @dimen/action-margin;
-	border: solid 1px @color/border;
 	background-color: white;
-	opacity: 0.2;
+	opacity: 0.6;
 	cursor: pointer;
 }
 
@@ -55,10 +55,6 @@
 	float: right;
 }
 
-.actions img:hover {
-	opacity: 0.6;
-}
-
 .actions .separator {
 	display: inline-block;
 	width: @dimen/action-icon-size;
@@ -69,4 +65,40 @@
 .actions input {
 	vertical-align: bottom;
 	margin-top: 0;
+}
+
+.upload-image {
+	position: relative;
+	display: inline-block;
+}
+
+.upload-icon {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+	height: auto;
+	background: 0;
+	border-radius: unset;
+	opacity: 0.6;
+}
+
+.upload-icon.hidden {
+	display: none;
+}
+
+.upload-image input, .upload-icon input  {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.upload-icon img {
+	opacity: 1;
 }

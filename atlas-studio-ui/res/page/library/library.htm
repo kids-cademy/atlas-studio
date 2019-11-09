@@ -1,15 +1,13 @@
-<div class="collection" w:template="page/template#body" xmlns:w="js-lib.com/wood">
+<div class="library" w:template="page/template#body" xmlns:w="js-lib.com/wood">
 	<section>
 		<form class="form-bar with-actions">
-			<select w:widget="compo/instrument-family-select" name="family"></select>
-			<select w:widget="compo/object-state-select" name="state"></select>
+			<input name="search-input" />
 			<div class="actions inline"  data-class="com.kidscademy.Actions">
 				<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
 				<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
 				<span class="space"></span>
 				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
 				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
-				<img name="links-view" src="@image/action/list-view" title="@tip/search-reset" />
 			</div>
 		</form>
 	</section>
@@ -41,24 +39,17 @@
 				<h3 data-text="display"></h3>
 			</div>
 			<ul class="menu">
-				<li data-name="edit-object"><img src="@image/action/edit" /><span>@string/object-edit</span></li>
-				<li data-name="preview-object"><img src="@image/action/preview" /><span>@string/object-preview</span></li>
-				<li data-name="remove-object"><img src="@image/action/remove" /><span>@string/object-remove</span></li>
+				<li data-name="manage-objects"><img src="@image/action/manage-objects" /><span>@string/collection-objects</span></li>
+				<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
+				<li data-name="remove-collection"><img src="@image/action/remove" /><span>@string/collection-remove</span></li>
 			</ul>
 		</div>
 	</div>
 </div>
 
-<div class="collection" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
-	<div class="header">
-		<img data-src="icon-src" />
-		<h1 class="side-name" data-text="display"></h1>
-		<h2 class="last-updated" data-text="last-updated" data-format="js.format.StandardDateTime"></h2>
-	</div>
-
+<div class="account" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
-		<li data-name="create-object"><img src="@image/action/add" /><span>@string/object-create</span></li>
-		<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
-		<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/collection-export</span></a></li>
+		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
+		<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/library-export</span></a></li>
 	</ul>
 </div>

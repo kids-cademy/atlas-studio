@@ -250,22 +250,24 @@ ol li {
 /* ------------------------------------------------------------------------------------------------ */ 
 /* SIDE MENU */ 
 
-ul.side-menu {
+.menu {
 	padding: 1px;
 }
 
-ul.side-menu li {
+.menu li {
 	height: @dimen/side-menu-item-height;
 	line-height: @dimen/side-menu-item-height;
 	padding-left: 10px;
+	padding-right: 40px;
 	margin-left: 1px;
 	margin-top: 1px;
 	border-right: solid 4px;
+	white-space: nowrap;
 	cursor: pointer;
 	color: black;
 }
 
-ul.side-menu li img {
+.menu li img {
 	display: inline-block;
 	width: @dimen/side-menu-icon-size;
 	height: @dimen/side-menu-icon-size;
@@ -276,12 +278,12 @@ ul.side-menu li img {
 	opacity: 1;
 }
 
-ul.side-menu li a {
+.menu li a {
 	text-transform: inherit;
 	color: inherit;
 }
 
-ul.side-menu li .state {
+.menu li .state {
 	display: inline-block;
 	vertical-align: middle;
 	float: right;
@@ -292,70 +294,70 @@ ul.side-menu li .state {
 	border-radius: 10px;
 }
 
-ul.side-menu li.invalid .state {
+.menu li.invalid .state {
 	background-color: @color/danger;
 }
 
-ul.side-menu li:hover {
+.menu li:hover {
 	color: black;
 }
 
-ul.side-menu li:nth-child(1) {
+.menu li:nth-child(1) {
 	border-right-color: @color/red-300;
 	background-color: @color/red-50;
 }
 
-ul.side-menu li:nth-child(2) {
+.menu li:nth-child(2) {
 	border-right-color: @color/pink-300;
 	background-color: @color/pink-50;
 }
 
-ul.side-menu li:nth-child(3) {
+.menu li:nth-child(3) {
 	border-right-color: @color/purple-300;
 	background-color: @color/purple-50;
 }
 
-ul.side-menu li:nth-child(4) {
+.menu li:nth-child(4) {
 	border-right-color: @color/deep-purple-300;
 	background-color: @color/deep-purple-50;
 }
 
-ul.side-menu li:nth-child(5) {
+.menu li:nth-child(5) {
 	border-right-color: @color/indigo-300;
 	background-color: @color/indigo-50;
 }
 
-ul.side-menu li:nth-child(6) {
+.menu li:nth-child(6) {
 	border-right-color: @color/blue-300;
 	background-color: @color/blue-50;
 }
 
-ul.side-menu li:nth-child(7) {
+.menu li:nth-child(7) {
 	border-right-color: @color/light-blue-300;
 	background-color: @color/light-blue-50;
 }
 
-ul.side-menu li:nth-child(8) {
+.menu li:nth-child(8) {
 	border-right-color: @color/cyan-300;
 	background-color: @color/cyan-50;
 }
 
-ul.side-menu li:nth-child(9) {
+.menu li:nth-child(9) {
 	border-right-color: @color/teal-300;
 	background-color: @color/teal-50;
 }
 
-ul.side-menu li:nth-child(10) {
+.menu li:nth-child(10) {
 	border-right-color: @color/green-300;
 	background-color: @color/green-50;
 }
 
-ul.side-menu li:nth-child(11) {
+.menu li:nth-child(11) {
 	border-right-color: @color/light-green-300;
 	background-color: @color/light-green-50;
 }
 
-ul.side-menu li:nth-child(12) {
+.menu li:nth-child(12) {
 	border-right-color: @color/lime-300;
 	background-color: @color/lime-50;
 }

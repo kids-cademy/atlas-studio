@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Search</title>
-	<description>Atlas search.</description>
+	<title>Library</title>
+	<description>Librarian work place.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
@@ -10,6 +10,6 @@
 		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/CssFlags.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
-		<script>script/com/kidscademy/page/SearchPage.js</script>
+		<script>script/com/kidscademy/page/LibraryPage.js</script>
 	</scripts>
 </page>

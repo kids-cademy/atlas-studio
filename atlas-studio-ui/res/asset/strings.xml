@@ -3,7 +3,7 @@
 	<logo-type>kids (a)cademy</logo-type>
 	<slogan>learn by playing</slogan>
 
-	<dashboard>dashboard</dashboard>
+	<library>library</library>
 	<collection>collection</collection>
 	<search>search</search>
 	<account>account</account>
@@ -52,10 +52,20 @@
 	<object-related>Related</object-related>
 	<object-links>Links</object-links>
 
-	<object-preview>Preview</object-preview>
+	<library-export>Export All Collections</library-export>
+	
+	<collection-create>Create Collection</collection-create>
+	<collection-objects>Manage Objects</collection-objects>
+	<collection-edit>Edit Collection</collection-edit>
+	<collection-remove>Remove Collection</collection-remove>
+	<collection-export>Export Collection</collection-export>
+	
+	<object-create>Create Object</object-create>
+	<object-edit>Edit Object</object-edit>
+	<object-remove>Remove Object</object-remove>
+	<object-preview>Preview Object</object-preview>
 	<object-save>Save</object-save>
-	<object-remove>Remove</object-remove>
-
+	
 	<taxonomy-class-family>FAMILY</taxonomy-class-family>
 	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
 </string>

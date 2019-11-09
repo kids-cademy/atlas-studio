@@ -1,0 +1,63 @@
+.context-menu {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	width: 50%;
+	max-width: 600px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 8% auto;
+	padding: 1px;
+	background-color: @color/window-background;
+	border: solid 1px @color/border;
+}
+
+.context-menu.hidden {
+	display: none;
+}
+
+.context-menu .caption {
+	height: @dimen/window-caption-height;
+	line-height: @dimen/window-caption-height;
+	background-color: @color/window-caption;
+}
+
+.context-menu .caption img {
+	float: right;
+	height: @dimen/window-caption-height;
+	filter: invert(100%);
+	cursor: pointer;
+}
+
+.context-menu .content {
+	overflow: auto;	
+}
+
+.context-menu .object {
+	
+}
+
+.context-menu .object img {
+	float: left;
+	@style/image-border
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.context-menu .object::after {
+	@style/clear-after
+}
+
+.context-menu .object h3 {
+	padding-bottom: 4px;
+	border-bottom: solid 1px @color/border-light;
+	margin-top: 20px;
+	text-transform: uppercase;	
+}
+
+.context-menu .menu {
+	margin-top: 20px;
+	margin-bottom: 20px;	
+}

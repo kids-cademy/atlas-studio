@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Objects Collections</title>
+	<title>Collections</title>
 	<description>Manager for collections of objects.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
@@ -9,6 +9,7 @@
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/CssFlags.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/PageHeader.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/CollectionPage.js</script>

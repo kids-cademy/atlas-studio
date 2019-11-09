@@ -6,8 +6,9 @@ input {
 	height: @dimen/input-height;
 	line-height: @dimen/input-height;
 	padding: @dimen/input-padding;
-	background: 0;
-	border: solid 1px #76be76;
+	background: white;
+	border: solid 1px @color/border-input;
+	border-radius: @dimen/control-radius;
 	font-size: 18px;
 }
 
@@ -90,8 +91,9 @@ select {
 	height: @dimen/input-height;
 	line-height: @dimen/input-height;
 	padding: @dimen/input-padding;
-	background: 0;
-	border: solid 1px #76be76;
+	background: white;
+	border: solid 1px @color/border-input;
+	border-radius: @dimen/control-radius;
 	font-size: 18px;
 }
 
@@ -118,8 +120,9 @@ textarea {
 	overflow:auto;
 	font-size: 18px;
 	line-height: 22px;
-	background: 0;
-	border: solid 1px #76be76;
+	background: white;
+	border: solid 1px @color/border-input;
+	border-radius: @dimen/control-radius;
 	resize: none;
 }
 
@@ -143,6 +146,5 @@ input.invalid, textarea.invalid, select.invalid, img.invalid {
 }
 
 input:focus, textarea:focus, select:focus {
-	background: none;
-	border-color: @color/control-focus-border;
+	border-color: @color/border-focus;
 }

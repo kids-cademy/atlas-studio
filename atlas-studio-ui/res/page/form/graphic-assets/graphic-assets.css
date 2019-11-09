@@ -56,7 +56,7 @@
 	display: inline-block;
 	max-width: 240px;
 	flex: 0 0 240px;
-	border: solid 1px @color/border-muted;
+	border: solid 1px @color/border-light;
 	padding: 20px;
 	margin-right: 10px;
 	background-color: white;
@@ -65,7 +65,7 @@
 .graphic-assets .image-editor .preview {
 	display: inline-block;
 	position: relative;
-	border: solid 1px @color/border-muted;
+	border: solid 1px @color/border-light;
 	flex-grow: 1;
 	background-image: url(@image/preview-bg);
 }
@@ -75,7 +75,7 @@
 }
 
 .graphic-assets .image-editor .file-info h3 {
-	border-bottom: solid 1px @color/border-muted;
+	border-bottom: solid 1px @color/border-light;
 	padding-bottom: 20px;
 	margin-bottom: 20px;
 	white-space: nowrap;

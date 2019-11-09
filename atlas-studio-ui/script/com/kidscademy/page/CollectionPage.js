@@ -14,23 +14,24 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onListClick, this);
-		this._listView.hide();
+		this._listView.on("contextmenu", this._onContextMenu, this);
 
 		this._sidebar = this.getByCss(".side-bar .header");
 		this._sidebar.setObject(this._collection);
 
-		const sidebarActions = this.getByCss(".side-bar .actions");
-		sidebarActions.on(this, {
+		const sideMenu = this.getByCss(".side-bar .menu");
+		sideMenu.on(this, {
 			"&edit-collection": this._onEditCollection,
-			"&new-object": this._onNewObject,
+			"&create-object": this._onCreateObject,
 			"&remove-collection": this._onRemoveCollection
 		});
-		const exportAnchor = sidebarActions.getByCssClass("export");
+		const exportAnchor = sideMenu.getByCssClass("export");
 		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}`);
 
 		this._filterForm = this.getByCssClass("form-bar");
 		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "cards", "links");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
 		this._filterForm.setObject(this.getPageAttr("filter-form"));
 		this._listType.set(this.getPageAttr("list-type"));
@@ -48,7 +49,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	_onLoadItems() {
 		const filter = this._filterForm.getObject();
 		AtlasService.getCollectionItems(filter, this._collection.id, items => {
-			this._listView.setObject(items).show()
+			this._listView.setObject(items).show();
 			this._autoScroll();
 		});
 	}
@@ -76,13 +77,33 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	}
 
-	_onRemoveCollection() {
-
+	_onCreateObject() {
+		this._moveToPage("@link/form", "0");
 	}
 
-	_onNewObject() {
-		this._moveToPage("form.htm", "0");
+	// --------------------------------------------------------------------------------------------
+	// CONTEXT MENU HANDLERS
+
+	_onEditObject(objectView) {
+		const object = objectView.getUserData();
+		this._moveToPage("@link/form", object.id);
 	}
+
+	_onPreviewObject(objectView) {
+		const object = objectView.getUserData();
+		this._moveToPage("@link/reader", object.id);
+	}
+
+	_onRemoveObject(objectView) {
+		js.ua.System.confirm("@string/confirm-object-remove", (ok) => {
+			if (ok) {
+				const object = objectView.getUserData();
+				AtlasService.removeAtlasObject(object.id, () => objectView.remove());
+			}
+		});
+	}
+
+	// --------------------------------------------------------------------------------------------
 
 	_onListClick(ev) {
 		const li = ev.target.getParentByTag("li");
@@ -98,6 +119,15 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		else {
 			this._moveToPage("@link/form", objectId);
 		}
+	}
+
+	_onContextMenu(ev) {
+		const li = ev.target.getParentByTag("li");
+		if (li == null) {
+			return;
+		}
+		ev.halt();
+		this._contextMenu.open(li);
 	}
 
 	// --------------------------------------------------------------------------------------------

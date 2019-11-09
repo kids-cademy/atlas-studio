@@ -1,0 +1,12 @@
+.library {
+	display: flex;
+	flex-direction: column;
+}
+
+.library .content {
+	overflow-y: auto;
+}
+
+.library .list-view {
+	margin: 20px;
+}

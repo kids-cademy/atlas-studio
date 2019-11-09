@@ -31,6 +31,9 @@
 	<sys-message-text>#FAFAD2</sys-message-text>
 	<sys-message-border>#709fa0</sys-message-border>
 
+	<window-caption>@color/teal-500</window-caption>
+	<window-background>@color/grey-50</window-background>
+	
 	<join-button>#367297</join-button>
 	<button-backgroundx>#367297</button-backgroundx>
 	<primaryx>#123456</primaryx>
@@ -41,9 +44,13 @@
 	<secondary-text>#2E7D32</secondary-text>
 	<accent-header>yellow</accent-header>
 	<accent-text>yellow</accent-text>
+
+	<border-image>@color/grey-400</border-image>
+	<border-input>@color/grey-400</border-input>
+	<border-focus>#76be76</border-focus>
 	
 	<border>@color/grey-700</border>
+	<border-light>@color/grey-300</border-light>
 	<border-accent>@color/blue-100</border-accent>
-	<border-muted>@color/grey-300</border-muted>
 	<border-alert>@color/red-300</border-alert>
 </color>

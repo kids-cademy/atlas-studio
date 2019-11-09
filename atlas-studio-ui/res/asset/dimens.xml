@@ -35,7 +35,7 @@
 	<!-- actions -->
 	<action-icon-size>48px</action-icon-size>
 	<action-small-icon-size>32px</action-small-icon-size>
-	<action-margin>20px</action-margin>
+	<action-margin>12px</action-margin>
 
 	<action-size>64px</action-size>
 	<page-padding>32px</page-padding>
@@ -54,9 +54,12 @@
 
 	<icon-size>96px</icon-size>
 	<icon-size-small>64px</icon-size-small>
+	<window-caption-height>48px</window-caption-height>
 
 	<input-height>42px</input-height>
 	<input-padding>0 10px</input-padding>
+	<control-radius>4px</control-radius>
+	
 	<z-index-multi-select>1000</z-index-multi-select>
 
 </dimen>

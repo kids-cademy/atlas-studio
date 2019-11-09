@@ -32,7 +32,7 @@ body>.flex-content .side-bar {
 	flex-grow: 0;
 	flex-basis: @dimen/page-sidebar-width;
 	xmargin-right: 20px;
-	border-right: solid 1px @color/border-muted;
+	border-right: solid 1px @color/border-light;
 	background-color: #f8f8f8;
 	overflow: hidden;
 }

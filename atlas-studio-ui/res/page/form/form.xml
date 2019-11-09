@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Object Form</title>
+	<title>Form</title>
 	<description>Object form page.</description>
 	<scripts>
 		<script>script/com/kidscademy/Form.js</script>
