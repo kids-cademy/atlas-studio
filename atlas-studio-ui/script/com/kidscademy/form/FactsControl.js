@@ -77,6 +77,9 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 	}
 
 	_onAdd() {
+		if (this._editor.isVisible()) {
+			return;
+		}
 		this._showEditor(true);
 		this._termInput.reset();
 		this._definitionInput.reset();

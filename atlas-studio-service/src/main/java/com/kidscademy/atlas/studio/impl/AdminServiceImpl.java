@@ -18,12 +18,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean login(Login login) {
-	User user = dao.getUser(login);
-	if (user != null) {
-	    context.login(user);
-	    return true;
-	}
-	return false;
+	return context.login(login.getEmailAddress(), login.getPassword());
     }
 
     @Override

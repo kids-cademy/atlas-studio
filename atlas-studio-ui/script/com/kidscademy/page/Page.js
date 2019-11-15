@@ -33,6 +33,11 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         js.ua.System.error(`${er.cause}: ${er.message}`);
     }
 
+    onAuthenticationRequired(url) {
+        $error(`com.kidscademy.page.Page#onAuthenticationRequired: Authentication required for ${url}`);
+        js.ua.System.error(`Authentication required for ${url}`);
+    }
+
     onBusinessFail(er) {
         if (er.errorCode > this.ERRORS.length) {
             super.onBusinessFail(er);

@@ -122,6 +122,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onContextMenu(ev) {
+		if (ev.ctrlKey) {
+			return;
+		}
 		const li = ev.target.getParentByTag("li");
 		if (li == null) {
 			return;

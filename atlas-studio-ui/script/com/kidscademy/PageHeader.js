@@ -52,7 +52,7 @@ com.kidscademy.PageHeader = class extends js.dom.Element {
 	}
 
 	_onLogoutAction(ev) {
-		AdminService.logout(() => WinMain.assign("community.htm"));
+		AdminService.logout(() => WinMain.assign("home.htm"));
 	}
 	
 	/**

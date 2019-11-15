@@ -25,6 +25,10 @@
 		<wiki-how interface="com.kidscademy.atlas.studio.www.WikiHow" type="REMOTE" url="https:xpath://www.wikihow.com/" />
 	</managed-classes>
 	<!--<observer period="60000" />-->
+	<login>
+		<property name="realm" value="Atlas Studio" />
+		<property name="page" value="home.htm" />
+	</login>
 	<views>
 		<repository path="${catalina.base}/webapps/atlas-studio/" files-pattern="*.htm" />
 	</views>
