@@ -1,6 +1,6 @@
 package com.kidscademy.atlas.studio.tool;
 
-import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.format;
+import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.buildCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class ImageProcessorImpl implements ImageProcessor {
 
     @Override
     public ImageInfo getImageInfo(File imageFile) throws IOException {
-	ImageInfoResult result = identify.exec(ImageInfoResult.class, imageFile.getAbsolutePath());
+	ImageInfoResult result = identify.exec(ImageInfoResult.class, buildCommand("${imageFile}", imageFile));
 	return result.getImageInfo();
     }
 
@@ -101,17 +101,17 @@ public class ImageProcessorImpl implements ImageProcessor {
     @Override
     public String perceptualHash(File imageFile) throws IOException {
 	PerceptualHashResult result = identify.exec(PerceptualHashResult.class,
-		format("-verbose -define identify:moments ${imageFile}", imageFile));
+		buildCommand("-verbose -define identify:moments ${imageFile}", imageFile));
 	return result.getHash();
     }
 
     @Override
     public double perceptualDistance(File imageFile1, File imageFile2) throws IOException {
-	String command1 = format("-verbose -define identify:moments ${imageFile}", imageFile1);
+	String command1 = buildCommand("-verbose -define identify:moments ${imageFile}", imageFile1);
 	PerceptualHashResult result1 = identify.exec(PerceptualHashResult.class, command1);
 	List<Double> values1 = result1.getValues();
 
-	String command2 = format("-verbose -define identify:moments ${imageFile}", imageFile2);
+	String command2 = buildCommand("-verbose -define identify:moments ${imageFile}", imageFile2);
 	PerceptualHashResult result2 = identify.exec(PerceptualHashResult.class, command2);
 	List<Double> values2 = result2.getValues();
 
@@ -125,7 +125,7 @@ public class ImageProcessorImpl implements ImageProcessor {
     @Override
     public <T> T info(File imageFile, String attribute, Class<T> type) throws IOException {
 	// https://imagemagick.org/script/escape.php
-	String command = format("${imageFile} -format %[${attribute}] info:", imageFile, attribute);
+	String command = buildCommand("${imageFile} -format %[${attribute}] info:", imageFile, attribute);
 	ValueResult<T> result = convert.exec(ValueResult.class, command);
 	return result.getValue(type);
     }
@@ -138,6 +138,6 @@ public class ImageProcessorImpl implements ImageProcessor {
     // --------------------------------------------------------------------------------------------
 
     private void exec(String format, Object... args) throws IOException {
-	convert.exec(format(format, args));
+	convert.exec(buildCommand(format, args));
     }
 }

@@ -96,10 +96,11 @@ public class AtlasCollectionExportView implements View {
 	    zip.closeEntry();
 
 	    addEntry(zip, item, atlasObject.getSampleName());
+	    addEntry(zip, item, atlasObject.getWaveformName());
 	    addEntry(zip, exportObject.getName(), "icon.jpg", pictureFile(atlasObject, "icon", 96, 96));
-	    addEntry(zip, exportObject.getName(), "contextual.jpg", pictureFile(atlasObject, "contextual", 920, 560));
 	    addEntry(zip, exportObject.getName(), "cover.png", pictureFile(atlasObject, "cover", 560, 0));
 	    addEntry(zip, exportObject.getName(), "featured.png", pictureFile(atlasObject, "featured", 560, 0));
+	    addEntry(zip, exportObject.getName(), "contextual.jpg", pictureFile(atlasObject, "contextual", 920, 560));
 	}
 
 	ZipEntry entry = new ZipEntry("atlas/search-index.json");

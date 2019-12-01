@@ -1,6 +1,6 @@
 package com.kidscademy.atlas.studio.tool;
 
-import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.format;
+import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.buildCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,11 +96,11 @@ public class AudioProcessorImpl implements AudioProcessor {
 	// risk for inside silence remove
 
 	if (audioFile.length() > CT.MAX_TRIM_FILE_SIZE) {
-	    String start = format(
+	    String start = buildCommand(
 		    "silenceremove=start_periods=1:start_duration=${start_duration}:start_threshold=-65dB:detection=peak",
 		    SILENCE_DURATION);
 
-	    String stop = format(
+	    String stop = buildCommand(
 		    "silenceremove=stop_periods=1:stop_duration=${stop_duration}:stop_threshold=-65dB:detection=peak",
 		    SILENCE_DURATION);
 
@@ -108,7 +108,7 @@ public class AudioProcessorImpl implements AudioProcessor {
 	    return;
 	}
 
-	String remove = format(
+	String remove = buildCommand(
 		"silenceremove=start_periods=1:start_duration=${start_duration}:start_threshold=-60dB:detection=peak",
 		SILENCE_DURATION);
 
@@ -166,14 +166,14 @@ public class AudioProcessorImpl implements AudioProcessor {
     // --------------------------------------------------------------------------------------------
 
     private void exec(String format, Object... args) throws IOException {
-	ffmpeg.exec(format(format, args));
+	ffmpeg.exec(buildCommand(format, args));
     }
 
     private <T> T exec(Type type, String format, Object... args) throws IOException {
-	return ffmpeg.exec(type, format(format, args));
+	return ffmpeg.exec(type, buildCommand(format, args));
     }
 
     private ProbeResult probe(String format, Object... args) throws IOException {
-	return ffprobe.exec(ProbeResult.class, format(format, args));
+	return ffprobe.exec(ProbeResult.class, buildCommand(format, args));
     }
 }

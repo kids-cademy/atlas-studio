@@ -16,13 +16,13 @@ import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
 import js.rmi.BusinessException;
-import js.tiny.container.annotation.Private;
 import js.tiny.container.annotation.Public;
 import js.tiny.container.annotation.RolesAllowed;
 import js.tiny.container.annotation.Service;
 import js.tiny.container.http.form.Form;
 
 @Service
+//@RolesAllowed("EDITOR")
 @Public
 public interface AtlasService {
     List<AtlasCollection> getCollections();
@@ -44,7 +44,6 @@ public interface AtlasService {
 
     AtlasObject saveAtlasObject(AtlasObject object) throws IOException;
 
-    @Private
     @RolesAllowed("LIBRARIAN")
     void removeAtlasObject(int objectId);
 
@@ -58,6 +57,8 @@ public interface AtlasService {
 
     Map<String, String> importObjectsFacts(Link link);
 
+    AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException;
+    
     List<Taxon> loadAtlasObjectTaxonomy(String objectName);
 
     // ----------------------------------------------------------------------------------------------

@@ -13,7 +13,7 @@ import js.util.Strings;
 public abstract class AbstractToolProcess implements ToolProcess {
     private static final Log log = LogFactory.getLog(AbstractToolProcess.class);
 
-    private static final long FFMPEG_TIMEOUT = 16000L;
+    private static final long EXECUTION_TIMEOUT = 16000L;
 
     public void exec(String command) throws IOException {
 	exec(VoidResult.class, command);
@@ -29,7 +29,7 @@ public abstract class AbstractToolProcess implements ToolProcess {
     }
 
     protected static void wait(Process process, Thread stdinThread, Object lock) throws IOException {
-	long timeout = FFMPEG_TIMEOUT;
+	long timeout = EXECUTION_TIMEOUT;
 	long timestamp = System.currentTimeMillis() + timeout;
 
 	synchronized (lock) {
@@ -47,7 +47,7 @@ public abstract class AbstractToolProcess implements ToolProcess {
 
 	if (timeout <= 0) {
 	    process.destroy();
-	    throw new IOException("FFmpeg process timeout. See stdout logs for process printout.");
+	    throw new IOException("Process execution timeout. See stdout logs for process printout.");
 	}
 
 	int returnCode = -1;
@@ -57,8 +57,8 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	    log.error(e);
 	}
 	if (returnCode != 0) {
-	    throw new IOException(String
-		    .format("FFmpeg process fail. Exit code |%d|. See stdout logs for process printout.", returnCode));
+	    throw new IOException(String.format(
+		    "Process execution fail. Exit code |%d|. See stdout logs for process printout.", returnCode));
 	}
     }
 
@@ -70,7 +70,21 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	}
     }
 
-    public static String format(String format, Object... args) {
+    /**
+     * Inject arguments into command template. Arguments are processed by position
+     * so order should correct. It is caller responsibility to provide arguments in
+     * proper order.
+     * <p>
+     * File arguments are handled specially: always uses absolute path and double
+     * quote.
+     * 
+     * @param commandTemplate
+     *            command template,
+     * @param arguments
+     *            command template arguments.
+     * @return command string.
+     */
+    public static String buildCommand(String commandTemplate, Object... arguments) {
 	// 0: NONE
 	// 1: APPEND
 	// 2: WAIT_OPEN_BRACE
@@ -78,8 +92,8 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	int state = 1;
 
 	StringBuilder valueBuilder = new StringBuilder();
-	for (int charIndex = 0, argIndex = 0; charIndex < format.length(); ++charIndex) {
-	    char c = format.charAt(charIndex);
+	for (int charIndex = 0, argIndex = 0; charIndex < commandTemplate.length(); ++charIndex) {
+	    char c = commandTemplate.charAt(charIndex);
 	    switch (state) {
 	    case 1:
 		if (c == '$') {
@@ -97,12 +111,19 @@ public abstract class AbstractToolProcess implements ToolProcess {
 
 	    case 3:
 		if (c == '}') {
-		    if (argIndex == args.length) {
+		    if (argIndex == arguments.length) {
 			throw new BugError("Not enough arguments provided for given command format.");
 		    }
-		    Object arg = args[argIndex];
-		    // special handling for files argument; always uses absolute path
-		    valueBuilder.append(arg instanceof File? ((File)arg).getAbsolutePath(): arg.toString());
+
+		    Object argument = arguments[argIndex];
+		    String value;
+		    if (argument instanceof File) {
+			value = Strings.concat('"', ((File) argument).getAbsolutePath(), '"');
+		    } else {
+			value = argument.toString();
+		    }
+
+		    valueBuilder.append(value);
 		    ++argIndex;
 		    state = 1;
 		}

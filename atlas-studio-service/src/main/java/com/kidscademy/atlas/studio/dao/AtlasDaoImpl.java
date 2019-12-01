@@ -32,7 +32,7 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public AtlasCollection getCollectionById(int collectionId) {
-	return em.find(AtlasCollection.class, 1);
+	return em.find(AtlasCollection.class, collectionId);
     }
 
     @Override

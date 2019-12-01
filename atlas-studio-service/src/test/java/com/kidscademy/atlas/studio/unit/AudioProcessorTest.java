@@ -76,7 +76,7 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i %s %s", audioFile, new File("audio.wav")));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" \"%s\"", audioFile, new File("audio.wav")));
 
 	ArgumentCaptor<File> wavFileCaptor = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFileCaptor = ArgumentCaptor.forClass(File.class);
@@ -95,7 +95,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(), equalToFormat(
-		"-i %s -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse,silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse %s",
+		"-i \"%s\" -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse,silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse \"%s\"",
 		audioFile, targetFile));
     }
 
@@ -104,6 +104,7 @@ public class AudioProcessorTest {
 	File audioFile = Mockito.mock(File.class);
 	File targetFile = new File("target.mp3");
 
+	when(audioFile.getAbsolutePath()).thenReturn(new File("audio.mp3").getAbsolutePath());
 	when(audioFile.length()).thenReturn(CT.MAX_TRIM_FILE_SIZE + 1L);
 
 	audio.trimSilence(audioFile, targetFile);
@@ -111,7 +112,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(), equalToFormat(
-		"-i %s -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-65dB:detection=peak,silenceremove=stop_periods=1:stop_duration=0.5:stop_threshold=-65dB:detection=peak %s",
+		"-i \"%s\" -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-65dB:detection=peak,silenceremove=stop_periods=1:stop_duration=0.5:stop_threshold=-65dB:detection=peak \"%s\"",
 		audioFile, targetFile));
     }
 
@@ -124,7 +125,7 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i %s -ss 12.3 -to 45.67 %s", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -ss 12.3 -to 45.67 \"%s\"", audioFile, targetFile));
     }
 
     @Test
@@ -136,7 +137,7 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i %s -af pan=mono|c0=0.5*c0+0.5*c1 %s", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af pan=mono|c0=0.5*c0+0.5*c1 \"%s\"", audioFile, targetFile));
     }
 
     @Test
@@ -154,10 +155,10 @@ public class AudioProcessorTest {
 
 	verify(ffmpeg).exec(typeCaptor.capture(), commandCaptor.capture());
 	assertThat(typeCaptor.getValue(), equalTo((Type) VolumeInfo.class));
-	assertThat(commandCaptor.getValue(), equalToFormat("-i %s -af volumedetect -f null /dev/null", audioFile));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af volumedetect -f null /dev/null", audioFile));
 
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i %s -af volume=3.2dB %s", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af volume=3.2dB \"%s\"", audioFile, targetFile));
     }
 
     @Test
@@ -170,7 +171,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i %s -af afade=t=in:ss=0:d=12.345:curve=tri %s", audioFile, targetFile));
+		equalToFormat("-i \"%s\" -af afade=t=in:ss=0:d=12.345:curve=tri \"%s\"", audioFile, targetFile));
     }
 
     @Test
@@ -186,7 +187,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i %s -af afade=t=out:st=21.0:d=2.1:curve=tri %s", audioFile, targetFile));
+		equalToFormat("-i \"%s\" -af afade=t=out:st=21.0:d=2.1:curve=tri \"%s\"", audioFile, targetFile));
     }
 
     // --------------------------------------------------------------------------------------------

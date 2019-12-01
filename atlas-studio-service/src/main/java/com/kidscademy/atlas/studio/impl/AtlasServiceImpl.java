@@ -21,6 +21,7 @@ import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
@@ -39,12 +40,12 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
+import com.kidscademy.atlas.studio.www.LifeFormWikipediaArticle;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikiHow;
-import com.kidscademy.atlas.studio.www.Wikipedia;
-import com.kidscademy.atlas.studio.www.WikipediaPageSummary;
+import com.kidscademy.atlas.studio.www.WikipediaArticleText;
 
 import js.json.Json;
 import js.lang.BugError;
@@ -55,7 +56,6 @@ import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.tiny.container.http.form.UploadedFile;
-import js.util.Classes;
 import js.util.Params;
 
 public class AtlasServiceImpl implements AtlasService {
@@ -68,7 +68,6 @@ public class AtlasServiceImpl implements AtlasService {
     private final TaxonomyDao taxonomyDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
-    private final Wikipedia wikipedia;
     private final SoftSchools softSchools;
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
@@ -80,13 +79,12 @@ public class AtlasServiceImpl implements AtlasService {
 	log.trace("AtlasServiceImpl(AppContext)");
 
 	this.context = context;
-	this.json = Classes.loadService(Json.class);
+	this.json = context.loadService(Json.class);
 
 	this.atlasDao = context.getInstance(AtlasDao.class);
 	this.taxonomyDao = context.getInstance(TaxonomyDao.class);
 	this.audioProcessor = context.getInstance(AudioProcessor.class);
 	this.imageProcessor = context.getInstance(ImageProcessor.class);
-	this.wikipedia = context.getInstance(Wikipedia.class);
 	this.softSchools = context.getInstance(SoftSchools.class);
 	this.freeDictionary = context.getInstance(TheFreeDictionary.class);
 	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
@@ -211,8 +209,8 @@ public class AtlasServiceImpl implements AtlasService {
 	    return Strings.html(softSchools.getFacts(link.getPath()).getDescription());
 
 	case "wikipedia.org":
-	    WikipediaPageSummary summary = wikipedia.getPageSummary(link.getFileName());
-	    return summary != null ? Strings.html(summary.getExtract()) : null;
+	    WikipediaArticleText article = new WikipediaArticleText(link.getUrl());
+	    return article.getText();
 
 	default:
 	    return null;
@@ -234,13 +232,51 @@ public class AtlasServiceImpl implements AtlasService {
 	}
     }
 
+    @Override
+    public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException {
+	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(articleURL);
+
+	AtlasObject object = new AtlasObject();
+	object.setCollection(atlasDao.getCollectionById(collectionId));
+
+	object.setName(Strings.scientificToDashedName(article.getScientificName()));
+	object.setDisplay(article.getCommonName());
+	object.setDefinition(article.getDefinition());
+	object.setDescription(article.getDescription());
+
+	object.setStartDate(article.getStartDate());
+	object.setEndDate(article.getEndDate());
+	object.setConservation(ConservationStatus.forDisplay(article.getConservationStatus()));
+
+	List<Taxon> taxonomy = loadAtlasObjectTaxonomy(object.getName());
+	if (taxonomy.isEmpty()) {
+	    taxonomy = article.getTaxonomy();
+	}
+	if (!taxonomy.isEmpty()) {
+	    object.setTaxonomy(taxonomy);
+	}
+
+	List<Link> links = new ArrayList<>();
+	links.add(Link.create(articleURL,
+		String.format("Wikipedia article about %s.", object.getDisplay().toLowerCase())));
+	object.setLinks(links);
+
+	object.setState(AtlasObject.State.DEVELOPMENT);
+	object.setAliases(new ArrayList<String>());
+	object.setImages(new HashMap<String, Image>());
+	object.setLastUpdated(new Date());
+
+	saveAtlasObject(object);
+	return atlasDao.getAtlasItem(object.getId());
+    }
+
     private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Suborder",
 	    "Family", "Genus", "Species", "Subspecies" };
 
     @Override
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
 	Params.notNullOrEmpty(objectName, "Atlas object name");
-	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.binomialName(objectName));
+	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.dashedToScientificName(objectName));
 	List<Taxon> taxonomy = new ArrayList<>(TAXON_NAMES.length);
 	for (String taxonName : TAXON_NAMES) {
 	    if (sourceTaxonomy.containsKey(taxonName)) {

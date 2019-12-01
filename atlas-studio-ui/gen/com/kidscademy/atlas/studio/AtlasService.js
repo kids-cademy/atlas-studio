@@ -329,6 +329,37 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Import wikipedia object.
+	 *
+	 * @param int collectionId,
+	 * @param java.net.URL articleURL,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.AtlasItem
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 importWikipediaObject: function(collectionId, articleURL) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Collection id argument is not a number.");
+		$assert(typeof articleURL !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Article URL argument is undefined.");
+		$assert(articleURL === null || js.lang.Types.isString(articleURL), "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Article URL argument is not a string.");
+
+		var __callback__ = arguments[2];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Callback is not a function.");
+		var __scope__ = arguments[3];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importWikipediaObject", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importWikipediaObject");
+		rmi.setParameters(collectionId, articleURL);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Load atlas object taxonomy.
 	 *
 	 * @param java.lang.String objectName,

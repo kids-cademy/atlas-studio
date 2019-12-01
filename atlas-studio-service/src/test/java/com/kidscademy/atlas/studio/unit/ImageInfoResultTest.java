@@ -100,6 +100,28 @@ public class ImageInfoResultTest {
 	assertThat(matcher.group(11), equalTo("946990"));
 	assertThat(matcher.group(12), equalTo("B"));
     }
+    
+    @Test
+    public void formatPattern5() {
+	String line = "picture file.jpg JPEG 920x560 920x560+0+0 8-bit sRGB 178854B 0.047u 0:00.045";
+	Pattern format = Classes.getFieldValue(ImageInfoResult.class, "FORMAT");
+	Matcher matcher = format.matcher(line);
+	assertTrue(matcher.find());
+	assertThat(matcher.groupCount(), equalTo(12));
+	assertThat(matcher.group(1), equalTo("picture file.jpg"));
+	assertThat(matcher.group(2), equalTo("JPEG"));
+	assertThat(matcher.group(3), equalTo("920"));
+	assertThat(matcher.group(4), equalTo("560"));
+	assertThat(matcher.group(5), equalTo("920"));
+	assertThat(matcher.group(6), equalTo("560"));
+	assertThat(matcher.group(7), equalTo("0"));
+	assertThat(matcher.group(8), equalTo("0"));
+	assertThat(matcher.group(9), equalTo("8"));
+	assertThat(matcher.group(10), equalTo("sRGB"));
+	assertThat(matcher.group(11), equalTo("178854"));
+	assertThat(matcher.group(12), equalTo("B"));
+    }
+    
 
     @Test
     public void getImageInfo1() {

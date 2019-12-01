@@ -39,6 +39,7 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 
+import js.json.Json;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.util.Classes;
@@ -78,6 +79,7 @@ public class AdminServiceTest {
 	when(context.getAppFile("search-index"))
 		.thenReturn(new File("fixture/tomcat/work/Applications/test-app/search-index"));
 
+	when(context.loadService(Json.class)).thenReturn(Classes.loadService(Json.class));
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
 	when(context.getInstance(AudioProcessor.class)).thenReturn(audioProcessor);
 
