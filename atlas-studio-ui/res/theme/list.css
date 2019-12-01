@@ -131,8 +131,18 @@ ol li {
 	color: #1985e2;
 }
 
+.list-view.cards .item .name {
+	margin-bottom: 4px;
+	color: #f74498;
+}
+
+.list-view.cards .item.published .name {
+	color: #1985e2;
+}
+
 .list-view.cards .item .last-updated {
 	padding-bottom: 4px;
+	margin-top: 0;
 	color: #b9095c;
 }
 
