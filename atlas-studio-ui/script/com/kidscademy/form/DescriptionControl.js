@@ -90,7 +90,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		const links = this._formPage.getLinks("description");
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert("@string/no-description-provider");
+				js.ua.System.alert("@string/alert-no-description-provider");
 				break;
 
 			case 1:

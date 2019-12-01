@@ -52,7 +52,7 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 		const links = this._formPage.getLinks("definition");
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert("@string/no-definition-provider");
+				js.ua.System.alert("@string/alert-no-definition-provider");
 				break;
 
 			case 1:

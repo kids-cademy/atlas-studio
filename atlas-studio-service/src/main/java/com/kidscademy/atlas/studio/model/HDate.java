@@ -2,6 +2,8 @@ package com.kidscademy.atlas.studio.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Embeddable;
 
@@ -146,13 +148,13 @@ public class HDate implements Comparable<HDate>, Displayable {
 	    }
 
 	case KYA:
-	    return String.format("%.1e kilo years ago", value);
+	    return String.format("%.1f kilo years ago", value);
 
 	case MYA:
-	    return String.format("%.1e million years ago", value);
+	    return String.format("%.1f million years ago", value);
 
 	case BYA:
-	    return String.format("%.1e billion years ago", value);
+	    return String.format("%.1f billion years ago", value);
 
 	default:
 	    break;
@@ -186,7 +188,18 @@ public class HDate implements Comparable<HDate>, Displayable {
     }
 
     public enum Format {
-	DATE, YEAR, DECADE, CENTURY, MILLENNIA, KYA, MYA, BYA
+	DATE, YEAR, DECADE, CENTURY, MILLENNIA, KYA, MYA, BYA;
+
+	private static Map<String, HDate.Format> FORMATS = new HashMap<>();
+	static {
+	    FORMATS.put("ka", HDate.Format.KYA);
+	    FORMATS.put("ma", HDate.Format.MYA);
+	    FORMATS.put("ga", HDate.Format.BYA);
+	}
+
+	public static Format yearsAgo(String value) {
+	    return FORMATS.get(value);
+	}
     }
 
     public enum Period {

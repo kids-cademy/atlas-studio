@@ -39,4 +39,9 @@ public class Taxon implements Displayable {
     public String toDisplay() {
 	return Strings.concat(name, ' ', value);
     }
+
+    @Override
+    public String toString() {
+	return Strings.toString(name, value);
+    }
 }

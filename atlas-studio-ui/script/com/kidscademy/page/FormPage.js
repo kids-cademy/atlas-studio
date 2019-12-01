@@ -14,6 +14,8 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
 
+		this.PRREVIEW_OBJECT = "preview-object";
+
 		/**
 		 * Flag true when a form control was changed. Used to signal user changes when leaving the page.
 		 * @type {Boolean}
@@ -90,6 +92,14 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_loadObject() {
+		if (this.hasContextAttr(this.PRREVIEW_OBJECT)) {
+			// if there is preview object stored on global storage we are back from reader preview page
+			// restore form from saved preview object and remove preview object from global context
+			this._onObjectLoaded(this.getContextAttr(this.PRREVIEW_OBJECT));
+			this.removeContextAttr(this.PRREVIEW_OBJECT);
+			return;
+		}
+
 		if (this._objectId !== 0) {
 			AtlasService.getAtlasObject(this._objectId, this._onObjectLoaded, this);
 		}
@@ -133,21 +143,8 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	// --------------------------------------------------------------------------------------------
 
 	_onPreview() {
-		if (this._object.id === 0) {
-			js.ua.System.alert("@string/object-not-saved");
-			return;
-		}
-
-		if (!this._dirty) {
-			WinMain.assign("reader.htm");
-			return;
-		}
-
-		js.ua.System.confirm("@string/confirm-object-save", ok => {
-			if (ok) {
-				this._onSave(() => WinMain.assign("reader.htm"));
-			}
-		});
+		this.setContextAttr(this.PRREVIEW_OBJECT, this._form.getObject(this._object));
+		WinMain.assign("@link/reader");
 	}
 
 	_onSave(previewCallback) {

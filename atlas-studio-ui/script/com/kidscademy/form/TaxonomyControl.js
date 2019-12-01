@@ -188,7 +188,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_onLoad() {
 		const objectName = this._formPage.getObject().name;
 		if (!objectName) {
-			js.ua.System.alert("@string/object-no-name");
+			js.ua.System.alert("@string/alert-object-no-name");
 			return;
 		}
 		AtlasService.loadAtlasObjectTaxonomy(objectName, this.setValue, this);

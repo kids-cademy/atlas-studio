@@ -13,11 +13,8 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		super();
 		this._objectView = WinMain.doc.getByTag("body");
 
-		var objectId = Number(this.getContextAttr("objectId"));
-		AtlasService.getAtlasObject(objectId, this._onObjectLoaded, this);
-	}
+		const object = this.getContextAttr("preview-object");
 
-	_onObjectLoaded(object) {
 		function list(object) {
 			var list = [];
 			for (var name in object) {

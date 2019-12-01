@@ -19,12 +19,17 @@
 	<three-no>3xNO</three-no>
 	<message>Mesage for script variable.</message>
 
+	<alert-no-definition-provider>No provider link for object definition.</alert-no-definition-provider>
+	<alert-no-description-provider>No provider link for object description.</alert-no-description-provider>
+	<alert-object-not-saved>Please save atlas object before opening it in preview page.</alert-object-not-saved>
+	<alert-object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</alert-object-no-name>
+	<alert-object-no-display>Please enter a display name for this object.</alert-object-no-display>
+	<alert-invalid-link-url>Link invalid URL.</alert-invalid-link-url>
+
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
 	<confirm-definition-remove>Please confirm object definition remove.</confirm-definition-remove>
-	<no-definition-provider>No provider link for object definition.</no-definition-provider>
 	<confirm-description-overwrite>Please confirm atlas object description overwrite.</confirm-description-overwrite>
 	<confirm-description-remove>Please confirm object description remove.</confirm-description-remove>
-	<no-description-provider>No provider link for object description.</no-description-provider>
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
 	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
 	<confirm-audio-remove>Please confirm audio assets remove.</confirm-audio-remove>
@@ -32,11 +37,10 @@
 	<confirm-all-facts-remove>Please confirm all facts remove.</confirm-all-facts-remove>
 	<confirm-area-remove>Please confirm geographical area remove.</confirm-area-remove>
 	<confirm-link-remove>Please confirm link remove.</confirm-link-remove>
-	<object-not-saved>Please save atlas object before opening it in preview page.</object-not-saved>
-	<object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</object-no-name>
-	<object-no-display>Please enter a display name for this object.</object-no-display>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
 	<confirm-object-not-saved>Atlas object is changed. Please confirm page leaving.</confirm-object-not-saved>
+
+	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 
 	<published-object>Published Object</published-object>
 
@@ -53,19 +57,20 @@
 	<object-links>Links</object-links>
 
 	<library-export>Export All Collections</library-export>
-	
+
 	<collection-create>Create Collection</collection-create>
 	<collection-objects>Manage Objects</collection-objects>
 	<collection-edit>Edit Collection</collection-edit>
 	<collection-remove>Remove Collection</collection-remove>
 	<collection-export>Export Collection</collection-export>
-	
+	<collection-import-wikipedia>Import Wikipedia Article</collection-import-wikipedia>
+
 	<object-create>Create Object</object-create>
 	<object-edit>Edit Object</object-edit>
 	<object-remove>Remove Object</object-remove>
 	<object-preview>Preview Object</object-preview>
 	<object-save>Save</object-save>
-	
+
 	<taxonomy-class-family>FAMILY</taxonomy-class-family>
 	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
 </string>

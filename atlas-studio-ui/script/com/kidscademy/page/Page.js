@@ -24,6 +24,7 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         this.getByCss("header .back.action").on("click", this._onBack, this);
 
         WinMain.on("unload", this._onUnload, this);
+        WinMain.page = this;
     }
 
     _onUnload() { }
@@ -56,6 +57,10 @@ com.kidscademy.page.Page = class extends js.ua.Page {
 
     removeContextAttr(name) {
         localStorage.removeItem(name);
+    }
+
+    hasContextAttr(name) {
+        return localStorage.getItem(name) != null;
     }
 
     setPageAttr(name, object) {

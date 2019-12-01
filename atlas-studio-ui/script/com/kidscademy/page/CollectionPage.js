@@ -21,8 +21,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 		const sideMenu = this.getByCss(".side-bar .menu");
 		sideMenu.on(this, {
-			"&edit-collection": this._onEditCollection,
 			"&create-object": this._onCreateObject,
+			"&import-wikipedia": this._onImportWikipedia,
+			"&edit-collection": this._onEditCollection,
 			"&remove-collection": this._onRemoveCollection
 		});
 		const exportAnchor = sideMenu.getByCssClass("export");
@@ -73,12 +74,21 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	// --------------------------------------------------------------------------------------------
 	// SIDE MENU HANDLERS
 
-	_onEditCollection() {
-
-	}
-
 	_onCreateObject() {
 		this._moveToPage("@link/form", "0");
+	}
+
+	_onImportWikipedia() {
+		js.ua.System.prompt("@string/prompt-wikipedia-url", url => {
+			AtlasService.importWikipediaObject(this._collection.id, url, object => {
+				this._listView.addObject(object);
+				this._autoScroll(object.id);
+			});
+		});
+	}
+
+	_onEditCollection() {
+
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -141,8 +151,10 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		WinMain.assign(pageName);
 	}
 
-	_autoScroll() {
-		var objectId = this.getPageAttr("object-id");
+	_autoScroll(objectId) {
+		if (typeof objectId === "undefined") {
+			objectId = this.getPageAttr("object-id");
+		}
 		if (objectId == null) {
 			return;
 		}

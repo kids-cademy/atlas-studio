@@ -235,10 +235,14 @@ public class Link implements Displayable {
      * @return newly created link.
      */
     public static Link create(Link template) {
-	String domain = domain(template.url);
+	return create(template.getUrl(), template.getDescription());
+    }
+
+    public static Link create(URL url, String description) {
+	String domain = domain(url);
 
 	Link link = new Link();
-	link.url = template.url;
+	link.url = url;
 	link.domain = domain;
 
 	link.display = DOMAINS.get(domain)[0];
@@ -246,9 +250,9 @@ public class Link implements Displayable {
 	    log.warn("Not registered display name for base doamin |%s|.", domain);
 	    link.display = domain;
 	}
-	link.description = template.description;
+	link.description = description;
 
-	link.iconName = Strings.concat(basedomain(template.url), ".png");
+	link.iconName = Strings.concat(basedomain(url), ".png");
 	link.iconSrc = Files.linkSrc(link.iconName);
 	link.features = DOMAINS.get(domain)[1];
 	return link;

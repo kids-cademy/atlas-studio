@@ -1,5 +1,8 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import js.lang.Displayable;
 
 public enum ConservationStatus implements Displayable {
@@ -50,5 +53,21 @@ public enum ConservationStatus implements Displayable {
 
     public boolean isExtinct() {
 	return this == EW || this == EX;
+    }
+
+    private static Map<String, ConservationStatus> VALUES = new HashMap<>();
+    static {
+	VALUES.put("Least Concern", ConservationStatus.LC);
+	VALUES.put("Near Threatened", ConservationStatus.NT);
+	VALUES.put("Vulnerable", ConservationStatus.VU);
+	VALUES.put("Endangered", ConservationStatus.EN);
+	VALUES.put("Critically Endangered", ConservationStatus.CR);
+	VALUES.put("Extinct in the Wild", ConservationStatus.EW);
+	VALUES.put("Extinct", ConservationStatus.EX);
+	VALUES.put("Not Available", ConservationStatus.NA);
+    }
+
+    public static ConservationStatus forDisplay(String text) {
+	return VALUES.get(text);
     }
 }

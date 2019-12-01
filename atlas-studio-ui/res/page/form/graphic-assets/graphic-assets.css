@@ -38,9 +38,14 @@
 	color: black;
 }
 
+.graphic-assets .meta {
+	margin-top: 40px;
+	border-top: solid 1px white;
+}
+
 .graphic-assets .meta textarea {
-	height: 100px;
-	min-height: 100px;
+	height: 200px;
+	min-height: 200px;
 }
 
 .graphic-assets .image-editor {

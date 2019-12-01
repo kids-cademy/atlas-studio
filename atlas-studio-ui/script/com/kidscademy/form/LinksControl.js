@@ -179,12 +179,17 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	_onUrlPaste(ev) {
 		const objectDisplay = this._formPage.getObject().display;
 		if (!objectDisplay) {
-			js.ua.System.alert("@string/object-no-display");
+			js.ua.System.alert("@string/alert-object-no-display");
 			return;
 		}
 
 		const url = ev.getData();
-		const domain = /^(?:http|https|ftp|file):\/\/(?:[^.]+\.)*([^.]+\.[^:/]+).*$/.exec(url)[1];
+		const matcher = /^(?:http|https|ftp|file):\/\/(?:[^.]+\.)*([^.]+\.[^:/]+).*$/.exec(url);
+		if (matcher == null) {
+			js.ua.System.alert("@string/alert-invalid-link-url");
+			return;
+		}
+		const domain = matcher[1];
 		if (!domain) {
 			return;
 		}
@@ -225,7 +230,7 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 	"merriam-webster.com": function (url, object, callback) {
 		callback(`${object} definition on Webster.`);
 	},
-	
+
 	"youtube.com": function (url, object, callback) {
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', `https://noembed.com/embed?url=${url}`);

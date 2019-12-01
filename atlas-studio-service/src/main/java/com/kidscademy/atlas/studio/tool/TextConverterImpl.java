@@ -1,6 +1,6 @@
 package com.kidscademy.atlas.studio.tool;
 
-import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.format;
+import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.buildCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,6 @@ public class TextConverterImpl implements TextConverter {
     // --------------------------------------------------------------------------------------------
 
     private void exec(String format, Object... args) throws IOException {
-	pandoc.exec(format(format, args));
+	pandoc.exec(buildCommand(format, args));
     }
 }

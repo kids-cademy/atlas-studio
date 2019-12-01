@@ -29,13 +29,25 @@ public class Strings extends js.util.Strings {
 	return "<p>" + text.replaceAll("\\. ", ".</p><p>") + "</p>";
     }
 
-    public static String binomialName(String name) {
-	List<String> parts = split(name, '-');
-	StringBuilder binomialName = new StringBuilder(toTitleCase(parts.get(0)));
+    public static String dashedToScientificName(String dashedName) {
+	List<String> parts = split(dashedName, '-');
+	StringBuilder scientificName = new StringBuilder(toTitleCase(parts.get(0)));
 	for (int i = 1; i < parts.size(); ++i) {
-	    binomialName.append(' ');
-	    binomialName.append(parts.get(i));
+	    scientificName.append(' ');
+	    scientificName.append(parts.get(i));
 	}
-	return binomialName.toString();
+	return scientificName.toString();
+    }
+
+    public static String scientificToDashedName(String scientificName) {
+	return scientificName.toLowerCase().replace(' ', '-');
+    }
+
+    public static String removeReferences(String text) {
+	return text.replaceAll("\\[[^\\]]+\\]", "");
+    }
+
+    public static String removeParentheses(String text) {
+	return text.replaceAll("\\([^\\)]+\\)", "");
     }
 }
