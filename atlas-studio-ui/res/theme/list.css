@@ -69,6 +69,10 @@ ol li {
 	color: black;
 }
 
+.list-view.icons .item .name {
+	display: none;
+}
+
 .list-view.icons .item .last-updated {
 	display: none;
 }
