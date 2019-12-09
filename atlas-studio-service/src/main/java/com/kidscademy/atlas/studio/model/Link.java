@@ -225,6 +225,8 @@ public class Link implements Displayable {
 	DOMAINS.put("merriam-webster.com", new String[] { "Merriam-Webster", "definition" });
 	DOMAINS.put("youtube.com", new String[] { "YouTube", "audio" });
 	DOMAINS.put("britannica.com", new String[] { "Encyclopædia Britannica", "" });
+	DOMAINS.put("nationalgeographic.com", new String[] { "National Geographic", "" });
+	DOMAINS.put("dkfindout.com", new String[] { "DK findout", "" });
     }
 
     /**

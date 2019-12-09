@@ -219,6 +219,14 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`${object} article on Britannica.`);
 	},
 
+	"nationalgeographic.com": function (url, object, callback) {
+		callback(`${object} article on National Geographic.`);
+	},
+
+	"dkfindout.com": function (url, object, callback) {
+		callback(`DK find out ${object.toLowerCase()} facts.`);
+	},
+
 	"thefreedictionary.com": function (url, object, callback) {
 		callback(`${object} definition on dictionary.`);
 	},
