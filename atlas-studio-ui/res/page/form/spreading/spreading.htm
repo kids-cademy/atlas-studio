@@ -9,7 +9,7 @@
 		</div>
 		<div class="container">
 			<ul class="regions-view" data-list=".">
-				<li><span data-text="area"></span> <span data-text="name"></span></li>
+				<li data-format="com.kidscademy.format.RegionFormat"></li>
 			</ul>
 			<div class="actions" data-class="com.kidscademy.Actions">
 				<img name="add" src="@image/action/add" title="@tip/spreading-add" />
@@ -21,10 +21,16 @@
 			<div class="editor hidden">
 				<div>
 					<div class="controlset">
-						<label>Region</label><input name="region-name" class="medium" />
+						<label>Region</label><input name="name" class="medium" />
 					</div>
 					<div class="controlset">
 						<label>Area</label><select name="area" w:widget="compo/region-select"></select>
+					</div>
+					<div class="controlset">
+						<label>Less</label><input name="less" class="medium" />
+					</div>
+					<div class="controlset">
+						<label>Less Area</label><select name="less-area" w:widget="compo/region-select"></select>
 					</div>
 				</div>
 			</div>

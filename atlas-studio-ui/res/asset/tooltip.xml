@@ -51,13 +51,18 @@
 	<taxonomy-close>close taxonomy editor</taxonomy-close>
 
 	<facts-add>add new facts</facts-add>
-	<facts-import>import facts is not yet implemented</facts-import>
+	<facts-import>import facts from provider</facts-import>
 	<facts-done>accept facts edits</facts-done>
 	<facts-move-to-definition>move this fact to object definition</facts-move-to-definition>
 	<facts-move-to-description>move this fact to object description</facts-move-to-description>
 	<facts-remove>remove facts record</facts-remove>
 	<facts-remove-all>remove all facts records</facts-remove-all>
 	<facts-close>close facts editor</facts-close>
+
+	<features-add>initialize with empty features list</features-add>
+	<features-import>import features from provider</features-import>
+	<features-load>initialize features from kids (a)cademy database</features-load>
+	<features-edit>edit current feature value</features-edit>
 
 	<spreading-add>add new spreading</spreading-add>
 	<spreading-import>import spreading is not yet implemented</spreading-import>

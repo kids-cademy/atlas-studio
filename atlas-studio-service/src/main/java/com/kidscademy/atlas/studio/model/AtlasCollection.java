@@ -28,6 +28,7 @@ public class AtlasCollection {
     private String display;
     private String iconName;
     private TaxonomyClass taxonomyClass;
+    private FeaturesClass featuresClass;
 
     @Transient
     private MediaSRC iconSrc;
@@ -69,6 +70,10 @@ public class AtlasCollection {
 
     public TaxonomyClass getTaxonomyClass() {
         return taxonomyClass;
+    }
+
+    public FeaturesClass getFeaturesClass() {
+        return featuresClass;
     }
 
     public MediaSRC getIconSrc() {

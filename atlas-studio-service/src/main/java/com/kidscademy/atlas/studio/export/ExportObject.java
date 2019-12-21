@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
+import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -39,7 +40,7 @@ public class ExportObject {
     private final String waveformPath;
 
     private final List<ExportFact> facts;
-    private final Map<String, String> features;
+    private final List<Feature> features;
     private final List<ExportRelatedObject> related;
     private final List<ExportLink> links;
 

@@ -47,9 +47,10 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._graphicAssets = this.getByClass(com.kidscademy.form.GraphicAssets);
 		this._audioAssets = this.getByClass(com.kidscademy.form.AudioAssets);
 		this._factsControl = this.getByClass(com.kidscademy.form.FactsControl);
+		this._featuresControl = this.getByClass(com.kidscademy.form.FeaturesControl);
 		this._spreadingControl = this.getByClass(com.kidscademy.form.SpreadingControl);
-		this._relatedControl = this._form.getByClass(com.kidscademy.form.RelatedControl);
-		this._linksControl = this._form.getByClass(com.kidscademy.form.LinksControl);
+		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
+		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
 		this._taxonomyControl.onCreate(this);
 		this._definitionControl.onCreate(this);
@@ -57,11 +58,25 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._graphicAssets.onCreate(this);
 		this._audioAssets.onCreate(this);
 		this._factsControl.onCreate(this);
+		this._featuresControl.onCreate(this);
 		this._spreadingControl.onCreate(this);
 		this._relatedControl.onCreate(this);
 		this._linksControl.onCreate(this);
 
 		this._loadObject();
+	}
+
+	_onUnload() {
+		this._taxonomyControl.onDestroy();
+		this._definitionControl.onDestroy();
+		this._descriptionControl.onDestroy();
+		this._graphicAssets.onDestroy();
+		this._audioAssets.onDestroy();
+		this._factsControl.onDestroy();
+		this._featuresControl.onDestroy();
+		this._spreadingControl.onDestroy();
+		this._relatedControl.onDestroy();
+		this._linksControl.onDestroy();
 	}
 
 	getObject() {
@@ -127,6 +142,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._graphicAssets.onStart();
 		this._audioAssets.onStart();
 		this._factsControl.onStart();
+		this._featuresControl.onStart();
 		this._spreadingControl.onStart();
 		this._relatedControl.onStart();
 		this._linksControl.onStart();

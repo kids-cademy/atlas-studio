@@ -8,9 +8,12 @@ import js.lang.Displayable;
 public class Region implements Displayable {
     private String name;
     private Area area;
+    private String less;
+    private Area lessArea;
 
     public Region() {
 	area = Area.ALL;
+	lessArea = Area.ALL;
     }
 
     public Region(String name) {
@@ -23,12 +26,33 @@ public class Region implements Displayable {
 	this.area = area;
     }
 
+    public Region(String name, Area area, String less) {
+	this(name);
+	this.area = area;
+	this.less = less;
+    }
+
+    public Region(String name, Area area, String less, Area lessArea) {
+	this.name = name;
+	this.area = area;
+	this.less = less;
+	this.lessArea = lessArea;
+    }
+
     public String getName() {
 	return name;
     }
 
     public Area getArea() {
 	return area;
+    }
+
+    public String getLess() {
+        return less;
+    }
+
+    public Area getLessArea() {
+        return lessArea;
     }
 
     @Override
@@ -41,6 +65,8 @@ public class Region implements Displayable {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((area == null) ? 0 : area.hashCode());
+	result = prime * result + ((less == null) ? 0 : less.hashCode());
+	result = prime * result + ((lessArea == null) ? 0 : lessArea.hashCode());
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
 	return result;
     }
@@ -55,6 +81,13 @@ public class Region implements Displayable {
 	    return false;
 	Region other = (Region) obj;
 	if (area != other.area)
+	    return false;
+	if (less == null) {
+	    if (other.less != null)
+		return false;
+	} else if (!less.equals(other.less))
+	    return false;
+	if (lessArea != other.lessArea)
 	    return false;
 	if (name == null) {
 	    if (other.name != null)

@@ -19,7 +19,11 @@ com.kidscademy.format.RegionFormat.prototype = {
 
 	format: function (region) {
 		const template = this.templates[region.area];
-		return $format(template, region.name);
+		if (!region.less) {
+			return $format(template, region.name);
+		}
+		const lessTemplate = this.templates[region.lessArea];
+		return $format(template + " less " + lessTemplate, region.name, region.less);
 	},
 
 	parse: function (value) {

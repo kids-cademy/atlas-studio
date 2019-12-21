@@ -1,0 +1,48 @@
+{
+	"id": "sgz5nu0x",
+	"thumbnail": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/p/peregrine-falcon_thumb.JPG",
+	"isKids": false,
+	"facts": [
+		{
+			"key": "Common Name",
+			"value": "Peregrine Falcon"
+		},
+		{
+			"key": "Scientific Name",
+			"value": "Falco peregrinus"
+		},
+		{
+			"key": "Type",
+			"value": "Birds"
+		},
+		{
+			"key": "Diet",
+			"value": "Carnivore"
+		},
+		{
+			"key": "Average life span in The Wild",
+			"value": "Up to 17 years"
+		},
+		{
+			"key": "Size",
+			"value": "Body: 14 to 19 inches; wingspan: 3.3 to 3.6 feet"
+		},
+		{
+			"key": "Weight",
+			"value": "18.8 to 56.5 ounces"
+		}
+	],
+	"statusCode": "lc",
+	"populationTrend": "Stable",
+	"relativeImage": {
+		"label": "Size relative to a 6-ft man",
+		"imagePath": "/content/dam/animals/graphic/birds/p/peregrine-falcon_size.gif",
+		"aspectRatio": 0.65,
+		"mimeType": "image/gif"
+	},
+	"seoImage": {
+		"imagePath": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/p/peregrine-falcon_thumb.JPG",
+		"aspectRatio": 1,
+		"mimeType": "image/jpeg"
+	}
+}

@@ -8,6 +8,82 @@
 			<img src="@image/action/features" />
 		</div>
 		<div class="container">
+			<table>
+				<thead>
+					<tr>
+						<td>@string/features-name</td>
+						<td>@string/features-value</td>
+						<td>@string/features-maximum</td>
+						<td>@string/features-quantity</td>
+					</tr>
+				</thead>
+				<tbody class="features-view" data-list=".">
+					<tr class="item">
+						<td data-text="name"></td>
+						<td data-text="value"></td>
+						<td data-text="maximum"></td>
+						<td data-text="quantity"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/features-import" />
+				<img name="load" src="@image/action/autorenew" title="@tip/features-load" /> 
+				<img name="add" src="@image/action/add" title="@tip/features-add" />
+				<img name="done" src="@image/action/done" title="@tip/taxonomy-done" />
+				<img name="remove" src="@image/action/remove" title="@tip/taxonomy-remove" />
+				<img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-remove-all" class="rfloat" />
+				<img name="close" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+			</div>
+			 
+			 <div class="editor hidden" data-class="com.kidscademy.FormData">
+			 	<div class="controlset">
+					<label>@string/features-name</label> <input name="name" data-value="url" />
+				</div>
+			 	<div class="controlset">
+					<label>@string/features-value</label> <input name="value" data-value="url" />
+				</div>
+			 	<div class="controlset">
+					<label>@string/features-maximum</label> <input name="maximum" data-value="url" class="optional" />
+				</div>
+			 	<div class="controlset">
+					<label>@string/features-quantity</label> <select name="quantity">
+						<option selected="selected"></option>
+						<option>@string/features-quantity-mass</option>
+						<option>@string/features-quantity-time</option>
+						<option>@string/features-quantity-length</option>
+						<option>@string/features-quantity-speed</option>
+					</select>
+					<select class="mass units hidden" data-persist="features.mass">
+						<option value="0.001">gram</option>
+						<option value="1" selected="selected">kilogram</option>
+						<option value="1000">tonne</option>
+					</select>
+					<select class="time units hidden" data-persist="features.time">
+						<option value="1" selected="selected">second</option>
+						<option value="86400">day</option>
+						<option value="31556952">year</option>
+					</select>
+					<select class="length units hidden" data-persist="features.length">
+						<option value="0.001">millimeter</option>
+						<option value="0.01">centimeter</option>
+						<option value="0.1">decimeter</option>
+						<option value="1" selected="selected">meter</option>
+					</select>
+					<select class="speed units hidden" data-persist="features.speed">
+						<option value="1" selected="selected">meter per second</option>
+						<option value="0.2777777778">kilometer per hour</option>
+					</select>
+				</div>
+			 </div>
+			 
+			 <ul class="list-view hidden" data-list="." data-class="com.kidscademy.form.LinkSelect">
+				<li data-id="id">
+					<img data-src="icon-src" data-title="url" />
+					<h4 data-text="display"></h4>
+				</li>
+			</ul>
 		</div>	
 	</div>
 </fieldset>

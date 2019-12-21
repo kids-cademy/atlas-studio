@@ -29,6 +29,8 @@ import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
 
+import js.util.Params;
+
 @Entity
 public class AtlasObject implements RepositoryObject, HDateRange {
     @Id
@@ -96,6 +98,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 
     /** Optional object spreading, empty list if not applicable. */
     @ElementCollection
+    @OrderColumn
     private List<Region> spreading;
 
     @Embedded
@@ -139,7 +142,8 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private Map<String, String> facts;
 
     @ElementCollection
-    private Map<String, String> features;
+    @OrderColumn
+    private List<Feature> features;
 
     @ElementCollection
     @OrderColumn
@@ -280,6 +284,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     }
 
     public void setCollection(AtlasCollection collection) {
+	Params.notNull(collection, "Atlas collection");
 	this.collection = collection;
     }
 
@@ -378,11 +383,11 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.taxonomy = taxonomy;
     }
 
-    public Map<String, String> getFeatures() {
+    public List<Feature> getFeatures() {
 	return features;
     }
 
-    public void setFeatures(Map<String, String> features) {
+    public void setFeatures(List<Feature> features) {
 	this.features = features;
     }
 

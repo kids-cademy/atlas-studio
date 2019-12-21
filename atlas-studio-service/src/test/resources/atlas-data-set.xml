@@ -12,6 +12,7 @@
 		<display>Instrument</display>
 		<iconName>instrument.png</iconName>
 		<taxonomyClass>MUSICAL_INSTRUMENT</taxonomyClass>
+		<featuresClass>NONE</featuresClass>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
@@ -19,6 +20,7 @@
 		<display>Bird</display>
 		<iconName>bird.png</iconName>
 		<taxonomyClass>BIOLOGICAL</taxonomyClass>
+		<featuresClass>BIRD</featuresClass>
 	</atlascollection>
 
 	<atlasobject>
@@ -168,15 +170,21 @@
 	<atlasobject_features>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
-		<features_key>Feature #1</features_key>
-		<features>Feature #1 value.</features>
+		<features_order>0</features_order>
+		<name>lifespan</name>
+		<value>536520000</value>
+		<maximum></maximum>
+		<quantity>1</quantity>
 	</atlasobject_features>
 
 	<atlasobject_features>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
-		<features_key>Feature #2</features_key>
-		<features>Feature #2 value.</features>
+		<features_order>1</features_order>
+		<name>wingspan</name>
+		<value>1.00584</value>
+		<maximum>1.09728</maximum>
+		<quantity>2</quantity>
 	</atlasobject_features>
 
 	<atlasobject_links>
@@ -193,8 +201,11 @@
 	<atlasobject_spreading>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
+		<spreading_order>0</spreading_order>
 		<name>Romania</name>
 		<area>1</area>
+		<less></less>
+		<lessArea>0</lessArea>
 	</atlasobject_spreading>
 
 	<atlasobject_related>

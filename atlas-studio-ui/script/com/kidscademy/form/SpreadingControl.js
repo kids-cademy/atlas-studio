@@ -23,8 +23,10 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 		this._regionsView.on("click", this._onRegionsViewClick, this);
 
 		this._editor = this.getByCssClass("editor");
-		this._regionNameInput = this._editor.getByName("region-name");
+		this._nameInput = this._editor.getByName("name");
 		this._areaSelect = this._editor.getByName("area");
+		this._lessInput = this._editor.getByName("less");
+		this._lessAreaSelect = this._editor.getByName("less-area");
 		this._editingRegionIndex = -1;
 
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
@@ -54,8 +56,10 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 	_onAdd(ev) {
 		this._editingRegionIndex = -1;
 		this._showEditor(true);
-		this._regionNameInput.reset();
+		this._nameInput.reset();
 		this._areaSelect.reset();
+		this._lessInput.reset();
+		this._lessAreaSelect.reset();
 	}
 
 	_onImport() {
@@ -67,14 +71,18 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 			// not editing mode, that is, add a new region
 			this._regions.push({
 				id: 0,
-				name: this._regionNameInput.getValue(),
-				area: this._areaSelect.getValue()
+				name: this._nameInput.getValue(),
+				area: this._areaSelect.getValue(),
+				less: this._lessInput.getValue(),
+				lessArea: this._lessAreaSelect.getValue()
 			});
 		}
 		else {
 			// editing mode; this._editingRegionIndex points to item that is editing
-			this._regions[this._editingRegionIndex].name = this._regionNameInput.getValue();
+			this._regions[this._editingRegionIndex].name = this._nameInput.getValue();
 			this._regions[this._editingRegionIndex].area = this._areaSelect.getValue();
+			this._regions[this._editingRegionIndex].less = this._lessInput.getValue();
+			this._regions[this._editingRegionIndex].lessArea = this._lessAreaSelect.getValue();
 		}
 
 		this._updateRegionsView();
@@ -105,8 +113,10 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 			this._showEditor(true);
 
 			var region = this._regions[this._editingRegionIndex];
-			this._regionNameInput.setValue(region.name);
+			this._nameInput.setValue(region.name);
 			this._areaSelect.setValue(region.area);
+			this._lessInput.setValue(region.less);
+			this._lessAreaSelect.setValue(region.lessArea);
 		}
 	}
 
@@ -118,7 +128,7 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 		this._actions.show(show, "done", "remove", "close");
 		this._editor.show(show);
 		if (show) {
-			this._regionNameInput.focus();
+			this._nameInput.focus();
 		}
 	}
 

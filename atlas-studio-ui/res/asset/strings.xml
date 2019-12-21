@@ -35,6 +35,8 @@
 	<confirm-audio-remove>Please confirm audio assets remove.</confirm-audio-remove>
 	<confirm-fact-remove>Please confirm fact remove.</confirm-fact-remove>
 	<confirm-all-facts-remove>Please confirm all facts remove.</confirm-all-facts-remove>
+	<confirm-feature-remove>Please confirm feature remove.</confirm-feature-remove>
+	<confirm-all-features-remove>Please confirm all features remove.</confirm-all-features-remove>
 	<confirm-area-remove>Please confirm geographical area remove.</confirm-area-remove>
 	<confirm-link-remove>Please confirm link remove.</confirm-link-remove>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
@@ -73,4 +75,13 @@
 
 	<taxonomy-class-family>FAMILY</taxonomy-class-family>
 	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
+	
+	<features-name>Name</features-name>
+	<features-value>Value / Minimum</features-value>
+	<features-maximum>Maximum</features-maximum>
+	<features-quantity>Physical Quantity</features-quantity>
+	<features-quantity-mass>MASS</features-quantity-mass>
+	<features-quantity-time>TIME</features-quantity-time>
+	<features-quantity-length>LENGTH</features-quantity-length>
+	<features-quantity-speed>SPEED</features-quantity-speed>
 </string>

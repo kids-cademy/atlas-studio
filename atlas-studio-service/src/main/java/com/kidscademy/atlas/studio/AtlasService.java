@@ -9,6 +9,8 @@ import java.util.Set;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.Feature;
+import com.kidscademy.atlas.studio.model.FeaturesClass;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
@@ -22,7 +24,7 @@ import js.tiny.container.annotation.Service;
 import js.tiny.container.http.form.Form;
 
 @Service
-//@RolesAllowed("EDITOR")
+// @RolesAllowed("EDITOR")
 @Public
 public interface AtlasService {
     List<AtlasCollection> getCollections();
@@ -49,16 +51,20 @@ public interface AtlasService {
 
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
+    List<Feature> getFeatureTemplates(FeaturesClass featuresClass);
+
     Link createLink(Link link);
 
     String importObjectDefinition(Link link);
 
     String importObjectDescription(Link link);
 
-    Map<String, String> importObjectsFacts(Link link);
+    Map<String, String> importObjectFacts(Link link);
+
+    List<Feature> importObjectFeatures(Link link);
 
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException;
-    
+
     List<Taxon> loadAtlasObjectTaxonomy(String objectName);
 
     // ----------------------------------------------------------------------------------------------

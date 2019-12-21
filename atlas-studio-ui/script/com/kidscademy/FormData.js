@@ -50,6 +50,7 @@ com.kidscademy.FormData = class extends js.dom.Element {
 				}
 			}
 		});
+		return this;
 	}
 
 	getObject(object) {

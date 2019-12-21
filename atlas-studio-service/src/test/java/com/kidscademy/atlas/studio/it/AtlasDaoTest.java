@@ -15,7 +15,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +30,12 @@ import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonomyClass;
@@ -198,7 +199,9 @@ public class AtlasDaoTest {
 
     @Test
     public void getCollectionItems() {
-	List<AtlasItem> items = dao.getCollectionItems(Collections.EMPTY_MAP,1);
+	Map<String, String> filter = new HashMap<>();
+	filter.put("state", "");
+	List<AtlasItem> items = dao.getCollectionItems(filter, 1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(2));
 	assertAtlasItem(items.get(0));
@@ -278,10 +281,16 @@ public class AtlasDaoTest {
 	assertThat(object.getFacts().get("Fact #2"), equalTo("Fact #2 description."));
 
 	assertThat(object.getFeatures(), notNullValue());
-	assertThat(object.getFeatures().keySet(), not(empty()));
-	assertThat(object.getFeatures().keySet(), hasSize(2));
-	assertThat(object.getFeatures().get("Feature #1"), equalTo("Feature #1 value."));
-	assertThat(object.getFeatures().get("Feature #2"), equalTo("Feature #2 value."));
+	assertThat(object.getFeatures(), not(empty()));
+	assertThat(object.getFeatures(), hasSize(2));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("lifespan"));
+	assertThat(object.getFeatures().get(0).getValue(), equalTo(536520000.0));
+	assertThat(object.getFeatures().get(0).getMaximum(), nullValue());
+	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.TIME));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("wingspan"));
+	assertThat(object.getFeatures().get(1).getValue(), equalTo(1.00584));
+	assertThat(object.getFeatures().get(1).getMaximum(), equalTo(1.09728));
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
 
 	assertThat(object.getLinks(), notNullValue());
 	assertThat(object.getLinks(), hasSize(1));
@@ -359,9 +368,9 @@ public class AtlasDaoTest {
 	facts.put("Banjo Fact #2", "Banjo fact #2 description.");
 	object.setFacts(facts);
 
-	Map<String, String> features = new HashMap<>();
-	features.put("Banjo Feature #1", "Banjo feature #1 value");
-	features.put("Banjo Feature #2", "Banjo feature #2 value");
+	List<Feature> features = new ArrayList<>();
+	features.add(new Feature("length", 0.3556, 0.4826, PhysicalQuantity.LENGTH));
+	features.add(new Feature("height", 0.4826, 0.5334, PhysicalQuantity.LENGTH));
 	object.setFeatures(features);
 
 	List<String> related = new ArrayList<>();
@@ -425,11 +434,11 @@ public class AtlasDaoTest {
 	assertThat(expected.getSpreading(), notNullValue());
 	assertThat(expected.getSpreading(), hasSize(2));
 	assertThat(expected.getSpreading().get(0), notNullValue());
-	assertThat(expected.getSpreading().get(0).getName(), equalTo("Africa"));
-	assertThat(expected.getSpreading().get(0).getArea(), equalTo(Region.Area.NORTH));
+	assertThat(expected.getSpreading().get(0).getName(), equalTo("Europe"));
+	assertThat(expected.getSpreading().get(0).getArea(), equalTo(Region.Area.SOUTH));
 	assertThat(expected.getSpreading().get(1), notNullValue());
-	assertThat(expected.getSpreading().get(1).getName(), equalTo("Europe"));
-	assertThat(expected.getSpreading().get(1).getArea(), equalTo(Region.Area.SOUTH));
+	assertThat(expected.getSpreading().get(1).getName(), equalTo("Africa"));
+	assertThat(expected.getSpreading().get(1).getArea(), equalTo(Region.Area.NORTH));
 
 	assertThat(expected.getFacts(), notNullValue());
 	assertThat(expected.getFacts().keySet(), not(empty()));
@@ -437,11 +446,17 @@ public class AtlasDaoTest {
 	assertThat(expected.getFacts().get("Banjo Fact #1"), equalTo("Banjo fact #1 description."));
 	assertThat(expected.getFacts().get("Banjo Fact #2"), equalTo("Banjo fact #2 description."));
 
-	assertThat(expected.getFeatures(), notNullValue());
-	assertThat(expected.getFeatures().keySet(), not(empty()));
-	assertThat(expected.getFeatures().keySet(), hasSize(2));
-	assertThat(expected.getFeatures().get("Banjo Feature #1"), equalTo("Banjo feature #1 value"));
-	assertThat(expected.getFeatures().get("Banjo Feature #2"), equalTo("Banjo feature #2 value"));
+	assertThat(object.getFeatures(), notNullValue());
+	assertThat(object.getFeatures(), not(empty()));
+	assertThat(object.getFeatures(), hasSize(2));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("length"));
+	assertThat(object.getFeatures().get(0).getValue(), equalTo(0.3556));
+	assertThat(object.getFeatures().get(0).getMaximum(), equalTo(0.4826));
+	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
+	assertThat(object.getFeatures().get(1).getValue(), equalTo(0.4826));
+	assertThat(object.getFeatures().get(1).getMaximum(), equalTo(0.5334));
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
 
 	assertThat(expected.getLinks(), notNullValue());
 	assertThat(expected.getLinks(), hasSize(2));
@@ -533,13 +548,13 @@ public class AtlasDaoTest {
 
 	object = dao.getNextAtlasObject(object.getId());
 	assertThat(object.getName(), equalTo("eagle"));
-	
+
 	object = dao.getNextAtlasObject(object.getId());
 	assertThat(object.getName(), equalTo("bandoneon"));
-	
+
 	object = dao.getNextAtlasObject(object.getId());
 	assertThat(object.getName(), equalTo("cimbalom"));
-	
+
 	object = dao.getNextAtlasObject(object.getId());
 	assertThat(object, nullValue());
     }

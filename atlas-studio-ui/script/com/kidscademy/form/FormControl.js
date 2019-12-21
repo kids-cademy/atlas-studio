@@ -19,6 +19,19 @@ com.kidscademy.form.FormControl = class extends js.dom.Control {
      */
     onCreate(formPage) {
         this._formPage = formPage;
+
+        this.findByCss("[data-persist]").forEach(element => {
+            const value = this._formPage.getPageAttr(element.getAttr("data-persist"));
+            if (value) {
+                element.setValue(value);
+            }
+        });
+    }
+
+    onDestroy() {
+        this.findByCss("[data-persist]").forEach(element => {
+            this._formPage.setPageAttr(element.getAttr("data-persist"), element.getValue());
+        });
     }
 
     /**

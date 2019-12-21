@@ -225,6 +225,32 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Get feature templates.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.FeaturesClass featuresClass,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.Feature>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getFeatureTemplates: function(featuresClass) {
+		$assert(typeof featuresClass !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Features class argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getFeatureTemplates");
+		rmi.setParameters(featuresClass);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Create link.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.Link link,
@@ -303,7 +329,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Import objects facts.
+	 * Import object facts.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.Link link,
 	 * @param Function callback function to invoke on RMI completion,
@@ -311,19 +337,45 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @return java.util.Map<java.lang.String,java.lang.String>
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 importObjectsFacts: function(link) {
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectsFacts", "Link argument is undefined.");
+	 importObjectFacts: function(link) {
+		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Link argument is undefined.");
 
 		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectsFacts", "Callback is not a function.");
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Callback is not a function.");
 		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectsFacts", "Scope is not an object.");
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
 		}
 
 		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectsFacts");
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectFacts");
+		rmi.setParameters(link);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Import object features.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.Link link,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.Feature>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 importObjectFeatures: function(link) {
+		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Link argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectFeatures");
 		rmi.setParameters(link);
 		rmi.exec(__callback__, __scope__);
 	},

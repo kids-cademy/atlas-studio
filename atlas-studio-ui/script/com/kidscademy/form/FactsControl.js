@@ -58,7 +58,7 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 
 	_onImport() {
 		this._fireEvent("input");
-		const load = (link) => AtlasService.importObjectsFacts(link, facts => this.setValue(facts));
+		const load = (link) => AtlasService.importObjectFacts(link, facts => this.setValue(facts));
 
 		const links = this._formPage.getLinks("facts");
 		switch (links.length) {
