@@ -30,6 +30,48 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		object.facts = list(object.facts);
 
 		this._objectView.setObject(object);
+
+		this._doc = WinMain.doc;
+		this._panorama = this._doc.getByCss(".h-linear");
+		this._doc.on("mousedown", this._onMouseDown, this);
+	}
+
+	_onMouseDown(ev) {
+		if (this._lock) {
+			return;
+		}
+		ev.prevent();
+
+		this._startPageX = ev.pageX;
+		this._startPageY = ev.pageY;
+		this._startLeft = parseInt(this._panorama.style.get('left'));
+
+		this._doc.on("mousemove", this._onMouseMove, this);
+		this._doc.on("mouseup", this._onMouseUp, this);
+
+		// minimum left position is determined heuristically
+		// it is not very clear why panorama width, that is, this.style.getWidth() is changing while dragging
+		this._minLeft = WinMain.getWidth() - this._panorama.style.getWidth() - 30;
+	}
+
+	_onMouseMove(ev) {
+		const deltaPageX = ev.pageX - this._startPageX;
+		this._left = this._startLeft + deltaPageX;
+
+		if (this._left > 0) {
+			this._left = 0;
+		}
+		if (this._left < this._minLeft) {
+			this._left = this._minLeft;
+		}
+
+		console.log(this._left);
+		this._panorama.style.set("left", this._left + "px");
+	}
+
+	_onMouseUp(ev) {
+		this._doc.un('mousemove', this._onMouseMove);
+		this._doc.un('mouseup', this._onMouseUp);
 	}
 
 	/**

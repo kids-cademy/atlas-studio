@@ -16,10 +16,17 @@
 	right: 0;
 	bottom: 20%;
 	background: rgba(0, 0, 0, 0.2);
+	padding: @dimen/infobox-padding;
 }
 
-.featured p {
-	padding: @dimen/infobox-padding;
+.featured .paragraph-container p {
 	margin: 0;
-	font-size: 1.2rem;
+	margin-top: 1.5em;
+	line-height: 1.5em;
+	font-size: 1.1rem;
+	color: white;
+}
+
+.featured .paragraph-container p:first-child {
+	margin-top: 0;
 }

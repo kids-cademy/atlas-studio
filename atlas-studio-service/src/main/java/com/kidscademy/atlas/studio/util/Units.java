@@ -15,6 +15,10 @@ public class Units {
 	case "pound":
 	case "pounds":
 	    return poundsToKilograms(value);
+
+	case "ton":
+	case "tons":
+	    return tonsToKilograms(value);
 	}
 	throw new BugError("Unrecognized mass units |%s|.", units);
     }
@@ -33,6 +37,14 @@ public class Units {
 
     public static double poundsToKilograms(String pounds) {
 	return poundsToKilograms(Double.parseDouble(pounds));
+    }
+
+    public static double tonsToKilograms(double tons) {
+	return tons * 1000;
+    }
+
+    public static double tonsToKilograms(String tons) {
+	return tonsToKilograms(Double.parseDouble(tons));
     }
 
     // --------------------------------------------------------------------------------------------

@@ -11,16 +11,16 @@
 	<black-t80>rgba(0, 0, 0, 0.5)</black-t80>
 	<hexa-icon>rgba(100, 199, 204, 0.7)</hexa-icon>
 	
-	<palette-1>#006064</palette-1>
-	<palette-2>#00838f</palette-2>
-	<palette-3>#0097a7</palette-3>
-	<palette-4>#00acc1</palette-4>
-	<palette-5>#00bcd4</palette-5>
-	<palette-6>#26c6da</palette-6>
-	<palette-7>#4dd0e1</palette-7>
-	<palette-8>#80deea</palette-8>
-	<palette-9>#b2ebf2</palette-9>
-	<palette-10>#e0f7fa</palette-10>
+	<palette-1>#80deea</palette-1>
+	<palette-2>#228B22</palette-2>
+	<palette-3>#B22222</palette-3>
+	<palette-4>#DAA520</palette-4>
+	<palette-5>#4664b2</palette-5>
+	<palette-6>#83b246</palette-6>
+	<palette-7>#b27e46</palette-7>
+	<palette-8>#B39DDB</palette-8>
+	<palette-9>#f0eb95</palette-9>
+	<palette-10>#6495ED</palette-10>
 
 	<page-header-bg>#000000</page-header-bg>
 	<page-header-link>#80A0A0</page-header-link>

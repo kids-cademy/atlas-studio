@@ -1,5 +1,5 @@
 .description {
-	width: 600px;
+	xwidth: 600px;
 }
 
 .description .section {
@@ -16,4 +16,30 @@
 
 .description p:first-of-type {
 	margin: 0;
+}
+
+.description .column-text {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+}
+
+.description .column-text .column {
+	width: @dimen/column-width;
+	margin: 0 @dimen/column-gap;
+}
+
+.description .column-text .column:first-child {
+	margin-left: 0;
+}
+
+.description .column-text p {
+	line-height: 36px;
+	margin-bottom: 36px;
+	font-size: 22px;
+	color: white;
+}
+
+.description .column-text q {
+	color: yellow;
 }

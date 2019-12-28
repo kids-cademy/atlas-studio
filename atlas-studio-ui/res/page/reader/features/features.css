@@ -1,3 +1,128 @@
 .features {
-	width: 600px;
+	width: 500px;
+	xheight: 600px;
+}
+
+.features .text {
+	position: relative;
+	flex-grow: 1;	
+}
+
+.reader .features p {
+	line-height: 36px;
+	margin-bottom: 36px;
+	margin-top: 0;
+	font-size: 22px;
+	color: @color/accent;
+}
+
+.features table {
+	width: 100%;
+	xmargin-bottom: 140px;	
+}
+
+.features tr {
+	border-bottom: solid 1px @color/rule;
+}
+
+.features .name, .features .value {
+	xdisplay: inline-block;
+	xbox-sizing: border-box;
+	xvertical-align: top;
+	xmargin-bottom: @dimen/divider-size;
+	xmargin-bottom: 20px;
+	padding: 20px @dimen/paragraph-indent;
+}
+
+.features tr:last-child {
+	border-bottom: 0;
+}
+
+.features .name {
+	xwidth: 360px;
+	xbackground-color: rgba(21, 101, 192, 0.25);
+	color: @color/text;
+	text-transform: uppercase;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: right; 
+	xpadding-left: 0;
+}
+
+.features .value {
+	xwidth: 480px;
+	xbackground-color: rgba(198, 40, 40, 0.25);
+	xbackground-color: rgba(21, 101, 192, 0.5);
+	border-left: solid 2px @color/rule;
+	color: @color/mute;
+	xpadding-right: 0;
+}
+
+.features tr:nth-of-type(1) .value {
+	border-color: @color/palette-1;
+}
+
+.features tr:nth-of-type(2) .value {
+	border-color: @color/palette-2;
+}
+
+.features tr:nth-of-type(3) .value {
+	border-color: @color/palette-3;
+}
+
+.features tr:nth-of-type(4) .value {
+	border-color: @color/palette-4;
+}
+
+.features tr:nth-of-type(5) .value {
+	border-color: @color/palette-5;
+}
+
+.features tr:nth-of-type(6) .value {
+	border-color: @color/palette-6;
+}
+
+.features tr:nth-of-type(7) .value {
+	border-color: @color/palette-7;
+}
+
+.features tr:nth-of-type(8) .value {
+	border-color: @color/palette-8;
+}
+
+.features tr:nth-of-type(9) .value {
+	border-color: @color/palette-9;
+}
+
+.features tr:nth-of-type(10) .value {
+	border-color: @color/palette-10;
+}
+
+.features .image-frame {
+	flex-grow: 1;
+	position: relative;
+	margin-top: 10vh;	
+}
+
+.features .caption {
+	position: absolute;
+	width: 100%;
+	xright: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.2);
+	padding: @dimen/infobox-padding;
+	box-sizing: border-box;
+}
+
+.features .caption p {
+	margin: 0;
+	margin-top: 1.5em;
+	line-height: 1.5em;
+	font-size: 1.1rem;
+	color: white;
+}
+
+.features .caption p:first-child {
+	margin-top: 0;
 }

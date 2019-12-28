@@ -62,4 +62,6 @@
 	
 	<z-index-multi-select>1000</z-index-multi-select>
 
+	<column-width>500px</column-width>
+	<column-gap>60px</column-gap>
 </dimen>

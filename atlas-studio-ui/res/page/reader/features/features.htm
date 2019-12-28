@@ -1,10 +1,23 @@
-<div class="section features" xmlns:w="js-lib.com/wood">
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
-	<div w:widget="features/item"></div>
+<div class="section features" data-if="features">
+	<div class="flex-v">
+		<table>
+			<tbody data-list="features">
+				<tr>
+					<td class="name" data-text="name"></td>
+					<td class="value" data-text="value"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="image-frame" data-if="images.trivia">
+			<img class="image fit-top-center" data-src="images.trivia.src" />
+			<div class="caption" data-html="images.trivia.caption"></div>
+		</div>
+
+		<div class="spare-v" data-if="!images.trivia"></div>
+		<div data-if="!images.trivia">
+			<p>Since then, he was reintroduced to northern Arizona and southern Utah - including the Grand Canyon area and Zion National Park, the coastal mountains of central and southern California, and northern Baja California.</p>
+		</div>
+		<div class="spare-v" data-if="!images.trivia"></div>
+	</div>
 </div>

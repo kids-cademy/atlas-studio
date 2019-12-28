@@ -155,10 +155,19 @@ public class NationalGeographicArticle {
 		    break;
 		}
 
+		// Height at the shoulder: 8.2 to 13 feet
+		pattern = Pattern.compile("^Height at the shoulder: ([\\d\\.]+) to ([\\d\\.]+) (inches|feet)$");
+		matcher = pattern.matcher(fact.value);
+		if (matcher.find()) {
+		    minimumHeight = round(Units.toMeters(matcher.group(1), matcher.group(3)));
+		    maximumHeight = round(Units.toMeters(matcher.group(2), matcher.group(3)));
+		    break;
+		}
+
 		throw new BugError("Invalid size pattern |%s|.", fact.value);
 
 	    case "Weight":
-		pattern = Pattern.compile("^([\\d\\.]+) to ([\\d\\.]+) (ounces|pounds)$");
+		pattern = Pattern.compile("^([\\d\\.]+) to ([\\d\\.]+) (ounces|pounds|tons)$");
 		matcher = pattern.matcher(fact.value);
 		if (matcher.find()) {
 		    minimumWeight = round(Units.toKilograms(matcher.group(1), matcher.group(3)));
@@ -181,7 +190,7 @@ public class NationalGeographicArticle {
 		    maximumWeight = round(Units.toKilograms(matcher.group(1), matcher.group(2)));
 		    break;
 		}
-
+		
 		throw new BugError("Invalid weight pattern |%s|.", fact.value);
 	    }
 	}

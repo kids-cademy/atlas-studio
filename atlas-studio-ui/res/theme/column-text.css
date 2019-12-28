@@ -1,0 +1,54 @@
+.column-text {
+	position: relative;
+	box-sizing: border-box;
+	width: 0;
+	height: inherit;
+	overflow: hidden;
+}
+
+.column-text .column {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: @dimen/column-width;
+	height: auto;
+	white-space: normal;
+}
+
+.column-text .column.hidden {
+	display: none;
+}
+
+.column-text .column:first-child {
+	margin-left: 0;
+}
+
+.column-text h1 {
+	color: yellow;
+	border-bottom: solid 1px yellow;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+}
+
+.column-text p {
+	padding: 0;
+	margin: 0;
+}
+
+.column-text p:last-child {
+	margin-bottom: 0;
+}
+
+.column-text q {
+	color: seagreen;
+}
+
+.column-text img {
+	max-width: 100%;
+}
+
+.column-text li {
+	list-style: inside;
+	margin-bottom: 20px;
+}

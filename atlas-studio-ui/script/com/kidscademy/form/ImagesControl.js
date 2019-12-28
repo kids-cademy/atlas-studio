@@ -24,6 +24,7 @@ com.kidscademy.form.ImagesControl = class extends com.kidscademy.form.FormContro
 		var imagesList = [];
 		addImage(images.icon);
 		addImage(images.cover);
+		addImage(images.trivia);
 		addImage(images.featured);
 		addImage(images.contextual);
 
@@ -49,7 +50,7 @@ com.kidscademy.form.ImagesControl = class extends com.kidscademy.form.FormContro
 		images[image.imageKey] = image;
 		this.setValue(images);
 		this._fireEvent("input");
-		}
+	}
 
 	updateImage(image) {
 		const element = this.findChild(element => element.getUserData().fileName === image.fileName);

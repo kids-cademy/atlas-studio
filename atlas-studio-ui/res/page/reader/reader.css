@@ -42,8 +42,9 @@ body {
 	width: 100%;
 	top: @dimen/action-size;
 	bottom: 0;
-	overflow-x: scroll;
-	padding: @dimen/page-padding 0 @eval(sub @dimen/page-padding 17px);
+	xoverflow-x: scroll;
+	margin: @dimen/page-padding 0;
+	cursor: move;
 }
 
 .reader.hidden .h-scroll {
@@ -51,6 +52,8 @@ body {
 }
 
 .reader .h-linear {
+	position: absolute;
+	left: 0;
 	width: auto;
 	height: 100%;
 	white-space: nowrap;

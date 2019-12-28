@@ -32,3 +32,18 @@
 .inline.hidden {
 	display: none;
 }
+
+.flex-h {
+	display: flex;
+	flex-direction: row;
+}
+
+.flex-v {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.spare-v {
+	flex-grow: 1;
+}

@@ -223,6 +223,10 @@ ol li {
 	margin-bottom: 20px;
 }
 
+.list-view.links .item .name {
+	display: none;
+}
+
 .list-view.links .item.published .display {
 	border-color: #5aa3e2;
 	xcolor: #1985e2;
