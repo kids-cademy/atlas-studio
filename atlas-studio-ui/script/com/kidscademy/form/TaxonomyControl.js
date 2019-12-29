@@ -315,13 +315,13 @@ com.kidscademy.form.TaxonomyControl.MusicalInstrumentTaxonomy = {
 
 com.kidscademy.form.TaxonomyControl.BiologicalTaxonomy = {
 	template: [
-		{ name: "Kingdom", value: null },
-		{ name: "Phylum", value: null },
-		{ name: "Class", value: null },
-		{ name: "Order", value: null },
-		{ name: "Family", value: null },
-		{ name: "Genus", value: null },
-		{ name: "Species", value: null }
+		{ name: "kingdom", value: null },
+		{ name: "phylum", value: null },
+		{ name: "class", value: null },
+		{ name: "order", value: null },
+		{ name: "family", value: null },
+		{ name: "genus", value: null },
+		{ name: "species", value: null }
 	],
 	type: "STRING",
 	values: null

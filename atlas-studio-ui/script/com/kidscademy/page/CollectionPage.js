@@ -9,7 +9,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	/** Construct atlas collection instance. */
 	constructor() {
 		super();
-		this.PRREVIEW_OBJECT = "preview-object";
 
 		// current selected collection is stored on global context by dashboard
 		this._collection = this.getContextAttr("collection");
@@ -103,10 +102,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onPreviewObject(objectView) {
 		const object = objectView.getUserData();
-		AtlasService.getAtlasObject(object.id, object => {
-			this.setContextAttr(this.PRREVIEW_OBJECT, object);
-			WinMain.assign("@link/reader");
-		});
+		WinMain.assign("@link/reader", { id: object.id });
 	}
 
 	_onRemoveObject(objectView) {

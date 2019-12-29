@@ -36,7 +36,7 @@ ol li {
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 
-/* LIST VIEW */ 
+/* LIST VIEW - ICONS */ 
 
 .list-view.icons {
 	list-style: none;
@@ -86,7 +86,7 @@ ol li {
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 
-/* CARD VIEW */ 
+/* LIST VIEW - CARDS */ 
 
 .list-view.cards {
 	list-style: none;
@@ -188,7 +188,7 @@ ol li {
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 
-/* LINKS VIEW */ 
+/* LIST VIEW - LINKS */ 
 
 .list-view.links {
 	list-style: none;
@@ -263,6 +263,52 @@ ol li {
 	margin: 0;
 	padding: 0;
 	border: none;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ITEM VIEW */
+
+.list .item {
+	display: block;
+	padding: 4px;
+	margin-bottom: @dimen/divider-size;
+	background-color: @color/black-t20;
+}
+
+.list .item::after {
+	display: block;
+	content: "";
+	clear: both;
+}
+
+.list .item .icon {
+	float: left;
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
+	margin: 0 20px 0 0;
+	border-radius: 0;
+}
+
+.list .item .display {
+	margin: 10px 0 0 0;
+	padding: 0;
+	font-weight: lighter;
+	font-size: 1.8rem;
+	color: @color/text;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.list .item .description {
+	width: 400px;
+	margin: 10px 0 0 0;
+	padding: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 1.4rem;
+	color: @color/mute;
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 

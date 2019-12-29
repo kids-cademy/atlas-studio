@@ -34,6 +34,7 @@ public enum FeaturesClass {
 	templates.add(new Feature("height", PhysicalQuantity.LENGTH));
 	templates.add(new Feature("weight", PhysicalQuantity.MASS));
 	templates.add(new Feature("speed", PhysicalQuantity.SPEED));
+	templates.add(new Feature("speed.full", PhysicalQuantity.SPEED));
 	templates.add(new Feature("speed.gliding", PhysicalQuantity.SPEED));
 	templates.add(new Feature("speed.diving", PhysicalQuantity.SPEED));
 	return templates;

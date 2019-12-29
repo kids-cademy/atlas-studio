@@ -12,11 +12,13 @@ public class ExportLink {
     private final String display;
     private final String description;
     private final String iconPath;
+    private final String iconSrc;
 
     public ExportLink(Link link) {
 	this.url = link.getUrl();
 	this.display = link.toDisplay();
 	this.description = link.getDescription();
 	this.iconPath = Strings.concat("link/", link.getIconName());
+	this.iconSrc = link.getIconSrc().value();
     }
 }

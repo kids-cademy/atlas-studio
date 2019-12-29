@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -266,4 +267,6 @@ public interface AtlasService {
     Set<AtlasItem> search(String criterion);
 
     String getWikiHowTitle(URL url);
+
+    ExportObject getExportObject(int objectId);
 }

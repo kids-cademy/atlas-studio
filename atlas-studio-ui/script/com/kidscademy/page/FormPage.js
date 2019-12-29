@@ -14,8 +14,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
 
-		this.PRREVIEW_OBJECT = "preview-object";
-
 		/**
 		 * Flag true when a form control was changed. Used to signal user changes when leaving the page.
 		 * @type {Boolean}
@@ -159,8 +157,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	// --------------------------------------------------------------------------------------------
 
 	_onPreview() {
-		this.setContextAttr(this.PRREVIEW_OBJECT, this._form.getObject(this._object));
-		WinMain.assign("@link/reader");
+		WinMain.assign("@link/reader", { id: this._object.id });
 	}
 
 	_onSave(previewCallback) {

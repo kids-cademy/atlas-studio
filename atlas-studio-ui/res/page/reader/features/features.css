@@ -32,6 +32,7 @@
 	xmargin-bottom: @dimen/divider-size;
 	xmargin-bottom: 20px;
 	padding: 20px @dimen/paragraph-indent;
+	padding: 20px 30px;
 }
 
 .features tr:last-child {
@@ -46,11 +47,13 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	text-align: right; 
+	xtext-align: right; 
 	xpadding-left: 0;
+	xpadding-right: 10px;
 }
 
 .features .value {
+	width: 100%;
 	xwidth: 480px;
 	xbackground-color: rgba(198, 40, 40, 0.25);
 	xbackground-color: rgba(21, 101, 192, 0.5);
@@ -119,8 +122,8 @@
 	margin: 0;
 	margin-top: 1.5em;
 	line-height: 1.5em;
-	font-size: 1.1rem;
-	color: white;
+	font-size: 1.0rem;
+	color: yellow;
 }
 
 .features .caption p:first-child {

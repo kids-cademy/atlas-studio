@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Feature;
@@ -28,7 +29,7 @@ public class ExportObject {
     private final Map<String, ExportImage> images;
 
     private final Date lastUpdated;
-    private final List<Taxon> taxonomy;
+    private final List<ExportTaxon> taxonomy;
     private final List<String> aliases;
     private final List<Region> spreading;
     private final HDate startDate;
@@ -40,7 +41,7 @@ public class ExportObject {
     private final String waveformPath;
 
     private final List<ExportFact> facts;
-    private final List<Feature> features;
+    private final List<ExportFeature> features;
     private final List<ExportRelatedObject> related;
     private final List<ExportLink> links;
 
@@ -57,7 +58,11 @@ public class ExportObject {
 	}
 
 	this.lastUpdated = object.getLastUpdated();
-	this.taxonomy = object.getTaxonomy();
+	this.taxonomy = new ArrayList<>();
+	for (Taxon taxon : object.getTaxonomy()) {
+	    this.taxonomy.add(new ExportTaxon(taxon));
+	}
+
 	this.aliases = object.getAliases();
 	this.spreading = object.getSpreading();
 	this.startDate = object.getStartDate();
@@ -73,7 +78,10 @@ public class ExportObject {
 	    this.facts.add(new ExportFact(entry));
 	}
 
-	this.features = object.getFeatures();
+	this.features = new ArrayList<>();
+	for (Feature feature : object.getFeatures()) {
+	    this.features.add(new ExportFeature(feature));
+	}
 
 	this.related = new ArrayList<>();
 
@@ -92,7 +100,11 @@ public class ExportObject {
     }
 
     public void addRelated(ExportRelatedObject relatedObject) {
-	this.related.add(relatedObject);
+	related.add(relatedObject);
+    }
+
+    public void addRelated(AtlasItem item) {
+	related.add(new ExportRelatedObject(item));
     }
 
     public String getName() {
@@ -111,7 +123,7 @@ public class ExportObject {
 	return description;
     }
 
-    public List<Taxon> getTaxonomy() {
+    public List<ExportTaxon> getTaxonomy() {
 	return taxonomy;
     }
 
@@ -137,6 +149,10 @@ public class ExportObject {
 
     public List<ExportFact> getFacts() {
 	return facts;
+    }
+
+    public List<ExportFeature> getFeatures() {
+	return features;
     }
 
     public ExportImage getImage(String imageKey) {

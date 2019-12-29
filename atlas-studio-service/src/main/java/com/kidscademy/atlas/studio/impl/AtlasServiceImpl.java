@@ -18,6 +18,7 @@ import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.TaxonomyDao;
+import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -666,5 +667,15 @@ public class AtlasServiceImpl implements AtlasService {
     public String getWikiHowTitle(URL url) {
 	WikiHow wikiHow = context.getInstance(WikiHow.class);
 	return wikiHow.getTitle(url.getPath());
+    }
+
+    @Override
+    public ExportObject getExportObject(int objectId) {
+	AtlasObject object = atlasDao.getAtlasObject(objectId);
+	ExportObject exportObject = new ExportObject(object);
+	for (AtlasItem related : atlasDao.getRelatedAtlasObjects(object.getCollection().getId(), object.getRelated())) {
+	    exportObject.addRelated(related);
+	}
+	return exportObject;
     }
 }

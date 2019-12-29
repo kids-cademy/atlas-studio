@@ -1205,6 +1205,33 @@ com.kidscademy.atlas.studio.AtlasService = {
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getWikiHowTitle");
 		rmi.setParameters(url);
 		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Get export object.
+	 *
+	 * @param int objectId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.export.ExportObject
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getExportObject: function(objectId) {
+		$assert(typeof objectId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getExportObject", "Object id argument is undefined.");
+		$assert(js.lang.Types.isNumber(objectId), "com.kidscademy.atlas.studio.AtlasService#getExportObject", "Object id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getExportObject", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getExportObject", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getExportObject");
+		rmi.setParameters(objectId);
+		rmi.exec(__callback__, __scope__);
 	}
 };
 

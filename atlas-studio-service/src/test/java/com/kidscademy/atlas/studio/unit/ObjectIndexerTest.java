@@ -63,7 +63,7 @@ public class ObjectIndexerTest {
 	when(atlasObject.getSampleTitle()).thenReturn("Vittorio Monti"); // 8
 	when(atlasObject.getSpreading()).thenReturn(Arrays.asList(new Region("Canada"))); // 16
 	// musical instrument has no conservation status // 32
-	when(atlasObject.getTaxonomy()).thenReturn(Arrays.asList(new Taxon("Family", "KEYBOARD"))); // 64
+	when(atlasObject.getTaxonomy()).thenReturn(Arrays.asList(new Taxon("family", "KEYBOARD"))); // 64
 	when(exportItem.getDisplay()).thenReturn("Concertina"); // 128
 	when(atlasObject.getAliases()).thenReturn(Arrays.asList("Akkordeon", "Fisarmonica")); // 256
 	when(atlasObject.getDisplay()).thenReturn("Accordion"); // 512

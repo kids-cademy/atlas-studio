@@ -211,7 +211,6 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	}
 
 	_onUnitsChange(ev) {
-		alert(ev.target.getValue())
 	}
 
 	/**

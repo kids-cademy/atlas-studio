@@ -75,6 +75,10 @@ public class Feature {
 	return maximum;
     }
 
+    public boolean hasMaximum() {
+	return maximum != null;
+    }
+
     public PhysicalQuantity getQuantity() {
 	return quantity;
     }
