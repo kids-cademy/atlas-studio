@@ -53,6 +53,8 @@ public class ExportFeature {
 	EN.put("length.tail", "Tail Length");
 	EN.put("length.claw", "Claws Size");
 	EN.put("height", "Height");
+	EN.put("height.shoulder", "Height at Shoulder");
+	EN.put("height.hip", "Height at Hip");
 	EN.put("wingspan", "Wingspan");
 	EN.put("weight", "Weight");
 	EN.put("speed", "Speed");

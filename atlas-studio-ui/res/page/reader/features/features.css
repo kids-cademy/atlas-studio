@@ -105,7 +105,7 @@
 .features .image-frame {
 	flex-grow: 1;
 	position: relative;
-	margin-top: 10vh;	
+	margin-top: 40px;	
 }
 
 .features .caption {
@@ -122,7 +122,7 @@
 	margin: 0;
 	margin-top: 1.5em;
 	line-height: 1.5em;
-	font-size: 1.0rem;
+	font-size: 0.9rem;
 	color: yellow;
 }
 

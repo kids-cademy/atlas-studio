@@ -324,8 +324,8 @@ public class AtlasServiceImpl implements AtlasService {
 	return atlasDao.getAtlasItem(object.getId());
     }
 
-    private static final String[] TAXON_NAMES = new String[] { "Kingdom", "Phylum", "Class", "Order", "Suborder",
-	    "Family", "Genus", "Species", "Subspecies" };
+    private static final String[] TAXON_NAMES = new String[] { "kingdom", "phylum", "class", "order", "suborder",
+	    "family", "genus", "species", "subspecies" };
 
     @Override
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {

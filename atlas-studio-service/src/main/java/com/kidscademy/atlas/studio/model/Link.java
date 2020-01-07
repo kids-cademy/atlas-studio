@@ -228,6 +228,7 @@ public class Link implements Displayable {
 	DOMAINS.put("nationalgeographic.com", new String[] { "National Geographic", "features" });
 	DOMAINS.put("dkfindout.com", new String[] { "DK findout", "" });
 	DOMAINS.put("ebird.org", new String[] { "eBird", "" });
+	DOMAINS.put("eol.org", new String[] { "Encyclopedia of Life", "" });
     }
 
     /**

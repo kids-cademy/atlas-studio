@@ -57,6 +57,8 @@ public class ObjectIndexerTest {
 	Map<String, String> facts = new HashMap<>();
 	facts.put("Used in pop music", "The accordion is used in pop music.");
 
+	when(atlasObject.getName()).thenReturn("accordion");
+	
 	when(atlasObject.getDescription()).thenReturn("The accordion is a musical instrument."); // 1
 	when(atlasObject.getFacts()).thenReturn(facts); // 2
 	when(atlasObject.getDefinition()).thenReturn("A portable wind instrument."); // 4
@@ -105,6 +107,8 @@ public class ObjectIndexerTest {
 		return 0;
 	    }
 	}
+
+	when(atlasObject.getName()).thenReturn("accordion");
 
 	ObjectIndexer<ExportObject, Key> indexer = new ObjectIndexer<>(new ObjectFields<>(ExportObject.class));
 	ExportObject object = new ExportObject(atlasObject);

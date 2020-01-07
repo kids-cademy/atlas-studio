@@ -110,7 +110,7 @@ public class LifeFormWikipediaArticle implements HDateRange {
 
 	if (scientificName.contains(".")) {
 	    String[] parts = scientificName.split(" ");
-	    Taxon genus = taxon(taxonomy, "Genus");
+	    Taxon genus = taxon(taxonomy, "genus");
 	    if (genus != null) {
 		parts[0] = genus.getValue();
 	    }
@@ -131,22 +131,22 @@ public class LifeFormWikipediaArticle implements HDateRange {
 	    subspeciesValue = scientificName;
 	}
 
-	Taxon species = taxon(taxonomy, "Species");
+	Taxon species = taxon(taxonomy, "species");
 	if (species != null) {
 	    species.setValue(speciesValue);
 	} else {
-	    species = new Taxon("Species", speciesValue);
+	    species = new Taxon("species", speciesValue);
 	    taxonomy.add(species);
 	}
 
 	if (subspeciesValue == null) {
 	    return;
 	}
-	Taxon subspecies = taxon(taxonomy, "Subspecies");
+	Taxon subspecies = taxon(taxonomy, "subspecies");
 	if (subspecies != null) {
 	    subspecies.setValue(subspeciesValue);
 	} else {
-	    subspecies = new Taxon("Subspecies", subspeciesValue);
+	    subspecies = new Taxon("subspecies", subspeciesValue);
 	    taxonomy.add(subspecies);
 	}
     }
@@ -275,7 +275,7 @@ public class LifeFormWikipediaArticle implements HDateRange {
 	    return null;
 	}
 
-	taxon.setName(name);
+	taxon.setName(name.toLowerCase());
 	taxon.setValue(text(row, TAXON_XPATHS));
 	return taxon;
     }

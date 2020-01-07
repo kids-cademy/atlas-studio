@@ -44,14 +44,14 @@ public class AtlasDaoImpl implements AtlasDao {
     public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
 	StringBuilder queryBuilder = new StringBuilder();
 	queryBuilder.append("select i from AtlasItem i where i.collection.id=?1 ");
-	if (!filter.get("state").isEmpty()) {
+	if (!filter.get("state").equals("NONE")) {
 	    queryBuilder.append("and i.state=?2 ");
 	}
 	queryBuilder.append("order by i.display");
 
 	TypedQuery<AtlasItem> query = em.createQuery(queryBuilder.toString(), AtlasItem.class).setParameter(1,
 		collectionId);
-	if (!filter.get("state").isEmpty()) {
+	if (!filter.get("state").equals("NONE")) {
 	    query.setParameter(2, AtlasObject.State.valueOf(filter.get("state")));
 	}
 	return query.getResultList();
@@ -72,10 +72,14 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<ExportItem> getCollectionExportItems(int collectionId) {
-	return em
-		.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name",
-			ExportItem.class)
-		.setParameter(1, collectionId).setParameter(2, AtlasObject.State.PUBLISHED).getResultList();
+	return em.createQuery("select i from ExportItem i where i.collection.id=?1 order by i.name", ExportItem.class)
+		.setParameter(1, collectionId).getResultList();
+    }
+
+    @Override
+    public List<ExportItem> getCollectionExportItemsByState(int collectionId, AtlasObject.State state) {
+	return em.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name",
+		ExportItem.class).setParameter(1, collectionId).setParameter(2, state).getResultList();
     }
 
     @Override

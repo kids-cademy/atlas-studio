@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio;
 
+import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Login;
 
 import js.tiny.container.annotation.Controller;
@@ -11,8 +12,8 @@ import js.tiny.container.mvc.View;
 @Public
 public interface AtlasController {
     Resource login(Login login);
-    
+
     View exportAllAtlasCollections();
 
-    View exportAtlasCollection(int collectionId);
+    View exportAtlasCollection(int collectionId, AtlasObject.State state);
 }

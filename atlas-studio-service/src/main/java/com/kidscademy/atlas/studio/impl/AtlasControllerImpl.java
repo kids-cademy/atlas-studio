@@ -3,6 +3,7 @@ package com.kidscademy.atlas.studio.impl;
 import com.kidscademy.atlas.studio.AtlasController;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.export.AtlasCollectionExportView;
+import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Login;
 
 import js.json.Json;
@@ -36,7 +37,7 @@ public class AtlasControllerImpl implements AtlasController {
     }
 
     @Override
-    public View exportAtlasCollection(int collectionId) {
-	return new AtlasCollectionExportView(atlasDao, json, collectionId);
+    public View exportAtlasCollection(int collectionId, AtlasObject.State state) {
+	return new AtlasCollectionExportView(atlasDao, json, collectionId, state);
     }
 }

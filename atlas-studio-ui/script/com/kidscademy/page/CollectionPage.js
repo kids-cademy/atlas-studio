@@ -27,10 +27,8 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 			"&edit-collection": this._onEditCollection,
 			"&remove-collection": this._onRemoveCollection
 		});
-		const exportAnchor = sideMenu.getByCssClass("export");
-		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}`);
 
-		this._filterForm = this.getByCssClass("form-bar");
+		this._filterForm = this.getByCssClass("filter-form");
 		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "cards", "links");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
@@ -38,6 +36,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._filterForm.setObject(this.getPageAttr("filter-form"));
 		this._listType.set(this.getPageAttr("list-type"));
 		this._actions.fire("load-items");
+
+		const exportAnchor = sideMenu.getByCssClass("export");
+		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}&state=${this._filterForm.getObject().state}`);
 	}
 
 	_onUnload() {

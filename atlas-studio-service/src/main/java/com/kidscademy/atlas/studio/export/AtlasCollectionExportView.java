@@ -42,10 +42,15 @@ public class AtlasCollectionExportView implements View {
 	this.items = atlasDao.getAllExportItems();
     }
 
-    public AtlasCollectionExportView(AtlasDao atlasDao, Json json, int collectionId) {
+    public AtlasCollectionExportView(AtlasDao atlasDao, Json json, int collectionId, AtlasObject.State state) {
 	this.atlasDao = atlasDao;
 	this.json = json;
-	this.items = atlasDao.getCollectionExportItems(collectionId);
+	if (state == AtlasObject.State.NONE) {
+	    this.items = atlasDao.getCollectionExportItems(collectionId);
+
+	} else {
+	    this.items = atlasDao.getCollectionExportItemsByState(collectionId, state);
+	}
     }
 
     @Override
@@ -98,6 +103,7 @@ public class AtlasCollectionExportView implements View {
 	    addEntry(zip, item, atlasObject.getSampleName());
 	    addEntry(zip, item, atlasObject.getWaveformName());
 	    addEntry(zip, exportObject.getName(), "icon.jpg", pictureFile(atlasObject, "icon", 96, 96));
+	    addEntry(zip, exportObject.getName(), "trivia.png", pictureFile(atlasObject, "trivia", 500, 0));
 	    addEntry(zip, exportObject.getName(), "cover.png", pictureFile(atlasObject, "cover", 560, 0));
 	    addEntry(zip, exportObject.getName(), "featured.png", pictureFile(atlasObject, "featured", 560, 0));
 	    addEntry(zip, exportObject.getName(), "contextual.jpg", pictureFile(atlasObject, "contextual", 920, 560));

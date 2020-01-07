@@ -49,11 +49,18 @@ public class QuantityFormat implements Comparator<Pair> {
     public int compare(Pair leftQuantity, Pair rightQuantity) {
 	final DecimalNumeral left = new DecimalNumeral(leftQuantity.first());
 	final DecimalNumeral right = new DecimalNumeral(rightQuantity.first());
-
+	
 	if (left.isZero()) {
 	    return 1;
 	}
 	if (right.isZero()) {
+	    return -1;
+	}
+
+	if (left.isSubunit()) {
+	    return 1;
+	}
+	if (right.isSubunit()) {
 	    return -1;
 	}
 
@@ -62,13 +69,6 @@ public class QuantityFormat implements Comparator<Pair> {
 	}
 	if (left.length() > right.length()) {
 	    return 1;
-	}
-
-	if (left.isSubunit()) {
-	    return 1;
-	}
-	if (right.isSubunit()) {
-	    return -1;
 	}
 
 	if (left.weight() > right.weight()) {

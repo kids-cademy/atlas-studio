@@ -227,6 +227,10 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`DK find out ${object.toLowerCase()} facts.`);
 	},
 
+	"eol.org": function (url, object, callback) {
+		callback(`Data, maps and articles about ${object.toLowerCase()}.`);
+	},
+
 	"ebird.org": function (url, object, callback) {
 		callback(`eBird observations about ${object.toLowerCase()}.`);
 	},

@@ -28,6 +28,8 @@ public interface AtlasDao {
 
     List<ExportItem> getCollectionExportItems(int collectionId);
 
+    List<ExportItem> getCollectionExportItemsByState(int collectionId, AtlasObject.State state);
+
     List<ExportItem> getAllExportItems();
 
     /**
