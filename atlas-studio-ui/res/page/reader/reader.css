@@ -107,11 +107,6 @@ body {
 	cursor: pointer;
 }
 
-.reader p {
-	line-height: normal;
-	color: @color/text;	
-}
-
 .reader .circle {
 	position: absolute;
 	border-radius: 50%;
@@ -171,4 +166,9 @@ body {
 .reader .rule.v {
 	width: 1px;
 	height: 100%;
+}
+
+.reader .paragraphs-cache {
+	position: absolute;
+	top: 1000px;
 }

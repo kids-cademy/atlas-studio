@@ -16,9 +16,15 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		this._panorama = this._doc.getByCss(".h-linear");
 		this._doc.on("mousedown", this._onMouseDown, this);
 
-		this._objectView = WinMain.doc.getByTag("body");
+		this._objectView = this._doc.getByTag("body");
+		this._paragraphsCache = this._doc.getByCss(".paragraphs-cache");
+
 		const objectId = Number(WinMain.url.parameters.id);
-		AtlasService.getExportObject(objectId, object => this._objectView.setObject(object));
+		AtlasService.getExportObject(objectId, object => {
+			this._paragraphsCache.setHTML(object.description);
+			object.paragraphs = this._paragraphsCache;
+			this._objectView.setObject(object);
+		});
 	}
 
 	_onMouseDown(ev) {
@@ -50,7 +56,6 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 			this._left = this._minLeft;
 		}
 
-		console.log(this._left);
 		this._panorama.style.set("left", this._left + "px");
 	}
 

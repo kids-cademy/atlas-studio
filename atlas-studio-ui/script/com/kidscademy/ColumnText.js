@@ -4,83 +4,84 @@ $package("com.kidscademy");
  * Section of text organized into columns of fixed width.
  * 
  * @author Iulian Rotaru
- * @since 1.0
- * 
- * @constructor Construct an instance of ColumnText class.
- * @param js.dom.Document ownerDoc element owner document,
- * @param Node node native {@link Node} instance.
- * @assert assertions imposed by {@link js.dom.Element#Element(js.dom.Document, Node)}.
  */
-com.kidscademy.ColumnText = function (ownerDoc, node) {
-	this.$super(ownerDoc, node);
-
+com.kidscademy.ColumnText = class extends js.dom.Element {
 	/**
-	 * Index of the next fragment to extract from text.
+	 * Construct an instance of ColumnText class.
 	 * 
-	 * @type Number
+	 * @param js.dom.Document ownerDoc element owner document,
+	 * @param Node node native {@link Node} instance.
+	 * @assert assertions imposed by {@link js.dom.Element#Element(js.dom.Document, Node)}.
 	 */
-	this._textIndex = 0;
+	constructor(ownerDoc, node) {
+		super(ownerDoc, node);
 
-	/**
-	 * Column text container height. This is the height to which a column is allowed to grow.
-	 * 
-	 * @type Number
-	 */
-	this._containerHeight = 0;
+		/** Paragraph end tag. */
+		this.P_END_TAG = "</p>";
 
-	/**
-	 * Current column.
-	 * 
-	 * @type js.dom.Element
-	 */
-	this._column = null;
+		/**
+		 * Index of the next fragment to extract from text.
+		 * 
+		 * @type Number
+		 */
+		this._textIndex = 0;
 
-	/**
-	 * A column width, including actual width, border, padding and margin. This value is computed on the fly for the
-	 * first created column and reused so that all columns have the same width.
-	 * 
-	 * @type Number
-	 */
-	this._columnWidth = 0;
+		/**
+		 * Column text container height. This is the height to which a column is allowed to grow.
+		 * 
+		 * @type Number
+		 */
+		this._containerHeight = 0;
 
-	/**
-	 * Column extra vertical space includes padding, border and margin. This value is computed on the fly for the first
-	 * created column and reused for all columns.
-	 * 
-	 * @type Number
-	 */
-	this._columnExtraHeight = 0;
+		/**
+		 * Current column.
+		 * 
+		 * @type js.dom.Element
+		 */
+		this._column = null;
 
-	/**
-	 * Columns count.
-	 * 
-	 * @type Number
-	 */
-	this._columnsCount = 0;
+		/**
+		 * A column width, including actual width, border, padding and margin. This value is computed on the fly for the
+		 * first created column and reused so that all columns have the same width.
+		 * 
+		 * @type Number
+		 */
+		this._columnWidth = 0;
 
-	/**
-	 * Cached value for estimation on minimum height required to insert a new paragraph into column. It includes bottom
-	 * margin for current paragraph and at lest on line height for the newly one. This value is computed on the fly by
-	 * {@link #this._estimateParagraphHeight()}.
-	 * 
-	 * @type Number
-	 */
-	this._minParagraphHeight = 0;
+		/**
+		 * Column extra vertical space includes padding, border and margin. This value is computed on the fly for the first
+		 * created column and reused for all columns.
+		 * 
+		 * @type Number
+		 */
+		this._columnExtraHeight = 0;
 
-	/**
-	 * Overflow tags are tags removed from overflowing paragraph. When adding paragraphs to current column it can happen
-	 * that column height to exceed container, that is, overflow occurs. We need to remove words from paragraph end till
-	 * overflow ends. Between removed word we can find formating tags like &lt;q&gt;. Store discovered tags into this
-	 * array in order to restore them into next column.
-	 * 
-	 * @type Array
-	 */
-	this._overflowTags = [];
-};
+		/**
+		 * Columns count.
+		 * 
+		 * @type Number
+		 */
+		this._columnsCount = 0;
 
-com.kidscademy.ColumnText.prototype = {
-	/** Paragraph end tag. */
-	P_END_TAG: "</p>",
+		/**
+		 * Cached value for estimation on minimum height required to insert a new paragraph into column. It includes bottom
+		 * margin for current paragraph and at lest on line height for the newly one. This value is computed on the fly by
+		 * {@link #this._estimateParagraphHeight()}.
+		 * 
+		 * @type Number
+		 */
+		this._minParagraphHeight = 0;
+
+		/**
+		 * Overflow tags are tags removed from overflowing paragraph. When adding paragraphs to current column it can happen
+		 * that column height to exceed container, that is, overflow occurs. We need to remove words from paragraph end till
+		 * overflow ends. Between removed word we can find formating tags like &lt;q&gt;. Store discovered tags into this
+		 * array in order to restore them into next column.
+		 * 
+		 * @type Array
+		 */
+		this._overflowTags = [];
+	}
 
 	/**
 	 * Set this column text content. Columns are created dynamically and filled up till parent container height limit.
@@ -90,18 +91,10 @@ com.kidscademy.ColumnText.prototype = {
 	 * @param String text formatted text.
 	 * @return com.kidscademy.ColumnText this object.
 	 */
-	setObject: function (text) {
+	setObject(text) {
 		if (this.hasCssClass("hidden")) {
 			return;
 		}
-
-
-		// const parser = new DOMParser();
-		// const doc = parser.parseFromString(text, "text/xml");
-		// const root = doc.children[0];
-		// for (var i = 0; i < root.children.length; ++i) {
-		// 	console.debug(root.children.item(i).tagName)
-		// }
 
 		this._containerHeight = this.style.getHeight();
 		$assert(this._containerHeight > 0, "com.kidscademy.ColumnText#ColumnText", "Container height is zero.\r\nPlease ensure column text parent has height set or inherited.");
@@ -150,14 +143,14 @@ com.kidscademy.ColumnText.prototype = {
 
 		this.style.setWidth(this._columnsCount * this._columnWidth);
 		this.removeCssClass("closed");
-	},
+	}
 
-	getColumnsCount: function () {
+	getColumnsCount() {
 		$assert(this._columnsCount > 0, "com.kidscademy.ColumnText#getColumnsCount", "Invalid state. Zero columns count.");
 		return this._columnsCount;
-	},
+	}
 
-	setOffset: function (offset) {
+	setOffset(offset) {
 		$assert(this._columnWidth > 0, "com.kidscademy.ColumnText#setOffset", "Invalid state. Zero column width.");
 		$assert(offset >= 0 && offset < this._columnsCount, "com.kidscademy.ColumnText#setOffset", "Offset |%d| not in range.", offset);
 
@@ -174,7 +167,7 @@ com.kidscademy.ColumnText.prototype = {
 		for (; columnsIndex < columns.size(); ++columnsIndex) {
 			columns.item(columnsIndex).removeCssClass("hidden");
 		}
-	},
+	}
 
 	/**
 	 * Get next paragraph fragment from given <code>text</code> or null if no more. Returned paragraph fragment starts
@@ -190,7 +183,7 @@ com.kidscademy.ColumnText.prototype = {
 	 * @return String paragraph fragment or null.
 	 * @see #_textIndex
 	 */
-	_getParagraphFragment: function (text) {
+	_getParagraphFragment(text) {
 		var startIndex = this._textIndex;
 		this._textIndex = text.indexOf(this.P_END_TAG, this._textIndex);
 		if (this._textIndex === -1) {
@@ -210,7 +203,7 @@ com.kidscademy.ColumnText.prototype = {
 		}
 
 		return paragraph;
-	},
+	}
 
 	/**
 	 * Test if current column content overflows. Is considered overflow if current column height is strictly greater
@@ -218,9 +211,9 @@ com.kidscademy.ColumnText.prototype = {
 	 * 
 	 * @return Boolean true if current column overflows.
 	 */
-	_isOverflow: function () {
+	_isOverflow() {
 		return this._columnHeight() > this._containerHeight;
-	},
+	}
 
 	/**
 	 * Get current column height or zero if there is no current column created yet. Returned value include the effective
@@ -228,9 +221,9 @@ com.kidscademy.ColumnText.prototype = {
 	 * 
 	 * @return Number current column height.
 	 */
-	_columnHeight: function () {
+	_columnHeight() {
 		return this._column != null ? (this._column.style.getHeight() + this._columnExtraHeight) : 0;
-	},
+	}
 
 	/**
 	 * Estimate minimum vertical space needed to insert a new paragraph. To be able to insert a new paragraph a column
@@ -244,7 +237,7 @@ com.kidscademy.ColumnText.prototype = {
 	 * 
 	 * @return Number minimum height needed for a new paragraph.
 	 */
-	_estimateParagraphHeight: function () {
+	_estimateParagraphHeight() {
 		if (this._column == null) {
 			return Number.MAX_VALUE;
 		}
@@ -263,7 +256,7 @@ com.kidscademy.ColumnText.prototype = {
 			this._minParagraphHeight = lineHeight + paragraphBottomMargin;
 		}
 		return this._minParagraphHeight;
-	},
+	}
 
 	/**
 	 * Create a new column and update column left position. Left position is computed based on column width, that is
@@ -271,7 +264,7 @@ com.kidscademy.ColumnText.prototype = {
 	 * <p>
 	 * Note that column width is computed for first column and cached. This means all columns have the same width.
 	 */
-	_createColumn: function () {
+	_createColumn() {
 		this._column = this._ownerDoc.createElement("div");
 		this._column.addCssClass("column");
 		this.addChild(this._column);
@@ -288,7 +281,7 @@ com.kidscademy.ColumnText.prototype = {
 		// for left value uses columns count existing before adding this column
 		this._column.style.setLeft(this._columnsCount * this._columnWidth);
 		++this._columnsCount;
-	},
+	}
 
 	/**
 	 * Add paragraph described by given fragment to current column.
@@ -297,11 +290,11 @@ com.kidscademy.ColumnText.prototype = {
 	 * @return js.dom.Element newly created paragraph.
 	 * @assert current column is not null.
 	 */
-	_addParagraph: function (paragraphFragment) {
+	_addParagraph(paragraphFragment) {
 		$assert(this._column !== null, "com.kidscademy.ColumnText#_addParagraph", "Current column is null.");
 		this._column.addHTML(paragraphFragment);
 		return this._column.getLastChild().addCssClass("paragraph");
-	},
+	}
 
 	/**
 	 * Remove last word from paragraph and update last word length instance property. This method parses given paragraph
@@ -312,7 +305,7 @@ com.kidscademy.ColumnText.prototype = {
 	 * @param Array skipTags tags to skipped from paragraph start.
 	 * @return String paragraph with last word removed.
 	 */
-	_removeLastWord: function (paragraph, skipTags) {
+	_removeLastWord(paragraph, skipTags) {
 		var tag, buildTag;
 
 		var skipTagsIndex = paragraph.length;
@@ -355,15 +348,14 @@ com.kidscademy.ColumnText.prototype = {
 					return paragraph.substring(0, i);
 			}
 		}
-	},
+	}
 
 	/**
 	 * Class string representation.
 	 * 
 	 * @return this class string representation.
 	 */
-	toString: function () {
+	toString() {
 		return "com.kidscademy.ColumnText";
 	}
 };
-$extends(com.kidscademy.ColumnText, js.dom.Element);

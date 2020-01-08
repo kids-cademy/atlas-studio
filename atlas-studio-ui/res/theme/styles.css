@@ -44,6 +44,31 @@
 	height: 100%;
 }
 
-.spare-v {
+.flex-fit, .spare-v {
 	flex-grow: 1;
+}
+
+.accent {
+	color: yellow;
+}
+
+.upper-case {
+	text-transform: uppercase;
+}
+
+.rule {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background-color: @color/rule;	
+}
+
+.rule.h {
+	width: 100%;
+	height: 1px;
+}
+
+.rule.v {
+	width: 1px;
+	height: 100%;
 }

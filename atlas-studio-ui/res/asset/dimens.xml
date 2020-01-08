@@ -39,7 +39,7 @@
 
 	<action-size>64px</action-size>
 	<page-padding>32px</page-padding>
-	<section-space>100px</section-space>
+	<section-space>120px</section-space>
 	<paragraph-space>40px</paragraph-space>
 	<paragraph-indent>60px</paragraph-indent>
 	<infobox-padding>40px</infobox-padding>

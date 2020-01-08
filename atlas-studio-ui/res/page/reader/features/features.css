@@ -9,11 +9,16 @@
 }
 
 .reader .features p {
+	box-sizing: border-box;
 	line-height: 36px;
+	margin: 0;
 	margin-bottom: 36px;
-	margin-top: 0;
 	font-size: 22px;
 	color: @color/accent;
+}
+
+.reader .features p:last-child {
+	margin-bottom: 0;
 }
 
 .features table {
@@ -128,4 +133,9 @@
 
 .features .caption p:first-child {
 	margin-top: 0;
+}
+
+.features .column-text {
+	xbox-sizing: border-box;
+	margin-top: 100px;	
 }

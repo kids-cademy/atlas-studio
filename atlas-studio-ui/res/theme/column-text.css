@@ -1,6 +1,6 @@
 .column-text {
-	position: relative;
-	box-sizing: border-box;
+	xposition: relative;
+	xbox-sizing: border-box;
 	width: 0;
 	height: inherit;
 	overflow: hidden;
@@ -8,9 +8,9 @@
 
 .column-text .column {
 	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
+	xposition: absolute;
+	xtop: 0;
+	xleft: 0;
 	width: @dimen/column-width;
 	height: auto;
 	white-space: normal;
@@ -51,4 +51,37 @@
 .column-text li {
 	list-style: inside;
 	margin-bottom: 20px;
+}
+
+
+
+.column-text {
+	display: inline-block;
+	vertical-align: top;
+	width: @dimen/column-width;
+	height: 100%;
+}
+
+.column-text.hidden {
+	display: none;
+}
+
+.column-text .column {
+	width: @dimen/column-width;
+	margin: 0 @dimen/column-gap;
+}
+
+.column-text .column:first-child {
+	margin-left: 0;
+}
+
+.column-text p {
+	line-height: 36px;
+	margin-bottom: 36px;
+	font-size: 22px;
+	color: white;
+}
+
+.column-text q {
+	color: yellow;
 }
