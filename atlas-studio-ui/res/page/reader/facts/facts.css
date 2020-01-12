@@ -2,11 +2,16 @@
 	width: 750px;	
 }
 
+.facts .list {
+	position: absolute;
+	width: 100%;
+	top: 0;	
+}
+
 .facts .item {
 	list-style: none;
 	position: relative;
 	width: 100%;
-	padding-top: 10px;	
 	margin-bottom: @dimen/divider-size;
 	background: none !important;
 }
@@ -64,10 +69,34 @@
 	background-color: @color/palette-10;
 }
 
+.facts .item:nth-child(11) .circle {
+	background-color: @color/palette-11;
+}
+
+.facts .item:nth-child(12) .circle {
+	background-color: @color/palette-12;
+}
+
+.facts .item:nth-child(13) .circle {
+	background-color: @color/palette-13;
+}
+
+.facts .item:nth-child(14) .circle {
+	background-color: @color/palette-14;
+}
+
+.facts .item:nth-child(15) .circle {
+	background-color: @color/palette-15;
+}
+
+.facts .item:nth-child(16) .circle {
+	background-color: @color/palette-16;
+}
+
 .facts .item .name {
 	height: @dimen/bullet-size;
 	line-height: @dimen/bullet-size;
-	margin: 10px 0 10px 0;
+	margin: 10px 0 2px 0;
 	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
 	color: @color/text;
 	font-size: 1.8rem;
@@ -79,9 +108,14 @@
 }
 
 .facts .item .value {
+	display: none;
 	margin: 0;
 	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
 	color: @color/mute;
 	font-size: 1.4rem;
 	text-align: left;
+}
+
+.facts .item.opened .value {
+	display: block;
 }

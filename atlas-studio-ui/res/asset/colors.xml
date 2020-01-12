@@ -11,16 +11,22 @@
 	<black-t80>rgba(0, 0, 0, 0.5)</black-t80>
 	<hexa-icon>rgba(100, 199, 204, 0.7)</hexa-icon>
 	
-	<palette-1>#80deea</palette-1>
-	<palette-2>#228B22</palette-2>
-	<palette-3>#B22222</palette-3>
-	<palette-4>#DAA520</palette-4>
-	<palette-5>#4664b2</palette-5>
-	<palette-6>#83b246</palette-6>
-	<palette-7>#b27e46</palette-7>
-	<palette-8>#B39DDB</palette-8>
-	<palette-9>#f0eb95</palette-9>
-	<palette-10>#6495ED</palette-10>
+	<palette-1>@color/red-500</palette-1>
+	<palette-2>@color/pink-500</palette-2>
+	<palette-3>@color/purple-500</palette-3>
+	<palette-4>@color/deep-purple-500</palette-4>
+	<palette-5>@color/indigo-500</palette-5>
+	<palette-6>@color/blue-700</palette-6>
+	<palette-7>@color/light-blue-500</palette-7>
+	<palette-8>@color/cyan-500</palette-8>
+	<palette-9>@color/teal-500</palette-9>
+	<palette-10>@color/green-500</palette-10>
+	<palette-11>@color/light-green-500</palette-11>
+	<palette-12>@color/lime-500</palette-12>
+	<palette-13>@color/yellow-500</palette-13>
+	<palette-14>@color/amber-500</palette-14>
+	<palette-15>@color/orange-500</palette-15>
+	<palette-16>@color/deep-orange-500</palette-16>
 
 	<page-header-bg>#000000</page-header-bg>
 	<page-header-link>#80A0A0</page-header-link>

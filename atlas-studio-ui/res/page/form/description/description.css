@@ -2,6 +2,11 @@
 	
 }
 
+.description textarea {
+	width: 100%;
+	height: 500px;
+}
+
 .description:not(.hidden) .list-view {
 	margin-top: 20px;
 }

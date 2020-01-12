@@ -17,32 +17,76 @@ import js.util.Classes;
 public class WikipediaArticleText {
     private final List<String> sentences = new ArrayList<String>();
 
+    private enum State {
+	INTRO, TOC, DESCRIPTION
+    }
+
+    private static boolean id(Element element, String id) {
+	return id.equalsIgnoreCase(element.getAttr("id")) || (element.hasChildren() && id.equalsIgnoreCase(element.getFirstChild().getAttr("id")));
+    }
+
+    private static boolean tag(Element element, String tag) {
+	return tag.equalsIgnoreCase(element.getTag());
+    }
+
+    private boolean add(Element element) {
+	if (sentences.size() == 20) {
+	    return false;
+	}
+	System.out.println(element.getText());
+
+	String text = element.getText().trim();
+	text = Strings.removeReferences(text);
+
+	// break iterator deals with shorthands but only simple cases
+	// for now is acceptable to have bad sentences breaking
+
+	BreakIterator border = BreakIterator.getSentenceInstance(Locale.US);
+	border.setText(text);
+	int start = border.first();
+	for (int end = border.next(); end != BreakIterator.DONE; start = end, end = border.next()) {
+	    sentences.add(text.substring(start, end).trim());
+	}
+
+	return true;
+    }
+
     public WikipediaArticleText(URL articleURL) {
 	this(content(articleURL));
     }
 
     public WikipediaArticleText(EList content) {
-	for (Element element : content) {
-	    // collect all <p> elements till found table of content
-	    if ("toc".equals(element.getAttr("id"))) {
-		break;
-	    }
+	State state = State.INTRO;
 
-	    if ("p".equals(element.getTag())) {
-		System.out.println(element.getText());
-
-		String text = element.getText().trim();
-		text = Strings.removeReferences(text);
-
-		// break iterator deals with shorthands but only simple cases
-		// for now is acceptable to have bad sentences breaking
-
-		BreakIterator border = BreakIterator.getSentenceInstance(Locale.US);
-		border.setText(text);
-		int start = border.first();
-		for (int end = border.next(); end != BreakIterator.DONE; start = end, end = border.next()) {
-		    sentences.add(text.substring(start, end).trim());
+	COLLECT: for (Element element : content) {
+	    switch (state) {
+	    case INTRO:
+		if (id(element, "toc")) {
+		    state = State.TOC;
+		    break;
 		}
+		if (tag(element, "p")) {
+		    if (!add(element)) {
+			break COLLECT;
+		    }
+		}
+		break;
+
+	    case TOC:
+		if (id(element, "description")) {
+		    state = State.DESCRIPTION;
+		}
+		continue;
+
+	    case DESCRIPTION:
+		if (!tag(element, "p")) {
+		    break COLLECT;
+		}
+		if (!add(element)) {
+		    break COLLECT;
+		}
+		break;
+
 	    }
 	}
     }

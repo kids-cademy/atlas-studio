@@ -15,7 +15,7 @@
 	width: 70%;
 	right: 0;
 	bottom: 20%;
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(0, 0, 0, 0.3);
 	padding: @dimen/infobox-padding;
 }
 
@@ -24,7 +24,7 @@
 	margin-top: 1.5em;
 	line-height: 1.5em;
 	font-size: 1.1rem;
-	color: white;
+	color: yellow;
 }
 
 .featured .paragraph-container p:first-child {

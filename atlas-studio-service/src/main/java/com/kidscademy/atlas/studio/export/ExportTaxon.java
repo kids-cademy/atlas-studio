@@ -46,6 +46,7 @@ public class ExportTaxon implements Displayable {
 	EN.put("order", "Order");
 	EN.put("family", "Family");
 	EN.put("genus", "Genus");
+	EN.put("subgenus", "Subgenus");
 	EN.put("species", "Species");
 	EN.put("suborder", "Suborder");
 	EN.put("subfamily", "Subfamily");

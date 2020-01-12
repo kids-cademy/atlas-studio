@@ -54,6 +54,8 @@ address,caption,cite,code,dfn,em,strong,th,var {
 	font-style: normal;
 	font-weight: normal;
 	word-spacing: normal;
+	font-family: "Open Sans";
+	font-weight: lighter;
 }
 
 input,textarea,select,option,button {
@@ -63,10 +65,8 @@ input,textarea,select,option,button {
 	font-family: inherit;
 	font-size: inherit;
 	font-weight: inherit;
-}
-
-input,textarea,select,option,button {
-	*font-size: 100%;
+	font-family: "Open Sans";
+	font-weight: lighter;
 }
 
 input[type=image] {
