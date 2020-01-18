@@ -269,6 +269,10 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`${object} facts for kids.`);
 	},
 
+	"animalia.bio": function (url, object, callback) {
+		callback(`Animalia article avout ${object.toLowerCase()}.`);
+	},
+
 	"wikihow.com": function (url, object, callback) {
 		AtlasService.getWikiHowTitle(url, callback);
 	}

@@ -39,6 +39,7 @@ public class ExportObject {
     private final String sampleTitle;
     private final String samplePath;
     private final String waveformPath;
+    private final String waveformSrc;
 
     private final List<ExportFact> facts;
     private final List<ExportFeature> features;
@@ -72,6 +73,7 @@ public class ExportObject {
 	this.sampleTitle = object.getSampleTitle();
 	this.samplePath = Util.path(object.getName(), object.getSampleName());
 	this.waveformPath = Util.path(object.getName(), object.getWaveformName());
+	this.waveformSrc = object.getWaveformSrc() != null ? object.getWaveformSrc().value() : null;
 
 	this.facts = new ArrayList<>();
 	for (Map.Entry<String, String> entry : object.getFacts().entrySet()) {

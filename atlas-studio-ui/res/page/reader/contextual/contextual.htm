@@ -6,7 +6,7 @@
 			<img class="play" src="@image/action-play" />
 		</div>
 	</div>
-	<div class="graphics">
+	<div class="graphics" data-if="!waveformSrc">
 		<div class="group">
 			<hr class="rule h" />
 			<img class="graphic i1" src="@image/circle-1" />
@@ -16,4 +16,5 @@
 			<img class="graphic i5" src="@image/circle-5" />
 		</div>
 	</div>
+	<img class="graphics" data-src="waveformSrc" data-if="waveformSrc" />
 </div>

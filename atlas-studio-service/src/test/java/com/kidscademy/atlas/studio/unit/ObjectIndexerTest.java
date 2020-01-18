@@ -20,6 +20,7 @@ import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.export.ExportRelatedObject;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.search.DirectIndex;
@@ -58,6 +59,7 @@ public class ObjectIndexerTest {
 	facts.put("Used in pop music", "The accordion is used in pop music.");
 
 	when(atlasObject.getName()).thenReturn("accordion");
+	when(atlasObject.getWaveformSrc()).thenReturn(new MediaSRC());
 	
 	when(atlasObject.getDescription()).thenReturn("The accordion is a musical instrument."); // 1
 	when(atlasObject.getFacts()).thenReturn(facts); // 2
@@ -109,6 +111,7 @@ public class ObjectIndexerTest {
 	}
 
 	when(atlasObject.getName()).thenReturn("accordion");
+	when(atlasObject.getWaveformSrc()).thenReturn(new MediaSRC());
 
 	ObjectIndexer<ExportObject, Key> indexer = new ObjectIndexer<>(new ObjectFields<>(ExportObject.class));
 	ExportObject object = new ExportObject(atlasObject);
