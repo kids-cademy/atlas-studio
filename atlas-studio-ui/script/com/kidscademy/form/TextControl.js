@@ -10,7 +10,16 @@ com.kidscademy.form.TextControl = class extends js.dom.Control {
 			this.reset();
 			return;
 		}
-		this._setValue(text.replace(/<p>/g, "").replace(/<\/p>/g, "\n\n"));
+
+		const turndownService = new TurndownService();
+
+		// Use the turndown method from the created instance
+		// to convert the first argument (HTML string) to Markdown
+		var markdown = turndownService.turndown(text);
+		console.log(markdown);
+		this._setValue(markdown);
+
+		//		this._setValue(text.replace(/<p>/g, "").replace(/<\/p>/g, "\n\n"));
 	}
 
 	getValue() {
@@ -18,7 +27,12 @@ com.kidscademy.form.TextControl = class extends js.dom.Control {
 		if (!text) {
 			return null;
 		}
-		return "<p>" + text.trim().replace(/\n\n/g, "</p><p>") + "</p>";
+
+		const md = new Remarkable();
+		console.log(md.render(text));
+		return md.render(text);
+
+		//		return "<p>" + text.trim().replace(/\n\n/g, "</p><p>") + "</p>";
 	}
 
 	/**
