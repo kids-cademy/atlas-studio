@@ -126,7 +126,8 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this.setPageAttr("object-id", objectId);
 
 		if (ev.ctrlKey) {
-			this._moveToPage("@link/reader", objectId);
+			const objectId = li.getAttr("id");
+			this._onPreviewObject(li);
 		}
 		else {
 			this._moveToPage("@link/form", objectId);
@@ -134,14 +135,18 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onContextMenu(ev) {
-		if (ev.ctrlKey) {
-			return;
-		}
 		const li = ev.target.getParentByTag("li");
 		if (li == null) {
 			return;
 		}
 		ev.halt();
+
+		if (ev.ctrlKey) {
+			const objectId = li.getAttr("id");
+			this._onPreviewObject(li);
+			return;
+		}
+
 		this._contextMenu.open(li);
 	}
 

@@ -17,15 +17,12 @@
 	padding-top: 0;
 }
 
-.infobox .container.accent {
-	border-left: solid 1px @color/rule;
-}
-
 .infobox h2 {
 	margin: @dimen/paragraph-space  0 10px 0;
 	font-weight: lighter;
 	font-size: 1.8rem;
 	color: black;
+	text-transform: capitalize;
 }
 
 .infobox .last-updated h2 {

@@ -72,13 +72,13 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<ExportItem> getCollectionExportItems(int collectionId) {
-	return em.createQuery("select i from ExportItem i where i.collection.id=?1 order by i.name", ExportItem.class)
+	return em.createQuery("select i from ExportItem i where i.collection.id=?1 order by i.display", ExportItem.class)
 		.setParameter(1, collectionId).getResultList();
     }
 
     @Override
     public List<ExportItem> getCollectionExportItemsByState(int collectionId, AtlasObject.State state) {
-	return em.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.name",
+	return em.createQuery("select i from ExportItem i where i.collection.id=?1 and i.state=?2 order by i.display",
 		ExportItem.class).setParameter(1, collectionId).setParameter(2, state).getResultList();
     }
 

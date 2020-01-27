@@ -1,4 +1,4 @@
-package com.kidscademy.atlas.studio.unit;
+package com.kidscademy.atlas.studio.it;
 
 import java.io.IOException;
 import java.net.URL;
