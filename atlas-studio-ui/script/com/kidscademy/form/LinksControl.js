@@ -227,6 +227,14 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 		callback(`DK find out ${object.toLowerCase()} facts.`);
 	},
 
+	"iucnredlist.org": function (url, object, callback) {
+		callback(`IUCN Red List index of ${object.toLowerCase()}.`);
+	},
+
+	"itis.gov": function (url, object, callback) {
+		callback(`ITIS taxonomy for ${object.toLowerCase()}.`);
+	},
+
 	"eol.org": function (url, object, callback) {
 		callback(`Data, maps and articles about ${object.toLowerCase()}.`);
 	},

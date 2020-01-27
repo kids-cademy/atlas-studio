@@ -230,6 +230,8 @@ public class Link implements Displayable {
 	DOMAINS.put("ebird.org", new String[] { "eBird", "" });
 	DOMAINS.put("eol.org", new String[] { "Encyclopedia of Life", "" });
 	DOMAINS.put("animalia.bio", new String[] { "ANIMALIA", "" });
+	DOMAINS.put("iucnredlist.org", new String[] { "IUCN Red List", "" });
+	DOMAINS.put("itis.gov", new String[] { "Taxonomic Information System", "" });
     }
 
     /**
