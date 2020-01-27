@@ -61,7 +61,8 @@ public class ExportFeature {
 	EN.put("speed.full", "Full Speed");
 	EN.put("speed.gliding", "Gliding Speed");
 	EN.put("speed.diving", "Diving Speed");
-	EN.put("diving.depth", "Diving Depth");
-	EN.put("altitude", "Altitude");
+	EN.put("flying.height", "Flying Height");
+	EN.put("elevation", "Elevation");
+	EN.put("depth", "Diving Depth");
     }
 }
