@@ -22,11 +22,14 @@
 	font-weight: lighter;
 	font-size: 1.8rem;
 	color: black;
-	text-transform: capitalize;
 }
 
 .infobox .last-updated h2 {
 	margin-top: 0;
+}
+
+.infobox .taxonomy h2 {
+	text-transform: capitalize;
 }
 
 .infobox .body {
@@ -37,6 +40,14 @@
 	white-space: nowrap;
 	font-size: 1.4rem;
 	color: @color/accent;
+}
+
+.infobox li {
+	text-transform: uppercase;	
+}
+
+.infobox .last-updated p {
+	color: @color/text;
 }
 
 .infobox .name {

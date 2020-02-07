@@ -181,6 +181,16 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    synchronized public void moveAtlasObject(AtlasItem object, int collectionId) {
+	File objectDir = Files.objectDir(object);
+	object = atlasDao.moveAtlasObject(object.getId(), collectionId);
+	if (object != null) {
+	    File newObjectDir = Files.objectDir(object);
+	    objectDir.renameTo(newObjectDir);
+	}
+    }
+
+    @Override
     public List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames) {
 	return atlasDao.getRelatedAtlasObjects(collectionId, relatedNames);
     }
@@ -357,7 +367,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadImage(Form imageForm, File imageFile) throws IOException, BusinessException {
-	AtlasItem atlasItem = getAtlasItem(imageForm);
+	AtlasItem atlasItem = getAtlasItemByForm(imageForm);
 	String imageKey = imageForm.getValue("image-key");
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
@@ -504,7 +514,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AudioSampleInfo uploadAudioSample(Form audioSampleForm) throws IOException {
-	AtlasItem atlasItem = getAtlasItem(audioSampleForm);
+	AtlasItem atlasItem = getAtlasItemByForm(audioSampleForm);
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	handler.upload(audioSampleForm.getFile("file"));
 	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
@@ -596,7 +606,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     // ----------------------------------------------------------------------------------------------
 
-    private AtlasItem getAtlasItem(Form mediaForm) {
+    private AtlasItem getAtlasItemByForm(Form mediaForm) {
 	String objectId = mediaForm.getValue("atlas-object-id");
 	if (objectId == null) {
 	    throw new BugError("Media form should have <atlas-object-id> field.");

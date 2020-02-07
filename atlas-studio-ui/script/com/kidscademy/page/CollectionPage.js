@@ -33,6 +33,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
+		this._collectionSelect = this.getByClass(com.kidscademy.ItemSelect);
+		AtlasService.getCollections(collections => this._collectionSelect.load(collections));
+
 		this._filterForm.setObject(this.getPageAttr("filter-form"));
 		this._listType.set(this.getPageAttr("list-type"));
 		this._actions.fire("load-items");
@@ -112,6 +115,13 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 				const object = objectView.getUserData();
 				AtlasService.removeAtlasObject(object.id, () => objectView.remove());
 			}
+		});
+	}
+
+	_onMoveObject(objectView) {
+		this._collectionSelect.open(collection => {
+			const object = objectView.getUserData();
+			AtlasService.moveAtlasObject(object, collection.id, () => objectView.remove());
 		});
 	}
 

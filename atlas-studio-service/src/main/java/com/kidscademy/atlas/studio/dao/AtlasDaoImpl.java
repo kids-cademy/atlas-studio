@@ -72,7 +72,8 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<ExportItem> getCollectionExportItems(int collectionId) {
-	return em.createQuery("select i from ExportItem i where i.collection.id=?1 order by i.display", ExportItem.class)
+	return em
+		.createQuery("select i from ExportItem i where i.collection.id=?1 order by i.display", ExportItem.class)
 		.setParameter(1, collectionId).getResultList();
     }
 
@@ -106,6 +107,20 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (object != null) {
 	    em.remove(object);
 	}
+    }
+
+    @Override
+    @Mutable
+    public AtlasItem moveAtlasObject(int objectId, int collectionId) {
+	AtlasItem object = em.find(AtlasItem.class, objectId);
+	if (object != null) {
+	    AtlasCollection collection = em.find(AtlasCollection.class, collectionId);
+	    if (collection != null) {
+		object.setCollection(collection);
+		return object;
+	    }
+	}
+	return null;
     }
 
     @Override

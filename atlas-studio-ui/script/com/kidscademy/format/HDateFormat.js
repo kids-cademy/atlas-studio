@@ -35,22 +35,22 @@ com.kidscademy.format.HDateFormat.prototype = {
 				return `${hdate.value}0s ${this.getEra(hdate)}`;
 
 			case "CENTURY":
-				const value = this.roman(hdate.value);
+				const value = hdate.value;
 				const era = this.getEra(hdate);
 				const suffix = this.suffix(hdate.value);
 
 				switch (this.getPeriod(hdate)) {
 					case "BEGINNING":
-						return `Beginning of ${value}-${suffix} Century, ${era}`;
+						return `Beginning of ${value}${suffix} Century, ${era}`;
 
 					case "MIDDLE":
-						return `Middle of ${value}-${suffix} Century, ${era}`;
+						return `Middle of ${value}${suffix} Century, ${era}`;
 
 					case "END":
-						return `End of ${value}-${suffix} Century, ${era}`;
+						return `End of ${value}${suffix} Century, ${era}`;
 
 					default:
-						return `${value}-${suffix} Century, ${era}`;
+						return `${value}${suffix} Century, ${era}`;
 				}
 				break;
 
@@ -71,7 +71,7 @@ com.kidscademy.format.HDateFormat.prototype = {
 	},
 
 	roman(number) {
-		const symbols = com.kidscademy.format.HDateFormat.RomanSymbols
+		const symbols = com.kidscademy.format.HDateFormat.RomanSymbols;
 		var value = '';
 
 		for (var i of Object.keys(symbols)) {

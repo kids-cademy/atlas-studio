@@ -70,6 +70,7 @@
 	<object-create>Create Object</object-create>
 	<object-edit>Edit Object</object-edit>
 	<object-remove>Remove Object</object-remove>
+	<object-move>Move to Collection</object-move>
 	<object-preview>Preview Object</object-preview>
 	<object-save>Save</object-save>
 

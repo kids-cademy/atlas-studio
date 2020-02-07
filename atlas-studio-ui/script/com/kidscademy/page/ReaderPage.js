@@ -29,11 +29,34 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		this._minLeft = 0;
 
 		const objectId = Number(WinMain.url.parameters.id);
-		AtlasService.getExportObject(objectId, object => {
-			this._paragraphsCache.setHTML(object.description);
-			object.paragraphs = this._paragraphsCache;
-			this._objectView.setObject(object);
-		});
+		AtlasService.getExportObject(objectId, this._onObjectLoaded, this);
+	}
+
+	_onObjectLoaded(object) {
+		this._paragraphsCache.setHTML(object.description);
+		object.paragraphs = this._paragraphsCache;
+		this._objectView.setObject(object);
+
+		// adjust position of the featured image section, if is visible
+		const featuredSection = this.getByCss(".section.featured");
+		if (!featuredSection.isVisible()) {
+			return;
+		}
+
+		// find first visible section before contextual image section and move featured image there
+		// the point is to have a visible section between featured and contextual images to avoid having two images in sequence
+		// do nothing if there is no visible section before contextual image, that is, leave featured image where it is
+		var section = this.getByCss(".section.contextual");
+		while ((section = section.getPreviousSibling()) != null) {
+			if (section === featuredSection) {
+				// takes care to skip featured section itself
+				continue;
+			}
+			if (section.isVisible()) {
+				section.insertBefore(featuredSection);
+				break;
+			}
+		}
 	}
 
 	_onMouseDown(ev) {

@@ -50,6 +50,8 @@ public interface AtlasService {
     @RolesAllowed("LIBRARIAN")
     void removeAtlasObject(int objectId);
 
+    void moveAtlasObject(AtlasItem object, int collectionId);
+    
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
     List<Feature> getFeatureTemplates(FeaturesClass featuresClass);

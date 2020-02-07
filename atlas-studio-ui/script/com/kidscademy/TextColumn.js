@@ -24,9 +24,7 @@ com.kidscademy.TextColumn = class extends js.dom.Element {
 			}
 			this.addChild(paragraphElement);
 		}
-		if (this.getChildrenCount() === 0) {
-			this.getParent().hide();
-		}
+		this.getParent().show(this.getChildrenCount());
 	}
 
 	/**

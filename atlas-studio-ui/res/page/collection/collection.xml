@@ -10,6 +10,7 @@
 		<script>script/com/kidscademy/CssFlags.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
+		<script>script/com/kidscademy/ItemSelect.js</script>
 		<script>script/com/kidscademy/PageHeader.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/CollectionPage.js</script>

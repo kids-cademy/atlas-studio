@@ -82,6 +82,10 @@ public class AtlasItem implements RepositoryObject {
 	return id;
     }
 
+    public void setCollection(AtlasCollection collection) {
+        this.collection = collection;
+    }
+
     public AtlasCollection getCollection() {
 	return collection;
     }
