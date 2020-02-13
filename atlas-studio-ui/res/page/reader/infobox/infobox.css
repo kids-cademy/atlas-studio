@@ -47,11 +47,11 @@
 }
 
 .infobox .last-updated p {
-	color: @color/text;
+	color: @color/text-inverse;
 }
 
 .infobox .name {
-	color: @color/text;
+	color: @color/text-inverse;
 	text-transform: uppercase;	
 	font-size: 1.4rem;
 }
@@ -63,7 +63,7 @@
 }
 
 .infobox .value {
-	color: @color/text;	
+	color: @color/text-inverse;	
 	text-transform: lowercase;	
 	font-size: 1.4rem;
 }

@@ -1,0 +1,52 @@
+.insight-links {
+	white-space: nowrap;
+}
+
+.insight-links .row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.insight-links .links {
+	display: inline-block;
+	flex-grow: 1;
+	/* not clear why but need have absolute value otherwise vertical scroll is not displayed - probably covered */
+	/* the actual value does not mater but should be small enough */
+	/* do not know how cross-browser is this solution but seems to be working on major recent browsers */
+	width: 100px;
+	height: @eval(add @dimen/icon-size 4 @eval(mul 2 @dimen/list-item-padding));
+	margin-top: @dimen/list-item-y-space;
+	border: solid 1px #E6E6E6;
+	background-color: #F8F8F8;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.insight-links .links .link {
+	display: inline-block;
+	width: 80px;
+	margin: 0 0 0 30px;
+	white-space: normal;
+}
+
+.insight-links .links .icon {
+	display: block;
+	border: none;
+	width: 64px;
+	height: 64px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.insight-links .links .display {
+	display: block;
+	margin: 6px 0 0 0;
+	padding: 0;
+	border: none;
+	font-size: 1.2rem;
+	line-height: 16px;
+	height: 32px;
+	text-align: center;
+	overflow: hidden;
+}

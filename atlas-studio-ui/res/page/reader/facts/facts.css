@@ -98,7 +98,7 @@
 	line-height: @dimen/bullet-size;
 	margin: 10px 0 2px 0;
 	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
-	color: @color/text;
+	color: @color/text-inverse;
 	font-size: 1.8rem;
 	font-weight: lighter;
 	white-space: nowrap;

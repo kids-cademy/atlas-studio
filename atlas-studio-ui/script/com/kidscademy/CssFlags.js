@@ -13,9 +13,9 @@ com.kidscademy.CssFlags = class {
         if (flag == null) {
             flag = this._flags[0];
         }
-
         if (this._flags.indexOf(flag) === -1) {
-            throw `Invalid flag |${flag}| for element |${this._element.toString()}|.`;
+            $debug("com.kidscademy.CssFlags#set", `Invalid flag |${flag}| for element |${this._element.toString()}|.`);
+            flag = this._flags[0];
         }
         if (this._currentFlag != null) {
             this._element.removeCssClass(this._currentFlag);

@@ -32,7 +32,7 @@ body {
 	height: @dimen/action-size;
 	line-height: @dimen/action-size;
 	font-size: 1.8rem;
-	color: @color/text;
+	color: @color/text-inverse;
 	text-transform: uppercase;
 	margin-left: @dimen/paragraph-space;
 }

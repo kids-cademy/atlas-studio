@@ -43,6 +43,7 @@ public class ExportTaxon implements Displayable {
 	EN.put("kingdom", "Kingdom");
 	EN.put("phylum", "Phylum");
 	EN.put("class", "Class");
+	EN.put("infraclass", "Infraclass");
 	EN.put("order", "Order");
 	EN.put("family", "Family");
 	EN.put("genus", "Genus");

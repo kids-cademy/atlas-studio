@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <color>
-	<text>white</text>
+	<text>black</text>
+	<text-accent>yellow</text-accent>
+	<text-inverse>white</text-inverse>
+	
 	<mute>#E0E0E0</mute>
 	<accent>yellow</accent>
 	<rule>rgba(255, 255, 255, 0.5)</rule>
@@ -10,7 +13,29 @@
 	<black-t50>rgba(0, 0, 0, 0.312)</black-t50>
 	<black-t80>rgba(0, 0, 0, 0.5)</black-t80>
 	<hexa-icon>rgba(100, 199, 204, 0.7)</hexa-icon>
+
+	<primary>#337AB7</primary>
+	<success>#5CB85C</success>
+	<info>#5BC0DE</info>
+	<warning>#F0AD4E</warning>
+	<danger>#D9534F</danger>
 	
+	<muted-bg>#777</muted-bg>
+	<primary-bg>#337AB7</primary-bg>
+	<success-bg>#5CB85C</success-bg>
+	<info-bg>#5BC0DE</info-bg>
+	<warning-bg>#F0AD4E</warning-bg>
+	<danger-bg>#D96B68</danger-bg>
+	
+	<muted-border>#777</muted-border>
+	<primary-border>#337AB7</primary-border>
+	<success-border>#5CB85C</success-border>
+	<info-border>#5BC0DE</info-border>
+	<warning-border>#F0AD4E</warning-border>
+	<danger-border>#d95a56</danger-border>
+
+	<danger-text>#d94d48</danger-text>
+		
 	<palette-1>@color/red-500</palette-1>
 	<palette-2>@color/pink-500</palette-2>
 	<palette-3>@color/purple-500</palette-3>
@@ -59,4 +84,28 @@
 	<border-light>@color/grey-300</border-light>
 	<border-accent>@color/blue-100</border-accent>
 	<border-alert>@color/red-300</border-alert>
+	
+	
+	<button-background>#62A30C</button-background>
+	<button-active-background>#7CBC27</button-active-background>
+	<button-ripple-background>rgba(236, 240, 241, .3)</button-ripple-background>
+	<button-text>#FFFFFF</button-text>
+
+	<fieldset-background>linear-gradient(to bottom, #F0F0F0, #FFFFFF)</fieldset-background>
+	<fieldset-border>#E0E0E0 #E6E6E6 #E6E6E6 #E6E6E6</fieldset-border>
+	<fieldset-collapsed-border>#A7E2AF #E6E6E6 #E6E6E6 #E6E6E6</fieldset-collapsed-border>
+	<legend-text>#000000</legend-text>
+
+	<placeholder>black</placeholder>
+
+	<control-border>#E6E6E6</control-border>
+	<control-hover-border>#00A000</control-hover-border>
+	<control-invalid-border>#A00000</control-invalid-border>
+	<control-focus-border>#B0B0B0</control-focus-border>
+	<control-background>linear-gradient(#FAFAFA, #FFFFFF, #FAFAFA)</control-background>
+
+	<quote-text>#5F9EA0</quote-text>
+	<quote-before>#7A7A7A</quote-before>
+	<quote-cite>#999999</quote-cite>
+	
 </color>

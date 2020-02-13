@@ -11,8 +11,11 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Taxon;
@@ -23,6 +26,12 @@ public interface AtlasDao {
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
+
+    List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId);
+
+    List<AtlasRelated> getCollectionRelated(Map<String, String> filter, int collectionId);
+
+    List<AtlasLinks> getCollectionLinks(Map<String, String> filter, int collectionId);
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
 

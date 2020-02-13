@@ -1,17 +1,12 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
@@ -37,11 +32,6 @@ public class AtlasItem implements RepositoryObject {
     private String definition;
     private AtlasObject.State state;
     private Date lastUpdated;
-
-    @ElementCollection
-    @CollectionTable(name = "atlasobject_links", joinColumns = @JoinColumn(name = "atlasobject_ID"))
-    @OrderColumn
-    private List<Link> links;
 
     /**
      * Media file name for object icon. Object icon has a small dimension and has
@@ -72,9 +62,6 @@ public class AtlasItem implements RepositoryObject {
     public void postLoad() {
 	if (iconName != null) {
 	    iconSrc = Files.mediaSrc(this, iconName, "96x96");
-	}
-	for (Link link : links) {
-	    link.postLoad();
 	}
     }
 

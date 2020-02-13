@@ -31,7 +31,8 @@
 	vertical-align: top;
 	width: @dimen/action-icon-size;
 	height: @dimen/action-icon-size;
-	@style/image-border
+	padding: 1px;
+	border: solid 1px @color/border-image;
 	margin-right: @dimen/action-margin;
 	background-color: white;
 	opacity: 0.6;

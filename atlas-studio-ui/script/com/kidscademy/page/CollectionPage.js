@@ -13,10 +13,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		// current selected collection is stored on global context by dashboard
 		this._collection = this.getContextAttr("collection");
 
-		this._listView = this.getByCssClass("list-view");
-		this._listView.on("click", this._onListClick, this);
-		this._listView.on("contextmenu", this._onContextMenu, this);
-
 		this._sidebar = this.getByCss(".side-bar .header");
 		this._sidebar.setObject(this._collection);
 
@@ -28,8 +24,17 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 			"&remove-collection": this._onRemoveCollection
 		});
 
+		this._listView = this.getByCssClass("list-view");
+		this._listView.on("click", this._onListClick, this);
+		this._listView.on("contextmenu", this._onContextMenu, this);
+
+		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "tiles", "details", "cards");
+		this._listType.set(this.getPageAttr("list-type"));
+
+		this._contentView = this.getByClass(com.kidscademy.FrameView);
+		this._contentView.select("list-view");
+
 		this._filterForm = this.getByCssClass("filter-form");
-		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "cards", "links");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
@@ -37,7 +42,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		AtlasService.getCollections(collections => this._collectionSelect.load(collections));
 
 		this._filterForm.setObject(this.getPageAttr("filter-form"));
-		this._listType.set(this.getPageAttr("list-type"));
 		this._actions.fire("load-items");
 
 		const exportAnchor = sideMenu.getByCssClass("export");
@@ -55,8 +59,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	_onLoadItems() {
 		const filter = this._filterForm.getObject();
 		AtlasService.getCollectionItems(filter, this._collection.id, items => {
-			this._listView.setObject(items).show();
-			this._autoScroll();
+			this._contentView.select("list-view");
+			this._contentView.setObject(items);
+			this._revealItem();
 		});
 	}
 
@@ -65,15 +70,54 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onIconsView() {
+		this._contentView.select("list-view");
 		this._listType.set("icons");
+		this._revealItem();
+	}
+
+	_onTilesView() {
+		this._contentView.select("list-view");
+		this._listType.set("tiles");
+		this._revealItem();
+	}
+
+	_onDetailsView() {
+		this._contentView.select("list-view");
+		this._listType.set("details");
+		this._revealItem();
 	}
 
 	_onCardsView() {
+		this._contentView.select("list-view");
 		this._listType.set("cards");
+		this._revealItem();
+	}
+
+	_onRelatedView() {
+		const filter = this._filterForm.getObject();
+		AtlasService.getCollectionRelated(filter, this._collection.id, items => {
+			this._contentView.select("insight-related");
+			this._contentView.setObject(items);
+			this._revealItem();
+		});
 	}
 
 	_onLinksView() {
-		this._listType.set("links");
+		const filter = this._filterForm.getObject();
+		AtlasService.getCollectionLinks(filter, this._collection.id, items => {
+			this._contentView.select("insight-links");
+			this._contentView.setObject(items);
+			this._revealItem();
+		});
+	}
+
+	_onImagesView() {
+		const filter = this._filterForm.getObject();
+		AtlasService.getCollectionImages(filter, this._collection.id, items => {
+			this._contentView.select("insight-images");
+			this._contentView.setObject(items);
+			this._revealItem();
+		});
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -87,7 +131,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		js.ua.System.prompt("@string/prompt-wikipedia-url", url => {
 			AtlasService.importWikipediaObject(this._collection.id, url, object => {
 				this._listView.addObject(object);
-				this._autoScroll(object.id);
+				this._revealItem(object.id);
 			});
 		});
 	}
@@ -168,7 +212,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		WinMain.assign(pageName);
 	}
 
-	_autoScroll(objectId) {
+	_revealItem(objectId) {
 		if (typeof objectId === "undefined") {
 			objectId = this.getPageAttr("object-id");
 		}

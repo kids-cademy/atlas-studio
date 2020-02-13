@@ -11,8 +11,11 @@ import javax.persistence.TypedQuery;
 
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Taxon;
@@ -42,15 +45,36 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
+	return getCollectionItems(AtlasItem.class, filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId) {
+	return getCollectionItems(AtlasImages.class, filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasRelated> getCollectionRelated(Map<String, String> filter, int collectionId) {
+	return getCollectionItems(AtlasRelated.class, filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasLinks> getCollectionLinks(Map<String, String> filter, int collectionId) {
+	return getCollectionItems(AtlasLinks.class, filter, collectionId);
+    }
+
+    private <T> List<T> getCollectionItems(Class<T> type, Map<String, String> filter, int collectionId) {
 	StringBuilder queryBuilder = new StringBuilder();
-	queryBuilder.append("select i from AtlasItem i where i.collection.id=?1 ");
+	queryBuilder.append("select i from ");
+	queryBuilder.append(type.getSimpleName());
+	queryBuilder.append(" i where i.collection.id=?1 ");
 	if (!filter.get("state").equals("NONE")) {
 	    queryBuilder.append("and i.state=?2 ");
 	}
 	queryBuilder.append("order by i.display");
 
-	TypedQuery<AtlasItem> query = em.createQuery(queryBuilder.toString(), AtlasItem.class).setParameter(1,
-		collectionId);
+	TypedQuery<T> query = em.createQuery(queryBuilder.toString(), type);
+	query.setParameter(1, collectionId);
 	if (!filter.get("state").equals("NONE")) {
 	    query.setParameter(2, AtlasObject.State.valueOf(filter.get("state")));
 	}

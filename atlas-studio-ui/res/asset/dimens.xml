@@ -52,8 +52,6 @@
 	<divider-size>4px</divider-size>
 	<hexa-icon-size>96px</hexa-icon-size>
 
-	<icon-size>96px</icon-size>
-	<icon-size-small>64px</icon-size-small>
 	<window-caption-height>48px</window-caption-height>
 
 	<input-height>42px</input-height>
@@ -64,4 +62,19 @@
 
 	<column-width>500px</column-width>
 	<column-gap>60px</column-gap>
+	
+	<max-z-index>2147483647</max-z-index>
+	<buttons-top>30px</buttons-top>
+	<button-space>20px</button-space>
+	
+	
+	<!-- list view -->
+	<list-item-x-space>20px</list-item-x-space>
+	<list-item-y-space>20px</list-item-y-space>
+	<list-item-padding>10px</list-item-padding>
+	
+	<!-- icon -->
+	<icon-size>96px</icon-size>
+	<icon-size-small>48px</icon-size-small>
+	
 </dimen>

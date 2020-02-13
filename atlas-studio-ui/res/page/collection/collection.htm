@@ -7,14 +7,25 @@
 				<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
 				<span class="space"></span>
 				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
+				<img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" />
+				<img name="details-view" src="@image/action/details-view" title="@tip/search-reset" />
 				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
-				<img name="links-view" src="@image/action/list-view" title="@tip/search-reset" />
+				<span class="space"></span>
+				<img name="images-view" src="@image/action/images-view" title="@tip/search-reset" />
+				<img name="related-view" src="@image/action/related" title="@tip/search-reset" />
+				<img name="links-view" src="@image/action/link" title="@tip/search-reset" />
+				<span class="space"></span>
+				<img src="@image/action/sort-by-alpha" title="@tip/search-reset" />
+				<img src="@image/action/sort" title="@tip/search-reset" />
 			</div>
 		</form>
 	</section>
 
-	<section class="content">
-		<ul w:widget="compo/objects-list-view"></ul>
+	<section class="content" data-class="com.kidscademy.FrameView">
+		<ul data-name="list-view" w:widget="compo/objects-list-view"></ul>
+		<ul data-name="insight-images" w:widget="page/collection/insight-images"></ul>
+		<ul data-name="insight-links" w:widget="page/collection/insight-links"></ul>
+		<ul data-name="insight-related" w:widget="page/collection/insight-related"></ul>
 	</section>
 
 	<div w:widget="page/collection/context-menu"></div>

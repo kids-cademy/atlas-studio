@@ -20,6 +20,7 @@ public class Image {
     public static final String KEY_ICON = "icon";
     public static final String KEY_COVER = "cover";
     public static final String KEY_FEATURED = "featured";
+    public static final String KEY_TRIVIA = "trivia";
     public static final String KEY_CONTEXTUAL = "contextual";
 
     /** Image key is unique per atlas object. */
@@ -70,7 +71,7 @@ public class Image {
 	this.uploadDate = new Date();
     }
 
-    public void postLoad(AtlasObject object) {
+    public void postLoad(RepositoryObject object) {
 	src = Files.mediaSrc(object, fileName);
     }
 

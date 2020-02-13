@@ -4,11 +4,11 @@
 }
 
 .collection .content {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px;
 	overflow-y: auto;
-}
-
-.collection .list-view {
-	margin: 40px 20px;
+	overflow-x: hidden;
 }
 
 .collection.side-bar {

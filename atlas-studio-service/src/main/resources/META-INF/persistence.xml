@@ -21,6 +21,9 @@
 		<class>com.kidscademy.atlas.studio.model.AtlasCollection</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasObject</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasImages</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasRelated</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasLinks</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 

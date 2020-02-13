@@ -35,124 +35,214 @@ ol li {
 	display: none;
 }
 
-/* ------------------------------------------------------------------------------------------------ */ 
-/* LIST VIEW - ICONS */ 
 
-.list-view.icons {
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST VIEW - GLOBAL */ 
+
+.list-view {
 	list-style: none;
 }
 
-.list-view.icons .item {
+.list-view .item {
 	list-style: none;
 	display: inline-block;
-	width: 96px;
-	margin-right: 26px;
-	text-align: center;
+	margin: @dimen/list-item-y-space 0 0 @dimen/list-item-x-space;
 }
 
-.list-view.icons .item .icon {
+.list-view .item .icon {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
-	border: solid 1px #E6E6E6;
+	border: solid 1px #e6e6e6;
 	cursor: pointer;
+}
+
+.list-view .item.development .icon {
+	border-color: #f779b4;
+}
+
+.list-view .item.published .icon {
+	border-color: #5aa3e2
+}
+
+.list-view .item .display {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text;
+}
+
+.list-view .item.development .display {
+	color: #f74498;
+}
+
+.list-view .item.published .display {
+	color: #1985e2;
+}
+
+.list-view .item .name {
+	display: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text;
+}
+
+.list-view .item.development .name {
+	color: #f74498;
+}
+
+.list-view .item.published .name {
+	color: #1985e2;
+}
+
+.list-view .item .last-updated {
+	display: none;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text;
+}
+
+.list-view .item.development .last-updated {
+	color: #b9095c;
+}
+
+.list-view .item.published .last-updated {
+	color: #1364ac;
+}
+
+.list-view .item .definition {
+	display: none;
+}
+
+.list-view .item .circle {
+	display: none;
+}
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST VIEW - ICONS */ 
+
+.list-view.icons .item {
+	width: 96px;
+	text-align: center;
 }
 
 .list-view.icons .item .display {
 	width: 100%;
+	margin: 4px 0 0 0;
 	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	font-family: "Roboto";
 	font-size: 1.3rem;
-	color: black;
+	line-height: 16px;
+	height: 32px;
+	white-space: normal;
 }
 
-.list-view.icons .item .name {
-	display: none;
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST VIEW - TILES */ 
+
+.list-view.tiles {
+	padding: 0 @eval(sub @dimen/list-item-x-space @dimen/divider-size) @eval(sub @dimen/list-item-y-space @dimen/divider-size) 0;
 }
 
-.list-view.icons .item .last-updated {
-	display: none;
+.list-view.tiles .item {
+	width: 400px;
+	padding: @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, #F8F8F8, #E6E6E6);
+	border: solid 1px #E6E6E6;
 }
 
-.list-view.icons .item .definition {
-	display: none;
+.list-view.tiles .item.development {
+	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
+	border-color: #f779b4;
 }
 
-.list-view.icons .item .links {
-	display: none;
+.list-view.tiles .item.published {
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
+	border-color: #76b0e2;
+}
+
+.list-view.tiles .item .icon {
+	float: left;
+	margin-right: @dimen/list-item-padding;
+}
+
+.list-view.tiles .item .display {
+	padding-bottom: 4px;
+	border-bottom: solid 1px #E6E6E6;
+	text-transform: uppercase;
+}
+
+.list-view.tiles .item.development .display {
+	border-color: #f779b4;
+}
+
+.list-view.tiles .item.published .display {
+	border-color: #5aa3e2;
+}
+
+.list-view.tiles .item .name {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.list-view.tiles .item .last-updated {
+	display: block;
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 
 /* LIST VIEW - CARDS */ 
 
 .list-view.cards {
-	list-style: none;
+	padding: 0 @eval(sub @dimen/list-item-x-space @dimen/divider-size) @eval(sub @dimen/list-item-y-space @dimen/divider-size) 0;
 }
 
 .list-view.cards .item {
-	list-style: none;
-	display: inline-block;
 	position: relative;
 	width: 400px;
-	margin: 10px;
-	padding: 12px;
+	padding: @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, #F8F8F8, #E6E6E6);
+	border: solid 1px #E6E6E6;
+}
+
+.list-view.cards .item.development {
 	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
-	border: solid 1px #f779b4;
+	border-color: #f779b4;
 }
 
 .list-view.cards .item.published {
 	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
-	border: solid 1px #76b0e2;
+	border-color: #76b0e2;
 }
 
 .list-view.cards .item .icon {
 	float: left;
-	width: @dimen/icon-size;
-	height: @dimen/icon-size;
-	padding: 1px;
-	border: solid 1px #f779b4;
-	margin-right: 12px;
-	margin-bottom: 12px;
-	cursor: pointer;
-}
-
-.list-view.cards .item.published .icon {
-	border-color: #5aa3e2
+	margin-right: @dimen/list-item-padding;
 }
 
 .list-view.cards .item .display {
 	padding-bottom: 4px;
-	border-bottom: solid 1px #f779b4;
-	color: #f74498;
+	border-bottom: solid 1px #E6E6E6;
 	text-transform: uppercase;
+}
+
+.list-view.cards .item.development .display {
+	border-color: #f779b4;
 }
 
 .list-view.cards .item.published .display {
 	border-color: #5aa3e2;
-	color: #1985e2;
 }
 
 .list-view.cards .item .name {
+	display: block;
 	margin-bottom: 4px;
-	color: #f74498;
-}
-
-.list-view.cards .item.published .name {
-	color: #1985e2;
 }
 
 .list-view.cards .item .last-updated {
-	padding-bottom: 4px;
-	margin-top: 0;
-	color: #b9095c;
-}
-
-.list-view.cards .item.published .last-updated {
-	border-color: #5aa3e2;
-	color: #1364ac;
+	display: block;
 }
 
 .list-view.cards .item .definition {
@@ -161,9 +251,13 @@ ol li {
 	position: relative;
 	height: 66px;
 	line-height: 22px;
-	margin-top: 40px;
+	margin-top: 20px;
 	overflow: hidden;
 	font-size: 16px;
+	color: @color/text;
+}
+
+.list-view.cards .item.development .definition {
 	color: #c6005d;
 }
 
@@ -171,11 +265,8 @@ ol li {
 	color: #005eaf;
 }
 
-.list-view.cards .item .links {
-	display: none;
-}
-
 .list-view.cards .circle {
+	display: block;
 	position: absolute;
 	width: 100px;
 	height: 100px;
@@ -188,81 +279,88 @@ ol li {
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 
-/* LIST VIEW - LINKS */ 
+/* LIST VIEW - DETAILS */ 
 
-.list-view.links {
-	list-style: none;
+.list-view.details {
+	padding: @eval(sub @dimen/list-item-y-space @dimen/divider-size) @eval(sub @dimen/list-item-x-space @dimen/divider-size);
 }
 
-.list-view.links .item {
-	list-style: none;
-	display: block;
-	padding: 10px;
-	border-bottom: solid 1px #E6E6E6;
-	xmargin-bottom: 40px;
-	background-color: #F8F8F8;
-	font-size: 0;
+.list-view.details .item {
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	width: 100%;
+	margin: @dimen/divider-size 0 0 0;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
-.list-view.links .item .icon {
+.list-view.details .item .icon {
 	width: @dimen/icon-size-small;
 	height: @dimen/icon-size-small;
-	padding: 1px;
-	border: solid 1px #E6E6E6;
-	cursor: pointer;
 }
 
-.list-view.links .item .display {
+.list-view.details .item .display {
+	display: inline-block;
+	width: 300px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 0 0 @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, #F8F8F8, #E6E6E6);
+	border: solid 1px #E6E6E6;
+}
+
+.list-view.details .item.development .display {
+	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
+	border-color: #f779b4;
+}
+
+.list-view.details .item.published .display {
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
+	border-color: #5aa3e2;
+}
+
+.list-view.details .item .name {
 	display: inline-block;
 	width: 200px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	color: @color/text;
+}
+
+.list-view.details .item .last-updated {
+	display: inline-block;
+	width: 200px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	color: @color/text;
+}
+
+.list-view.details .item .definition {
+	display: inline-block;
+	flex-grow: 1;
+	/* not clear why but need have absolute value otherwise vertical scroll is not displayed - probably covered */
+	/* the actual value does not mater but should be small enough */
+	/* do not know how cross-browser is this solution but seems to be working on major recent browsers */
+	width: 100px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	white-space: nowrap;
 	overflow: hidden;
-	padding: 0 0 4px 10px;
-	border-bottom: solid 1px #f779b4;
 	text-overflow: ellipsis;
-	color: black;
-	margin-bottom: 20px;
-}
-
-.list-view.links .item .name {
-	display: none;
-}
-
-.list-view.links .item.published .display {
-	border-color: #5aa3e2;
-	xcolor: #1985e2;
-}
-
-.list-view.links .item .last-updated {
-	display: none;
-}
-
-.list-view.links .item .definition {
-	display: none;
-}
-
-.list-view.links .item .links {
-	display: inline-block;
-	margin-left: 80px;
-}
-
-.list-view.links .item .links .item {
-	display: inline-block;
-	padding: 0;
-	border: none;
-	margin: 0 20px 0 0;
-	background: none;
-	font-size: 0;
-}
-
-.list-view.links .item .links .item .icon {
-	border: none;
-}
-
-.list-view.links .item .links .item .display {
-	display: none;
-	margin: 0;
-	padding: 0;
-	border: none;
 }
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -309,119 +407,4 @@ ol li {
 	text-overflow: ellipsis;
 	font-size: 1.2rem;
 	color: @color/mute;
-}
-
-/* ------------------------------------------------------------------------------------------------ */ 
-/* SIDE MENU */ 
-
-.menu {
-	padding: 1px;
-}
-
-.menu li {
-	height: @dimen/side-menu-item-height;
-	line-height: @dimen/side-menu-item-height;
-	padding-left: 10px;
-	padding-right: 40px;
-	margin-left: 1px;
-	margin-top: 1px;
-	border-right: solid 4px;
-	white-space: nowrap;
-	cursor: pointer;
-	color: black;
-}
-
-.menu li img {
-	display: inline-block;
-	width: @dimen/side-menu-icon-size;
-	height: @dimen/side-menu-icon-size;
-	vertical-align: middle;
-	margin-right: 20px;
-	border: none;
-	background: none;
-	opacity: 1;
-}
-
-.menu li a {
-	text-transform: inherit;
-	color: inherit;
-}
-
-.menu li .state {
-	display: inline-block;
-	vertical-align: middle;
-	float: right;
-	width: @dimen/side-menu-bullet-size;
-	height: @dimen/side-menu-bullet-size;
-	margin-top: 12px;
-	margin-right: 10px;
-	border-radius: 10px;
-}
-
-.menu li.invalid .state {
-	background-color: @color/danger;
-}
-
-.menu li:hover {
-	color: black;
-}
-
-.menu li:nth-child(1) {
-	border-right-color: @color/red-300;
-	background-color: @color/red-50;
-}
-
-.menu li:nth-child(2) {
-	border-right-color: @color/pink-300;
-	background-color: @color/pink-50;
-}
-
-.menu li:nth-child(3) {
-	border-right-color: @color/purple-300;
-	background-color: @color/purple-50;
-}
-
-.menu li:nth-child(4) {
-	border-right-color: @color/deep-purple-300;
-	background-color: @color/deep-purple-50;
-}
-
-.menu li:nth-child(5) {
-	border-right-color: @color/indigo-300;
-	background-color: @color/indigo-50;
-}
-
-.menu li:nth-child(6) {
-	border-right-color: @color/blue-300;
-	background-color: @color/blue-50;
-}
-
-.menu li:nth-child(7) {
-	border-right-color: @color/light-blue-300;
-	background-color: @color/light-blue-50;
-}
-
-.menu li:nth-child(8) {
-	border-right-color: @color/cyan-300;
-	background-color: @color/cyan-50;
-}
-
-.menu li:nth-child(9) {
-	border-right-color: @color/teal-300;
-	background-color: @color/teal-50;
-}
-
-.menu li:nth-child(10) {
-	border-right-color: @color/green-300;
-	background-color: @color/green-50;
-}
-
-.menu li:nth-child(11) {
-	border-right-color: @color/light-green-300;
-	background-color: @color/light-green-50;
-}
-
-.menu li:nth-child(12) {
-	border-right-color: @color/lime-300;
-	background-color: @color/lime-50;
 }

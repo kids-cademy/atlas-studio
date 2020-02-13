@@ -20,8 +20,11 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeaturesClass;
@@ -115,6 +118,21 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
 	return atlasDao.getCollectionItems(filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId) {
+	return atlasDao.getCollectionImages(filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasRelated> getCollectionRelated(Map<String, String> filter, int collectionId) {
+	return atlasDao.getCollectionRelated(filter, collectionId);
+    }
+
+    @Override
+    public List<AtlasLinks> getCollectionLinks(Map<String, String> filter, int collectionId) {
+	return atlasDao.getCollectionLinks(filter, collectionId);
     }
 
     @Override

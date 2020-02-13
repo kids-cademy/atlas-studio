@@ -64,5 +64,5 @@
 	margin: 0;
 	padding-right: 30px;
 	font-size: 1.6rem;
-	color: @color/text;
+	color: @color/text-inverse;
 }
