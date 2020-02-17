@@ -9,7 +9,6 @@ import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.www.LifeFormWikipediaArticle;
 
 public class LifeFormWikipediaArticleTest {
-
     @Test
     public void parseDescription() throws IOException {
 	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(

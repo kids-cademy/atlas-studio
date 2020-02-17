@@ -76,12 +76,18 @@
 }
 
 .column-text p {
+	display: block;
 	line-height: 36px;
 	margin-bottom: 36px;
 	font-size: 22px;
 	color: white;
 }
 
-.column-text q {
+.column-text em {
+	font-style: italic;
 	color: yellow;
+}
+
+.column-text strong {
+	font-weight: bold;
 }

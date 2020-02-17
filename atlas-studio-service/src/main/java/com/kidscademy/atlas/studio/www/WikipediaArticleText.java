@@ -22,7 +22,8 @@ public class WikipediaArticleText {
     }
 
     private static boolean id(Element element, String id) {
-	return id.equalsIgnoreCase(element.getAttr("id")) || (element.hasChildren() && id.equalsIgnoreCase(element.getFirstChild().getAttr("id")));
+	return id.equalsIgnoreCase(element.getAttr("id"))
+		|| (element.hasChildren() && id.equalsIgnoreCase(element.getFirstChild().getAttr("id")));
     }
 
     private static boolean tag(Element element, String tag) {
@@ -104,13 +105,7 @@ public class WikipediaArticleText {
     }
 
     public String text(int firstIndex) {
-	StringBuilder descriptionBuilder = new StringBuilder();
-	for (int i = firstIndex; i < sentences.size(); ++i) {
-	    descriptionBuilder.append("<p>");
-	    descriptionBuilder.append(sentences.get(i));
-	    descriptionBuilder.append("</p>");
-	}
-	return descriptionBuilder.toString();
+	return Strings.join(sentences, "\r\n\r\n");
     }
 
     private static EList content(URL articleURL) {

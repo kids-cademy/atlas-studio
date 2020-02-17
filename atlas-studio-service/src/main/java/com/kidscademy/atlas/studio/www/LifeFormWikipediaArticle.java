@@ -18,6 +18,7 @@ import js.dom.Document;
 import js.dom.DocumentBuilder;
 import js.dom.EList;
 import js.dom.Element;
+import js.lang.BugError;
 import js.util.Classes;
 
 public class LifeFormWikipediaArticle implements HDateRange {
@@ -107,6 +108,10 @@ public class LifeFormWikipediaArticle implements HDateRange {
 
 	// normalize scientific name
 	// it can happen to have scientific name using shorthand for genus
+
+	if (scientificName == null) {
+	    throw new BugError("Null scientific name.");
+	}
 
 	if (scientificName.contains(".")) {
 	    String[] parts = scientificName.split(" ");

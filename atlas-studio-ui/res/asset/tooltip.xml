@@ -7,8 +7,14 @@
 	<definition-close>close object definition editor</definition-close>
 	
 	<description-import>import object description from external source</description-import>
+	<description-add-all-sections>add recommended description sections</description-add-all-sections>
+	<description-add-section>add new description section</description-add-section>
+	<description-rename-section>rename tab for description section</description-rename-section>
+	<description-done-section>commit current operation</description-done-section>
+	<description-copy-section>copy description section content to clipboard</description-copy-section>
+	<description-remove-section>remove current description section</description-remove-section>
 	<description-remove-all>remove object description</description-remove-all>
-	<description-close>close object description editor</description-close>
+	<description-close>discard current operation</description-close>
 
 	<graphic-add>add new image to object</graphic-add>
 	<graphic-upload>upload image from local storage</graphic-upload>

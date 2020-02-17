@@ -5,8 +5,37 @@
 .description textarea {
 	width: 100%;
 	height: 500px;
+	xfont-family: Courier New;
+	xletter-spacing: 0.2rem;
+	border-radius: 6px 6px 0 0;
 }
 
-.description:not(.hidden) .list-view {
+.description:not (.hidden ) .list-view {
 	margin-top: 20px;
+}
+
+.description .tabs {
+	vertical-align: top;
+}
+
+.description .tab {
+	display: inline-block;
+	margin: 0;
+	padding: 10px;
+	background-color: #F0F0F0;
+	color: #A0A0A0;
+	border: solid 1px #BDBDBD;
+	border-radius: 0 0 6px 6px;
+	font-size: 1.8rem;
+	cursor: pointer;
+	user-select: none;
+}
+
+.description .tab {
+
+}
+
+.description .tab.active {
+	background-color: #FFFFFF;
+	color: @color/text;
 }

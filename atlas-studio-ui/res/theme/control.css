@@ -113,7 +113,7 @@ select option {
 textarea {
 	box-sizing: border-box;
 	width: 800px;
-	max-width: 1100px;
+	max-width: @dimen/container-width;
 	height: 400px;
 	min-height: 200px;
 	padding: 10px;

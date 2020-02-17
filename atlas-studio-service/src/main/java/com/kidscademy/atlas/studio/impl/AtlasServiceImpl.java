@@ -343,7 +343,7 @@ public class AtlasServiceImpl implements AtlasService {
 		String.format("Wikipedia article about %s.", object.getDisplay().toLowerCase())));
 	object.setLinks(links);
 
-	object.setState(AtlasObject.State.DEVELOPMENT);
+	object.setState(AtlasObject.State.NONE);
 	object.setAliases(new ArrayList<String>());
 	object.setImages(new HashMap<String, Image>());
 	object.setLastUpdated(new Date());

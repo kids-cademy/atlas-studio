@@ -21,6 +21,7 @@
 
 	<alert-no-definition-provider>No provider link for object definition.</alert-no-definition-provider>
 	<alert-no-description-provider>No provider link for object description.</alert-no-description-provider>
+	<alert-not-empty-section>Cannot remove non-empty description section.</alert-not-empty-section>
 	<alert-object-not-saved>Please save atlas object before opening it in preview page.</alert-object-not-saved>
 	<alert-object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</alert-object-no-name>
 	<alert-object-no-display>Please enter a display name for this object.</alert-object-no-display>
@@ -29,7 +30,6 @@
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
 	<confirm-definition-remove>Please confirm object definition remove.</confirm-definition-remove>
 	<confirm-description-overwrite>Please confirm atlas object description overwrite.</confirm-description-overwrite>
-	<confirm-description-remove>Please confirm object description remove.</confirm-description-remove>
 	<confirm-image-remove>Please confirm object image remove.</confirm-image-remove>
 	<confirm-image-rollback>Please confirm object image rollback.</confirm-image-rollback>
 	<confirm-audio-remove>Please confirm audio assets remove.</confirm-audio-remove>

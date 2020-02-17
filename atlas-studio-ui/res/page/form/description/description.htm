@@ -8,18 +8,35 @@
 			<img src="@image/action/description" />
 		</div>
 		<div class="container">
-			<div>
-				<textarea class="optional"></textarea>
+			<div class="text-editors" data-list=".">
+				<textarea></textarea>
+			</div>
+			<div class="tabs-view" data-list=".">
+				<span class="tab" data-text="." draggable="true"></span>
 			</div>
 			<div class="actions" data-class="com.kidscademy.Actions">
 				<img name="import" src="@image/action/upload" title="@tip/description-import" />
-				<!-- actions with 'rfloat' are rendered by browser with reversed order -->
+				<img name="add-all-sections" src="@image/action/add-all" title="@tip/description-add-all-sections" />
+				<span class="space"></span>
+				
+				<img name="add-section" src="@image/action/add" title="@tip/description-add-section" />
+				<img name="rename-section" src="@image/action/edit" title="@tip/description-rename-section" />
+				<img name="done-section" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/description-done-section" />
+				<img name="copy-to-clipboard" src="@image/action/copy-to-clipboard" title="@tip/description-copy-section" />
+
+				<img name="remove-section" src="@image/action/remove" title="@tip/description-remove-section" class="rfloat" />
 				<img name="close" src="@image/action/close" title="@tip/description-close" class="rfloat" />
-				<img name="remove-all" src="@image/action/remove-all" title="@tip/description-remove-all" class="rfloat" /> 
+			</div>
+			<div class="editor-controls hidden">
+				<div class="controlset">
+					<input name="section-name" maxlength="32" />
+				</div>
 			</div>
 			<ul class="list-view hidden" data-list="." data-class="com.kidscademy.form.LinkSelect">
-				<li data-id="id"><img data-src="icon-src" data-title="url" />
-					<h4 data-text="display"></h4></li>
+				<li data-id="id">
+					<img data-src="icon-src" data-title="url" />
+					<h4 data-text="display"></h4>
+				</li>
 			</ul>
 		</div>
 	</div>
