@@ -179,6 +179,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		const tabElement = ev.target.getParentByCssClass("tab");
 		if (tabElement != null) {
 			this._updateEditorIndex(tabElement.getChildIndex());
+			this._getActiveTextEditor().focus();
 		}
 	}
 
@@ -228,12 +229,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	_updateEditorIndex(activeEditorIndex) {
 		const editors = this._textEditors.getChildren();
 		for (let i = 0; i < editors.size(); ++i) {
-			if (i === activeEditorIndex) {
-				editors.item(i).show().focus();
-			}
-			else {
-				editors.item(i).hide();
-			}
+			editors.item(i).addCssClass("hidden", i !== activeEditorIndex);
 		}
 
 		const tabs = this._tabsView.getChildren();
@@ -246,6 +242,10 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		this._tabsView.addObject(sectionName);
 		this._textEditors.addObject("");
 		return this._textEditors.getLastChild();
+	}
+
+	_getActiveTextEditor() {
+		return this._textEditors.getByIndex(this._getActiveTabIndex());
 	}
 
 	_getTextEditorByName(tabName) {

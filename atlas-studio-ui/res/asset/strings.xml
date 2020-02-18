@@ -81,6 +81,7 @@
 	<features-value>Value / Minimum</features-value>
 	<features-maximum>Maximum</features-maximum>
 	<features-quantity>Physical Quantity</features-quantity>
+	<features-display>Display</features-display>
 	<features-quantity-mass>MASS</features-quantity-mass>
 	<features-quantity-time>TIME</features-quantity-time>
 	<features-quantity-length>LENGTH</features-quantity-length>

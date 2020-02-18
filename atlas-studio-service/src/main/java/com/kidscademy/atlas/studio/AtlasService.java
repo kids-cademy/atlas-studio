@@ -280,4 +280,6 @@ public interface AtlasService {
     String getWikiHowTitle(URL url);
 
     ExportObject getExportObject(int objectId);
+    
+    Feature updateFeatureDisplay(Feature feature);
 }

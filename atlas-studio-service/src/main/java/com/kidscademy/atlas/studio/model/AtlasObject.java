@@ -252,6 +252,10 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	    picture.postLoad(this);
 	}
 
+	for (Feature feature : features) {
+	    feature.postLoad();
+	}
+
 	for (Link link : links) {
 	    link.postLoad();
 	}

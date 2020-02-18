@@ -1349,6 +1349,32 @@ com.kidscademy.atlas.studio.AtlasService = {
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getExportObject");
 		rmi.setParameters(objectId);
 		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Update feature display.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.Feature feature,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Feature
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 updateFeatureDisplay: function(feature) {
+		$assert(typeof feature !== "undefined", "com.kidscademy.atlas.studio.AtlasService#updateFeatureDisplay", "Feature argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#updateFeatureDisplay", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#updateFeatureDisplay", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "updateFeatureDisplay");
+		rmi.setParameters(feature);
+		rmi.exec(__callback__, __scope__);
 	}
 };
 

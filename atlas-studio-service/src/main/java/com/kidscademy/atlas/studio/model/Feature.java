@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 /**
  * Any measurable or observable characteristic of an object. A feature has a
@@ -41,6 +42,13 @@ public class Feature {
      */
     private PhysicalQuantity quantity;
 
+    /**
+     * Display is used on atlas studio user interface and is not strictly part of
+     * domain model.
+     */
+    @Transient
+    private String display;
+
     public Feature() {
 
     }
@@ -51,16 +59,17 @@ public class Feature {
     }
 
     public Feature(String name, double value, PhysicalQuantity quantity) {
-	this.name = name;
+	this(name, quantity);
 	this.value = value;
-	this.quantity = quantity;
     }
 
     public Feature(String name, double value, double maximum, PhysicalQuantity quantity) {
-	this.name = name;
-	this.value = value;
+	this(name, value, quantity);
 	this.maximum = maximum;
-	this.quantity = quantity;
+    }
+
+    public void postLoad() {
+	this.display = new FeatureValueFormat(this).display();
     }
 
     public String getName() {
@@ -81,5 +90,9 @@ public class Feature {
 
     public PhysicalQuantity getQuantity() {
 	return quantity;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 }

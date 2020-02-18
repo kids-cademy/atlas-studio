@@ -706,4 +706,11 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 	return exportObject;
     }
+
+    @Override
+    public Feature updateFeatureDisplay(Feature feature) {
+	// reuse handler used to update feature display after loading object from database
+	feature.postLoad();
+	return feature;
+    }
 }

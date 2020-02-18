@@ -95,7 +95,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		const feature = itemView.getUserData();
 		this._updateUnitsSelect(feature.quantity);
 
-		// create new object instance in order to avoid scalling feature reference
+		// create new object instance in order to avoid scalling value of the edited feature reference 
 		this._editor.setObject({
 			name: feature.name,
 			value: (feature.value / this._unitsSelect.getValue()).toFixed(4),
@@ -155,13 +155,16 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 			feature.maximum = (feature.maximum * this._unitsSelect.getValue()).toFixed(4);
 		}
 
-		if (this._currentItemView != null) {
-			this._currentItemView.setObject(feature);
-		}
-		else {
-			this._featuresView.addObject(feature);
-		}
-		this._onClose();
+		// udpate feature display - processed on server, before updating user interface
+		AtlasService.updateFeatureDisplay(feature, feature => {
+			if (this._currentItemView != null) {
+				this._currentItemView.setObject(feature);
+			}
+			else {
+				this._featuresView.addObject(feature);
+			}
+			this._onClose();
+		});
 	}
 
 	_onRemove() {

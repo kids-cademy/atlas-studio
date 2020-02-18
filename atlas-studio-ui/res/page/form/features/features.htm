@@ -12,6 +12,7 @@
 				<thead>
 					<tr>
 						<td>@string/features-name</td>
+						<td>@string/features-display</td>
 						<td>@string/features-value</td>
 						<td>@string/features-maximum</td>
 						<td>@string/features-quantity</td>
@@ -20,6 +21,7 @@
 				<tbody class="features-view" data-list=".">
 					<tr class="item">
 						<td data-text="name"></td>
+						<td data-text="display"></td>
 						<td data-text="value"></td>
 						<td data-text="maximum"></td>
 						<td data-text="quantity"></td>
@@ -31,10 +33,10 @@
 				<img name="import" src="@image/action/upload" title="@tip/features-import" />
 				<img name="load" src="@image/action/autorenew" title="@tip/features-load" /> 
 				<img name="add" src="@image/action/add" title="@tip/features-add" />
-				<img name="done" src="@image/action/done" title="@tip/taxonomy-done" />
-				<img name="remove" src="@image/action/remove" title="@tip/taxonomy-remove" />
+				<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
+				<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
 				<img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-remove-all" class="rfloat" />
-				<img name="close" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+				<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
 			</div>
 			 
 			 <div class="editor hidden" data-class="com.kidscademy.FormData">
