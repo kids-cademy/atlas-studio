@@ -8,10 +8,10 @@ public class SoftSchoolsFacts {
     @XPath("//*[@id='hdrcnt']/H1")
     private String title;
 
-    @XPath("//*[@class='factsmaintbl']/*/TD")
+    @XPath("//*[@class='factsmaintbl']//TD")
     private String description;
 
-    @XPath("//*[@class='fact_topbar']/*/*/TD")
+    @XPath("//*[@class='fact_topbar']//TD")
     private List<String> facts;
 
     public String getTitle() {

@@ -18,7 +18,7 @@
 		<convert-process class="com.kidscademy.atlas.studio.tool.ConvertProcess" />
 
 		<wikipedia interface="com.kidscademy.atlas.studio.www.Wikipedia" type="REMOTE" url="https:rest://en.wikipedia.org/api/rest_v1/" />
-		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="http:xpath://www.softschools.com/" />
+		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />
 		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
 		<cambridge-dictionary interface="com.kidscademy.atlas.studio.www.CambridgeDictionary" type="REMOTE" url="https:xpath://dictionary.cambridge.org/" />
 		<merriam-webster interface="com.kidscademy.atlas.studio.www.MerriamWebster" type="REMOTE" url="https:xpath://www.merriam-webster.com/dictionary/" />

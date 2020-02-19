@@ -9,7 +9,11 @@ import js.xpath.client.XPath;
 
 public interface SoftSchools {
     @Path("{path}")
-    @XPath("//*[@class='factsmaintbl']/*/TD")
+    @XPath("//*[@id='hdrcnt']/H1")
+    String getTitle(@PathParam("path") String path);
+
+    @Path("{path}")
+    @XPath("//*[@class='factsmaintbl']//TD")
     String getDescription(@PathParam("path") String path);
 
     @Path("{path}")

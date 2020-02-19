@@ -21,7 +21,7 @@ public class SoftSchoolsTest {
     private static final String DESCRIPTOR = "" + //
 	    "<app-descriptor>" + //
 	    " <managed-classes>" + //
-	    "  <soft-schools interface='com.kidscademy.atlas.studio.www.SoftSchools' type='REMOTE' url='http:xpath://www.softschools.com/' />"
+	    "  <soft-schools interface='com.kidscademy.atlas.studio.www.SoftSchools' type='REMOTE' url='https:xpath://www.softschools.com/' />"
 	    + //
 	    " </managed-classes>" + //
 	    "</app-descriptor>";
@@ -32,6 +32,13 @@ public class SoftSchoolsTest {
     public void beforeTest() throws Exception {
 	AppContext context = TestContext.start(DESCRIPTOR);
 	softSchools = context.getInstance(SoftSchools.class);
+    }
+
+    @Test
+    public void getTitle() {
+	String title = softSchools.getTitle("facts/animals/lion_facts/2/");
+	assertThat(title, notNullValue());
+	assertThat(title, equalTo("Lion Facts"));
     }
 
     @Test
