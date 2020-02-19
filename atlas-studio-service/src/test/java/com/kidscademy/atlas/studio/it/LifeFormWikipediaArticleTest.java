@@ -12,7 +12,7 @@ public class LifeFormWikipediaArticleTest {
     @Test
     public void parseDescription() throws IOException {
 	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(
-		new URL("https://en.wikipedia.org/wiki/Australasian_darter"));
+		new URL("https://en.wikipedia.org/wiki/Cuvier%27s_beaked_whale"));
 
 	System.out.println(article.getScientificName());
 	System.out.println(article.getCommonName());
