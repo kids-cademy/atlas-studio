@@ -113,6 +113,11 @@ com.kidscademy.Md2Htm = class {
 
                 case 4: // COLLECT_LINE
                     if (c === '\n') {
+                        // take care to close inline tag from current line if markdown source forgets closing it
+                        if (this._inlineTag != null) {
+                            this._html += `</${this._inlineTag}>`;
+                            this._inlineTag = null;
+                        }
                         if (listTag != null) {
                             this._html += "</li>";
                         }
@@ -134,7 +139,7 @@ com.kidscademy.Md2Htm = class {
 
     _append(char) {
         switch (char) {
-            case '`':
+            case '"':
                 if (this._inlineTag == null) {
                     this._html += "<em>";
                     this._inlineTag = "em";
@@ -145,7 +150,7 @@ com.kidscademy.Md2Htm = class {
                 }
                 break;
 
-            case '"':
+            case '`':
                 if (this._inlineTag == null) {
                     this._html += "<strong>";
                     this._inlineTag = "strong";

@@ -14,7 +14,7 @@ com.kidscademy.Htm2Md = class {
         var markdown = "";
         for (let i = 0; i < this._elements.size(); ++i) {
             const element = this._elements.item(i);
-            
+
             switch (element.getTag()) {
                 case "h1":
                     markdown += `# ${this._markdown(element)}`;
@@ -82,11 +82,11 @@ com.kidscademy.Htm2Md = class {
                 case Node.ELEMENT_NODE:
                     switch (child.tagName.toLowerCase()) {
                         case "strong":
-                            markdown += `"${this._markdown(child)}"`;
+                            markdown += `\`${this._markdown(child)}\``;
                             break;
 
                         case "em":
-                            markdown += `\`${this._markdown(child)}\``;
+                            markdown += `"${this._markdown(child)}"`;
                             break;
                     }
                     break;
