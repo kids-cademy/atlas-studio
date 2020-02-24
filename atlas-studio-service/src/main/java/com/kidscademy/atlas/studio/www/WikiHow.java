@@ -7,6 +7,6 @@ import js.xpath.client.XPath;
 
 public interface WikiHow {
     @Path("{path}")
-    @XPath("/HTML/BODY/DIV[3]/DIV[2]/DIV[2]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/H1/A")
+    @XPath("//H1[@id='section_0']/A")
     String getTitle(@PathParam("path") String path);
 }
