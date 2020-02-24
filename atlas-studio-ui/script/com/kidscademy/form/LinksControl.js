@@ -278,7 +278,15 @@ com.kidscademy.form.LinksControl.DomainDescription = {
 	},
 
 	"animalia.bio": function (url, object, callback) {
-		callback(`Animalia article avout ${object.toLowerCase()}.`);
+		callback(`Animalia article about ${object.toLowerCase()}.`);
+	},
+
+	"dosits.org": function (url, object, callback) {
+		callback(`${object} sounds.`);
+	},
+
+	"animaldiversity.org": function (url, object, callback) {
+		callback(`${object} on Animal Diversity Web.`);
 	},
 
 	"wikihow.com": function (url, object, callback) {
