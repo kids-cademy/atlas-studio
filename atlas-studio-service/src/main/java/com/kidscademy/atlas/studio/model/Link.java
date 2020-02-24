@@ -232,6 +232,8 @@ public class Link implements Displayable {
 	DOMAINS.put("animalia.bio", new String[] { "ANIMALIA", "" });
 	DOMAINS.put("iucnredlist.org", new String[] { "IUCN Red List", "" });
 	DOMAINS.put("itis.gov", new String[] { "Taxonomic Information System", "" });
+	DOMAINS.put("dosits.org", new String[] { "Sound in the Sea", "audio" });
+	DOMAINS.put("animaldiversity.org", new String[] { "Animal Diversity Web", "" });
     }
 
     /**
