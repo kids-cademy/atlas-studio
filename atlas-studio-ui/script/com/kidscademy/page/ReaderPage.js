@@ -33,19 +33,8 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onObjectLoaded(object) {
-		const parser = new DOMParser();
-		const document = new js.dom.Document(parser.parseFromString(object.description, "text/xml"));
-		const sectionsEList = document.findByTag("section");
-
-		this._paragraphsCache.removeChildren();
-		for (let i = 0; i < sectionsEList.size(); ++i) {
-			const children = sectionsEList.item(i).getChildren();
-			for (let j = 0; j < children.size(); ++j) {
-				this._paragraphsCache.addChild(children.item(j));
-			}
-		}
+		this._paragraphsCache.setHTML(object.description);
 		object.paragraphs = this._paragraphsCache;
-
 		this._objectView.setObject(object);
 
 		// adjust position of the featured image section, if is visible

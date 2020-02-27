@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.export;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ExportObject {
 	this.name = object.getName();
 	this.display = object.getDisplay();
 	this.definition = object.getDefinition();
-	this.description = object.getDescription();
+	this.description = exportDescription(object.getDescription());
 
 	this.images = new HashMap<>();
 	for (Map.Entry<String, Image> entry : object.getImages().entrySet()) {
@@ -159,5 +160,67 @@ public class ExportObject {
 
     public ExportImage getImage(String imageKey) {
 	return images.get(imageKey);
+    }
+
+    private static String exportDescription(String description) {
+	if (description == null) {
+	    return null;
+	}
+	StringBuilder exportBuilder = new StringBuilder();
+	StringBuilder tagBuilder = new StringBuilder();
+
+	DescriptionState state = DescriptionState.LINE;
+	boolean endTag = false;
+	for (int i = 0; i < description.length(); ++i) {
+	    char c = description.charAt(i);
+
+	    switch (state) {
+	    case TAG:
+		if (c == '/') {
+		    endTag = true;
+		    break;
+		}
+		if (c == '>') {
+		    if (!excludes(tagBuilder.toString())) {
+			exportBuilder.append('<');
+			if (endTag) {
+			    exportBuilder.append('/');
+			}
+			exportBuilder.append(tagBuilder);
+			exportBuilder.append('>');
+		    }
+		    endTag = false;
+		    tagBuilder.setLength(0);
+		    state = DescriptionState.LINE;
+		    break;
+		}
+		tagBuilder.append(c);
+		break;
+
+	    case LINE:
+		if (c == '<') {
+		    state = DescriptionState.TAG;
+		    break;
+		}
+		exportBuilder.append(c);
+		break;
+	    }
+	}
+
+	return exportBuilder.toString();
+    }
+
+    private static List<String> DESCRIPTION_EXCLUDE_TAGS = Arrays.asList("text", "section", "em", "strong");
+
+    private static boolean excludes(String tag) {
+	int tagNameEndPosition = tag.indexOf(' ');
+	if (tagNameEndPosition == -1) {
+	    tagNameEndPosition = tag.length();
+	}
+	return DESCRIPTION_EXCLUDE_TAGS.contains(tag.substring(0, tagNameEndPosition));
+    }
+
+    private enum DescriptionState {
+	TAG, LINE
     }
 }
