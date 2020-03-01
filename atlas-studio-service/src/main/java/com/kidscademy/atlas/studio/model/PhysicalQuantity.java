@@ -7,5 +7,5 @@ package com.kidscademy.atlas.studio.model;
  * @author Iulian Rotaru
  */
 public enum PhysicalQuantity {
-    MASS, TIME, LENGTH, SPEED
+    MASS, TIME, LENGTH, SPEED, FOOD_ENERGY
 }

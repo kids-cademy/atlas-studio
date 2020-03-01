@@ -1,10 +1,8 @@
 package com.kidscademy.atlas.studio.www;
 
 import java.net.URL;
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import com.kidscademy.atlas.studio.util.Strings;
 
@@ -31,24 +29,7 @@ public class WikipediaArticleText {
     }
 
     private boolean add(Element element) {
-	if (sentences.size() == 20) {
-	    return false;
-	}
-	System.out.println(element.getText());
-
-	String text = element.getText().trim();
-	text = Strings.removeReferences(text);
-
-	// break iterator deals with shorthands but only simple cases
-	// for now is acceptable to have bad sentences breaking
-
-	BreakIterator border = BreakIterator.getSentenceInstance(Locale.US);
-	border.setText(text);
-	int start = border.first();
-	for (int end = border.next(); end != BreakIterator.DONE; start = end, end = border.next()) {
-	    sentences.add(text.substring(start, end).trim());
-	}
-
+	Strings.collectSentences(Strings.removeReferences(element.getText().trim()), sentences);
 	return true;
     }
 

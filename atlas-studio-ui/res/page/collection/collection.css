@@ -11,6 +11,11 @@
 	overflow-x: hidden;
 }
 
+.collection .info {
+	margin: 10px 0 0 30px;
+	font-size: 1.8rem;	
+}
+
 .collection.side-bar {
 }
 

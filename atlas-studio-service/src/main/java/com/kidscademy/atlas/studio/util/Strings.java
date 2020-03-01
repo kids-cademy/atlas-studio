@@ -1,6 +1,9 @@
 package com.kidscademy.atlas.studio.util;
 
+import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Strings extends js.util.Strings {
     /**
@@ -18,15 +21,29 @@ public class Strings extends js.util.Strings {
 	return paragraph.substring(0, Math.min(firstPuctuationIndex, 64));
     }
 
+    public static List<String> breakSentences(String text) {
+	List<String> sentences = new ArrayList<>();
+	collectSentences(text, sentences);
+	return sentences;
+    }
+
+    public static void collectSentences(String text, List<String> sentences) {
+	// break iterator deals with shorthands but only simple cases
+	// for now is acceptable to have bad sentences breaking
+
+	BreakIterator border = BreakIterator.getSentenceInstance(Locale.US);
+	border.setText(text);
+	int start = border.first();
+	for (int end = border.next(); end != BreakIterator.DONE; start = end, end = border.next()) {
+	    sentences.add(text.substring(start, end).trim());
+	}
+    }
+
     public static String substringAfter(String string, String prefix) {
 	if (prefix.length() >= string.length()) {
 	    return "";
 	}
 	return string.substring(prefix.length());
-    }
-
-    public static String html(String text) {
-	return "<p>" + text.replaceAll("\\. ", ".</p><p>") + "</p>";
     }
 
     public static String dashedToScientificName(String dashedName) {

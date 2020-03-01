@@ -86,4 +86,5 @@
 	<features-quantity-time>TIME</features-quantity-time>
 	<features-quantity-length>LENGTH</features-quantity-length>
 	<features-quantity-speed>SPEED</features-quantity-speed>
+	<features-quantity-food-energy>FOOD_ENERGY</features-quantity-food-energy>
 </string>

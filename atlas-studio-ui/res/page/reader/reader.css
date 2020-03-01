@@ -172,3 +172,7 @@ body {
 	position: absolute;
 	top: 1000px;
 }
+
+.reader h1 {
+	font-size: 1.4rem;
+}

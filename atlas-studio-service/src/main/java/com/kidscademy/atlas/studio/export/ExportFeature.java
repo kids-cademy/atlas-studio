@@ -64,5 +64,12 @@ public class ExportFeature {
 	EN.put("flying.height", "Flying Height");
 	EN.put("elevation", "Elevation");
 	EN.put("depth", "Diving Depth");
+	EN.put("nutrient.energy", "Food Energy");
+	EN.put("nutrient.protein", "Protein");
+	EN.put("nutrient.fat", "Total Fat");
+	EN.put("nutrient.corbohydrate", "Carbohydrate");
+	EN.put("nutrient.sugars", "Sugars");
+	EN.put("nutrient.fibre", "Dietary Fibre");
+	EN.put("nutrient.ethanol", "Drinking Alcohol");
     }
 }

@@ -49,7 +49,7 @@ public class QuantityFormat implements Comparator<Pair> {
     public int compare(Pair leftQuantity, Pair rightQuantity) {
 	final DecimalNumeral left = new DecimalNumeral(leftQuantity.first());
 	final DecimalNumeral right = new DecimalNumeral(rightQuantity.first());
-	
+
 	if (left.isZero()) {
 	    return 1;
 	}
@@ -140,6 +140,7 @@ public class QuantityFormat implements Comparator<Pair> {
 	UNITS.put(PhysicalQuantity.TIME, TimeUnits.values());
 	UNITS.put(PhysicalQuantity.LENGTH, LengthUnits.values());
 	UNITS.put(PhysicalQuantity.SPEED, SpeedUnits.values());
+	UNITS.put(PhysicalQuantity.FOOD_ENERGY, FoodEnergyUnits.values());
     }
 
     private interface Unit {
@@ -221,6 +222,28 @@ public class QuantityFormat implements Comparator<Pair> {
 	private String symbol;
 
 	private SpeedUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum FoodEnergyUnits implements Unit {
+	CALORIE(1, "calories");
+
+	private double factor;
+	private String symbol;
+
+	private FoodEnergyUnits(double factor, String symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}

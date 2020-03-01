@@ -24,6 +24,8 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 			"&remove-collection": this._onRemoveCollection
 		});
 
+		this._infoView = this.getByCssClass("info");
+
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onListClick, this);
 		this._listView.on("contextmenu", this._onContextMenu, this);
@@ -58,7 +60,12 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onLoadItems() {
 		const filter = this._filterForm.getObject();
+		const timestamp = Date.now();
 		AtlasService.getCollectionItems(filter, this._collection.id, items => {
+			this._infoView.setObject({
+				objectsCount: items.length,
+				ellapsedTime: Date.now() - timestamp
+			}).show();
 			this._contentView.select("list-view");
 			this._contentView.setObject(items);
 			this._revealItem();

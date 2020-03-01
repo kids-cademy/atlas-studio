@@ -203,7 +203,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		if (!quantity) {
 			quantity = this._editor.getByCss("select[name='quantity']").getValue();
 		}
-		const unitsSelector = quantity.toLowerCase();
+		const unitsSelector = quantity.toLowerCase().replace(/_/g, '-');
 		if (unitsSelector) {
 			this._unitsSelect = this._editor.getByCssClass(unitsSelector).show();
 		}

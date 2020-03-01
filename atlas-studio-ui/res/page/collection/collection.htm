@@ -1,6 +1,7 @@
 <div class="collection" w:template="page/template#body" xmlns:w="js-lib.com/wood">
 	<section>
 		<form class="filter-form form-bar with-actions">
+			<div w:widget="compo/negator" data-name="negate"></div>
 			<select w:widget="compo/object-state-select" name="state"></select>
 			<div class="actions inline"  data-class="com.kidscademy.Actions">
 				<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
@@ -22,6 +23,7 @@
 	</section>
 
 	<section class="content" data-class="com.kidscademy.FrameView">
+		<h1 class="info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
 		<ul data-name="list-view" w:widget="compo/objects-list-view"></ul>
 		<ul data-name="insight-images" w:widget="page/collection/insight-images"></ul>
 		<ul data-name="insight-links" w:widget="page/collection/insight-links"></ul>
