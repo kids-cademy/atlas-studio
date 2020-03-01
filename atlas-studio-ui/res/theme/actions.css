@@ -5,6 +5,7 @@
 }
 
 .actions.inline {
+	vertical-align: top;
 	margin: 0;
 	padding: 0;
 	border: none;
@@ -33,7 +34,7 @@
 	height: @dimen/action-icon-size;
 	padding: 1px;
 	border: solid 1px @color/border-image;
-	margin-right: @dimen/action-margin;
+	xmargin-right: @dimen/action-margin;
 	background-color: white;
 	opacity: 0.6;
 	cursor: pointer;

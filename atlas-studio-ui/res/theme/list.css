@@ -49,6 +49,10 @@ ol li {
 	margin: @dimen/list-item-y-space 0 0 @dimen/list-item-x-space;
 }
 
+.list-view .item:first-child {
+	margin-left: 0;
+}
+
 .list-view .item .icon {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
