@@ -539,14 +539,15 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     }
 
     public enum State {
-	// ENUM('DEVELOPMENT','PUBLISHED')
-	NONE, DEVELOPMENT, PUBLISHED
+	// ENUM('CREATED', 'DEVELOPMENT','PUBLISHED')
+	NONE, CREATED, DEVELOPMENT, PUBLISHED
     }
 
     public static AtlasObject create(AtlasCollection collection) {
 	AtlasObject object = new AtlasObject();
 	object.collection = collection;
-	object.state = AtlasObject.State.DEVELOPMENT;
+	object.state = AtlasObject.State.CREATED;
+	object.description = "<text><section name='text'></section></text>";
 	object.aliases = Collections.emptyList();
 	object.taxonomy = Collections.emptyList();
 	object.images = Collections.emptyMap();

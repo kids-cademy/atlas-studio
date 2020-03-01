@@ -33,6 +33,7 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
+import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
@@ -116,23 +117,23 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId) {
-	return atlasDao.getCollectionItems(filter, collectionId);
+    public List<AtlasItem> getCollectionItems(Map<String, String> criteria, int collectionId) {
+	return atlasDao.getCollectionItems(new SearchFilter(criteria), collectionId);
     }
 
     @Override
-    public List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId) {
-	return atlasDao.getCollectionImages(filter, collectionId);
+    public List<AtlasImages> getCollectionImages(Map<String, String> criteria, int collectionId) {
+	return atlasDao.getCollectionImages(new SearchFilter(criteria), collectionId);
     }
 
     @Override
-    public List<AtlasRelated> getCollectionRelated(Map<String, String> filter, int collectionId) {
-	return atlasDao.getCollectionRelated(filter, collectionId);
+    public List<AtlasRelated> getCollectionRelated(Map<String, String> criteria, int collectionId) {
+	return atlasDao.getCollectionRelated(new SearchFilter(criteria), collectionId);
     }
 
     @Override
-    public List<AtlasLinks> getCollectionLinks(Map<String, String> filter, int collectionId) {
-	return atlasDao.getCollectionLinks(filter, collectionId);
+    public List<AtlasLinks> getCollectionLinks(Map<String, String> criteria, int collectionId) {
+	return atlasDao.getCollectionLinks(new SearchFilter(criteria), collectionId);
     }
 
     @Override
@@ -244,7 +245,7 @@ public class AtlasServiceImpl implements AtlasService {
     public String importObjectDescription(Link link) {
 	switch (link.getDomain()) {
 	case "softschools.com":
-	    return Strings.html(softSchools.getFacts(link.getPath()).getDescription());
+	    return Strings.join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()), "\r\n\r\n");
 
 	case "wikipedia.org":
 	    WikipediaArticleText article = new WikipediaArticleText(link.getUrl());
@@ -709,7 +710,8 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public Feature updateFeatureDisplay(Feature feature) {
-	// reuse handler used to update feature display after loading object from database
+	// reuse handler used to update feature display after loading object from
+	// database
 	feature.postLoad();
 	return feature;
     }

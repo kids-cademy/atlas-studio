@@ -1,7 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PostLoad;
@@ -18,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
 public interface AtlasDao {
@@ -25,13 +25,13 @@ public interface AtlasDao {
 
     List<AtlasCollection> getCollections();
 
-    List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
+    List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId);
 
-    List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId);
+    List<AtlasImages> getCollectionImages(SearchFilter filter, int collectionId);
 
-    List<AtlasRelated> getCollectionRelated(Map<String, String> filter, int collectionId);
+    List<AtlasRelated> getCollectionRelated(SearchFilter filter, int collectionId);
 
-    List<AtlasLinks> getCollectionLinks(Map<String, String> filter, int collectionId);
+    List<AtlasLinks> getCollectionLinks(SearchFilter filter, int collectionId);
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon);
 

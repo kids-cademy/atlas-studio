@@ -37,6 +37,7 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
+import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonomyClass;
 import com.kidscademy.atlas.studio.util.Files;
@@ -199,9 +200,10 @@ public class AtlasDaoTest {
 
     @Test
     public void getCollectionItems() {
-	Map<String, String> filter = new HashMap<>();
-	filter.put("state", "");
-	List<AtlasItem> items = dao.getCollectionItems(filter, 1);
+	Map<String, String> criteria = new HashMap<>();
+	criteria.put("state", "NONE");
+
+	List<AtlasItem> items = dao.getCollectionItems(new SearchFilter(criteria), 1);
 	assertThat(items, notNullValue());
 	assertThat(items, hasSize(2));
 	assertAtlasItem(items.get(0));
