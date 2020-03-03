@@ -14,16 +14,20 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		this.CSS_INVALID = js.dom.Control.prototype.CSS_INVALID;
 
+
+		// current selected collection and object ID are stored on global context
+		this._collection = this.getContextAttr("collection");
+		this._objectId = Number(this.getContextAttr("objectId"));
+
+		// TODO: temporar solution
+		this._objectId = Number(WinMain.url.parameters.id);
+
 		/**
 		 * Flag true when a form control was changed. Used to signal user changes when leaving the page.
 		 * @type {Boolean}
 		 */
 		this._dirty = false;
 		WinMain.on("pre-unload", this._onPreUnload, this);
-
-		// current selected collection and object ID are stored on global context
-		this._collection = this.getContextAttr("collection");
-		this._objectId = Number(this.getContextAttr("objectId"));
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._form.on("input", ev => { this._dirty = true });
@@ -77,13 +81,13 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._linksControl.onDestroy();
 	}
 
+	getCollection() {
+		return this._object.collection;
+	}
+
 	getObject() {
 		this._form.getObject(this._object);
 		return this._object;
-	}
-
-	getCollection() {
-		return this._collection;
 	}
 
 	getAtlasItem() {
@@ -105,14 +109,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_loadObject() {
-		if (this.hasContextAttr(this.PRREVIEW_OBJECT)) {
-			// if there is preview object stored on global storage we are back from reader preview page
-			// restore form from saved preview object and remove preview object from global context
-			this._onObjectLoaded(this.getContextAttr(this.PRREVIEW_OBJECT));
-			this.removeContextAttr(this.PRREVIEW_OBJECT);
-			return;
-		}
-
 		if (this._objectId !== 0) {
 			AtlasService.getAtlasObject(this._objectId, this._onObjectLoaded, this);
 		}
@@ -123,9 +119,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 	_onObjectLoaded(object) {
 		this._dirty = false;
-
-		// take care to update this object ID on global context
-		this.setContextAttr("objectId", object.id);
 
 		this.findByCss(".quick-links li").removeCssClass(this.CSS_INVALID);
 		this._form.reset();

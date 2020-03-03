@@ -69,11 +69,17 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		this._taxonNameLabel = null;
 
 		/**
-		 * User interface control that allows for taxon value input. Depending on taxonomy class this control
+		 * User interface control that allows for taxon value input. Depending on taxon meta-defintion this control
 		 * can be a free text input or a select.
 		 * @type {@ js.dom.Control}
 		 */
 		this._taxonValueControl = null;
+
+		/** Variant of {@link #_taxonValueControl} used when taxon value is free text. */
+		this._taxonValueInput = null;
+
+		/** Variant of {@link #_taxonValueControl} used when taxon value is selected from a set of predefined values. */
+		this._taxonValueSelect = null;
 
 		/**
 		 * This control actions handler.
@@ -99,37 +105,12 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * invoked after {@link #setValue(Object)}.
 	 */
 	onStart() {
-		this._atlasItem = this._formPage.getAtlasItem();
-		this._taxonomyClass = this._formPage.getCollection().taxonomyClass;
-		// update again actions visibility here because we need taxonomy class
-		this._updateActions();
-
-		switch (this._taxonomyClass) {
-			case "MUSICAL_INSTRUMENT":
-				const familyTaxonomy = com.kidscademy.form.TaxonomyControl.MusicalInstrumentTaxonomy;
-				this._taxonomyTemplate = familyTaxonomy.template;
-
-				this._taxonValueEditor = this.getByCss(".editor.taxon-value.family");
-				this._taxonValueControl = this._taxonValueEditor.getByName("value");
-
-				var options = familyTaxonomy.values;
-				options.splice(0, 0, "");
-				this._taxonValueControl.setOptions(options);
-				break;
-
-			case "BIOLOGICAL":
-				this._taxonomyTemplate = com.kidscademy.form.TaxonomyControl.BiologicalTaxonomy.template;
-
-				this._taxonValueEditor = this.getByCss(".editor.taxon-value.biological");
-				this._taxonValueControl = this._taxonValueEditor.getByName("value");
-				this._taxonValueControl.on("keydown", this._onTaxonValueKey, this);
-				break;
-
-			default:
-				throw `Invalid taxonony class '${this._taxonomyClass}' on collection '${this._formPage.getCollection().display}'.`;
-		}
-
+		this._taxonValueEditor = this.getByCss(".editor.taxon-value");
 		this._taxonNameLabel = this._taxonValueEditor.getByName("name");
+
+		this._taxonValueInput = this._taxonValueEditor.getByName("value-input");
+		this._taxonValueInput.on("keydown", this._onTaxonValueKey, this);
+		this._taxonValueSelect = this._taxonValueEditor.getByName("value-select");
 	}
 
 	/**
@@ -178,7 +159,10 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	// ACTION HANDLERS
 
 	_onAdd() {
-		this.setValue(this._taxonomyTemplate);
+		const taxonomyMeta = this._formPage.getCollection().taxonomyMeta;
+		const taxonomy = taxonomyMeta.map(taxonMeta => { return { name: taxonMeta.name, value: null } });
+
+		this.setValue(taxonomy);
 		if (this._taxonomy.length == 1) {
 			this._taxonEditIndex = 0;
 			this._openEditor();
@@ -240,7 +224,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 	_openEditor() {
 		this._taxonValueEditor.show();
-		this._taxonValueControl.reset().focus();
+		//this._taxonValueControl.reset().focus();
 
 		this._updateEditControls();
 		this._actions.show("done", "remove", "close");
@@ -269,6 +253,18 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 */
 	_updateEditControls() {
 		this._taxonNameLabel.setValue(this._taxonomy[this._taxonEditIndex].name);
+
+		const taxonMeta = this._formPage.getCollection().taxonomyMeta[this._taxonEditIndex];
+		if (taxonMeta.values == null) {
+			this._taxonValueSelect.hide();
+			this._taxonValueControl = this._taxonValueInput.show();
+		}
+		else {
+			this._taxonValueInput.hide();
+			this._taxonValueSelect.setOptions(taxonMeta.values.split(','));
+			this._taxonValueControl = this._taxonValueSelect.show();
+		}
+
 		this._taxonValueControl.setValue(this._taxonomy[this._taxonEditIndex].value);
 	}
 
@@ -288,43 +284,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	toString() {
 		return "com.kidscademy.form.TaxonomyControl";
 	}
-};
-
-com.kidscademy.form.TaxonomyControl.MusicalInstrumentTaxonomy = {
-	template: [
-		{ name: "Family", value: null }
-	],
-	type: "ENUM",
-	values: [
-		// A keyboard instrument is a musical instrument played using a keyboard.
-		"KEYBOARD",
-		// Instrument is sounded by being struck or scraped by a beater or musician hands.
-		"PERCUSSION",
-		// Produce sound by directing a focused stream of air across the edge of a hole in a cylindrical tube.
-		"WOODWIND",
-		// Produces sound by vibration of air in a tubular resonator in sympathy with the vibration of the player's 
-		// lips. The term "brass instrument" should be defined by the way the sound is made and not by whether the 
-		// instrument is actually made of brass. 
-		"BRASS",
-		// Produce sound from vibrating strings transmitted to the body of the instrument.
-		"STRINGS",
-		// Instruments with a series of thin plates, each of which is fixed at one end and has the other end free.
-		"LAMELLOPHONE"
-	]
-};
-
-com.kidscademy.form.TaxonomyControl.BiologicalTaxonomy = {
-	template: [
-		{ name: "kingdom", value: null },
-		{ name: "phylum", value: null },
-		{ name: "class", value: null },
-		{ name: "order", value: null },
-		{ name: "family", value: null },
-		{ name: "genus", value: null },
-		{ name: "species", value: null }
-	],
-	type: "STRING",
-	values: null
 };
 
 $preload(com.kidscademy.form.TaxonomyControl);

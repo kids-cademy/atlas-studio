@@ -10,19 +10,81 @@
 		<id>1</id>
 		<name>instrument</name>
 		<display>Instrument</display>
+		<definition>Musical instrument.</definition>
 		<iconName>instrument.png</iconName>
-		<taxonomyClass>MUSICAL_INSTRUMENT</taxonomyClass>
-		<featuresClass>NONE</featuresClass>
+		<endDate>1</endDate>
+		<conservationStatus>1</conservationStatus>
+		<audioSample>1</audioSample>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
 		<display>Bird</display>
+		<definition>Wild bird.</definition>
 		<iconName>bird.png</iconName>
-		<taxonomyClass>BIOLOGICAL</taxonomyClass>
-		<featuresClass>BIRD</featuresClass>
+		<endDate>1</endDate>
+		<conservationStatus>1</conservationStatus>
+		<audioSample>1</audioSample>
 	</atlascollection>
 
+	<atlascollection_taxonomymeta>
+		<id>1</id>
+		<atlascollection_id>1</atlascollection_id>
+		<taxonomymeta_order>0</taxonomymeta_order>
+		<name>family</name>
+		<values>KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE</values>
+	</atlascollection_taxonomymeta>
+
+	<atlascollection_taxonomymeta>
+		<id>2</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>0</taxonomymeta_order>
+		<name>kingdom</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>3</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>1</taxonomymeta_order>
+		<name>phylum</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>4</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>2</taxonomymeta_order>
+		<name>class</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>5</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>3</taxonomymeta_order>
+		<name>order</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>6</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>4</taxonomymeta_order>
+		<name>family</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>7</id>
+		<atlascollection_id>2</atlascollection_id>
+		<taxonomymeta_order>5</taxonomymeta_order>
+		<name>genus</name>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	<atlascollection_taxonomymeta>
+		<id>8</id>
+		<atlascollection_id>2</atlascollection_id>
+		<name>species</name>
+		<taxonomymeta_order>6</taxonomymeta_order>
+		<values></values>
+	</atlascollection_taxonomymeta>
+	
 	<atlasobject>
 		<id>1</id>
 		<collection_id>1</collection_id>

@@ -2,9 +2,8 @@
 <project>
 	<author>Iulian Rotaru</author>
 	<name>atlas-studio</name>
-	<display>kids (a)cademy</display>
-	<description>kids (a)cademy is a self-educational ecosystem targeted at children of all ages.</description>
-	<design>material</design>
+	<display>Atlas Studio</display>
+	<description>Development environment for Atlas collections and releases.</description>
 	<locale>en</locale>
 
 	<site-dir>build/site</site-dir>
@@ -17,12 +16,8 @@
 	</metas>
 
 	<fonts>
-		<font>http://fonts.googleapis.com/css?family=Lato</font>
-		<font>http://fonts.googleapis.com/css?family=Roboto</font>
-		<font>http://fonts.googleapis.com/css?family=Helvetica+Neue</font>
+		<font>http://fonts.googleapis.com/css?family=Montserrat&amp;display=swap</font>
 		<font>http://fonts.googleapis.com/css?family=Open+Sans</font>
-		<font>http://fonts.googleapis.com/css?family=Great+Vibes</font>
-		<font>https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap</font>
 	</fonts>
 	
 	<scripts>
@@ -30,5 +25,4 @@
 		<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 	</scripts>
 		
-	<excludes>page/account, page/media</excludes>
 </project>

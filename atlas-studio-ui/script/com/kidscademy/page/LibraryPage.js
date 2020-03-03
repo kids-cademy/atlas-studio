@@ -100,7 +100,7 @@ com.kidscademy.page.LibraryPage = class extends com.kidscademy.page.Page {
 		const collection = collectionView.getUserData();
 		// store selected collection on global context to make it accessible to all descendant pages
 		this.setContextAttr("collection", collection);
-		WinMain.assign("@link/collection");
+		WinMain.assign("@link/collection", { id: collection.id });
 	}
 
 	/**

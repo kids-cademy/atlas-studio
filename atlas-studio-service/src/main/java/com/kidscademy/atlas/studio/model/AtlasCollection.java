@@ -1,10 +1,14 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
@@ -26,9 +30,14 @@ public class AtlasCollection {
 
     private String name;
     private String display;
+    private String definition;
     private String iconName;
-    private TaxonomyClass taxonomyClass;
-    private FeaturesClass featuresClass;
+
+    @ElementCollection
+    @OrderColumn
+    private List<TaxonMeta> taxonomyMeta;
+
+    private Flags flags;
 
     @Transient
     private MediaSRC iconSrc;
@@ -64,19 +73,23 @@ public class AtlasCollection {
 	return display;
     }
 
+    public String getDefinition() {
+	return definition;
+    }
+
     public String getIconName() {
 	return iconName;
     }
 
-    public TaxonomyClass getTaxonomyClass() {
-        return taxonomyClass;
-    }
-
-    public FeaturesClass getFeaturesClass() {
-        return featuresClass;
-    }
-
     public MediaSRC getIconSrc() {
-        return iconSrc;
+	return iconSrc;
+    }
+
+    public List<TaxonMeta> getTaxonomyMeta() {
+	return taxonomyMeta;
+    }
+
+    public Flags getFlags() {
+	return flags;
     }
 }

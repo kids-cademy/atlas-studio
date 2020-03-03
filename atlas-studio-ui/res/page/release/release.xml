@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Account</title>
-	<description>Developer account settings.</description>
+	<title>Release</title>
+	<description>Release management tool.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>

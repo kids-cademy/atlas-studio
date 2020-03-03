@@ -31,6 +31,8 @@ import js.tiny.container.http.form.Form;
 // @RolesAllowed("EDITOR")
 @Public
 public interface AtlasService {
+    AtlasCollection getCollection(int collectionId);
+
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
@@ -60,7 +62,7 @@ public interface AtlasService {
     void removeAtlasObject(int objectId);
 
     void moveAtlasObject(AtlasItem object, int collectionId);
-    
+
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
     List<Feature> getFeatureTemplates(FeaturesClass featuresClass);
@@ -280,6 +282,6 @@ public interface AtlasService {
     String getWikiHowTitle(URL url);
 
     ExportObject getExportObject(int objectId);
-    
+
     Feature updateFeatureDisplay(Feature feature);
 }

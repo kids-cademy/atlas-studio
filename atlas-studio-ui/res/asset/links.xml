@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <link>
-	<library>library.htm</library>
+	<workspace>workspace.htm</workspace>
 	<collection>collection.htm</collection>
+	<meta>meta.htm</meta>
 	<search>search.htm</search>
 	<form>form.htm</form>
 	<media>media.htm</media>
+	<release>release.htm</release>
 	<account>account.htm</account>
 	<reader>reader.htm</reader>
 </link>

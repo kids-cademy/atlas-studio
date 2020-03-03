@@ -49,10 +49,6 @@ ol li {
 	margin: @dimen/list-item-y-space 0 0 @dimen/list-item-x-space;
 }
 
-.list-view .item:first-child {
-	margin-left: 0;
-}
-
 .list-view .item .icon {
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
@@ -137,11 +133,11 @@ ol li {
 	width: 100%;
 	margin: 4px 0 0 0;
 	text-align: center;
-	font-family: "Roboto";
-	font-size: 1.3rem;
-	line-height: 16px;
-	height: 32px;
+	font-size: 1.4rem;
+	line-height: 18px;
+	height: 40px;
 	white-space: normal;
+	text-transform: capitalize;
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 

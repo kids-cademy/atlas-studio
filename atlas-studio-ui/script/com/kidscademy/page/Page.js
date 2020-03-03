@@ -87,7 +87,6 @@ com.kidscademy.page.Page = class extends js.ua.Page {
             }
             if (!this._isPreviewMode()) {
                 $debug("com.kidscademy.page.Page#getContextAttr", "Invalid global context. Missing attribute |%s|. Go to home page.", name);
-                WinMain.assign("@link/library");
                 return;
             }
             // is legal for value to be missing on development in preview mode

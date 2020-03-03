@@ -112,6 +112,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public AtlasCollection getCollection(int collectionId) {
+	return atlasDao.getCollectionById(collectionId);
+    }
+
+    @Override
     public List<AtlasCollection> getCollections() {
 	return atlasDao.getCollections();
     }
@@ -245,7 +250,8 @@ public class AtlasServiceImpl implements AtlasService {
     public String importObjectDescription(Link link) {
 	switch (link.getDomain()) {
 	case "softschools.com":
-	    return Strings.join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()), "\r\n\r\n");
+	    return Strings.join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()),
+		    "\r\n\r\n");
 
 	case "wikipedia.org":
 	    WikipediaArticleText article = new WikipediaArticleText(link.getUrl());
@@ -344,7 +350,7 @@ public class AtlasServiceImpl implements AtlasService {
 		String.format("Wikipedia article about %s.", object.getDisplay().toLowerCase())));
 	object.setLinks(links);
 
-	object.setState(AtlasObject.State.NONE);
+	object.setState(AtlasObject.State.CREATED);
 	object.setAliases(new ArrayList<String>());
 	object.setImages(new HashMap<String, Image>());
 	object.setLastUpdated(new Date());

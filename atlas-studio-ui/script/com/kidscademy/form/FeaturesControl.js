@@ -65,7 +65,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	 */
 	onStart() {
 		this._atlasItem = this._formPage.getAtlasItem();
-		this._featuresClass = this._formPage.getCollection().featuresClass;
+		//this._featuresClass = this._formPage.getObject().meta.featuresClass;
 		// update again actions visibility here because we need features class
 		this._updateActions();
 	}

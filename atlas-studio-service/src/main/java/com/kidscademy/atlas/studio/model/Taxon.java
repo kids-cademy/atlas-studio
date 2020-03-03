@@ -14,6 +14,10 @@ public class Taxon implements Displayable {
 
     }
 
+    public Taxon(String name) {
+	this.name = name;
+    }
+
     public Taxon(String name, String value) {
 	this.name = name;
 	this.value = value;

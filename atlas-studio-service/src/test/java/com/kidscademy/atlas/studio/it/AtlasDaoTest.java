@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -39,7 +40,6 @@ import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
-import com.kidscademy.atlas.studio.model.TaxonomyClass;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.json.Json;
@@ -227,7 +227,15 @@ public class AtlasDaoTest {
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
 	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
 	assertThat(object.getCollection().getIconName(), equalTo("instrument.png"));
-	assertThat(object.getCollection().getTaxonomyClass(), equalTo(TaxonomyClass.MUSICAL_INSTRUMENT));
+	
+	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
+	assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
+	assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("family"));
+	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(), equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
+	
+	assertTrue(object.getCollection().getFlags().isEndDate());
+	assertTrue(object.getCollection().getFlags().isConservationStatus());
+	assertTrue(object.getCollection().getFlags().isAudioSample());
 
 	assertThat(object.getRank(), equalTo(1234));
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));

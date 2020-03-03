@@ -26,7 +26,7 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 		this._searchResult.on("click", this._onItemClick, this);
 		this._searchResult.on("contextmenu", this._onContextMenu, this);
 
-		this._listType = new com.kidscademy.CssFlags(this._searchResult, "icons", "cards");
+		this._listType = new com.kidscademy.CssFlags(this._searchResult, "icons", "tiles", "details", "cards");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
@@ -66,6 +66,14 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 
 	_onIconsView() {
 		this._listType.set("icons");
+	}
+
+	_onTilesView() {
+		this._listType.set("tiles");
+	}
+
+	_onDetailsView() {
+		this._listType.set("details");
 	}
 
 	_onCardsView() {
@@ -114,7 +122,7 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 		this.setContextAttr("collection", object.collection);
 		this.setContextAttr("objectId", object.id);
 
-		WinMain.assign(reader ? "@link/reader" : "@link/form");
+		WinMain.assign(reader ? "@link/reader" : "@link/form", { id: object.id });
 	}
 
 	/**

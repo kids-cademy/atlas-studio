@@ -60,7 +60,7 @@ public class LifeFormWikipediaArticle implements HDateRange {
 
 		case TAXONOMY:
 		    Taxon taxon = taxon(element);
-		    if (taxon != null) {
+		    if (taxon != null && taxon.getValue() != null) {
 			taxonomy.add(taxon);
 		    }
 		    break;

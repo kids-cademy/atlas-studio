@@ -10,11 +10,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	constructor() {
 		super();
 
-		// current selected collection is stored on global context by dashboard
-		this._collection = this.getContextAttr("collection");
-
-		this._sidebar = this.getByCss(".side-bar .header");
-		this._sidebar.setObject(this._collection);
+		const sidebar = this.getByCss(".side-bar .header");
+		this._collectionId = Number(WinMain.url.parameters.id);
+		AtlasService.getCollection(this._collectionId, collection => sidebar.setObject(collection));
 
 		const sideMenu = this.getByCss(".side-bar .menu");
 		sideMenu.on(this, {
@@ -47,7 +45,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._actions.fire("load-items");
 
 		const exportAnchor = sideMenu.getByCssClass("export");
-		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collection.id}&state=${this._filterForm.getObject().state}`);
+		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collectionId}&state=${this._filterForm.getObject().state}`);
 	}
 
 	_onUnload() {
@@ -61,7 +59,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	_onLoadItems() {
 		const filter = this._filterForm.getObject();
 		const timestamp = Date.now();
-		AtlasService.getCollectionItems(filter, this._collection.id, items => {
+		AtlasService.getCollectionItems(filter, this._collectionId, items => {
 			this._infoView.setObject({
 				objectsCount: items.length,
 				ellapsedTime: Date.now() - timestamp
@@ -102,7 +100,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onRelatedView() {
 		const filter = this._filterForm.getObject();
-		AtlasService.getCollectionRelated(filter, this._collection.id, items => {
+		AtlasService.getCollectionRelated(filter, this._collectionId, items => {
 			this._contentView.select("insight-related");
 			this._contentView.setObject(items);
 			this._revealItem();
@@ -111,7 +109,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onLinksView() {
 		const filter = this._filterForm.getObject();
-		AtlasService.getCollectionLinks(filter, this._collection.id, items => {
+		AtlasService.getCollectionLinks(filter, this._collectionId, items => {
 			this._contentView.select("insight-links");
 			this._contentView.setObject(items);
 			this._revealItem();
@@ -120,7 +118,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onImagesView() {
 		const filter = this._filterForm.getObject();
-		AtlasService.getCollectionImages(filter, this._collection.id, items => {
+		AtlasService.getCollectionImages(filter, this._collectionId, items => {
 			this._contentView.select("insight-images");
 			this._contentView.setObject(items);
 			this._revealItem();
@@ -136,7 +134,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 	_onImportWikipedia() {
 		js.ua.System.prompt("@string/prompt-wikipedia-url", url => {
-			AtlasService.importWikipediaObject(this._collection.id, url, object => {
+			AtlasService.importWikipediaObject(this._collectionId, url, object => {
 				this._listView.addObject(object);
 				this._revealItem(object.id);
 			});
@@ -187,7 +185,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this.setPageAttr("object-id", objectId);
 
 		if (ev.ctrlKey) {
-			const objectId = li.getAttr("id");
 			this._onPreviewObject(li);
 		}
 		else {
@@ -216,7 +213,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	_moveToPage(pageName, objectId) {
 		// store selected object ID on global context to make it available to next pages
 		this.setContextAttr("objectId", objectId);
-		WinMain.assign(pageName);
+		WinMain.assign(pageName, { id: objectId });
 	}
 
 	_revealItem(objectId) {

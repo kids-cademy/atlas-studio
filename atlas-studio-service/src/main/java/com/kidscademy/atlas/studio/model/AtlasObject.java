@@ -2,6 +2,7 @@ package com.kidscademy.atlas.studio.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -548,8 +549,13 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	object.collection = collection;
 	object.state = AtlasObject.State.CREATED;
 	object.description = "<text><section name='text'></section></text>";
+
+	object.taxonomy = new ArrayList<>();
+	for (TaxonMeta taxonMeta : collection.getTaxonomyMeta()) {
+	    object.taxonomy.add(new Taxon(taxonMeta.getName()));
+	}
+
 	object.aliases = Collections.emptyList();
-	object.taxonomy = Collections.emptyList();
 	object.images = Collections.emptyMap();
 	object.spreading = Collections.emptyList();
 	object.facts = Collections.emptyMap();

@@ -20,6 +20,7 @@ import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 
 import js.dom.DocumentBuilder;
@@ -48,6 +49,8 @@ public class AtlasServiceTest {
 
     @Test
     public void importWikipediaObject() throws IOException {
+	when(atlasDao.getCollectionById(2)).thenReturn(new AtlasCollection(2, "wild-birds"));
+	
 	URL articleURL = new URL("https://en.wikipedia.org/wiki/Common_raven");
 	AtlasItem object = service.importWikipediaObject(2, articleURL);
 	

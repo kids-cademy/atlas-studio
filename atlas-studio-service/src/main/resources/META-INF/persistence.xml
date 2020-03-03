@@ -27,6 +27,8 @@
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 
+		<class>com.kidscademy.atlas.studio.model.TaxonMeta</class>
+
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
 		<properties>
@@ -90,6 +92,8 @@
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
+
+		<class>com.kidscademy.atlas.studio.model.TaxonMeta</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
