@@ -55,5 +55,6 @@ public class ExportTaxon implements Displayable {
 	EN.put("subspecies", "Subspecies");
 	EN.put("infraorder", "Infraorder");
 	EN.put("parvorder", "Parvorder");
+	EN.put("type", "Type");
     }
 }

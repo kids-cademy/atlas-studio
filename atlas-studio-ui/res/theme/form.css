@@ -14,11 +14,29 @@ form fieldset .content {
 }
 
 form .controlset {
+	display: flex;
 	margin-top: 20px;	
 }
 
-form label {
+form .controlset:first-child {
+	margin-top: 0;
+}
+
+form .controlset textarea {
 	display: inline-block;
+	margin-top: 0;
+}
+
+form fieldset h2 {
+	font-size: 1.8rem;
+	color: green;
+	border-bottom: solid 1px #E6E6E6;
+	text-transform: uppercase;
+}
+
+form fieldset label {
+	display: inline-block;
+	flex-shrink: 0;
 	width: 200px;
 	font-size: 18px;
 }

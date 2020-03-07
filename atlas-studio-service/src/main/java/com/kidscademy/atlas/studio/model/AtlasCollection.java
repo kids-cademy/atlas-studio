@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
 
+import js.util.Params;
+
 /**
  * Atlas collection groups together {@link AtlasObject} that have something in
  * common. It is the primary mean to distribute atlas content. An atlas
@@ -61,6 +63,10 @@ public class AtlasCollection {
 	iconSrc = Files.collectionSrc(iconName);
     }
 
+    public void postMerge(AtlasCollection sourceCollection) {
+	iconName = sourceCollection.iconSrc.fileName();
+    }
+
     public int getId() {
 	return id;
     }
@@ -77,8 +83,17 @@ public class AtlasCollection {
 	return definition;
     }
 
+    public void setIconName(String iconName) {
+	Params.notNullOrEmpty(iconName, "Icon name");
+	this.iconName = iconName;
+    }
+
     public String getIconName() {
 	return iconName;
+    }
+
+    public boolean hasIconName() {
+	return iconName != null;
     }
 
     public MediaSRC getIconSrc() {
@@ -91,5 +106,14 @@ public class AtlasCollection {
 
     public Flags getFlags() {
 	return flags;
+    }
+
+    public static AtlasCollection create() {
+	AtlasCollection collection = new AtlasCollection();
+	collection.flags = new Flags();
+	collection.flags.setEndDate(true);
+	collection.flags.setConservationStatus(true);
+	collection.flags.setAudioSample(true);
+	return collection;
     }
 }

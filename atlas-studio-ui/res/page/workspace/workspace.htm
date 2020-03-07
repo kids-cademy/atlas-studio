@@ -1,38 +1,13 @@
-<div class="library" w:template="page/template#body" xmlns:w="js-lib.com/wood">
-	<section>
-		<form class="form-bar with-actions">
-			<input name="search-input" />
-			<div class="actions inline"  data-class="com.kidscademy.Actions">
-				<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
-				<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
-				<span class="space"></span>
-				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
-				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
-			</div>
-		</form>
+<div class="workspace" w:template="page/template#body" xmlns:w="js-lib.com/wood">
+	<section class="content" data-class="com.kidscademy.FrameView">
+		<div data-name="collections-list" w:widget="page/workspace/collections-list"></div>
+		<div data-name="collection-form" w:widget="page/workspace/collection-form" class="hidden"></div>
 	</section>
 
-	<section class="content">
-		<ul w:widget="compo/objects-list-view"></ul>
-	</section>
-
-	<div class="context-menu dialog hidden" data-class="com.kidscademy.ContextMenu" w:role="LIBRARIAN,EDITOR">
-		<div class="caption"><img class="close" src="@image/action/close" /></div>
-		<div class="content">
-			<div class="object">
-				<img data-src="icon-src" />
-				<h3 data-text="display"></h3>
-			</div>
-			<ul class="menu">
-				<li data-name="manage-objects" w:role="LIBRARIAN"><img src="@image/action/manage-objects" /><span>@string/collection-objects</span></li>
-				<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
-				<li data-name="remove-collection"><img src="@image/action/remove" /><span>@string/collection-remove</span></li>
-			</ul>
-		</div>
-	</div>
+	<div w:widget="page/workspace/context-menu"></div>
 </div>
 
-<div class="library" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
+<div class="workspace" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
 		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/workspace-create-collection</span></li>
 		<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/workspace-export</span></a></li>

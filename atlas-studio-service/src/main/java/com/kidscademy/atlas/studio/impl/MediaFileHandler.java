@@ -91,26 +91,34 @@ public class MediaFileHandler {
      * Initialize internal state from given arguments and version value by scanning
      * file system.
      * 
-     * @param collectionItem
+     * @param repositoryObject
      *            collection item owning media file,
      * @param mediaFile
      *            media file name.
      * @throws IllegalArgumentException
      *             if arguments are null or media file has no extension.
      */
-    public MediaFileHandler(RepositoryObject collectionItem, String mediaFile) {
-	Params.notNull(collectionItem, "Collection item");
-	MediaSRC mediaSrc = Files.mediaSrc(collectionItem.getRepositoryName(), collectionItem.getName(), mediaFile);
+    public MediaFileHandler(RepositoryObject repositoryObject, String mediaFile) {
+	this(Files.mediaSrc(repositoryObject.getRepositoryName(), repositoryObject.getName(), mediaFile));
+    }
+
+    public MediaFileHandler(MediaSRC mediaSrc) {
+	String mediaFileName = mediaSrc.fileName();
+
 	// infer base path from path in order to avoid hard coded path dependency
 	basePath = mediaSrc.basePath();
 
 	File file = Files.mediaFile(mediaSrc);
 	baseDir = file.getParentFile();
-	basename = Files.basename(mediaFile);
-	extension = Files.getExtension(mediaFile);
+	basename = Files.basename(mediaFileName);
+	int versionPosition = basename.lastIndexOf('_');
+	if (versionPosition != -1) {
+	    basename = basename.substring(0, versionPosition);
+	}
+	extension = Files.getExtension(mediaFileName);
 	if (extension.isEmpty()) {
 	    throw new IllegalArgumentException(
-		    Strings.format("Invalid media file |%s|. Missing extension.", mediaFile));
+		    Strings.format("Invalid media file |%s|. Missing extension.", mediaFileName));
 	}
 
 	// scan files system in order to detect version
@@ -235,6 +243,13 @@ public class MediaFileHandler {
 	    targetSrc = src(basePath, basename, version + 1, extension);
 	}
 	return targetSrc;
+    }
+
+    public File icon() {
+	if (version == -1) {
+	    throw new BugError("Attempt to create icon for not existing media file.");
+	}
+	return file(baseDir, basename + "_96x96", 0, extension);
     }
 
     /**

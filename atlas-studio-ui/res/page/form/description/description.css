@@ -3,9 +3,7 @@
 }
 
 .description textarea {
-	width: 100%;
-	height: 500px;
-	border-radius: 6px 6px 0 0;
+	border-bottom-left-radius: 0;
 }
 
 .description:not (.hidden ) .list-view {

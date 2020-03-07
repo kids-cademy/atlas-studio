@@ -20,12 +20,24 @@ public class Flags {
      */
     private boolean audioSample;
 
+    public void setEndDate(boolean endDate) {
+        this.endDate = endDate;
+    }
+
     public boolean isEndDate() {
 	return endDate;
     }
 
+    public void setConservationStatus(boolean conservationStatus) {
+        this.conservationStatus = conservationStatus;
+    }
+
     public boolean isConservationStatus() {
 	return conservationStatus;
+    }
+
+    public void setAudioSample(boolean audioSample) {
+        this.audioSample = audioSample;
     }
 
     public boolean isAudioSample() {

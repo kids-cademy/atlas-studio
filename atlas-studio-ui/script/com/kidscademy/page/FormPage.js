@@ -131,6 +131,9 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._definitionControl.onStart();
 		this._descriptionControl.onStart();
 		this._graphicAssets.onStart();
+		if(!object.collection.flags.audioSample) {
+			this._audioAssets.hide();
+		}
 		this._audioAssets.onStart();
 		this._factsControl.onStart();
 		this._featuresControl.onStart();

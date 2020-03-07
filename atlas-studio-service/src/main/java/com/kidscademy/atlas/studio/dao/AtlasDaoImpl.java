@@ -20,6 +20,7 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
+import js.lang.BugError;
 import js.transaction.Immutable;
 import js.transaction.Mutable;
 import js.transaction.Transactional;
@@ -34,8 +35,35 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    @Mutable
+    public void removeAtlasCollection(int collectionId) {
+	AtlasCollection collection = em.find(AtlasCollection.class, collectionId);
+	if (collection != null) {
+	    em.remove(collection);
+	}
+    }
+
+    @Override
+    public int getCollectionSize(int collectionId) {
+	Number count = (Number) em.createQuery("select count(o) from AtlasObject o where o.collection.id=:id")
+		.setParameter("id", collectionId).getSingleResult();
+	return count.intValue();
+    }
+
+    @Override
     public AtlasCollection getCollectionById(int collectionId) {
 	return em.find(AtlasCollection.class, collectionId);
+    }
+
+    @Override
+    public boolean uniqueCollectionName(AtlasCollection collection) {
+	List<AtlasCollection> result = em
+		.createQuery("select c from AtlasCollection c where c.id!=:id and c.name=:name", AtlasCollection.class)
+		.setParameter("id", collection.getId()).setParameter("name", collection.getName()).getResultList();
+	if (result.size() > 1) {
+	    throw new BugError("Database inconsistency. Multiple collections with the same name.");
+	}
+	return result.size() == 0;
     }
 
     @Override
@@ -68,8 +96,8 @@ public class AtlasDaoImpl implements AtlasDao {
 	queryBuilder.append("select i from ");
 	queryBuilder.append(type.getSimpleName());
 	queryBuilder.append(" i where i.collection.id=?1 ");
-	if(!filter.criterion("state").is(AtlasObject.State.NONE)) {
-	    if(filter.criterion("negate").is(true)) {
+	if (!filter.criterion("state").is(AtlasObject.State.NONE)) {
+	    if (filter.criterion("negate").is(true)) {
 		queryBuilder.append("and i.state!=?2 ");
 	    } else {
 		queryBuilder.append("and i.state=?2 ");
@@ -79,7 +107,7 @@ public class AtlasDaoImpl implements AtlasDao {
 
 	TypedQuery<T> query = em.createQuery(queryBuilder.toString(), type);
 	query.setParameter(1, collectionId);
-	if(!filter.criterion("state").is(AtlasObject.State.NONE)) {
+	if (!filter.criterion("state").is(AtlasObject.State.NONE)) {
 	    query.setParameter(2, filter.get("state", AtlasObject.State.class));
 	}
 	return query.getResultList();
@@ -115,6 +143,16 @@ public class AtlasDaoImpl implements AtlasDao {
     public List<ExportItem> getAllExportItems() {
 	return em.createQuery("select i from ExportItem i where i.state=?1 order by i.name", ExportItem.class)
 		.setParameter(1, AtlasObject.State.PUBLISHED).getResultList();
+    }
+
+    @Override
+    @Mutable
+    public void saveAtlasCollection(AtlasCollection collection) {
+	if (collection.getId() == 0) {
+	    em.persist(collection);
+	} else {
+	    em.merge(collection).postMerge(collection);
+	}
     }
 
     @Override

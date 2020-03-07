@@ -14,7 +14,9 @@ com.kidscademy.page.Page = class extends js.ua.Page {
 
         this.ERRORS = ["", // SUCCESS
             "Picture file name already used.", // NOT_UNIQUE_PICTURE_FILE_NAME
-            "Featured picture should have transparent background." // NOT_TRANSPARENT_FEATURED_PICTURE
+            "Featured picture should have transparent background.", // NOT_TRANSPARENT_FEATURED_PICTURE
+            "Collection name already used.", // NOT_UNIQUE_COLLECTION_NAME
+            "Collection should be empty." // NOT_EMPTY_COLLECTION
         ];
 
         window.onscroll = () => {

@@ -112,10 +112,9 @@ select option {
 
 textarea {
 	box-sizing: border-box;
-	width: 800px;
+	width: 100%;
 	max-width: @dimen/container-width;
-	height: 400px;
-	min-height: 200px;
+	height: 200px;
 	padding: 10px;
 	overflow:auto;
 	font-size: 18px;
@@ -124,6 +123,19 @@ textarea {
 	border: solid 1px @color/border-input;
 	border-radius: @dimen/control-radius;
 	resize: none;
+	margin-top: 20px;
+}
+
+textarea:first-child {
+	margin-top: 0;
+}
+
+textarea.large {
+	height: 500px;
+}
+
+textarea.small {
+	height: 100px;
 }
 
 textarea.auto-size {

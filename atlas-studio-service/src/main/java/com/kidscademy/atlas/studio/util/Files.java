@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
@@ -42,26 +43,32 @@ public final class Files extends js.util.Files {
 	return new MediaSRC("/media/collection/" + iconName);
     }
 
-    private static File REPOSIOTRY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
+    private static File REPOSITORY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
+
+    public static File mediaFile(AtlasCollection collection) {
+	// repository dir := ${catalina.base}/webapps
+	// media SRC := /media/collection/${collection.iconName}
+	return new File(REPOSITORY_DIR, Strings.concat("/media/collection/", collection.getIconName()));
+    }
 
     public static File objectDir(RepositoryObject object) {
 	return objectDir(object.getRepositoryName(), object.getName());
     }
 
     public static File objectDir(String repositoryName, String objectName) {
-	return new File(REPOSIOTRY_DIR, Strings.concat("/media/atlas/", repositoryName, "/", objectName, '/'));
+	return new File(REPOSITORY_DIR, Strings.concat("/media/atlas/", repositoryName, "/", objectName, '/'));
     }
 
     public static File mediaFile(MediaSRC mediaSrc) {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/atlas/collection/object/file
-	return new File(REPOSIOTRY_DIR, mediaSrc.value());
+	return new File(REPOSITORY_DIR, mediaSrc.value());
     }
 
     public static File mediaFile(RepositoryObject object, String mediaFileName) {
 	// repository dir := ${catalina.base}/webapps
 	// path := /media/atlas/collection/object/file
-	return new File(REPOSIOTRY_DIR, Files.mediaSrc(object, mediaFileName).value());
+	return new File(REPOSITORY_DIR, Files.mediaSrc(object, mediaFileName).value());
     }
 
     /**
@@ -78,7 +85,7 @@ public final class Files extends js.util.Files {
      */
     public static File mediaFile(RepositoryObject collectionItem, String basename, String extension) {
 	String fileName = Strings.concat(basename, '.', extension);
-	return new File(REPOSIOTRY_DIR, Files.mediaSrc(collectionItem, fileName).value());
+	return new File(REPOSITORY_DIR, Files.mediaSrc(collectionItem, fileName).value());
     }
 
     private static final Map<String, String> MEDIA_TYPES = new HashMap<>();

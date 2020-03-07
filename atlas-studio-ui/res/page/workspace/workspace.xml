@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Library</title>
-	<description>Librarian work place.</description>
+	<title>Workspace</title>
+	<description>Editor work place.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/FrameView.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/CssFlags.js</script>
+		<script>script/com/kidscademy/workspace/CollectionsList.js</script>
+		<script>script/com/kidscademy/workspace/CollectionForm.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
-		<script>script/com/kidscademy/page/LibraryPage.js</script>
+		<script>script/com/kidscademy/page/WorkspacePage.js</script>
 	</scripts>
 </page>

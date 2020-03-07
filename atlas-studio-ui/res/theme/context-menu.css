@@ -4,6 +4,8 @@
 
 .context-menu .object img {
 	float: left;
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
 	padding: 1px;
 	border: solid 1px @color/border-image;
 	margin-left: 10px;

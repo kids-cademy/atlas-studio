@@ -41,6 +41,7 @@
 .graphic-assets .meta {
 	margin-top: 40px;
 	border-top: solid 1px white;
+	padding-top: 20px;
 }
 
 .graphic-assets .meta textarea {

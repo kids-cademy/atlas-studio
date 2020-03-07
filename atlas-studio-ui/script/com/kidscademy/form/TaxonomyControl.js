@@ -122,10 +122,15 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	}
 
 	/**
-	 * For now taxonomy control is always valid.
-	 * @returns {Boolean} always return true.
+	 * Test if taxonomy values are filled.
+	 * @returns {Boolean} return true if taxonomy all values are filled.
 	 */
 	isValid() {
+		for (let i = 0; i < this._taxonomy.length; ++i) {
+			if (!this._taxonomy[i].value) {
+				return false;
+			}
+		}
 		return true;
 	}
 

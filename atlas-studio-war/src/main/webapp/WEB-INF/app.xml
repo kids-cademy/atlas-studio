@@ -6,6 +6,7 @@
 		<admin-service interface="com.kidscademy.atlas.studio.AdminService" class="com.kidscademy.atlas.studio.impl.AdminServiceImpl" />
 		<atlas-service interface="com.kidscademy.atlas.studio.AtlasService" class="com.kidscademy.atlas.studio.impl.AtlasServiceImpl" />
 		<atlas-controller interface="com.kidscademy.atlas.studio.AtlasController" class="com.kidscademy.atlas.studio.impl.AtlasControllerImpl" />
+		<image-service interface="com.kidscademy.atlas.studio.ImageService" class="com.kidscademy.atlas.studio.impl.ImageServiceImpl" />
 
 		<entity-manager interface="javax.persistence.EntityManager" class="js.transaction.eclipselink.EntityManagerImpl" />
 		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />

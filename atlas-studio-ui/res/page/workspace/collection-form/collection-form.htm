@@ -1,0 +1,100 @@
+<div class="collection-form" data-class="com.kidscademy.workspace.CollectionForm" xmlns:w="js-lib.com/wood">
+	<form class="form">
+		<fieldset>
+			<div class="header container">
+				<h2>Identity</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>name</label><input name="name" />
+					</div>
+					<div class="controlset">
+						<label>display</label><input name="display" />
+					</div>
+					<div class="controlset">
+						<label>definition</label>
+						<textarea name="definition" class="small"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset class="icon-section">
+			<div class="header container">
+				<h2>Icon</h2>
+			</div>
+			<div class="content">
+				<div class="container" data-class="com.kidscademy.workspace.IconControl">
+					<div class="view">
+						<img class="image" name="icon-src" data-class="js.dom.ImageControl" />
+					</div>
+					<div class="meta exclude hidden" data-class="com.kidscademy.FormData">
+						<div class="controlset">
+							<label>source</label> <input name="source" class="large optional" />
+						</div>
+					</div>
+					<div w:widget="compo/image-editor"></div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<div class="header container">
+				<h2>Taxonomy Meta</h2>
+			</div>
+			<div class="content">
+				<div data-name="taxonomy-meta" class="container" data-class="com.kidscademy.workspace.TaxonomyMetaControl">
+					<table>
+						<tbody class="taxonomy-view" data-list=".">
+							<tr class="item">
+								<td data-text="name"></td>
+								<td class="separator">:</td>
+								<td data-text="values"></td>
+							</tr>
+						</tbody>
+					</table>
+			
+					<div class="actions" data-class="com.kidscademy.Actions">
+						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> 
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+					</div>
+					
+					<div class="taxon-editor hidden">
+						<div class="controlset">
+							<label>taxon name</label><input class="taxon-name" />
+						</div>
+						<div class="controlset">
+							<label>taxon values</label><input class="taxon-values" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<div class="header container">
+				<h2>Flags</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>end date</label><input name="flags.end-date" type="checkbox" />
+					</div>
+					<div class="controlset">
+						<label>conservation status</label><input name="flags.conservation-status" type="checkbox" />
+					</div>
+					<div class="controlset">
+						<label>audio sample</label><input name="flags.audio-sample" type="checkbox" />
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+	<div class="container buttons-bar">
+		<button name="save">Save</button>
+		<button name="cancel">Cancel</button>
+	</div>
+</div>

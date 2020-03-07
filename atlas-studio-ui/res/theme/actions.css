@@ -34,10 +34,15 @@
 	height: @dimen/action-icon-size;
 	padding: 1px;
 	border: solid 1px @color/border-image;
-	xmargin-right: @dimen/action-margin;
+	margin-right: 0;
 	background-color: white;
 	opacity: 0.6;
 	cursor: pointer;
+}
+
+.actions img.rfloat {
+	margin-right: 0;
+	margin-left: @dimen/action-margin;
 }
 
 .actions.inline img {
@@ -61,7 +66,10 @@
 	display: inline-block;
 	width: @dimen/action-icon-size;
 	height: @dimen/action-icon-size;
-	margin-right: @dimen/action-margin;
+}
+
+.actions .separator.hidden {
+	display: none;
 }
 
 .actions input {

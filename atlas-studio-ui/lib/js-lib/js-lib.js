@@ -4231,6 +4231,7 @@ js.dom.ImageControl = function(ownerDoc, node) {
 
 js.dom.ImageControl.prototype = {
 	reset : function() {
+		this._error = false;
 		if (this._defaultSrc != null) {
 			this._node.src = this._defaultSrc;
 		}
@@ -4244,6 +4245,8 @@ js.dom.ImageControl.prototype = {
 		if (!src || /^\s+|(?:&nbsp;)+$/g.test(src)) {
 			return this.reset();
 		}
+		
+		this._error = false;
 		this._node.src = "";
 		this._node.src = src + '?' + Date.now();
 		return this;
@@ -4253,8 +4256,23 @@ js.dom.ImageControl.prototype = {
 		if (this._error) {
 			return null;
 		}
-		var src = this._node.src;
-		return src ? src.substr(0, src.indexOf('?')) : null;
+		
+		// use attributes interface to retrieve image source
+		// node.src returns normalized URL, with protocol and server, even if set value was absolute path
+		// do not confuse absolute path with absolute URL
+		
+		var attr = this._node.attributes.getNamedItem("src");
+		if (attr == null) {
+			return null;
+		}
+		
+		var src = attr.value;
+		if(src == null) {
+			return null;
+		}
+		
+		var argsIndex = src.indexOf('?');
+		return argsIndex > 0 ? src.substr(0, argsIndex) : src;
 	},
 
 	_onError : function(ev) {

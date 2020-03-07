@@ -113,6 +113,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		const formData = this._metaFormData.getFormData();
 		const object = this._formPage.getObject();
 
+		formData.append("image-kind", "OBJECT");
 		formData.append("atlas-object-id", object.id);
 		formData.append("media-file", ev.target._node.files[0]);
 
@@ -139,6 +140,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		const formData = this._metaFormData.getFormData();
 		const object = this._formPage.getObject();
 
+		formData.append("image-kind", "OBJECT");
 		formData.append("atlas-object-id", object.id);
 
 		AtlasService.uploadImageBySource(formData, image => {

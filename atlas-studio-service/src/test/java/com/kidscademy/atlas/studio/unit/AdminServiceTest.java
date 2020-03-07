@@ -71,7 +71,7 @@ public class AdminServiceTest {
 
     @BeforeClass
     public static void beforeClass() {
-	Classes.setFieldValue(Files.class, "REPOSIOTRY_DIR", "fixture/tomcat/webapps");
+	Classes.setFieldValue(Files.class, "REPOSITORY_DIR", "fixture/tomcat/webapps");
     }
 
     @Before

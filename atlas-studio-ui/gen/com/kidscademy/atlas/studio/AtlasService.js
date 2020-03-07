@@ -5,6 +5,84 @@ $package("com.kidscademy.atlas.studio");
  */
 com.kidscademy.atlas.studio.AtlasService = {
 	/**
+	 * Create atlas collection.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.AtlasCollection
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 createAtlasCollection: function() {
+		var __callback__ = arguments[0];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#createAtlasCollection", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#createAtlasCollection", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "createAtlasCollection");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Save atlas collection.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.AtlasCollection collection,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.AtlasCollection
+	 * @throws js.rmi.BusinessException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 saveAtlasCollection: function(collection) {
+		$assert(typeof collection !== "undefined", "com.kidscademy.atlas.studio.AtlasService#saveAtlasCollection", "Collection argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#saveAtlasCollection", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#saveAtlasCollection", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "saveAtlasCollection");
+		rmi.setParameters(collection);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Remove atlas collection.
+	 *
+	 * @param int collectionId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @throws js.rmi.BusinessException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 removeAtlasCollection: function(collectionId) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removeAtlasCollection", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#removeAtlasCollection", "Collection id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#removeAtlasCollection", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#removeAtlasCollection", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removeAtlasCollection");
+		rmi.setParameters(collectionId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get collection.
 	 *
 	 * @param int collectionId,

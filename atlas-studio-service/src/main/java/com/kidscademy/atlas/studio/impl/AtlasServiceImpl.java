@@ -112,6 +112,27 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public AtlasCollection createAtlasCollection() {
+	return AtlasCollection.create();
+    }
+
+    @Override
+    public void removeAtlasCollection(int collectionId) throws BusinessException {
+	BusinessRules.emptyCollection(collectionId);
+	atlasDao.removeAtlasCollection(collectionId);
+    }
+
+    @Override
+    public AtlasCollection saveAtlasCollection(AtlasCollection collection) throws BusinessException {
+	BusinessRules.uniqueCollectionName(collection);
+	if (!collection.hasIconName()) {
+	    collection.setIconName(collection.getName() + ".png");
+	}
+	atlasDao.saveAtlasCollection(collection);
+	return collection;
+    }
+
+    @Override
     public AtlasCollection getCollection(int collectionId) {
 	return atlasDao.getCollectionById(collectionId);
     }
@@ -392,6 +413,65 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadImage(Form imageForm, File imageFile) throws IOException, BusinessException {
+	final Image.Kind imageKind = imageForm.getValue("image-kind", Image.Kind.class);
+	if (imageKind == null) {
+	    throw new BugError("Missing <image-kind> field from image form.");
+	}
+
+	switch (imageKind) {
+	case COLLECTION:
+	    return uploadCollectionImage(imageForm, imageFile);
+
+	case LINK:
+	    return uploadLinkImage(imageForm, imageFile);
+
+	case OBJECT:
+	    return uploadObjectImage(imageForm, imageFile);
+
+	default:
+	    throw new BugError("Not processed image kind |%s|.", imageKind);
+	}
+    }
+
+    /**
+     * 
+     * @param imageForm
+     *            form data from user interface
+     * @param imageFile
+     *            uploaded image file, temporary file processed by caller logic.
+     * @return
+     * @throws IOException
+     */
+    private Image uploadCollectionImage(Form imageForm, File imageFile) throws IOException {
+	AtlasCollection collection = getAtlasCollectionByForm(imageForm);
+	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+
+	File targetFile = Files.mediaFile(collection);
+	targetFile.getParentFile().mkdirs();
+	targetFile.delete();
+
+	if (!imageFile.renameTo(targetFile)) {
+	    throw new IOException("Unable to upload " + targetFile);
+	}
+
+	Image image = new Image();
+	image.setImageKey(Image.KEY_ICON);
+	image.setUploadDate(new Date());
+	image.setSource(imageForm.getValue("source"));
+	image.setFileName(targetFile.getName());
+
+	image.setFileSize(imageInfo.getFileSize());
+	image.setWidth(imageInfo.getWidth());
+	image.setHeight(imageInfo.getHeight());
+	image.setSrc(Files.collectionSrc(collection.getIconName()));
+	return image;
+    }
+
+    private Image uploadLinkImage(Form imageForm, File imageFile) throws IOException {
+	return null;
+    }
+
+    private Image uploadObjectImage(Form imageForm, File imageFile) throws IOException, BusinessException {
 	AtlasItem atlasItem = getAtlasItemByForm(imageForm);
 	String imageKey = imageForm.getValue("image-key");
 
@@ -630,6 +710,18 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     // ----------------------------------------------------------------------------------------------
+
+    private AtlasCollection getAtlasCollectionByForm(Form mediaForm) {
+	String objectId = mediaForm.getValue("collection-id");
+	if (objectId == null) {
+	    throw new BugError("Media form should have <collection-id> field.");
+	}
+	try {
+	    return atlasDao.getCollectionById(Integer.parseInt(objectId));
+	} catch (NumberFormatException unused) {
+	    throw new BugError("Media form <collection-id> field should be numeric.");
+	}
+    }
 
     private AtlasItem getAtlasItemByForm(Form mediaForm) {
 	String objectId = mediaForm.getValue("atlas-object-id");

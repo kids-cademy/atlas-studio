@@ -56,7 +56,7 @@ public class Image {
 
     @Transient
     private String path;
-    
+
     public Image() {
     }
 
@@ -154,17 +154,23 @@ public class Image {
     }
 
     public void setPath(String path) {
-        this.path = path;
+	this.path = path;
     }
 
     public String getPath() {
-        return path;
+	return path;
     }
 
+    public boolean isIcon() {
+	return KEY_ICON.equals(imageKey);
+    }
+
+    @Deprecated
     public void updateIcon(AtlasItem object) throws IOException {
 	if (KEY_ICON.equals(imageKey)) {
 	    File pictureFile = Files.mediaFile(object, fileName);
 	    File iconFile = icon(object, fileName);
+	    // TODO: global factory is deprecated
 	    ImageProcessor image = Factory.getInstance(ImageProcessor.class);
 	    image.resize(pictureFile, iconFile, 96, 96);
 	}
@@ -216,5 +222,9 @@ public class Image {
     @Override
     public String toString() {
 	return fileName;
+    }
+    
+    public enum Kind {
+	COLLECTION, OBJECT, LINK
     }
 }

@@ -31,6 +31,12 @@ import js.tiny.container.http.form.Form;
 // @RolesAllowed("EDITOR")
 @Public
 public interface AtlasService {
+    AtlasCollection createAtlasCollection();
+
+    AtlasCollection saveAtlasCollection(AtlasCollection collection) throws BusinessException;
+
+    void removeAtlasCollection(int collectionId) throws BusinessException;
+
     AtlasCollection getCollection(int collectionId);
 
     List<AtlasCollection> getCollections();

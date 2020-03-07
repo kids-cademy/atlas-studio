@@ -21,7 +21,13 @@ import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
 public interface AtlasDao {
+    void saveAtlasCollection(AtlasCollection collection);
+
+    void removeAtlasCollection(int collectionId);
+
     AtlasCollection getCollectionById(int collectionId);
+
+    boolean uniqueCollectionName(AtlasCollection collection);
 
     List<AtlasCollection> getCollections();
 
@@ -99,4 +105,6 @@ public interface AtlasDao {
     AtlasObject getNextAtlasObject(int objectId);
 
     List<AtlasItem> getAtlasItems(List<Integer> objectIds);
+
+    int getCollectionSize(int collectionId);
 }

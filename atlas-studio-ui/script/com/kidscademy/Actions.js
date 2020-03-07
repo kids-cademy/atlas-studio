@@ -128,33 +128,33 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		}
 
 		names.forEach(name => this.getByName(name).show(show));
-		return this;
+		return this._update();
 	}
 
 	showOnly(...names) {
 		this.getChildren().forEach(action => {
 			action.show(names.includes(action.getName()));
 		});
-		return this;
+		return this._update();
 	}
 
 	showAll() {
 		this.getChildren().forEach(child => {
 			child.show();
 		});
-		return this;
+		return this._update();
 	}
 
 	hide(...names) {
 		names.forEach(name => this.getByName(name).hide());
-		return this;
+		return this._update();
 	}
 
 	hideAll() {
 		this.getChildren().forEach(child => {
 			child.hide();
 		});
-		return this;
+		return this._update();
 	}
 
 	getControl(name) {
@@ -185,6 +185,15 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 	_isAction(child) {
 		return !child.hasCssClass("control") && !child.hasCssClass("separator");
+	}
+
+	_update() {
+		// first visible child
+		const child = this.getByCss(":scope > :not(.hidden)");
+		if (child != null && child.hasCssClass("separator")) {
+			child.hide();
+		}
+		return this;
 	}
 
 	/**

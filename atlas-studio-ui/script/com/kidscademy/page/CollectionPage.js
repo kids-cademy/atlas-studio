@@ -22,6 +22,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 			"&remove-collection": this._onRemoveCollection
 		});
 
+		this._contentView = this.getByClass(com.kidscademy.FrameView);
+		this._contentView.select("list-view");
+
 		this._infoView = this.getByCssClass("info");
 
 		this._listView = this.getByCssClass("list-view");
@@ -30,9 +33,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 
 		this._listType = new com.kidscademy.CssFlags(this._listView, "icons", "tiles", "details", "cards");
 		this._listType.set(this.getPageAttr("list-type"));
-
-		this._contentView = this.getByClass(com.kidscademy.FrameView);
-		this._contentView.select("list-view");
 
 		this._filterForm = this.getByCssClass("filter-form");
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
@@ -139,10 +139,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 				this._revealItem(object.id);
 			});
 		});
-	}
-
-	_onEditCollection() {
-
 	}
 
 	// --------------------------------------------------------------------------------------------

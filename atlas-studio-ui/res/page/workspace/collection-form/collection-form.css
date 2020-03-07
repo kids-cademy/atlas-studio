@@ -1,0 +1,23 @@
+.collection-form {
+	
+}
+
+.collection-form .taxonomy-view .action {
+	
+}
+
+.collection-form .taxonomy-view td {
+	padding: 2px;
+	font-size: 1.8rem;
+	cursor: pointer;
+}
+
+.collection-form .taxonomy-view .separator {
+	padding: 0 20px;
+}
+
+.collection-form .taxon-editor {
+	margin-top: 20px;
+	border-top: solid 1px #E6E6E6;
+	padding-top: 20px;
+}
