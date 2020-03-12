@@ -1,3 +1,15 @@
+.context-menu {
+	
+}
+
+.context-menu.no-object li {
+	display: none;
+}
+
+.context-menu.no-object li.no-object {
+	display: inherit;
+}
+
 .context-menu .object {
 	
 }

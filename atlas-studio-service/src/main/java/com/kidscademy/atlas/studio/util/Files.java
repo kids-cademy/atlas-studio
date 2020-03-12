@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
@@ -49,6 +50,12 @@ public final class Files extends js.util.Files {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/collection/${collection.iconName}
 	return new File(REPOSITORY_DIR, Strings.concat("/media/collection/", collection.getIconName()));
+    }
+
+    public static File mediaFile(LinkMeta linkMeta) {
+	// repository dir := ${catalina.base}/webapps
+	// media SRC := /media/link/${link.iconName}
+	return new File(REPOSITORY_DIR, Strings.concat("/media/link/", linkMeta.getIconName()));
     }
 
     public static File objectDir(RepositoryObject object) {

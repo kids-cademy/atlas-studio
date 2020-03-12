@@ -127,17 +127,24 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._form.setObject(object);
 		this._sidebar.setObject(object);
 
+		function start(flag, control) {
+			if (flag) {
+				control.onStart();
+			}
+			else {
+				control.hide();
+			}
+		}
+
+		start(object.collection.flags.audioSample, this._audioAssets);
+		start(object.collection.flags.spreading, this._spreadingControl);
+
 		this._taxonomyControl.onStart();
 		this._definitionControl.onStart();
 		this._descriptionControl.onStart();
 		this._graphicAssets.onStart();
-		if(!object.collection.flags.audioSample) {
-			this._audioAssets.hide();
-		}
-		this._audioAssets.onStart();
 		this._factsControl.onStart();
 		this._featuresControl.onStart();
-		this._spreadingControl.onStart();
 		this._relatedControl.onStart();
 		this._linksControl.onStart();
 	}
@@ -156,7 +163,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		WinMain.assign("@link/reader", { id: this._object.id });
 	}
 
-	_onSave(previewCallback) {
+	_onSave() {
 		this.findByCss(".quick-links li").removeCssClass(this.CSS_INVALID);
 		const updateQuickLink = control => {
 			const fieldset = control.getParentByTag("fieldset");
@@ -165,14 +172,21 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		};
 
 		const object = this.getObject();
-		if (this._form.isValid(updateQuickLink)) {
-			if (typeof previewCallback === "function") {
-				AtlasService.saveAtlasObject(object, previewCallback, this);
-			}
-			else {
-				AtlasService.saveAtlasObject(object, this._onObjectLoaded, this);
-			}
+		if (!this._form.isValid(updateQuickLink)) {
+			return;
 		}
+
+		AtlasService.saveAtlasObject(object, object => {
+			if (this._objectId == 0) {
+				this._objectId = object.id;
+				let page = location.href.split('/').pop();
+				// at this point page is: form.htm?id=0
+				// replace 0 with saved object id
+				page = page.substring(0, page.length - 1) + object.id;
+				location.replace(page);
+			}
+			this._onObjectLoaded(object);
+		});
 	}
 
 	_onQuickLinks(ev) {

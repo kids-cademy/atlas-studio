@@ -54,4 +54,22 @@ public class ImageProcessorTest {
 	assertThat(imageInfo.getWidth(), equalTo(920));
 	assertThat(imageInfo.getHeight(), equalTo(560));
     }
+
+    @Test
+    public void getImageInfo_Gray256c() throws IOException {
+	ImageInfoResult result = new ImageInfoResult();
+	result.parse("picture.jpg JPEG 1256x1256 1256x1256+0+0 8-bit Gray 256c 251950B 0.000u 0:00.000");
+	
+	when(identify.exec(eq(ImageInfoResult.class), anyString())).thenReturn(result);
+
+	File imageFile = new File("picture.jpg");
+	ImageInfo imageInfo = processor.getImageInfo(imageFile);
+
+	assertThat(imageInfo, notNullValue());
+	assertThat(imageInfo.getFileName(), equalTo("picture.jpg"));
+	assertThat(imageInfo.getFileSize(), equalTo(251950));
+	assertThat(imageInfo.getType(), equalTo(MediaType.JPEG));
+	assertThat(imageInfo.getWidth(), equalTo(1256));
+	assertThat(imageInfo.getHeight(), equalTo(1256));
+    }
 }

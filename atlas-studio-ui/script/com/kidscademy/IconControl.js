@@ -1,19 +1,14 @@
 $package("com.kidscademy.workspace");
 
-com.kidscademy.workspace.IconControl = class extends js.dom.Element {
+com.kidscademy.IconControl = class extends js.dom.Element {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
-        this._collection = null;
+        this._object = { id: 0 };
+        this._imageKind = null;
+        this._image = {};
 
-        this._image = {
-            fileName: "contextual.jpg",
-            fileSize: 109661,
-            width: 1112,
-            height: 674
-        };
-
-        this._imageEditor = WinMain.doc.getByClass(com.kidscademy.ImageEditor);
+        this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
         this._imageEditor.config({
             aspectRatio: 1
         });
@@ -25,14 +20,15 @@ com.kidscademy.workspace.IconControl = class extends js.dom.Element {
         this._imageEditor.on("change", this._onImageEditorChange, this);
         this._imageEditor.on("remove", this._onImageEditorRemove, this);
 
-        this._metaForm = WinMain.doc.getByClass(com.kidscademy.FormData);
+        this._metaForm = this.getByClass(com.kidscademy.FormData);
 
-        this._imageView = WinMain.doc.getByCssClass("image");
+        this._imageView = this.getByClass(js.dom.ImageControl);
         this._imageView.on("click", this._onImageClick, this);
     }
 
-    setCollection(collection) {
-        this._collection = collection;
+    config(config) {
+        this._object = config.object;
+        this._imageKind = config.imageKind;
     }
 
     _onImageClick(ev) {
@@ -54,8 +50,8 @@ com.kidscademy.workspace.IconControl = class extends js.dom.Element {
 
     _onImageEditorUpload(handler) {
         const formData = this._metaForm.getFormData();
-        formData.append("image-kind", "COLLECTION");
-        formData.append("collection-id", this._collection.id);
+        formData.append("image-kind", this._imageKind);
+        formData.append("object-id", this._object.id);
         formData.append("media-file", handler.file);
 
         AtlasService.uploadImage(formData, image => {
@@ -66,13 +62,13 @@ com.kidscademy.workspace.IconControl = class extends js.dom.Element {
     }
 
     _onImageEditorLink(callback) {
-        if(!this._metaForm.isValid()) {
+        if (!this._metaForm.isValid()) {
             return;
         }
 
         const formData = this._metaForm.getFormData();
-        formData.append("image-kind", "COLLECTION");
-        formData.append("collection-id", this._collection.id);
+        formData.append("image-kind", this._imageKind);
+        formData.append("object-id", this._object.id);
 
         AtlasService.uploadImageBySource(formData, image => {
             this._image = image;
@@ -90,6 +86,6 @@ com.kidscademy.workspace.IconControl = class extends js.dom.Element {
     }
 
     toString() {
-        return "com.kidscademy.workspace.IconControl";
+        return "com.kidscademy.IconControl";
     }
 };

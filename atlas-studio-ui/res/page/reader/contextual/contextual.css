@@ -17,6 +17,26 @@
 	margin-bottom: @eval(mul @dimen/sample-title-height 0.5);	
 }
 
+.contextual .caption {
+	position: absolute;
+	box-sizing: border-box;
+	width: 100%;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.3);
+	padding: @dimen/infobox-padding;
+} 
+
+.contextual .caption p {
+	margin-top: 20px;
+	font-size: 1.1rem;
+	line-height: 1.5rem;
+	color: yellow;
+}
+
+.contextual .caption p:first-child {
+	margin-top: 0;
+}
+
 .contextual .title {
 	position: absolute;
 	width: 100%;

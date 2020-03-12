@@ -1,9 +1,18 @@
 package com.kidscademy.atlas.studio.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import js.json.Json;
+import js.tools.commons.util.Classes;
 
 public class Strings extends js.util.Strings {
     /**
@@ -66,5 +75,26 @@ public class Strings extends js.util.Strings {
 
     public static String removeParentheses(String text) {
 	return text.replaceAll("\\([^\\)]+\\)", "");
+    }
+
+    private static Pattern BASE_DOMAIN_PATTERN = Pattern
+	    .compile("^(?:http|https|ftp|file):\\/\\/(?:[^.]+\\.)*([^.]+\\.[^:/]+).*$");
+
+    public static String basedomain(URL url) {
+	if (url == null) {
+	    return null;
+	}
+	Matcher matcher = BASE_DOMAIN_PATTERN.matcher(url.toExternalForm());
+	if (!matcher.find()) {
+	    return null;
+	}
+	return matcher.group(1);
+    }
+
+    public static <T> T load(URL url, Class<T> type) throws IOException {
+	OutputStream stream = new ByteArrayOutputStream();
+	Files.copy(url, stream);
+	Json json = Classes.loadService(Json.class);
+	return json.parse(stream.toString(), type);
     }
 }

@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeaturesClass;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
@@ -73,7 +74,17 @@ public interface AtlasService {
 
     List<Feature> getFeatureTemplates(FeaturesClass featuresClass);
 
-    Link createLink(Link link);
+    Link createLink(Link link) throws BusinessException;
+
+    String getLinkDefinition(URL link, String objectDisplay);
+    
+    LinkMeta createLinkMeta();
+
+    List<LinkMeta> getLinksMeta();
+
+    LinkMeta saveLinkMeta(LinkMeta linkMeta);
+    
+    void removeLinkMeta(int linkMetaId);
 
     String importObjectDefinition(Link link);
 

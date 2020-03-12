@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
@@ -68,7 +69,7 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasCollection> getCollections() {
-	return em.createQuery("select c from AtlasCollection c", AtlasCollection.class).getResultList();
+	return em.createQuery("select c from AtlasCollection c order by c.display", AtlasCollection.class).getResultList();
     }
 
     @Override
@@ -221,6 +222,45 @@ public class AtlasDaoImpl implements AtlasDao {
 			Link.class)
 		.setParameter("collectionName", object.getRepositoryName()).setParameter("name", object.getName())
 		.getResultList();
+    }
+
+    @Override
+    public List<LinkMeta> getLinksMeta() {
+	return em.createQuery("select l from LinkMeta l order by l.display", LinkMeta.class).getResultList();
+    }
+
+    @Override
+    public LinkMeta getLinkMetaById(int linkMetaId) {
+	return em.find(LinkMeta.class, linkMetaId);
+    }
+
+    @Override
+    public LinkMeta getLinkMetaByDomain(String domain) {
+	List<LinkMeta> result = em.createQuery("select l from LinkMeta l where l.domain=:domain", LinkMeta.class)
+		.setParameter("domain", domain).getResultList();
+	if (result.size() > 1) {
+	    throw new BugError("Database inconsistency. Not unique link meta domain.");
+	}
+	return result.size() == 1 ? result.get(0) : null;
+    }
+
+    @Override
+    @Mutable
+    public void saveLinkMeta(LinkMeta linkMeta) {
+	if (linkMeta.getId() == 0) {
+	    em.persist(linkMeta);
+	} else {
+	    em.merge(linkMeta).postMerge(linkMeta);
+	}
+    }
+
+    @Override
+    @Mutable
+    public void removeLinkMeta(int linkMetaId) {
+	LinkMeta linkMeta = em.find(LinkMeta.class, linkMetaId);
+	if (linkMeta != null) {
+	    em.remove(linkMeta);
+	}
     }
 
     @Override

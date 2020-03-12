@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
@@ -81,6 +82,16 @@ public interface AtlasDao {
     String getAtlasObjectName(int objectId);
 
     List<Link> getObjectLinks(AtlasItem object);
+
+    List<LinkMeta> getLinksMeta();
+
+    LinkMeta getLinkMetaById(int linkMetaId);
+
+    LinkMeta getLinkMetaByDomain(String domain);
+
+    void saveLinkMeta(LinkMeta linkMeta);
+
+    void removeLinkMeta(int linkMeta);
 
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 

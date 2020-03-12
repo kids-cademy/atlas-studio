@@ -63,7 +63,14 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 
 	open(contextView) {
 		this._contextView = contextView;
-		this._objectView.setObject(contextView.getUserData());
+		if (this._contextView != null) {
+			this.removeCssClass("no-object");
+			this._objectView.setObject(contextView.getUserData()).show();
+		}
+		else {
+			this.addCssClass("no-object");
+			this._objectView.hide();
+		}
 		this.show();
 	}
 

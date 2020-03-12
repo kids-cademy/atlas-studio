@@ -1,0 +1,9 @@
+.collections-list {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.collections-list.hidden {
+	display: none;
+}

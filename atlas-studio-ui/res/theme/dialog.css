@@ -1,14 +1,23 @@
-.dialog {
-	display: flex;
-	flex-direction: column;
-	position: fixed;
-	width: 50%;
-	max-width: 600px;
+.dialog-frame {
+	position: absolute;
+	width: 0;
+	height: 0;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	margin: 8% auto;
+	margin: 10% auto;
+	overflow: visible;
+}
+
+.dialog {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 40vw;
+	min-width: 420px;
+	max-width: 620px;
+	left: -20vw;
 	padding: 1px;
 	background-color: @color/window-background;
 	border: solid 1px @color/border;

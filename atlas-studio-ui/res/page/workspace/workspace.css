@@ -4,28 +4,12 @@
 }
 
 .workspace .content {
+	height: 100%;
 	overflow-y: auto;
 	margin-bottom: 20px;
 }
 
 .workspace .list-view {
+	flex-grow: 1;
 	margin: 20px;
-}
-
-.workspace [data-name='collection-form'] .image {
-	height: @dimen/icon-size;
-	padding: 1px;
-	border: solid 1px #E6E6E6;
-	cursor: pointer;
-}
-
-.workspace [data-name='collection-form'] .image.invalid {
-	width: @dimen/icon-size;
-	border-color: @color/control-invalid-border;
-}
-
-.workspace [data-name='collection-form'] .meta {
-	margin-top: 20px;
-	border-top: solid 1px #E6E6E6;
-	padding-top: 20px;
 }

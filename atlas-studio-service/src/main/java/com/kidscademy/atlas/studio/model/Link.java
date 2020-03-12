@@ -12,15 +12,10 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.Displayable;
-import js.log.Log;
-import js.log.LogFactory;
 import js.util.Strings;
 
 @Embeddable
 public class Link implements Displayable {
-    /** Class logger. */
-    private static final Log log = LogFactory.getLog(Link.class);
-
     /**
      * Link URL to external source document. That document should provide data about
      * advertised features, see {@link #features}.
@@ -40,7 +35,7 @@ public class Link implements Displayable {
     /**
      * Short description about linked resource content.
      */
-    private String description;
+    private String definition;
     /**
      * Icon file name as stored into database. This value is used to set
      * {@link #iconSrc} when load link from database.
@@ -77,16 +72,16 @@ public class Link implements Displayable {
      *            URL for external source document.
      * @param display
      *            link name displayed on user interface,
-     * @param description
+     * @param definition
      *            short description about linked resource content,
      * @param iconName
      *            icon file name.
      */
-    public Link(URL url, String display, String description, MediaSRC iconSrc) {
+    public Link(URL url, String display, String definition, MediaSRC iconSrc) {
 	this.url = url;
 	this.domain = domain(url);
 	this.display = display;
-	this.description = description;
+	this.definition = definition;
 	this.iconSrc = iconSrc;
 	this.features = "description";
     }
@@ -122,8 +117,8 @@ public class Link implements Displayable {
 	return display;
     }
 
-    public String getDescription() {
-	return description;
+    public String getDefinition() {
+	return definition;
     }
 
     public String getIconName() {
@@ -236,34 +231,17 @@ public class Link implements Displayable {
 	DOMAINS.put("animaldiversity.org", new String[] { "Animal Diversity Web", "" });
     }
 
-    /**
-     * Factory method for link.
-     * 
-     * @param template
-     *            link template from user interface.
-     * @return newly created link.
-     */
-    public static Link create(Link template) {
-	return create(template.getUrl(), template.getDescription());
-    }
-
-    public static Link create(URL url, String description) {
-	String domain = domain(url);
-
+    public static Link create(LinkMeta linkMeta, URL articleURL, String definition) {
 	Link link = new Link();
-	link.url = url;
-	link.domain = domain;
+	link.url = articleURL;
+	link.domain = linkMeta.getDomain();
 
-	link.display = DOMAINS.get(domain)[0];
-	if (link.display == null) {
-	    log.warn("Not registered display name for base doamin |%s|.", domain);
-	    link.display = domain;
-	}
-	link.description = description;
+	link.display = linkMeta.getDisplay();
+	link.definition = definition;
 
-	link.iconName = Strings.concat(basedomain(url), ".png");
+	link.iconName = Strings.concat(basedomain(articleURL), ".png");
 	link.iconSrc = Files.linkSrc(link.iconName);
-	link.features = DOMAINS.get(domain)[1];
+	link.features = linkMeta.getFeatures();
 	return link;
     }
 

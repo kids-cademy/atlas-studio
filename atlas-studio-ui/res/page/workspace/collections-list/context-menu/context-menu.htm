@@ -1,0 +1,21 @@
+<div class="dialog-frame context-menu hidden" data-class="com.kidscademy.ContextMenu" xmlns:w="js-lib.com/wood">
+	<div class="dialog">
+		<div class="caption">
+			<img class="close" src="@image/action/close" />
+		</div>
+		<div class="content">
+			<div class="object">
+				<img data-src="icon-src" />
+				<h3 data-text="display"></h3>
+			</div>
+			<ul class="menu">
+				<!-- if context menu is no triggered by an object from parent list, this context menu has 'no-object' class -->
+				<!-- in this case menu displays only items possessing the same 'no-object' class, that is, 'create-collection' item  -->
+				<li data-name="create-collection" class="no-object"><img src="@image/action/add" /><span>@string/collection-create</span></li>
+				<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
+				<li data-name="remove-collection"><img src="@image/action/remove" /><span>@string/collection-remove</span></li>
+				<li data-name="manage-objects"><img src="@image/action/manage-objects" /><span>@string/collection-objects</span></li>
+			</ul>
+		</div>
+	</div>
+</div>

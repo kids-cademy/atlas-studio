@@ -2,15 +2,15 @@
 	<section class="content" data-class="com.kidscademy.FrameView">
 		<div data-name="collections-list" w:widget="page/workspace/collections-list"></div>
 		<div data-name="collection-form" w:widget="page/workspace/collection-form" class="hidden"></div>
+		<div data-name="links-meta-list" w:widget="page/workspace/links-meta-list" class="hidden"></div>
+		<div data-name="link-meta-form" w:widget="page/workspace/link-meta-form" class="hidden"></div>
 	</section>
-
-	<div w:widget="page/workspace/context-menu"></div>
 </div>
 
 <div class="workspace" w:template="page/template#side-bar" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
-		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/workspace-create-collection</span></li>
-		<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/workspace-export</span></a></li>
-		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+		<li data-name="collections-list"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+		<li><a class="export-all-collections" download="atlas.zip"><img src="@image/action/download" /><span>@string/workspace-export</span></a></li>
+		<li data-name="links-meta-list"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>		
 	</ul>
 </div>

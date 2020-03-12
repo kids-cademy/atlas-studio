@@ -30,6 +30,7 @@ import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeaturesClass;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
@@ -45,6 +46,7 @@ import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
+import com.kidscademy.atlas.studio.tool.MediaType;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
@@ -101,7 +103,7 @@ public class AtlasServiceImpl implements AtlasService {
 
 	File file = context.getAppFile("search-index");
 	List<KeywordIndex<Integer>> searchIndex;
-	if (file.exists()) {
+	if (file != null && file.exists()) {
 	    searchIndex = json.parse(new FileReader(file),
 		    new GType(List.class, new GType(KeywordIndex.class, Integer.class)));
 	} else {
@@ -246,8 +248,48 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Link createLink(Link link) {
-	return Link.create(link);
+    public Link createLink(Link link) throws BusinessException {
+	BusinessRules.registeredLinkDomain(link.getUrl());
+	URL articleURL = link.getUrl();
+	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(articleURL));
+	return Link.create(linkMeta, articleURL, link.getDefinition());
+    }
+
+    @Override
+    public String getLinkDefinition(URL link, String objectDisplay) {
+	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(link));
+	return linkMeta != null ? linkMeta.getLinkDefinition(link, objectDisplay) : null;
+    }
+
+    @Override
+    public LinkMeta createLinkMeta() {
+	return LinkMeta.create();
+    }
+
+    @Override
+    public List<LinkMeta> getLinksMeta() {
+	return atlasDao.getLinksMeta();
+    }
+
+    @Override
+    public LinkMeta saveLinkMeta(LinkMeta linkMeta) {
+	LinkMeta existingLinkMeta = atlasDao.getLinkMetaById(linkMeta.getId());
+	if (existingLinkMeta != null) {
+	    if (!existingLinkMeta.getDomain().equals(linkMeta.getDomain())) {
+		linkMeta.updateIconName();
+		Files.mediaFile(existingLinkMeta).renameTo(Files.mediaFile(linkMeta));
+	    }
+	} else {
+	    linkMeta.setIconName(linkMeta.buildIconName());
+	}
+
+	atlasDao.saveLinkMeta(linkMeta);
+	return linkMeta;
+    }
+
+    @Override
+    public void removeLinkMeta(int linkMetaId) {
+	atlasDao.removeLinkMeta(linkMetaId);
     }
 
     @Override
@@ -367,8 +409,8 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	List<Link> links = new ArrayList<>();
-	links.add(Link.create(articleURL,
-		String.format("Wikipedia article about %s.", object.getDisplay().toLowerCase())));
+	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(articleURL));
+	links.add(Link.create(linkMeta, articleURL, linkMeta.getLinkDefinition(articleURL, object.getDisplay())));
 	object.setLinks(links);
 
 	object.setState(AtlasObject.State.CREATED);
@@ -468,7 +510,35 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadLinkImage(Form imageForm, File imageFile) throws IOException {
-	return null;
+	LinkMeta linkMeta = getLinkMetaByForm(imageForm);
+
+	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+	if (imageInfo.getType() != MediaType.PNG) {
+	    File pngFile = Files.replaceExtension(imageFile, "png");
+	    imageProcessor.convert(imageFile, pngFile);
+	    imageFile = pngFile;
+	    imageInfo = imageProcessor.getImageInfo(imageFile);
+	}
+
+	File targetFile = Files.mediaFile(linkMeta);
+	targetFile.getParentFile().mkdirs();
+	targetFile.delete();
+
+	if (!imageFile.renameTo(targetFile)) {
+	    throw new IOException("Unable to upload " + targetFile);
+	}
+
+	Image image = new Image();
+	image.setImageKey(Image.KEY_ICON);
+	image.setUploadDate(new Date());
+	image.setSource(imageForm.getValue("source"));
+	image.setFileName(targetFile.getName());
+
+	image.setFileSize(imageInfo.getFileSize());
+	image.setWidth(imageInfo.getWidth());
+	image.setHeight(imageInfo.getHeight());
+	image.setSrc(Files.linkSrc(linkMeta.getIconName()));
+	return image;
     }
 
     private Image uploadObjectImage(Form imageForm, File imageFile) throws IOException, BusinessException {
@@ -712,14 +782,26 @@ public class AtlasServiceImpl implements AtlasService {
     // ----------------------------------------------------------------------------------------------
 
     private AtlasCollection getAtlasCollectionByForm(Form mediaForm) {
-	String objectId = mediaForm.getValue("collection-id");
+	String objectId = mediaForm.getValue("object-id");
 	if (objectId == null) {
-	    throw new BugError("Media form should have <collection-id> field.");
+	    throw new BugError("Media form should have <object-id> field.");
 	}
 	try {
 	    return atlasDao.getCollectionById(Integer.parseInt(objectId));
 	} catch (NumberFormatException unused) {
-	    throw new BugError("Media form <collection-id> field should be numeric.");
+	    throw new BugError("Media form <object-id> field should be numeric.");
+	}
+    }
+
+    private LinkMeta getLinkMetaByForm(Form mediaForm) {
+	String objectId = mediaForm.getValue("object-id");
+	if (objectId == null) {
+	    throw new BugError("Media form should have <object-id> field.");
+	}
+	try {
+	    return atlasDao.getLinkMetaById(Integer.parseInt(objectId));
+	} catch (NumberFormatException unused) {
+	    throw new BugError("Media form <object-id> field should be numeric.");
 	}
     }
 

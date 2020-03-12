@@ -10,8 +10,11 @@
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/CssFlags.js</script>
+		<script>script/com/kidscademy/IconControl.js</script>
 		<script>script/com/kidscademy/workspace/CollectionsList.js</script>
 		<script>script/com/kidscademy/workspace/CollectionForm.js</script>
+		<script>script/com/kidscademy/workspace/LinksMetaList.js</script>
+		<script>script/com/kidscademy/workspace/LinkMetaForm.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/WorkspacePage.js</script>
 	</scripts>

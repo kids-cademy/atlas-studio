@@ -19,7 +19,12 @@ public class Flags {
      * interface should not display controls for audio sample.
      */
     private boolean audioSample;
-
+    /**
+     * Flag for object spreading property, default to true. If this flag is false user
+     * interface should not display controls for object spreading.
+     */
+    private boolean spreading;
+    
     public void setEndDate(boolean endDate) {
         this.endDate = endDate;
     }
@@ -42,5 +47,13 @@ public class Flags {
 
     public boolean isAudioSample() {
 	return audioSample;
+    }
+
+    public void setSpreading(boolean spreading) {
+        this.spreading = spreading;
+    }
+
+    public boolean isSpreading() {
+        return spreading;
     }
 }

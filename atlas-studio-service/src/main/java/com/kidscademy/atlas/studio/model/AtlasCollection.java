@@ -114,6 +114,7 @@ public class AtlasCollection {
 	collection.flags.setEndDate(true);
 	collection.flags.setConservationStatus(true);
 	collection.flags.setAudioSample(true);
+	collection.flags.setSpreading(true);
 	return collection;
     }
 }

@@ -70,5 +70,6 @@ public class ExportFeature {
 	EN.put("nutrient.sugars", "Sugars");
 	EN.put("nutrient.fibre", "Dietary Fibre");
 	EN.put("nutrient.ethanol", "Drinking Alcohol");
+	EN.put("nutrient.carbohydrate", "Carbohydrates");
     }
 }

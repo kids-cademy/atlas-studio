@@ -29,7 +29,7 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		this._editor = this.getByCssClass("editor");
 		this._urlInput = this._editor.getByName("url");
 		this._urlInput.on("paste", this._onUrlPaste, this);
-		this._descriptionInput = this._editor.getByName("description");
+		this._definitionInput = this._editor.getByName("definition");
 		this._formData = this.getByClass(com.kidscademy.FormData);
 
 		/**
@@ -51,9 +51,7 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	}
 
 	getValue() {
-		const links = [];
-		this._linksView.getChildren().forEach(linkView => links.push(linkView.getUserData("value")));
-		return links;
+		return this._linksView.getChildren().map(linkView => linkView.getUserData("value"));
 	}
 
 	isValid() {
@@ -182,22 +180,8 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 			js.ua.System.alert("@string/alert-object-no-display");
 			return;
 		}
-
 		const url = ev.getData();
-		const matcher = /^(?:http|https|ftp|file):\/\/(?:[^.]+\.)*([^.]+\.[^:/]+).*$/.exec(url);
-		if (matcher == null) {
-			js.ua.System.alert("@string/alert-invalid-link-url");
-			return;
-		}
-		const domain = matcher[1];
-		if (!domain) {
-			return;
-		}
-
-		const descriptionHandler = com.kidscademy.form.LinksControl.DomainDescription[domain];
-		if (descriptionHandler) {
-			descriptionHandler(url, objectDisplay, (description) => this._descriptionInput.setValue(description));
-		}
+		AtlasService.getLinkDefinition(url, objectDisplay, definition => this._definitionInput.setValue(definition));
 	}
 
 	/**
@@ -207,89 +191,5 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	 */
 	toString() {
 		return "com.kidscademy.form.LinksControl";
-	}
-};
-
-com.kidscademy.form.LinksControl.DomainDescription = {
-	"wikipedia.org": function (url, object, callback) {
-		callback(`Wikipedia article about ${object.toLowerCase()}.`);
-	},
-
-	"britannica.com": function (url, object, callback) {
-		callback(`${object} article on Britannica.`);
-	},
-
-	"nationalgeographic.com": function (url, object, callback) {
-		callback(`${object} article on National Geographic.`);
-	},
-
-	"dkfindout.com": function (url, object, callback) {
-		callback(`DK find out ${object.toLowerCase()} facts.`);
-	},
-
-	"iucnredlist.org": function (url, object, callback) {
-		callback(`IUCN Red List index of ${object.toLowerCase()}.`);
-	},
-
-	"itis.gov": function (url, object, callback) {
-		callback(`ITIS taxonomy for ${object.toLowerCase()}.`);
-	},
-
-	"eol.org": function (url, object, callback) {
-		callback(`Data, maps and articles about ${object.toLowerCase()}.`);
-	},
-
-	"ebird.org": function (url, object, callback) {
-		callback(`eBird observations about ${object.toLowerCase()}.`);
-	},
-
-	"thefreedictionary.com": function (url, object, callback) {
-		callback(`${object} definition on dictionary.`);
-	},
-
-	"cambridge.org": function (url, object, callback) {
-		callback(`${object} definition on Cambridge.`);
-	},
-
-	"merriam-webster.com": function (url, object, callback) {
-		callback(`${object} definition on Webster.`);
-	},
-
-	"youtube.com": function (url, object, callback) {
-		const xhr = new XMLHttpRequest();
-		xhr.open('GET', `https://noembed.com/embed?url=${url}`);
-		xhr.onload = () => {
-			if (xhr.response) {
-				const response = JSON.parse(xhr.response);
-				if (response.title) {
-					callback(response.title);
-				}
-			}
-		};
-		xhr.send();
-	},
-
-	"softschools.com": function (url, object, callback) {
-		callback(`${object} facts on Soft Schools.`);
-	},
-
-	"kiddle.co": function (url, object, callback) {
-		callback(`${object} facts for kids.`);
-	},
-
-	"animalia.bio": function (url, object, callback) {
-		callback(`Animalia article about ${object.toLowerCase()}.`);
-	},
-
-	"dosits.org": function (url, object, callback) {
-		callback(`${object} sounds.`);
-	},
-
-	"animaldiversity.org": function (url, object, callback) {
-		callback(`${object} on Animal Diversity Web.`);
-	},
-
-	"wikihow.com": function (url, object, callback) {
-		AtlasService.getWikiHowTitle(url, callback);
 	}
 };

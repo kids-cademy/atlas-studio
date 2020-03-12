@@ -1,0 +1,9 @@
+.links-meta-list {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.links-meta-list.hidden {
+	display: none;
+}

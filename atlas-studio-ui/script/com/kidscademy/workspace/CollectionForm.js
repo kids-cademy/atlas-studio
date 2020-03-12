@@ -10,7 +10,7 @@ com.kidscademy.workspace.CollectionForm = class extends js.dom.Element {
 
         this._iconSection = this.getByCssClass("icon-section");
 
-        this._iconControl = this.getByClass(com.kidscademy.workspace.IconControl);
+        this._iconControl = this.getByClass(com.kidscademy.IconControl);
         this._taxonomyMetaControl = this.getByClass(com.kidscademy.workspace.TaxonomyMetaControl);
 
         this.getByCss(".buttons-bar [name='save']").on("click", this._onSave, this);
@@ -24,7 +24,11 @@ com.kidscademy.workspace.CollectionForm = class extends js.dom.Element {
             this._iconSection.hide().addCssClass("exclude");
         }
         else {
-            this._iconControl.setCollection(collection);
+            this._iconSection.show().removeCssClass("exclude");
+            this._iconControl.config({
+                object: collection,
+                imageKind: "COLLECTION"
+            });
         }
         this._form.setObject(collection);
     }

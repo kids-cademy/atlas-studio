@@ -3,7 +3,6 @@ package com.kidscademy.atlas.studio.impl;
 import com.kidscademy.atlas.studio.AdminService;
 import com.kidscademy.atlas.studio.dao.AdminDao;
 import com.kidscademy.atlas.studio.model.Login;
-import com.kidscademy.atlas.studio.model.User;
 
 import js.tiny.container.core.AppContext;
 

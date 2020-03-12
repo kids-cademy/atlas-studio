@@ -8,6 +8,10 @@
 	overflow-y: auto;
 }
 
+.object-form .form fieldset:last-child {
+	margin-bottom: 40px;
+}
+
 .object-form .action {
 	display: inline-block;
 	width: @dimen/action-icon-size;

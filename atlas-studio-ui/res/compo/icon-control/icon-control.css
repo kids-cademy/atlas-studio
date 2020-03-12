@@ -1,0 +1,17 @@
+.icon-control .image {
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px #E6E6E6;
+	cursor: pointer;
+}
+
+.icon-control .image.invalid {
+	width: @dimen/icon-size;
+	border-color: @color/control-invalid-border;
+}
+
+.icon-control .meta {
+	margin-top: 20px;
+	border-top: solid 1px #E6E6E6;
+	padding-top: 20px;
+}

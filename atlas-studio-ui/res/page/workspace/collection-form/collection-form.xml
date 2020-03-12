@@ -7,7 +7,7 @@
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/workspace/IconControl.js</script>
+		<script>script/com/kidscademy/IconControl.js</script>
 		<script>script/com/kidscademy/workspace/TaxonomyMetaControl.js</script>
 		<script>script/com/kidscademy/workspace/CollectionForm.js</script>
 	</scripts>
