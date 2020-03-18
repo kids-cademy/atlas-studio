@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
@@ -24,7 +25,7 @@ import js.util.Params;
  * @author Iulian Rotaru
  */
 @Entity
-@Cacheable
+//@Cacheable
 public class AtlasCollection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +39,10 @@ public class AtlasCollection {
     @ElementCollection
     @OrderColumn
     private List<TaxonMeta> taxonomyMeta;
+
+    @ManyToMany
+    @OrderColumn
+    private List<FeatureMeta> featuresMeta;
 
     private Flags flags;
 
@@ -106,6 +111,10 @@ public class AtlasCollection {
 
     public Flags getFlags() {
 	return flags;
+    }
+
+    public List<FeatureMeta> getFeaturesMeta() {
+        return featuresMeta;
     }
 
     public static AtlasCollection create() {

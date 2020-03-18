@@ -5,10 +5,6 @@
 	vertical-align: top;
 }
 
-.action-bar-select.hidden {
-	display: none;
-}
-
 .action-bar-select .abs-control {
 	display: inline-block;
 	width: auto;

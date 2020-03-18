@@ -11,16 +11,16 @@
 			<table>
 				<tbody class="taxonomy-view" data-list=".">
 					<tr class="item">
-						<td data-text="name"></td>
+						<td class="name" data-text="name"></td>
 						<td class="separator">:</td>
-						<td data-text="value"></td>
+						<td class="value" data-text="value"></td>
 					</tr>
 				</tbody>
 			</table>
 			
 			<div class="actions" data-class="com.kidscademy.Actions">
 				<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> 
-				<img name="load" src="@image/action/load" title="@tip/taxonomy-load" /> 
+				<img name="load" src="@image/action/reset" title="@tip/taxonomy-load" /> 
 				<img name="batch-edit" src="@image/action/edit" title="@tip/taxonomy-batch-edit" /> 
 				<img name="done" src="@image/action/done" title="@tip/taxonomy-done" />
 				<img name="remove" src="@image/action/remove" title="@tip/taxonomy-remove" />
@@ -28,16 +28,15 @@
 				<img name="close" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
 			</div>
 			
-			<div class="editor taxonomy-class hidden">
-				<label>Taxonomy Class</label> <select name="taxonomy-class">
-					<option selected="selected"></option>
-					<option>@string/taxonomy-class-family</option>
-					<option>@string/taxonomy-class-biological</option>
-				</select>
+			<div class="meta-editor hidden" data-class="com.kidscademy.form.TaxonomyControl.MetaEditor">
+				<div class="controlset">
+					<label>taxon meta</label><select></select>
+				</div>
 			</div>
-			
-			<div class="editor taxon-value hidden">
-				<label data-name="name"></label> <input name="value-input" /><select name="value-select" class="hidden"></select>
+			<div class="editor hidden" data-class="com.kidscademy.form.TaxonomyControl.Editor">
+				<div class="controlset">
+					<label></label> <input /><select class="hidden"></select>
+				</div>
 			</div>
 		</div>
 	</div>

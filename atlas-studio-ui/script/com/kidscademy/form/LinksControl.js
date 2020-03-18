@@ -115,7 +115,6 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 	// --------------------------------------------------------------------------------------------
 	// DRAG AND DROP
 
-
 	_onDragStart(ev) {
 		const li = ev.target.getParentByTag("li");
 		ev.setData({

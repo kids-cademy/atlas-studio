@@ -27,12 +27,14 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Feature;
-import com.kidscademy.atlas.studio.model.FeaturesClass;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
+import com.kidscademy.atlas.studio.model.QuantityFormat;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
@@ -243,11 +245,6 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<Feature> getFeatureTemplates(FeaturesClass featuresClass) {
-	return featuresClass.getTemplates();
-    }
-
-    @Override
     public Link createLink(Link link) throws BusinessException {
 	BusinessRules.registeredLinkDomain(link.getUrl());
 	URL articleURL = link.getUrl();
@@ -272,6 +269,34 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public FeatureMeta createFeatureMeta() {
+	return FeatureMeta.create();
+    }
+
+    @Override
+    public List<FeatureMeta> getFeaturesMetaCandidates(List<FeatureMeta> current) {
+	List<FeatureMeta> featuresMeta = atlasDao.getFeaturesMeta();
+	featuresMeta.removeAll(current);
+	return featuresMeta;
+    }
+
+    @Override
+    public FeatureMeta saveFeatureMeta(FeatureMeta featureMeta) {
+	atlasDao.saveFeatureMeta(featureMeta);
+	return featureMeta;
+    }
+
+    @Override
+    public void removeFeatureMeta(int featureMetaId) {
+	atlasDao.removeFeatureMeta(featureMetaId);
+    }
+
+    @Override
+    public List<Option> getQuantityUnits(PhysicalQuantity quantity) {
+	return QuantityFormat.getOptions(quantity);
+    }
+
+    @Override
     public LinkMeta saveLinkMeta(LinkMeta linkMeta) {
 	LinkMeta existingLinkMeta = atlasDao.getLinkMetaById(linkMeta.getId());
 	if (existingLinkMeta != null) {
@@ -290,6 +315,11 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public void removeLinkMeta(int linkMetaId) {
 	atlasDao.removeLinkMeta(linkMetaId);
+    }
+
+    @Override
+    public List<FeatureMeta> getFeatureMeta() {
+	return atlasDao.getFeaturesMeta();
     }
 
     @Override

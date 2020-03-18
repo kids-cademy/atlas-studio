@@ -4,23 +4,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
-		/**
-		 * Atlas object - in fact its lite version, atlas item, for which this taxonomy is applied.
-		 * @type {Object}
-		 */
-		this._atlasItem = null;
-
-		/**
-		 * The class of taxonomy defines classification type and is used to select the user interface 
-		 * layout used by this control. Current supported values are 'MUSICAL_INSTRUMENT' and 'BIOLOGICAL'. 
-		 * 
-		 * Musical instrument taxonomy has only one classification criterion named 'Family' and accepts
-		 * values from an enumeration.
-		 * 
-		 * Biological taxonomy is the scientific classification for animals and plants.
-		 * @type {String}
-		 */
-		this._featuresClass = null;
+		this._featuresMeta = null;
 
 		/**
 		 * Atlas object features is an array of feature objects.
@@ -35,13 +19,15 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._featuresView = this.getByCssClass("features-view");
 		this._featuresView.on("click", this._onClick, this);
 
-		this._currentItemView = null;
+		this._selectedFeatureView = null;
 
-		this._editor = this.getByClass(com.kidscademy.FormData);
-		this._editor.getByCss("[name='quantity']").on("change", this._onQuantityChange, this);
-		this._editor.findByCss(".units").on("change", this._onUnitsChange, this);
+		this._featureForm = this.getByClass(com.kidscademy.FormData);
 
-		this._unitsSelect = null;
+		this._featureNameSelect = this._featureForm.getByName("name");
+		this._featureNameSelect.on("change", this._onFeatureNameChange, this);
+
+		this._unitsSelect = this._featureForm.getByName("units");
+		this._unitsSelect.on("change", this._onUnitsChange, this);
 
 		this._linkSelect = this.getByClass(com.kidscademy.form.LinkSelect);
 
@@ -52,6 +38,15 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).hideAll();
 	}
 
+	/**
+	 * Handler called by atlas object form just after object loaded. Note that this callback is 
+	 * invoked after {@link #setValue(Object)}.
+	 */
+	onStart() {
+		this._featuresMeta = this._formPage.getAtlasItem().collection.featuresMeta;
+		this._updateActions();
+	}
+
 	setValue(features) {
 		this._features = features;
 		this._featuresView.setObject(features);
@@ -59,49 +54,12 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		return this;
 	}
 
-	/**
-	 * Handler called by atlas object form just after object loaded. Note that this callback is 
-	 * invoked after {@link #setValue(Object)}.
-	 */
-	onStart() {
-		this._atlasItem = this._formPage.getAtlasItem();
-		//this._featuresClass = this._formPage.getObject().meta.featuresClass;
-		// update again actions visibility here because we need features class
-		this._updateActions();
-	}
-
 	getValue() {
-		const features = [];
-		this._featuresView.getChildren().forEach(featureView => features.push(featureView.getUserData("value")));
-		return features;
+		return this._featuresView.getChildren().map(featureView => featureView.getUserData());
 	}
 
 	isValid() {
-		return true;
-	}
-
-	/**
-	 * Click event handler uses event delegation pattern to detect taxon object selected by user. This handler
-	 * opens taxon value editor and initialize name and value controls.
-	 * @param {js.event.Event} ev mouse click event. 
-	 */
-	_onClick(ev) {
-		const itemView = ev.target.getParentByCssClass("item");
-		if (!itemView) {
-			return;
-		}
-
-		this._currentItemView = itemView;
-		const feature = itemView.getUserData();
-		this._updateUnitsSelect(feature.quantity);
-
-		// create new object instance in order to avoid scalling value of the edited feature reference 
-		this._editor.setObject({
-			name: feature.name,
-			value: (feature.value / this._unitsSelect.getValue()).toFixed(4),
-			maximum: feature.maximum != null ? (feature.maximum / this._unitsSelect.getValue()).toFixed(4) : null,
-			quantity: feature.quantity
-		}).show();
+		return this._featuresView.hasChildren();
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -131,34 +89,41 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	}
 
 	_onAdd() {
-		this._editor.setObject({
+		// feature name select options should display only not already used names
+		const currentNames = this._featuresView.getChildren().map(featureView => featureView.getUserData().name);
+		const options = this._featuresMeta.filter(featureMeta => currentNames.indexOf(featureMeta.name) == -1);
+		options.unshift({ id: 0, name: "" });
+		this._featureNameSelect.setOptions(options);
+
+		this._featureForm.setObject({
 			name: null,
 			value: null,
 			maximum: null,
 			quantity: null
 		}).show();
-		this._updateUnitsSelect();
-		this._currentItemView = null;
+		this._selectedFeatureView = null;
 	}
 
 	_onDone() {
-		if (!this._editor.isVisible()) {
+		if (!this._featureForm.isVisible()) {
 			return;
 		}
-		if (!this._editor.isValid()) {
+		if (!this._featureForm.isValid()) {
 			return;
 		}
 
-		const feature = this._editor.getObject();
-		feature.value = (feature.value * this._unitsSelect.getValue()).toFixed(4);
+		const feature = this._featureForm.getObject();
+		// feature name select store id into option value and we need feature name, stored on text
+		feature.name = this._featureNameSelect.getText();
+		feature.value = this._round(feature.value * this._unitsSelect.getValue());
 		if (feature.maximum) {
-			feature.maximum = (feature.maximum * this._unitsSelect.getValue()).toFixed(4);
+			feature.maximum = this._round(feature.maximum * this._unitsSelect.getValue());
 		}
 
 		// udpate feature display - processed on server, before updating user interface
 		AtlasService.updateFeatureDisplay(feature, feature => {
-			if (this._currentItemView != null) {
-				this._currentItemView.setObject(feature);
+			if (this._selectedFeatureView != null) {
+				this._selectedFeatureView.setObject(feature);
 			}
 			else {
 				this._featuresView.addObject(feature);
@@ -170,7 +135,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	_onRemove() {
 		js.ua.System.confirm("@string/confirm-feature-remove", ok => {
 			if (ok) {
-				this._currentItemView.remove();
+				this._selectedFeatureView.remove();
 				this._onClose();
 			}
 		});
@@ -186,34 +151,96 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	}
 
 	_onClose() {
-		this._currentItemView = null;
-		this._editor.reset().hide();
+		this._selectedFeatureView = null;
+		this._featureForm.reset().hide();
 	}
 
 	// --------------------------------------------------------------------------------------------
 
-	_updateActions() {
+	/**
+	 * Click event handler uses event delegation pattern to detect taxon object selected by user. This handler
+	 * opens taxon value editor and initialize name and value controls.
+	 * @param {js.event.Event} ev mouse click event. 
+	 */
+	_onClick(ev) {
+		const itemView = ev.target.getParentByCssClass("item");
+		if (!itemView) {
+			return;
+		}
+		this._selectedFeatureView = itemView;
 
-		this._actions.showAll();
+		// ensure feature name select contains the name of the currently selected feature view by reloading all
+		this._featureNameSelect.setOptions(this._featuresMeta);
 
+		const feature = this._selectedFeatureView.getUserData();
+		this._updateFeatureForm(feature, (ok) => {
+			if (!ok) {
+				js.ua.System.alert("@string/alert-inconsistent-db");
+				this._selectedFeatureView.remove();
+				return;
+			}
+
+			// create new object instance in order to avoid scalling value of the edited feature reference 
+			this._featureForm.setObject({
+				name: feature.name,
+				definition: feature.definition,
+				value: this._round(feature.value / this._unitsSelect.getValue()),
+				maximum: feature.maximum != null ? this._round(feature.maximum / this._unitsSelect.getValue()) : null,
+				quantity: feature.quantity
+			}).show();
+		});
 	}
 
-	_updateUnitsSelect(quantity) {
-		this._editor.findByCss(".units").forEach(unitsSelect => unitsSelect.hide());
-		if (!quantity) {
-			quantity = this._editor.getByCss("select[name='quantity']").getValue();
-		}
-		const unitsSelector = quantity.toLowerCase().replace(/_/g, '-');
-		if (unitsSelector) {
-			this._unitsSelect = this._editor.getByCssClass(unitsSelector).show();
-		}
+	_updateActions() {
+		this._actions.showAll();
 	}
 
 	_onQuantityChange(ev) {
-		this._updateUnitsSelect();
+		this._updateFeatureForm();
 	}
 
 	_onUnitsChange(ev) {
+		const feature = this._featureForm.getObject();
+		this._formPage.setContextAttr(feature.quantity, this._unitsSelect.getText());
+
+		const factor = this._unitsSelect.getValue();
+		this._featureForm.setValue("value", this._round(feature.value * factor));
+		this._featureForm.setValue("maximum", feature.maximum != null ? this._round(feature.maximum * factor) : null);
+	}
+
+	_onFeatureNameChange(ev) {
+		const feature = ev.target.getObject();
+		this._updateFeatureForm(feature);
+	}
+
+	_updateFeatureForm(feature, callback) {
+		this._featureForm.setValue("name", feature.name);
+		this._featureForm.setValue("quantity", feature.quantity);
+
+		// feature definition is found on meta
+		const featureMeta = this._featuresMeta.find(featureMeta => featureMeta.name === feature.name);
+		if (!featureMeta) {
+			if (callback) { callback(false); }
+			return;
+		}
+		this._featureForm.setValue("definition", featureMeta.definition);
+
+		AtlasService.getQuantityUnits(feature.quantity, units => {
+			this._unitsSelect.setOptions(units);
+
+			var unitText = this._formPage.getContextAttr(feature.quantity);
+			if (unitText == null) {
+				unitText = units[0].text;
+				this._formPage.setContextAttr(feature.quantity, unitText);
+			}
+			this._unitsSelect.setValue(unitText);
+
+			if (callback) { callback(true); }
+		});
+	}
+
+	_round(number) {
+		return Number(number.toFixed(9));
 	}
 
 	/**

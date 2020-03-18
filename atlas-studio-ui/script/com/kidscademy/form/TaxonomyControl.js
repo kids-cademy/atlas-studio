@@ -17,22 +17,23 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		this._atlasItem = null;
 
 		/**
-		 * The class of taxonomy defines classification type and is used to select the user interface 
-		 * layout used by this control. Current supported values are 'MUSICAL_INSTRUMENT' and 'BIOLOGICAL'. 
-		 * 
-		 * Musical instrument taxonomy has only one classification criterion named 'Family' and accepts
-		 * values from an enumeration.
-		 * 
-		 * Biological taxonomy is the scientific classification for animals and plants.
-		 * @type {String}
+		 * Taxonomy meta reference on parent atlas collection.
+		 * @type {com.kidscademy.form.TaxonomyControl.Meta}
 		 */
-		this._taxonomyClass = null;
+		this._meta = null;
 
 		/**
-		 * Atlas object taxonomy is an array of taxon objects.
-		 * @type {Array}
+		 * Taxon meta editor.
+		 * @type {com.kidscademy.form.TaxonomyControl.MetaEditor}
 		 */
-		this._taxonomy = null;
+		this._metaEditor = this.getByCssClass("meta-editor");
+
+		/**
+		 * Taxon instance editor.
+		 * @type {com.kidscademy.form.TaxonomyControl.Editor}
+		 */
+		this._editor = this.getByCssClass("editor");
+		this._editor.onKey(this._onEditorKey.bind(this));
 
 		/**
 		 * Array index for taxon object currently on edit. This index identify taxon object from atlas object {@link #_taxonomy}.
@@ -55,37 +56,19 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		this._taxonomyView.on("click", this._onClick, this);
 
 		/**
-		 * Current taxon value editor. It is initialized at this control creation, see {@link #onStart()}.
-		 * A taxon is a classification criterion from atlas object {@link #_taxonomy}.
-		 * @type {js.dom.Element}
-		 */
-		this._taxonValueEditor = null;
-
-		/**
-		 * The name of currently editing atlas object taxon. It is not changeable and is displayed on user
-		 * interface as a label.
-		 * @type {js.dom.Element}
-		 */
-		this._taxonNameLabel = null;
-
-		/**
-		 * User interface control that allows for taxon value input. Depending on taxon meta-defintion this control
-		 * can be a free text input or a select.
-		 * @type {@ js.dom.Control}
-		 */
-		this._taxonValueControl = null;
-
-		/** Variant of {@link #_taxonValueControl} used when taxon value is free text. */
-		this._taxonValueInput = null;
-
-		/** Variant of {@link #_taxonValueControl} used when taxon value is selected from a set of predefined values. */
-		this._taxonValueSelect = null;
-
-		/**
 		 * This control actions handler.
 		 * @type {com.kidscademy.Actions}
 		 */
-		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).hideAll();
+		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).showOnly("add");
+	}
+
+	/**
+	 * Handler called by atlas object form just after object loaded. Note that this callback is 
+	 * invoked after {@link #setValue(Object)}.
+	 */
+	onStart() {
+		this._meta = new com.kidscademy.form.TaxonomyControl.Meta(this._formPage.getCollection().taxonomyMeta);
+		this._metaEditor.bind(this._meta);
 	}
 
 	/**
@@ -94,23 +77,9 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * @return {com.kidscademy.form.TaxonomyControl} this object pointer.
 	 */
 	setValue(taxonomy) {
-		this._taxonomy = taxonomy;
 		this._taxonomyView.setObject(taxonomy);
 		this._updateActions();
 		return this;
-	}
-
-	/**
-	 * Handler called by atlas object form just after object loaded. Note that this callback is 
-	 * invoked after {@link #setValue(Object)}.
-	 */
-	onStart() {
-		this._taxonValueEditor = this.getByCss(".editor.taxon-value");
-		this._taxonNameLabel = this._taxonValueEditor.getByName("name");
-
-		this._taxonValueInput = this._taxonValueEditor.getByName("value-input");
-		this._taxonValueInput.on("keydown", this._onTaxonValueKey, this);
-		this._taxonValueSelect = this._taxonValueEditor.getByName("value-select");
 	}
 
 	/**
@@ -118,7 +87,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * @returns {Array} atlas object taxonomy.
 	 */
 	getValue() {
-		return this._taxonomy;
+		return this._taxonomyView.getChildren().map(taxonView => taxonView.getUserData());
 	}
 
 	/**
@@ -126,12 +95,13 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * @returns {Boolean} return true if taxonomy all values are filled.
 	 */
 	isValid() {
-		for (let i = 0; i < this._taxonomy.length; ++i) {
-			if (!this._taxonomy[i].value) {
-				return false;
+		var valid = true;
+		this._taxonomyView.getChildren().forEach(taxonView => {
+			if (valid && !taxonView.getByCssClass("value").getText()) {
+				valid = false;
 			}
-		}
-		return true;
+		});
+		return valid;
 	}
 
 	/**
@@ -148,7 +118,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		}
 	}
 
-	_onTaxonValueKey(ev) {
+	_onEditorKey(ev) {
 		switch (ev.key) {
 			case js.event.Key.ENTER:
 				this._onDone();
@@ -163,12 +133,21 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
+	/**
+	 * Handle 'ADD' action. If current taxonomy is empty load default from collection taxonomy meta. If current taxonomy 
+	 * is already loaded append a new taxon.
+	 */
 	_onAdd() {
-		const taxonomyMeta = this._formPage.getCollection().taxonomyMeta;
-		const taxonomy = taxonomyMeta.map(taxonMeta => { return { name: taxonMeta.name, value: null } });
+		if (this._taxonomyView.hasChildren()) {
+			// taxon name select options should display only not already used names
+			const names = this._taxonomyView.getChildren().map(taxonView => taxonView.getUserData().name);
+			this._metaEditor.open(names);
+			this._updateActions();
+			return;
+		}
 
-		this.setValue(taxonomy);
-		if (this._taxonomy.length == 1) {
+		this.setValue(this._meta.getTaxonomyTemplate());
+		if (this._taxonomyView.getChildrenCount() == 1) {
 			this._taxonEditIndex = 0;
 			this._openEditor();
 		}
@@ -193,7 +172,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_onDone() {
 		if (this._batchEdit) {
 			this._updateTaxonomyView();
-			if (++this._taxonEditIndex === this._taxonomy.length) {
+			if (++this._taxonEditIndex === this._taxonomyView.getChildrenCount()) {
 				this._taxonEditIndex = -1;
 				this._onClose();
 				return;
@@ -202,14 +181,18 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			return;
 		}
 
+		if (this._metaEditor.isVisible()) {
+			this._metaEditor.hide();
+			this._taxonomyView.addObject({ name: this._metaEditor.getValue(), value: null });
+			return;
+		}
+
 		this._updateTaxonomyView();
 		this._onClose();
 	}
 
 	_onRemove() {
-		this._fireEvent("input");
-		this._taxonomy[this._taxonEditIndex].value = null;
-		this._taxonomyView.setObject(this._taxonomy);
+		this._taxonomyView.getByIndex(this._taxonEditIndex).remove();
 		this._onClose();
 	}
 
@@ -221,35 +204,34 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 	_onClose() {
 		this._batchEdit = false;
-		this._taxonValueEditor.hide();
+		this._metaEditor.hide();
+		this._editor.hide();
 		this._updateActions();
 	}
 
 	// --------------------------------------------------------------------------------------------
 
 	_openEditor() {
-		this._taxonValueEditor.show();
-		//this._taxonValueControl.reset().focus();
-
-		this._updateEditControls();
+		this._editor.show();
+		if (this._taxonEditIndex !== -1) {
+			this._updateEditControls();
+		}
 		this._actions.show("done", "remove", "close");
 	}
 
 	_updateActions() {
-		const taxonomySize = this._taxonomy === null ? 0 : this._taxonomy.length;
+		const taxonomySize = this._taxonomyView.getChildrenCount();
 		if (taxonomySize === 0) {
 			this._actions.showOnly("add");
 		}
 		else {
 			this._actions.showOnly("remove-all");
 		}
-
 		if (taxonomySize > 1) {
-			this._actions.show("batch-edit");
+			this._actions.show("add", "batch-edit");
 		}
-
-		if ((this._taxonomy == null || this._taxonomy.length === 0) && this._taxonomyClass === "BIOLOGICAL") {
-			this._actions.show("load");
+		if (this._metaEditor.isVisible()) {
+			this._actions.show("done", "close");
 		}
 	}
 
@@ -257,28 +239,17 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * Update editor controls with taxon object at current {@link #_taxonEditIndex} from  {@link #_taxonomy} array.
 	 */
 	_updateEditControls() {
-		this._taxonNameLabel.setValue(this._taxonomy[this._taxonEditIndex].name);
-
-		const taxonMeta = this._formPage.getCollection().taxonomyMeta[this._taxonEditIndex];
-		if (taxonMeta.values == null) {
-			this._taxonValueSelect.hide();
-			this._taxonValueControl = this._taxonValueInput.show();
-		}
-		else {
-			this._taxonValueInput.hide();
-			this._taxonValueSelect.setOptions(taxonMeta.values.split(','));
-			this._taxonValueControl = this._taxonValueSelect.show();
-		}
-
-		this._taxonValueControl.setValue(this._taxonomy[this._taxonEditIndex].value);
+		$assert(this._taxonEditIndex !== -1, "com.kidscademy.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
+		const taxon = this._taxonomyView.getByIndex(this._taxonEditIndex).getUserData();
+		const taxonMeta = this._meta.getTaxonMeta(taxon.name);
+		this._editor.setObject(taxonMeta, taxon);
 	}
 
 	/**
-	 * Store taxon value from editor on {@link #_taxonomy} array and reload taxonomy view.
+	 * Store taxon value from editor on selected taxon from taxonomy view.
 	 */
 	_updateTaxonomyView() {
-		this._taxonomy[this._taxonEditIndex].value = this._taxonValueControl.getValue();
-		this._taxonomyView.setObject(this._taxonomy);
+		this._taxonomyView.getByIndex(this._taxonEditIndex).setObject(this._editor.getObject());
 	}
 
 	/**
@@ -292,3 +263,107 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 };
 
 $preload(com.kidscademy.form.TaxonomyControl);
+
+com.kidscademy.form.TaxonomyControl.Meta = class {
+	constructor(taxonomyMeta) {
+		this._taxonomyMeta = taxonomyMeta;
+	}
+
+	getTaxonomyTemplate() {
+		return this._taxonomyMeta.map(taxonMeta => { return { name: taxonMeta.name, value: null } });
+	}
+
+	getTaxonNames() {
+		return this._taxonomyMeta.map(taxonMeta => taxonMeta.name);
+	}
+
+	getTaxonMeta(taxonName) {
+		const taxonMeta = this._taxonomyMeta.find(taxonMeta => taxonMeta.name === taxonName);
+		$assert(typeof taxonMeta !== "undefined", "com.kidscademy.form.TaxonomyControl.Meta#getTaxonMeta", "Taxon name |%s| not found", taxonName);
+		return taxonMeta;
+	}
+};
+
+com.kidscademy.form.TaxonomyControl.Editor = class extends js.dom.Element {
+	constructor(ownerDoc, node) {
+		super(ownerDoc, node);
+
+		/**
+		 * The name of currently editing atlas object taxon. It is not changeable and is displayed on user
+		 * interface as a label.
+		 * @type {js.dom.Element}
+		 */
+		this._nameLabel = this.getByTag("label");
+
+		/** Variant of {@link #_valueControl} used when taxon value is free text. */
+		this._valueInput = this.getByTag("input");
+
+		/** Variant of {@link #_valueControl} used when taxon value is selected from a set of predefined values. */
+		this._valueSelect = this.getByTag("select");
+
+		/**
+		 * User interface control that allows for taxon value input. Depending on taxon meta-defintion this control
+		 * can be a free text input or a select.
+		 * @type {js.dom.Control}
+		 */
+		this._valueControl = null;
+	}
+
+	onKey(callback) {
+		this._valueInput.on("keydown", callback);
+	}
+
+	setObject(taxonMeta, taxon) {
+		if (taxonMeta.values == null) {
+			this._valueSelect.hide();
+			this._valueControl = this._valueInput.show();
+		}
+		else {
+			this._valueInput.hide();
+			this._valueSelect.setOptions(taxonMeta.values.split(','));
+			this._valueControl = this._valueSelect.show();
+		}
+
+		this._nameLabel.setValue(taxon.name);
+		this._valueControl.setValue(taxon.value);
+	}
+
+	getObject() {
+		return {
+			name: this._nameLabel.getText(),
+			value: this._valueControl.getValue()
+		};
+	}
+
+	toString() {
+		return "com.kidscademy.form.TaxonomyControl.Editor";
+	}
+};
+
+com.kidscademy.form.TaxonomyControl.MetaEditor = class extends js.dom.Element {
+	constructor(ownerDoc, node) {
+		super(ownerDoc, node);
+
+		this._meta = null;
+
+		this._select = this.getByTag("select");
+	}
+
+	bind(meta) {
+		this._meta = meta;
+	}
+
+	open(currentNames) {
+		const options = this._meta.getTaxonNames().filter(name => currentNames.indexOf(name) === -1);
+		this._select.setOptions(options);
+		this.show();
+	}
+
+	getValue() {
+		return this._select.getValue();
+	}
+
+	toString() {
+		return "com.kidscademy.form.TaxonomyControl.MetaEditor";
+	}
+};

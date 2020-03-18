@@ -2,13 +2,8 @@
 	
 }
 
-.features td {
-	padding: 8px 20px;
-	border: solid 1px white;
-	font-size: 1.8rem;
-	cursor: pointer;
-}
-
-.features thead td {
-	background-color: @color/white-t50;
+.features .editor {
+	padding-top: 20px;
+	border-top: solid 1px #E6E6E6;
+	margin-top: 20px;
 }

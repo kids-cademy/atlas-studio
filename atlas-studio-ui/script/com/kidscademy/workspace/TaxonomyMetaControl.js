@@ -22,9 +22,7 @@ com.kidscademy.workspace.TaxonomyMetaControl = class extends js.dom.Control {
     }
 
     getValue() {
-        const taxonomyMeta = [];
-        this._taxonomyMetaView.getChildren().forEach(row => taxonomyMeta.push(row.getUserData()));
-        return taxonomyMeta;
+        return this._taxonomyMetaView.getChildren().map(row => row.getUserData());
     }
 
     isValid() {

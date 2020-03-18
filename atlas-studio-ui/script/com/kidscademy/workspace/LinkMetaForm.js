@@ -12,8 +12,8 @@ com.kidscademy.workspace.LinkMetaForm = class extends js.dom.Element {
 
         this._iconControl = this.getByClass(com.kidscademy.IconControl);
 
-        this.getByCss(".buttons-bar [name='save']").on("click", this._onSave, this);
-        this.getByCss(".buttons-bar [name='cancel']").on("click", this._onCancel, this);
+        this.getByName("save").on("click", this._onSave, this);
+        this.getByName("cancel").on("click", this._onCancel, this);
     }
 
     open(linkMeta, callback) {

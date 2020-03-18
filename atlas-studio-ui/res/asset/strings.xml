@@ -29,6 +29,7 @@
 	<alert-object-no-name>Please enter a name for this atlas object. For biological object should be a binomial name.</alert-object-no-name>
 	<alert-object-no-display>Please enter a display name for this object.</alert-object-no-display>
 	<alert-invalid-link-url>Link invalid URL.</alert-invalid-link-url>
+	<alert-inconsistent-db>Inconsistent database record! Force removing.</alert-inconsistent-db>
 
 	<confirm-collection-remove>Please confirm atlas collection remove. Collection should be empty.</confirm-collection-remove>
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
@@ -44,6 +45,7 @@
 	<confirm-area-remove>Please confirm geographical area remove.</confirm-area-remove>
 	<confirm-link-remove>Please confirm link remove.</confirm-link-remove>
 	<confirm-link-meta-remove>Please confirm link deregistration.</confirm-link-meta-remove>
+	<confirm-feature-meta-remove>Please confirm object feature remove.</confirm-feature-meta-remove>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
 	<confirm-object-not-saved>Atlas object is changed. Please confirm page leaving.</confirm-object-not-saved>
 
@@ -67,6 +69,7 @@
 	<workspace-export>Export All Collections</workspace-export>
 	<workspace-external-sources>External Sources</workspace-external-sources>
 	<workspace-register-external-source>Register External Source</workspace-register-external-source>
+	<workspace-features-meta>Features Meta</workspace-features-meta>
 
 	<collection-create>Create Collection</collection-create>
 	<collection-objects>Manage Objects</collection-objects>
@@ -79,24 +82,31 @@
 	<link-meta-edit>Edit Link Meta</link-meta-edit>
 	<link-meta-remove>Remove Link Meta</link-meta-remove>
 
+	<feature-meta-create>Create Feature Meta</feature-meta-create>
+	<feature-meta-edit>Edit Feature Meta</feature-meta-edit>
+	<feature-meta-remove>Remove Feature Meta</feature-meta-remove>
+	
 	<object-create>Create Object</object-create>
 	<object-edit>Edit Object</object-edit>
 	<object-remove>Remove Object</object-remove>
 	<object-move>Move to Collection</object-move>
 	<object-preview>Preview Object</object-preview>
 	<object-save>Save</object-save>
-
-	<taxonomy-class-family>FAMILY</taxonomy-class-family>
-	<taxonomy-class-biological>BIOLOGICAL</taxonomy-class-biological>
 	
-	<features-name>Name</features-name>
-	<features-value>Value / Minimum</features-value>
-	<features-maximum>Maximum</features-maximum>
-	<features-quantity>Physical Quantity</features-quantity>
-	<features-display>Display</features-display>
-	<features-quantity-mass>MASS</features-quantity-mass>
-	<features-quantity-time>TIME</features-quantity-time>
-	<features-quantity-length>LENGTH</features-quantity-length>
-	<features-quantity-speed>SPEED</features-quantity-speed>
-	<features-quantity-food-energy>FOOD_ENERGY</features-quantity-food-energy>
+	<taxon-name>taxon name</taxon-name>
+	<taxon-values>taxon values</taxon-values>
+	
+	<feature-name>Name</feature-name>
+	<feature-value>Value / Minimum</feature-value>
+	<feature-maximum>Maximum</feature-maximum>
+	<feature-display>Display</feature-display>
+	<feature-definition>Definition</feature-definition>
+	<feature-quantity>Quantity</feature-quantity>
+	<feature-units>Units</feature-units>
+	
+	<quantity-mass>MASS</quantity-mass>
+	<quantity-time>TIME</quantity-time>
+	<quantity-length>LENGTH</quantity-length>
+	<quantity-speed>SPEED</quantity-speed>
+	<quantity-food-energy>FOOD_ENERGY</quantity-food-energy>
 </string>

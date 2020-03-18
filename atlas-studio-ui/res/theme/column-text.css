@@ -16,10 +16,6 @@
 	white-space: normal;
 }
 
-.column-text .column.hidden {
-	display: none;
-}
-
 .column-text .column:first-child {
 	margin-left: 0;
 }
@@ -60,10 +56,6 @@
 	vertical-align: top;
 	width: @dimen/column-width;
 	height: 100%;
-}
-
-.column-text.hidden {
-	display: none;
 }
 
 .column-text .column {

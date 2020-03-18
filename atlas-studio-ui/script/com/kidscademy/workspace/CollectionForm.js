@@ -12,9 +12,10 @@ com.kidscademy.workspace.CollectionForm = class extends js.dom.Element {
 
         this._iconControl = this.getByClass(com.kidscademy.IconControl);
         this._taxonomyMetaControl = this.getByClass(com.kidscademy.workspace.TaxonomyMetaControl);
+        this._featuresMetaControl = this.getByClass(com.kidscademy.workspace.FeaturesMetaControl);
 
-        this.getByCss(".buttons-bar [name='save']").on("click", this._onSave, this);
-        this.getByCss(".buttons-bar [name='cancel']").on("click", this._onCancel, this);
+        this.getByName("save").on("click", this._onSave, this);
+        this.getByName("cancel").on("click", this._onCancel, this);
     }
 
     open(collection, callback) {

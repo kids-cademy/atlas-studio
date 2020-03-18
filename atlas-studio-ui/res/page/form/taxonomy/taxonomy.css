@@ -15,3 +15,7 @@
 .taxonomy .taxonomy-view .separator {
 	padding: 0 20px;
 }
+
+.taxonomy .editor, .taxonomy .meta-editor {
+	margin-top: 20px;
+}

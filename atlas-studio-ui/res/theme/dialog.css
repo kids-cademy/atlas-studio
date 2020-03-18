@@ -23,10 +23,6 @@
 	border: solid 1px @color/border;
 }
 
-.dialog.hidden {
-	display: none;
-}
-
 .dialog .caption {
 	height: @dimen/window-caption-height;
 	line-height: @dimen/window-caption-height;

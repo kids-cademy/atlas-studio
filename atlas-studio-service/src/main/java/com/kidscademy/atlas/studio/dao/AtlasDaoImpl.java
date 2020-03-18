@@ -15,6 +15,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
@@ -69,7 +70,8 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasCollection> getCollections() {
-	return em.createQuery("select c from AtlasCollection c order by c.display", AtlasCollection.class).getResultList();
+	return em.createQuery("select c from AtlasCollection c order by c.display", AtlasCollection.class)
+		.getResultList();
     }
 
     @Override
@@ -159,6 +161,8 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
+	em.createNativeQuery("DELETE FROM atlasobject_features WHERE atlasobject_id=" + object.getId()).executeUpdate();
+	
 	object.setLastUpdated(new Timestamp(System.currentTimeMillis()));
 	if (object.getId() == 0) {
 	    em.persist(object);
@@ -260,6 +264,30 @@ public class AtlasDaoImpl implements AtlasDao {
 	LinkMeta linkMeta = em.find(LinkMeta.class, linkMetaId);
 	if (linkMeta != null) {
 	    em.remove(linkMeta);
+	}
+    }
+
+    @Override
+    public List<FeatureMeta> getFeaturesMeta() {
+	return em.createQuery("select f from FeatureMeta f order by f.name", FeatureMeta.class).getResultList();
+    }
+
+    @Override
+    @Mutable
+    public void saveFeatureMeta(FeatureMeta featureMeta) {
+	if (featureMeta.getId() == 0) {
+	    em.persist(featureMeta);
+	} else {
+	    em.merge(featureMeta);
+	}
+    }
+
+    @Override
+    @Mutable
+    public void removeFeatureMeta(int featureMetaId) {
+	FeatureMeta featureMeta = em.find(FeatureMeta.class, featureMetaId);
+	if (featureMeta != null) {
+	    em.remove(featureMeta);
 	}
     }
 

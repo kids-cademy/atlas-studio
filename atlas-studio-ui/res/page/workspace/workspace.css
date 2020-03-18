@@ -9,7 +9,7 @@
 	margin-bottom: 20px;
 }
 
-.workspace .list-view {
+.workspace .content .body {
 	flex-grow: 1;
 	margin: 20px;
 }

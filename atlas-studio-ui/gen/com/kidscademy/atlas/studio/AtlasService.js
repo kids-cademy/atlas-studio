@@ -447,32 +447,6 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Get feature templates.
-	 *
-	 * @param com.kidscademy.atlas.studio.model.FeaturesClass featuresClass,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.List<com.kidscademy.atlas.studio.model.Feature>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 getFeatureTemplates: function(featuresClass) {
-		$assert(typeof featuresClass !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Features class argument is undefined.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getFeatureTemplates", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getFeatureTemplates");
-		rmi.setParameters(featuresClass);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
 	 * Create link.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.Link link,
@@ -786,6 +760,156 @@ com.kidscademy.atlas.studio.AtlasService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "loadAtlasObjectTaxonomy");
 		rmi.setParameters(objectName);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Create feature meta.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.FeatureMeta
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 createFeatureMeta: function() {
+		var __callback__ = arguments[0];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#createFeatureMeta", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#createFeatureMeta", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "createFeatureMeta");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Get feature meta.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.FeatureMeta>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getFeatureMeta: function() {
+		var __callback__ = arguments[0];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getFeatureMeta", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getFeatureMeta", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getFeatureMeta");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Get features meta candidates.
+	 *
+	 * @param java.util.List<com.kidscademy.atlas.studio.model.FeatureMeta> current,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.FeatureMeta>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getFeaturesMetaCandidates: function(current) {
+		$assert(typeof current !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getFeaturesMetaCandidates", "Current argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getFeaturesMetaCandidates", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getFeaturesMetaCandidates", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getFeaturesMetaCandidates");
+		rmi.setParameters(current);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Save feature meta.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.FeatureMeta featureMeta,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.FeatureMeta
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 saveFeatureMeta: function(featureMeta) {
+		$assert(typeof featureMeta !== "undefined", "com.kidscademy.atlas.studio.AtlasService#saveFeatureMeta", "Feature meta argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#saveFeatureMeta", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#saveFeatureMeta", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "saveFeatureMeta");
+		rmi.setParameters(featureMeta);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Remove feature meta.
+	 *
+	 * @param int featureMetaId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 removeFeatureMeta: function(featureMetaId) {
+		$assert(typeof featureMetaId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#removeFeatureMeta", "Feature meta id argument is undefined.");
+		$assert(js.lang.Types.isNumber(featureMetaId), "com.kidscademy.atlas.studio.AtlasService#removeFeatureMeta", "Feature meta id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#removeFeatureMeta", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#removeFeatureMeta", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "removeFeatureMeta");
+		rmi.setParameters(featureMetaId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Get quantity units.
+	 *
+	 * @param com.kidscademy.atlas.studio.model.PhysicalQuantity quantity,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.Option>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getQuantityUnits: function(quantity) {
+		$assert(typeof quantity !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getQuantityUnits", "Quantity argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getQuantityUnits", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getQuantityUnits", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getQuantityUnits");
+		rmi.setParameters(quantity);
 		rmi.exec(__callback__, __scope__);
 	},
 

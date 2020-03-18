@@ -1,0 +1,16 @@
+<div class="dialog-frame context-menu hidden" data-class="com.kidscademy.ContextMenu" xmlns:w="js-lib.com/wood">
+	<div class="dialog">
+		<div class="caption">
+			<img class="close" src="@image/action/close" />
+		</div>
+		<div class="content">
+			<ul class="menu">
+				<!-- if context menu is no triggered by an object from parent group view, this context menu has 'no-object' class -->
+				<!-- in this case context menu displays only items possessing the same 'no-object' class -->
+				<li data-name="create-feature" class="no-object"><img src="@image/action/add" /><span>@string/feature-meta-create</span></li>
+				<li data-name="edit-feature"><img src="@image/action/edit" /><span>@string/feature-meta-edit</span></li>
+				<li data-name="remove-feature"><img src="@image/action/remove" /><span>@string/feature-meta-remove</span></li>
+			</ul>
+		</div>
+	</div>
+</div>

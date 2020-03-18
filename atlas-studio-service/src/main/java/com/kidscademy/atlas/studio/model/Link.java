@@ -1,8 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,26 +19,31 @@ public class Link implements Displayable {
      * advertised features, see {@link #features}.
      */
     private URL url;
+    
     /**
      * URL base domain contains only domain and TLD. For example for
      * <code>www.softschools.com</code> links this domain value is
      * <code>softschools.com</code>.
      */
     private String domain;
+    
     /**
      * Link name displayed on user interface. May be subject of
      * internationalization.
      */
     private String display;
+    
     /**
      * Short description about linked resource content.
      */
     private String definition;
+    
     /**
      * Icon file name as stored into database. This value is used to set
      * {@link #iconSrc} when load link from database.
      */
     private String iconName;
+    
     /**
      * Every link provides some kind of data, named features. This fields holds a
      * comma separated list of features and cannot be null or empty.
@@ -175,60 +178,8 @@ public class Link implements Displayable {
     }
 
     @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((url == null) ? 0 : url.hashCode());
-	return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	Link other = (Link) obj;
-	if (url == null) {
-	    if (other.url != null)
-		return false;
-	} else if (!url.equals(other.url))
-	    return false;
-	return true;
-    }
-
-    @Override
     public String toString() {
 	return url != null ? url.toExternalForm() : "null";
-    }
-
-    /**
-     * Currently supported domains should be declared here. Maybe to move to
-     * external resource.
-     */
-    private static final Map<String, String[]> DOMAINS = new HashMap<>();
-    static {
-	DOMAINS.put("wikipedia.org", new String[] { "Wikipedia", "description" });
-	DOMAINS.put("softschools.com", new String[] { "Soft Schools", "description,facts" });
-	DOMAINS.put("kiddle.co", new String[] { "Kiddle", "description" });
-	DOMAINS.put("kids-cademy.com", new String[] { "kids (a)cademy", "description,facts" });
-	DOMAINS.put("wikihow.com", new String[] { "wikiHow", "howto" });
-	DOMAINS.put("thefreedictionary.com", new String[] { "The Free Dictionary", "definition" });
-	DOMAINS.put("cambridge.org", new String[] { "Cambridge Dictionary", "definition" });
-	DOMAINS.put("merriam-webster.com", new String[] { "Merriam-Webster", "definition" });
-	DOMAINS.put("youtube.com", new String[] { "YouTube", "audio" });
-	DOMAINS.put("britannica.com", new String[] { "Encyclopædia Britannica", "" });
-	DOMAINS.put("nationalgeographic.com", new String[] { "National Geographic", "features" });
-	DOMAINS.put("dkfindout.com", new String[] { "DK findout", "" });
-	DOMAINS.put("ebird.org", new String[] { "eBird", "" });
-	DOMAINS.put("eol.org", new String[] { "Encyclopedia of Life", "" });
-	DOMAINS.put("animalia.bio", new String[] { "ANIMALIA", "" });
-	DOMAINS.put("iucnredlist.org", new String[] { "IUCN Red List", "" });
-	DOMAINS.put("itis.gov", new String[] { "Taxonomic Information System", "" });
-	DOMAINS.put("dosits.org", new String[] { "Sound in the Sea", "audio" });
-	DOMAINS.put("animaldiversity.org", new String[] { "Animal Diversity Web", "" });
     }
 
     public static Link create(LinkMeta linkMeta, URL articleURL, String definition) {

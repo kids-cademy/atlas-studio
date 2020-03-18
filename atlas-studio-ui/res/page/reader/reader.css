@@ -67,10 +67,6 @@ body {
 	background-color: rgb(74, 144, 226);
 	z-index: 100;
 }
-
-.reader.hidden .scroll-mask {
-	display: none;
-}
 	
 .reader .section {
 	display: inline-block;
@@ -83,20 +79,12 @@ body {
 	overflow: hidden;
 }
 
-.reader .section.hidden {
-	display: none;
-}
-
 .reader .section:first-child {
 	margin-left: @dimen/page-padding;
 }
 
 .reader .section:last-child {
 	padding-right: @dimen/page-padding;
-}
-
-.reader.hidden {
-	display: none;	
 }
 
 .reader .action {

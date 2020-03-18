@@ -19,10 +19,5 @@
 		<font>http://fonts.googleapis.com/css?family=Montserrat&amp;display=swap</font>
 		<font>http://fonts.googleapis.com/css?family=Open+Sans</font>
 	</fonts>
-	
-	<scripts>
-		<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-		<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-	</scripts>
 		
 </project>

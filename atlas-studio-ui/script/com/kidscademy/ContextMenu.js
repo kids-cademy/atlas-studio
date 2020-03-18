@@ -4,6 +4,11 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		/**
+		 * Optional object view on context menu header. It can be null if context menu belongs to a group view
+		 * not oriented on icons, e.g. table view.
+		 * @type {js.dom.Element}
+		 */
 		this._objectView = this.getByCssClass("object");
 
 		/**
@@ -65,11 +70,15 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 		this._contextView = contextView;
 		if (this._contextView != null) {
 			this.removeCssClass("no-object");
-			this._objectView.setObject(contextView.getUserData()).show();
+			if (this._objectView != null) {
+				this._objectView.setObject(contextView.getUserData()).show();
+			}
 		}
 		else {
 			this.addCssClass("no-object");
-			this._objectView.hide();
+			if (this._objectView != null) {
+				this._objectView.hide();
+			}
 		}
 		this.show();
 	}

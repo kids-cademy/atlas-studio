@@ -54,7 +54,7 @@
 	<taxonomy-done>accept taxonomy edits</taxonomy-done>
 	<taxonomy-remove>remove selected taxon value</taxonomy-remove>
 	<taxonomy-remove-all>remove atlas object taxonomy</taxonomy-remove-all>
-	<taxonomy-close>close taxonomy editor</taxonomy-close>
+	<taxonomy-close>close taxonomy editor without saving</taxonomy-close>
 
 	<facts-add>add new facts</facts-add>
 	<facts-import>import facts from provider</facts-import>
@@ -70,6 +70,11 @@
 	<features-load>initialize features from kids (a)cademy database</features-load>
 	<features-edit>edit current feature value</features-edit>
 
+	<features-meta-add>select feature meta</features-meta-add>
+	<features-meta-done>accept feature meta edits</features-meta-done>
+	<features-meta-remove>remove feature meta</features-meta-remove>
+	<features-meta-close>close feature meta editor without saving</features-meta-close>
+	
 	<spreading-add>add new spreading</spreading-add>
 	<spreading-import>import spreading is not yet implemented</spreading-import>
 	<spreading-done>accept spreading edits</spreading-done>

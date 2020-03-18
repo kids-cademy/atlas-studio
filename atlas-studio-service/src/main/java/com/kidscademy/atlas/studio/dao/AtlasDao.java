@@ -15,6 +15,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
@@ -118,4 +119,10 @@ public interface AtlasDao {
     List<AtlasItem> getAtlasItems(List<Integer> objectIds);
 
     int getCollectionSize(int collectionId);
+
+    List<FeatureMeta> getFeaturesMeta();
+    
+    void saveFeatureMeta(FeatureMeta featureMeta);
+    
+    void removeFeatureMeta(int featureMetaId);
 }

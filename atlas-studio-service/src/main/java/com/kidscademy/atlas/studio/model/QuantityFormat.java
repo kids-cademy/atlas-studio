@@ -18,10 +18,7 @@ public class QuantityFormat implements Comparator<Pair> {
     private final String units;
 
     public QuantityFormat(double value, PhysicalQuantity physicalQuantity) {
-	Unit[] units = UNITS.get(physicalQuantity);
-	if (units == null) {
-	    throw new BugError("Missing units for physical quantity |%s|.", physicalQuantity);
-	}
+	Unit[] units = quantityUnits(physicalQuantity);
 
 	NumberFormat numberFormat = NumberFormat.getNumberInstance();
 	numberFormat.setMaximumFractionDigits(10);
@@ -88,7 +85,23 @@ public class QuantityFormat implements Comparator<Pair> {
 	return 0;
     }
 
+    public static List<Option> getOptions(PhysicalQuantity quantity) {
+	List<Option> options = new ArrayList<>();
+	for (Unit unit : quantityUnits(quantity)) {
+	    options.add(new Option(unit.symbol(), Double.toString(1.0 / unit.factor())));
+	}
+	return options;
+    }
+
     // --------------------------------------------------------------------------------------------
+
+    private static Unit[] quantityUnits(PhysicalQuantity quantity) {
+	Unit[] units = UNITS.get(quantity);
+	if (units == null) {
+	    throw new BugError("Missing units for physical quantity |%s|.", quantity);
+	}
+	return units;
+    }
 
     private static double round(double value, int scale) {
 	BigDecimal decimal = new BigDecimal(value).setScale(scale, RoundingMode.HALF_EVEN);
@@ -150,7 +163,7 @@ public class QuantityFormat implements Comparator<Pair> {
     }
 
     private enum MassUnits implements Unit {
-	GRAM(1000, "grams"), KILOGRAM(1, "kg"), TON(0.001, "tons");
+	MICROGRAM(1000000000, "micrograms"), MILLIGRAM(1000000, "milligrams"), GRAM(1000, "grams"), KILOGRAM(1, "kg"), TON(0.001, "tons");
 
 	private double factor;
 	private String symbol;
@@ -258,4 +271,25 @@ public class QuantityFormat implements Comparator<Pair> {
 	    return symbol;
 	}
     }
+
+    /*
+     * 
+     * <select class="mass units hidden" data-persist="features.mass"> <option
+     * value="0.001">gram</option> <option value="1"
+     * selected="selected">kilogram</option> <option value="1000">tonne</option>
+     * </select> <select class="time units hidden" data-persist="features.time">
+     * <option value="1" selected="selected">second</option> <option
+     * value="86400">day</option> <option value="31556952">year</option> </select>
+     * <select class="length units hidden" data-persist="features.length"> <option
+     * value="0.001">millimeter</option> <option value="0.01">centimeter</option>
+     * <option value="0.1">decimeter</option> <option value="1"
+     * selected="selected">meter</option> </select> <select
+     * class="speed units hidden" data-persist="features.speed"> <option value="1"
+     * selected="selected">meter per second</option> <option
+     * value="0.2777777778">kilometer per hour</option> </select> <select
+     * class="food-energy units hidden" data-persist="features.food-energy"> <option
+     * value="1" selected="selected">calorie</option> </select>
+     * 
+     */
+
 }

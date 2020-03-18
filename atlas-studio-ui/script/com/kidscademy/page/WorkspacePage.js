@@ -16,7 +16,8 @@ com.kidscademy.page.WorkspacePage = class extends com.kidscademy.page.Page {
 		sideMenu.on(this, {
 			"&collections-list": this._onCollectionsList,
 			"&export-all-collections": this._onExportAllCollections,
-			"&links-meta-list": this._onLinksMetaList
+			"&links-meta-list": this._onLinksMetaList,
+			"&features-meta-list": this._onFeaturesMetaList
 		});
 		const exportAnchor = sideMenu.getByCssClass("export-all-collections");
 		exportAnchor.setAttr("href", "export-all-atlas-collections.xsp");
@@ -26,9 +27,11 @@ com.kidscademy.page.WorkspacePage = class extends com.kidscademy.page.Page {
 
 		this._collectionsList = this.getByClass(com.kidscademy.workspace.CollectionsList);
 		this._linksMetaList = this.getByClass(com.kidscademy.workspace.LinksMetaList);
+		this._featuresMetaList = this.getByClass(com.kidscademy.workspace.FeaturesMetaList);
 
 		this._collectionsList.onCreate(this);
 		this._linksMetaList.onCreate(this);
+		this._featuresMetaList.onCreate(this);
 	}
 
 	selectView(viewName) {
@@ -38,6 +41,7 @@ com.kidscademy.page.WorkspacePage = class extends com.kidscademy.page.Page {
 	_onUnload() {
 		this._collectionsList.onDestroy(this);
 		this._linksMetaList.onDestroy(this);
+		this._featuresMetaList.onDestroy(this);
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -53,8 +57,13 @@ com.kidscademy.page.WorkspacePage = class extends com.kidscademy.page.Page {
 
 	_onLinksMetaList() {
 		this.selectView("links-meta-list");
-
 	}
+
+	_onFeaturesMetaList() {
+		this.selectView("features-meta-list");
+	}
+
+	// --------------------------------------------------------------------------------------------
 
 	/**
 	 * Class string representation.

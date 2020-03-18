@@ -35,3 +35,7 @@
 	background-color: #FFFFFF;
 	color: @color/text;
 }
+
+.description .editor-controls {
+	margin-top: 20px;
+}

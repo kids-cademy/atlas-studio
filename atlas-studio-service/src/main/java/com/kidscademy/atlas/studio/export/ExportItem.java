@@ -1,6 +1,8 @@
 package com.kidscademy.atlas.studio.export;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +23,14 @@ public class ExportItem implements RepositoryObject {
     
     @ManyToOne
     private AtlasCollection collection;
+
+    @Enumerated(EnumType.STRING)
+    private AtlasObject.State state;
     
     private String name;
     private String display;
     private String definition;
     private String iconName;
-    private AtlasObject.State state;
 
 
     @Transient

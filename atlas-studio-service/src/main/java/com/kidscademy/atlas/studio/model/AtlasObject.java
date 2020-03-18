@@ -15,6 +15,8 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +43,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     @ManyToOne
     private AtlasCollection collection;
 
-    /** Object state, for now only in development and published. */
+    @Enumerated(EnumType.STRING)
     private State state;
 
     /** Last change timestamp. */
@@ -540,7 +542,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     }
 
     public enum State {
-	// ENUM('CREATED', 'DEVELOPMENT','PUBLISHED')
+	// ENUM('NONE', 'CREATED', 'DEVELOPMENT','PUBLISHED')
 	NONE, CREATED, DEVELOPMENT, PUBLISHED
     }
 

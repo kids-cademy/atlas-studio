@@ -14,11 +14,13 @@ import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.Feature;
-import com.kidscademy.atlas.studio.model.FeaturesClass;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.Option;
+import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
@@ -72,18 +74,16 @@ public interface AtlasService {
 
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
-    List<Feature> getFeatureTemplates(FeaturesClass featuresClass);
-
     Link createLink(Link link) throws BusinessException;
 
     String getLinkDefinition(URL link, String objectDisplay);
-    
+
     LinkMeta createLinkMeta();
 
     List<LinkMeta> getLinksMeta();
 
     LinkMeta saveLinkMeta(LinkMeta linkMeta);
-    
+
     void removeLinkMeta(int linkMetaId);
 
     String importObjectDefinition(Link link);
@@ -97,6 +97,18 @@ public interface AtlasService {
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException;
 
     List<Taxon> loadAtlasObjectTaxonomy(String objectName);
+
+    FeatureMeta createFeatureMeta();
+
+    List<FeatureMeta> getFeatureMeta();
+
+    List<FeatureMeta> getFeaturesMetaCandidates(List<FeatureMeta> current);
+
+    FeatureMeta saveFeatureMeta(FeatureMeta featureMeta);
+
+    void removeFeatureMeta(int featureMetaId);
+
+    List<Option> getQuantityUnits(PhysicalQuantity quantity);
 
     // ----------------------------------------------------------------------------------------------
     // OBJECT IMAGE SERVICES

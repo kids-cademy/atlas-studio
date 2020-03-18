@@ -11,6 +11,10 @@
 	clear: both;	
 }
 
+.hidden {
+	display: none !important;	
+}
+
 .float-right, .rfloat {
 	float: right;
 }
@@ -27,10 +31,6 @@
 
 .inline {
 	display: inline-block;	
-}
-
-.inline.hidden {
-	display: none;
 }
 
 .flex-h {
@@ -71,4 +71,14 @@
 .rule.v {
 	width: 1px;
 	height: 100%;
+}
+
+.full-width {
+	width: 100%;	
+}
+
+.single-line {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

@@ -8,7 +8,9 @@
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/IconControl.js</script>
+		<script>script/com/kidscademy/TableView.js</script>
 		<script>script/com/kidscademy/workspace/TaxonomyMetaControl.js</script>
+		<script>script/com/kidscademy/workspace/FeaturesMetaControl.js</script>
 		<script>script/com/kidscademy/workspace/CollectionForm.js</script>
 	</scripts>
 </page>

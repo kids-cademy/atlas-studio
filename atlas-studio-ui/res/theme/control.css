@@ -12,6 +12,10 @@ input {
 	font-size: 18px;
 }
 
+input.inline {
+	margin-right: 20px;
+}
+
 .with-actions input, .with-actions select {
 	vertical-align: top;
 	height: @dimen/action-icon-size;
@@ -100,6 +104,14 @@ select {
 .gecko select {
 	xposition: relative;
 	xtop: -3px;
+}
+
+select {
+	
+}
+
+select.inline {
+	margin-right: 20px;	
 }
 
 select option {

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,10 +31,12 @@ public class AtlasLinks implements RepositoryObject {
     @ManyToOne
     private AtlasCollection collection;
 
+    @Enumerated(EnumType.STRING)
+    private AtlasObject.State state;
+
     private String name;
     private String display;
     private String iconName;
-    private AtlasObject.State state;
     private Date lastUpdated;
 
     @ElementCollection
@@ -45,7 +49,7 @@ public class AtlasLinks implements RepositoryObject {
 
     @Transient
     private List<MediaSRC> items;
-    
+
     @PostLoad
     public void postLoad() {
 	if (iconName != null) {
@@ -81,10 +85,10 @@ public class AtlasLinks implements RepositoryObject {
     }
 
     public AtlasObject.State getState() {
-        return state;
+	return state;
     }
 
     public Date getLastUpdated() {
-        return lastUpdated;
+	return lastUpdated;
     }
 }

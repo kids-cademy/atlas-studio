@@ -1,6 +1,8 @@
 package com.kidscademy.atlas.studio.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 /**
@@ -16,8 +18,8 @@ import javax.persistence.Transient;
 @Embeddable
 public class Feature {
     /**
-     * Feature name is for internal use only; it is not meant to be displayed on
-     * user interface.
+     * System unique feature name is for internal use only; it is not meant to be
+     * displayed on user interface.
      */
     private String name;
 
@@ -40,6 +42,7 @@ public class Feature {
      * Non prefixed units are one (1) references without any factor, e.g. meter not
      * kilometer or other multiple or submultiple.
      */
+    @Enumerated(EnumType.STRING)
     private PhysicalQuantity quantity;
 
     /**
@@ -69,7 +72,7 @@ public class Feature {
     }
 
     public void postLoad() {
-	this.display = new FeatureValueFormat(this).display();
+	display = new FeatureValueFormat(this).display();
     }
 
     public String getName() {
@@ -93,6 +96,11 @@ public class Feature {
     }
 
     public void setDisplay(String display) {
-        this.display = display;
+	this.display = display;
+    }
+
+    @Override
+    public String toString() {
+	return name;
     }
 }

@@ -68,8 +68,21 @@ public class ExportFeature {
 	EN.put("nutrient.protein", "Protein");
 	EN.put("nutrient.fat", "Total Fat");
 	EN.put("nutrient.sugars", "Sugars");
-	EN.put("nutrient.fibre", "Dietary Fibre");
+	EN.put("nutrient.fiber", "Dietary Fiber");
+	EN.put("nutrient.starch", "Starch");
 	EN.put("nutrient.ethanol", "Drinking Alcohol");
 	EN.put("nutrient.carbohydrate", "Carbohydrates");
+	EN.put("nutrient.water", "Water");
+	EN.put("vitamin.a", "Vitamin A");
+	EN.put("vitamin.b1", "Vitamin B1");
+	EN.put("vitamin.b3", "Vitamin B3");
+	EN.put("mineral.calcium", "Calcium");
+	EN.put("mineral.iron", "Iron");
+	EN.put("mineral.magnesium", "Magnesium");
+	EN.put("mineral.manganese", "Manganese");
+	EN.put("mineral.phosphorus", "Phosphorus");
+	EN.put("mineral.potassium", "Potassium");
+	EN.put("mineral.sodium", "Sodium");
+	EN.put("mineral.zinc", "Zinc");
     }
 }

@@ -85,6 +85,25 @@
 		<values></values>
 	</atlascollection_taxonomymeta>
 	
+	<featuremeta>
+		<id>1</id>
+		<name>height</name>
+		<definition>height</definition>
+		<quantity>LENGTH</quantity>
+	</featuremeta>
+	<featuremeta>
+		<id>2</id>
+		<name>weight</name>
+		<definition>weight</definition>
+		<quantity>MASS</quantity>
+	</featuremeta>
+
+	<atlascollection_featuremeta>
+		<atlascollection_id>1</atlascollection_id>
+		<featuresmeta_id>1</featuresmeta_id>
+		<featuresmeta_order>0</featuresmeta_order>
+	</atlascollection_featuremeta>
+		
 	<atlasobject>
 		<id>1</id>
 		<collection_id>1</collection_id>
@@ -221,7 +240,6 @@
 		<facts_key>Fact #1</facts_key>
 		<facts>Fact #1 description.</facts>
 	</atlasobject_facts>
-
 	<atlasobject_facts>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
@@ -236,9 +254,8 @@
 		<name>lifespan</name>
 		<value>536520000</value>
 		<maximum></maximum>
-		<quantity>1</quantity>
+		<quantity>TIME</quantity>
 	</atlasobject_features>
-
 	<atlasobject_features>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
@@ -246,17 +263,29 @@
 		<name>wingspan</name>
 		<value>1.00584</value>
 		<maximum>1.09728</maximum>
-		<quantity>2</quantity>
+		<quantity>LENGTH</quantity>
 	</atlasobject_features>
 
 	<atlasobject_links>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
+		<links_order>0</links_order>
 		<url>https://en.wikipedia.org/wiki/Accordion</url>
 		<domain>wikipedia.org</domain>
 		<display>Wikipedia</display>
-		<description>Wikipedia article about accordion.</description>
+		<definition>Wikipedia article about accordion.</definition>
 		<iconName>wikipedia.png</iconName>
+		<features>description</features>
+	</atlasobject_links>
+	<atlasobject_links>
+		<id>2</id>
+		<atlasobject_id>1</atlasobject_id>
+		<links_order>1</links_order>
+		<url>https://www.britannica.com/art/bandonion</url>
+		<domain>britannica.com</domain>
+		<display>Britannica</display>
+		<definition>Britannica article about bandoneon.</definition>
+		<iconName>britannica.png</iconName>
 		<features>description</features>
 	</atlasobject_links>
 

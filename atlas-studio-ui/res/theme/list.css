@@ -31,10 +31,6 @@ ol li {
 	padding-left: 5px;
 }
 
-.list-inline>li.hidden, .inline>li.hidden {
-	display: none;
-}
-
 
 /* ------------------------------------------------------------------------------------------------ */ 
 /* LIST VIEW - GLOBAL */ 

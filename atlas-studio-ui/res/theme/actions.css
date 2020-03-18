@@ -54,10 +54,6 @@
 	height: @dimen/input-height;
 }
 
-.actions img.hidden {
-	display: none;
-}
-
 .actions img.last {
 	float: right;
 }
@@ -66,10 +62,6 @@
 	display: inline-block;
 	width: @dimen/action-icon-size;
 	height: @dimen/action-icon-size;
-}
-
-.actions .separator.hidden {
-	display: none;
 }
 
 .actions input {
@@ -91,10 +83,6 @@
 	background: 0;
 	border-radius: unset;
 	opacity: 0.6;
-}
-
-.upload-icon.hidden {
-	display: none;
 }
 
 .upload-image input, .upload-icon input  {
