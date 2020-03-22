@@ -161,6 +161,22 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
+	// atlas object features are @Emebddable mapped with @@ElementCollection
+	// also mapping has @OrderColumn annotation meaning that implementation is responsible for updating order column from database
+	//
+	// when update features list content, especially when reorder, current eclipselink implementation generates a query that compare
+	// for equality all persisted Feature class properties
+	// the problem is when compare for null value: 
+	// generated SQL contains (maximum = ?) replaced with (maximum = NULL) which is not valid SQL; it should be (maxim IS NULL)
+	//
+	// here is and example for generated SQL
+	// UPDATE AtlasObject_FEATURES SET features_ORDER = ? WHERE ((AtlasObject_ID = ?) AND ((VALUE = ?) AND ((QUANTITY = ?) AND ((NAME = ?) AND (MAXIMUM = ?)))))
+	//
+	// the problem is observed only on feature maximum value which is Double boxing class that should be null if not used
+	//
+	// quick workaround is to remove all current features and reload!
+	// see com.kidscademy.atlas.studio.it.AtlasDaoWriteTest#saveAtlasObject_FeaturesReorder()
+	//
 	em.createNativeQuery("DELETE FROM atlasobject_features WHERE atlasobject_id=" + object.getId()).executeUpdate();
 	
 	object.setLastUpdated(new Timestamp(System.currentTimeMillis()));

@@ -10,8 +10,24 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 		this.getByName("copy-to-clipboard").on("click", this._onDisplayCopy, this);
 	}
 
+	onCreate(formPage) {
+		if (!formPage.getFlags().endDate) {
+			this.getByCss(".controlset.end-date").hide();
+		}
+		if (!formPage.getFlags().conservationStatus) {
+			this.getByCss(".controlset.conservation-status").hide();
+		}
+	}
+
+	onDestroy() {
+	}
+
+	onStart() {
+
+	}
+
 	_onNamePaste(ev) {
-		function toHyphenCase (str) {
+		function toHyphenCase(str) {
 			if (!str) {
 				return '';
 			}
@@ -21,7 +37,7 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 				return '-' + $1.toLowerCase();
 			}).substr(1);
 		}
-	
+
 		ev.prevent();
 		this._nameView.setValue(toHyphenCase(ev.getData()));
 	}

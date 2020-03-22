@@ -9,3 +9,7 @@
 .facts:not(.hidden) .list-view {
 	margin-top: 20px;
 }
+
+.facts .editor {
+	margin-top: 20px;
+}

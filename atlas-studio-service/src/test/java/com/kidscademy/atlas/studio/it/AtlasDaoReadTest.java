@@ -166,7 +166,6 @@ public class AtlasDaoReadTest {
 	assertTrue(object.getCollection().getFlags().isConservationStatus());
 	assertTrue(object.getCollection().getFlags().isAudioSample());
 
-	assertThat(object.getRank(), equalTo(1234));
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(object.getName(), equalTo("accordion"));
 	assertThat(object.getName(), equalTo("accordion"));

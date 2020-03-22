@@ -17,6 +17,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 
 		// current selected collection and object ID are stored on global context
 		this._collection = this.getContextAttr("collection");
+		this._flags = this._collection.flags;
 		this._objectId = Number(this.getContextAttr("objectId"));
 
 		// TODO: temporar solution
@@ -43,6 +44,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		const quickLinks = this.getByCssClass("quick-links");
 		quickLinks.on("click", this._onQuickLinks, this);
 
+		this._identifyFieldset = this.getByClass(com.kidscademy.form.IdentityFieldSet);
 		this._taxonomyControl = this.getByClass(com.kidscademy.form.TaxonomyControl);
 		this._definitionControl = this.getByClass(com.kidscademy.form.DefinitionControl);
 		this._descriptionControl = this.getByClass(com.kidscademy.form.DescriptionControl);
@@ -54,6 +56,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
+		this._identifyFieldset.onCreate(this);
 		this._taxonomyControl.onCreate(this);
 		this._definitionControl.onCreate(this);
 		this._descriptionControl.onCreate(this);
@@ -69,6 +72,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onUnload() {
+		this._identifyFieldset.onDestroy(this);
 		this._taxonomyControl.onDestroy();
 		this._definitionControl.onDestroy();
 		this._descriptionControl.onDestroy();
@@ -81,13 +85,17 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._linksControl.onDestroy();
 	}
 
-	getCollection() {
-		return this._object.collection;
-	}
-
 	getObject() {
 		this._form.getObject(this._object);
 		return this._object;
+	}
+
+	getCollection() {
+		return this._collection;
+	}
+
+	getFlags() {
+		return this._flags;
 	}
 
 	getAtlasItem() {
@@ -136,9 +144,10 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 			}
 		}
 
-		start(object.collection.flags.audioSample, this._audioAssets);
-		start(object.collection.flags.spreading, this._spreadingControl);
+		start(this._flags.audioSample, this._audioAssets);
+		start(this._flags.spreading, this._spreadingControl);
 
+		this._identifyFieldset.onStart();
 		this._taxonomyControl.onStart();
 		this._definitionControl.onStart();
 		this._descriptionControl.onStart();

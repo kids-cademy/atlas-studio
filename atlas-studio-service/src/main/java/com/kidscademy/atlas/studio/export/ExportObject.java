@@ -21,7 +21,6 @@ import com.kidscademy.atlas.studio.model.Taxon;
 public class ExportObject {
     private int index;
 
-    private final int rank;
     private final String name;
     private final String display;
     private final String definition;
@@ -48,7 +47,6 @@ public class ExportObject {
     private final List<ExportLink> links;
 
     public ExportObject(AtlasObject object) {
-	this.rank = object.getRank();
 	this.name = object.getName();
 	this.display = object.getDisplay();
 	this.definition = object.getDefinition();

@@ -69,7 +69,6 @@ public class AtlasDaoWriteTest {
 	AtlasObject object = new AtlasObject();
 	object.setCollection(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
-	object.setRank(9999);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 
@@ -105,7 +104,6 @@ public class AtlasDaoWriteTest {
 	AtlasObject object = new AtlasObject();
 	object.setCollection(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
-	object.setRank(9999);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 
@@ -145,7 +143,6 @@ public class AtlasDaoWriteTest {
 	object.setCollection(new AtlasCollection(1, "instrument"));
 
 	object.setState(AtlasObject.State.DEVELOPMENT);
-	object.setRank(9999);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 	object.setDefinition("Banjo definition.");
@@ -213,7 +210,6 @@ public class AtlasDaoWriteTest {
 	assertThat(expected.getCollection().getDisplay(), equalTo("Instrument"));
 	assertThat(expected.getCollection().getIconName(), equalTo("instrument.png"));
 
-	assertThat(expected.getRank(), equalTo(9999));
 	assertThat(expected.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(expected.getName(), equalTo("banjo"));
 	assertThat(expected.getDisplay(), equalTo("Banjo"));
@@ -366,6 +362,35 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getRelated().get(1), equalTo("bandoneon"));
     }
 
+
+    @Test
+    public void saveAtlasObject_Rename() {
+	// object #1 has relation with object #3
+	AtlasObject object = dao.getAtlasObject(1);
+	assertThat(object.getRelated(), notNullValue());
+	assertThat(object.getRelated(), hasSize(2));
+	assertThat(object.getRelated().get(0), equalTo("bandoneon"));
+
+	// change name of object #3
+	object = dao.getAtlasObject(3);
+	assertThat(object.getRelated(), notNullValue());
+	assertThat(object.getName(), equalTo("bandoneon"));
+	
+	object.setName("bandoneon-changed");
+	dao.saveAtlasObject(object);
+
+	// object #3 name should be changed
+	object = dao.getAtlasObject(3);
+	assertThat(object.getRelated(), notNullValue());
+	assertThat(object.getName(), equalTo("bandoneon-changed"));
+
+	// object #1 relation should be updated
+	object = dao.getAtlasObject(1);
+	assertThat(object.getRelated(), notNullValue());
+	assertThat(object.getRelated(), hasSize(2));
+	assertThat(object.getRelated().get(0), equalTo("bandoneon-changed"));
+    }
+    
     // ----------------------------------------------------------------------------------------------
 
     private static MediaSRC src(String objectName, String mediaFile) {

@@ -49,8 +49,6 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     /** Last change timestamp. */
     private Date lastUpdated;
 
-    private int rank;
-
     /**
      * Object name unique per its parent collection. This value is used internally
      * and is not meant to be displayed to user.
@@ -313,14 +311,6 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 
     public void setLastUpdated(Date lastUpdated) {
 	this.lastUpdated = lastUpdated;
-    }
-
-    public int getRank() {
-	return rank;
-    }
-
-    public void setRank(int relevanceRank) {
-	this.rank = relevanceRank;
     }
 
     @Override

@@ -14,7 +14,6 @@
 	margin: 0;
 	margin-bottom: 36px;
 	font-size: 22px;
-	color: @color/accent;
 }
 
 .reader .features p:last-child {

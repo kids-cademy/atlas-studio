@@ -9,9 +9,6 @@
 		</div>
 		<div class="container">
 			<div class="controlset">
-				<label>rank</label><input name="rank" class="mini optional" />
-			</div>
-			<div class="controlset">
 				<label>name</label><input name="name" />
 			</div>
 			<div class="controlset">
@@ -30,7 +27,7 @@
 				<select class="inline" w:widget="compo/hdate-period-select"></select>
 				<select class="inline" w:widget="compo/hdate-era-select"></select>
 			</div>
-			<div class="controlset" data-name="end-date" data-class="com.kidscademy.form.HDateControl">
+			<div class="controlset end-date" data-name="end-date" data-class="com.kidscademy.form.HDateControl">
 				<label>end date</label>
 				<input name="value" class="inline small optional" />
 				<select class="inline" w:widget="compo/hdate-format-select"></select>
@@ -40,7 +37,7 @@
 			<div class="controlset">
 				<label>state</label><select w:widget="compo/object-state-select" name="state"></select>
 			</div>
-			<div class="controlset">
+			<div class="controlset conservation-status">
 				<label>conservation status</label><select w:widget="compo/conservation-select" name="conservation" class="optional"></select>
 			</div>
 		</div>

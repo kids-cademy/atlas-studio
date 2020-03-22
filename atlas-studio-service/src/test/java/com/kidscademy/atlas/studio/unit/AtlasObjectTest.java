@@ -23,7 +23,6 @@ public class AtlasObjectTest {
     public void serializeJSON() throws MalformedURLException {
 	AtlasObject object = new AtlasObject();
 	object.setId(1);
-	object.setRank(9999);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
 	object.setDescription("Banjo description.");
