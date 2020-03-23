@@ -123,6 +123,24 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public void removeAtlasCollection(int collectionId) throws BusinessException {
 	BusinessRules.emptyCollection(collectionId);
+	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
+
+	File icon = Files.mediaFile(collection);
+	if(!icon.delete()) {
+	    log.error("Cannot remove collection icon |%s|.", icon);
+	}
+	
+	File repositoryDir = Files.repositoryDir(collection.getName());
+	if (repositoryDir.isDirectory()) {
+	    String[] files = repositoryDir.list();
+	    if (files != null && files.length > 0) {
+		throw new BugError("Empty collection |%s| should have empty media directory.", collection.getName());
+	    }
+	    if (!repositoryDir.delete()) {
+		log.error("Cannot remove media directory for collection |%s|.", collection.getName());
+	    }
+	}
+
 	atlasDao.removeAtlasCollection(collectionId);
     }
 
@@ -582,11 +600,29 @@ public class AtlasServiceImpl implements AtlasService {
 	BusinessRules.transparentImage(imageKey, imageFile);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+	String targetExtension = null;
+	switch (imageKey) {
+	case Image.KEY_ICON:
+	case Image.KEY_CONTEXTUAL:
+	    targetExtension = "jpg";
+	    break;
 
-	File targetFile = Files.mediaFile(atlasItem, imageKey, imageInfo.getType().extension());
+	case Image.KEY_COVER:
+	case Image.KEY_FEATURED:
+	    targetExtension = "png";
+	    break;
+
+	default:
+	    targetExtension = imageInfo.getType().extension();
+	}
+
+	File targetFile = Files.mediaFile(atlasItem, imageKey, targetExtension);
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
+	if (!imageInfo.getType().extension().equals(targetExtension)) {
+	    imageProcessor.convert(imageFile, (imageFile = Files.replaceExtension(imageFile, targetExtension)));
+	}
 	if (!imageFile.renameTo(targetFile)) {
 	    throw new IOException("Unable to upload " + targetFile);
 	}

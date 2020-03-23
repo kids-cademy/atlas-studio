@@ -314,3 +314,4 @@ public interface AtlasService {
 
     Feature updateFeatureDisplay(Feature feature);
 }
+

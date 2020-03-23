@@ -14,7 +14,7 @@ import js.dom.DocumentBuilder;
 import js.dom.Element;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.unit.TestContext;
-import js.tools.commons.util.Classes;
+import js.util.Classes;
 
 public class MerriamWebsterTest {
     private static final String DESCRIPTOR = "" + //

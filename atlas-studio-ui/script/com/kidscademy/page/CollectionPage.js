@@ -45,7 +45,9 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._actions.fire("load-items");
 
 		const exportAnchor = sideMenu.getByCssClass("export");
-		exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collectionId}&state=${this._filterForm.getObject().state}`);
+		exportAnchor.on("click", ev => {
+			exportAnchor.setAttr("href", `export-atlas-collection.xsp?id=${this._collectionId}&state=${this._filterForm.getObject().state}`);
+		});
 	}
 
 	_onUnload() {

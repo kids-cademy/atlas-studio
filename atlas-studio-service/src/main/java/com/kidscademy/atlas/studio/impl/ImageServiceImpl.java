@@ -159,11 +159,6 @@ public class ImageServiceImpl implements ImageService {
     public Image commitImage(Image image) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
 	handler.commit();
-
-	if (image.isIcon()) {
-	    imageProcessor.resize(handler.source(), handler.icon(), 96, 96);
-	}
-
 	updateImage(image, handler.source(), handler.sourceSrc());
 	return image;
     }

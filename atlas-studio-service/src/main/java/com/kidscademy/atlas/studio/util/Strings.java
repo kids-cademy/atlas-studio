@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import js.json.Json;
-import js.tools.commons.util.Classes;
+import js.util.Classes;
 
 public class Strings extends js.util.Strings {
     /**

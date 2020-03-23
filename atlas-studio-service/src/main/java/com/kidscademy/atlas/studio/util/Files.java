@@ -58,6 +58,10 @@ public final class Files extends js.util.Files {
 	return new File(REPOSITORY_DIR, Strings.concat("/media/link/", linkMeta.getIconName()));
     }
 
+    public static File repositoryDir(String repositoryName) {
+	return new File(REPOSITORY_DIR, Strings.concat("/media/atlas/", repositoryName, '/'));
+    }
+
     public static File objectDir(RepositoryObject object) {
 	return objectDir(object.getRepositoryName(), object.getName());
     }

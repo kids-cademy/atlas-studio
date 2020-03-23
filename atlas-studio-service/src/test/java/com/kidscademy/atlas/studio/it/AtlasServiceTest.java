@@ -25,7 +25,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 
 import js.dom.DocumentBuilder;
 import js.tiny.container.core.AppContext;
-import js.tools.commons.util.Classes;
+import js.util.Classes;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AtlasServiceTest {
