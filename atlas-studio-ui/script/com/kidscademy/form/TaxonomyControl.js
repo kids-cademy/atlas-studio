@@ -142,7 +142,10 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			// taxon name select options should display only not already used names
 			const names = this._taxonomyView.getChildren().map(taxonView => taxonView.getUserData().name);
 			this._metaEditor.open(names);
-			this._updateActions();
+			if (!this._updateActions()) {
+				js.ua.System.alert("@string/alert-no-taxons");
+				this._onClose();
+			}
 			return;
 		}
 
@@ -353,10 +356,21 @@ com.kidscademy.form.TaxonomyControl.MetaEditor = class extends js.dom.Element {
 		this._meta = meta;
 	}
 
+	/**
+	 * Open this meta editor and load available taxon names.
+	 * 
+	 * @param {Array} currentNames names list for taxon already used.
+	 * @return {Boolean} false if all registered taxons are used - in which case this editor is not displayed, 
+	 * true if this meta editor is opened successfully.
+	 */
 	open(currentNames) {
 		const options = this._meta.getTaxonNames().filter(name => currentNames.indexOf(name) === -1);
 		this._select.setOptions(options);
+		if (options.length === 0) {
+			return false;
+		}
 		this.show();
+		return true;
 	}
 
 	getValue() {

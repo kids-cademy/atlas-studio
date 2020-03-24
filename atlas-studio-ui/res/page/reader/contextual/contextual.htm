@@ -1,21 +1,20 @@
 <div class="section contextual">
-	<div class="image-frame">
-		<img class="image fit-top-center" data-src="images.contextual.src" />
-		<div data-if="!sampleTitle" class="caption" data-html="images.contextual.caption"></div>
-		<div data-if="sampleTitle">
-			<p class="title accent" data-text="sampleTitle"></p>
-			<img class="play" src="@image/action-play" />
+	<div class="flex-v">
+		<img class="image" data-src="images.contextual.src" />
+
+		<p data-if="samplePath" class="sample-title"><span class="text" data-text="sampleTitle"></span><img class="play" src="@image/action-play" /></p>
+		<img data-if="samplePath" class="waveform" data-src="waveformSrc" />
+	
+		<div data-if="!samplePath" class="frame">
+			<div data-if="images.contextual.caption" class="caption" data-html="images.contextual.caption"></div>
+			<div data-if="!images.contextual.caption" class="graphics">
+				<hr class="rule h" />
+				<img class="graphic i1" src="@image/circle-1" />
+				<img class="graphic i2" src="@image/circle-2" />
+				<img class="graphic i3" src="@image/circle-3" />
+				<img class="graphic i4" src="@image/circle-4" />
+				<img class="graphic i5" src="@image/circle-5" />
+			</div>
 		</div>
 	</div>
-	<div class="graphics" data-if="!waveformSrc">
-		<div class="group">
-			<hr class="rule h" />
-			<img class="graphic i1" src="@image/circle-1" />
-			<img class="graphic i2" src="@image/circle-2" />
-			<img class="graphic i3" src="@image/circle-3" />
-			<img class="graphic i4" src="@image/circle-4" />
-			<img class="graphic i5" src="@image/circle-5" />
-		</div>
-	</div>
-	<img class="graphics" data-src="waveformSrc" data-if="waveformSrc" />
 </div>

@@ -84,5 +84,7 @@ public class ExportFeature {
 	EN.put("mineral.potassium", "Potassium");
 	EN.put("mineral.sodium", "Sodium");
 	EN.put("mineral.zinc", "Zinc");
+	EN.put("orbit.aphelion", "Orbit Aphelion");
+	EN.put("orbit.perihelion", "Orbit Perihelion");
     }
 }

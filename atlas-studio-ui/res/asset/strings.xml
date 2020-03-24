@@ -30,6 +30,7 @@
 	<alert-object-no-display>Please enter a display name for this object.</alert-object-no-display>
 	<alert-invalid-link-url>Link invalid URL.</alert-invalid-link-url>
 	<alert-inconsistent-db>Inconsistent database record! Force removing.</alert-inconsistent-db>
+	<alert-no-taxons>No more taxons available.</alert-no-taxons>
 
 	<confirm-collection-remove>Please confirm atlas collection remove. Collection should be empty.</confirm-collection-remove>
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>

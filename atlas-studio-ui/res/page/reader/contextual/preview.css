@@ -1,0 +1,62 @@
+html {
+	font-size: initial !important;
+	letter-spacing: normal !important;
+}
+
+body {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: "Montserrat", "Open Sans";
+	font-weight: lighter;
+	background-color: rgb(74, 144, 226);
+}
+
+p {
+	line-height: normal;	
+}
+
+.top-menu {
+	height: @dimen/action-size;
+	padding-right: 30px;
+	border-bottom: solid 1px white;
+}
+
+.top-menu .action {
+	width: @dimen/action-size;
+	height: @dimen/action-size;
+	margin: 0 0 0 @dimen/action-margin;
+	xfilter: invert(100%);
+	cursor: pointer;
+	background-color: #E6E6E660;
+}
+
+.section {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	height: 100%;
+	margin-left: @dimen/section-space;
+	xborder: dashed 1px cyan;
+	white-space: normal;
+	overflow: hidden;
+}
+
+.h-scroll {
+	position: absolute;
+	width: 100%;
+	top: @dimen/action-size;
+	bottom: 0;
+	overflow-x: scroll;
+	padding: @dimen/page-padding 0 @eval(sub @dimen/page-padding 17px);
+}
+
+.h-linear {
+	left: 0;
+	width: auto;
+	height: 100%;
+}
+
+.section.contextual {
+	width: 860px;
+}

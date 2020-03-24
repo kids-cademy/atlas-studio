@@ -14,6 +14,7 @@
 	margin: 0;
 	margin-bottom: 36px;
 	font-size: 22px;
+	color: @color/text-accent;
 }
 
 .reader .features p:last-child {
@@ -46,7 +47,7 @@
 .features .name {
 	xwidth: 360px;
 	xbackground-color: rgba(21, 101, 192, 0.25);
-	color: @color/text;
+	color: @color/text-inverse;
 	text-transform: uppercase;
 	white-space: nowrap;
 	overflow: hidden;
