@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,10 @@ import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.Release;
+import com.kidscademy.atlas.studio.model.ReleaseChild;
+import com.kidscademy.atlas.studio.model.ReleaseItem;
+import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
@@ -49,6 +54,13 @@ public class AtlasDaoImpl implements AtlasDao {
     public int getCollectionSize(int collectionId) {
 	Number count = (Number) em.createQuery("select count(o) from AtlasObject o where o.collection.id=:id")
 		.setParameter("id", collectionId).getSingleResult();
+	return count.intValue();
+    }
+
+    @Override
+    public int getReleaseSize(int releaseId) {
+	Number count = (Number) em.createQuery("select count(r.children) from ReleaseParent r where r.id=:id")
+		.setParameter("id", releaseId).getSingleResult();
 	return count.intValue();
     }
 
@@ -162,23 +174,29 @@ public class AtlasDaoImpl implements AtlasDao {
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
 	// atlas object features are @Emebddable mapped with @@ElementCollection
-	// also mapping has @OrderColumn annotation meaning that implementation is responsible for updating order column from database
+	// also mapping has @OrderColumn annotation meaning that implementation is
+	// responsible for updating order column from database
 	//
-	// when update features list content, especially when reorder, current eclipselink implementation generates a query that compare
+	// when update features list content, especially when reorder, current
+	// eclipselink implementation generates a query that compare
 	// for equality all persisted Feature class properties
-	// the problem is when compare for null value: 
-	// generated SQL contains (maximum = ?) replaced with (maximum = NULL) which is not valid SQL; it should be (maxim IS NULL)
+	// the problem is when compare for null value:
+	// generated SQL contains (maximum = ?) replaced with (maximum = NULL) which is
+	// not valid SQL; it should be (maxim IS NULL)
 	//
 	// here is and example for generated SQL
-	// UPDATE AtlasObject_FEATURES SET features_ORDER = ? WHERE ((AtlasObject_ID = ?) AND ((VALUE = ?) AND ((QUANTITY = ?) AND ((NAME = ?) AND (MAXIMUM = ?)))))
+	// UPDATE AtlasObject_FEATURES SET features_ORDER = ? WHERE ((AtlasObject_ID =
+	// ?) AND ((VALUE = ?) AND ((QUANTITY = ?) AND ((NAME = ?) AND (MAXIMUM = ?)))))
 	//
-	// the problem is observed only on feature maximum value which is Double boxing class that should be null if not used
+	// the problem is observed only on feature maximum value which is Double boxing
+	// class that should be null if not used
 	//
 	// quick workaround is to remove all current features and reload!
-	// see com.kidscademy.atlas.studio.it.AtlasDaoWriteTest#saveAtlasObject_FeaturesReorder()
+	// see
+	// com.kidscademy.atlas.studio.it.AtlasDaoWriteTest#saveAtlasObject_FeaturesReorder()
 	//
 	em.createNativeQuery("DELETE FROM atlasobject_features WHERE atlasobject_id=" + object.getId()).executeUpdate();
-	
+
 	object.setLastUpdated(new Timestamp(System.currentTimeMillis()));
 	if (object.getId() == 0) {
 	    em.persist(object);
@@ -368,5 +386,80 @@ public class AtlasDaoImpl implements AtlasDao {
     public List<AtlasItem> getAtlasItems(List<Integer> objectIds) {
 	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class)
 		.setParameter("ids", objectIds).getResultList();
+    }
+
+    @Override
+    public List<ReleaseItem> getReleases() {
+	return em.createQuery("select r from ReleaseItem r order by r.display", ReleaseItem.class).getResultList();
+    }
+
+    @Override
+    public Release getReleaseById(int releaseId) {
+	return em.find(Release.class, releaseId);
+    }
+
+    @Override
+    public ReleaseParent getReleaseParentById(int releaseId) {
+	return em.find(ReleaseParent.class, releaseId);
+    }
+
+    @Override
+    @Mutable
+    public void saveRelease(Release releaase) throws IOException {
+	releaase.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+	if (releaase.getId() == 0) {
+	    em.persist(releaase);
+	} else {
+	    em.merge(releaase).postMerge(releaase);
+	}
+    }
+
+    @Override
+    @Mutable
+    public void removeRelease(int releaseId) {
+	Release release = em.find(Release.class, releaseId);
+	if (release != null) {
+	    em.remove(release);
+	}
+    }
+
+    @Override
+    @Mutable
+    public void addReleaseChild(int releaseId, int childId) {
+	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	ReleaseChild child = em.find(ReleaseChild.class, childId);
+	release.getChildren().add(child);
+    }
+
+    @Override
+    @Mutable
+    public void addReleaseChildren(int releaseId, List<Integer> childIds) {
+	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	List<ReleaseChild> children = em
+		.createQuery("select c from ReleaseChild c where c.id in :ids", ReleaseChild.class)
+		.setParameter("ids", childIds).getResultList();
+	release.getChildren().addAll(children);
+    }
+
+    @Override
+    @Mutable
+    public void removeReleaseChild(int releaseId, int childId) {
+	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	ReleaseChild child = em.find(ReleaseChild.class, childId);
+	release.getChildren().remove(child);
+    }
+
+    @Override
+    public List<AtlasItem> getReleaseItems(int releaseId) {
+	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	List<Integer> ids = new ArrayList<>();
+	for (ReleaseChild child : release.getChildren()) {
+	    ids.add(child.getId());
+	}
+	if (ids.isEmpty()) {
+	    return Collections.emptyList();
+	}
+	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class).setParameter("ids", ids)
+		.getResultList();
     }
 }

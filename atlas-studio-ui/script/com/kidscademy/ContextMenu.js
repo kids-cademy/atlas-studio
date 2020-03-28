@@ -19,8 +19,7 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 
 		this._contextView = null;
 
-		const closeAction = this.getByCssClass("close");
-		closeAction.on("click", this._onClose, this);
+		this.getByCssClass("close").on("click", this._onClose, this);
 	}
 
 	/**

@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
+import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.util.Files;
 
@@ -71,6 +73,7 @@ public class AtlasDaoWriteTest {
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
+	object.setDefinition("Definition");
 
 	Map<String, Image> pictures = new HashMap<>();
 	object.setImages(pictures);
@@ -106,6 +109,7 @@ public class AtlasDaoWriteTest {
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
+	object.setDefinition("Definition");
 
 	Map<String, Image> images = new HashMap<>();
 	object.setImages(images);
@@ -362,7 +366,6 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getRelated().get(1), equalTo("bandoneon"));
     }
 
-
     @Test
     public void saveAtlasObject_Rename() {
 	// object #1 has relation with object #3
@@ -375,7 +378,7 @@ public class AtlasDaoWriteTest {
 	object = dao.getAtlasObject(3);
 	assertThat(object.getRelated(), notNullValue());
 	assertThat(object.getName(), equalTo("bandoneon"));
-	
+
 	object.setName("bandoneon-changed");
 	dao.saveAtlasObject(object);
 
@@ -390,7 +393,44 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getRelated(), hasSize(2));
 	assertThat(object.getRelated().get(0), equalTo("bandoneon-changed"));
     }
-    
+
+    @Test
+    public void addReleaseChild() {
+	dao.addReleaseChild(1, 4);
+	ReleaseParent release = dao.getReleaseParentById(1);
+	assertThat(release, notNullValue());
+	assertThat(release.getChildren(), notNullValue());
+	assertThat(release.getChildren(), hasSize(3));
+	assertThat(release.getChildren().get(0).getId(), equalTo(1));
+	assertThat(release.getChildren().get(1).getId(), equalTo(2));
+	assertThat(release.getChildren().get(2).getId(), equalTo(4));
+    }
+
+    @Test
+    public void addReleaseChildren() {
+	dao.addReleaseChildren(1, Arrays.asList(4, 3));
+	ReleaseParent release = dao.getReleaseParentById(1);
+	assertThat(release, notNullValue());
+	assertThat(release.getChildren(), notNullValue());
+	assertThat(release.getChildren(), hasSize(4));
+	// surprisingly children are ordered by id instead of insertion order
+	// perhaps because ReleaseChild has equals and hashCode dependent on id
+	assertThat(release.getChildren().get(0).getId(), equalTo(1));
+	assertThat(release.getChildren().get(1).getId(), equalTo(2));
+	assertThat(release.getChildren().get(2).getId(), equalTo(3));
+	assertThat(release.getChildren().get(3).getId(), equalTo(4));
+    }
+
+    @Test
+    public void removeReleaseChild() {
+	dao.removeReleaseChild(1, 1);
+	ReleaseParent release = dao.getReleaseParentById(1);
+	assertThat(release, notNullValue());
+	assertThat(release.getChildren(), notNullValue());
+	assertThat(release.getChildren(), hasSize(1));
+	assertThat(release.getChildren().get(0).getId(), equalTo(2));
+    }
+
     // ----------------------------------------------------------------------------------------------
 
     private static MediaSRC src(String objectName, String mediaFile) {

@@ -43,9 +43,15 @@ com.kidscademy.IconControl = class extends js.dom.Element {
         this._metaForm.open();
     }
 
+    /**
+     * Handler invoked when underlying image editor is closed.
+     * @param {Object} image optional image descriptor, possible null.
+     */
     _onImageEditorClose(image) {
         this._metaForm.hide();
-        this._imageView.setValue(image.src);
+        if (image != null) {
+            this._imageView.setValue(image.src);
+        }
     }
 
     _onImageEditorUpload(handler) {

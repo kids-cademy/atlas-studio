@@ -1,0 +1,84 @@
+<div class="release-form" data-class="com.kidscademy.release.ReleaseForm" xmlns:w="js-lib.com/wood">
+	<form class="form">
+		<fieldset>
+			<div class="header container">
+				<h2>Identity</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>name</label><input name="name" />
+					</div>
+					<div class="controlset">
+						<label>display</label><input name="display" />
+					</div>
+					<div class="controlset">
+						<label>package</label><input name="package-name" />
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset class="graphic-section">
+			<div class="header container">
+				<h2>Graphic Assets</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="icon-control" data-class="com.kidscademy.release.GraphicAssets">
+						<div class="view images-list">
+							<img name="images.icon" class="thumbnail optional" data-class="js.dom.ImageControl" />
+							<img name="images.feature" class="thumbnail optional" data-class="js.dom.ImageControl" />
+							<img name="images.cover" class="thumbnail optional" data-class="js.dom.ImageControl" />
+						</div>
+						<div class="meta exclude hidden" data-class="com.kidscademy.FormData">
+							<div class="controlset">
+								<label>source</label> <input name="source" class="large optional" />
+							</div>
+						</div>
+						<div w:widget="compo/image-editor"></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="properties-section">
+			<div class="header container">
+				<h2>Properties</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>app name</label><input name="properties.app_name" />
+					</div>
+					<div class="controlset">
+						<label>edition</label><input name="properties.app_edition" />
+					</div>
+					<div class="controlset">
+						<label>release</label><input name="properties.app_release" />
+					</div>
+					<div class="controlset">
+						<label>app update</label><input name="properties.app_update" />
+					</div>
+					<div class="controlset">
+						<label>publisher</label><input name="properties.app_publisher" />
+					</div>
+					<div class="controlset">
+						<label>content license</label><input name="properties.content_license" />
+					</div>
+					<div class="controlset">
+						<label>logotype</label><input name="properties.app_logotype" />
+					</div>
+					<div class="controlset">
+						<label>about</label><textarea name="properties.app_about" class="small"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="container buttons-bar">
+		<button name="save">@string/save</button>
+		<button name="cancel">@string/cancel</button>
+	</div>
+</div>						

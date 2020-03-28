@@ -11,80 +11,95 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
 @Entity
-@Table(name="atlasitem")
-public class ExportItem implements RepositoryObject {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @ManyToOne
-    private AtlasCollection collection;
+@Table(name = "atlasitem")
+public class ExportItem implements RepositoryObject
+{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Enumerated(EnumType.STRING)
-    private AtlasObject.State state;
-    
-    private String name;
-    private String display;
-    private String definition;
-    private String iconName;
+  @ManyToOne
+  private AtlasCollection collection;
 
+  @Enumerated(EnumType.STRING)
+  private AtlasObject.State state;
 
-    @Transient
-    private int index;
-    @Transient
-    private String iconPath;
-    
-    public int getId() {
-        return id;
-    }
+  private String name;
+  private String display;
+  private String definition;
+  private String iconName;
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
+  @Transient
+  private int index;
+  @Transient
+  private String iconPath;
 
-    public int getIndex() {
-        return index;
-    }
+  public ExportItem() {
+  }
 
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
-    }
+  public ExportItem(AtlasItem item) {
+    // TODO: HACK
+    this.id = item.getId();
+    this.collection = item.getCollection();
+    this.state = item.getState();
+    this.name = item.getName();
+    this.display = item.getDisplay();
+    this.definition = item.getDefinition();
+    this.iconName = item.getIconName();
+  }
 
-    public String getIconPath() {
-        return iconPath;
-    }
+  public int getId() {
+    return id;
+  }
 
-    @Override
-    public String getRepositoryName() {
-	return collection.getName();
-    }
+  public void setIndex(int index) {
+    this.index = index;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public int getIndex() {
+    return index;
+  }
 
-    @Override
-    public String getName() {
-	return name;
-    }
+  public void setIconPath(String iconPath) {
+    this.iconPath = iconPath;
+  }
 
-    public String getDisplay() {
-        return display;
-    }
+  public String getIconPath() {
+    return iconPath;
+  }
 
-    public String getDefinition() {
-        return definition;
-    }
+  @Override
+  public String getRepositoryName() {
+    return collection.getName();
+  }
 
-    public String getIconName() {
-        return iconName;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public AtlasObject.State getState() {
-        return state;
-    }
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  public String getDisplay() {
+    return display;
+  }
+
+  public String getDefinition() {
+    return definition;
+  }
+
+  public String getIconName() {
+    return iconName;
+  }
+
+  public AtlasObject.State getState() {
+    return state;
+  }
 }

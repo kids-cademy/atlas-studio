@@ -17,6 +17,7 @@ com.kidscademy.page.Page = class extends js.ua.Page {
             "Featured picture should have transparent background.", // TRANSPARENT_FEATURED_PICTURE
             "Collection name already used.", // UNIQUE_COLLECTION_NAME
             "Collection should be empty.", // EMPTY_COLLECTION
+            "Release should be empty.", // EMPTY_RELEASE
             "Not registered link domain." // REGISTERED_LINK_DOMAIN
         ];
 

@@ -21,21 +21,21 @@ import com.kidscademy.atlas.studio.util.Files;
  * @author Iulian Rotaru
  */
 @Entity
-public class AtlasItem implements RepositoryObject {
+public class AtlasItem implements RepositoryObject, GraphicObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
     private AtlasCollection collection;
-
+    
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
     
+    private Date lastUpdated;
     private String name;
     private String display;
     private String definition;
-    private Date lastUpdated;
 
     /**
      * Media file name for object icon. Object icon has a small dimension and has
@@ -87,14 +87,21 @@ public class AtlasItem implements RepositoryObject {
     }
 
     @Override
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    @Override
     public String getName() {
 	return name;
     }
 
+    @Override
     public String getDisplay() {
 	return display;
     }
 
+    @Override
     public String getDefinition() {
 	return definition;
     }
@@ -103,14 +110,11 @@ public class AtlasItem implements RepositoryObject {
 	return state;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
     public String getIconName() {
 	return iconName;
     }
 
+    @Override
     public MediaSRC getIconSrc() {
 	return iconSrc;
     }

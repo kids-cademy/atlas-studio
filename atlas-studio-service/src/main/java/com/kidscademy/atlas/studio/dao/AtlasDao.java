@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +20,9 @@ import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.Release;
+import com.kidscademy.atlas.studio.model.ReleaseItem;
+import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
@@ -120,9 +124,29 @@ public interface AtlasDao {
 
     int getCollectionSize(int collectionId);
 
+    int getReleaseSize(int releaseId);
+
     List<FeatureMeta> getFeaturesMeta();
-    
+
     void saveFeatureMeta(FeatureMeta featureMeta);
-    
+
     void removeFeatureMeta(int featureMetaId);
+
+    List<ReleaseItem> getReleases();
+
+    Release getReleaseById(int releaseId);
+
+    void saveRelease(Release release) throws IOException;
+
+    void removeRelease(int releaseId);
+
+    ReleaseParent getReleaseParentById(int releaseId);
+
+    void addReleaseChild(int releaseId, int childId);
+
+    void addReleaseChildren(int releaseId, List<Integer> childIds);
+
+    void removeReleaseChild(int releaseId, int childId);
+
+    List<AtlasItem> getReleaseItems(int releaseId);
 }

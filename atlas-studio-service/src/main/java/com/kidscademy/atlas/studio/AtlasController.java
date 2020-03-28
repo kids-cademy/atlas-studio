@@ -16,4 +16,6 @@ public interface AtlasController {
     View exportAllAtlasCollections();
 
     View exportAtlasCollection(int collectionId, AtlasObject.State state);
+    
+    Resource apk(String name);
 }

@@ -111,6 +111,7 @@
 		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
 		<name>accordion</name>
 		<display>Accordion</display>
+		<definition>Accordion definition.</definition>
 		<description>Accordion description.</description>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
@@ -125,6 +126,7 @@
 		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
 		<name>eagle</name>
 		<display>Eagle</display>
+		<definition>Eagle definition.</definition>
 		<description>Eagle description.</description>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
@@ -139,6 +141,7 @@
 		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
 		<name>bandoneon</name>
 		<display>Bandoneon</display>
+		<definition>Bandoneon definition.</definition>
 		<description>Bandonenon description.</description>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
@@ -153,6 +156,7 @@
 		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
 		<name>cimbalom</name>
 		<display>Cimbalom</display>
+		<definition>Cimbalom definition.</definition>
 		<description>Cimbalom description.</description>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
@@ -305,4 +309,21 @@
 		<related>cimbalom</related>
 		<related_order>1</related_order>
 	</atlasobject_related>
+	
+	<release>
+		<id>1</id>
+		<lastUpdated>2020-03-25 21:14:32</lastUpdated>
+		<name>wild-birds</name>
+		<display>Wild Birds</display>
+		<packageName>com.kidscademy.birds</packageName>
+	</release>
+	
+	<release_atlasitem>
+		<release_id>1</release_id>
+		<objects_id>1</objects_id>
+	</release_atlasitem>
+	<release_atlasitem>
+		<release_id>1</release_id>
+		<objects_id>2</objects_id>
+	</release_atlasitem>
 </data-set>

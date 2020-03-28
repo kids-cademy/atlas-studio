@@ -18,8 +18,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		sideMenu.on(this, {
 			"&create-object": this._onCreateObject,
 			"&import-wikipedia": this._onImportWikipedia,
-			"&edit-collection": this._onEditCollection,
-			"&remove-collection": this._onRemoveCollection
+			"&add-to-release": this._onAddToRelease
 		});
 
 		this._contentView = this.getByClass(com.kidscademy.FrameView);
@@ -38,8 +37,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
-		this._collectionSelect = this.getByClass(com.kidscademy.ItemSelect);
-		AtlasService.getCollections(collections => this._collectionSelect.load(collections));
+		this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
 
 		this._filterForm.setObject(this.getPageAttr("filter-form"));
 		this._actions.fire("load-items");
@@ -143,6 +141,14 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		});
 	}
 
+	_onAddToRelease() {
+		const childIds = this._listView.getChildren().map(child => child.getAttr("id"));
+		ReleaseService.getReleases(releases => this._itemSelect.load(releases));
+		this._itemSelect.open(release => {
+			ReleaseService.addReleaseChildren(release.id, childIds);
+		});
+	}
+
 	// --------------------------------------------------------------------------------------------
 	// CONTEXT MENU HANDLERS
 
@@ -166,7 +172,8 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 	}
 
 	_onMoveObject(objectView) {
-		this._collectionSelect.open(collection => {
+		AtlasService.getCollections(collections => this._itemSelect.load(collections));
+		this._itemSelect.open(collection => {
 			const object = objectView.getUserData();
 			AtlasService.moveAtlasObject(object, collection.id, () => objectView.remove());
 		});

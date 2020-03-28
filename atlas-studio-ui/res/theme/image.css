@@ -1,3 +1,66 @@
+.images-list img {
+	margin-right: 40px;
+}
+
+/* THUMBNAIL */
+
+.thumbnail {
+	width: auto;
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px #E6E6E6;
+}
+
+/* ICON */
+
+.icon {
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px #E6E6E6;
+}
+
+/* SECTION ICON */
+
+.section-icon {
+	position: relative;
+	width: 0;
+	height: 0;
+	left: 80%;
+	top: -@eval(add (mul @dimen/section-icon-size 0.5) @dimen/section-padding);
+}
+
+.section-icon.bottom {
+	top: 10px;
+	bottom: @eval(add (mul @dimen/section-icon-size 0.5) @dimen/section-padding);
+}
+
+.section-icon img {
+	width: @dimen/section-icon-size;
+	height: @dimen/section-icon-size;
+	background-color: @color/teal-100;
+	border-radius: @eval(mul @dimen/section-icon-size 0.5);
+	box-shadow: 0 0 15px #408080;
+	box-sizing: border-box;
+	opacity: 0.8;
+}
+
+.section-icon.big img {
+	width: @dimen/section-icon-big-size;
+	height: @dimen/section-icon-big-size;
+	border-radius: @eval(mul @dimen/section-icon-big-size 0.5);
+}
+
+.section-icon.padding {
+	top: -70px;
+}
+
+.section-icon.padding img {
+	padding: 16px;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+
 .image.fit-center {
 	/* max-width and max-height are used to confine image inside its container */
 	max-width: 100%;

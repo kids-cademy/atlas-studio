@@ -86,5 +86,6 @@ public class ExportFeature {
 	EN.put("mineral.zinc", "Zinc");
 	EN.put("orbit.aphelion", "Orbit Aphelion");
 	EN.put("orbit.perihelion", "Orbit Perihelion");
+	EN.put("width", "Width");
     }
 }

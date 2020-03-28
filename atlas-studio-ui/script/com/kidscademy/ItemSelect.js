@@ -8,6 +8,8 @@ com.kidscademy.ItemSelect = class extends js.dom.Element {
 
 		this._listView = this.getByCssClass("list-view");
 		this._listView.on("click", this._onClick, this);
+
+		this.getByCssClass("close").on("click", this._onClose, this);
 	}
 
 	load(items) {
@@ -25,6 +27,10 @@ com.kidscademy.ItemSelect = class extends js.dom.Element {
 			this._callback(item.getUserData());
 			this.hide();
 		}
+	}
+
+	_onClose() {
+		this.hide();
 	}
 
 	toString() {

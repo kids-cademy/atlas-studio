@@ -18,7 +18,8 @@ public class BusinessRules {
     private static final int TRANSPARENT_FEATURED_PICTURE = 0x0002;
     private static final int UNIQUE_COLLECTION_NAME = 0x0003;
     private static final int EMPTY_COLLECTION = 0x0004;
-    private static final int REGISTERED_LINK_DOMAIN = 0x0005;
+    private static final int EMPTY_RELEASE = 0x0005;
+    private static final int REGISTERED_LINK_DOMAIN = 0x0006;
 
     private static final AtlasDao atlasDao;
     private static final ImageProcessor imageProcessor;
@@ -49,6 +50,12 @@ public class BusinessRules {
     public static void emptyCollection(int collectionId) throws BusinessException {
 	if (atlasDao.getCollectionSize(collectionId) > 0) {
 	    throw new BusinessException(EMPTY_COLLECTION);
+	}
+    }
+
+    public static void emptyRelease(int releaseId) throws BusinessException {
+	if (atlasDao.getReleaseSize(releaseId) > 0) {
+	    throw new BusinessException(EMPTY_RELEASE);
 	}
     }
 

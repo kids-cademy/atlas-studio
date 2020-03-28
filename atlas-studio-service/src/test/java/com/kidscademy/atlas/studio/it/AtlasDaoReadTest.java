@@ -10,6 +10,9 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import static org.mockito.Mockito.*;
+
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,7 +25,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
@@ -33,16 +40,20 @@ import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
+import com.kidscademy.atlas.studio.model.Release;
+import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.json.Json;
+import js.tiny.container.core.AppContext;
 import js.transaction.TransactionFactory;
 import js.transaction.eclipselink.TransactionFactoryImpl;
 import js.unit.db.Database;
 import js.util.Classes;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AtlasDaoReadTest {
     private static Database database;
     private static TransactionFactory factory;
@@ -50,15 +61,20 @@ public class AtlasDaoReadTest {
     @BeforeClass
     public static void beforeClass() throws SQLException {
 	database = new Database("atlas_test", "kids_cademy", "kids_cademy");
+	database.setVerbose(false);
 	database.load(Classes.getResourceAsStream("atlas-data-set.xml"));
 	factory = new TransactionFactoryImpl();
     }
+
+    @Mock
+    private AppContext context;
 
     private AtlasDao dao;
 
     @Before
     public void beforeTest() {
 	dao = factory.newInstance(AtlasDaoImpl.class);
+	new Application(context);
     }
 
     @Test
@@ -344,6 +360,34 @@ public class AtlasDaoReadTest {
 
 	object = dao.getNextAtlasObject(object.getId());
 	assertThat(object, nullValue());
+    }
+
+    @Test
+    public void getReleaseById() {
+	when(context.getProperty("releases.repository.path", File.class)).thenReturn(new File("fixture/release/"));
+
+	Release release = dao.getReleaseById(1);
+	assertThat(release, notNullValue());
+    }
+
+    @Test
+    public void getReleaseParentById() {
+	ReleaseParent release = dao.getReleaseParentById(1);
+	assertThat(release, notNullValue());
+
+	assertThat(release.getChildren(), notNullValue());
+	assertThat(release.getChildren(), hasSize(2));
+	assertThat(release.getChildren().get(0).getId(), equalTo(1));
+	assertThat(release.getChildren().get(1).getId(), equalTo(2));
+    }
+
+    @Test
+    public void getReleaseItems() {
+	List<AtlasItem> items = dao.getReleaseItems(1);
+	assertThat(items, notNullValue());
+	assertThat(items, hasSize(2));
+	assertThat(items.get(0).getName(), equalTo("accordion"));
+	assertThat(items.get(1).getName(), equalTo("eagle"));
     }
 
     // ----------------------------------------------------------------------------------------------

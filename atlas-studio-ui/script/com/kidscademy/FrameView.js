@@ -24,7 +24,7 @@ com.kidscademy.FrameView = class extends js.dom.Element {
         }
         this._view = this.getByCss(`:scope > [data-name='%s']`, viewName);
         $assert(this._view != null, "com.kidscademy.FrameView#select", "No child view with name |%s|.", viewName);
-        this._view.show();
+        return this._view.show();
     }
 
     setObject(object) {

@@ -49,6 +49,7 @@
 	<confirm-feature-meta-remove>Please confirm object feature remove.</confirm-feature-meta-remove>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
 	<confirm-object-not-saved>Atlas object is changed. Please confirm page leaving.</confirm-object-not-saved>
+	<confirm-release-remove>Please confirm release remove.</confirm-release-remove>
 
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 
@@ -78,6 +79,7 @@
 	<collection-remove>Remove Collection</collection-remove>
 	<collection-export>Export Collection</collection-export>
 	<collection-import-wikipedia>Import Wikipedia Article</collection-import-wikipedia>
+	<collection-add-to-release>Add To Release</collection-add-to-release>
 
 	<link-meta-create>Create Link Meta</link-meta-create>
 	<link-meta-edit>Edit Link Meta</link-meta-edit>
@@ -110,4 +112,10 @@
 	<quantity-length>LENGTH</quantity-length>
 	<quantity-speed>SPEED</quantity-speed>
 	<quantity-food-energy>FOOD_ENERGY</quantity-food-energy>
+
+	<release-create>Create Release</release-create>
+	<release-edit>Edit Release</release-edit>
+	<release-remove>Remove Release</release-remove>
+	<release-objects>Manage Objects</release-objects>
+	
 </string>

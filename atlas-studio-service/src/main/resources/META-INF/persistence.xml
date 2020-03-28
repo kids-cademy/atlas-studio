@@ -6,6 +6,7 @@
 		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 
 		<!-- attribute converters -->
+		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 
 		<!-- embeddables -->
@@ -29,6 +30,11 @@
 		<class>com.kidscademy.atlas.studio.model.LinkMeta</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
+
+		<class>com.kidscademy.atlas.studio.model.Release</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseItem</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseParent</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
@@ -74,6 +80,7 @@
 		<!-- disable cache on tests since create dependencies between test cases -->
 		<shared-cache-mode>NONE</shared-cache-mode>
 
+		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
@@ -92,6 +99,11 @@
 		<class>com.kidscademy.atlas.studio.model.LinkMeta</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
+
+		<class>com.kidscademy.atlas.studio.model.Release</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseItem</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseParent</class>
+		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

@@ -1,8 +1,8 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Cacheable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,12 +25,13 @@ import js.util.Params;
  * @author Iulian Rotaru
  */
 @Entity
-//@Cacheable
-public class AtlasCollection {
+// @Cacheable
+public class AtlasCollection implements GraphicObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private Date lastUpdated;
     private String name;
     private String display;
     private String definition;
@@ -76,6 +77,10 @@ public class AtlasCollection {
 	return id;
     }
 
+    public Date getLastUpdated() {
+	return lastUpdated;
+    }
+
     public String getName() {
 	return name;
     }
@@ -114,7 +119,7 @@ public class AtlasCollection {
     }
 
     public List<FeatureMeta> getFeaturesMeta() {
-        return featuresMeta;
+	return featuresMeta;
     }
 
     public static AtlasCollection create() {

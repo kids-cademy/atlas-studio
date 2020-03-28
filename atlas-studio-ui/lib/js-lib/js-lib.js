@@ -4178,11 +4178,12 @@ js.dom.Image.prototype = {
 	},
 
 	reload : function(src) {
+		var random = Math.random().toString(36).substr(2);
 		var i = src.indexOf('?');
 		if (i !== -1) {
-			src = src.substring(0, i);
+			return this.setSrc(src + '&__random__=' + random);
 		}
-		return this.setSrc(src + '?' + Math.random().toString(36).substr(2));
+		return this.setSrc(src + '?' + random);
 	},
 
 	reset : function() {
@@ -4247,8 +4248,15 @@ js.dom.ImageControl.prototype = {
 		}
 		
 		this._error = false;
-		this._node.src = "";
-		this._node.src = src + '?' + Date.now();
+		var random = Math.random().toString(36).substr(2);
+
+		var i = src.indexOf('?');
+		if (i !== -1) {
+			this._node.src = src + '&__random__=' + random;
+		}
+		else {
+			this._node.src = src + '?' + random;
+		}
 		return this;
 	},
 

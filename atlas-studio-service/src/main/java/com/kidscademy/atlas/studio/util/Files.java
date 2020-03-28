@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
@@ -108,5 +109,26 @@ public final class Files extends js.util.Files {
 
     public static String probeContentType(String path) {
 	return MEDIA_TYPES.get(getExtension(path));
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    private static File releasesDir;
+
+    private static final Object releasesDirMutex = new Object();
+
+    public static File releasesDir() {
+	if (releasesDir == null) {
+	    synchronized (releasesDirMutex) {
+		if (releasesDir == null) {
+		    releasesDir = Application.instance().getProperty("releases.repository.path", File.class);
+		}
+	    }
+	}
+	return releasesDir;
+    }
+
+    public static File releaseDir(String releaseName) {
+	return new File(releasesDir(), releaseName);
     }
 }
