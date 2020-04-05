@@ -27,11 +27,6 @@ com.kidscademy.TextColumn = class extends js.dom.Element {
 		this.getParent().show(this.getChildrenCount());
 	}
 
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.TextColumn";
 	}

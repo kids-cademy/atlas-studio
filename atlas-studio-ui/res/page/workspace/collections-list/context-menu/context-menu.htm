@@ -1,13 +1,8 @@
 <div class="dialog-frame context-menu hidden" data-class="com.kidscademy.ContextMenu" xmlns:w="js-lib.com/wood">
 	<div class="dialog">
-		<div class="caption">
-			<img class="close" src="@image/action/close" />
-		</div>
+		<div class="caption"><img class="close" src="@image/action/close" /></div>
 		<div class="content">
-			<div class="object">
-				<img data-src="icon-src" />
-				<h3 data-text="display"></h3>
-			</div>
+			<div class="object" w:widget="compo/object-box"></div>
 			<ul class="menu">
 				<!-- if context menu is no triggered by an object from parent list, this context menu has 'no-object' class -->
 				<!-- in this case menu displays only items possessing the same 'no-object' class, that is, 'create-collection' item  -->

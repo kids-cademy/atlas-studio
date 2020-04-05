@@ -13,12 +13,15 @@
 						<label>display</label><input name="display" />
 					</div>
 					<div class="controlset">
-						<label>package</label><input name="package-name" />
+						<label>brief</label><input name="brief" />
+					</div>
+					<div class="controlset">
+						<label>definition</label><textarea name="definition" class="small"></textarea>
 					</div>
 				</div>
 			</div>
 		</fieldset>
-		
+					
 		<fieldset class="graphic-section">
 			<div class="header container">
 				<h2>Graphic Assets</h2>
@@ -42,36 +45,46 @@
 			</div>
 		</fieldset>
 
-		<fieldset class="properties-section">
+		<fieldset>
 			<div class="header container">
 				<h2>Properties</h2>
 			</div>
 			<div class="content">
 				<div class="container">
 					<div class="controlset">
-						<label>app name</label><input name="properties.app_name" />
+						<label>publisher</label><input name="publisher" />
 					</div>
 					<div class="controlset">
-						<label>edition</label><input name="properties.app_edition" />
+						<label>edition</label><input name="edition" />
 					</div>
 					<div class="controlset">
-						<label>release</label><input name="properties.app_release" />
+						<label>version</label><input name="version" />
 					</div>
 					<div class="controlset">
-						<label>app update</label><input name="properties.app_update" />
+						<label>license</label><input name="license" />
 					</div>
-					<div class="controlset">
-						<label>publisher</label><input name="properties.app_publisher" />
-					</div>
-					<div class="controlset">
-						<label>content license</label><input name="properties.content_license" />
-					</div>
-					<div class="controlset">
-						<label>logotype</label><input name="properties.app_logotype" />
-					</div>
-					<div class="controlset">
-						<label>about</label><textarea name="properties.app_about" class="small"></textarea>
-					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<div class="header container">
+				<h2>README</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<textarea name="readme" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<div class="header container">
+				<h2>PRIVACY</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<textarea name="privacy" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
 				</div>
 			</div>
 		</fieldset>

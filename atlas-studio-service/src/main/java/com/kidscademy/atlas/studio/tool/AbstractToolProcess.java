@@ -28,6 +28,16 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	return builder.start();
     }
 
+    protected static Process start(File directory, List<String> command) throws IOException {
+	ProcessBuilder builder = new ProcessBuilder(command);
+	builder.directory(directory);
+	// redirect STDERR to STDOUT so that reading process.getInputStream get them
+	// both
+	builder.redirectErrorStream(true);
+	log.debug("Create process |%s|.", Strings.join(command));
+	return builder.start();
+    }
+
     protected static void wait(Process process, Thread stdinThread, Object lock) throws IOException {
 	long timeout = EXECUTION_TIMEOUT;
 	long timestamp = System.currentTimeMillis() + timeout;

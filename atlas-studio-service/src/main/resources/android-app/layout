@@ -1,6 +1,6 @@
 app/src/main/assets/atlas/objects-list.json
 app/src/main/assets/atlas/search-index.json
-app/src/main/res/values/strings.xml
+!app/src/main/res/values/strings.xml
 !app/src/main/AndroidManifest.xml
 app/.gitignore
 !app/build.gradle
@@ -15,6 +15,4 @@ gradlew
 gradlew.bat
 LICENSE
 local.properties
-PRIVACY.md
-README.md
 !settings.gradle

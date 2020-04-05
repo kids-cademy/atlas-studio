@@ -47,7 +47,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     private State state;
 
     /** Last change timestamp. */
-    private Date lastUpdated;
+    private Date timestamp;
 
     /**
      * Object name unique per its parent collection. This value is used internally
@@ -305,12 +305,12 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.state = state;
     }
 
-    public Date getLastUpdated() {
-	return lastUpdated;
+    public Date getTimestamp() {
+	return timestamp;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-	this.lastUpdated = lastUpdated;
+    public void setTimestamp(Date timestamp) {
+	this.timestamp = timestamp;
     }
 
     @Override

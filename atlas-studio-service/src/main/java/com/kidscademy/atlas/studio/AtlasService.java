@@ -88,7 +88,9 @@ public interface AtlasService {
 
     String importObjectDefinition(Link link);
 
-    String importObjectDescription(Link link);
+    Map<String, String> importObjectDescription(Link link);
+
+    String formatLines(String text, String separator);
 
     Map<String, String> importObjectFacts(Link link);
 
@@ -314,4 +316,3 @@ public interface AtlasService {
 
     Feature updateFeatureDisplay(Feature feature);
 }
-

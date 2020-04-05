@@ -10,6 +10,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.export.ExportItem;
+import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -136,17 +137,45 @@ public interface AtlasDao {
 
     Release getReleaseById(int releaseId);
 
+    Release getReleaseByName(String releaseName);
+
     void saveRelease(Release release) throws IOException;
 
     void removeRelease(int releaseId);
 
     ReleaseParent getReleaseParentById(int releaseId);
 
+    /**
+     * Add atlas object to release, both parent release and child atlas object being
+     * identified by database IDs. Is legal for child to already be registered in
+     * which case this method does nothing.
+     * 
+     * @param releaseId
+     * @param childId
+     */
     void addReleaseChild(int releaseId, int childId);
 
+    /**
+     * Add atlas objects to release, both parent release and child atlas objects
+     * identified by database IDs. Child IDs argument may contain already released
+     * atlas objects. This method takes care to avoid adding multiple times.
+     * 
+     * @param releaseId
+     *            parent release,
+     * @param childIds
+     *            atlas objects.
+     */
     void addReleaseChildren(int releaseId, List<Integer> childIds);
 
     void removeReleaseChild(int releaseId, int childId);
 
     List<AtlasItem> getReleaseItems(int releaseId);
+
+    AndroidApp getAndroidAppByName(String name);
+
+    void saveAndroidApp(AndroidApp app);
+
+    void removeAndroidApp(int appId);
+
+    AndroidApp getAndroidAppById(int appId);
 }

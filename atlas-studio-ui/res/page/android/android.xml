@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Android App</title>
+	<description>Android application for atlas release publishing.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
+		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/page/AndroidPage.js</script>
+	</scripts>
+</page>

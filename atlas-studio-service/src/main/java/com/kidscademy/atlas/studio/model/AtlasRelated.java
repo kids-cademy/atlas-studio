@@ -36,7 +36,7 @@ public class AtlasRelated implements RepositoryObject {
     private String name;
     private String display;
     private String iconName;
-    private Date lastUpdated;
+    private Date timestamp;
 
     @ElementCollection
     @OrderColumn
@@ -89,7 +89,7 @@ public class AtlasRelated implements RepositoryObject {
         return state;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public Date getTimestamp() {
+        return timestamp;
     }
 }

@@ -35,6 +35,7 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseItem</class>
 		<class>com.kidscademy.atlas.studio.model.ReleaseParent</class>
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
+		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
@@ -104,6 +105,7 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseItem</class>
 		<class>com.kidscademy.atlas.studio.model.ReleaseParent</class>
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
+		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

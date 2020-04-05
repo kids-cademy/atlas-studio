@@ -98,6 +98,11 @@ com.kidscademy.release.ReleasesList = class extends js.dom.Element {
         this._openObjectsList(releaseView);
     }
 
+    _onAndroidApp(releaseView) {
+        const release = releaseView.getUserData();
+        WinMain.assign("@link/android", { release: release.name });
+    }
+
     // --------------------------------------------------------------------------------------------
 
     _onContextMenu(ev) {

@@ -32,7 +32,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
     
-    private Date lastUpdated;
+    private Date timestamp;
     private String name;
     private String display;
     private String definition;
@@ -87,8 +87,8 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     }
 
     @Override
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
     @Override

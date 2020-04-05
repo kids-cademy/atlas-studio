@@ -34,7 +34,7 @@ public class AtlasImages implements RepositoryObject {
     
     private String name;
     private String display;
-    private Date lastUpdated;
+    private Date timestamp;
 
     @ElementCollection
     @MapKeyColumn(name = "imageKey")
@@ -77,8 +77,8 @@ public class AtlasImages implements RepositoryObject {
         return state;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
     public Map<String, Image> getImages() {

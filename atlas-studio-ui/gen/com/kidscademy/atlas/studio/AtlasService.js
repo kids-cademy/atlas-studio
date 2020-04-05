@@ -633,7 +633,7 @@ com.kidscademy.atlas.studio.AtlasService = {
 	 * @param com.kidscademy.atlas.studio.model.Link link,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.lang.String
+	 * @return java.util.Map<java.lang.String,java.lang.String>
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
 	 importObjectDescription: function(link) {
@@ -650,6 +650,36 @@ com.kidscademy.atlas.studio.AtlasService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectDescription");
 		rmi.setParameters(link);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Format lines.
+	 *
+	 * @param java.lang.String text,
+	 * @param java.lang.String separator,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.lang.String
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 formatLines: function(text, separator) {
+		$assert(typeof text !== "undefined", "com.kidscademy.atlas.studio.AtlasService#formatLines", "Text argument is undefined.");
+		$assert(text === null || js.lang.Types.isString(text), "com.kidscademy.atlas.studio.AtlasService#formatLines", "Text argument is not a string.");
+		$assert(typeof separator !== "undefined", "com.kidscademy.atlas.studio.AtlasService#formatLines", "Separator argument is undefined.");
+		$assert(separator === null || js.lang.Types.isString(separator), "com.kidscademy.atlas.studio.AtlasService#formatLines", "Separator argument is not a string.");
+
+		var __callback__ = arguments[2];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#formatLines", "Callback is not a function.");
+		var __scope__ = arguments[3];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#formatLines", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "formatLines");
+		rmi.setParameters(text, separator);
 		rmi.exec(__callback__, __scope__);
 	},
 

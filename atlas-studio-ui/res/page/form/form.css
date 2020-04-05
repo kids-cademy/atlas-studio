@@ -58,7 +58,7 @@
 	white-space: nowrap;
 }
 
-.object-form.side-bar .last-updated {
+.object-form.side-bar .timestamp {
 	margin: 8px 0;
 	xfont-size: 1.3rem;
 	xcolor: @color/black;

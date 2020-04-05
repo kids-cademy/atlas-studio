@@ -31,7 +31,7 @@ public class AtlasCollection implements GraphicObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Date lastUpdated;
+    private Date timestamp;
     private String name;
     private String display;
     private String definition;
@@ -77,8 +77,8 @@ public class AtlasCollection implements GraphicObject {
 	return id;
     }
 
-    public Date getLastUpdated() {
-	return lastUpdated;
+    public Date getTimestamp() {
+	return timestamp;
     }
 
     public String getName() {

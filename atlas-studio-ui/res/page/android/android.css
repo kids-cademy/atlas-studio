@@ -1,0 +1,29 @@
+.android {
+	display: flex;
+	flex-direction: column;
+}
+
+.android.side-bar  {
+	position: relative;	
+}
+
+.android.side-bar .menu {
+	margin-top: 40px;	
+}
+
+.android.side-bar .menu.bottom {
+	position: absolute;
+	width: 100%;
+	bottom: 2px;	
+}
+
+.android .content {
+	height: 100%;
+	overflow-y: auto;
+	margin-bottom: 20px;
+}
+
+.android .content .body {
+	flex-grow: 1;
+	margin: 20px;
+}

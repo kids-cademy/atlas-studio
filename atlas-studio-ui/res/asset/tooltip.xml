@@ -10,6 +10,7 @@
 	<description-add-all-sections>add recommended description sections</description-add-all-sections>
 	<description-add-section>add new description section</description-add-section>
 	<description-rename-section>rename tab for description section</description-rename-section>
+	<description-format-lines>format lines spacing</description-format-lines>
 	<description-done-section>commit current operation</description-done-section>
 	<description-copy-section>copy description section content to clipboard</description-copy-section>
 	<description-remove-section>remove current description section</description-remove-section>
@@ -29,6 +30,8 @@
 	<graphic-flip>flip, mirror image horizontally</graphic-flip>
 	<graphic-rotate-left>rotate image to left</graphic-rotate-left>
 	<graphic-rotate-right>rotate image to right</graphic-rotate-right>
+	<graphic-brightness>adjust image brightness</graphic-brightness>
+	<graphic-contrast>adjust image contrast</graphic-contrast>
 	<graphic-done>commit current operation</graphic-done>
 	<graphic-undo>undo last image processing</graphic-undo>
 	<graphic-close>close image editor and cancel all image transforms</graphic-close>

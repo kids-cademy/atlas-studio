@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Rich Text Control</title>
+	<description>Rich text control formated as markdown.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/Htm2Md.js</script>
+		<script>script/com/kidscademy/Md2Htm.js</script>
+		<script>script/com/kidscademy/RichTextControl.js</script>
+	</scripts>
+</page>

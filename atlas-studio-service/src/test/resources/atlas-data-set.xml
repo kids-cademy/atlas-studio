@@ -312,10 +312,17 @@
 	
 	<release>
 		<id>1</id>
-		<lastUpdated>2020-03-25 21:14:32</lastUpdated>
+		<timestamp>2020-03-25 21:14:32</timestamp>
 		<name>wild-birds</name>
 		<display>Wild Birds</display>
-		<packageName>com.kidscademy.birds</packageName>
+		<brief>Wild birds brief</brief>
+		<definition>Wild birds definition</definition>
+		<description>Wild birds description.</description>
+		<edition>community edition</edition>
+		<version>Release 1.0</version>
+		<publisher>Published by kids (a)cademy</publisher>
+		<license>public domain knowledge</license>
+		<policy>Wild birds policy.</policy>
 	</release>
 	
 	<release_atlasitem>

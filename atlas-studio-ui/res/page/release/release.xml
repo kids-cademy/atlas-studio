@@ -10,6 +10,9 @@
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/CssFlags.js</script>
+		<script>script/com/kidscademy/Htm2Md.js</script>
+		<script>script/com/kidscademy/Md2Htm.js</script>
+		<script>script/com/kidscademy/RichTextControl.js</script>
 		<script>script/com/kidscademy/release/GraphicAssets.js</script>
 		<script>script/com/kidscademy/release/ReleasesList.js</script>
 		<script>script/com/kidscademy/release/ReleaseForm.js</script>

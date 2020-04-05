@@ -145,6 +145,7 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		}
 
 		start(this._flags.audioSample, this._audioAssets);
+		start(this._object.collection.featuresMeta.length, this._featuresControl);
 		start(this._flags.spreading, this._spreadingControl);
 
 		this._identifyFieldset.onStart();
@@ -153,7 +154,6 @@ com.kidscademy.page.FormPage = class extends com.kidscademy.page.Page {
 		this._descriptionControl.onStart();
 		this._graphicAssets.onStart();
 		this._factsControl.onStart();
-		this._featuresControl.onStart();
 		this._relatedControl.onStart();
 		this._linksControl.onStart();
 	}

@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import com.kidscademy.atlas.studio.export.ExportItem;
+import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -197,7 +199,7 @@ public class AtlasDaoImpl implements AtlasDao {
 	//
 	em.createNativeQuery("DELETE FROM atlasobject_features WHERE atlasobject_id=" + object.getId()).executeUpdate();
 
-	object.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+	object.setTimestamp(new Timestamp(System.currentTimeMillis()));
 	if (object.getId() == 0) {
 	    em.persist(object);
 	} else {
@@ -399,18 +401,23 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public Release getReleaseByName(String releaseName) {
+	return em.createQuery("select r from Release r where r.name=:name", Release.class)
+		.setParameter("name", releaseName).getSingleResult();
+    }
+
+    @Override
     public ReleaseParent getReleaseParentById(int releaseId) {
 	return em.find(ReleaseParent.class, releaseId);
     }
 
     @Override
     @Mutable
-    public void saveRelease(Release releaase) throws IOException {
-	releaase.setLastUpdated(new Timestamp(System.currentTimeMillis()));
-	if (releaase.getId() == 0) {
-	    em.persist(releaase);
+    public void saveRelease(Release release) throws IOException {
+	if (release.getId() == 0) {
+	    em.persist(release);
 	} else {
-	    em.merge(releaase).postMerge(releaase);
+	    em.merge(release);
 	}
     }
 
@@ -428,16 +435,29 @@ public class AtlasDaoImpl implements AtlasDao {
     public void addReleaseChild(int releaseId, int childId) {
 	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
 	ReleaseChild child = em.find(ReleaseChild.class, childId);
-	release.getChildren().add(child);
+	if (!release.getChildren().contains(child)) {
+	    release.getChildren().add(child);
+	}
     }
 
     @Override
     @Mutable
     public void addReleaseChildren(int releaseId, List<Integer> childIds) {
-	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
 	List<ReleaseChild> children = em
 		.createQuery("select c from ReleaseChild c where c.id in :ids", ReleaseChild.class)
 		.setParameter("ids", childIds).getResultList();
+
+	// to my real shame i did not find a way to retrieve only not already existing
+	// children and i need to remove them manually
+	// anyway, i do not expect performance impact
+	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	Iterator<ReleaseChild> it = children.iterator();
+	while (it.hasNext()) {
+	    if (release.getChildren().contains(it.next())) {
+		it.remove();
+	    }
+	}
+
 	release.getChildren().addAll(children);
     }
 
@@ -459,7 +479,39 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (ids.isEmpty()) {
 	    return Collections.emptyList();
 	}
-	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class).setParameter("ids", ids)
-		.getResultList();
+	return em.createQuery("select i from AtlasItem i where i.id in :ids order by i.display", AtlasItem.class)
+		.setParameter("ids", ids).getResultList();
+    }
+
+    @Override
+    public AndroidApp getAndroidAppById(int appId) {
+	return em.find(AndroidApp.class, appId);
+    }
+
+    @Override
+    public AndroidApp getAndroidAppByName(String name) {
+	List<AndroidApp> apps = em
+		.createQuery("select a from AndroidApp a where a.release.name=:name", AndroidApp.class)
+		.setParameter("name", name).getResultList();
+	return apps.isEmpty() ? null : apps.get(0);
+    }
+
+    @Override
+    @Mutable
+    public void saveAndroidApp(AndroidApp app) {
+	if (app.getId() == 0) {
+	    em.persist(app);
+	} else {
+	    em.merge(app);
+	}
+    }
+
+    @Override
+    @Mutable
+    public void removeAndroidApp(int appId) {
+	AndroidApp app = em.find(AndroidApp.class, appId);
+	if (app != null) {
+	    em.remove(app);
+	}
     }
 }

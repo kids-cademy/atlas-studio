@@ -47,6 +47,47 @@ com.kidscademy.Htm2Md = class {
                         markdown += "\r\n";
                     }
                     break;
+
+                case "table":
+                    const layout = [];
+                    const columnWidths = [];
+                    const rows = element.findByTag("tr");
+
+                    for (let i = 0; i < rows.size(); ++i) {
+                        layout[i] = rows.item(i).getChildren().map(td => td.getText().trim());
+                        for (let j = 0; j < layout[i].length; ++j) {
+                            columnWidths[j] = Math.max(columnWidths[j] || 0, layout[i][j].length);
+                        }
+                    }
+
+                    function text(text, width, padding) {
+                        text = text.trim();
+                        while (text.length < width) {
+                            text += padding;
+                        }
+                        return text;
+                    }
+
+                    for (let j = 0; j < layout[0].length; ++j) {
+                        markdown += `| ${text(layout[0][j], columnWidths[j], ' ')} `;
+                    }
+                    markdown += "\r\n";
+
+                    for (let j = 0; j < layout[0].length; ++j) {
+                        markdown += `|-${text("", columnWidths[j], '-')}-`;
+                    }
+                    markdown += "\r\n";
+
+                    for (let i = 1; ;) {
+                        for (let j = 0; j < layout[i].length; ++j) {
+                            markdown += `| ${text(layout[i][j], columnWidths[j], ' ')} `;
+                        }
+                        if (++i == layout.length) {
+                            break;
+                        }
+                        markdown += "\r\n";
+                    }
+                    break;
             }
             markdown += "\r\n\r\n";
         }

@@ -97,4 +97,75 @@ public class Strings extends js.util.Strings {
 	Json json = Classes.loadService(Json.class);
 	return json.parse(stream.toString(), type);
     }
+
+    /** States enumeration for plain text parser automata. */
+    private static enum PlainTextState
+    {
+      TEXT, START_TAG, END_TAG
+    }
+
+    /**
+     * Convenient variant for {@link #toPlainText(String, int, int)} when using entire source text.
+     * 
+     * @param text HTML formatted text.
+     * @return newly created plain text.
+     */
+    public static String toPlainText(String text)
+    {
+      return toPlainText(text, 0, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Convert HTML formatted into plain text. This method parses source text and detect HTML tags. Current implementation
+     * handle only &lt;p&gt; tags replacing them with line break.
+     * <p>
+     * <b>Implementation note</b>: experimental implementation. This implementation is work in progress and is marked as
+     * deprecated to warn developer about logic evolution. Final parser should handle &lt;br&gt; to line break, &lt;p&gt;
+     * to double line breaks, &lt;q&gt; to simple quotation mark, &lt;ul&gt; to new lines beginning with tab and dash,
+     * &lt;ol&gt; to new lines beginning with tab and ordinal and all &lt;h&gt; tags to triple line breaks.
+     * 
+     * @param text HTML formatted source text,
+     * @param offset source text offset,
+     * @param capacity generated plain text maximum allowed length.
+     * @return newly created plain text.
+     */
+    public static String toPlainText(String text, int offset, int capacity)
+    {
+      PlainTextState state = PlainTextState.TEXT;
+
+      StringBuilder plainText = new StringBuilder();
+      for(int i = offset; i < text.length() && plainText.length() <= capacity; ++i) {
+        int c = text.charAt(i);
+
+        switch(state) {
+        case TEXT:
+          if(c == '<') {
+            state = PlainTextState.START_TAG;
+            break;
+          }
+          plainText.append((char)c);
+          break;
+
+        case START_TAG:
+          if(c == '/') {
+            state = PlainTextState.END_TAG;
+            break;
+          }
+          if(c == '>') {
+            state = PlainTextState.TEXT;
+          }
+          break;
+
+        case END_TAG:
+          if(c == 'p') {
+            plainText.append("\r\n");
+          }
+          if(c == '>') {
+            state = PlainTextState.TEXT;
+          }
+          break;
+        }
+      }
+      return plainText.toString();
+    }
 }

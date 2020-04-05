@@ -7,8 +7,8 @@ android {
         applicationId "${package}"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode ${version-code}
+        versionName "${version-name}"
     }
     buildTypes {
         release {

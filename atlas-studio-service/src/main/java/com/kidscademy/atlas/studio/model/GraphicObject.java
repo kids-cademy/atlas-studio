@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Iulian Rotaru
  */
 public interface GraphicObject {
-    Date getLastUpdated();
+    Date getTimestamp();
     
     String getName();
     

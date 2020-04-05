@@ -92,7 +92,7 @@ ol li {
 	color: #1985e2;
 }
 
-.list-view .item .last-updated {
+.list-view .item .timestamp {
 	display: none;
 	margin: 0;
 	white-space: nowrap;
@@ -101,11 +101,11 @@ ol li {
 	color: @color/text;
 }
 
-.list-view .item.development .last-updated {
+.list-view .item.development .timestamp {
 	color: #b9095c;
 }
 
-.list-view .item.published .last-updated {
+.list-view .item.published .timestamp {
 	color: #1364ac;
 }
 
@@ -184,7 +184,7 @@ ol li {
 	margin-bottom: 4px;
 }
 
-.list-view.tiles .item .last-updated {
+.list-view.tiles .item .timestamp {
 	display: block;
 }
 
@@ -237,7 +237,7 @@ ol li {
 	margin-bottom: 4px;
 }
 
-.list-view.cards .item .last-updated {
+.list-view.cards .item .timestamp {
 	display: block;
 }
 
@@ -329,7 +329,7 @@ ol li {
 	color: @color/text;
 }
 
-.list-view.details .item .last-updated {
+.list-view.details .item .timestamp {
 	display: inline-block;
 	width: 200px;
 	height: @eval(add @dimen/icon-size-small 2);

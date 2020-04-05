@@ -24,9 +24,14 @@ com.kidscademy.Md2Htm = class {
         // 2 WAIT_DOT
         // 3 SKIP_SPACE
         // 4 COLLECT_LINE
+        // 5 TABLE_HEADER
+        // 6 TABLE_UNDERLINE
+        // 7 TABLE_BODY
+        // 8 TABLE_BODY_END
 
         var blockTag = null;
         var listTag = null;
+        var cellIndex = 0;
         var state = 0; // LINE_START
 
         for (let i = 0; i < this._markdown.length; ++i) {
@@ -40,6 +45,11 @@ com.kidscademy.Md2Htm = class {
                     switch (c) {
                         case '#':
                             state = 1; // SECOND_HASH
+                            break;
+
+                        case '|':
+                            this._html += "<table><tr><th>";
+                            state = 5; // TABLE_HEADER
                             break;
 
                         case '-':
@@ -126,6 +136,55 @@ com.kidscademy.Md2Htm = class {
                             blockTag = null;
                         }
                         state = 0; // LINE_START
+                        break;
+                    }
+                    this._append(c);
+                    break;
+
+                case 5: // TABLE_HEADER
+                    if (c === '\n') {
+                        this._html += "</th></tr>";
+                        state = 6; // TABLE_UNDERLINE
+                        break;
+                    }
+                    if (c === '|') {
+                        this._html += "</th><th>";
+                        break;
+                    }
+                    this._append(c);
+                    break;
+
+                case 6: // TABLE_UNDERLINE
+                    if (c === '\n') {
+                        cellIndex = 0;
+                        state = 7; // TABLE_BODY
+                    }
+                    break;
+
+                case 8: // TABLE_BODY_END
+                    if (c === '\n') {
+                        this._html += "</table>";
+                        state = 0; // LINE_START
+                        break;
+                    }
+                    state = 7; // TABLE_BODY
+                // fall through next case
+
+                case 7: // TABLE_BODY
+                    if (c === '\n') {
+                        this._html += "</td></tr>";
+                        cellIndex = 0;
+                        state = 8; // TABLE_BODY_END
+                        break;
+                    }
+                    if (c === '|') {
+                        if (cellIndex++ === 0) {
+                            this._html += "<tr>";
+                        }
+                        else {
+                            this._html += "</td>";
+                        }
+                        this._html += "<td>";
                         break;
                     }
                     this._append(c);

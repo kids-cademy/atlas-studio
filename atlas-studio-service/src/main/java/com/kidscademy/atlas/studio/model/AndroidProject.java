@@ -15,8 +15,9 @@ import js.dom.DocumentBuilder;
 import js.dom.Element;
 import js.lang.BugError;
 import js.util.Classes;
+import js.util.Strings;
 
-public class Project {
+public class AndroidProject {
     /** Strings resources XML file path, relative to project root. */
     private static final String STRINGS_PATH = "app/src/main/res/values/strings.xml";
 
@@ -27,9 +28,8 @@ public class Project {
     private final String name;
     private Document strings;
 
-    public Project(Application application, String name) {
-	File repositoryPath = application.getProperty("releases.repository.path", File.class);
-	this.location = new File(repositoryPath, name);
+    public AndroidProject(Application application, String name) {
+	this.location = new File(appsDir(), name);
 	this.name = name;
 
 	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
@@ -64,7 +64,7 @@ public class Project {
     }
 
     public void setProperties(Map<String, String> properties) throws IOException {
-	if (strings == null) {
+	if (strings == null || properties == null) {
 	    return;
 	}
 	for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -72,7 +72,7 @@ public class Project {
 	    if (valueEl == null) {
 		throw new BugError("Invalid release properties. Missing value name |%s|.", entry.getKey());
 	    }
-	    valueEl.setText(entry.getValue());
+	    valueEl.setText(Strings.escapeXML(entry.getValue()));
 	}
 	strings.serialize(new FileWriter(stringsFile()), true);
     }
@@ -87,5 +87,36 @@ public class Project {
 
     public File getAtlasObjectDir(String objectName) {
 	return new File(new File(location, ATLAS_DIR), objectName);
+    }
+
+    public void setReadme(String description) {
+	// TODO convert description HTML to MD and write to README.md file
+
+    }
+
+    public void setPrivacy(String policy) {
+	// TODO convert HTML to TXT and write to PRIVACY file
+
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    private static File appsDir;
+
+    private static final Object APPS_DIR_MUTEX = new Object();
+
+    public static File appsDir() {
+	if (appsDir == null) {
+	    synchronized (APPS_DIR_MUTEX) {
+		if (appsDir == null) {
+		    appsDir = Application.instance().getProperty("android.apps.path", File.class);
+		}
+	    }
+	}
+	return appsDir;
+    }
+
+    public static File appDir(String appName) {
+	return new File(appsDir(), appName);
     }
 }

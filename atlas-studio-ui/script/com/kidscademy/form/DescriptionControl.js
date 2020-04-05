@@ -87,13 +87,14 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	_onImport() {
 		const load = (link) => {
 			AtlasService.importObjectDescription(link, description => {
-				const sectionName = link.display.toLowerCase();
-				var textEditor = this._getTextEditorByName(sectionName);
-				if (textEditor == null) {
-					textEditor = this._addTextEditor(sectionName);
+				for (let section in description) {
+					let textEditor = this._getTextEditorByName(section);
+					if (textEditor == null) {
+						textEditor = this._addTextEditor(section);
+					}
+					textEditor.setValue(description[section]);
+					this._updateEditorIndex(textEditor.getChildIndex());
 				}
-				textEditor.setValue(description);
-				this._updateEditorIndex(textEditor.getChildIndex());
 			});
 		}
 
@@ -146,6 +147,11 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		}
 		this._sectionNameInput.reset();
 		this._editorControls.hide();
+	}
+
+	_onFormatLines() {
+		const textEditor = this._textEditors.getByIndex(this._getActiveTabIndex());
+		AtlasService.formatLines(textEditor.getValue(), "\r\n\r\n", text => textEditor.setValue(text));
 	}
 
 	_onCopyToClipboard() {

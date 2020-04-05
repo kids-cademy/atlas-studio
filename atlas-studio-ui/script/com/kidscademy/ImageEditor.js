@@ -131,6 +131,14 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         ImageService.rotateImageRight(this._image, this._onProcessingDone, this);
     }
 
+    _onBrightness() {
+
+    }
+
+    _onContrast() {
+
+    }
+
 	/**
 	 * Commit current operation. Done button action depends on context. If current operation is <code>duplicate</code> this
 	 * handler execute it on server.
@@ -191,9 +199,9 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
     }
 
 	/**
-	 * Callback invoked when server image processing is complete.
+	 * Callback invoked when server image processing is complete. This method updates preview image and fires <change> event.
 	 * 
-	 * @param {Object} image image returned by server.
+	 * @param {Object} image image descriptor returned by server.
 	 */
     _onProcessingDone(image) {
         ++this._transformsCount;
@@ -210,10 +218,6 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         this._fileInfoView.setObject(this._image);
     }
 
-	/**
-	 * Class string representation.
-	 * @return {String} this class string representation.
-	 */
     toString() {
         return "com.kidscademy.ImageEditor";
     }

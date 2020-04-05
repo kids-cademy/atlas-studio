@@ -57,5 +57,6 @@ public class ExportTaxon implements Displayable {
 	EN.put("parvorder", "Parvorder");
 	EN.put("variety", "Variety");
 	EN.put("type", "Type");
+	EN.put("section", "Section");
     }
 }

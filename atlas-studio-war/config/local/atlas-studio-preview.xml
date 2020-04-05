@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context reloadable="true" cachingAllowed="false" antiResourceLocking="false" cacheTTL="0">
-        <Resource
-                name="jdbc/atlas"
-                type="com.mchange.v2.c3p0.ComboPooledDataSource"
-                factory="org.apache.naming.factory.BeanFactory"
-                driverClass="com.mysql.jdbc.Driver"
-                jdbcUrl="jdbc:mysql://localhost:3306/atlas"
-                auth="Container"
-                user="kids_cademy"
-                password="kids_cademy"
-        />
+	<Resource
+    	name="jdbc/atlas"
+        type="com.mchange.v2.c3p0.ComboPooledDataSource"
+        factory="org.apache.naming.factory.BeanFactory"
+        driverClass="com.mysql.jdbc.Driver"
+        jdbcUrl="jdbc:mysql://localhost:3306/atlas"
+        auth="Container"
+        user="kids_cademy"
+        password="kids_cademy"
+	/>
 
+	<Parameter name="android.apps.path" value="D://tmp/apps/" />
 	<Parameter name="captcha.repository.path" value="${catalina.base}/webapps/media/captcha" />
 	<Parameter name="image.magick.convert" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe" />
 	<Parameter name="image.magick.identify" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/identify.exe" />

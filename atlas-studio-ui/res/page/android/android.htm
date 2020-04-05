@@ -1,0 +1,71 @@
+<div w:template="page/template#body" class="android" xmlns:w="js-lib.com/wood">
+	<section class="content" data-class="com.kidscademy.FrameView">
+		<form class="form">
+			<fieldset>
+				<div class="header container">
+					<h2>Identity</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>release</label><input name="release.name" disabled="disabled" />
+						</div>
+						<div class="controlset">
+							<label>package</label><input name="package-name" />
+						</div>
+						<div class="controlset">
+							<label>version code</label><input name="version-code" />
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="header container">
+					<h2>Git Repository</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>address</label><input name="git-repository" />
+						</div>
+						<div class="controlset">
+							<label>user name</label><input name="git-user-name" />
+						</div>
+						<div class="controlset">
+							<label>password</label><input name="git-password" />
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="container buttons-bar">
+			<button name="update">@string/update</button>
+		</div>
+	</section>
+</div>
+
+<div w:template="page/template#side-bar" class="android" xmlns:w="js-lib.com/wood">
+	<div class="header">
+		<div w:widget="compo/object-box"></div>
+	</div>
+
+	<ul class="menu">
+		<li data-name="settings"><img src="@image/action/settings" /><span>@string/android-settings</span></li>
+		<li data-name="store-listing"><img src="@image/action/google-play" /><span>@string/android-store-listing</span></li>
+	</ul>
+
+	<ul class="menu">
+		<li data-name="clean-project"><img src="@image/action/clean-project" /><span>@string/android-clean-project</span></li>
+		<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
+		<li data-name="build-bundle"><img src="@image/action/build-bundle" /><span>@string/android-build-bundle</span></li>
+		<li class="divider"></li>
+		<li data-name="download-apk"><img src="@image/action/download" /><span>@string/android-download-apk</span></li>
+		<li data-name="download-bundle"><img src="@image/action/download" /><span>@string/android-download-bundle</span></li>
+	</ul>
+
+	<ul class="menu bottom">
+		<li data-name="edit-release"><img src="@image/action/edit" /><span>@string/android-edit-release</span></li>
+		<li data-name="remove-app"><img src="@image/action/remove" /><span>@string/android-remove</span></li>
+	</ul>
+</div>

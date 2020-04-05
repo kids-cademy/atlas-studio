@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.LifeFormWikipediaArticle;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.NationalGeographicArticle;
+import com.kidscademy.atlas.studio.www.PlantVillage;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikiHow;
@@ -126,10 +128,10 @@ public class AtlasServiceImpl implements AtlasService {
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
 
 	File icon = Files.mediaFile(collection);
-	if(!icon.delete()) {
+	if (!icon.delete()) {
 	    log.error("Cannot remove collection icon |%s|.", icon);
 	}
-	
+
 	File repositoryDir = Files.repositoryDir(collection.getName());
 	if (repositoryDir.isDirectory()) {
 	    String[] files = repositoryDir.list();
@@ -358,19 +360,36 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public String importObjectDescription(Link link) {
+    public Map<String, String> importObjectDescription(Link link) {
+	Map<String, String> sections = new LinkedHashMap<>();
 	switch (link.getDomain()) {
 	case "softschools.com":
-	    return Strings.join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()),
-		    "\r\n\r\n");
+	    sections.put("softschools", Strings
+		    .join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()), "\r\n\r\n"));
+	    break;
 
 	case "wikipedia.org":
 	    WikipediaArticleText article = new WikipediaArticleText(link.getUrl());
-	    return article.getText();
+	    sections.put("wikipedia", article.getText());
+	    break;
+
+	case "psu.edu":
+	    PlantVillage plantVillage = context.getInstance(PlantVillage.class);
+	    plantVillage.getArticle(link.getPath()).getSections(sections);
+	    break;
 
 	default:
+	    break;
+	}
+	return sections;
+    }
+
+    @Override
+    public String formatLines(String text, String separator) {
+	if (text == null) {
 	    return null;
 	}
+	return Strings.join(Strings.breakSentences(text), separator);
     }
 
     @Override
@@ -464,7 +483,7 @@ public class AtlasServiceImpl implements AtlasService {
 	object.setState(AtlasObject.State.CREATED);
 	object.setAliases(new ArrayList<String>());
 	object.setImages(new HashMap<String, Image>());
-	object.setLastUpdated(new Date());
+	object.setTimestamp(new Date());
 
 	saveAtlasObject(object);
 	return atlasDao.getAtlasItem(object.getId());

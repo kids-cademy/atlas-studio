@@ -14,27 +14,10 @@
 	
 }
 
-.context-menu .object img {
-	float: left;
-	width: @dimen/icon-size;
-	height: @dimen/icon-size;
-	padding: 1px;
-	border: solid 1px @color/border-image;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
 .context-menu .object::after {
 	display: block;
 	content: "";
 	clear: both;
-}
-
-.context-menu .object h3 {
-	padding-bottom: 4px;
-	border-bottom: solid 1px @color/border-light;
-	margin-top: 20px;
-	text-transform: uppercase;	
 }
 
 .context-menu .menu {

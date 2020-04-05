@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kidscademy.atlas.studio.AtlasController;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.export.AtlasCollectionExportView;
+import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Login;
 import com.kidscademy.atlas.studio.util.Files;
@@ -54,7 +55,7 @@ public class AtlasControllerImpl implements AtlasController
     {
       @Override
       public void serialize(HttpServletResponse httpResponse) throws IOException {
-        File apkFile = new File(Files.releaseDir(name), "app/build/outputs/apk/debug/app-debug.apk");
+        File apkFile = new File(AndroidProject.appDir(name), "app/build/outputs/apk/debug/app-debug.apk");
         InputStream apkStream = new FileInputStream(apkFile);
         try {
           httpResponse.setContentType(ContentType.APPLICATION_STREAM.getValue());

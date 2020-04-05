@@ -1,0 +1,63 @@
+Console commands for Android project
+
+------------------------------------------------------------------------
+create release icon:
+$convert -size 512x512 -define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#3eb12f background.png
+$convert cover.png -resize 460x460 -gravity center -background none -extent 512x512 image.png
+$convert background.png image.png -compose over -composite icon.png
+	
+------------------------------------------------------------------------
+create release feature image:
+$convert -size 1024x500 -define gradient:center=192,256 -define gradient:radii=700,384 radial-gradient:white-#3eb12f feature-bg.png
+$convert feature-bg.png image.png -compose over -composite feature.png
+
+------------------------------------------------------------------------
+build android project:
+executed from project directory
+$gradlew build
+
+------------------------------------------------------------------------
+list attached devices
+$adb devices -l
+List of devices attached
+6Z7BH0EO36             device product:rk3188 model:Evolio_X10 device:rk3188 transport_id:1
+
+
+------------------------------------------------------------------------
+publish android project on github:
+executed from project directory
+
+$git init
+after execution local git repository is created on hidden directory .git
+
+commit project content to local repository
+last dot is for current working directory 
+$git add .
+$git commit -m "Initial import"
+
+create empty! project on github
+add remote origin
+$git remote add origin https://github.com/kids-cademy/atlas.vegetables.git
+
+push local repository to remote origin, master branch
+$git push --set-upstream origin master
+Username for 'https://github.com': iulian@gnotis.ro
+Password for 'https://iulian@gnotis.ro@github.com':
+Enumerating objects: 205, done.
+Counting objects: 100% (205/205), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (195/195), done.
+Writing objects: 100% (205/205), 28.70 MiB | 12.02 MiB/s, done.
+Total 205 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/kids-cademy/atlas.vegetables.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+
+commit changes
+$git commit -m "Update readme" .
+$git push
+
+
+

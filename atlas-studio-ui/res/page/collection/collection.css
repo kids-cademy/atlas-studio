@@ -44,7 +44,7 @@
 	text-overflow: ellipsis;
 }
 
-.collection.side-bar .last-updated {
+.collection.side-bar .timestamp {
 	margin: 8px 0;
 	font-size: 1.3rem;
 	xcolor: @color/black;

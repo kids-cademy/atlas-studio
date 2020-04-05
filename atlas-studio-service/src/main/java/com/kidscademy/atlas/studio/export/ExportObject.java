@@ -57,7 +57,7 @@ public class ExportObject {
 	    this.images.put(entry.getKey(), new ExportImage(object, entry.getValue()));
 	}
 
-	this.lastUpdated = object.getLastUpdated();
+	this.lastUpdated = object.getTimestamp();
 	this.taxonomy = new ArrayList<>();
 	for (Taxon taxon : object.getTaxonomy()) {
 	    this.taxonomy.add(new ExportTaxon(taxon));

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">${app_name}</string>
+    <string name="app_logotype">${app_logotype}</string>
+    <string name="app_description">${app_definition}</string>
+    <string name="app_publisher">Published by ${publisher}</string>
+    <string name="app_edition">${edition}</string>
+    <string name="app_release">Release ${version-name}</string>
+    <string name="app_update">${update-date}</string>
+    <string name="content_license">${license}</string>
+    <string name="app_about">${app_definition}</string>
+    <string name="app_about_caption">About ${app_name}</string>
+    <string name="app_rate_caption">Rate ${app_name}</string>
+    <string name="app_share_caption">Share ${app_name}</string>
+</resources>

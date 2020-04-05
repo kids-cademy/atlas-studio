@@ -18,7 +18,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		sideMenu.on(this, {
 			"&create-object": this._onCreateObject,
 			"&import-wikipedia": this._onImportWikipedia,
-			"&add-to-release": this._onAddToRelease
+			"&add-all-to-release": this._onAddAllToRelease
 		});
 
 		this._contentView = this.getByClass(com.kidscademy.FrameView);
@@ -141,11 +141,11 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		});
 	}
 
-	_onAddToRelease() {
+	_onAddAllToRelease() {
 		const childIds = this._listView.getChildren().map(child => child.getAttr("id"));
 		ReleaseService.getReleases(releases => this._itemSelect.load(releases));
 		this._itemSelect.open(release => {
-			ReleaseService.addReleaseChildren(release.id, childIds);
+			ReleaseService.addReleaseChildren(release.id, childIds, () => js.ua.System.alert("@string/alert-release-processing-done"));
 		});
 	}
 
@@ -176,6 +176,14 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.page.Page {
 		this._itemSelect.open(collection => {
 			const object = objectView.getUserData();
 			AtlasService.moveAtlasObject(object, collection.id, () => objectView.remove());
+		});
+	}
+
+	_onAddToRelease(objectView) {
+		const object = objectView.getUserData();
+		ReleaseService.getReleases(releases => this._itemSelect.load(releases));
+		this._itemSelect.open(release => {
+			ReleaseService.addReleaseChild(release.id, object.id);
 		});
 	}
 

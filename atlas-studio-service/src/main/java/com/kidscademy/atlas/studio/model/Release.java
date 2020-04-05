@@ -10,54 +10,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.kidscademy.atlas.studio.Application;
 
 import js.util.Strings;
 
 @Entity
 @Table(name = "\"RELEASE\"")
 public class Release implements GraphicObject {
-    @Transient
-    private transient final Application application;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Date lastUpdated;
+    private Date timestamp;
     private String name;
     private String display;
-    private String packageName;
-
-    @Transient
+    private String brief;
     private String definition;
+    private String publisher;
+    private String edition;
+    private String version;
+    private String license;
+    private String readme;
+    private String privacy;
 
     @Transient
     private MediaSRC iconSrc;
 
     @Transient
-    private Map<String, String> properties;
-
-    @Transient
     private Map<String, MediaSRC> images;
-
-    public Release() {
-	this.application = Application.instance();
-    }
-
-    /**
-     * Test constructor.
-     * 
-     * @param application
-     *            application mock.
-     */
-    public Release(Application application) {
-	this.application = application;
-    }
 
     @PostLoad
     public void postLoad() throws IOException {
@@ -67,35 +48,19 @@ public class Release implements GraphicObject {
 	images.put("icon", new MediaSRC(Strings.concat("/media/release/", name, "/icon.png")));
 	images.put("feature", new MediaSRC(Strings.concat("/media/release/", name, "/feature.png")));
 	images.put("cover", new MediaSRC(Strings.concat("/media/release/", name, "/cover.png")));
-
-	Project project = new Project(application, name);
-	properties = project.getProprties();
-	definition = properties.get("app_about");
-    }
-
-    @PrePersist
-    public void prePersist() throws IOException {
-	postMerge(this);
-    }
-
-    public void postMerge(Release release) throws IOException {
-	if (release.properties == null) {
-	    Project project = new Project(application, name);
-	    project.setProperties(properties);
-	}
     }
 
     public int getId() {
 	return id;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-	this.lastUpdated = lastUpdated;
+    @Override
+    public Date getTimestamp() {
+	return timestamp;
     }
 
-    @Override
-    public Date getLastUpdated() {
-	return lastUpdated;
+    public void setTimestamp(Date timestamp) {
+	this.timestamp = timestamp;
     }
 
     @Override
@@ -108,9 +73,37 @@ public class Release implements GraphicObject {
 	return display;
     }
 
+    public String getBrief() {
+	return brief;
+    }
+
     @Override
     public String getDefinition() {
 	return definition;
+    }
+
+    public String getReadme() {
+	return readme;
+    }
+
+    public String getPublisher() {
+	return publisher;
+    }
+
+    public String getEdition() {
+	return edition;
+    }
+
+    public String getVersion() {
+	return version;
+    }
+
+    public String getLicense() {
+	return license;
+    }
+
+    public String getPrivacy() {
+	return privacy;
     }
 
     @Override
@@ -118,11 +111,7 @@ public class Release implements GraphicObject {
 	return iconSrc;
     }
 
-    public String getPackageName() {
-	return packageName;
-    }
-
-    public Map<String, String> getProperties() {
-	return properties;
+    public Map<String, MediaSRC> getImages() {
+	return images;
     }
 }

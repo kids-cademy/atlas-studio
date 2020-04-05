@@ -1,0 +1,86 @@
+<description>
+	<h1>${app_name}</h1>
+	<p>${app_definition}</p>
+	<p>It is focused on facts, with reasonable amount of text and media content. </p>
+	<p>It is not meant to be exhaustive but rather to be used as a quick reference on a particular subject or field. For complete reference, the reader can visit the external sources that are linked on every article.</p>
+	<p>Atlas is an open source and non-profit project. Updated sources are available on GitHub, https://github.com/kids-cademy/ under Apache License 2.0.</p>
+	<p>Content, including media is contributed by volunteers and most part is compiled from sources from Internet, mostly Wikipedia but by no means limited to. See the list of used sources at the end of this document.  </p>
+	<p>When copied, content is believed to be covered by the fair use amendment, as define by https://en.wikipedia.org/wiki/Fair_use. For rights violation please contact kids (a)cademy.</p>
+	<p>Any feedback is welcomed, especially the critical one. We really are committed to improve both presentation and content quality. You can, of course, contribute. Please visit http://kids-cademy.com.</p>
+	<p>Thank you for using the atlas, please help improving and spread the word.</p>
+	<h2>Sources</h2>
+	<table>
+		<tr>
+			<th>Authority</th>
+			<th>Link</th>
+		</tr>
+		<tr>
+			<td>ANIMALIA</td>
+			<td>http://animalia.bio/</td>
+		</tr>
+		<tr>
+			<td>Animal Diversity Web</td>
+			<td>https://animaldiversity.org/</td>
+		</tr>
+		<tr>
+			<td>Cambridge Dictionary</td>
+			<td>https://dictionary.cambridge.org/</td>
+		</tr>
+		<tr>
+			<td>DK findout</td>
+			<td>https://www.dkfindout.com/us/ </td>
+		</tr>
+		<tr>
+			<td>Encyclopedia of Life</td>
+			<td>https://eol.org/</td>
+		</tr>
+		<tr>
+			<td>Encyclopædia Britannica</td>
+			<td>https://www.britannica.com/</td>
+		</tr>
+		<tr>
+			<td>Integrated Taxonomic Information System</td>
+			<td>https://www.itis.gov/</td>
+		</tr>
+		<tr>
+			<td>IUCN Red List</td>
+			<td>https://www.iucnredlist.org/</td>
+		</tr>
+		<tr>
+			<td>Kiddle Facts For Kids</td>
+			<td>https://www.kiddle.co/</td>
+		</tr>
+		<tr>
+			<td>Merriam-Webster</td>
+			<td>https://www.merriam-webster.com/</td>
+		</tr>
+		<tr>
+			<td>National Geographic</td>
+			<td>https://www.nationalgeographic.com/</td>
+		</tr>
+		<tr>
+			<td>SoftSchools Facts</td>
+			<td>http://www.softschools.com/facts/</td>
+		</tr>
+		<tr>
+			<td>Sound in the Sea</td>
+			<td>https://dosits.org/</td>
+		</tr>
+		<tr>
+			<td>The Free Dictionary</td>
+			<td>http://www.thefreedictionary.com/</td>
+		</tr>
+		<tr>
+			<td>YouTube</td>
+			<td>https://www.youtube.com/</td>
+		</tr>
+		<tr>
+			<td>wikiHow</td>
+			<td>https://www.wikihow.com/Main-Page</td>
+		</tr>
+		<tr>
+			<td>Wikipedia The Free Encyclopedia</td>
+			<td>https://en.wikipedia.org/wiki/Main_Page</td>
+		</tr>
+	</table>
+</description>
