@@ -29,9 +29,27 @@ com.kidscademy.page.Page = class extends js.ua.Page {
 
         WinMain.on("unload", this._onUnload, this);
         WinMain.page = this;
+
+        this._events = new js.event.CustomEvents();
+
+        this._contentView = this.getByClass(com.kidscademy.FrameView);
+
+        // TODO: move to sidebar class
+        const viewTabs = this.getByCss(".side-bar .view-tabs");
+        if (viewTabs != null) {
+            this._contentView.onCreate(this);
+            viewTabs.on("click", ev => {
+                const item = ev.target.getParentByTag("li");
+                if (item != null) {
+                    this._contentView.select(item.getName());
+                }
+            });
+        }
     }
 
-    _onUnload() { }
+    _onUnload() { 
+        this._contentView.onDestroy();
+    }
 
     onServerFail(er) {
         $error(`com.kidscademy.page.Page#onServerFail ${er.cause}: ${er.message}`);

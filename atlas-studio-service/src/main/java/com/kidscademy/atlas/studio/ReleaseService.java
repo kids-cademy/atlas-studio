@@ -2,6 +2,7 @@ package com.kidscademy.atlas.studio;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -48,8 +49,10 @@ public interface ReleaseService {
     AndroidApp updateAndroidApp(AndroidApp app) throws IOException;
 
     void removeAndroidApp(int appId) throws IOException;
-    
+
     void cleanAndroidProject(AndroidApp app) throws IOException;
-    
+
     void buildAndroidApp(AndroidApp app) throws IOException;
+
+    Map<String, String> getAndroidStoreListing(int appId);
 }

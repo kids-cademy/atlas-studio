@@ -6,6 +6,12 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
+		<script>script/com/kidscademy/View.js</script>
+		<script>script/com/kidscademy/FrameView.js</script>
+		<script>script/com/kidscademy/util/Sound.js</script>
+		<script>script/com/kidscademy/android/ApplicationView.js</script>
+		<script>script/com/kidscademy/android/StoreListingView.js</script>
+		<script>script/com/kidscademy/android/ProjectSettingsForm.js</script>
 		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/AndroidPage.js</script>
 	</scripts>

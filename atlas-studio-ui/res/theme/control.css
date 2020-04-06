@@ -23,10 +23,6 @@ input.inline {
 	margin-right: @dimen/action-margin;
 }
 
-input[disabled] {
-	color: green;
-}
-
 input.large {
 	width: 800px;
 	max-width: 800px;

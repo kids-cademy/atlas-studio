@@ -123,8 +123,9 @@
 	<release-objects>Manage Objects</release-objects>
 	<release-android-app>Android App</release-android-app>
 
-	<android-settings>Project Settings</android-settings>	
+	<android-application>Application</android-application>
 	<android-store-listing>Store Listing</android-store-listing>
+	<android-settings>Project Settings</android-settings>	
 	<android-clean-project>Clean Project</android-clean-project>
 	<android-build-apk>Build APK</android-build-apk>
 	<android-build-bundle>Build Bundle</android-build-bundle>

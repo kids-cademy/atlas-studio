@@ -14,13 +14,10 @@ com.kidscademy.page.AndroidPage = class extends com.kidscademy.page.Page {
 
 		this._app = null;
 
-		this._form = this.getByCssClass("form");
 		this._objectBox = this.getByCssClass("object-box");
 
 		const releaseName = WinMain.url.parameters.release;
 		ReleaseService.getAndroidAppForRelease(releaseName, this._onAppLoaded, this);
-
-		this.getByName("update").on("click", this._onUpdate, this);
 
 		const menu = this.getByCss(".side-bar .menu");
 		menu.on(this, {
@@ -33,20 +30,11 @@ com.kidscademy.page.AndroidPage = class extends com.kidscademy.page.Page {
 			"&edit-release": this._onEditRelease,
 			"&remove-app": this._onRemoveApp
 		});
-
-		this.on("clean-project", this._onCleanProject, this);
 	}
 
 	_onAppLoaded(app) {
 		this._app = app;
-		this._form.setObject(app);
 		this._objectBox.setObject(app);
-	}
-
-	_onUpdate() {
-		if (this._form.isValid()) {
-			ReleaseService.updateAndroidApp(this._form.getObject(this._app), this._onAppLoaded, this);
-		}
 	}
 
 	_onCleanProject() {

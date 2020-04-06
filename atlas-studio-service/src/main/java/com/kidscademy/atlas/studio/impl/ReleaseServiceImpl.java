@@ -27,6 +27,10 @@ import com.kidscademy.atlas.studio.tool.AndroidTools;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Html2Md;
 
+import js.dom.Document;
+import js.dom.DocumentBuilder;
+import js.dom.EList;
+import js.dom.Element;
 import js.format.LongDate;
 import js.io.VariablesWriter;
 import js.lang.AsyncTask;
@@ -225,5 +229,39 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void buildAndroidApp(AndroidApp app) throws IOException {
 	androidTools.build(app.getDir());
+    }
+
+    @Override
+    public Map<String, String> getAndroidStoreListing(int appId) {
+	AndroidApp app = dao.getAndroidAppById(appId);
+
+	StringBuilder readme = new StringBuilder();
+	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
+	Document doc = builder.loadXML(new StringReader(app.getRelease().getReadme()));
+	for (Element element : doc.getRoot().getChildren()) {
+	    if (!element.getTag().equals("table")) {
+		readme.append(element.getText());
+	    } else {
+		EList rows = element.findByTag("tr");
+		for (int i = 1;;) {
+		    readme.append("- ");
+		    readme.append(rows.item(i).getFirstChild().getText().trim());
+		    if (++i == rows.size()) {
+			break;
+		    }
+		    readme.append("\r\n");
+		}
+	    }
+	    readme.append("\r\n\r\n");
+	}
+
+	Map<String, String> listing = new HashMap<>();
+	listing.put("title", app.getDisplay());
+	listing.put("shortDescription", app.getRelease().getBrief());
+	listing.put("fullDescription", readme.toString());
+	listing.put("website", "http://kids-cademy.com/");
+	listing.put("email", "contact@kids-cademy.com");
+	listing.put("privacy", app.getGitRepository().toExternalForm().replace(".git", "/") + "blob/master/PRIVACY.md");
+	return listing;
     }
 }

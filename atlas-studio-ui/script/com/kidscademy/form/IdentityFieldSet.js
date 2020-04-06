@@ -7,7 +7,8 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 		this._nameView.on("paste", this._onNamePaste, this);
 
 		this._displayView = this.getByName("display");
-		this.getByName("copy-to-clipboard").on("click", this._onDisplayCopy, this);
+		this.getByName("copy-name").on("click", this._onNameCopy, this);
+		this.getByName("copy-display").on("click", this._onDisplayCopy, this);
 	}
 
 	onCreate(formPage) {
@@ -40,6 +41,10 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 
 		ev.prevent();
 		this._nameView.setValue(toHyphenCase(ev.getData()));
+	}
+
+	_onNameCopy() {
+		this._nameView.copyToClipboard();
 	}
 
 	_onDisplayCopy() {

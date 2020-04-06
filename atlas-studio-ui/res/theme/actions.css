@@ -40,6 +40,21 @@
 	cursor: pointer;
 }
 
+.action-for-input {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: @dimen/input-height;
+	height: @dimen/input-height;
+	padding: 1px;
+	border: solid 1px @color/border-image;
+	margin-right: 0;
+	background-color: white;
+	opacity: 0.6;
+	cursor: pointer;
+	margin-left: 2px;
+}
+
 .actions img.rfloat {
 	margin-right: 0;
 	margin-left: @dimen/action-margin;
