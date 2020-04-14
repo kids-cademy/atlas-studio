@@ -8,12 +8,12 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
-		this._relatedView = this.getByCss(".list-view.related");
+		this._relatedView = this.getByCss(".icons-list.related");
 		this._relatedView.on("dragstart", this._onDragStart, this);
 		this._relatedView.on("dragover", this._onDragOver, this);
 		this._relatedView.on("drop", this._onRelatedViewDrop, this);
 
-		this._candidatesView = this.getByCss(".list-view.candidates");
+		this._candidatesView = this.getByCss(".icons-list.candidates");
 		this._candidatesView.on("dragstart", this._onDragStart, this);
 		this._candidatesView.on("dragover", this._onDragOver, this);
 		this._candidatesView.on("drop", this._onCandidatesViewDrop, this);
@@ -24,8 +24,9 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).showOnly("search");
 	}
 
-	onStart() {
-		const taxonomy = this._formPage.getObject().taxonomy;
+	onCreate(formPage) {
+		super.onCreate(formPage);
+		const taxonomy = formPage.getObject().taxonomy;
 		this._taxonomySelect.setOptions(taxonomy);
 	}
 
@@ -33,9 +34,13 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	// CONTROL INTERFACE
 
 	setValue(names) {
+		if(names.length === 0) {
+			this._relatedView.setObject([]);
+			return;
+		}
 		const collectionId = this._formPage.getCollection().id;
 		AtlasService.getRelatedAtlasObjects(collectionId, names, objects => {
-			objects.forEach(object => object.href = `@link/form?id=${object.id}`);
+			objects.forEach(object => object.href = `@link/object-form?object=${object.id}`);
 			this._relatedView.setObject(objects);
 		});
 	}

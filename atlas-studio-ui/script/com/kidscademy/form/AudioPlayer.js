@@ -98,11 +98,6 @@ com.kidscademy.form.AudioPlayer = class extends js.dom.Element {
 		this.on("click", this._onClick, this);
 	}
 
-	/**
-	 * Hook invoked by this class parent when is about to be displayed.
-	 * 
-	 * @param {com.kidscademy.form.FormPage} formPage - parent form page.
-	 */
 	onCreate(formPage) {
 		this._formPage = formPage;
 	}

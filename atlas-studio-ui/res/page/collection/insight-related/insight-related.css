@@ -1,0 +1,17 @@
+.insight-related {
+	white-space: nowrap;
+}
+
+.insight-related .row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-top: @dimen/list-item-y-space;
+}
+
+.insight-related .object-box {
+	width: 400px;
+	padding: 10px;
+	border: solid 1px #E6E6E6;
+	margin-right: 2px;
+}

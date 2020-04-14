@@ -1,0 +1,125 @@
+<fieldset class="graphic-assets" data-class="com.kidscademy.form.GraphicAssets" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/graphic-assets</h2>
+		<p>@string/sample-text</p>
+	</div>
+	
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/graphic-asset" />
+		</div>
+		
+		<div class="container">
+			<div class="view">
+				<ul data-name="images" class="inline hidden" data-class="com.kidscademy.form.ImagesControl">
+					<li data-id="id" class="item">
+						<img data-src="src" data-reload="true" />
+						<h4 data-text="imageKey"></h4>
+						<h4><span data-text="width"></span> x <span data-text="height"></span></h4>
+						<h4 data-text="fileSize" data-format="js.format.FileSize"></h4>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="meta exclude hidden" data-class="com.kidscademy.FormData">
+				<div class="controlset">
+					<label>name</label> <select name="image-key">
+						<option></option>
+						<option>icon</option>
+						<option>cover</option>
+						<option>trivia</option>
+						<option>featured</option>
+						<option>contextual</option>
+					</select>
+				</div>
+				<div class="controlset">
+					<label>source</label> <input name="source" class="large optional" />
+				</div>
+				<div class="controlset">
+					<label>caption</label> <textarea name="caption" class="optional" data-class="com.kidscademy.form.CaptionControl"></textarea>
+				</div>
+				<div class="exclude hidden">
+					<label>license</label> <select name="license" class="optional">
+						<option>Original Work</option>
+						<option>Fair Use License</option>
+						<option>Creative Commons license</option>
+						<option>Apache License Version 2.0</option>
+					</select>
+				</div>
+			</div>			
+			
+			<div class="actions bar exclude" data-class="com.kidscademy.Actions">
+				<img name="add" src="@image/action/add" title="@tip/graphic-add" />
+				<span data-name="upload" class="upload-icon">
+					<img src="@image/action/upload" />
+					<input name="upload-file" type="file" title="@tip/graphic-upload" accept="image/*" />
+				</span>
+				<img name="search" src="@image/action/search" title="@tip/graphic-search" />
+				<img name="link" src="@image/action/link" title="@tip/graphic-link" />
+				<img name="edit" src="@image/action/edit" title="@tip/graphic-edit" />
+				<img name="clone-to-icon" src="@image/action/clone-to-icon" title="@tip/graphic-clone-to-icon" />
+				<span class="separator"></span>
+				<img name="crop" src="@image/action/crop" title="@tip/graphic-crop" />
+				<img name="trim" src="@image/action/image-trim" title="@tip/graphic-trim" />
+				<img name="flop" src="@image/action/flop" title="@tip/graphic-flop" />
+				<img name="flip" src="@image/action/flip" title="@tip/graphic-flip" />
+				<img name="rotate-left" src="@image/action/rotate-left" title="@tip/graphic-rotate-left" />
+				<img name="rotate-right" src="@image/action/rotate-right" title="@tip/graphic-rotate-right" />
+				<span class="separator"></span>
+				<img name="done" src="@image/action/done" title="@tip/graphic-done" />
+				<img name="undo" src="@image/action/undo" title="@tip/graphic-undo" />
+				<img name="remove" src="@image/action/remove" title="@tip/graphic-remove" />
+				<img name="close" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
+			</div>
+
+			<div class="image-editor hidden">
+				<div class="info">
+					<div class="file-info">
+						<h3 data-text="fileName"></h3>
+						<dl class="inline">
+							<dt>Type</dt>
+							<dd data-text="kind"></dd>
+							<dt>Size</dt>
+							<dd data-text="fileSize" data-format="js.format.FileSize"></dd>
+							<dt>Date</dt>
+							<dd data-text="uploadDate" data-format="js.format.StandardDate"></dd>
+							<dt>Width</dt>
+							<dd data-text="width"></dd>
+							<dt>Height</dt>
+							<dd data-text="height"></dd>
+						</dl>
+					</div>
+					<dl class="crop-info inline hidden">
+						<dt>Left</dt>
+						<dd data-text="left"></dd>
+						<dt>Top</dt>
+						<dd data-text="top"></dd>
+						<dt>Width</dt>
+						<dd data-text="width"></dd>
+						<dt>Height</dt>
+						<dd data-text="height"></dd>
+					</dl>
+				</div>
+				<div class="preview">
+					<img />
+					<div class="crop-mask hidden" data-class="com.kidscademy.form.CropMask">
+						<div class="x-offset outer"></div>
+						<div class="crop-column">
+							<div class="y-offset outer"></div>
+							<div class="crop-rect">
+								<div class="y-resize n"></div>
+								<div class="y-resize s"></div>
+								<div class="x-resize w"></div>
+								<div class="x-resize e"></div>
+							</div>
+							<div class="y-span outer"></div>
+						</div>
+						<div class="x-span outer"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!--<div class="exclude" w:compo="atlas/form/graphic-assets/image-search"></div>-->
+		</div>
+	</div>
+</fieldset>

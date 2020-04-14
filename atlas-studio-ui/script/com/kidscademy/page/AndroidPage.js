@@ -19,17 +19,10 @@ com.kidscademy.page.AndroidPage = class extends com.kidscademy.page.Page {
 		const releaseName = WinMain.url.parameters.release;
 		ReleaseService.getAndroidAppForRelease(releaseName, this._onAppLoaded, this);
 
-		const menu = this.getByCss(".side-bar .menu");
-		menu.on(this, {
-			"&clean-project": this._onCleanProject,
-			"&build-apk": this._onBuildApk
-		});
-
-		const actions = this.getByCss(".side-bar .menu.bottom");
-		actions.on(this, {
-			"&edit-release": this._onEditRelease,
-			"&remove-app": this._onRemoveApp
-		});
+		this._sidebar.on("clean-project", this._onCleanProject, this);
+		this._sidebar.on("build-apk", this._onBuildApk, this);
+		this._sidebar.on("edit-release", this._onEditRelease, this);
+		this._sidebar.on("remove-app", this._onRemoveApp, this);
 	}
 
 	_onAppLoaded(app) {
@@ -37,12 +30,15 @@ com.kidscademy.page.AndroidPage = class extends com.kidscademy.page.Page {
 		this._objectBox.setObject(app);
 	}
 
+	// --------------------------------------------------------------------------------------------
+	// SIDE BAR MENU HANDLERS
+
 	_onCleanProject() {
-		ReleaseService.cleanAndroidProject(this._form.getObject(this._app));
+		ReleaseService.cleanAndroidProject(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
 	}
 
 	_onBuildApk() {
-		ReleaseService.buildAndroidApp(this._form.getObject(this._app));
+		ReleaseService.buildAndroidApp(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
 	}
 
 	_onEditRelease() {

@@ -1,0 +1,80 @@
+.object-form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.object-form.sidebar .header {
+	padding: 10px 10px;
+}
+
+.object-form.sidebar .menu {
+	margin-top: 20px;
+}
+
+.object-form .form {
+	overflow-y: auto;
+}
+
+.object-form .form fieldset:last-child {
+	margin-bottom: 40px;
+}
+
+.object-form .action {
+	display: inline-block;
+	width: @dimen/action-icon-size;
+	height: @dimen/action-icon-size;
+	vertical-align: middle;
+	margin-right: @dimen/action-margin;
+	border: solid 1px @color/border;
+	background-color: white;
+	opacity: 0.2;
+	cursor: pointer;
+}
+
+.object-form .action.small {
+	width: @dimen/action-small-icon-size;
+	height: @dimen/action-small-icon-size;
+}
+
+/* experimental section description */
+.object-form .form .header p {
+	display: none;
+}
+
+.object-form .section-icon {
+	position: relative;
+	width: 0;
+	height: 0;
+	left: 80%;
+	top: -@eval(add (mul @dimen/section-icon-size 0.5) @dimen/section-padding);
+}
+
+.object-form .section-icon.bottom {
+	top: 10px;
+	bottom: @eval(add (mul @dimen/section-icon-size 0.5) @dimen/section-padding);
+}
+
+.object-form .section-icon img {
+	width: @dimen/section-icon-size;
+	height: @dimen/section-icon-size;
+	background-color: @color/teal-100;
+	border-radius: @eval(mul @dimen/section-icon-size 0.5);
+	box-shadow: 0 0 15px #408080;
+	box-sizing: border-box;
+	opacity: 0.8;
+}
+
+.object-form .section-icon.big img {
+	width: @dimen/section-icon-big-size;
+	height: @dimen/section-icon-big-size;
+	border-radius: @eval(mul @dimen/section-icon-big-size 0.5);
+}
+
+.object-form .section-icon.padding {
+	top: -70px;
+}
+
+.object-form .section-icon.padding img {
+	padding: 16px;
+}

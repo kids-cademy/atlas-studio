@@ -17,7 +17,7 @@ com.kidscademy.Form = class extends js.dom.Form {
 		super(ownerDoc, node);
 		this._textAreaControls = this.findByTag("textarea");
 	}
-
+	
 	show() {
 		super.show();
 		this._textAreaControls.forEach(control => control.show());

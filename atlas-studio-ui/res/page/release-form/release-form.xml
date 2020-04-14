@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Release Form</title>
+	<description>Releaseform.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
+		<script>script/com/kidscademy/IconControl.js</script>
+		<script>script/com/kidscademy/ImageEditor.js</script>
+		<script>script/com/kidscademy/Htm2Md.js</script>
+		<script>script/com/kidscademy/Md2Htm.js</script>
+		<script>script/com/kidscademy/RichTextControl.js</script>
+		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/page/ReleaseForm.js</script>
+	</scripts>
+</page>

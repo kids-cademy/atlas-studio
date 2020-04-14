@@ -129,6 +129,8 @@ public interface AtlasDao {
 
     List<FeatureMeta> getFeaturesMeta();
 
+    FeatureMeta getFeatureMetaById(int featureMetaId);
+
     void saveFeatureMeta(FeatureMeta featureMeta);
 
     void removeFeatureMeta(int featureMetaId);

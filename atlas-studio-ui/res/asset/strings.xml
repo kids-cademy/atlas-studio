@@ -12,6 +12,10 @@
 	<media>media</media>
 	<release>release</release>
 	<logout>logout</logout>
+	
+	<collections>Collections</collections>
+	<features-meta>Features Meta</features-meta>
+	<links-meta>External Sources</links-meta>
 
 	<submit>Submit</submit>
 	<join>Join</join>
@@ -32,7 +36,7 @@
 	<alert-invalid-link-url>Link invalid URL.</alert-invalid-link-url>
 	<alert-inconsistent-db>Inconsistent database record! Force removing.</alert-inconsistent-db>
 	<alert-no-taxons>No more taxons available.</alert-no-taxons>
-	<alert-release-processing-done>Release processing done.</alert-release-processing-done>
+	<alert-processing-done>Processing done.</alert-processing-done>
 
 	<confirm-collection-remove>Please confirm atlas collection remove. Collection should be empty.</confirm-collection-remove>
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
@@ -53,6 +57,9 @@
 	<confirm-object-not-saved>Atlas object is changed. Please confirm page leaving.</confirm-object-not-saved>
 	<confirm-release-remove>Please confirm release remove.</confirm-release-remove>
 	<confirm-app-remove>Please confirm application remove.</confirm-app-remove>
+	<confirm-remove-from-release>Please confirm object remove from release.</confirm-remove-from-release>
+	<confirm-feature-meta-remove>Please confirm feature meta remove.</confirm-feature-meta-remove>
+	<confirm-link-meta-remove>Please confirm external source remove.</confirm-link-meta-remove>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 
@@ -76,6 +83,7 @@
 	<workspace-register-external-source>Register External Source</workspace-register-external-source>
 	<workspace-features-meta>Features Meta</workspace-features-meta>
 
+	<collection-open>Open Collection</collection-open>
 	<collection-create>Create Collection</collection-create>
 	<collection-objects>Manage Objects</collection-objects>
 	<collection-edit>Edit Collection</collection-edit>
@@ -120,7 +128,8 @@
 	<release-create>Create Release</release-create>
 	<release-edit>Edit Release</release-edit>
 	<release-remove>Remove Release</release-remove>
-	<release-objects>Manage Objects</release-objects>
+	<release-remove-object>Remove From Release</release-remove-object>
+	<release-objects>Release Objects</release-objects>
 	<release-android-app>Android App</release-android-app>
 
 	<android-application>Application</android-application>

@@ -311,11 +311,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		this._previewImage.setSrc(image.src);
 	}
 
-	/**
-	* Class string representation.
-	* 
-	* @return this class string representation.
-	*/
 	toString() {
 		return "com.kidscademy.form.GraphicAssets";
 	}

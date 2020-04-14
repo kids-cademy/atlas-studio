@@ -2,8 +2,8 @@
 	<header data-class="com.kidscademy.PageHeader">
 		<img src="@image/action/previous-page" class="back action" />
 		<nav class="top-menu">
-			<a href="@link/workspace">@string/workspace</a>
-			<a href="@link/release">@string/release</a>
+			<a href="@link/collections">@string/workspace</a>
+			<a href="@link/releases">@string/release</a>
 			<a href="@link/meta">@string/meta</a>
 			<a href="@link/media">@string/media</a>
 			<a href="@link/search">@string/search</a>
@@ -13,8 +13,20 @@
 		<img src="/media/user/iulian.png" class="developer" />
 	</header>
 
-	<section class="flex-content">
-		<div w:editable="side-bar" class="side-bar"></div>
-		<div w:editable="body" class="body"></div>
-	</section>
+	<div class="flex-content">
+		<div class="sidebar" data-class="com.kidscademy.Sidebar">
+			<div class="caption">
+				<span class="title"></span><img class="close" src="@image/action/collapse" />
+			</div>
+			<div class="object-view hidden">
+				<div w:compo="compo/object-box"></div>
+			</div>
+			<div w:editable="sidemenu" class="sidemenu"></div>
+		</div>
+		<div class="body">
+			<div class="scroll-y">
+				<div w:editable="content" class="content"></div>
+			</div>
+		</div>
+	</div>
 </body>

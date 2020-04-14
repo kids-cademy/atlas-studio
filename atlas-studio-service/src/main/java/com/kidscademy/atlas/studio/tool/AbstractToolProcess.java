@@ -39,7 +39,10 @@ public abstract class AbstractToolProcess implements ToolProcess {
     }
 
     protected static void wait(Process process, Thread stdinThread, Object lock) throws IOException {
-	long timeout = EXECUTION_TIMEOUT;
+	wait(process, EXECUTION_TIMEOUT, stdinThread, lock);
+    }
+
+    protected static void wait(Process process, long timeout, Thread stdinThread, Object lock) throws IOException {
 	long timestamp = System.currentTimeMillis() + timeout;
 
 	synchronized (lock) {

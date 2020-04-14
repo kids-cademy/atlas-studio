@@ -1,0 +1,31 @@
+<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<form class="form">
+		<fieldset>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>@string/feature-name</label><input name="name" />
+					</div>
+					<div class="controlset">
+						<label>@string/feature-quantity</label><select name="quantity" w:compo="compo/physical-quantity-select"></select>
+					</div>
+					<div class="controlset">
+						<label>@string/feature-definition</label>
+						<textarea name="definition" class="small"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="container buttons-bar">
+		<button name="save">@string/save</button>
+		<button name="cancel">@string/cancel</button>
+	</div>
+</div>
+
+<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+	<ul class="menu">
+		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
+	</ul>
+</div>

@@ -4,6 +4,8 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		this._titleView = this.getByCssClass("title");
+
 		/**
 		 * Optional object view on context menu header. It can be null if context menu belongs to a group view
 		 * not oriented on icons, e.g. table view.
@@ -19,7 +21,27 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 
 		this._contextView = null;
 
-		this.getByCssClass("close").on("click", this._onClose, this);
+		this.getByCssClass("close").on("click", this.hide, this);
+	}
+
+	on(actionName, listener, scope) {
+		const action = this.getByCss("li[data-name='%s']", actionName);
+		$assert(action != null, "com.kidscademy.ContextMenu#on", "No menu item for action |%s|.", actionName);
+
+		if (action.hasCssClass("default-action")) {
+			this._defaultAction = { name: actionName, listener: listener, scope: scope };
+		}
+
+		const _this = this;
+		const actionHandler = function () {
+			_this.hide();
+			listener.call(scope || window, _this._contextView);
+		};
+		action.on("click", actionHandler);
+	}
+
+	getDefaultAction() {
+		return this._defaultAction;
 	}
 
 	/**
@@ -67,23 +89,13 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 
 	open(contextView) {
 		this._contextView = contextView;
-		if (this._contextView != null) {
-			this.removeCssClass("no-object");
-			if (this._objectView != null) {
-				this._objectView.setObject(contextView.getUserData()).show();
-			}
+		if (this._contextView == null) {
+			return;
 		}
-		else {
-			this.addCssClass("no-object");
-			if (this._objectView != null) {
-				this._objectView.hide();
-			}
-		}
+		const object = contextView.getUserData();
+		this._titleView.setText(object.title).show();
+		this._objectView.setObject(object).show();
 		this.show();
-	}
-
-	_onClose() {
-		this.hide();
 	}
 
 	toString() {

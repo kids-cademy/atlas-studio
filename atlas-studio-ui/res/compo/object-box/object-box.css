@@ -1,22 +1,68 @@
+.object-box {
+	background: none;
+	border-color: transparent;
+	min-height: @eval(ADD @dimen/icon-size 4px);	
+}
+
+.object-box.created {
+	background: radial-gradient(circle at 30% 50%, #F8F8F8, #E6E6E6);
+	border-color: #E6E6E6;
+}
+
+.object-box.development {
+	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
+	border-color: #f779b4;
+}
+
+.object-box.published {
+	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
+	border-color: #76b0e2;
+}
+
 .object-box .icon {
 	float: left;
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
 	border: solid 1px @color/border-image;
-	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.object-box.created .icon {
+	border-color: @color/border-image;
+}
+
+.object-box.development .icon {
+	border-color: #f779b4;
+}
+
+.object-box.published .icon {
+	border-color: #5aa3e2;
 }
 
 .object-box .display {
 	padding-bottom: 4px;
 	border-bottom: solid 1px @color/border-light;
-	margin-top: 20px;
+	margin-top: 0;
 	text-transform: uppercase;	
 	font-size: 2.0rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.object-box.created .display {
+	color: #000000;
+}
+
+.object-box.development .display {
+	color: #f74498;
+	border-color: #f779b4;
+}
+
+.object-box.published .display {
+	color: #1985e2;
+	border-color: #5aa3e2;
 }
 
 .object-box .name {

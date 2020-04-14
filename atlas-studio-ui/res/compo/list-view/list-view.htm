@@ -1,0 +1,16 @@
+<div class="list-view" data-class="com.kidscademy.ListView" xmlns:w="js-lib.com/wood">
+	<form class="form-bar with-actions">
+		<input name="search-input" />
+		<div class="actions inline"  data-class="com.kidscademy.Actions">
+			<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
+			<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
+			<span class="space"></span>
+			<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
+			<img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" />
+			<img name="details-view" src="@image/action/details-view" title="@tip/search-reset" />
+			<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
+		</div>
+	</form>
+	<h1 class="loading-info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
+	<ul class="body icons" w:compo="compo/list-control"></ul>
+</div>

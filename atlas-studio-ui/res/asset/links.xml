@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <link>
 	<workspace>workspace.htm</workspace>
+	<collections>collections.htm</collections>
 	<collection>collection.htm</collection>
+	<collection-form>collection-form.htm</collection-form>
 	<meta>meta.htm</meta>
 	<search>search.htm</search>
-	<form>form.htm</form>
+	<object-form>object-form.htm</object-form>
 	<media>media.htm</media>
+	<releases>releases.htm</releases>
 	<release>release.htm</release>
+	<release-form>release-form.htm</release-form>
 	<account>account.htm</account>
 	<reader>reader.htm</reader>
-	<android>android.htm</android>
+	<features-meta>features-meta.htm</features-meta>
+	<feature-meta-form>feature-meta-form.htm</feature-meta-form>
+	<links-meta>links-meta.htm</links-meta>
+	<link-meta-form>link-meta-form.htm</link-meta-form>
+	<android-app>android-app.htm</android-app>
+	<android-settings>android-settings.htm</android-settings>
+	<android-listing>android-listing.htm</android-listing>
+	
+	<export-all-atlas-collections>export-all-atlas-collections.xsp</export-all-atlas-collections>
 </link>

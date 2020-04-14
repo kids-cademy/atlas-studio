@@ -5,10 +5,7 @@ $package("com.kidscademy.page");
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
-	/**
-	 * Construct an instance of reader page.
-	 */
+com.kidscademy.page.ReaderPage = class extends js.ua.Page {
 	constructor() {
 		super();
 
@@ -28,8 +25,11 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		 */
 		this._minLeft = 0;
 
-		const objectId = Number(WinMain.url.parameters.id);
+		const objectId = Number(WinMain.url.parameters.object);
 		AtlasService.getExportObject(objectId, this._onObjectLoaded, this);
+
+
+		this.getByCss("header .back.action").on("click", WinMain.back, WinMain);
 	}
 
 	_onObjectLoaded(object) {
@@ -125,11 +125,6 @@ com.kidscademy.page.ReaderPage = class extends com.kidscademy.page.Page {
 		this._scrolly = false;
 	}
 
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.page.ReaderPage";
 	}

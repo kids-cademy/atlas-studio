@@ -20,7 +20,7 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		 * List view for link objects.
 		 * @type {js.dom.Element}
 		 */
-		this._linksView = this.getByCssClass("list-view");
+		this._linksView = this.getByCssClass("icons-list");
 		this._linksView.on("click", this._onLinksViewClick, this);
 		this._linksView.on("dragstart", this._onDragStart, this);
 		this._linksView.on("dragover", this._onDragOver, this);

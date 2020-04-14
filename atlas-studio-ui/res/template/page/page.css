@@ -25,7 +25,8 @@ body>.flex-content {
 	overflow: hidden;
 }
 
-body>.flex-content .side-bar {
+body>.flex-content .sidebar {
+	position: relative;
 	width: @dimen/page-sidebar-width;
 	height: 100%;
 	flex-shrink: 0;
@@ -35,6 +36,34 @@ body>.flex-content .side-bar {
 	border-right: solid 1px @color/border-light;
 	background-color: #f8f8f8;
 	overflow: hidden;
+}
+
+body>.flex-content .sidebar .caption {
+	height: @dimen/window-caption-height;
+	line-height: @dimen/window-caption-height;
+	background-color: @color/window-caption;
+}
+
+body>.flex-content .sidebar .caption .title {
+	margin-left: 10px;
+	font-size: 2.0rem;
+	text-transform: uppercase;
+	color: @color/text-inverse;
+}
+
+body>.flex-content .sidebar .caption .close {
+	float: right;
+	height: @dimen/window-caption-height;
+	filter: invert(100%);
+	cursor: pointer;
+}
+
+body>.flex-content .sidebar .object-view {
+	padding: 10px;
+}
+
+body>.flex-content .sidebar .menu {
+	margin-top: 40px;
 }
 
 body>.flex-content .body {
@@ -68,7 +97,7 @@ body>header .developer {
 	margin-right: 40px;
 }
 
-body header .content {
+body>header .content {
 	white-space: nowrap;
 }
 
@@ -152,4 +181,8 @@ body>header .logo-type, body>footer .logo-type {
 	padding: 0;
 	text-transform: lowercase;
 	color: green;
+}
+
+.body > .scroll-y > .content {
+	margin-bottom: 40px;
 }

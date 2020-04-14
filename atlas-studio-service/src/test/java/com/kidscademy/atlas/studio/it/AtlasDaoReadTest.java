@@ -178,9 +178,9 @@ public class AtlasDaoReadTest {
 	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
 		equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
 
-	assertTrue(object.getCollection().getFlags().isEndDate());
-	assertTrue(object.getCollection().getFlags().isConservationStatus());
-	assertTrue(object.getCollection().getFlags().isAudioSample());
+	assertTrue(object.getCollection().getFlags().hasEndDate());
+	assertTrue(object.getCollection().getFlags().hasConservationStatus());
+	assertTrue(object.getCollection().getFlags().hasAudioSample());
 
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(object.getName(), equalTo("accordion"));

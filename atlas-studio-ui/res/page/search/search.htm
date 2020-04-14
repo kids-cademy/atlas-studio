@@ -1,4 +1,4 @@
-<div class="search" w:template="template/page#body" xmlns:w="js-lib.com/wood">
+<div class="search" w:template="template/page#content" xmlns:w="js-lib.com/wood">
 	<section>
 		<form class="form-bar with-actions">
 			<input name="search-input" />
@@ -18,14 +18,14 @@
 	</section>
 	
 	<section class="content">
-		<h1 class="info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
-		<ul class="search-result" w:widget="compo/objects-list-view"></ul>
+		<h1 class="loading-info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
+		<ul class="search-result" w:compo="compo/list-control"></ul>
 	</section>
 
-	<div w:widget="page/search/context-menu"></div>
+	<div w:compo="page/search/context-menu"></div>
 </div>
 
-<div class="account" w:template="template/page#side-bar" xmlns:w="js-lib.com/wood">
+<div class="search" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
 		<li data-name="update-index"><img src="@image/action/update-index" />Update Index</li>
 	</ul>

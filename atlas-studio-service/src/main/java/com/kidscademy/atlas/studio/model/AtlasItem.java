@@ -26,6 +26,9 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "Atlas Object";
+
     @ManyToOne
     private AtlasCollection collection;
     
@@ -89,6 +92,11 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     @Override
     public Date getTimestamp() {
         return timestamp;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
     }
 
     @Override

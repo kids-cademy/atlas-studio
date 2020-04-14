@@ -1,0 +1,24 @@
+<fieldset name="definition" class="definition" data-class="com.kidscademy.form.DefinitionControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-definition</h2>
+		<p>@string/sample-text</p>
+	</div>
+	
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/definition" />
+		</div>
+		<div class="container">
+			<textarea class="small"></textarea>
+
+			<div class="actions bar" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/definition-import" />
+				<!-- actions with 'rfloat' are rendered by browser with reversed order -->
+				<img name="close" src="@image/action/close" title="@tip/definition-close" class="rfloat" />
+				<img name="remove-all" src="@image/action/remove-all" title="@tip/definition-remove-all" class="rfloat" /> 
+			</div>
+
+			<ul class="hidden" w:compo="compo/icons-list" data-class="com.kidscademy.form.LinkSelect"></ul>
+		</div>
+	</div>
+</fieldset>

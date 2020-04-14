@@ -6,14 +6,14 @@ com.kidscademy.ItemSelect = class extends js.dom.Element {
 
 		this._callback = null;
 
-		this._listView = this.getByCssClass("list-view");
-		this._listView.on("click", this._onClick, this);
+		this._iconsListView = this.getByCssClass("icons-list");
+		this._iconsListView.on("click", this._onClick, this);
 
 		this.getByCssClass("close").on("click", this._onClose, this);
 	}
 
 	load(items) {
-		this._listView.setObject(items).show();
+		this._iconsListView.setObject(items).show();
 	}
 
 	open(callback) {

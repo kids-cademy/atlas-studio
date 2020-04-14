@@ -23,17 +23,23 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		this._meta = null;
 
 		/**
+		 * Import link editor.
+		 * @type {com.kidscademy.form.TaxonomyControl.LinkEditor}
+		 */
+		this._linkEditor = this.getByCss(".editor.link");
+
+		/**
 		 * Taxon meta editor.
 		 * @type {com.kidscademy.form.TaxonomyControl.MetaEditor}
 		 */
-		this._metaEditor = this.getByCssClass("meta-editor");
+		this._metaEditor = this.getByCss(".editor.meta");
 
 		/**
-		 * Taxon instance editor.
-		 * @type {com.kidscademy.form.TaxonomyControl.Editor}
+		 * Taxon value editor.
+		 * @type {com.kidscademy.form.TaxonomyControl.ValueEditor}
 		 */
-		this._editor = this.getByCssClass("editor");
-		this._editor.onKey(this._onEditorKey.bind(this));
+		this._valueEditor = this.getByCss(".editor.value");
+		this._valueEditor.onKey(this._onEditorKey.bind(this));
 
 		/**
 		 * Array index for taxon object currently on edit. This index identify taxon object from atlas object {@link #_taxonomy}.
@@ -66,8 +72,9 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * Handler called by atlas object form just after object loaded. Note that this callback is 
 	 * invoked after {@link #setValue(Object)}.
 	 */
-	onStart() {
-		this._meta = new com.kidscademy.form.TaxonomyControl.Meta(this._formPage.getCollection().taxonomyMeta);
+	onCreate(formPage) {
+		super.onCreate(formPage);
+		this._meta = new com.kidscademy.form.TaxonomyControl.Meta(formPage.getCollection().taxonomyMeta);
 		this._metaEditor.bind(this._meta);
 	}
 
@@ -133,6 +140,11 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
+	_onImport() {
+		this._actions.showOnly("done", "close");
+		this._linkEditor.open();
+	}
+
 	/**
 	 * Handle 'ADD' action. If current taxonomy is empty load default from collection taxonomy meta. If current taxonomy 
 	 * is already loaded append a new taxon.
@@ -184,6 +196,12 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			return;
 		}
 
+		if (this._linkEditor.isVisible()) {
+			this._linkEditor.hide();
+			AtlasService.importAtlasObjectTaxonomy(this._linkEditor.getValue(), this.setValue, this);
+			return;
+		}
+
 		if (this._metaEditor.isVisible()) {
 			this._metaEditor.hide();
 			this._taxonomyView.addObject({ name: this._metaEditor.getValue(), value: null });
@@ -207,15 +225,16 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 	_onClose() {
 		this._batchEdit = false;
+		this._linkEditor.hide();
 		this._metaEditor.hide();
-		this._editor.hide();
+		this._valueEditor.hide();
 		this._updateActions();
 	}
 
 	// --------------------------------------------------------------------------------------------
 
 	_openEditor() {
-		this._editor.show();
+		this._valueEditor.show();
 		if (this._taxonEditIndex !== -1) {
 			this._updateEditControls();
 		}
@@ -225,7 +244,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_updateActions() {
 		const taxonomySize = this._taxonomyView.getChildrenCount();
 		if (taxonomySize === 0) {
-			this._actions.showOnly("add");
+			this._actions.showOnly("import", "add");
 		}
 		else {
 			this._actions.showOnly("remove-all");
@@ -245,14 +264,14 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		$assert(this._taxonEditIndex !== -1, "com.kidscademy.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
 		const taxon = this._taxonomyView.getByIndex(this._taxonEditIndex).getUserData();
 		const taxonMeta = this._meta.getTaxonMeta(taxon.name);
-		this._editor.setObject(taxonMeta, taxon);
+		this._valueEditor.setObject(taxonMeta, taxon);
 	}
 
 	/**
 	 * Store taxon value from editor on selected taxon from taxonomy view.
 	 */
 	_updateTaxonomyView() {
-		this._taxonomyView.getByIndex(this._taxonEditIndex).setObject(this._editor.getObject());
+		this._taxonomyView.getByIndex(this._taxonEditIndex).setObject(this._valueEditor.getObject());
 	}
 
 	/**
@@ -287,7 +306,7 @@ com.kidscademy.form.TaxonomyControl.Meta = class {
 	}
 };
 
-com.kidscademy.form.TaxonomyControl.Editor = class extends js.dom.Element {
+com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
@@ -339,7 +358,7 @@ com.kidscademy.form.TaxonomyControl.Editor = class extends js.dom.Element {
 	}
 
 	toString() {
-		return "com.kidscademy.form.TaxonomyControl.Editor";
+		return "com.kidscademy.form.TaxonomyControl.ValueEditor";
 	}
 };
 
@@ -379,5 +398,25 @@ com.kidscademy.form.TaxonomyControl.MetaEditor = class extends js.dom.Element {
 
 	toString() {
 		return "com.kidscademy.form.TaxonomyControl.MetaEditor";
+	}
+};
+
+com.kidscademy.form.TaxonomyControl.LinkEditor = class extends js.dom.Element {
+	constructor(ownerDoc, node) {
+		super(ownerDoc, node);
+		this._input = this.getByTag("input");
+	}
+
+	open() {
+		this._input.reset();
+		this.show();
+	}
+
+	getValue() {
+		return this._input.getValue();
+	}
+
+	toString() {
+		return "com.kidscademy.form.TaxonomyControl.LinkEditor";
 	}
 };

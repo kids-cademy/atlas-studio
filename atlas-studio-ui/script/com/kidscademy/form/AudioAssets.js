@@ -23,11 +23,9 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 
 	onCreate(formPage) {
 		super.onCreate(formPage);
-		this._audioPlayer.onCreate(formPage);
-	}
 
-	onStart() {
-		const object = this._formPage.getObject();
+		const object = formPage.getObject();
+		this._audioPlayer.onCreate(formPage);
 		this._audioPlayer.setObject(object);
 		this._sampleInfoView.setObject(object.sampleInfo);
 	}

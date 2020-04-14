@@ -54,7 +54,7 @@ public interface AtlasService {
 
     List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes);
 
-    AtlasObject createAtlasObject(AtlasCollection collection);
+    AtlasObject createAtlasObject(int collectionId);
 
     /**
      * Get AtlasObject entity. If ID is zero returns an empty instance.
@@ -80,6 +80,8 @@ public interface AtlasService {
 
     LinkMeta createLinkMeta();
 
+    LinkMeta getLinkMeta(int linkMetaId);
+
     List<LinkMeta> getLinksMeta();
 
     LinkMeta saveLinkMeta(LinkMeta linkMeta);
@@ -98,11 +100,15 @@ public interface AtlasService {
 
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException;
 
+    List<Taxon> importAtlasObjectTaxonomy(URL pageURL);
+
     List<Taxon> loadAtlasObjectTaxonomy(String objectName);
 
     FeatureMeta createFeatureMeta();
 
-    List<FeatureMeta> getFeatureMeta();
+    FeatureMeta getFeatureMeta(int featureMetaId);
+
+    List<FeatureMeta> getFeaturesMeta();
 
     List<FeatureMeta> getFeaturesMetaCandidates(List<FeatureMeta> current);
 

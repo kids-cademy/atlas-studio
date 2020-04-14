@@ -33,22 +33,18 @@ com.kidscademy.page.Page = class extends js.ua.Page {
         this._events = new js.event.CustomEvents();
 
         this._contentView = this.getByClass(com.kidscademy.FrameView);
-
-        // TODO: move to sidebar class
-        const viewTabs = this.getByCss(".side-bar .view-tabs");
-        if (viewTabs != null) {
+        if (this._contentView != null) {
             this._contentView.onCreate(this);
-            viewTabs.on("click", ev => {
-                const item = ev.target.getParentByTag("li");
-                if (item != null) {
-                    this._contentView.select(item.getName());
-                }
-            });
         }
+
+        this._sidebar = this.getByClass(com.kidscademy.Sidebar);
+        this._sidebar.on("view-selected", this._onViewSelected, this);
     }
 
-    _onUnload() { 
-        this._contentView.onDestroy();
+    _onUnload() {
+        if (this._contentView != null) {
+            this._contentView.onDestroy(this);
+        }
     }
 
     onServerFail(er) {
@@ -136,6 +132,11 @@ com.kidscademy.page.Page = class extends js.ua.Page {
 
     _pageRelativeName(name) {
         return `${this.toString()}.${name}`;
+    }
+
+    _onViewSelected(viewName) {
+        $assert(this._contentView != null, "com.kidscademy.page.Page#onViewSelected", "Illegal state. Side bar has view tabs but page content has no frame layout.");
+        this._contentView.select(viewName);
     }
 
     /**

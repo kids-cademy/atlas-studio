@@ -5,7 +5,7 @@ $package("com.kidscademy.page");
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.page.MediaPage = class extends com.kidscademy.page.Page {
+com.kidscademy.page.MediaPage = class extends com.kidscademy.Page {
 	/**
 	 * Construct an instance of MediaPage class.
 	 */

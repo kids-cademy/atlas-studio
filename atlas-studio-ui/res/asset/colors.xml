@@ -85,7 +85,6 @@
 	<border-accent>@color/blue-100</border-accent>
 	<border-alert>@color/red-300</border-alert>
 	
-	
 	<button-background>#62A30C</button-background>
 	<button-active-background>#7CBC27</button-active-background>
 	<button-ripple-background>rgba(236, 240, 241, .3)</button-ripple-background>
@@ -107,5 +106,31 @@
 	<quote-text>#5F9EA0</quote-text>
 	<quote-before>#7A7A7A</quote-before>
 	<quote-cite>#999999</quote-cite>
+
+	<!-- object states -->
+	<!-- created, development, released, published -->
 	
+	<border-none>#E6E6E6</border-none>
+	<border-created>#e6e6e6</border-created>
+	<border-development>#f779b4</border-development>
+	<border-released>#5aa3e2</border-released>
+	<border-published>#5bbf83</border-published>
+	
+	<bg1-none>transparent</bg1-none>
+	<bg2-none>transparent</bg2-none>
+	<bg1-created>#FFFFFF</bg1-created>
+	<bg2-created>#E6E6E6</bg2-created>
+	<bg1-development>#ffe3f0</bg1-development>
+	<bg2-development>#f792c1</bg2-development>
+	<bg1-released>#FFFFFF</bg1-released>
+	<bg2-released>#89b9e2</bg2-released>
+	<bg1-published>#FFFFFF</bg1-published>
+	<bg2-published>#70eda2</bg2-published>
+	
+	<text-none>#000000</text-none>
+	<text-created>#000000</text-created>
+	<text-development>#f74498</text-development>
+	<text-released>#1985e2</text-released>
+	<text-published>#409d65</text-published>
+		
 </color>

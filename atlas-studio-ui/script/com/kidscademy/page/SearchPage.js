@@ -5,39 +5,32 @@ $package("com.kidscademy.page");
  * 
  * @author Iulian Rotaru
  */
-com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
-	/**
-	 * Construct an instance of SearchPage class.
-	 */
+com.kidscademy.page.SearchPage = class extends com.kidscademy.Page {
 	constructor() {
 		super();
 
-		const menu = this.getByCss(".side-bar .menu");
-		menu.on(this, {
-			"&update-index": this._onUpdateIndex
-		});
+		this._sidebar.on("update-index", this._onUpdateIndex, this);
 
 		this._searchInput = this.getByName("search-input");
+		this._searchInput.setValue(this.getPageAttr("search-input"));
 		this._searchInput.focus();
 
-		this._infoView = this.getByCssClass("info");
-
 		this._searchResult = this.getByCssClass("search-result");
+		this._searchResult.setLayout(this.getPageAttr("list-layout"));
 		this._searchResult.on("click", this._onItemClick, this);
 		this._searchResult.on("contextmenu", this._onContextMenu, this);
 
-		this._listType = new com.kidscademy.CssFlags(this._searchResult, "icons", "tiles", "details", "cards");
-		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
 
-		this._searchInput.setValue(this.getPageAttr("search-input"));
-		this._listType.set(this.getPageAttr("list-type"));
+		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._actions.fire("search-submit");
+
+		this._loadingInfoView = this.getByCssClass("loading-info");
 	}
 
 	_onUnload() {
 		this.setPageAttr("search-input", this._searchInput.getValue());
-		this.setPageAttr("list-type", this._listType.get());
+		this.setPageAttr("list-layout", this._searchResult.getLayout());
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -48,7 +41,7 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 		if (search) {
 			const timestamp = Date.now();
 			AtlasService.search(search, items => {
-				this._infoView.setObject({
+				this._loadingInfoView.setObject({
 					objectsCount: items.length,
 					ellapsedTime: Date.now() - timestamp
 				}).show();
@@ -60,24 +53,24 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 
 	_onSearchReset() {
 		this._searchInput.reset();
-		this._infoView.hide();
+		this._loadingInfoView.hide();
 		this._searchResult.removeChildren();
 	}
 
 	_onIconsView() {
-		this._listType.set("icons");
+		this._searchResult.setLayout("icons");
 	}
 
 	_onTilesView() {
-		this._listType.set("tiles");
+		this._searchResult.setLayout("tiles");
 	}
 
 	_onDetailsView() {
-		this._listType.set("details");
+		this._searchResult.setLayout("details");
 	}
 
 	_onCardsView() {
-		this._listType.set("cards");
+		this._searchResult.setLayout("cards");
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -91,45 +84,44 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.page.Page {
 	// CONTEXT MENU HANDLERS
 
 	_onEditObject(objectView) {
-		this._moveToPage(objectView, false);
+		const object = objectView.getUserData();
+		WinMain.assign("@link/object-form", { object: object.id });
 	}
 
 	_onPreviewObject(objectView) {
-		this._moveToPage(objectView, true);
+		const object = objectView.getUserData();
+		WinMain.assign("@link/reader", { object: object.id });
+	}
+
+	_onOpenCollection(objectView) {
+		const object = objectView.getUserData();
+		WinMain.assign("@link/collection", { collection: object.collection.id });
 	}
 
 	// --------------------------------------------------------------------------------------------
 
 	_onItemClick(ev) {
-		const li = ev.target.getParentByTag("li");
-		if (li != null) {
-			this._moveToPage(li, ev.ctrlKey);
+		const objectView = ev.target.getParentByTag("li");
+		if (objectView == null) {
+			return;
+		}
+
+		if (ev.ctrlKey) {
+			this._onPreviewObject(objectView);
+		}
+		else {
+			this._onEditObject(objectView);
 		}
 	}
 
 	_onContextMenu(ev) {
-		const li = ev.target.getParentByTag("li");
-		if (li == null) {
-			return;
+		const objectView = ev.target.getParentByTag("li");
+		if (objectView != null) {
+			ev.halt();
+			this._contextMenu.open(objectView);
 		}
-		ev.halt();
-		this._contextMenu.open(li);
 	}
 
-	_moveToPage(objectView, reader) {
-		const object = objectView.getUserData();
-
-		this.setContextAttr("collection", object.collection);
-		this.setContextAttr("objectId", object.id);
-
-		WinMain.assign(reader ? "@link/reader" : "@link/form", { id: object.id });
-	}
-
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.page.SearchPage";
 	}

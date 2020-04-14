@@ -42,8 +42,9 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	 * Handler called by atlas object form just after object loaded. Note that this callback is 
 	 * invoked after {@link #setValue(Object)}.
 	 */
-	onStart() {
-		this._featuresMeta = this._formPage.getAtlasItem().collection.featuresMeta;
+	onCreate(formPage) {
+		super.onCreate(formPage);
+		this._featuresMeta = formPage.getCollection().featuresMeta;
 		this._updateActions();
 	}
 
@@ -201,7 +202,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 	_onUnitsChange(ev) {
 		const feature = this._featureForm.getObject();
-		this._formPage.setContextAttr(feature.quantity, this._unitsSelect.getText());
+		this._formPage.setPageAttr(feature.quantity, this._unitsSelect.getText());
 
 		const factor = this._unitsSelect.getValue();
 		this._featureForm.setValue("value", this._round(feature.value * factor));
@@ -228,10 +229,10 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		AtlasService.getQuantityUnits(feature.quantity, units => {
 			this._unitsSelect.setOptions(units);
 
-			var unitText = this._formPage.getContextAttr(feature.quantity);
+			var unitText = this._formPage.getPageAttr(feature.quantity);
 			if (unitText == null) {
 				unitText = units[0].text;
-				this._formPage.setContextAttr(feature.quantity, unitText);
+				this._formPage.setPageAttr(feature.quantity, unitText);
 			}
 			this._unitsSelect.setValue(unitText);
 

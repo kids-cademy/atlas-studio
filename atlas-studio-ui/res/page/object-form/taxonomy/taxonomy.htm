@@ -1,0 +1,51 @@
+<fieldset class="taxonomy" data-class="com.kidscademy.form.TaxonomyControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@String/object-taxonomy</h2>
+		<p>@string/sample-text</p>
+	</div>
+	
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/taxonomy" />
+		</div>
+	
+		<div class="container">
+			<table>
+				<tbody class="taxonomy-view" data-list=".">
+					<tr class="item">
+						<td class="name" data-text="name"></td>
+						<td class="separator">:</td>
+						<td class="value" data-text="value"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="actions bar" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/taxonomy-import" />
+				<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> 
+				<img name="load" src="@image/action/reset" title="@tip/taxonomy-load" /> 
+				<img name="batch-edit" src="@image/action/edit" title="@tip/taxonomy-batch-edit" /> 
+				<img name="done" src="@image/action/done" title="@tip/taxonomy-done" />
+				<img name="remove" src="@image/action/remove" title="@tip/taxonomy-remove" />
+				<img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-remove-all" class="rfloat" />
+				<img name="close" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+			</div>
+			
+			<div class="editor link hidden" data-class="com.kidscademy.form.TaxonomyControl.LinkEditor">
+				<div class="controlset">
+					<label>page link</label><input />
+				</div>
+			</div>
+			<div class="editor meta hidden" data-class="com.kidscademy.form.TaxonomyControl.MetaEditor">
+				<div class="controlset">
+					<label>taxon meta</label><select></select>
+				</div>
+			</div>
+			<div class="editor value hidden" data-class="com.kidscademy.form.TaxonomyControl.ValueEditor">
+				<div class="controlset">
+					<label></label> <input /><select class="hidden"></select>
+				</div>
+			</div>
+		</div>
+	</div>
+</fieldset>

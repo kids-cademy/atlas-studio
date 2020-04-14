@@ -1,0 +1,48 @@
+<fieldset class="identity"  data-class="com.kidscademy.form.IdentityFieldSet" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-identity</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/identity" />
+		</div>
+		<div class="container">
+			<div class="controlset">
+				<label>name</label><input name="name" />
+				<span class="actions controlset">
+					<img name="copy-name" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+				</span>
+			</div>
+			<div class="controlset">
+				<label>display</label><input name="display" />
+				<span class="actions controlset">
+					<img name="copy-display" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+				</span>
+			</div>
+			<div class="controlset">
+				<label>aliases</label><input name="aliases" class="optional" data-class="com.kidscademy.form.AliasesControl" />
+			</div>
+			<div class="controlset" data-name="start-date" data-class="com.kidscademy.form.HDateControl">
+				<label>start date</label>
+				<input name="value" class="inline small optional" />
+				<select class="inline" w:compo="compo/hdate-format-select"></select>
+				<select class="inline" w:compo="compo/hdate-period-select"></select>
+				<select class="inline" w:compo="compo/hdate-era-select"></select>
+			</div>
+			<div class="controlset end-date" data-name="end-date" data-class="com.kidscademy.form.HDateControl">
+				<label>end date</label>
+				<input name="value" class="inline small optional" />
+				<select class="inline" w:compo="compo/hdate-format-select"></select>
+				<select class="inline" w:compo="compo/hdate-period-select"></select>
+				<select class="inline" w:compo="compo/hdate-era-select"></select>
+			</div>
+			<div class="controlset">
+				<label>state</label><select w:compo="compo/object-state-select" name="state"></select>
+			</div>
+			<div class="controlset conservation-status">
+				<label>conservation status</label><select w:compo="compo/conservation-select" name="conservation" class="optional"></select>
+			</div>
+		</div>
+	</div>
+</fieldset>

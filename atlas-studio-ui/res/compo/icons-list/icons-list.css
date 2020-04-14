@@ -1,0 +1,34 @@
+.icons-list {
+	list-style: none;
+	padding: @dimen/list-item-y-space 0 0 @dimen/list-item-x-space ;
+}
+
+.icons-list .item {
+	width: @dimen/icon-size;
+	list-style: none;
+	display: inline-block;
+	margin: 0 @dimen/list-item-x-space @dimen/list-item-y-space 0;
+	text-align: center;
+}
+
+.icons-list .item .icon {
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px #e6e6e6;
+	cursor: pointer;
+}
+
+.icons-list .item .display {
+	width: 100%;
+	height: 40px;
+	line-height: 18px;
+	margin: 4px 0 0 0;
+	font-size: 1.4rem;
+	white-space: normal;
+	text-align: center;
+	text-transform: capitalize;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text;
+}

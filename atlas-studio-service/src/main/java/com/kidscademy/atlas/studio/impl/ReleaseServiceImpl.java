@@ -65,6 +65,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
+    public Release getReleaseByName(String releaseName) {
+	return dao.getReleaseByName(releaseName);
+    }
+
+    @Override
     public Release saveRelease(Release release) throws IOException {
 	dao.saveRelease(release);
 	return release;
@@ -124,6 +129,11 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 	Release release = dao.getReleaseByName(releaseName);
 	return AndroidApp.create(release);
+    }
+
+    @Override
+    public AndroidApp getAndroidApp(int appId) {
+	return dao.getAndroidAppById(appId);
     }
 
     @Override
@@ -222,12 +232,14 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
-    public void cleanAndroidProject(AndroidApp app) throws IOException {
+    public void cleanAndroidProject(int appId) throws IOException {
+	AndroidApp app = dao.getAndroidAppById(appId);
 	androidTools.cleanProject(app.getDir());
     }
 
     @Override
-    public void buildAndroidApp(AndroidApp app) throws IOException {
+    public void buildAndroidApp(int appId) throws IOException {
+	AndroidApp app = dao.getAndroidAppById(appId);
 	androidTools.build(app.getDir());
     }
 

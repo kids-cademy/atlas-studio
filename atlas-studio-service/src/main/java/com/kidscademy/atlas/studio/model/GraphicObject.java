@@ -9,12 +9,19 @@ import java.util.Date;
  */
 public interface GraphicObject {
     Date getTimestamp();
+
+    String getTitle();
     
     String getName();
-    
+
     String getDisplay();
-    
+
+    /**
+     * Optional short description, null if not used.
+     * 
+     * @return
+     */
     String getDefinition();
-    
+
     MediaSRC getIconSrc();
 }

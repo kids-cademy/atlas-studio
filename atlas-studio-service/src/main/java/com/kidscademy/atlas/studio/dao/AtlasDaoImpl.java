@@ -309,6 +309,11 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public FeatureMeta getFeatureMetaById(int featureMetaId) {
+	return em.find(FeatureMeta.class, featureMetaId);
+    }
+
+    @Override
     @Mutable
     public void saveFeatureMeta(FeatureMeta featureMeta) {
 	if (featureMeta.getId() == 0) {

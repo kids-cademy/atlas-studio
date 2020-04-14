@@ -18,7 +18,6 @@ import js.dom.Document;
 import js.dom.DocumentBuilder;
 import js.dom.EList;
 import js.dom.Element;
-import js.lang.BugError;
 import js.util.Classes;
 
 public class LifeFormWikipediaArticle implements HDateRange {
@@ -110,7 +109,7 @@ public class LifeFormWikipediaArticle implements HDateRange {
 	// it can happen to have scientific name using shorthand for genus
 
 	if (scientificName == null) {
-	    throw new BugError("Null scientific name.");
+	    return;
 	}
 
 	if (scientificName.contains(".")) {
@@ -136,6 +135,12 @@ public class LifeFormWikipediaArticle implements HDateRange {
 	    subspeciesValue = scientificName;
 	}
 
+	// it seems there is convention to use both genus and species for species taxon
+	// kids (a)cademy uses only simple species name and uses qualified name for
+	// binomial and trinomial names, aka scientific name
+	// the same for sub-species
+
+	speciesValue = Strings.toTitleCase(Strings.last(speciesValue, ' '));
 	Taxon species = taxon(taxonomy, "species");
 	if (species != null) {
 	    species.setValue(speciesValue);
@@ -147,6 +152,7 @@ public class LifeFormWikipediaArticle implements HDateRange {
 	if (subspeciesValue == null) {
 	    return;
 	}
+	subspeciesValue = Strings.toTitleCase(Strings.last(subspeciesValue, ' '));
 	Taxon subspecies = taxon(taxonomy, "subspecies");
 	if (subspecies != null) {
 	    subspecies.setValue(subspeciesValue);

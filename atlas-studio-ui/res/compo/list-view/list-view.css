@@ -1,0 +1,8 @@
+.list-view {
+	
+}
+
+.list-view .loading-info {
+	margin: @dimen/list-item-y-space @dimen/list-item-x-space;
+	font-size: 2.0rem;
+}

@@ -31,6 +31,9 @@ public class AtlasCollection implements GraphicObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "Atlas Collection";
+    
     private Date timestamp;
     private String name;
     private String display;
@@ -77,18 +80,27 @@ public class AtlasCollection implements GraphicObject {
 	return id;
     }
 
+    @Override
     public Date getTimestamp() {
 	return timestamp;
     }
 
+    @Override
+    public String getTitle() {
+	return title;
+    }
+
+    @Override
     public String getName() {
 	return name;
     }
 
+    @Override
     public String getDisplay() {
 	return display;
     }
 
+    @Override
     public String getDefinition() {
 	return definition;
     }
@@ -106,6 +118,7 @@ public class AtlasCollection implements GraphicObject {
 	return iconName != null;
     }
 
+    @Override
     public MediaSRC getIconSrc() {
 	return iconSrc;
     }

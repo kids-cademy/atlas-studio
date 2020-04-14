@@ -194,7 +194,12 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public AtlasObject createAtlasObject(AtlasCollection collection) {
+    public AtlasObject createAtlasObject(int collectionId) {
+	Params.notZero(collectionId, "Collection ID");
+	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
+	if (collection == null) {
+	    throw new BugError("Invalid collection ID |%d|. Record not existing in database.", collectionId);
+	}
 	return AtlasObject.create(collection);
     }
 
@@ -284,6 +289,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public LinkMeta getLinkMeta(int linkMetaId) {
+	return atlasDao.getLinkMetaById(linkMetaId);
+    }
+
+    @Override
     public List<LinkMeta> getLinksMeta() {
 	return atlasDao.getLinksMeta();
     }
@@ -291,6 +301,11 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public FeatureMeta createFeatureMeta() {
 	return FeatureMeta.create();
+    }
+
+    @Override
+    public FeatureMeta getFeatureMeta(int featureMetaId) {
+	return atlasDao.getFeatureMetaById(featureMetaId);
     }
 
     @Override
@@ -338,7 +353,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<FeatureMeta> getFeatureMeta() {
+    public List<FeatureMeta> getFeaturesMeta() {
 	return atlasDao.getFeaturesMeta();
     }
 
@@ -455,17 +470,25 @@ public class AtlasServiceImpl implements AtlasService {
     public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException {
 	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(articleURL);
 
+	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
 	AtlasObject object = new AtlasObject();
-	object.setCollection(atlasDao.getCollectionById(collectionId));
+	object.setCollection(collection);
 
 	object.setName(Strings.scientificToDashedName(article.getScientificName()));
+	if (object.getName() == null) {
+	    object.setName(article.getCommonName().trim().toLowerCase().replaceAll("[()]", "").replaceAll(" ", "-"));
+	}
 	object.setDisplay(article.getCommonName());
 	object.setDefinition(article.getDefinition());
 	object.setDescription(article.getDescription());
 
 	object.setStartDate(article.getStartDate());
-	object.setEndDate(article.getEndDate());
-	object.setConservation(ConservationStatus.forDisplay(article.getConservationStatus()));
+	if (collection.getFlags().hasEndDate()) {
+	    object.setEndDate(article.getEndDate());
+	}
+	if (collection.getFlags().hasConservationStatus()) {
+	    object.setConservation(ConservationStatus.forDisplay(article.getConservationStatus()));
+	}
 
 	List<Taxon> taxonomy = loadAtlasObjectTaxonomy(object.getName());
 	if (taxonomy.isEmpty()) {
@@ -487,6 +510,16 @@ public class AtlasServiceImpl implements AtlasService {
 
 	saveAtlasObject(object);
 	return atlasDao.getAtlasItem(object.getId());
+    }
+
+    @Override
+    public List<Taxon> importAtlasObjectTaxonomy(URL pageURL) {
+	switch (Strings.basedomain(pageURL)) {
+	case "wikipedia.org":
+	    LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(pageURL);
+	    return article.getTaxonomy();
+	}
+	return null;
     }
 
     private static final String[] TAXON_NAMES = new String[] { "kingdom", "phylum", "class", "order", "suborder",

@@ -2,6 +2,12 @@
 	padding: 1px;
 }
 
+.menu.bottom {
+	position:absolute;
+	width:100%;
+	bottom: 2px;
+}
+
 .menu li {
 	height: @dimen/side-menu-item-height;
 	line-height: @dimen/side-menu-item-height;

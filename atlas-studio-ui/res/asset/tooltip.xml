@@ -50,6 +50,7 @@
 	<audio-done>commit all audio sample processing</audio-done>
 	<audio-remove-all>remove audio sample</audio-remove-all>
 
+	<taxonomy-import>import taxonomy from given link</taxonomy-import>
 	<taxonomy-add>initialize with empty taxonomy</taxonomy-add>
 	<taxonomy-load>initialize taxonomy from kids (a)cademy database</taxonomy-load>
 	<taxonomy-edit>edit current taxon value</taxonomy-edit>

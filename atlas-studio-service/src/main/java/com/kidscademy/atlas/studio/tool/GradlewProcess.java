@@ -14,6 +14,8 @@ import js.util.Strings;
 public class GradlewProcess extends AbstractToolProcess {
     private static final Log log = LogFactory.getLog(GradlewProcess.class);
 
+    private static final long GRADLE_TASK_TIMEOUT = 30000;
+
     private final File appDir;
 
     public GradlewProcess(File appDir) {
@@ -53,7 +55,7 @@ public class GradlewProcess extends AbstractToolProcess {
 	StdinReader stdinReader = new StdinReader();
 	Thread stdinThread = new Thread(stdinReader);
 
-	wait(process, stdinThread, lock);
+	wait(process, GRADLE_TASK_TIMEOUT, stdinThread, lock);
 
 	return null;
     }

@@ -20,6 +20,9 @@ public class ReleaseItem implements GraphicObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "Release";
+
     private Date timestamp;
     private String name;
     private String display;
@@ -40,6 +43,11 @@ public class ReleaseItem implements GraphicObject {
     @Override
     public Date getTimestamp() {
 	return timestamp;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
     }
 
     @Override

@@ -198,6 +198,18 @@ com.kidscademy.Md2Htm = class {
 
     _append(char) {
         switch (char) {
+            case '&':
+                this._html += "&amp;"
+                break;
+
+            case '<':
+                this._html += "&lt;";
+                break;
+
+            case '>':
+                this._html += "&gt;";
+                break;
+
             case '"':
                 if (this._inlineTag == null) {
                     this._html += "<em>";

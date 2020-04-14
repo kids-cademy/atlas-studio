@@ -17,10 +17,11 @@
 	width: 40vw;
 	min-width: 420px;
 	max-width: 620px;
+	min-height: @eval(ADD @dimen/window-caption-height @dimen/icon-size 44px);
 	left: -20vw;
 	padding: 1px;
 	background-color: @color/window-background;
-	border: solid 1px @color/border;
+	border: solid 1px @color/border-light;
 }
 
 .dialog .caption {
@@ -29,7 +30,14 @@
 	background-color: @color/window-caption;
 }
 
-.dialog .caption img {
+.dialog .caption .title {
+	margin-left: 10px;
+	font-size: 2.0rem;
+	text-transform: uppercase;
+	color: @color/text-inverse;
+}
+
+.dialog .caption .close {
 	float: right;
 	height: @dimen/window-caption-height;
 	filter: invert(100%);
@@ -37,5 +45,6 @@
 }
 
 .dialog .content {
+	max-height: 440px;
 	overflow: auto;	
 }

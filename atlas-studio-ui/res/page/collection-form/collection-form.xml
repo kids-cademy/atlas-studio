@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Collection Form</title>
+	<description>Collection form from editor workspace.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/IconControl.js</script>
+		<script>script/com/kidscademy/TableView.js</script>
+		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/collection/TaxonomyMetaControl.js</script>
+		<script>script/com/kidscademy/collection/FeaturesMetaControl.js</script>
+		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/page/CollectionForm.js</script>
+	</scripts>
+</page>

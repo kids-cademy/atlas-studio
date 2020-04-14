@@ -1,0 +1,413 @@
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST CONTROL - GLOBAL */ 
+
+.list-control {
+	list-style: none;
+	padding: 0 @dimen/list-item-x-space @dimen/list-item-y-space 0;
+}
+
+.list-control .item {
+	list-style: none;
+	display: inline-block;
+	margin: @dimen/list-item-y-space 0 0 @dimen/list-item-x-space;
+}
+
+.list-control .item .icon {
+	width: @dimen/icon-size;
+	height: @dimen/icon-size;
+	padding: 1px;
+	border: solid 1px @color/border-none;
+	cursor: pointer;
+}
+
+.list-control .item.created .icon {
+	border-color: @color/border-created;
+}
+
+.list-control .item.development .icon {
+	border-color: @color/border-development;
+}
+
+.list-control .item.released .icon {
+	border-color: @color/border-released;
+}
+
+.list-control .item.published .icon {
+	border-color: @color/border-published;
+}
+
+.list-control .item .display {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text-none;
+}
+
+.list-control .item.created .display {
+	color: @color/text-created;
+}
+
+.list-control .item.development .display {
+	color: @color/text-development;
+}
+
+.list-control .item.released .display {
+	color: @color/text-released;
+}
+
+.list-control .item.published .display {
+	color: @color/text-published;
+}
+
+.list-control .item .name {
+	display: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text-none;
+}
+
+.list-control .item.created .name {
+	color: @color/text-created;
+}
+
+.list-control .item.development .name {
+	color: @color/text-development;
+}
+
+.list-control .item.released .name {
+	color: @color/text-released;
+}
+
+.list-control .item.published .name {
+	color: @color/text-published;
+}
+
+.list-control .item .timestamp {
+	display: none;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color/text-none;
+}
+
+.list-control .item.created .timestamp {
+	color: @color/text-created;
+}
+
+.list-control .item.development .timestamp {
+	color: @color/text-development;
+}
+
+.list-control .item.released .timestamp {
+	color: @color/text-released;
+}
+
+.list-control .item.published .timestamp {
+	color: @color/text-published;
+}
+
+.list-control .item .definition {
+	display: none;
+}
+
+.list-control .item .circle {
+	display: none;
+}
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST CONTROL - ICONS */ 
+
+.list-control.icons .item {
+	width: 96px;
+	text-align: center;
+}
+
+.list-control.icons .item .display {
+	width: 100%;
+	margin: 4px 0 0 0;
+	text-align: center;
+	font-size: 1.4rem;
+	line-height: 18px;
+	height: 40px;
+	white-space: normal;
+	text-transform: capitalize;
+}
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST CONTROL - TILES */ 
+
+.list-control.tiles {
+	padding: 0 @eval(sub @dimen/list-item-x-space @dimen/divider-size) @eval(sub @dimen/list-item-y-space @dimen/divider-size) 0;
+}
+
+.list-control.tiles .item {
+	width: 400px;
+	padding: @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-none, @color/bg2-none);
+	border: solid 1px @color/border-none;
+}
+
+.list-control.tiles .item.created {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-created, @color/bg2-created);
+	border-color: @color/border-created;
+}
+
+.list-control.tiles .item.development {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-development, @color/bg2-development);
+	border-color: @color/border-development;
+}
+
+.list-control.tiles .item.released {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-released, @color/bg2-released);
+	border-color: @color/border-released;
+}
+
+.list-control.tiles .item.published {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-published, @color/bg2-published);
+	border-color: @color/border-published;
+}
+
+.list-control.tiles .item .icon {
+	float: left;
+	margin-right: @dimen/list-item-padding;
+}
+
+.list-control.tiles .item .display {
+	padding-bottom: 4px;
+	border-bottom: solid 1px @color/border-none;
+	text-transform: uppercase;
+}
+
+.list-control.tiles .item.created .display {
+	border-color: @color/border-created;
+}
+
+.list-control.tiles .item.development .display {
+	border-color: @color/border-development;
+}
+
+.list-control.tiles .item.released .display {
+	border-color: @color/border-released;
+}
+
+.list-control.tiles .item.published .display {
+	border-color: @color/border-published;
+}
+
+.list-control.tiles .item .name {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.list-control.tiles .item .timestamp {
+	display: block;
+}
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST CONTROL - CARDS */ 
+
+.list-control.cards {
+	padding: 0 @eval(sub @dimen/list-item-x-space @dimen/divider-size) @eval(sub @dimen/list-item-y-space @dimen/divider-size) 0;
+}
+
+.list-control.cards .item {
+	position: relative;
+	width: 400px;
+	padding: @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-none, @color/bg2-none);
+	border: solid 1px @color/border-none;
+}
+
+.list-control.cards .item.created {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-created, @color/bg2-created);
+	border-color: @color/border-created;
+}
+
+.list-control.cards .item.development {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-development, @color/bg2-development);
+	border-color: @color/border-development;
+}
+
+.list-control.cards .item.released {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-released, @color/bg2-released);
+	border-color: @color/border-released;
+}
+
+.list-control.cards .item.published {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-published, @color/bg2-published);
+	border-color: @color/border-published;
+}
+
+.list-control.cards .item .icon {
+	float: left;
+	margin-right: @dimen/list-item-padding;
+}
+
+.list-control.cards .item .display {
+	padding-bottom: 4px;
+	border-bottom: solid 1px @color/border-none;
+	text-transform: uppercase;
+}
+
+.list-control.cards .item.created .display {
+	border-color: @color/border-created;
+}
+
+.list-control.cards .item.development .display {
+	border-color: @color/border-development;
+}
+
+.list-control.cards .item.released .display {
+	border-color: @color/border-released;
+}
+
+.list-control.cards .item.published .display {
+	border-color: @color/border-published;
+}
+
+.list-control.cards .item .name {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.list-control.cards .item .timestamp {
+	display: block;
+}
+
+.list-control.cards .item .definition {
+	display: block;
+	clear: both;
+	position: relative;
+	height: 66px;
+	line-height: 22px;
+	margin-top: 20px;
+	overflow: hidden;
+	font-size: 16px;
+	color: @color/text-none;
+}
+
+.list-control.cards .item.created .definition {
+	color: @color/text-created;
+}
+
+.list-control.cards .item.development .definition {
+	color: @color/text-development;
+}
+
+.list-control.cards .item.released .definition {
+	color: @color/text-released;
+}
+
+.list-control.cards .item.published .definition {
+	color: @color/text-published;
+}
+
+.list-control.cards .circle {
+	display: block;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	right: 20px;
+	bottom: 20px;
+	xborder: solid 1px #41b5bd;
+	background-color: #FFFFFF20;
+	radius: 50%;
+	z-index: 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ */ 
+/* LIST CONTROL - DETAILS */ 
+
+.list-control.details {
+	padding: @eval(sub @dimen/list-item-y-space @dimen/divider-size) @eval(sub @dimen/list-item-x-space @dimen/divider-size);
+}
+
+.list-control.details .item {
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	width: 100%;
+	margin: @dimen/divider-size 0 0 0;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.list-control.details .item .icon {
+	width: @dimen/icon-size-small;
+	height: @dimen/icon-size-small;
+}
+
+.list-control.details .item .display {
+	display: inline-block;
+	width: 300px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 0 0 @dimen/list-item-padding;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-none, @color/bg2-none);
+	border: solid 1px @color/border-none;
+}
+
+.list-control.details .item.created .display {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-created, @color/bg2-created);
+	border-color: @color/border-created;
+}
+
+.list-control.details .item.development .display {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-development, @color/bg2-development);
+	border-color: @color/border-development;
+}
+
+.list-control.details .item.released .display {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-released, @color/bg2-released);
+	border-color: @color/border-released;
+}
+
+.list-control.details .item.published .display {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-published, @color/bg2-published);
+	border-color: @color/border-published;
+}
+
+.list-control.details .item .name {
+	display: inline-block;
+	width: 200px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	color: @color/text;
+}
+
+.list-control.details .item .timestamp {
+	display: inline-block;
+	width: 200px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	color: @color/text;
+}
+
+.list-control.details .item .definition {
+	display: inline-block;
+	flex-grow: 1;
+	/* not clear why but need have absolute value otherwise vertical scroll is not displayed - probably covered */
+	/* the actual value does not mater but should be small enough */
+	/* do not know how cross-browser is this solution but seems to be working on major recent browsers */
+	width: 100px;
+	height: @eval(add @dimen/icon-size-small 2);
+	line-height: @eval(add @dimen/icon-size-small 2);
+	margin: 0 0 0 @dimen/divider-size;
+	padding: 0 @dimen/list-item-padding;
+	background-color: #F8F8F8;
+	border: solid 1px #E6E6E6;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

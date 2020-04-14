@@ -6716,7 +6716,7 @@ js.dom.template.SrcOperator.prototype = {
 		}
 		else {
 			$debug("js.dom.template.SrcOperator#_exec", "Set element |%s| src attribute from property |%s|.", element, propertyPath);
-			if (typeof element.reload === "function") {
+			if (Boolean(element.getAttr("data-reload"))) {
 				element.reload(value);
 			}
 			else if (typeof element.setSrc === "function") {

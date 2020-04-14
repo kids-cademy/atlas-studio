@@ -1,20 +1,11 @@
-<div class="release" w:template="template/page#body" xmlns:w="js-lib.com/wood">
-	<section class="content" data-class="com.kidscademy.FrameView">
-		<div data-name="releases-list" w:widget="page/release/releases-list"></div>
-		<div data-name="release-form" w:widget="page/release/release-form" class="hidden"></div>
-		<div data-name="objects-list" w:widget="page/release/objects-list" class="hidden"></div>
-	</section>
+<div class="release" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<ul data-name="objects-list" w:compo="compo/list-view"></ul>
+	<div w:compo="page/release/context-menu"></div>
 </div>
 
-<div class="release" w:template="template/page#side-bar" xmlns:w="js-lib.com/wood">
-	<div class="release-info">
-		<img data-src="icon-src" />
-		<h1 class="side-name" data-text="display"></h1>
-		<h2 class="timestamp" data-text="timestamp" data-format="js.format.StandardDateTime"></h2>
-	</div>
-
+<div class="release" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
-		<li data-name="create-release">@string/release-create</li>
-		<li data-name="sync-with-file-system">Sync with File System</li>
+		<li data-name="edit-release"><img src="@image/action/edit" /><span>@string/release-edit</span></li>
+		<li data-name="android-app"><img src="@image/action/android" /><span>@string/release-android-app</span></li>
 	</ul>
 </div>

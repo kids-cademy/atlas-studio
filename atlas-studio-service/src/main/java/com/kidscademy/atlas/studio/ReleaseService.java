@@ -22,6 +22,8 @@ public interface ReleaseService {
 
     Release getRelease(int releaseId);
 
+    Release getReleaseByName(String releaseName);
+
     Release saveRelease(Release release) throws IOException;
 
     void removeRelease(int releaseId) throws IOException, BusinessException;
@@ -46,13 +48,15 @@ public interface ReleaseService {
      */
     AndroidApp getAndroidAppForRelease(String releaseName);
 
+    AndroidApp getAndroidApp(int appId);
+
     AndroidApp updateAndroidApp(AndroidApp app) throws IOException;
 
     void removeAndroidApp(int appId) throws IOException;
 
-    void cleanAndroidProject(AndroidApp app) throws IOException;
+    void cleanAndroidProject(int appId) throws IOException;
 
-    void buildAndroidApp(AndroidApp app) throws IOException;
+    void buildAndroidApp(int appId) throws IOException;
 
     Map<String, String> getAndroidStoreListing(int appId);
 }

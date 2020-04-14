@@ -86,3 +86,8 @@
 .console {
 	font-family: "Lucida Console", Monaco, monospace;
 }
+
+.scroll-y {
+	height: 100%;
+	overflow-y: auto;
+}

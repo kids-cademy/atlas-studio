@@ -59,5 +59,6 @@ public class ExportTaxon implements Displayable {
 	EN.put("variety", "Variety");
 	EN.put("type", "Type");
 	EN.put("section", "Section");
+	EN.put("category", "Category");
     }
 }

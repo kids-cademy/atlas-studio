@@ -21,20 +21,26 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "atlasitem")
-public class AtlasImages implements RepositoryObject {
+public class AtlasImages implements GraphicObject, RepositoryObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Transient
+    private final String title = "Atlas Images";
 
     @ManyToOne
     private AtlasCollection collection;
 
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
-    
+
     private String name;
     private String display;
     private Date timestamp;
+
+    @Transient
+    private MediaSRC iconSrc;
 
     @ElementCollection
     @MapKeyColumn(name = "imageKey")
@@ -43,11 +49,15 @@ public class AtlasImages implements RepositoryObject {
 
     @Transient
     private List<MediaSRC> items;
-    
+
     @PostLoad
     public void postLoad() {
 	for (Image picture : images.values()) {
 	    picture.postLoad(this);
+	}
+	Image iconImage = images.get(Image.KEY_ICON);
+	if (iconImage != null) {
+	    iconSrc = iconImage.getSrc();
 	}
     }
 
@@ -69,16 +79,33 @@ public class AtlasImages implements RepositoryObject {
 	return collection;
     }
 
+    @Override
+    public String getTitle() {
+	return title;
+    }
+
+    @Override
     public String getDisplay() {
 	return display;
     }
 
     public AtlasObject.State getState() {
-        return state;
+	return state;
     }
 
+    @Override
     public Date getTimestamp() {
-        return timestamp;
+	return timestamp;
+    }
+
+    @Override
+    public String getDefinition() {
+	return null;
+    }
+
+    @Override
+    public MediaSRC getIconSrc() {
+	return iconSrc;
     }
 
     public Map<String, Image> getImages() {

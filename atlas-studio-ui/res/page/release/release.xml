@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Releases</title>
-	<description>Releases management tool.</description>
+	<title>Release</title>
+	<description>Release view.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/FrameView.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
-		<script>script/com/kidscademy/CssFlags.js</script>
-		<script>script/com/kidscademy/Htm2Md.js</script>
-		<script>script/com/kidscademy/Md2Htm.js</script>
-		<script>script/com/kidscademy/RichTextControl.js</script>
-		<script>script/com/kidscademy/release/GraphicAssets.js</script>
-		<script>script/com/kidscademy/release/ReleasesList.js</script>
-		<script>script/com/kidscademy/release/ReleaseForm.js</script>
-		<script>script/com/kidscademy/release/ObjectsList.js</script>
-		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/ReleasePage.js</script>
 	</scripts>
 </page>

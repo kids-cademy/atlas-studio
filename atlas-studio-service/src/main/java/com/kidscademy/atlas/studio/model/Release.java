@@ -22,6 +22,9 @@ public class Release implements GraphicObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "Release";
+
     private Date timestamp;
     private String name;
     private String display;
@@ -61,6 +64,11 @@ public class Release implements GraphicObject {
 
     public void setTimestamp(Date timestamp) {
 	this.timestamp = timestamp;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
     }
 
     @Override

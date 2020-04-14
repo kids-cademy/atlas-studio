@@ -1,0 +1,15 @@
+<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<div w:compo="compo/list-view"></div>
+	<div w:compo="page/links-meta/context-menu"></div>
+</div>
+
+<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+	<ul class="menu">
+		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+		<li data-name="links-meta"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+	</ul>
+	<ul class="menu">
+		<li data-name="create-link-meta"><img src="@image/action/add" /><span>@string/link-meta-create</span></li>
+	</ul>
+</div>

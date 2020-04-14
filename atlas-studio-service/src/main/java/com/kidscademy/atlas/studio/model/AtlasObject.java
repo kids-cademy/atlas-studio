@@ -35,7 +35,7 @@ import com.kidscademy.atlas.studio.util.Files;
 import js.util.Params;
 
 @Entity
-public class AtlasObject implements RepositoryObject, HDateRange {
+public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -45,6 +45,9 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 
     @Enumerated(EnumType.STRING)
     private State state;
+
+    @Transient
+    private final String title = "Atlas Object";
 
     /** Last change timestamp. */
     private Date timestamp;
@@ -177,6 +180,9 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     @Transient
     private MediaSRC waveformSrc;
 
+    @Transient
+    private MediaSRC iconSrc;
+
     public AtlasObject() {
     }
 
@@ -261,6 +267,10 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	    link.postLoad();
 	}
 
+	Image icon = images.get(Image.KEY_ICON);
+	if (icon != null) {
+	    iconSrc = icon.getSrc();
+	}
 	sampleSrc = Files.mediaSrc(this, sampleName);
 	waveformSrc = Files.mediaSrc(this, waveformName);
     }
@@ -305,6 +315,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.state = state;
     }
 
+    @Override
     public Date getTimestamp() {
 	return timestamp;
     }
@@ -316,6 +327,11 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     @Override
     public String getRepositoryName() {
 	return collection.getName();
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
     }
 
     @Override
@@ -340,6 +356,11 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.images = pictures;
     }
 
+    @Override
+    public MediaSRC getIconSrc() {
+	return iconSrc;
+    }
+
     public List<String> getAliases() {
 	return aliases;
     }
@@ -348,6 +369,7 @@ public class AtlasObject implements RepositoryObject, HDateRange {
 	this.aliases = aliases;
     }
 
+    @Override
     public String getDisplay() {
 	return display;
     }
@@ -532,8 +554,8 @@ public class AtlasObject implements RepositoryObject, HDateRange {
     }
 
     public enum State {
-	// ENUM('NONE', 'CREATED', 'DEVELOPMENT','PUBLISHED')
-	NONE, CREATED, DEVELOPMENT, PUBLISHED
+	// ENUM('NONE', 'CREATED', 'DEVELOPMENT', 'RELEASED', 'PUBLISHED')
+	NONE, CREATED, DEVELOPMENT, RELEASED, PUBLISHED
     }
 
     public static AtlasObject create(AtlasCollection collection) {

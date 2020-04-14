@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>List View</title>
+	<description>Objects list view with search and multiple layouts. Search experimental and is not yet implemented.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/ListControl.js</script>
+		<script>script/com/kidscademy/ListView.js</script>
+	</scripts>
+</page>

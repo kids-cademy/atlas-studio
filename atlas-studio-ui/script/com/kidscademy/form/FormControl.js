@@ -34,13 +34,6 @@ com.kidscademy.form.FormControl = class extends js.dom.Control {
         });
     }
 
-    /**
-     * Form control life cycle hook. Invoked after atlas object was loaded and this control value updated.
-     */
-    onStart() {
-
-    }
-
     _fireEvent(eventName) {
         const event = new Event(eventName, { bubbles: true });
         this._node.dispatchEvent(event);

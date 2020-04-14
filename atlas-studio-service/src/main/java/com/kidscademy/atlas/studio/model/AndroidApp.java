@@ -21,6 +21,8 @@ public class AndroidApp implements GraphicObject {
 
     private Date timestamp;
     @Transient
+    private final String title = "Android App";
+    @Transient
     private String name;
     @Transient
     private String display;
@@ -53,6 +55,11 @@ public class AndroidApp implements GraphicObject {
     @Override
     public Date getTimestamp() {
 	return timestamp;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
     }
 
     @Override
@@ -92,17 +99,17 @@ public class AndroidApp implements GraphicObject {
     }
 
     public String getGitUserName() {
-        return gitUserName;
+	return gitUserName;
     }
 
     public String getGitPassword() {
-        return gitPassword;
+	return gitPassword;
     }
 
     public File getDir() {
 	return AndroidProject.appDir(name);
     }
-    
+
     public static AndroidApp create(Release release) {
 	AndroidApp app = new AndroidApp();
 	app.timestamp = new Date();

@@ -29,7 +29,7 @@ public class Flags {
         this.endDate = endDate;
     }
 
-    public boolean isEndDate() {
+    public boolean hasEndDate() {
 	return endDate;
     }
 
@@ -37,7 +37,7 @@ public class Flags {
         this.conservationStatus = conservationStatus;
     }
 
-    public boolean isConservationStatus() {
+    public boolean hasConservationStatus() {
 	return conservationStatus;
     }
 
@@ -45,7 +45,7 @@ public class Flags {
         this.audioSample = audioSample;
     }
 
-    public boolean isAudioSample() {
+    public boolean hasAudioSample() {
 	return audioSample;
     }
 
@@ -53,7 +53,7 @@ public class Flags {
         this.spreading = spreading;
     }
 
-    public boolean isSpreading() {
+    public boolean hasSpreading() {
         return spreading;
     }
 }

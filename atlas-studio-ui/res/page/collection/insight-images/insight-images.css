@@ -6,6 +6,14 @@
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	margin-top: @dimen/list-item-y-space;
+}
+
+.insight-images .object-box {
+	width: 400px;
+	padding: 10px;
+	border: solid 1px #E6E6E6;
+	margin-right: 2px;
 }
 
 .insight-images .images {
@@ -16,13 +24,11 @@
 	/* do not know how cross-browser is this solution but seems to be working on major recent browsers */
 	width: 100px;
 	height: @eval(add @dimen/icon-size 4 @eval(mul 2 @dimen/list-item-padding));
-	margin-top: @dimen/list-item-y-space;
 	background-color: #F8F8F8;
 	border: solid 1px #E6E6E6;
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 
 .insight-images .image {
 	box-sizing: content-box;

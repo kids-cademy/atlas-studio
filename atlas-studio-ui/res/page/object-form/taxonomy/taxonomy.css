@@ -1,0 +1,23 @@
+.taxonomy {
+	
+}
+
+.taxonomy .taxonomy-view .action {
+	
+}
+
+.taxonomy .taxonomy-view td {
+	padding: 2px;
+	font-size: 1.8rem;
+	cursor: pointer;
+}
+
+.taxonomy .taxonomy-view .separator {
+	padding: 0 20px;
+}
+
+.taxonomy .editor, .taxonomy .editor {
+	margin-top: 20px;
+	border-top: solid 1px #E6E6E6;
+	padding-top: 10px;
+}

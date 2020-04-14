@@ -1,0 +1,49 @@
+<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<form class="form">
+		<fieldset>
+			<div class="header container">
+				<h2>Identity</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>domain</label><input name="domain" />
+					</div>
+					<div class="controlset">
+						<label>display</label><input name="display" />
+					</div>
+					<div class="controlset">
+						<label>definition</label>
+						<textarea name="definition" class="small"></textarea>
+					</div>
+					<div class="controlset">
+						<label>features</label><input name="features" />
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset class="icon-section">
+			<div class="header container">
+				<h2>Icon</h2>
+			</div>
+			<div class="content">
+				<div class="container" w:compo="compo/icon-control"></div>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="container buttons-bar">
+		<button name="save">@string/save</button>
+		<button name="cancel">@string/cancel</button>
+	</div>
+</div>
+
+<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+	<ul class="menu">
+		<li data-name="create-link-meta"><img src="@image/action/add" /><span>@string/link-meta-create</span></li>
+		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
+		<li data-name="links-meta"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+	</ul>
+</div>

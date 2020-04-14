@@ -1,0 +1,44 @@
+<fieldset name="description" class="description" data-class="com.kidscademy.form.DescriptionControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-description</h2>
+		<p>@string/sample-text</p>
+	</div>
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/description" />
+		</div>
+		
+		<div class="container">
+			<div class="text-editors" data-list=".">
+				<textarea class="large"></textarea>
+			</div>
+			<div class="tabs-view" data-list=".">
+				<span class="tab" data-text="." draggable="true"></span>
+			</div>
+			<div class="actions bar" data-class="com.kidscademy.Actions">
+				<img name="import" src="@image/action/upload" title="@tip/description-import" />
+				<img name="add-all-sections" src="@image/action/add-all" title="@tip/description-add-all-sections" />
+				<span class="space"></span>
+				
+				<img name="add-section" src="@image/action/add" title="@tip/description-add-section" />
+				<img name="rename-section" src="@image/action/edit" title="@tip/description-rename-section" />
+				<img name="done-section" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/description-done-section" />
+				<span class="space"></span>
+
+				<img name="format-lines" src="@image/action/format-lines" title="@tip/description-format-lines" />
+				<img name="copy-to-clipboard" src="@image/action/copy-to-clipboard" title="@tip/description-copy-section" />
+
+				<img name="remove-section" src="@image/action/remove" title="@tip/description-remove-section" class="rfloat" />
+				<img name="close" src="@image/action/close" title="@tip/description-close" class="rfloat" />
+			</div>
+		
+			<div class="editor-controls hidden">
+				<div class="controlset">
+					<input name="section-name" maxlength="32" />
+				</div>
+			</div>
+		
+			<ul class="hidden" w:compo="compo/icons-list" data-class="com.kidscademy.form.LinkSelect"></ul>
+		</div>
+	</div>
+</fieldset>

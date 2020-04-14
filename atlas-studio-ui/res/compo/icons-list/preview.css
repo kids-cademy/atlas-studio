@@ -1,0 +1,11 @@
+.icons-list {
+	border: dashed 1px #E6E6E6;
+}
+
+.icons-list::first-line {
+	margin-top:0;
+}
+
+.icons-list li {
+	display: inline-block;
+}

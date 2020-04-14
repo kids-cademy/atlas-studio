@@ -2,16 +2,8 @@
 	
 }
 
-.context-menu.no-object li {
-	display: none;
-}
-
-.context-menu.no-object li.no-object {
-	display: inherit;
-}
-
 .context-menu .object {
-	
+	margin: 10px;
 }
 
 .context-menu .object::after {

@@ -1,15 +1,15 @@
 .release {
-	display: flex;
-	flex-direction: column;
+	
 }
 
-.release .content {
-	height: 100%;
-	overflow-y: auto;
-	margin-bottom: 20px;
+.release.sidebar {
+	
 }
 
-.release .content .body {
-	flex-grow: 1;
-	margin: 20px;
+.release.sidebar .header {
+	padding: 10px 10px;
+}
+
+.release.sidebar .menu {
+	margin-top: 20px;
 }

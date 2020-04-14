@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>List Control</title>
+	<description>Low level objects list view with multiple layouts.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/ListControl.js</script>
+	</scripts>
+</page>

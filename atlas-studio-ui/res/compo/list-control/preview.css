@@ -1,0 +1,11 @@
+.list-control {
+	border: dashed 1px #E6E6E6;
+}
+
+.list-control::first-line {
+	margin-top:0;
+}
+
+.list-control li {
+	display: inline-block;
+}

@@ -3,7 +3,7 @@ $package("com.kidscademy.page");
 com.kidscademy.page.AppsPage = class extends js.ua.Page {
     constructor() {
         super();
-        this._listView = this.getByCssClass("list-view");
+        this._appsListView = this.getByCssClass("icons-list");
         ReleaseService.getReleases(this._onAppsLoaded, this);
     }
 
@@ -12,7 +12,7 @@ com.kidscademy.page.AppsPage = class extends js.ua.Page {
             app.href = `apk.xsp?name=${app.name}`;
             app.download = `${app.name}.apk`;
         });
-        this._listView.setObject(apps).show();
+        this._appsListView.setObject(apps).show();
     }
 
     toString() {

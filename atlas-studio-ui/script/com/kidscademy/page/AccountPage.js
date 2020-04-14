@@ -1,23 +1,10 @@
 $package("com.kidscademy.page");
 
-/**
- * AccountPage class.
- * 
- * @author Iulian Rotaru
- */
-com.kidscademy.page.AccountPage = class extends com.kidscademy.page.Page {
-	/**
-	 * Construct an instance of AccountPage class.
-	 */
+com.kidscademy.page.AccountPage = class extends com.kidscademy.Page {
 	constructor() {
 		super();
 	}
 
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.page.AccountPage";
 	}

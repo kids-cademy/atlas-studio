@@ -1,0 +1,15 @@
+.related {
+	
+}
+
+.related .icons-list.related {
+	min-height: 40px;
+}
+
+.related .icons-list.candidates {
+	padding-top: 40px;
+}
+
+.related .actions {
+	margin-top: 0;
+}

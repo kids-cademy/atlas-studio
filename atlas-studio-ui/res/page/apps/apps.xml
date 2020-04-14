@@ -6,7 +6,6 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/page/Page.js</script>
 		<script>script/com/kidscademy/page/AppsPage.js</script>
 	</scripts>
 </page>

@@ -196,11 +196,6 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		return this;
 	}
 
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.Actions";
 	}

@@ -12,10 +12,12 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 	}
 
 	onCreate(formPage) {
-		if (!formPage.getFlags().endDate) {
+		this._formaPage = formPage;
+		const flags = formPage.getCollection().flags;
+		if (!flags.endDate) {
 			this.getByCss(".controlset.end-date").hide();
 		}
-		if (!formPage.getFlags().conservationStatus) {
+		if (!flags.conservationStatus) {
 			this.getByCss(".controlset.conservation-status").hide();
 		}
 	}

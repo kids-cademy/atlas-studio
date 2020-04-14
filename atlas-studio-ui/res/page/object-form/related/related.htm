@@ -1,0 +1,24 @@
+<fieldset class="related" data-class="com.kidscademy.form.RelatedControl" xmlns:w="js-lib.com/wood">
+	<div class="header container">
+		<h2>@string/object-related</h2>
+		<p>@string/sample-text</p>
+	</div>
+	
+	<div class="content">
+		<div class="section-icon padding">
+			<img src="@image/action/related" />
+		</div>
+	
+		<div class="container">
+			<ul w:compo="compo/icons-list" class="related" data-source="related"></ul>
+			
+			<div class="actions bar" data-class="com.kidscademy.Actions">
+				<img name="search" src="@image/action/search" title="@tip/related-search" /> 
+				<div class="taxonomy-select hidden" w:compo="compo/taxonomy-select"></div>
+				<img name="close" src="@image/action/close" title="@tip/related-close" class="rfloat" />
+			</div>
+			
+			<ul w:compo="compo/icons-list" class="candidates hidden" data-source="candidates"></ul>
+		</div>
+	</div>
+</fieldset>
