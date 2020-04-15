@@ -39,7 +39,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		 * @type {com.kidscademy.form.TaxonomyControl.ValueEditor}
 		 */
 		this._valueEditor = this.getByCss(".editor.value");
-		this._valueEditor.onKey(this._onEditorKey.bind(this));
 
 		/**
 		 * Array index for taxon object currently on edit. This index identify taxon object from atlas object {@link #_taxonomy}.
@@ -65,7 +64,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		 * This control actions handler.
 		 * @type {com.kidscademy.Actions}
 		 */
-		this._actions = this.getByClass(com.kidscademy.Actions).bind(this).showOnly("add");
+		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 	}
 
 	/**
@@ -125,18 +124,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		}
 	}
 
-	_onEditorKey(ev) {
-		switch (ev.key) {
-			case js.event.Key.ENTER:
-				this._onDone();
-				break;
-
-			case js.event.Key.ESCAPE:
-				this._onClose();
-				break;
-		}
-	}
-
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
@@ -154,10 +141,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			// taxon name select options should display only not already used names
 			const names = this._taxonomyView.getChildren().map(taxonView => taxonView.getUserData().name);
 			this._metaEditor.open(names);
-			if (!this._updateActions()) {
-				js.ua.System.alert("@string/alert-no-taxons");
-				this._onClose();
-			}
+			this._actions.showOnly("done", "close");
 			return;
 		}
 
@@ -204,7 +188,28 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 		if (this._metaEditor.isVisible()) {
 			this._metaEditor.hide();
-			this._taxonomyView.addObject({ name: this._metaEditor.getValue(), value: null });
+
+			// new taxon to add on current loaded taxonomy
+			const taxon = { name: this._metaEditor.getValue(), value: null };
+			const taxonomy = this.getValue();
+
+			// insert newly taxon before the first with greater index
+			// if all current taxon have smaller indices append newly taxon to the end
+			// taxon index is the position in array with defined taxons, as described by meta taxonomy
+
+			for (let i = 0; ; ++i) {
+				if (i === taxonomy.length) {
+					taxonomy.push(taxon);
+					break;
+				}
+				if (this._meta.getTaxonIndex(taxonomy[i]) > this._meta.getTaxonIndex(taxon)) {
+					taxonomy.splice(i, 0, taxon);
+					break;
+				}
+			}
+
+			this.setValue(taxonomy);
+			this._onClose();
 			return;
 		}
 
@@ -250,7 +255,10 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			this._actions.showOnly("remove-all");
 		}
 		if (taxonomySize > 1) {
-			this._actions.show("add", "batch-edit");
+			this._actions.show("batch-edit");
+			if (taxonomySize < this._meta.getTaxonomySize()) {
+				this._actions.show("add");
+			}
 		}
 		if (this._metaEditor.isVisible()) {
 			this._actions.show("done", "close");
@@ -291,6 +299,19 @@ com.kidscademy.form.TaxonomyControl.Meta = class {
 		this._taxonomyMeta = taxonomyMeta;
 	}
 
+	getTaxonomySize() {
+		return this._taxonomyMeta.length;
+	}
+
+	getTaxonIndex(taxon) {
+		for (let i = 0; i < this._taxonomyMeta.length; ++i) {
+			if (this._taxonomyMeta[i].name === taxon.name) {
+				return i;
+			}
+		}
+		return Infinity;
+	}
+
 	getTaxonomyTemplate() {
 		return this._taxonomyMeta.map(taxonMeta => { return { name: taxonMeta.name, value: null } });
 	}
@@ -319,6 +340,7 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 
 		/** Variant of {@link #_valueControl} used when taxon value is free text. */
 		this._valueInput = this.getByTag("input");
+		this._valueInput.on("paste", this._onPaste, this);
 
 		/** Variant of {@link #_valueControl} used when taxon value is selected from a set of predefined values. */
 		this._valueSelect = this.getByTag("select");
@@ -329,10 +351,6 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 		 * @type {js.dom.Control}
 		 */
 		this._valueControl = null;
-	}
-
-	onKey(callback) {
-		this._valueInput.on("keydown", callback);
 	}
 
 	setObject(taxonMeta, taxon) {
@@ -348,6 +366,7 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 
 		this._nameLabel.setValue(taxon.name);
 		this._valueControl.setValue(taxon.value);
+		this._valueControl.focus();
 	}
 
 	getObject() {
@@ -355,6 +374,13 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 			name: this._nameLabel.getText(),
 			value: this._valueControl.getValue()
 		};
+	}
+
+	_onPaste(ev) {
+		ev.halt();
+		var value = ev.getData().trim();
+		value = value[0].toUpperCase() + value.slice(1).toLowerCase();
+		this._valueInput.setValue(value);
 	}
 
 	toString() {
@@ -410,6 +436,7 @@ com.kidscademy.form.TaxonomyControl.LinkEditor = class extends js.dom.Element {
 	open() {
 		this._input.reset();
 		this.show();
+		this._input.focus();
 	}
 
 	getValue() {

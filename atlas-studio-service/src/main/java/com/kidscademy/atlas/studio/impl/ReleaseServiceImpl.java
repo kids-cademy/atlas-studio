@@ -123,10 +123,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public AndroidApp getAndroidAppForRelease(String releaseName) {
 	// by convention application have the same name as parent release
-	AndroidApp app = dao.getAndroidAppByName(releaseName);
-	if (app != null) {
-	    return app;
-	}
+	return dao.getAndroidAppByName(releaseName);
+    }
+
+    @Override
+    public AndroidApp createAndroidApp(String releaseName) {
 	Release release = dao.getReleaseByName(releaseName);
 	return AndroidApp.create(release);
     }
@@ -138,6 +139,10 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public AndroidApp updateAndroidApp(final AndroidApp app) throws IOException {
+	if (app.getId() == 0) {
+	    dao.saveAndroidApp(app);
+	}
+
 	final File appDir = app.getDir();
 	final boolean createProject = !appDir.exists();
 

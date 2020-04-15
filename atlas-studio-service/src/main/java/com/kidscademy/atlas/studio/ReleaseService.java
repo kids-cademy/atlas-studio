@@ -40,14 +40,16 @@ public interface ReleaseService {
 
     /**
      * Get Android app used to deliver requested release, identified by its unique
-     * name.
+     * name. Returns null if there is no android application for requested release.
      * 
      * @param releaseName
      *            release name.
-     * @return release android app.
+     * @return release android app, possible null.
      */
     AndroidApp getAndroidAppForRelease(String releaseName);
 
+    AndroidApp createAndroidApp(String releaseName);
+    
     AndroidApp getAndroidApp(int appId);
 
     AndroidApp updateAndroidApp(AndroidApp app) throws IOException;

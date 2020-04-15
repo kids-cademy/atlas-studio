@@ -14,7 +14,7 @@ import js.util.Strings;
 public class GradlewProcess extends AbstractToolProcess {
     private static final Log log = LogFactory.getLog(GradlewProcess.class);
 
-    private static final long GRADLE_TASK_TIMEOUT = 30000;
+    private static final long GRADLE_TASK_TIMEOUT = 60000;
 
     private final File appDir;
 

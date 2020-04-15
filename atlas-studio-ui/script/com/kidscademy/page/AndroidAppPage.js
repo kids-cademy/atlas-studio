@@ -14,9 +14,16 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._sidebar.on("build-apk", this._onBuildAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
 
-        const releaseName = WinMain.url.parameters.release;
-        if (releaseName) {
-            ReleaseService.getAndroidAppForRelease(releaseName, this._onAppLoaded, this);
+        const release = WinMain.url.parameters.release;
+        if (release) {
+            ReleaseService.getAndroidAppForRelease(release, app => {
+                if (app == null) {
+                    // if android application is not created yet delegate android settings form
+                    WinMain.assign("@link/android-settings", { release: release });
+                    return;
+                }
+                this._onAppLoaded(app);
+            });
         }
         else {
             const appId = Number(WinMain.url.parameters.app);

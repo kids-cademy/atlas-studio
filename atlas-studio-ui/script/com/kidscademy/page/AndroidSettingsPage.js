@@ -8,14 +8,21 @@ com.kidscademy.page.AndroidSettingsPage = class extends com.kidscademy.Page {
         this._sidebar.on("android-app", this._onAndroidApp, this);
 
         this._form = this.getByTag("form");
-        this._appId = Number(WinMain.url.parameters.app);
-        ReleaseService.getAndroidApp(this._appId, this._onAppLoaded, this);
+
+        const release = WinMain.url.parameters.release;
+        if (release) {
+            ReleaseService.createAndroidApp(release, this._onAppLoaded, this);
+        }
+        else {
+            this._appId = Number(WinMain.url.parameters.app);
+            ReleaseService.getAndroidApp(this._appId, this._onAppLoaded, this);
+        }
 
         this.getByName("update").on("click", this._onUpdate, this);
     }
 
     _onAndroidApp() {
-        WinMain.assign("@link/android-app", { app: this._appId });
+        WinMain.assign("@link/android-app", { app: this._app.id });
     }
 
     _onAppLoaded(app) {

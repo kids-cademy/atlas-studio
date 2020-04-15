@@ -74,6 +74,9 @@ public class WikipediaArticleText {
     }
 
     public String getDefinition() {
+	if (sentences.size() == 0) {
+	    return null;
+	}
 	return Strings.removeParentheses(sentences.get(0));
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Object Classification</title>
+	<title>Object Taxonomy</title>
 	<description>Object classification field set from object form.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>

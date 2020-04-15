@@ -332,6 +332,33 @@ com.kidscademy.atlas.studio.ReleaseService = {
 	},
 
 	/**
+	 * Create android app.
+	 *
+	 * @param java.lang.String releaseName,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.AndroidApp
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 createAndroidApp: function(releaseName) {
+		$assert(typeof releaseName !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#createAndroidApp", "Release name argument is undefined.");
+		$assert(releaseName === null || js.lang.Types.isString(releaseName), "com.kidscademy.atlas.studio.ReleaseService#createAndroidApp", "Release name argument is not a string.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#createAndroidApp", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#createAndroidApp", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "createAndroidApp");
+		rmi.setParameters(releaseName);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get android app.
 	 *
 	 * @param int appId,
