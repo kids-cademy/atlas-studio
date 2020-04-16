@@ -10,6 +10,10 @@ com.kidscademy.Negator = class extends js.dom.Control {
 		return this.hasCssClass("negated").toString();
 	}
 
+	setValue(value) {
+		return this.addCssClass("negated", value === "true");
+	}
+
 	_onClick(ev) {
 		this.toggleCssClass("negated");
 	}

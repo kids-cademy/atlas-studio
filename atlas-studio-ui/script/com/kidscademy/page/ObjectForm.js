@@ -19,7 +19,6 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		 * @type {Boolean}
 		 */
 		this._dirty = false;
-		WinMain.on("pre-unload", this._onPreUnload, this);
 
 		this._form = this.getByClass(com.kidscademy.Form);
 		this._form.on("input", ev => { this._dirty = true });
@@ -177,18 +176,12 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		if (this._dirty) {
 			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
 				if (ok) {
-					WinMain.assign("collection.htm");
+					WinMain.assign("@link/collection", { collection: this._object.collection.id });
 				}
 			});
 			return;
 		}
 		super._onBack();
-	}
-
-	_onPreUnload(ev) {
-		if (this._dirty) {
-			return "@string/confirm-object-not-saved";
-		}
 	}
 
 	toString() {

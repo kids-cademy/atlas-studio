@@ -81,6 +81,10 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 				containerHandler.call(container, menu._contextView);
 			}.bind(container);
 
+			if (child.hasCssClass("default-action")) {
+				this._defaultAction = { name: name, listener: actionHandler };
+			}
+
 			child.on("click", actionHandler, container);
 			this._actionHandlers[name] = actionHandler;
 		});

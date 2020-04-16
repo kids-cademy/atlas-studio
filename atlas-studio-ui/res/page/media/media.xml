@@ -6,7 +6,7 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/MediaPage.js</script>
 	</scripts>
 </page>

@@ -12,7 +12,7 @@
 		<script>script/com/kidscademy/format/RegionFormat.js</script>
 		<script>script/com/kidscademy/reader/RelatedView.js</script>
 		<script>script/com/kidscademy/reader/FactsView.js</script>
-		<script>script/com/kidscademy/page/Page.js</script>
+		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/ReaderPage.js</script>
 	</scripts>
 </page>

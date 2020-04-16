@@ -16,6 +16,10 @@
 	margin-right: 2px;
 }
 
+.insight-images .object-box .icon {
+	cursor: pointer;
+}
+
 .insight-images .images {
 	display: inline-block;
 	flex-grow: 1;

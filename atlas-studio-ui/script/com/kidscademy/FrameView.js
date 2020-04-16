@@ -19,12 +19,23 @@ com.kidscademy.FrameView = class extends js.dom.Element {
      * @param {String} viewName the name of child view to select.
      */
     select(viewName) {
-        if (this._view != null) {
-            this._view.hide();
-        }
+        $assert(viewName != null, "com.kidscademy.FrameView#select", "Null view name.");
+        this._view.hide();
         this._view = this.getByCss(`:scope > .%s`, viewName);
-        $assert(this._view != null, "com.kidscademy.FrameView#select", "No child view with name |%s|.", viewName);
+        $assert(this._view != null, "com.kidscademy.FrameView#select", "No child view with class |%s|.", viewName);
         return this._view.show();
+    }
+
+    setObject(items) {
+        $assert(this._view != null, "com.kidscademy.FrameView#setObject", "Invalid state. Null selected view.");
+        this._view.setObject(items);
+    }
+
+    scrollIntoView(childId) {
+        const childView = this._view.getByCss("li[id='%s']", childId);
+        if (childView != null) {
+            childView.scrollIntoView();
+        }
     }
 
     toString() {

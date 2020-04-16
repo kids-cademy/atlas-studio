@@ -1,10 +1,9 @@
 <!-- layout of insight view for object images is structured on rows; a row displays an object and has an object info box and object images -->
-<!-- in order to reuse style from tiles list view need to add 'list-view tiles' classes to this component root and 'item' class to object info box -->
-<!-- object info box need also to have data-css-class="state" in order to update color theme -->
-<ul class="list-view tiles insight-images hidden" data-list="." xmlns:w="js-lib.com/wood">
+<!-- object info box need to have data-css-class="state" in order to update color theme -->
+<ul class="insight-images hidden" data-class="com.kidscademy.collection.InsightListView" data-list="." xmlns:w="js-lib.com/wood">
 	<li class="row" data-id="id">
 		<!-- object info box -->
-		<div class="item" data-css-class="state" w:compo="compo/object-box"></div>
+		<div data-css-class="state" w:compo="compo/object-box"></div>
 		<!-- object images - the actual insight data -->
 		<div class="images">
 			<img class="image" data-src="images.cover.src" src="@image/default-icon" data-title="images.cover.file-name" />

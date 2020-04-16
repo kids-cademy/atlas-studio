@@ -17,6 +17,7 @@
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/View.js</script>
 		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/collection/InsightListView.js</script>
 		<script>script/com/kidscademy/page/CollectionPage.js</script>
 	</scripts>
 </page>
