@@ -1,22 +1,27 @@
 .object-box {
 	background: none;
-	border-color: transparent;
+	border-color: @color/border-none;
 	min-height: @eval(ADD @dimen/icon-size 4px);	
 }
 
 .object-box.created {
-	background: radial-gradient(circle at 30% 50%, #F8F8F8, #E6E6E6);
-	border-color: #E6E6E6;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-created, @color/bg2-created);
+	border-color: @color/border-created;
 }
 
 .object-box.development {
-	background: radial-gradient(circle at 30% 50%, #ffe3f0, #f779b4);
-	border-color: #f779b4;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-development, @color/bg2-development);
+	border-color: @color/border-development;
+}
+
+.object-box.released {
+	background: radial-gradient(circle at 30% 50%, @color/bg1-released, @color/bg2-released);
+	border-color: @color/border-released;
 }
 
 .object-box.published {
-	background: radial-gradient(circle at 30% 50%, #FFFFFF, #76b0e2);
-	border-color: #76b0e2;
+	background: radial-gradient(circle at 30% 50%, @color/bg1-published, @color/bg2-published);
+	border-color: @color/border-published;
 }
 
 .object-box .icon {
@@ -24,45 +29,56 @@
 	width: @dimen/icon-size;
 	height: @dimen/icon-size;
 	padding: 1px;
-	border: solid 1px @color/border-image;
+	border: solid 1px @color/border-none;
 	margin-right: 10px;
 }
 
 .object-box.created .icon {
-	border-color: @color/border-image;
+	border-color: @color/border-created;
 }
 
 .object-box.development .icon {
-	border-color: #f779b4;
+	border-color: @color/border-development;
+}
+
+.object-box.released .icon {
+	border-color: @color/border-released;
 }
 
 .object-box.published .icon {
-	border-color: #5aa3e2;
+	border-color: @color/border-published;
 }
 
 .object-box .display {
 	padding-bottom: 4px;
-	border-bottom: solid 1px @color/border-light;
+	border-bottom: solid 1px @color/border-none;
 	margin-top: 0;
 	text-transform: uppercase;	
 	font-size: 2.0rem;
+	color: @color/text-none;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .object-box.created .display {
-	color: #000000;
+	color: @color/text-created;
+	border-color: @color/border-created;
 }
 
 .object-box.development .display {
-	color: #f74498;
-	border-color: #f779b4;
+	color: @color/text-development;
+	border-color: @color/border-development;
+}
+
+.object-box.released .display {
+	color: @color/text-released;
+	border-color: @color/border-released;
 }
 
 .object-box.published .display {
-	color: #1985e2;
-	border-color: #5aa3e2;
+	color: @color/text-published;
+	border-color: @color/border-published;
 }
 
 .object-box .name {
