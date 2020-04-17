@@ -16,6 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `androidapp`
+--
+
+DROP TABLE IF EXISTS `androidapp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `androidapp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `release_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `packageName` varchar(45) NOT NULL,
+  `versionCode` int(11) NOT NULL,
+  `gitRepository` tinytext NOT NULL,
+  `gitUserName` varchar(45) NOT NULL,
+  `gitPassword` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_ANDROIDAPP_PACKAGE_NAME` (`packageName`),
+  KEY `FK_ANDROIDAPP_RELEASE_idx` (`release_id`),
+  CONSTRAINT `FK_ANDROIDAPP_RELEASE` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `atlascollection`
 --
 
@@ -24,17 +47,19 @@ DROP TABLE IF EXISTS `atlascollection`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `atlascollection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name` varchar(45) NOT NULL,
   `display` varchar(45) NOT NULL,
   `definition` tinytext NOT NULL,
   `iconName` varchar(45) NOT NULL,
   `endDate` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Flag for object end date, default to true. If this flag is false user interface should not display controls for end date.',
+  `progenitor` tinyint(1) NOT NULL DEFAULT '1',
   `conservationStatus` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Flag for object conservation status, default to true. If this flag is false user interface should not display controls for conservation status.',
   `audioSample` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Flag for object audio sample, default to true. If this flag is false user interface should not display controls for audio sample.',
   `spreading` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_ATLAS_COLLECTION_NAME` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +98,7 @@ CREATE TABLE `atlascollection_taxonomymeta` (
   UNIQUE KEY `UQ_TAXONOMYMETA_NAME` (`name`,`atlascollection_id`),
   KEY `FK_TAXONOMYMETA_COLLECTION_ID` (`atlascollection_id`),
   CONSTRAINT `fk_taxon_meta_atlascollection1` FOREIGN KEY (`atlascollection_id`) REFERENCES `atlascollection` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +117,7 @@ SET character_set_client = utf8;
   `definition` tinyint NOT NULL,
   `iconName` tinyint NOT NULL,
   `state` tinyint NOT NULL,
-  `lastUpdated` tinyint NOT NULL
+  `timestamp` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -106,11 +131,11 @@ DROP TABLE IF EXISTS `atlasobject`;
 CREATE TABLE `atlasobject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `collection_id` int(11) NOT NULL,
-  `state` enum('CREATED','DEVELOPMENT','PUBLISHED') NOT NULL,
-  `lastUpdated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `state` enum('NONE','CREATED','DEVELOPMENT','RELEASED','PUBLISHED') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name` varchar(45) NOT NULL COMMENT 'Object name unique per dtype. This value is used internally and is not meant to be displayed to user.',
   `display` varchar(45) NOT NULL COMMENT 'Object name as displayed on user interface. It is subject to internationalization.',
-  `definition` text,
+  `definition` text NOT NULL,
   `description` text COMMENT 'Object description is rich text, that is, it can contains images, links and text formatting. It is stored as HTML.',
   `sampleTitle` varchar(128) DEFAULT NULL,
   `sampleName` varchar(45) DEFAULT NULL,
@@ -119,12 +144,13 @@ CREATE TABLE `atlasobject` (
   `startDateMask` int(11) DEFAULT NULL,
   `endDateValue` double DEFAULT NULL,
   `endDateMask` int(11) DEFAULT NULL,
-  `conservation` int(11) DEFAULT NULL,
+  `progenitor` varchar(45) DEFAULT NULL COMMENT 'Progenitor is the entity that somehow originates this object. For example, if this atlas object is an airplaine, progenitor is the manufacturer.',
+  `conservation` int(11) DEFAULT NULL COMMENT 'Optional conservation status for life forms.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlasobject_name` (`name`,`collection_id`),
   KEY `fk_atlasobject_atlascategory1_idx` (`collection_id`),
   CONSTRAINT `fk_atlasobject_atlascategory1` FOREIGN KEY (`collection_id`) REFERENCES `atlascollection` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=705 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=797 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +168,7 @@ CREATE TABLE `atlasobject_aliases` (
   PRIMARY KEY (`id`),
   KEY `fk_alias_atlas_object1_idx` (`atlasobject_id`),
   CONSTRAINT `fk_alias_objec_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=419 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=470 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +187,7 @@ CREATE TABLE `atlasobject_facts` (
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`facts_key`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object1` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3604 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4312 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,12 +204,12 @@ CREATE TABLE `atlasobject_features` (
   `name` varchar(45) NOT NULL,
   `value` double NOT NULL,
   `maximum` double DEFAULT NULL,
-  `quantity` enum('NONE','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY') NOT NULL,
+  `quantity` enum('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_atlaobject_features_name` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_features_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_atlasobject_features_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6429 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13621 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +235,7 @@ CREATE TABLE `atlasobject_images` (
   UNIQUE KEY `UQ_IMAGE_KEY` (`atlasobject_id`,`imageKey`),
   KEY `IX_IMAGE_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `FK_ATLASOBJECT_IMAGES_ATLASOBJECT_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3309 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3892 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +258,7 @@ CREATE TABLE `atlasobject_links` (
   PRIMARY KEY (`id`),
   KEY `IX_ATLASOBJECT_LINKS_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `fk_link_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2359 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2702 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +319,7 @@ CREATE TABLE `atlasobject_taxonomy` (
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object11` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3494 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3902 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,11 +349,11 @@ DROP TABLE IF EXISTS `featuremeta`;
 CREATE TABLE `featuremeta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `quantity` enum('NONE','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY') NOT NULL,
+  `quantity` enum('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY') NOT NULL,
   `definition` tinytext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_FEATUREMETA_NAME` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +395,7 @@ CREATE TABLE `linkmeta` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_linkmeta_domain` (`domain`),
   UNIQUE KEY `uq_linkmeta_iconName` (`iconName`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,9 +407,36 @@ DROP TABLE IF EXISTS `release`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `release` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name` varchar(45) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `display` varchar(45) NOT NULL,
+  `brief` varchar(45) NOT NULL,
+  `definition` tinytext NOT NULL,
+  `publisher` varchar(45) NOT NULL,
+  `edition` varchar(45) NOT NULL,
+  `version` varchar(45) NOT NULL,
+  `license` varchar(45) NOT NULL,
+  `readme` text NOT NULL,
+  `privacy` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_RELEASE_NAME` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `release_atlasitem`
+--
+
+DROP TABLE IF EXISTS `release_atlasitem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `release_atlasitem` (
+  `release_id` int(11) NOT NULL,
+  `objects_id` int(11) NOT NULL,
+  PRIMARY KEY (`release_id`,`objects_id`),
+  KEY `fk_release_atlasobject_atlasobject1_idx` (`objects_id`),
+  CONSTRAINT `fk_release_atlasobject_atlasobject1` FOREIGN KEY (`objects_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_release_atlasobject_release1` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -417,7 +470,7 @@ CREATE TABLE `user` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `atlasitem` AS select `o`.`id` AS `id`,`o`.`collection_id` AS `collection_id`,`o`.`name` AS `name`,`o`.`display` AS `display`,`o`.`definition` AS `definition`,`i`.`fileName` AS `iconName`,`o`.`state` AS `state`,`o`.`lastUpdated` AS `lastUpdated` from (`atlasobject` `o` left join `atlasobject_images` `i` on(((`o`.`id` = `i`.`atlasobject_id`) and (`i`.`imageKey` = 'icon')))) */;
+/*!50001 VIEW `atlasitem` AS select `o`.`id` AS `id`,`o`.`collection_id` AS `collection_id`,`o`.`name` AS `name`,`o`.`display` AS `display`,`o`.`definition` AS `definition`,`i`.`fileName` AS `iconName`,`o`.`state` AS `state`,`o`.`timestamp` AS `timestamp` from (`atlasobject` `o` left join `atlasobject_images` `i` on(((`o`.`id` = `i`.`atlasobject_id`) and (`i`.`imageKey` = 'icon')))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -469,4 +522,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-22 19:59:50
+-- Dump completed on 2020-04-17 12:24:27

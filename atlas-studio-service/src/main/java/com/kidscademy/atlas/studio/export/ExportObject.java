@@ -34,6 +34,7 @@ public class ExportObject {
     private final List<Region> spreading;
     private final HDate startDate;
     private final HDate endDate;
+    private final String progenitor;
     private final ConservationStatus conservation;
 
     private final String sampleTitle;
@@ -67,6 +68,7 @@ public class ExportObject {
 	this.spreading = object.getSpreading();
 	this.startDate = object.getStartDate();
 	this.endDate = object.getEndDate();
+	this.progenitor = object.getProgenitor();
 	this.conservation = object.getConservation();
 
 	this.sampleTitle = object.getSampleTitle();

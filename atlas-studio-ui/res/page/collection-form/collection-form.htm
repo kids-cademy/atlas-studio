@@ -134,6 +134,9 @@
 						<label>end date</label><input name="flags.end-date" type="checkbox" />
 					</div>
 					<div class="controlset">
+						<label>progenitor</label><input name="flags.progenitor" type="checkbox" />
+					</div>
+					<div class="controlset">
 						<label>conservation status</label><input name="flags.conservation-status" type="checkbox" />
 					</div>
 					<div class="controlset">
@@ -155,6 +158,6 @@
 
 <div class="collection-form" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
 	<ul class="menu actions">
-		<li><a href="@link/export-all-atlas-collections" download="atlas.zip"><img src="@image/action/download" /><span>@string/workspace-export</span></a></li>
+		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
 	</ul>
 </div>

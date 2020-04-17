@@ -115,6 +115,17 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	    @AttributeOverride(name = "mask", column = @Column(name = "endDateMask")) })
     private HDate endDate;
 
+    /**
+     * Progenitor is the entity that somehow originates this object. For example, if
+     * this atlas object is an airplaine, progenitor is the manufacturer. Null if
+     * not used. It is usualy displayed on info box.
+     */
+    private String progenitor;
+
+    /**
+     * Optional conservation status for life forms. Null if not used. It is usualy
+     * displayed on info box.
+     */
     private ConservationStatus conservation;
 
     /**
@@ -516,6 +527,14 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 
     public void setEndDate(HDate endDate) {
 	this.endDate = endDate;
+    }
+
+    public String getProgenitor() {
+	return progenitor;
+    }
+
+    public void setProgenitor(String progenitor) {
+	this.progenitor = progenitor;
     }
 
     public ConservationStatus getConservation() {

@@ -10,6 +10,11 @@ public class Flags {
      */
     private boolean endDate;
     /**
+     * Flag for object progenitor, default to true. If this flag is false user
+     * interface should not display progenitor control.
+     */
+    private boolean progenitor;
+    /**
      * Flag for object conservation status, default to true. If this flag is false
      * user interface should not display controls for conservation status.
      */
@@ -20,21 +25,29 @@ public class Flags {
      */
     private boolean audioSample;
     /**
-     * Flag for object spreading property, default to true. If this flag is false user
-     * interface should not display controls for object spreading.
+     * Flag for object spreading property, default to true. If this flag is false
+     * user interface should not display controls for object spreading.
      */
     private boolean spreading;
-    
+
     public void setEndDate(boolean endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public boolean hasEndDate() {
 	return endDate;
     }
 
+    public boolean hasProgenitor() {
+        return progenitor;
+    }
+
+    public void setProgenitor(boolean progenitor) {
+        this.progenitor = progenitor;
+    }
+
     public void setConservationStatus(boolean conservationStatus) {
-        this.conservationStatus = conservationStatus;
+	this.conservationStatus = conservationStatus;
     }
 
     public boolean hasConservationStatus() {
@@ -42,7 +55,7 @@ public class Flags {
     }
 
     public void setAudioSample(boolean audioSample) {
-        this.audioSample = audioSample;
+	this.audioSample = audioSample;
     }
 
     public boolean hasAudioSample() {
@@ -50,10 +63,10 @@ public class Flags {
     }
 
     public void setSpreading(boolean spreading) {
-        this.spreading = spreading;
+	this.spreading = spreading;
     }
 
     public boolean hasSpreading() {
-        return spreading;
+	return spreading;
     }
 }

@@ -12,6 +12,7 @@
 		<display>Instrument</display>
 		<definition>Musical instrument.</definition>
 		<iconName>instrument.png</iconName>
+		<progenitor>1</progenitor>
 		<endDate>1</endDate>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
@@ -22,6 +23,7 @@
 		<display>Bird</display>
 		<definition>Wild bird.</definition>
 		<iconName>bird.png</iconName>
+		<progenitor>1</progenitor>
 		<endDate>1</endDate>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
@@ -108,7 +110,7 @@
 		<id>1</id>
 		<collection_id>1</collection_id>
 		<state>DEVELOPMENT</state>
-		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>accordion</name>
 		<display>Accordion</display>
 		<definition>Accordion definition.</definition>
@@ -123,7 +125,7 @@
 		<id>2</id>
 		<collection_id>1</collection_id>
 		<state>DEVELOPMENT</state>
-		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>eagle</name>
 		<display>Eagle</display>
 		<definition>Eagle definition.</definition>
@@ -138,7 +140,7 @@
 		<id>3</id>
 		<collection_id>2</collection_id>
 		<state>PUBLISHED</state>
-		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>bandoneon</name>
 		<display>Bandoneon</display>
 		<definition>Bandoneon definition.</definition>
@@ -153,7 +155,7 @@
 		<id>4</id>
 		<collection_id>2</collection_id>
 		<state>PUBLISHED</state>
-		<lastUpdated>2019-01-30 12:30:00</lastUpdated>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>cimbalom</name>
 		<display>Cimbalom</display>
 		<definition>Cimbalom definition.</definition>
@@ -316,13 +318,13 @@
 		<name>wild-birds</name>
 		<display>Wild Birds</display>
 		<brief>Wild birds brief</brief>
-		<definition>Wild birds definition</definition>
-		<description>Wild birds description.</description>
+		<definition>Wild birds description.</definition>
 		<edition>community edition</edition>
 		<version>Release 1.0</version>
 		<publisher>Published by kids (a)cademy</publisher>
 		<license>public domain knowledge</license>
-		<policy>Wild birds policy.</policy>
+		<readme>Wild birds readme.</readme>
+		<privacy>Wild birds policy.</privacy>
 	</release>
 	
 	<release_atlasitem>

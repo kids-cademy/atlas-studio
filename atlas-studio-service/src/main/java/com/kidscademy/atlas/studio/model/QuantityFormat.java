@@ -149,6 +149,7 @@ public class QuantityFormat implements Comparator<Pair> {
 
     private static final Map<PhysicalQuantity, Unit[]> UNITS = new HashMap<>();
     static {
+	UNITS.put(PhysicalQuantity.SCALAR, ScalarUnits.values());
 	UNITS.put(PhysicalQuantity.MASS, MassUnits.values());
 	UNITS.put(PhysicalQuantity.TIME, TimeUnits.values());
 	UNITS.put(PhysicalQuantity.LENGTH, LengthUnits.values());
@@ -162,8 +163,23 @@ public class QuantityFormat implements Comparator<Pair> {
 	String symbol();
     }
 
+    private enum ScalarUnits implements Unit {
+	UNITARY;
+
+	@Override
+	public double factor() {
+	    return 1;
+	}
+
+	@Override
+	public String symbol() {
+	    return null;
+	}
+    }
+
     private enum MassUnits implements Unit {
-	MICROGRAM(1000000000, "micrograms"), MILLIGRAM(1000000, "milligrams"), GRAM(1000, "grams"), KILOGRAM(1, "kg"), TON(0.001, "tons");
+	MICROGRAM(1000000000, "micrograms"), MILLIGRAM(1000000, "milligrams"), GRAM(1000, "grams"), KILOGRAM(1,
+		"kg"), TON(0.001, "tons");
 
 	private double factor;
 	private String symbol;
