@@ -116,9 +116,9 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		const feature = this._featureForm.getObject();
 		// feature name select store id into option value and we need feature name, stored on text
 		feature.name = this._featureNameSelect.getText();
-		feature.value = this._round(feature.value * this._unitsSelect.getValue());
+		feature.value = this._round(feature.value * this._getUnitsValue());
 		if (feature.maximum) {
-			feature.maximum = this._round(feature.maximum * this._unitsSelect.getValue());
+			feature.maximum = this._round(feature.maximum * this._getUnitsValue());
 		}
 
 		// udpate feature display - processed on server, before updating user interface
@@ -185,8 +185,8 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 			this._featureForm.setObject({
 				name: feature.name,
 				definition: feature.definition,
-				value: this._round(feature.value / this._unitsSelect.getValue()),
-				maximum: feature.maximum != null ? this._round(feature.maximum / this._unitsSelect.getValue()) : null,
+				value: this._round(feature.value / this._getUnitsValue()),
+				maximum: feature.maximum != null ? this._round(feature.maximum / this._getUnitsValue()) : null,
 				quantity: feature.quantity
 			}).show();
 		});
@@ -226,6 +226,13 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		}
 		this._featureForm.setValue("definition", featureMeta.definition);
 
+		if (feature.quantity === "SCALAR") {
+			this._unitsSelect.hide();
+			if (callback) { callback(true); }
+			return;
+		}
+
+		this._unitsSelect.show();
 		AtlasService.getQuantityUnits(feature.quantity, units => {
 			this._unitsSelect.setOptions(units);
 
@@ -238,6 +245,10 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 			if (callback) { callback(true); }
 		});
+	}
+
+	_getUnitsValue() {
+		return this._unitsSelect.isVisible() ? this._unitsSelect.getValue() : 1;
 	}
 
 	_round(number) {

@@ -5,6 +5,7 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
         super();
 
         this._sidebar.showObject();
+        this._sidebar.on("features-meta", this._onFeaturesMeta, this);
 
         this._form = this.getByTag("form");
         this._iconSection = this._form.getByCssClass("icon-section");
@@ -36,6 +37,10 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
         }
         this._sidebar.setObject(collection);
         this._form.setObject(collection);
+    }
+
+    _onFeaturesMeta() {
+        WinMain.assign("@link/features-meta");
     }
 
     _onSave(ev) {

@@ -119,6 +119,7 @@
 	<feature-quantity>Quantity</feature-quantity>
 	<feature-units>Units</feature-units>
 	
+	<quantity-scalar>SCALAR</quantity-scalar>
 	<quantity-mass>MASS</quantity-mass>
 	<quantity-time>TIME</quantity-time>
 	<quantity-length>LENGTH</quantity-length>

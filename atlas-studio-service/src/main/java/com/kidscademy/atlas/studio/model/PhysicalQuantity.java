@@ -7,6 +7,6 @@ package com.kidscademy.atlas.studio.model;
  * @author Iulian Rotaru
  */
 public enum PhysicalQuantity {
-    // ENUM('NONE','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY')
-    NONE, MASS, TIME, LENGTH, SPEED, FOOD_ENERGY
+    // ENUM('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','FOOD_ENERGY')
+    NONE, SCALAR, MASS, TIME, LENGTH, SPEED, FOOD_ENERGY
 }

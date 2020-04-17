@@ -75,6 +75,10 @@ public class Feature {
 	display = new FeatureValueFormat(this).display();
     }
 
+    public boolean isScalar() {
+	return quantity == PhysicalQuantity.SCALAR;
+    }
+
     public String getName() {
 	return name;
     }

@@ -87,5 +87,7 @@ public class ExportFeature {
 	EN.put("orbit.aphelion", "Orbit Aphelion");
 	EN.put("orbit.perihelion", "Orbit Perihelion");
 	EN.put("width", "Width");
+	EN.put("crew", "Crew");
+	EN.put("range", "Range");
     }
 }
