@@ -209,7 +209,11 @@ CREATE TABLE `atlasobject_features` (
   UNIQUE KEY `uq_atlaobject_features_name` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_features_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_atlasobject_features_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=13621 DEFAULT CHARSET=utf8;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=13557 DEFAULT CHARSET=utf8;
+>>>>>>> branch 'master' of https://github.com/kids-cademy/atlas.studio.git
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +323,11 @@ CREATE TABLE `atlasobject_taxonomy` (
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object11` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=3902 DEFAULT CHARSET=utf8;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=3898 DEFAULT CHARSET=utf8;
+>>>>>>> branch 'master' of https://github.com/kids-cademy/atlas.studio.git
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -522,4 +530,8 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2020-04-17 12:24:27
+=======
+-- Dump completed on 2020-04-17  6:25:36
+>>>>>>> branch 'master' of https://github.com/kids-cademy/atlas.studio.git
