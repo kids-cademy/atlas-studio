@@ -89,5 +89,11 @@ public class ExportFeature {
 	EN.put("width", "Width");
 	EN.put("crew", "Crew");
 	EN.put("range", "Range");
+	EN.put("range.maximum", "Maximum Range");
+	EN.put("engine.power", "Engine Power");
+	EN.put("ship.beam", "Ship Beam");
+	EN.put("ship.beam.maximum", "Maximum Ship Beam");
+	EN.put("ship.draft", "Ship Draft");
+	EN.put("ship.displacement", "Ship Displacement");
     }
 }

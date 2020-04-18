@@ -139,6 +139,7 @@ public class AtlasCollection implements GraphicObject {
 	AtlasCollection collection = new AtlasCollection();
 	collection.flags = new Flags();
 	collection.flags.setEndDate(true);
+	collection.flags.setProgenitor(true);
 	collection.flags.setConservationStatus(true);
 	collection.flags.setAudioSample(true);
 	collection.flags.setSpreading(true);

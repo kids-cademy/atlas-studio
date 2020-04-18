@@ -81,7 +81,7 @@ public class Strings extends js.util.Strings {
     }
 
     private static Pattern BASE_DOMAIN_PATTERN = Pattern
-	    .compile("^(?:http|https|ftp|file):\\/\\/(?:[^.]+\\.)*([^.]+\\.[^:/]+).*$");
+	    .compile("^(?:http|https|ftp|file):\\/\\/(?:[^.]+\\.)*([^.]+\\.[^:/]+)\\/.*$");
 
     public static String basedomain(URL url) {
 	if (url == null) {

@@ -46,7 +46,10 @@
 
 .column-text li {
 	list-style: inside;
+	list-style-type: square;
 	margin-bottom: 20px;
+	font-size: 22px;
+	color: @color/text-inverse;
 }
 
 

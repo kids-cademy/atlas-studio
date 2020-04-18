@@ -124,6 +124,7 @@
 	<quantity-time>TIME</quantity-time>
 	<quantity-length>LENGTH</quantity-length>
 	<quantity-speed>SPEED</quantity-speed>
+	<quantity-power>POWER</quantity-power>
 	<quantity-food-energy>FOOD_ENERGY</quantity-food-energy>
 
 	<release-create>Create Release</release-create>

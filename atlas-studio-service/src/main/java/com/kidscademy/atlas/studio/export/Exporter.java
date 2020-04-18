@@ -95,7 +95,7 @@ public class Exporter
 
       target.write(file(atlasObject, "icon", 96, 96), path(atlasObject, "icon.jpg"));
       target.write(file(atlasObject, "trivia", 500, 0), path(atlasObject, "trivia.png"));
-      target.write(file(atlasObject, "cover", 560, 0), path(atlasObject, "cover.png"));
+      target.write(file(atlasObject, "cover", 0, 500), path(atlasObject, "cover.png"));
       target.write(file(atlasObject, "featured", 560, 0), path(atlasObject, "featured.png"));
       target.write(file(atlasObject, "contextual", 920, 560), path(atlasObject, "contextual.jpg"));
     }

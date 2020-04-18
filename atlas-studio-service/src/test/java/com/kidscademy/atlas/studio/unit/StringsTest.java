@@ -14,6 +14,7 @@ public class StringsTest {
     @Test
     public void basedomain() throws MalformedURLException {
 	assertThat(Strings.basedomain(new URL("https://en.wikipedia.org/wiki/Mountain")), equalTo("wikipedia.org"));
+	assertThat(Strings.basedomain(new URL("https://en.wikipedia.org/wiki/USS_Gerald_R._Ford")), equalTo("wikipedia.org"));
 	assertThat(Strings.basedomain(null), nullValue());
     }
 }
