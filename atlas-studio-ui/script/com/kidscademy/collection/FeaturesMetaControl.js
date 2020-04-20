@@ -26,7 +26,7 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
     }
 
     isValid() {
-        return this._featuresListView.getChildrenCount() > 0;
+        return this.hasCssClass("optional") || this._featuresListView.getChildrenCount() > 0;
     }
 
     _onFeaturesClick(ev) {

@@ -1111,6 +1111,62 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Replace image.
+	 *
+	 * @param js.tiny.container.http.form.Form form,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Image
+	 * @throws java.io.IOException
+	 * @throws js.rmi.BusinessException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 replaceImage: function(form) {
+		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#replaceImage", "Form argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#replaceImage", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#replaceImage", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "replaceImage");
+		rmi.setParameters(form);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Replace image by source.
+	 *
+	 * @param js.tiny.container.http.form.Form form,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Image
+	 * @throws java.io.IOException
+	 * @throws js.rmi.BusinessException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 replaceImageBySource: function(form) {
+		$assert(typeof form !== "undefined", "com.kidscademy.atlas.studio.AtlasService#replaceImageBySource", "Form argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#replaceImageBySource", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#replaceImageBySource", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "replaceImageBySource");
+		rmi.setParameters(form);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Trim image.
 	 *
 	 * @param com.kidscademy.atlas.studio.model.AtlasItem object,

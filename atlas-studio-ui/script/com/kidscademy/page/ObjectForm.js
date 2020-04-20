@@ -136,6 +136,16 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 	// --------------------------------------------------------------------------------------------
 
 	_onPreview() {
+		if (this._dirty) {
+			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
+				if (ok) {
+					this._dirty = false;
+					this._onPreview();
+				}
+			});
+			return;
+		}
+
 		WinMain.assign("@link/reader", { object: this._object.id });
 	}
 
@@ -176,7 +186,8 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		if (this._dirty) {
 			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
 				if (ok) {
-					WinMain.assign("@link/collection", { collection: this._object.collection.id });
+					this._dirty = false;
+					this._onBack();
 				}
 			});
 			return;

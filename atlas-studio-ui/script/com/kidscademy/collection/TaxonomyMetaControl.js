@@ -26,7 +26,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     }
 
     isValid() {
-        return this._taxonomyMetaView.getChildrenCount() > 0;
+        return this.hasCssClass("optional") || this._taxonomyMetaView.getChildrenCount() > 0;
     }
 
     _onViewClick(ev) {

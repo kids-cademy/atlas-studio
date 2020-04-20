@@ -696,6 +696,34 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public Image replaceImage(Form imageForm) throws IOException, BusinessException {
+	UploadedFile uploadedFile = imageForm.getUploadedFile("media-file");
+	return replaceImage(imageForm, uploadedFile.getFile());
+    }
+
+    @Override
+    public Image replaceImageBySource(Form imageForm) throws IOException, BusinessException {
+	Params.notNull(imageForm.getValue("source"), "Picture source");
+	URL url = new URL(imageForm.getValue("source"));
+	return replaceImage(imageForm, Files.copy(url));
+    }
+
+    private Image replaceImage(Form imageForm, File imageFile) throws BusinessException, IOException {
+	AtlasItem atlasItem = getAtlasItemByForm(imageForm);
+	String imageKey = imageForm.getValue("image-key");
+
+	Params.notZero(atlasItem.getId(), "Atlas item ID");
+	Params.notNullOrEmpty(imageKey, "Image key");
+	BusinessRules.transparentImage(imageKey, imageFile);
+
+	Image image = atlasDao.getImageByKey(atlasItem.getId(), imageKey);
+	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
+	imageFile.renameTo(handler.target());
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
     public Image cloneImageToIcon(AtlasItem atlasItem, Image image) throws IOException {
 	image.setImageKey(Image.KEY_ICON);
 
@@ -776,6 +804,11 @@ public class AtlasServiceImpl implements AtlasService {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.commit();
 	image.updateIcon(atlasItem);
+
+	if (image.isIcon() && image.getWidth() > 512 && image.getHeight() > 512) {
+	    imageProcessor.resize(handler.source(), handler.source(), 0, 512);
+	}
+
 	updateImage(image, handler.source(), handler.sourceSrc());
 	return image;
     }

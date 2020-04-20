@@ -64,7 +64,6 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	// ACTION HANDLERS
 
 	_onSearch() {
-		this._actions.show("close");
 		const object = this._formPage.getObject();
 
 		var taxon = null;
@@ -85,10 +84,17 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 		}
 	}
 
+	_onAddAll() {
+		while(this._candidatesView.hasChildren()) {
+			this._relatedView.addChildFirst(this._candidatesView.getFirstChild());
+		}
+		this._onClose();	
+	}
+
 	_onClose() {
 		this._taxonomySelect.hide();
 		this._candidatesView.hide();
-		this._actions.hide("close");
+		this._actions.hide("add-all", "close");
 	}
 
 	_onTaxonomySelectChange(taxon) {
@@ -107,6 +113,7 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 		AtlasService.getCollectionItemsByTaxon(collectionId, taxon, excludes, items => {
 			this._candidatesView.show();
 			this._candidatesView.setObject(items);
+			this._actions.show("add-all", "close");
 		});
 	}
 

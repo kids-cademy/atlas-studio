@@ -135,6 +135,10 @@ public interface AtlasService {
 
     Image cloneImageToIcon(AtlasItem object, Image image) throws IOException;
 
+    Image replaceImage(Form form) throws IOException, BusinessException;
+
+    Image replaceImageBySource(Form form) throws IOException, BusinessException;
+    
     Image trimImage(AtlasItem object, Image image) throws IOException;
 
     Image flopImage(AtlasItem object, Image image) throws IOException;

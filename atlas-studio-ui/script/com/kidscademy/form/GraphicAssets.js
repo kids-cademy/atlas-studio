@@ -80,7 +80,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	_onAdd() {
 		// this._actions.show("upload", "search", "link", "close");
-		this._actions.show("upload", "link", "close");
+		this._actions.showOnly("upload", "link", "close");
 		this._imageEditor.hide();
 		this._metaFormData.open();
 		this._metaFormData.enable("image-key");
@@ -117,10 +117,12 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		formData.append("atlas-object-id", object.id);
 		formData.append("media-file", ev.target._node.files[0]);
 
-		AtlasService.uploadImage(formData, image => {
+		// upload while image editor is opened is used to actually replace current image
+		const method = this._imageEditor.isVisible() ? "replaceImage" : "uploadImage";
+		AtlasService[method](formData, image => {
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
-			this._previewImage.setSrc(image.src);
+			this._previewImage.reload(image.src);
 		});
 	}
 
@@ -143,10 +145,11 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		formData.append("image-kind", "OBJECT");
 		formData.append("atlas-object-id", object.id);
 
-		AtlasService.uploadImageBySource(formData, image => {
+		const method = this._imageEditor.isVisible() ? "replaceImageBySource" : "uploadImageBySource";
+		AtlasService[method](formData, image => {
 			this._currentImage = image;
 			this._imagesControl.addImage(image);
-			this._previewImage.setSrc(image.src);
+			this._previewImage.reload(image.src);
 		});
 	}
 
@@ -277,6 +280,22 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	// --------------------------------------------------------------------------------------------
 
+	_onImageSelected(image) {
+		this._actions.show("remove");
+		this._metaFormData.disable("image-key");
+		this._currentImage = image;
+		this._previewImage.reload(image.src);
+	}
+
+	_onPreviewImageLoad(ev) {
+		this._transformsCount = 0;
+		this._actions.showAll().hide("add", "search");
+		this._cropMask.hide();
+		this._imageEditor.show();
+		this._metaFormData.setObject(this._currentImage);
+		this._fileInfoView.setObject(this._currentImage);
+	}
+
 	_closeImageEditor() {
 		this._actions.showOnly("add");
 		this._metaFormData.hide();
@@ -293,22 +312,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		++this._transformsCount;
 		this._currentImage = image;
 		this._previewImage.reload(image.src);
-	}
-
-	_onPreviewImageLoad(ev) {
-		this._transformsCount = 0;
-		this._actions.showAll().hide("add", "upload", "search", "link");
-		this._cropMask.hide();
-		this._imageEditor.show();
-		this._metaFormData.setObject(this._currentImage);
-		this._fileInfoView.setObject(this._currentImage);
-	}
-
-	_onImageSelected(image) {
-		this._actions.show("remove");
-		this._metaFormData.disable("image-key");
-		this._currentImage = image;
-		this._previewImage.setSrc(image.src);
 	}
 
 	toString() {

@@ -85,6 +85,7 @@
 	<spreading-remove>remove spreading record</spreading-remove>
 	<spreading-close>close spreading editor</spreading-close>
 
+	<related-add-all>add all related candidates</related-add-all>
 	<related-search>search for related candidates</related-search>
 	<related-close>close related objects editor</related-close>
 	
