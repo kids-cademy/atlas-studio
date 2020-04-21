@@ -7,6 +7,7 @@ import java.util.Map;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.LinkMeta;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
 import js.util.Params;
@@ -56,6 +57,22 @@ public final class Files extends js.util.Files {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/link/${link.iconName}
 	return new File(REPOSITORY_DIR, Strings.concat("/media/link/", linkMeta.getIconName()));
+    }
+
+    public static File mediaFile(Release release, String imageKey) {
+	// repository dir := ${catalina.base}/webapps
+	// media SRC := /media/release/${imageKey}.png
+	File file = new File(REPOSITORY_DIR,
+		Strings.concat("/media/release/", release.getName(), '/', imageKey, ".png"));
+	File dir = file.getParentFile();
+	if (dir != null && !dir.exists()) {
+	    dir.mkdirs();
+	}
+	return file;
+    }
+
+    public static MediaSRC mediaSrc(Release release, String imageKey) {
+	return new MediaSRC(Strings.concat("/media/release/", release.getName(), '/', imageKey, ".png"));
     }
 
     public static File repositoryDir(String repositoryName) {

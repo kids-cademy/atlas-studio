@@ -10,7 +10,8 @@ com.kidscademy.Page = class extends js.ua.Page {
             "Collection name already used.", // UNIQUE_COLLECTION_NAME
             "Collection should be empty.", // EMPTY_COLLECTION
             "Release should be empty.", // EMPTY_RELEASE
-            "Not registered link domain." // REGISTERED_LINK_DOMAIN
+            "Not registered link domain.", // REGISTERED_LINK_DOMAIN
+            "Image dimensions too small." // IMAGE_DIMENSIONS
         ];
 
         window.onscroll = () => {

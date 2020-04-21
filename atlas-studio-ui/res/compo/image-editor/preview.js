@@ -2,13 +2,13 @@ WinMain.on("load", () => {
 	const object = {
 		id: 1234,	
 		collection: {
-			name: "test-collection"
+			name: "test"
 		},
-		name: "test-object"
+		name: "image-editor"
 	};
 	
 	const image = {
-		fileName: "contextual.jpg",
+		fileName: "cougar.png",
 		fileSize: 109661,
 		width: 1112,
 		height: 674
@@ -41,6 +41,7 @@ WinMain.on("load", () => {
 
 	imageEditor.on("upload", handler => {
         const formData = metaForm.getFormData();
+		formData.append("image-kind", "OBJECT");
         formData.append("atlas-object-id", object.id);
         formData.append("media-file", handler.file);
 

@@ -5,6 +5,7 @@
 	<description>Image editor with basic operations like crop, flip and rotate.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ImageService.js</script>
 		<script>script/com/kidscademy/FormData.js</script>
 		<script>script/com/kidscademy/CropMask.js</script>

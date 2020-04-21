@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.RotateDirection;
 
 import js.rmi.BusinessException;
 import js.tiny.container.annotation.Public;
@@ -21,19 +22,19 @@ public interface ImageService {
 
     void removeImage(AtlasItem object, Image image) throws IOException;
 
-    
-    
     Image trimImage(Image image) throws IOException;
 
     Image flopImage(Image image) throws IOException;
 
     Image flipImage(Image image) throws IOException;
 
-    Image rotateImageLeft(Image image) throws IOException;
+    Image rotateImage(Image image, RotateDirection direction, float angle) throws IOException;
 
-    Image rotateImageRight(Image image) throws IOException;
+    Image cropRectangleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
-    Image cropImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
+    Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
+
+    Image adjustBrightnessContrast(Image image, int brightness, int contrast) throws IOException;
 
     Image undoImage(Image image) throws IOException;
 

@@ -5,14 +5,17 @@
 	<description>Releaseform.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
+		<script>script/com/kidscademy/FormData.js</script>
 		<script>script/com/kidscademy/IconControl.js</script>
-		<script>script/com/kidscademy/ImageEditor.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/Htm2Md.js</script>
 		<script>script/com/kidscademy/Md2Htm.js</script>
 		<script>script/com/kidscademy/RichTextControl.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/release/GraphicAssets.js</script>
 		<script>script/com/kidscademy/page/ReleaseForm.js</script>
 	</scripts>
 </page>

@@ -28,8 +28,7 @@
 	<graphic-icon>create object icon from image</graphic-icon>
 	<graphic-flop>flop, mirror image vertically</graphic-flop>
 	<graphic-flip>flip, mirror image horizontally</graphic-flip>
-	<graphic-rotate-left>rotate image to left</graphic-rotate-left>
-	<graphic-rotate-right>rotate image to right</graphic-rotate-right>
+	<graphic-rotate>rotate image</graphic-rotate>
 	<graphic-brightness>adjust image brightness</graphic-brightness>
 	<graphic-contrast>adjust image contrast</graphic-contrast>
 	<graphic-done>commit current operation</graphic-done>

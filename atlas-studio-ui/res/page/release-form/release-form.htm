@@ -16,78 +16,96 @@
 						<label>brief</label><input name="brief" />
 					</div>
 					<div class="controlset">
-						<label>definition</label><textarea name="definition" class="small"></textarea>
-					</div>
-				</div>
-			</div>
-		</fieldset>
-					
-		<fieldset class="graphic-section">
-			<div class="header container">
-				<h2>Graphic Assets</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="icon-control" data-class="com.kidscademy.release.GraphicAssets">
-						<div class="view images-list">
-							<img name="images.icon" class="thumbnail optional" data-class="js.dom.ImageControl" />
-							<img name="images.feature" class="thumbnail optional" data-class="js.dom.ImageControl" />
-							<img name="images.cover" class="thumbnail optional" data-class="js.dom.ImageControl" />
-						</div>
-						<div class="meta exclude hidden" data-class="com.kidscademy.FormData">
-							<div class="controlset">
-								<label>source</label> <input name="source" class="large optional" />
-							</div>
-						</div>
-						<div w:compo="compo/image-editor"></div>
+						<label>definition</label>
+						<textarea name="definition" class="small"></textarea>
 					</div>
 				</div>
 			</div>
 		</fieldset>
 
-		<fieldset>
-			<div class="header container">
-				<h2>Properties</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>publisher</label><input name="publisher" />
-					</div>
-					<div class="controlset">
-						<label>edition</label><input name="edition" />
-					</div>
-					<div class="controlset">
-						<label>version</label><input name="version" />
-					</div>
-					<div class="controlset">
-						<label>license</label><input name="license" />
+		<div class="edit-sections">
+			<fieldset>
+				<div class="header container">
+					<h2>Graphic Assets</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="view images-list">
+							<img name="images.icon" class="thumbnail optional" data-class="js.dom.ImageControl" /> 
+							<img name="images.feature" class="thumbnail optional" data-class="js.dom.ImageControl" /> 
+							<img name="images.cover" class="thumbnail optional" data-class="js.dom.ImageControl" />
+						</div>
+
+						<div data-name="graphicsBackground" data-class="com.kidscademy.release.GraphicAssets">
+							<div class="actions bar exclude" data-class="com.kidscademy.Actions">
+								<img name="edit" src="@image/action/edit" title="@tip/graphic-edit" /> 
+								<span data-name="upload" class="upload-icon"> 
+									<img src="@image/action/upload" /> 
+									<input name="upload-file" type="file" title="@tip/graphic-upload" accept="image/*" />
+								</span> 
+								<img name="link" src="@image/action/link" title="@tip/graphic-link" /> 
+								<span class="separator"></span> 
+								<img name="done" src="@image/action/done" title="@tip/graphic-done" /> 
+								<img name="close" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
+							</div>
+
+							<div class="editor hidden" data-class="com.kidscademy.FormData">
+								<div class="controlset">
+									<label>background</label> <input name="background" class="small" />
+								</div>
+								<div class="controlset exclude">
+									<label>source</label> <input name="source" class="large optional" />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
-		
-		<fieldset>
-			<div class="header container">
-				<h2>README</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<textarea name="readme" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+			</fieldset>
+
+			<fieldset>
+				<div class="header container">
+					<h2>Properties</h2>
 				</div>
-			</div>
-		</fieldset>
-		
-		<fieldset>
-			<div class="header container">
-				<h2>PRIVACY</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<textarea name="privacy" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>publisher</label><input name="publisher" />
+						</div>
+						<div class="controlset">
+							<label>edition</label><input name="edition" />
+						</div>
+						<div class="controlset">
+							<label>version</label><input name="version" />
+						</div>
+						<div class="controlset">
+							<label>license</label><input name="license" />
+						</div>
+					</div>
 				</div>
-			</div>
-		</fieldset>
+			</fieldset>
+
+			<fieldset>
+				<div class="header container">
+					<h2>README</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<textarea name="readme" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<div class="header container">
+					<h2>PRIVACY</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<textarea name="privacy" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+					</div>
+				</div>
+			</fieldset>
+		</div>
 	</form>
 
 	<div class="container buttons-bar">

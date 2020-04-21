@@ -87,8 +87,20 @@ public class ImageProcessorImpl implements ImageProcessor {
     }
 
     @Override
+    public void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset)
+	    throws IOException {
+	exec("${imageFile} -crop ${width}x${height}+${xoffset}+${yoffset} ${targetFile}", imageFile, width, height,
+		xoffset, yoffset, targetFile);
+
+	int cx = width / 2;
+	int cy = height / 2;
+	exec("-size ${width}x${height} xc:none -fill ${targetFile} -draw \"circle ${cx},${cy} ${cx},1\" ${targetFile}",
+		width, height, targetFile, cx, cy, cx, targetFile);
+    }
+
+    @Override
     public void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException {
-	exec("-composite -compose srcin ${imageFile} ${maskFile} ${imageFile}", imageFile, maskFile, imageFile);
+	exec("-composite -compose ${compose} ${imageFile} ${maskFile} ${imageFile}", compose.value(), imageFile, maskFile, imageFile);
     }
 
     @Override
@@ -96,6 +108,12 @@ public class ImageProcessorImpl implements ImageProcessor {
 	for (File overlapImageFile : overlapImageFiles) {
 	    exec("-composite ${imageFile} ${overlapImageFile} ${imageFile}", imageFile, overlapImageFile, imageFile);
 	}
+    }
+
+    @Override
+    public void brightnessContrast(File imageFile, File targetFile, int brightness, int contrast) throws IOException {
+	exec("${imageFile} -brightness-contrast ${brightness}x${contrast} ${targetFile}", imageFile, brightness,
+		contrast, targetFile);
     }
 
     @Override
@@ -135,9 +153,8 @@ public class ImageProcessorImpl implements ImageProcessor {
 	return info(imageFile, "opaque", boolean.class);
     }
 
-    // --------------------------------------------------------------------------------------------
-
-    private void exec(String format, Object... args) throws IOException {
+    @Override
+    public void exec(String format, Object... args) throws IOException {
 	convert.exec(buildCommand(format, args));
     }
 }

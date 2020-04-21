@@ -22,6 +22,7 @@ public class Image {
     public static final String KEY_FEATURED = "featured";
     public static final String KEY_TRIVIA = "trivia";
     public static final String KEY_CONTEXTUAL = "contextual";
+    public static final String KEY_RELEASE = "release";
 
     /** Image key is unique per atlas object. */
     @Column(insertable = false, updatable = false)
@@ -225,6 +226,6 @@ public class Image {
     }
     
     public enum Kind {
-	COLLECTION, OBJECT, LINK
+	COLLECTION, OBJECT, LINK, RELEASE
     }
 }

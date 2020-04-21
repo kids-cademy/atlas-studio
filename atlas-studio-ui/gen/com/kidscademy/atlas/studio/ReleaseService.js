@@ -32,6 +32,7 @@ com.kidscademy.atlas.studio.ReleaseService = {
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Release
+	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
 	 createRelease: function() {
@@ -156,6 +157,66 @@ com.kidscademy.atlas.studio.ReleaseService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "removeRelease");
 		rmi.setParameters(releaseId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Update release graphics.
+	 *
+	 * @param int releaseId,
+	 * @param java.lang.String background,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 updateReleaseGraphics: function(releaseId, background) {
+		$assert(typeof releaseId !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Release id argument is undefined.");
+		$assert(js.lang.Types.isNumber(releaseId), "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Release id argument is not a number.");
+		$assert(typeof background !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Background argument is undefined.");
+		$assert(background === null || js.lang.Types.isString(background), "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Background argument is not a string.");
+
+		var __callback__ = arguments[2];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Callback is not a function.");
+		var __scope__ = arguments[3];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#updateReleaseGraphics", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "updateReleaseGraphics");
+		rmi.setParameters(releaseId, background);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Upload release image.
+	 *
+	 * @param js.tiny.container.http.form.Form imageForm,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return com.kidscademy.atlas.studio.model.Image
+	 * @throws java.io.IOException
+	 * @throws js.rmi.BusinessException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 uploadReleaseImage: function(imageForm) {
+		$assert(typeof imageForm !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#uploadReleaseImage", "Image form argument is undefined.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#uploadReleaseImage", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#uploadReleaseImage", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "uploadReleaseImage");
+		rmi.setParameters(imageForm);
 		rmi.exec(__callback__, __scope__);
 	},
 

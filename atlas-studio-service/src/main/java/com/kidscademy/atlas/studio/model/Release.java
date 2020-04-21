@@ -30,6 +30,7 @@ public class Release implements GraphicObject {
     private String display;
     private String brief;
     private String definition;
+    private String graphicsBackground;
     private String publisher;
     private String edition;
     private String version;
@@ -90,6 +91,14 @@ public class Release implements GraphicObject {
 	return definition;
     }
 
+    public void setGraphicsBackground(String graphicsBackground) {
+	this.graphicsBackground = graphicsBackground;
+    }
+
+    public String getGraphicsBackground() {
+	return graphicsBackground;
+    }
+
     public String getReadme() {
 	return readme;
     }
@@ -121,5 +130,17 @@ public class Release implements GraphicObject {
 
     public Map<String, MediaSRC> getImages() {
 	return images;
+    }
+
+    public static Release create() {
+	Release release = new Release();
+	release.graphicsBackground = "0000D3";
+	release.publisher = "kids (a)cademy";
+	release.edition = "community edition";
+	release.version = "Release 1.0";
+	release.license = "Apache License 2.0";
+	release.readme = "readme...";
+	release.privacy = "privacy...";
+	return release;
     }
 }

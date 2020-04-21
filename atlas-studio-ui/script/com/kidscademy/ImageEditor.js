@@ -47,6 +47,12 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         // register event for hidden input of type file to trigger image loading from host OS
         this.getByName("file-upload").on("change", this._onFileUpload, this);
 
+        /**
+         * Optional action arguments form.
+         * @type {com.kidscademy.FormData}
+         */
+        this._argsForm = null;
+
         this._events = this.getCustomEvents();
         this._events.register("open", "close", "upload", "link", "change", "remove");
     }
@@ -91,13 +97,25 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         this._events.fire("link", callback);
     }
 
-    _onCrop() {
+    _onCropFree() {
         this._cropMask.open({
+            type: "FREE",
             width: this._previewImage._node.width,
             height: this._previewImage._node.height,
             naturalWidth: this._previewImage._node.naturalWidth,
             naturalHeight: this._previewImage._node.naturalHeight,
             aspectRatio: this._aspectRatio
+        }, this._onCropUpdate, this);
+    }
+
+    _onCropCircle() {
+        this._cropMask.open({
+            type: "CIRCLE",
+            width: this._previewImage._node.width,
+            height: this._previewImage._node.height,
+            naturalWidth: this._previewImage._node.naturalWidth,
+            naturalHeight: this._previewImage._node.naturalHeight,
+            aspectRatio: 1
         }, this._onCropUpdate, this);
     }
 
@@ -123,20 +141,12 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         ImageService.flipImage(this._image, this._onProcessingDone, this);
     }
 
-    _onRotateLeft() {
-        ImageService.rotateImageLeft(this._image, this._onProcessingDone, this);
+    _onRotate(argsForm) {
+        this._argsForm = argsForm;
     }
 
-    _onRotateRight() {
-        ImageService.rotateImageRight(this._image, this._onProcessingDone, this);
-    }
-
-    _onBrightness() {
-
-    }
-
-    _onContrast() {
-
+    _onBrightnessContrast(argsForm) {
+        this._argsForm = argsForm;
     }
 
 	/**
@@ -144,11 +154,28 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 	 * handler execute it on server.
 	 */
     _onDone() {
+        var args, crop;
         switch (this._actions.getPreviousAction()) {
-            case "crop":
-                const crop = this._cropMask.getCropArea();
+            case "crop-free":
+                crop = this._cropMask.getCropArea();
                 this._cropMask.hide();
-                ImageService.cropImage(this._image, crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                ImageService.cropRectangleImage(this._image, crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                break;
+
+            case "crop-circle":
+                crop = this._cropMask.getCropArea();
+                this._cropMask.hide();
+                ImageService.cropCircleImage(this._image, crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                break;
+
+            case "rotate":
+                args = this._getActionArgs("rotate");
+                ImageService.rotateImage(this._image, args.direction, Number(args.angle), this._onProcessingDone, this);
+                break;
+
+            case "brightness-contrast":
+                args = this._getActionArgs("brightness-contrast");
+                ImageService.adjustBrightnessContrast(this._image, Number(args.brightness), Number(args.contrast), this._onProcessingDone, this);
                 break;
 
             default:
@@ -190,6 +217,13 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
     }
 
     // --------------------------------------------------------------------------------------------
+
+    _getActionArgs(actionName) {
+        $assert(this._argsForm != null, "com.kidscademy.ImageEditor#_getActionArgs", "Null arguments form for |%s| action.", actionName);
+        const args = this._argsForm != null ? this._argsForm.getObject() : null;
+        this._argsForm = null;
+        return args;
+    }
 
     _closeImageEditor() {
         this._actions.showOnly("add");

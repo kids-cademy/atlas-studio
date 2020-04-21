@@ -13,12 +13,12 @@ form fieldset .content {
 	background: radial-gradient(circle at 30% 50%, #FFFFFF, #2d9a27);
 }
 
-form .controlset {
+form .controlset, .form .controlset {
 	display: flex;
 	margin-top: 20px;	
 }
 
-form .controlset:first-child {
+form .controlset:first-child, .form .controlset:first-child {
 	margin-top: 0;
 }
 

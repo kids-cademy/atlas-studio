@@ -53,9 +53,13 @@ public interface ImageProcessor {
 
     void crop(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
 
+    void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
+
     void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException;
 
     void overlap(File imageFile, File... overlapImageFiles) throws IOException;
+
+    void brightnessContrast(File imageFile, File targetFile, int brightness, int contrast) throws IOException;
 
     /**
      * Get MD5 digest of image content. Returned value is useful only to identify
@@ -108,4 +112,6 @@ public interface ImageProcessor {
     <T> T info(File imageFile, String attribute, Class<T> type) throws IOException;
 
     boolean isOpaque(File imageFile) throws IOException;
+    
+    void exec(String format, Object... args) throws IOException;
 }

@@ -38,6 +38,8 @@ com.kidscademy.CropMask = class extends js.dom.Element {
 	}
 
 	open(config, callback, scope) {
+		this.addCssClass("circle", config.type === "CIRCLE");
+
 		this._imageWidth = config.width;
 		this._imageHeight = config.height;
 		this._px = config.naturalWidth / config.width;

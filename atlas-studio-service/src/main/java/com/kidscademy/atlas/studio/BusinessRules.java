@@ -20,6 +20,7 @@ public class BusinessRules {
     private static final int EMPTY_COLLECTION = 0x0004;
     private static final int EMPTY_RELEASE = 0x0005;
     private static final int REGISTERED_LINK_DOMAIN = 0x0006;
+    private static final int IMAGE_DIMENSIONS = 0x0007;
 
     private static final AtlasDao atlasDao;
     private static final ImageProcessor imageProcessor;
@@ -62,6 +63,12 @@ public class BusinessRules {
     public static void registeredLinkDomain(URL link) throws BusinessException {
 	if (atlasDao.getLinkMetaByDomain(Strings.basedomain(link)) == null) {
 	    throw new BusinessException(REGISTERED_LINK_DOMAIN);
+	}
+    }
+
+    public static void imageDimensions(int dimension, int desired) throws BusinessException {
+	if (dimension < desired) {
+	    throw new BusinessException(IMAGE_DIMENSIONS);
 	}
     }
 }

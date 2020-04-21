@@ -6,19 +6,21 @@ import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
 
 import js.rmi.BusinessException;
 import js.tiny.container.annotation.Public;
 import js.tiny.container.annotation.Service;
+import js.tiny.container.http.form.Form;
 
 @Service
 @Public
 public interface ReleaseService {
     List<ReleaseItem> getReleases();
 
-    Release createRelease();
+    Release createRelease() throws IOException;
 
     Release getRelease(int releaseId);
 
@@ -27,6 +29,10 @@ public interface ReleaseService {
     Release saveRelease(Release release) throws IOException;
 
     void removeRelease(int releaseId) throws IOException, BusinessException;
+
+    void updateReleaseGraphics(int releaseId, String background) throws IOException;
+
+    Image uploadReleaseImage(Form imageForm) throws IOException, BusinessException;
 
     void createIcon();
 
@@ -49,7 +55,7 @@ public interface ReleaseService {
     AndroidApp getAndroidAppForRelease(String releaseName);
 
     AndroidApp createAndroidApp(String releaseName);
-    
+
     AndroidApp getAndroidApp(int appId);
 
     AndroidApp updateAndroidApp(AndroidApp app) throws IOException;

@@ -564,11 +564,11 @@ public class AtlasServiceImpl implements AtlasService {
 	case COLLECTION:
 	    return uploadCollectionImage(imageForm, imageFile);
 
-	case LINK:
-	    return uploadLinkImage(imageForm, imageFile);
-
 	case OBJECT:
 	    return uploadObjectImage(imageForm, imageFile);
+
+	case LINK:
+	    return uploadLinkImage(imageForm, imageFile);
 
 	default:
 	    throw new BugError("Not processed image kind |%s|.", imageKind);

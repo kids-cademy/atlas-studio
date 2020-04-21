@@ -11,6 +11,13 @@ com.kidscademy.page.ReleaseForm = class extends com.kidscademy.Page {
         this._release = null;
         this._form = this.getByTag("form");
 
+        /**
+         * Form fieldsets displayed only on release edit, that is, not displayed when release is newly created. All
+         * controls from these fieldssets have sensible default / initial values.
+         * @type {js.dom.Element}
+         */
+        this._editSections = this.getByCssClass("edit-sections");
+
         const releaseId = Number(WinMain.url.parameters.release);
         if (releaseId) {
             ReleaseService.getRelease(releaseId, this._onReleaseLoaded, this);
@@ -23,8 +30,15 @@ com.kidscademy.page.ReleaseForm = class extends com.kidscademy.Page {
         this.getByName("cancel").on("click", this._onCancel, this);
     }
 
+    getRelease() {
+        return this._release;
+    }
+
     _onReleaseLoaded(release) {
         this._release = release;
+        this._editSections.addCssClass("exclude", release.id === 0);
+        this._editSections.addCssClass("hidden", release.id === 0);
+
         this._sidebar.setObject(release);
         this._form.setObject(release);
     }

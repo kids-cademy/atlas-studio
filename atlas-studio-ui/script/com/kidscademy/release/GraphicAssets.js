@@ -1,53 +1,68 @@
 $package("com.kidscademy.release");
 
-com.kidscademy.release.GraphicAssets = class extends js.dom.Element {
+com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
-        this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
-        this._imageEditor.config({
-            aspectRatio: 1
+        this._iconView = this.getParent().getByName("images.icon");
+        this._featureView = this.getParent().getByName("images.feature");
+        this._coverView = this.getParent().getByName("images.cover");
+
+        this._editor = this.getByClass(com.kidscademy.FormData);
+
+        this._actions = this.getByClass(com.kidscademy.Actions).showOnly("edit").bind(this);
+        // register event for hidden input of type file to trigger image loading from host OS
+        this.getByName("upload-file").on("change", this._onUploadFile, this);
+    }
+
+    setValue(graphicsBackground) {
+        this._editor.setObject({ background: graphicsBackground });
+    }
+
+    getValue() {
+        return this._editor.getObject().background;
+    }
+
+    isValid() {
+        return this._editor.isValid();
+    }
+
+    _onEdit() {
+        this._actions.showAll().hide("edit");
+        this._editor.show();
+    }
+
+    _onUpload() {
+
+    }
+
+    _onUploadFile(ev) {
+        const release = WinMain.page.getRelease();
+
+        const formData = this._editor.getFormData();
+        formData.append("image-kind", "RELEASE");
+        formData.append("object-id", release.id);
+        formData.append("media-file", ev.target._node.files[0]);
+
+        ReleaseService.uploadReleaseImage(formData, image => {
+            this._iconView.reload();
+            this._featureView.reload();
+            this._coverView.reload();
+            this._onClose();
         });
-
-        this._imageEditor.on("open", this._onImageEditorOpen, this);
-        this._imageEditor.on("close", this._onImageEditorClose, this);
-        this._imageEditor.on("upload", this._onImageEditorUpload, this);
-        this._imageEditor.on("link", this._onImageEditorLink, this);
-        this._imageEditor.on("change", this._onImageEditorChange, this);
-        this._imageEditor.on("remove", this._onImageEditorRemove, this);
-
-        this._metaForm = this.getByClass(com.kidscademy.FormData);
-
-        this._imageListView = this.getByCssClass("images-list");
-        this._imageListView.on("click", this._onImageClick, this);
-    }
-    
-    _onImageEditorOpen() {
-        this._metaForm.open();
     }
 
-    /**
-     * Handler invoked when underlying image editor is closed.
-     * @param {Object} image optional image descriptor, possible null.
-     */
-    _onImageEditorClose(image) {
-        this._metaForm.hide();
-        if (image != null) {
-            this._imageView.setValue(image.src);
-        }
+    _onLink() {
+
     }
 
-    _onImageEditorUpload(handler) {
-        const formData = this._metaForm.getFormData();
-        formData.append("image-kind", this._imageKind);
-        formData.append("object-id", this._object.id);
-        formData.append("media-file", handler.file);
+    _onDone() {
+        this._onClose();
+    }
 
-        AtlasService.uploadImage(formData, image => {
-            this._image = image;
-            this._imageView.setValue(image.src);
-            handler.callback(image);
-        });
+    _onClose() {
+        this._actions.showOnly("edit");
+        this._editor.hide();
     }
 
     _onImageEditorLink(callback) {
@@ -63,22 +78,6 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Element {
             this._image = image;
             this._imageView.setValue(image.src);
             callback(image);
-        });
-    }
-
-    _onImageEditorChange(image) {
-        this._metaForm.setObject(image);
-    }
-
-    _onImageEditorRemove(image) {
-        this._imageView.remove();
-    }
-
-    _onImageClick(ev) {
-        this._metaForm.open();
-        this._image.src = ev.target.getAttr("src");
-        this._imageEditor.open(this._image, image => {
-            this._imageView.setValue(image.src);
         });
     }
 

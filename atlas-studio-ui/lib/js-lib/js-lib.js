@@ -4178,6 +4178,9 @@ js.dom.Image.prototype = {
 	},
 
 	reload : function(src) {
+		if(!src) {
+			src = this._node.src;
+		}
 		var random = Math.random().toString(36).substr(2);
 		var i = src.indexOf('?');
 		if (i !== -1) {
@@ -4240,6 +4243,13 @@ js.dom.ImageControl.prototype = {
 			this._node.removeAttribute("src");
 		}
 		return this;
+	},
+
+	reload : function(src) {
+		if(!src) {
+			src = this._node.src;
+		}
+		return this._setValue(src);
 	},
 
 	_setValue : function(src) {

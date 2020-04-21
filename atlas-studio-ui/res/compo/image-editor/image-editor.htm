@@ -1,4 +1,4 @@
-<div class="image-editor" xmlns:w="js-lib.com/wood" data-class="com.kidscademy.ImageEditor">
+<div class="image-editor" data-class="com.kidscademy.ImageEditor" xmlns:w="js-lib.com/wood">
 	<div class="actions bar exclude" data-class="com.kidscademy.Actions">
 		<img name="add" src="@image/action/add" title="@tip/graphic-add" />
 		<span data-name="upload" class="upload-icon">
@@ -7,22 +7,40 @@
 		</span>
 		<img name="link" src="@image/action/link" title="@tip/graphic-link" />
 		<span class="separator"></span>
-		<img name="crop" src="@image/action/crop" title="@tip/graphic-crop" />
+		<img name="crop-free" src="@image/action/crop-free" title="@tip/graphic-crop" />
+		<img name="crop-circle" src="@image/action/crop-circle" title="@tip/graphic-crop" />
 		<img name="trim" src="@image/action/image-trim" title="@tip/graphic-trim" />
 		<img name="flop" src="@image/action/flop" title="@tip/graphic-flop" />
 		<img name="flip" src="@image/action/flip" title="@tip/graphic-flip" />
-		<img name="rotate-left" src="@image/action/rotate-left" title="@tip/graphic-rotate-left" />
-		<img name="rotate-right" src="@image/action/rotate-right" title="@tip/graphic-rotate-right" />
-		<img name="brightness" src="@image/action/brightness" title="@tip/graphic-brightness" />
-		<img name="contrast" src="@image/action/contrast" title="@tip/graphic-contrast" />
+		<img name="rotate" src="@image/action/rotate" title="@tip/graphic-rotate" />
+		<img name="brightness-contrast" src="@image/action/brightness" title="@tip/graphic-brightness" />
 		<span class="separator"></span>
-		<img name="done" src="@image/action/done" title="@tip/graphic-done" />
+		<img name="done" data-key="ENTER" src="@image/action/done" title="@tip/graphic-done" />
 		<img name="undo" src="@image/action/undo" title="@tip/graphic-undo" />
 		<!-- right float actions are displayed in reverse order -->
-		<img name="close" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
+		<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
 		<img name="remove" src="@image/action/remove" title="@tip/graphic-remove" class="rfloat" />
 	</div>
 
+	<div class="actions args exclude">
+		<div class="rotate form" data-class="com.kidscademy.FormData">
+			<div class="controlset">
+				<label>direction</label><select name="direction" w:compo="compo/clock-direction-select"></select>
+			</div>
+			<div class="controlset">
+				<label>angle</label><input name="angle" class="small" />
+			</div>
+		</div>
+		<div class="brightness-contrast form" data-class="com.kidscademy.FormData">
+			<div class="controlset">
+				<label>brightness</label><input name="brightness" class="small" />
+			</div>
+			<div class="controlset">
+				<label>contrast</label><input name="contrast" class="small" />
+			</div>
+		</div>
+	</div>
+	
 	<div class="editor hidden">
 		<div class="info">
 			<div class="file-info">
@@ -53,11 +71,12 @@
 		</div>
 		<div class="preview">
 			<img />
-			<div class="crop-mask hidden" data-class="com.kidscademy.CropMask">
+			<div class="crop-mask circle hidden" data-class="com.kidscademy.CropMask">
 				<div class="x-offset outer"></div>
 				<div class="crop-column">
 					<div class="y-offset outer"></div>
 					<div class="crop-rect">
+						<div class="crop-preview"></div>
 						<div class="y-resize n"></div>
 						<div class="y-resize s"></div>
 						<div class="x-resize w"></div>

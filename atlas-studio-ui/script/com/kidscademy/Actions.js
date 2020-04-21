@@ -43,6 +43,8 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		 * @type {String} 
 		 */
 		this._previousAction = null;
+
+		this._args = new com.kidscademy.Actions.Args(this.getParent().getByCss(".actions.args"));
 	}
 
 	/**
@@ -71,11 +73,11 @@ com.kidscademy.Actions = class extends js.dom.Element {
 				throw `Missing handler for action ${name}.`;
 			}
 
-			// create a closure to keep action handler state that include current action name
+			// create a closure to keep action handler state that include current action name and optional arguments form
 			// container handler can obtain current action via this._actions.getCurrentAction()
 			const actions = this;
 			const actionHandler = function () {
-				containerHandler.apply(container, arguments);
+				containerHandler.call(container, actions._args.getArgsForm(name));
 				actions._previousAction = name;
 			}.bind(container);
 
@@ -198,5 +200,38 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 	toString() {
 		return "com.kidscademy.Actions";
+	}
+};
+
+com.kidscademy.Actions.Args = class {
+	constructor(container) {
+		this._container = container;
+		if (this._container != null) {
+			this._container.getChildren().forEach(child => child.hide());
+		}
+		this._argsForm = null;
+	}
+
+	getArgsForm(actionName) {
+		// is legal for action bar to not have arguments at all in which case arguments container is null
+		if (this._container == null) {
+			return null;
+		}
+
+		// is legal to have action without arguments
+		if (this._argsForm != null) {
+			this._argsForm.hide();
+		}
+
+		// by convention arguments form data has a CSS class with action name
+		this._argsForm = this._container.getByCss(":scope > .%s", actionName);
+		if (this._argsForm != null) {
+			this._argsForm.reset().show();
+		}
+		return this._argsForm;
+	}
+
+	toString() {
+		return "com.kidscademy.Actions.Args";
 	}
 };

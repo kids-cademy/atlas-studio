@@ -21,9 +21,12 @@ import com.kidscademy.atlas.studio.export.FsExportTarget;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
 import com.kidscademy.atlas.studio.tool.AndroidTools;
+import com.kidscademy.atlas.studio.tool.ImageInfo;
+import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Html2Md;
 
@@ -34,18 +37,22 @@ import js.dom.Element;
 import js.format.LongDate;
 import js.io.VariablesWriter;
 import js.lang.AsyncTask;
+import js.lang.BugError;
 import js.rmi.BusinessException;
+import js.tiny.container.http.form.Form;
 import js.util.Classes;
 
 public class ReleaseServiceImpl implements ReleaseService {
     private final Application application;
     private final AtlasDao dao;
     private final AndroidTools androidTools;
+    private final ImageProcessor imageProcessor;
 
-    public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools) {
+    public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools, ImageProcessor imageProcessor) {
 	this.application = Application.instance();
 	this.dao = dao;
 	this.androidTools = androidTools;
+	this.imageProcessor = imageProcessor;
     }
 
     @Override
@@ -54,9 +61,8 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
-    public Release createRelease() {
-	Release release = new Release();
-	return release;
+    public Release createRelease() throws IOException {
+	return Release.create();
     }
 
     @Override
@@ -71,6 +77,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public Release saveRelease(Release release) throws IOException {
+	if (release.getId() == 0) {
+	    createReleaseGraphics(release);
+	}
 	dao.saveRelease(release);
 	return release;
     }
@@ -98,6 +107,105 @@ public class ReleaseServiceImpl implements ReleaseService {
 	//
 	// convert feature-bg.png image.png -compose over -composite feature.png
 
+    }
+
+    @Override
+    public void updateReleaseGraphics(int releaseId, String background) throws IOException {
+	Release release = dao.getReleaseById(releaseId);
+	release.setGraphicsBackground(background);
+	createReleaseGraphics(release);
+	dao.saveRelease(release);
+    }
+
+    private void createReleaseGraphics(Release release) throws IOException {
+	String background = release.getGraphicsBackground();
+
+	File iconFile = Files.mediaFile(release, "icon");
+	iconFile.delete();
+	imageProcessor.exec(
+		"-size 512x512 -define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} ${iconFile}",
+		background, iconFile);
+
+	File featureFile = Files.mediaFile(release, "feature");
+	featureFile.delete();
+	imageProcessor.exec(
+		"-size 1024x500 -define gradient:center=192,256 -define gradient:radii=700,384 radial-gradient:white-#${background} ${featureFile}",
+		background, featureFile);
+
+	File coverFile = Files.mediaFile(release, "cover");
+	coverFile.delete();
+	imageProcessor.exec( //
+		"-size 788x788 " + // overall size
+			"xc:none -fill #${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
+											 // circle
+			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} "
+			+ // second layer is gradient
+			"-compose srcin -composite ${coverFile}", // compose
+		background, background, coverFile);
+
+	File releaseFile = Files.mediaFile(release, "release");
+	if (releaseFile.exists()) {
+	    File imageFile = Files.mediaFile(release, "image");
+	    imageProcessor.exec(
+		    "${releaseFile} -resize 460x460 -gravity center -background none -extent 512x512 ${imageFile}",
+		    releaseFile, imageFile);
+	    imageProcessor.exec("${iconFile} ${imageFile} -compose over -composite ${iconFile}", iconFile, imageFile,
+		    iconFile);
+	    imageProcessor.exec("${featureFile} ${imageFile} -compose over -composite ${featureFile}", featureFile,
+		    imageFile, featureFile);
+
+	    imageProcessor.exec(
+		    "${releaseFile} -resize 540x540 -gravity center -background none -extent 558x558 ${imageFile}",
+		    releaseFile, imageFile);
+	    imageProcessor.exec("${coverFile} ${imageFile} -gravity center -compose over -composite ${coverFile}",
+		    coverFile, imageFile, coverFile);
+
+	    imageFile.delete();
+	}
+    }
+
+    @Override
+    public Image uploadReleaseImage(Form imageForm) throws IOException, BusinessException {
+	File imageFile = imageForm.getUploadedFile("media-file").getFile();
+	BusinessRules.transparentImage(Image.KEY_RELEASE, imageFile);
+
+	Release release = getAtlasReleaseByForm(imageForm);
+	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+	BusinessRules.imageDimensions(Math.min(imageInfo.getWidth(), imageInfo.getHeight()), 558);
+	int size = Math.max(imageInfo.getWidth(), imageInfo.getHeight());
+
+	File targetFile = Files.mediaFile(release, Image.KEY_RELEASE);
+	targetFile.getParentFile().mkdirs();
+	targetFile.delete();
+
+	imageProcessor.exec("${imageFile} -resize ${size}x${size} -gravity center -background none ${targetFile}",
+		imageFile, size, size, targetFile);
+
+	Image image = new Image();
+	image.setImageKey(Image.KEY_RELEASE);
+	image.setUploadDate(new Date());
+	image.setSource(imageForm.getValue("source"));
+	image.setFileName(targetFile.getName());
+
+	image.setFileSize(imageInfo.getFileSize());
+	image.setWidth(imageInfo.getWidth());
+	image.setHeight(imageInfo.getHeight());
+	image.setSrc(Files.mediaSrc(release, Image.KEY_RELEASE));
+
+	createReleaseGraphics(release);
+	return image;
+    }
+
+    private Release getAtlasReleaseByForm(Form mediaForm) {
+	String objectId = mediaForm.getValue("object-id");
+	if (objectId == null) {
+	    throw new BugError("Media form should have <object-id> field.");
+	}
+	try {
+	    return dao.getReleaseById(Integer.parseInt(objectId));
+	} catch (NumberFormatException unused) {
+	    throw new BugError("Media form <object-id> field should be numeric |%s|.", objectId);
+	}
     }
 
     @Override
@@ -200,8 +308,17 @@ public class ReleaseServiceImpl implements ReleaseService {
 		    Files.copy(Classes.getResourceAsReader(sourcePath), writer);
 		}
 
-		copy(app.getRelease().getReadme(), new File(appDir, "README.md"));
-		copy(app.getRelease().getPrivacy(), new File(appDir, "PRIVACY.md"));
+		final Release release = app.getRelease();
+		copy(release.getReadme(), new File(appDir, "README.md"));
+		copy(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
+
+		copy(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
+		copy(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
+		copy(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
+
+		copy(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
+		copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
+		copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
 
 		AndroidProject project = new AndroidProject(application, app.getName());
 		File atlasDir = project.getAtlasDir();
@@ -225,6 +342,17 @@ public class ReleaseServiceImpl implements ReleaseService {
     private static void copy(String html, File file) throws IOException {
 	Html2Md html2md = new Html2Md(html);
 	Files.copy(new StringReader(html2md.converter()), new FileWriter(file));
+    }
+
+    private void copy(Release release, String imageKey, File appDir, String imagePath, int width, int height)
+	    throws IOException {
+	File releaseImage = Files.mediaFile(release, imageKey);
+	if (!releaseImage.exists()) {
+	    return;
+	}
+	File appImage = new File(appDir, imagePath);
+	appImage.getParentFile().mkdirs();
+	imageProcessor.resize(releaseImage, appImage, width, height);
     }
 
     @Override

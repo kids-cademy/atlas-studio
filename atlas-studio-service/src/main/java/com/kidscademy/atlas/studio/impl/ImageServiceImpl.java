@@ -11,8 +11,10 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.RotateDirection;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
+import com.kidscademy.atlas.studio.tool.MediaType;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.BugError;
@@ -132,25 +134,41 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image rotateImageLeft(Image image) throws IOException {
+    public Image rotateImage(Image image, RotateDirection direction, float angle) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
-	imageProcessor.rotate(handler.source(), handler.target(), -22.5F);
+	imageProcessor.rotate(handler.source(), handler.target(), direction == RotateDirection.CW ? angle : -angle);
 	updateImage(image, handler.target(), handler.targetSrc());
 	return image;
     }
 
     @Override
-    public Image rotateImageRight(Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
-	imageProcessor.rotate(handler.source(), handler.target(), 22.4F);
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image cropImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException {
+    public Image cropRectangleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
 	imageProcessor.crop(handler.source(), handler.target(), width, height, xoffset, yoffset);
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
+    public Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException {
+//	File imageFile = Files.mediaFile(image.getSrc());
+//	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+//	if (imageInfo.getType() != MediaType.PNG) {
+//	    File pngFile = Files.replaceExtension(imageFile, "png");
+//	    imageProcessor.convert(imageFile, pngFile);
+//	    image.replaceExtension("png");
+//	}
+
+	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
+	imageProcessor.cropCircle(handler.source(), handler.target(), width, height, xoffset, yoffset);
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
+    public Image adjustBrightnessContrast(Image image, int brightness, int contrast) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
+	imageProcessor.brightnessContrast(handler.source(), handler.target(), brightness, contrast);
 	updateImage(image, handler.target(), handler.targetSrc());
 	return image;
     }
