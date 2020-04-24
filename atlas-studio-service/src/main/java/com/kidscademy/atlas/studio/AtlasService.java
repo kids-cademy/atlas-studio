@@ -65,7 +65,7 @@ public interface AtlasService {
      */
     AtlasObject getAtlasObject(int objectId) throws IOException;
 
-    AtlasObject saveAtlasObject(AtlasObject object) throws IOException;
+    AtlasObject saveAtlasObject(AtlasObject object) throws IOException, BusinessException;
 
     @RolesAllowed("LIBRARIAN")
     void removeAtlasObject(int objectId);
@@ -98,7 +98,9 @@ public interface AtlasService {
 
     List<Feature> importObjectFeatures(Link link);
 
-    AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException;
+    AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
+    
+    boolean checkAtlasObjectName(String name);
 
     List<Taxon> importAtlasObjectTaxonomy(URL pageURL);
 

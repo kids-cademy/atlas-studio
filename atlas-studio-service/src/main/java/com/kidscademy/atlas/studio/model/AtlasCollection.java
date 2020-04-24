@@ -15,8 +15,6 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
 
-import js.util.Params;
-
 /**
  * Atlas collection groups together {@link AtlasObject} that have something in
  * common. It is the primary mean to distribute atlas content. An atlas
@@ -33,12 +31,11 @@ public class AtlasCollection implements GraphicObject {
 
     @Transient
     private final String title = "Atlas Collection";
-    
+
     private Date timestamp;
     private String name;
     private String display;
     private String definition;
-    private String iconName;
 
     @ElementCollection
     @OrderColumn
@@ -69,15 +66,15 @@ public class AtlasCollection implements GraphicObject {
 
     @PostLoad
     public void postLoad() {
-	iconSrc = Files.collectionSrc(iconName);
-    }
-
-    public void postMerge(AtlasCollection sourceCollection) {
-	iconName = sourceCollection.iconSrc.fileName();
+	iconSrc = Files.mediaSrc(this);
     }
 
     public int getId() {
 	return id;
+    }
+
+    public boolean isPersisted() {
+	return id != 0;
     }
 
     @Override
@@ -103,19 +100,6 @@ public class AtlasCollection implements GraphicObject {
     @Override
     public String getDefinition() {
 	return definition;
-    }
-
-    public void setIconName(String iconName) {
-	Params.notNullOrEmpty(iconName, "Icon name");
-	this.iconName = iconName;
-    }
-
-    public String getIconName() {
-	return iconName;
-    }
-
-    public boolean hasIconName() {
-	return iconName != null;
     }
 
     @Override

@@ -92,14 +92,13 @@ public class AtlasDaoReadTest {
 	assertThat(collection.getId(), equalTo(1));
 	assertThat(collection.getName(), equalTo("instrument"));
 	assertThat(collection.getDisplay(), equalTo("Instrument"));
-	assertThat(collection.getIconName(), equalTo("instrument.png"));
-	assertThat(collection.getIconSrc(), equalTo(Files.collectionSrc("instrument.png")));
+	assertThat(collection.getIconSrc(), equalTo(Files.mediaSrc(collection)));
 
 	assertThat(atlasItem.getRepositoryName(), equalTo("instrument"));
 	assertThat(atlasItem.getName(), equalTo("accordion"));
 	assertThat(atlasItem.getDisplay(), equalTo("Accordion"));
 	assertThat(atlasItem.getIconName(), equalTo("icon.jpg"));
-	assertThat(atlasItem.getIconSrc(), equalTo(src("accordion", "icon_96x96.jpg")));
+	assertThat(atlasItem.getIconSrc(), equalTo(src("accordion", "icon.jpg")));
     }
 
     @Test
@@ -170,7 +169,6 @@ public class AtlasDaoReadTest {
 	assertThat(object.getCollection().getId(), equalTo(1));
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
 	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
-	assertThat(object.getCollection().getIconName(), equalTo("instrument.png"));
 
 	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
 	assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
@@ -251,12 +249,10 @@ public class AtlasDaoReadTest {
 
 	assertThat(object.getLinks().get(0), notNullValue());
 	assertThat(object.getLinks().get(0).toDisplay(), equalTo("Wikipedia"));
-	assertThat(object.getLinks().get(0).getIconName(), equalTo("wikipedia.png"));
 	assertThat(object.getLinks().get(0).getIconSrc(), equalTo(new MediaSRC("/media/link/wikipedia.png")));
 	assertThat(object.getLinks().get(0).getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
 	assertThat(object.getLinks().get(1), notNullValue());
 	assertThat(object.getLinks().get(1).toDisplay(), equalTo("Britannica"));
-	assertThat(object.getLinks().get(1).getIconName(), equalTo("britannica.png"));
 	assertThat(object.getLinks().get(1).getIconSrc(), equalTo(new MediaSRC("/media/link/britannica.png")));
 	assertThat(object.getLinks().get(1).getUrl(), equalTo(new URL("https://www.britannica.com/art/bandonion")));
 
@@ -289,7 +285,7 @@ public class AtlasDaoReadTest {
 	assertThat(object.getName(), equalTo("accordion"));
 	assertThat(object.getDisplay(), equalTo("Accordion"));
 	assertThat(object.getIconName(), equalTo("icon.jpg"));
-	assertThat(object.getIconSrc(), equalTo(src("accordion", "icon_96x96.jpg")));
+	assertThat(object.getIconSrc(), equalTo(src("accordion", "icon.jpg")));
     }
 
     @Test

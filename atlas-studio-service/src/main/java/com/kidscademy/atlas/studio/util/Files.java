@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.kidscademy.atlas.studio.model.AtlasCollection;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.Domain;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
@@ -17,8 +17,8 @@ public final class Files extends js.util.Files {
     private Files() {
     }
 
-    public static MediaSRC mediaSrc(RepositoryObject collecitonItem, String mediaFile) {
-	return mediaSrc(collecitonItem.getRepositoryName(), collecitonItem.getName(), mediaFile);
+    public static MediaSRC mediaSrc(RepositoryObject object, String mediaFile) {
+	return mediaSrc(object.getRepositoryName(), object.getName(), mediaFile);
     }
 
     public static MediaSRC mediaSrc(RepositoryObject collectionItem, String mediaFile, String annotation) {
@@ -37,33 +37,57 @@ public final class Files extends js.util.Files {
 	return new MediaSRC(Strings.concat("/media/atlas/", collectionName, "/", objectName, '/', mediaFile));
     }
 
-    public static MediaSRC linkSrc(String iconName) {
-	return new MediaSRC("/media/link/" + iconName);
+    public static MediaSRC mediaSrc(Domain link) {
+	return new MediaSRC(mediaPath(link));
     }
 
-    public static MediaSRC collectionSrc(String iconName) {
-	return new MediaSRC("/media/collection/" + iconName);
+    public static File mediaFile(Domain link, String... variant) {
+	// repository dir := ${catalina.base}/webapps
+	return new File(REPOSITORY_DIR, mediaPath(link, variant));
+    }
+
+    private static String mediaPath(Domain link, String... variant) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("/media/link/");
+	builder.append(Files.basename(link.getDomain()));
+	if (variant.length == 1) {
+	    builder.append('_');
+	    builder.append(variant[0]);
+	}
+	builder.append(".png");
+	return builder.toString();
+    }
+
+    public static MediaSRC mediaSrc(AtlasCollection collection) {
+	return new MediaSRC(mediaPath(collection));
     }
 
     private static File REPOSITORY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
-    public static File mediaFile(AtlasCollection collection) {
+    public static File mediaFile(AtlasCollection collection, String... variant) {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/collection/${collection.iconName}
-	return new File(REPOSITORY_DIR, Strings.concat("/media/collection/", collection.getIconName()));
+	return new File(REPOSITORY_DIR, mediaPath(collection, variant));
     }
 
-    public static File mediaFile(LinkMeta linkMeta) {
-	// repository dir := ${catalina.base}/webapps
-	// media SRC := /media/link/${link.iconName}
-	return new File(REPOSITORY_DIR, Strings.concat("/media/link/", linkMeta.getIconName()));
+    private static String mediaPath(AtlasCollection collection, String... variant) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("/media/collection/");
+	builder.append(collection.getName());
+	if (variant.length == 1) {
+	    builder.append('_');
+	    builder.append(variant[0]);
+	}
+	builder.append(".png");
+	return builder.toString();
     }
 
-    public static File mediaFile(Release release, String imageKey) {
-	// repository dir := ${catalina.base}/webapps
-	// media SRC := /media/release/${imageKey}.png
-	File file = new File(REPOSITORY_DIR,
-		Strings.concat("/media/release/", release.getName(), '/', imageKey, ".png"));
+    public static File mediaDir(Release release) {
+	return new File(REPOSITORY_DIR, Strings.concat("/media/release/", release.getName(), '/'));
+    }
+
+    public static File mediaFile(Release release, String imageKey, String... variant) {
+	File file = new File(REPOSITORY_DIR, mediaPath(release, imageKey, variant));
 	File dir = file.getParentFile();
 	if (dir != null && !dir.exists()) {
 	    dir.mkdirs();
@@ -72,7 +96,21 @@ public final class Files extends js.util.Files {
     }
 
     public static MediaSRC mediaSrc(Release release, String imageKey) {
-	return new MediaSRC(Strings.concat("/media/release/", release.getName(), '/', imageKey, ".png"));
+	return new MediaSRC(mediaPath(release, imageKey));
+    }
+
+    private static String mediaPath(Release release, String imageKey, String... variant) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("/media/release/");
+	builder.append(release.getName());
+	builder.append('/');
+	builder.append(imageKey);
+	if (variant.length == 1) {
+	    builder.append('_');
+	    builder.append(variant[0]);
+	}
+	builder.append(".png");
+	return builder.toString();
     }
 
     public static File repositoryDir(String repositoryName) {
@@ -93,10 +131,27 @@ public final class Files extends js.util.Files {
 	return new File(REPOSITORY_DIR, mediaSrc.value());
     }
 
-    public static File mediaFile(RepositoryObject object, String mediaFileName) {
+    public static File mediaFile(RepositoryObject object, String mediaFileName, String... variant) {
 	// repository dir := ${catalina.base}/webapps
 	// path := /media/atlas/collection/object/file
-	return new File(REPOSITORY_DIR, Files.mediaSrc(object, mediaFileName).value());
+	return new File(REPOSITORY_DIR, Files.mediaPath(object, mediaFileName, variant));
+    }
+
+    private static String mediaPath(RepositoryObject object, String mediaFileName, String... variant) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("/media/atlas/");
+	builder.append(object.getRepositoryName());
+	builder.append('/');
+	builder.append(object.getName());
+	builder.append('/');
+	builder.append(Files.basename(mediaFileName));
+	if (variant.length == 1) {
+	    builder.append('_');
+	    builder.append(variant[0]);
+	}
+	builder.append('.');
+	builder.append(Files.getExtension(mediaFileName));
+	return builder.toString();
     }
 
     /**
@@ -111,7 +166,7 @@ public final class Files extends js.util.Files {
      *            media file extension.
      * @return media file path.
      */
-    public static File mediaFile(RepositoryObject collectionItem, String basename, String extension) {
+    public static File mediaFileExt(RepositoryObject collectionItem, String basename, String extension) {
 	String fileName = Strings.concat(basename, '.', extension);
 	return new File(REPOSITORY_DIR, Files.mediaSrc(collectionItem, fileName).value());
     }

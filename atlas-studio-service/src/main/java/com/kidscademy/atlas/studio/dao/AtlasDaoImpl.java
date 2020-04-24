@@ -83,6 +83,23 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public boolean uniqueObjectName(AtlasObject object) {
+	List<AtlasObject> result = em
+		.createQuery("select o from AtlasObject o where o.id!=:id and o.name=:name", AtlasObject.class)
+		.setParameter("id", object.getId()).setParameter("name", object.getName()).getResultList();
+	if (result.size() > 1) {
+	    throw new BugError("Database inconsistency. Multiple objects with the same name.");
+	}
+	return result.size() == 0;
+    }
+
+    @Override
+    public boolean objectNameExists(String name) {
+	return !em.createQuery("select o.name from AtlasObject o where o.name=:name", String.class)
+		.setParameter("name", name).getResultList().isEmpty();
+    }
+
+    @Override
     public List<AtlasCollection> getCollections() {
 	return em.createQuery("select c from AtlasCollection c order by c.display", AtlasCollection.class)
 		.getResultList();
@@ -168,7 +185,7 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (collection.getId() == 0) {
 	    em.persist(collection);
 	} else {
-	    em.merge(collection).postMerge(collection);
+	    em.merge(collection);
 	}
     }
 
@@ -290,7 +307,7 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (linkMeta.getId() == 0) {
 	    em.persist(linkMeta);
 	} else {
-	    em.merge(linkMeta).postMerge(linkMeta);
+	    em.merge(linkMeta);
 	}
     }
 
@@ -498,6 +515,13 @@ public class AtlasDaoImpl implements AtlasDao {
 	List<AndroidApp> apps = em
 		.createQuery("select a from AndroidApp a where a.release.name=:name", AndroidApp.class)
 		.setParameter("name", name).getResultList();
+	return apps.isEmpty() ? null : apps.get(0);
+    }
+
+    @Override
+    public AndroidApp getAndroidAppByRelease(int releaseId) {
+	List<AndroidApp> apps = em.createQuery("select a from AndroidApp a where a.release.id=:id", AndroidApp.class)
+		.setParameter("id", releaseId).getResultList();
 	return apps.isEmpty() ? null : apps.get(0);
     }
 

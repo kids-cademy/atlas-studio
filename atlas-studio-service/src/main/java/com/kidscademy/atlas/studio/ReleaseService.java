@@ -34,8 +34,6 @@ public interface ReleaseService {
 
     Image uploadReleaseImage(Form imageForm) throws IOException, BusinessException;
 
-    void createIcon();
-
     List<AtlasItem> getReleaseItems(int releaseId);
 
     void addReleaseChild(int releaseId, int childId) throws IOException;

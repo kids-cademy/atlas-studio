@@ -3,6 +3,7 @@ package com.kidscademy.atlas.studio.export;
 import java.net.URL;
 
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.util.Files;
 
 import js.util.Strings;
 
@@ -18,7 +19,7 @@ public class ExportLink {
 	this.url = link.getUrl();
 	this.display = link.toDisplay();
 	this.description = link.getDefinition();
-	this.iconPath = Strings.concat("link/", link.getIconName());
+	this.iconPath = Strings.concat("link/", Files.basename(link.getDomain()), ".png");
 	this.iconSrc = link.getIconSrc().value();
     }
 }

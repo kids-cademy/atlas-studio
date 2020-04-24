@@ -15,7 +15,7 @@
 }
 
 .actions.controlset {
-	margin: 0 0 0 @dimen/action-margin;
+	margin: 0 0 0 @dimen/action-margin !important;
 	padding: 0;
 	border: none;
 }

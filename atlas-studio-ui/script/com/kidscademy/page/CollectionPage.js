@@ -26,6 +26,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 		this._sidebar.on("import-wikipedia", this._onImportWikipedia, this);
 		this._sidebar.on("add-all-to-release", this._onAddAllToRelease, this);
 		this._sidebar.on("edit-collection", this._onEditCollection, this);
+		this._sidebar.on("remove-collection", this._onRemoveCollection, this);
 
 		this._listControl = this.getByCssClass("list-control");
 		this._listControl.setLayout(this.getPageAttr("list-layout"));
@@ -149,6 +150,14 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 
 	_onEditCollection() {
 		WinMain.assign("@link/collection-form", { collection: this._collectionId });
+	}
+
+	_onRemoveCollection() {
+		js.ua.System.confirm("@string/confirm-collection-remove", ok => {
+			if (ok) {
+				AtlasService.removeAtlasCollection(this._collectionId, () => WinMain.assign("@link/collections"));
+			}
+		});
 	}
 
 	// --------------------------------------------------------------------------------------------

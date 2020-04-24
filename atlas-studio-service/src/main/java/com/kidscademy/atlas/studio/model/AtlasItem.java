@@ -31,10 +31,10 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
 
     @ManyToOne
     private AtlasCollection collection;
-    
+
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
-    
+
     private Date timestamp;
     private String name;
     private String display;
@@ -68,7 +68,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     @PostLoad
     public void postLoad() {
 	if (iconName != null) {
-	    iconSrc = Files.mediaSrc(this, iconName, "96x96");
+	    iconSrc = Files.mediaSrc(this, iconName);
 	}
     }
 
@@ -77,7 +77,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     }
 
     public void setCollection(AtlasCollection collection) {
-        this.collection = collection;
+	this.collection = collection;
     }
 
     public AtlasCollection getCollection() {
@@ -91,7 +91,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
 
     @Override
     public Date getTimestamp() {
-        return timestamp;
+	return timestamp;
     }
 
     @Override

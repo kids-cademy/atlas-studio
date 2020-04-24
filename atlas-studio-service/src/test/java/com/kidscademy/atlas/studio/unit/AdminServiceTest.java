@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.kidscademy.atlas.studio.AtlasService;
+import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
@@ -40,6 +41,7 @@ import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.Wikipedia;
 
 import js.json.Json;
+import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.util.Classes;
@@ -66,6 +68,8 @@ public class AdminServiceTest {
     private CambridgeDictionary cambridgeDictionary;
     @Mock
     private MerriamWebster merriamWebster;
+    @Mock
+    private BusinessRules businessRules;
 
     private AtlasService service;
 
@@ -82,6 +86,8 @@ public class AdminServiceTest {
 	when(context.loadService(Json.class)).thenReturn(Classes.loadService(Json.class));
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
 	when(context.getInstance(AudioProcessor.class)).thenReturn(audioProcessor);
+	when(context.getInstance(BusinessRules.class)).thenReturn(businessRules);
+
 
 	service = new AtlasServiceImpl(context);
 
@@ -234,7 +240,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void saveObject() throws IOException {
+    public void saveObject() throws IOException, BusinessException {
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample.mp3"));
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample_1.mp3"));
 	Files.copy(new File("fixture/audio/sample.mp3"), file("sample_2.mp3"));

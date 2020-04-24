@@ -13,3 +13,7 @@
 .release.sidebar .menu {
 	margin-top: 20px;
 }
+
+.release .icon {
+	border-radius: @dimen/icon-radius;
+}

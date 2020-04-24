@@ -20,12 +20,13 @@ public class ImageInfoResult implements ResultParser {
     // 2. picture.png PNG 800x140 800x140+0+0 16-bit Grayscale Gray 720B 0.000u 0:00.000
     // 3. picture.png PNG 1200x733 1200x733+0+0 8-bit sRGB 989.227KiB 0.000u 0:00.000
     // 4. picture.png PNG 1723x1853 1723x1853-450-293 8-bit sRGB 946990B 0.000u 0:00.000
-    // # next pattern has file name with space
+    // # next pattern - #5, has file name with space
     // 5. picture file.jpg JPEG 920x560 920x560+0+0 8-bit sRGB 178854B 0.047u 0:00.045
     // 6. picture.png PNG 400x400 400x400+0+0 8-bit sRGB 256c 71081B 0.000u 0:00.000
     // 7. picture.jpg JPEG 1256x1256 1256x1256+0+0 8-bit Gray 256c 251950B 0.000u 0:00.000
+    // 8. picture.png PNG 361x362 361x362+0+0 8-bit Gray 300B 0.000u 0:00.000
     private static final Pattern FORMAT = Pattern.compile(
-	    "^(.+) (JPEG|PNG) (\\d+)x(\\d+) (\\d+)x(\\d+)[+-](\\d+)[+-](\\d+) (8|16)-bit (sRGB|sRGB 256c|Grayscale Gray|Gray 256c) (\\d+(?:\\.\\d+)?)(B|KiB|MiB) .+$");
+	    "^(.+) (JPEG|PNG) (\\d+)x(\\d+) (\\d+)x(\\d+)[+-](\\d+)[+-](\\d+) (8|16)-bit (sRGB|sRGB 256c|Grayscale Gray|Gray 256c|Gray) (\\d+(?:\\.\\d+)?)(B|KiB|MiB) .+$");
 
     @Override
     public void parse(String line) {

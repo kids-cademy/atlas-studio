@@ -36,6 +36,10 @@ public interface AtlasDao {
 
     boolean uniqueCollectionName(AtlasCollection collection);
 
+    boolean uniqueObjectName(AtlasObject object);
+
+    boolean objectNameExists(String name);
+
     List<AtlasCollection> getCollections();
 
     List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId);
@@ -180,4 +184,6 @@ public interface AtlasDao {
     void removeAndroidApp(int appId);
 
     AndroidApp getAndroidAppById(int appId);
+
+    AndroidApp getAndroidAppByRelease(int releaseId);
 }

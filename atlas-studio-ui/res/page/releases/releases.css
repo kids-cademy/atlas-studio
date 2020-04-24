@@ -3,5 +3,5 @@
 }
 
 .releases .icon {
-	border-radius: 10px;
+	border-radius: @dimen/icon-radius;
 }

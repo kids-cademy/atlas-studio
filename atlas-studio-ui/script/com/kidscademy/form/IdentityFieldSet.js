@@ -7,7 +7,7 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 		this._nameView.on("paste", this._onNamePaste, this);
 
 		this._displayView = this.getByName("display");
-		this.getByName("copy-name").on("click", this._onNameCopy, this);
+		this.getByName("check-name").on("click", this._onCheckName, this);
 		this.getByName("copy-display").on("click", this._onDisplayCopy, this);
 	}
 
@@ -45,8 +45,8 @@ com.kidscademy.form.IdentityFieldSet = class extends js.dom.Element {
 		this._nameView.setValue(toHyphenCase(ev.getData()));
 	}
 
-	_onNameCopy() {
-		this._nameView.copyToClipboard();
+	_onCheckName() {
+		AtlasService.checkAtlasObjectName(this._nameView.getValue(), ok => this._nameView.addCssClass("invalid", !ok));
 	}
 
 	_onDisplayCopy() {

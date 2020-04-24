@@ -120,7 +120,7 @@
 /* LIST CONTROL - ICONS */ 
 
 .list-control.icons .item {
-	width: 96px;
+	width: @dimen/icon-size;
 	text-align: center;
 }
 
@@ -132,7 +132,6 @@
 	line-height: 18px;
 	height: 40px;
 	white-space: normal;
-	text-transform: capitalize;
 }
 
 /* ------------------------------------------------------------------------------------------------ */ 

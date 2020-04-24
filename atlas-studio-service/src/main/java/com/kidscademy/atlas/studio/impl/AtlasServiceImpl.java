@@ -87,6 +87,7 @@ public class AtlasServiceImpl implements AtlasService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
     private final MerriamWebster merriamWebster;
+    private final BusinessRules businessRules;
 
     private KeywordTree<KeywordIndex<Integer>> index;
 
@@ -104,6 +105,7 @@ public class AtlasServiceImpl implements AtlasService {
 	this.freeDictionary = context.getInstance(TheFreeDictionary.class);
 	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
 	this.merriamWebster = context.getInstance(MerriamWebster.class);
+	this.businessRules = context.getInstance(BusinessRules.class);
 
 	File file = context.getAppFile("search-index");
 	List<KeywordIndex<Integer>> searchIndex;
@@ -124,7 +126,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public void removeAtlasCollection(int collectionId) throws BusinessException {
-	BusinessRules.emptyCollection(collectionId);
+	businessRules.emptyCollection(collectionId);
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
 
 	File icon = Files.mediaFile(collection);
@@ -148,10 +150,17 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AtlasCollection saveAtlasCollection(AtlasCollection collection) throws BusinessException {
-	BusinessRules.uniqueCollectionName(collection);
-	if (!collection.hasIconName()) {
-	    collection.setIconName(collection.getName() + ".png");
+	businessRules.uniqueCollectionName(collection);
+	if (collection.isPersisted()) {
+	    AtlasCollection currentCollection = atlasDao.getCollectionById(collection.getId());
+	    if (!currentCollection.getName().equals(collection.getName())) {
+		File currentIcon = Files.mediaFile(currentCollection);
+		File newIcon = Files.mediaFile(collection);
+		currentIcon.renameTo(newIcon);
+	    }
 	}
+
+	Files.mediaFile(collection, "96x96").delete();
 	atlasDao.saveAtlasCollection(collection);
 	return collection;
     }
@@ -194,6 +203,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public boolean checkAtlasObjectName(String name) {
+	return !atlasDao.objectNameExists(name);
+    }
+
+    @Override
     public AtlasObject createAtlasObject(int collectionId) {
 	Params.notZero(collectionId, "Collection ID");
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
@@ -220,8 +234,10 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public AtlasObject saveAtlasObject(AtlasObject object) throws IOException {
+    public AtlasObject saveAtlasObject(AtlasObject object) throws IOException, BusinessException {
 	Params.notNull(object.getName(), "Atlas object name");
+	businessRules.uniqueObjectName(object);
+
 	if (object.getId() != 0) {
 	    String currentObjectName = atlasDao.getAtlasObjectName(object.getId());
 	    if (!currentObjectName.equals(object.getName())) {
@@ -245,6 +261,10 @@ public class AtlasServiceImpl implements AtlasService {
 	    }
 	}
 
+	Image icon = object.getImage(Image.KEY_ICON);
+	if (icon != null) {
+	    Files.mediaFile(object, icon.getFileName(), "96x96").delete();
+	}
 	atlasDao.saveAtlasObject(object);
 	return object;
     }
@@ -271,7 +291,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public Link createLink(Link link) throws BusinessException {
-	BusinessRules.registeredLinkDomain(link.getUrl());
+	businessRules.registeredLinkDomain(link.getUrl());
 	URL articleURL = link.getUrl();
 	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(articleURL));
 	return Link.create(linkMeta, articleURL, link.getDefinition());
@@ -333,16 +353,16 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public LinkMeta saveLinkMeta(LinkMeta linkMeta) {
-	LinkMeta existingLinkMeta = atlasDao.getLinkMetaById(linkMeta.getId());
-	if (existingLinkMeta != null) {
-	    if (!existingLinkMeta.getDomain().equals(linkMeta.getDomain())) {
-		linkMeta.updateIconName();
-		Files.mediaFile(existingLinkMeta).renameTo(Files.mediaFile(linkMeta));
+	if (linkMeta.isPersisted()) {
+	    LinkMeta currentLinkMeta = atlasDao.getLinkMetaById(linkMeta.getId());
+	    if (!currentLinkMeta.getDomain().equals(linkMeta.getDomain())) {
+		File currentIcon = Files.mediaFile(currentLinkMeta);
+		File newIcon = Files.mediaFile(linkMeta);
+		currentIcon.renameTo(newIcon);
 	    }
-	} else {
-	    linkMeta.setIconName(linkMeta.buildIconName());
 	}
 
+	Files.mediaFile(linkMeta, "96x96").delete();
 	atlasDao.saveLinkMeta(linkMeta);
 	return linkMeta;
     }
@@ -467,7 +487,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException {
+    public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException {
 	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(articleURL);
 
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
@@ -605,7 +625,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setFileSize(imageInfo.getFileSize());
 	image.setWidth(imageInfo.getWidth());
 	image.setHeight(imageInfo.getHeight());
-	image.setSrc(Files.collectionSrc(collection.getIconName()));
+	image.setSrc(Files.mediaSrc(collection));
 	return image;
     }
 
@@ -637,7 +657,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setFileSize(imageInfo.getFileSize());
 	image.setWidth(imageInfo.getWidth());
 	image.setHeight(imageInfo.getHeight());
-	image.setSrc(Files.linkSrc(linkMeta.getIconName()));
+	image.setSrc(Files.mediaSrc(linkMeta));
 	return image;
     }
 
@@ -648,8 +668,8 @@ public class AtlasServiceImpl implements AtlasService {
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
 	Params.notNullOrEmpty(imageKey, "Image key");
 
-	BusinessRules.uniqueImage(atlasItem.getId(), imageKey);
-	BusinessRules.transparentImage(imageKey, imageFile);
+	businessRules.uniqueImage(atlasItem.getId(), imageKey);
+	businessRules.transparentImage(imageKey, imageFile);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 	String targetExtension = null;
@@ -668,7 +688,7 @@ public class AtlasServiceImpl implements AtlasService {
 	    targetExtension = imageInfo.getType().extension();
 	}
 
-	File targetFile = Files.mediaFile(atlasItem, imageKey, targetExtension);
+	File targetFile = Files.mediaFileExt(atlasItem, imageKey, targetExtension);
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
@@ -714,7 +734,7 @@ public class AtlasServiceImpl implements AtlasService {
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
 	Params.notNullOrEmpty(imageKey, "Image key");
-	BusinessRules.transparentImage(imageKey, imageFile);
+	businessRules.transparentImage(imageKey, imageFile);
 
 	Image image = atlasDao.getImageByKey(atlasItem.getId(), imageKey);
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
@@ -728,7 +748,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setImageKey(Image.KEY_ICON);
 
 	// by convention image key is used as image file base name
-	File iconFile = Files.mediaFile(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
+	File iconFile = Files.mediaFileExt(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
 	iconFile.getParentFile().mkdirs();
 	iconFile.delete();
 
@@ -803,7 +823,6 @@ public class AtlasServiceImpl implements AtlasService {
     public Image commitImage(AtlasItem atlasItem, Image image) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.commit();
-	image.updateIcon(atlasItem);
 
 	if (image.isIcon() && image.getWidth() > 512 && image.getHeight() > 512) {
 	    imageProcessor.resize(handler.source(), handler.source(), 0, 512);

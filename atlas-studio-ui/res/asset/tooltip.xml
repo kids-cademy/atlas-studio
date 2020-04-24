@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tip>
+	<identity-check-name>check uniqueness for atlas object name</identity-check-name>
 	<identity-copy-name>copy atlas object name to clipboard</identity-copy-name>
 	
 	<definition-import>import object definition from external source</definition-import>

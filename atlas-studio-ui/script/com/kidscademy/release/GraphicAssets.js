@@ -37,6 +37,9 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
     }
 
     _onUploadFile(ev) {
+        if (!this._metaForm.isValid()) {
+            return;
+        }
         const release = WinMain.page.getRelease();
 
         const formData = this._editor.getFormData();
@@ -44,12 +47,7 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
         formData.append("object-id", release.id);
         formData.append("media-file", ev.target._node.files[0]);
 
-        ReleaseService.uploadReleaseImage(formData, image => {
-            this._iconView.reload();
-            this._featureView.reload();
-            this._coverView.reload();
-            this._onClose();
-        });
+        ReleaseService.uploadReleaseImage(formData, image => this._updateUserInterface());
     }
 
     _onLink() {
@@ -57,7 +55,8 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
     }
 
     _onDone() {
-        this._onClose();
+        const release = WinMain.page.getRelease();
+        ReleaseService.updateReleaseGraphics(release.id, this._editor.getObject().background, () => this._updateUserInterface());
     }
 
     _onClose() {
@@ -65,20 +64,24 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
         this._editor.hide();
     }
 
-    _onImageEditorLink(callback) {
+    _onImageEditorLink() {
         if (!this._metaForm.isValid()) {
             return;
         }
+        const release = WinMain.page.getRelease();
 
         const formData = this._metaForm.getFormData();
-        formData.append("image-kind", this._imageKind);
-        formData.append("object-id", this._object.id);
+        formData.append("image-kind", "RELEASE");
+        formData.append("object-id", release.id);
 
-        AtlasService.uploadImageBySource(formData, image => {
-            this._image = image;
-            this._imageView.setValue(image.src);
-            callback(image);
-        });
+        AtlasService.uploadImageBySource(formData, image => this._updateUserInterface());
+    }
+
+    _updateUserInterface() {
+        this._iconView.reload();
+        this._featureView.reload();
+        this._coverView.reload();
+        this._onClose();
     }
 
     toString() {

@@ -9,10 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
-import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
-
-import js.tiny.container.core.Factory;
 
 @Embeddable
 @Cacheable
@@ -166,17 +163,6 @@ public class Image {
 	return KEY_ICON.equals(imageKey);
     }
 
-    @Deprecated
-    public void updateIcon(AtlasItem object) throws IOException {
-	if (KEY_ICON.equals(imageKey)) {
-	    File pictureFile = Files.mediaFile(object, fileName);
-	    File iconFile = icon(object, fileName);
-	    // TODO: global factory is deprecated
-	    ImageProcessor image = Factory.getInstance(ImageProcessor.class);
-	    image.resize(pictureFile, iconFile, 96, 96);
-	}
-    }
-
     public void removeIcon(AtlasItem object) throws IOException {
 	if (KEY_ICON.equals(imageKey)) {
 	    File icon = icon(object, fileName);
@@ -189,7 +175,6 @@ public class Image {
     private static File icon(AtlasItem object, String fileName) {
 	StringBuilder iconName = new StringBuilder();
 	iconName.append(Files.basename(fileName));
-	iconName.append("_96x96");
 	iconName.append('.');
 	iconName.append(Files.getExtension(fileName));
 	return Files.mediaFile(object, iconName.toString());
@@ -224,7 +209,7 @@ public class Image {
     public String toString() {
 	return fileName;
     }
-    
+
     public enum Kind {
 	COLLECTION, OBJECT, LINK, RELEASE
     }

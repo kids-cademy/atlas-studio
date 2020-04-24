@@ -52,7 +52,7 @@ public class AtlasRelated implements RepositoryObject {
     @PostLoad
     public void postLoad() {
 	if (iconName != null) {
-	    iconSrc = Files.mediaSrc(this, iconName, "96x96");
+	    iconSrc = Files.mediaSrc(this, iconName);
 	}
 	for (@SuppressWarnings("unused") String relatedName : related) {
 	    

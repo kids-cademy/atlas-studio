@@ -24,6 +24,7 @@ import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 
 import js.dom.DocumentBuilder;
+import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
 import js.util.Classes;
 
@@ -48,9 +49,9 @@ public class AtlasServiceTest {
     }
 
     @Test
-    public void importWikipediaObject() throws IOException {
+    public void importWikipediaObject() throws IOException, BusinessException {
 	when(atlasDao.getCollectionById(2)).thenReturn(new AtlasCollection(2, "wild-birds"));
-	
+
 	URL articleURL = new URL("https://en.wikipedia.org/wiki/Common_raven");
 	AtlasItem object = service.importWikipediaObject(2, articleURL);
 	

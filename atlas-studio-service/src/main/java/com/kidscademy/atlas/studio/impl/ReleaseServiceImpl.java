@@ -47,12 +47,15 @@ public class ReleaseServiceImpl implements ReleaseService {
     private final AtlasDao dao;
     private final AndroidTools androidTools;
     private final ImageProcessor imageProcessor;
+    private final BusinessRules businessRules;
 
-    public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools, ImageProcessor imageProcessor) {
+    public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools, ImageProcessor imageProcessor,
+	    BusinessRules businessRules) {
 	this.application = Application.instance();
 	this.dao = dao;
 	this.androidTools = androidTools;
 	this.imageProcessor = imageProcessor;
+	this.businessRules = businessRules;
     }
 
     @Override
@@ -77,36 +80,42 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public Release saveRelease(Release release) throws IOException {
-	if (release.getId() == 0) {
+	if (!release.isPersisted()) {
 	    createReleaseGraphics(release);
+	} else {
+	    Release currentRelease = dao.getReleaseById(release.getId());
+	    if (!currentRelease.getName().equals(release.getName())) {
+		File currentDir = Files.mediaDir(currentRelease);
+		File newDir = Files.mediaDir(release);
+		currentDir.renameTo(newDir);
+	    }
+	    if (!currentRelease.getGraphicsBackground().equals(release.getGraphicsBackground())) {
+		createReleaseGraphics(release);
+	    }
 	}
+
+	Files.mediaFile(release, Image.KEY_ICON, "96x96").delete();
 	dao.saveRelease(release);
 	return release;
     }
 
     @Override
     public void removeRelease(int releaseId) throws IOException, BusinessException {
-	BusinessRules.emptyRelease(releaseId);
+	businessRules.emptyRelease(releaseId);
+	AndroidApp app = dao.getAndroidAppByRelease(releaseId);
+	if (app != null) {
+	    File appDir = AndroidProject.appDir(app.getName());
+	    Files.removeFilesHierarchy(appDir);
+	    appDir.delete();
+	    dao.removeAndroidApp(app.getId());
+	}
+
+	Release release = dao.getReleaseById(releaseId);
+	File releaseDir = Files.mediaDir(release);
+	Files.removeFilesHierarchy(releaseDir);
+	releaseDir.delete();
+
 	dao.removeRelease(releaseId);
-    }
-
-    @Override
-    public void createIcon() {
-	// ICON
-	// convert -size 512x512 -define gradient:center=192,256 -define
-	// gradient:radii=384,384 radial-gradient:white-#3eb12f background.png
-	//
-	// convert cover.png -resize 460x460 -gravity center -background none -extent
-	// 512x512 image.png
-	//
-	// convert background.png image.png -compose over -composite icon.png
-
-	// FEATURE
-	// convert -size 1024x500 -define gradient:center=192,256 -define
-	// gradient:radii=700,384 radial-gradient:white-#3eb12f feature-bg.png
-	//
-	// convert feature-bg.png image.png -compose over -composite feature.png
-
     }
 
     @Override
@@ -167,11 +176,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public Image uploadReleaseImage(Form imageForm) throws IOException, BusinessException {
 	File imageFile = imageForm.getUploadedFile("media-file").getFile();
-	BusinessRules.transparentImage(Image.KEY_RELEASE, imageFile);
+	businessRules.transparentImage(Image.KEY_RELEASE, imageFile);
 
 	Release release = getAtlasReleaseByForm(imageForm);
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
-	BusinessRules.imageDimensions(Math.min(imageInfo.getWidth(), imageInfo.getHeight()), 558);
+	businessRules.imageDimensions(Math.min(imageInfo.getWidth(), imageInfo.getHeight()), 558);
 	int size = Math.max(imageInfo.getWidth(), imageInfo.getHeight());
 
 	File targetFile = Files.mediaFile(release, Image.KEY_RELEASE);

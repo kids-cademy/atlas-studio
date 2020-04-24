@@ -38,16 +38,23 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
-		this._loadObject();
-	}
-
-	_loadObject() {
-		if (this._objectId !== 0) {
-			AtlasService.getAtlasObject(this._objectId, this._onObjectLoaded, this);
-		}
-		else {
+		if (this._objectId === 0) {
 			AtlasService.createAtlasObject(this._collectionId, this._onObjectLoaded, this);
+			return;
 		}
+
+		AtlasService.getAtlasObject(this._objectId, object => {
+			const draft = this.getPageAttr(this._getObjectKey());
+			if (draft != null && draft.timestamp >= object.timestamp) {
+				this._onObjectLoaded(draft);
+				// draft is considered dirty because is not saved on database
+				this._dirty = true;
+			}
+			else {
+				this._onObjectLoaded(object);
+			}
+			this.removePageAttr(this._getObjectKey());
+		});
 	}
 
 	_onObjectLoaded(object) {
@@ -98,6 +105,10 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._spreadingControl.onDestroy();
 		this._relatedControl.onDestroy();
 		this._linksControl.onDestroy();
+
+		if (this._dirty) {
+			this.setPageAttr(this._getObjectKey(), this._form.getObject(this._object));
+		}
 	}
 
 	getObject() {
@@ -136,17 +147,9 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 	// --------------------------------------------------------------------------------------------
 
 	_onPreview() {
-		if (this._dirty) {
-			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
-				if (ok) {
-					this._dirty = false;
-					this._onPreview();
-				}
-			});
-			return;
+		if (!this._execDirty(this._onPreview)) {
+			WinMain.assign("@link/reader", { object: this._object.id });
 		}
-
-		WinMain.assign("@link/reader", { object: this._object.id });
 	}
 
 	_onSave() {
@@ -162,8 +165,7 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		if (this._form.isValid(updateQuickLink)) {
 			AtlasService.saveAtlasObject(object, object => {
 				if (reload) {
-					WinMain.assign("@link/object-form", { object: object.id });
-					return;
+					history.replaceState(null, "", `@link/object-form?object=${object.id}`);
 				}
 				this._onObjectLoaded(object);
 			});
@@ -182,17 +184,28 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		}
 	}
 
+	_getObjectKey() {
+		$assert(this._objectId !== 0, "com.kidscademy.page.ObjectForm#_getObjectKey", "Object not persisted.");
+		return `atlas-object-${this._objectId}`;
+	}
+
 	_onBack() {
-		if (this._dirty) {
+		if (!this._execDirty(this._onBack)) {
+			super._onBack();
+		}
+	}
+
+	_execDirty(callback) {
+		if (this._objectId === 0 && this._dirty) {
 			js.ua.System.confirm("@string/confirm-object-not-saved", ok => {
 				if (ok) {
 					this._dirty = false;
-					this._onBack();
+					callback.call(this);
 				}
 			});
-			return;
+			return true;
 		}
-		super._onBack();
+		return false;
 	}
 
 	toString() {

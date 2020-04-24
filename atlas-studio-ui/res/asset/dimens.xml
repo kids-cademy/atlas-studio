@@ -76,5 +76,6 @@
 	<!-- icon -->
 	<icon-size>96px</icon-size>
 	<icon-size-small>48px</icon-size-small>
+	<icon-radius>10px</icon-radius>
 	
 </dimen>

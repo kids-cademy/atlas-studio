@@ -87,15 +87,30 @@ com.kidscademy.form.SpreadingControl = class extends com.kidscademy.form.FormCon
 
 		this._updateRegionsView();
 		this._showEditor(false);
+
+		// do not fire 'input' explicitly since it is already fired by controls from editor
+		// this._fireEvent("input");
 	}
 
 	_onRemove(ev) {
 		js.ua.System.confirm("@string/confirm-area-remove", ok => {
 			if (ok) {
-				this._fireEvent("input");
 				this._regions.splice(this._editingRegionIndex, 1);
 				this._updateRegionsView();
 				this._showEditor(false);
+				// 'input' event is processed by form page to update dirty state
+				this._fireEvent("input");
+			}
+		});
+	}
+
+	_onRemoveAll() {
+		js.ua.System.confirm("@string/confirm-all-area-remove", ok => {
+			if (ok) {
+				this._regions.length = 0;
+				this._updateRegionsView();
+				this._showEditor(false);
+				this._fireEvent("input");
 			}
 		});
 	}

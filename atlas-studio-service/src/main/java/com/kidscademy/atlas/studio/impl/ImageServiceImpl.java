@@ -14,7 +14,6 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RotateDirection;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
-import com.kidscademy.atlas.studio.tool.MediaType;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.BugError;
@@ -27,10 +26,12 @@ import js.util.Params;
 public class ImageServiceImpl implements ImageService {
     private final AtlasDao atlasDao;
     private final ImageProcessor imageProcessor;
+    private final BusinessRules businessRules;
 
     public ImageServiceImpl(AppContext context) {
 	this.atlasDao = context.getInstance(AtlasDao.class);
 	this.imageProcessor = context.getInstance(ImageProcessor.class);
+	this.businessRules = context.getInstance(BusinessRules.class);
     }
 
     @Override
@@ -53,12 +54,12 @@ public class ImageServiceImpl implements ImageService {
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
 	Params.notNullOrEmpty(imageKey, "Image key");
 
-	BusinessRules.uniqueImage(atlasItem.getId(), imageKey);
-	BusinessRules.transparentImage(imageKey, imageFile);
+	businessRules.uniqueImage(atlasItem.getId(), imageKey);
+	businessRules.transparentImage(imageKey, imageFile);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 
-	File targetFile = Files.mediaFile(atlasItem, imageKey, imageInfo.getType().extension());
+	File targetFile = Files.mediaFileExt(atlasItem, imageKey, imageInfo.getType().extension());
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
@@ -87,7 +88,7 @@ public class ImageServiceImpl implements ImageService {
 	image.setImageKey(Image.KEY_ICON);
 
 	// by convention image key is used as image file base name
-	File iconFile = Files.mediaFile(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
+	File iconFile = Files.mediaFileExt(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
 	iconFile.getParentFile().mkdirs();
 	iconFile.delete();
 
@@ -151,13 +152,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException {
-//	File imageFile = Files.mediaFile(image.getSrc());
-//	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
-//	if (imageInfo.getType() != MediaType.PNG) {
-//	    File pngFile = Files.replaceExtension(imageFile, "png");
-//	    imageProcessor.convert(imageFile, pngFile);
-//	    image.replaceExtension("png");
-//	}
+	// File imageFile = Files.mediaFile(image.getSrc());
+	// ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
+	// if (imageInfo.getType() != MediaType.PNG) {
+	// File pngFile = Files.replaceExtension(imageFile, "png");
+	// imageProcessor.convert(imageFile, pngFile);
+	// image.replaceExtension("png");
+	// }
 
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
 	imageProcessor.cropCircle(handler.source(), handler.target(), width, height, xoffset, yoffset);

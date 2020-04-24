@@ -167,4 +167,19 @@ public class ImageInfoResultTest {
 	assertThat(info.getWidth(), equalTo(1200));
 	assertThat(info.getHeight(), equalTo(733));
     }
+
+    @Test
+    public void getImageInfo4() {
+	String line = "picture.png PNG 361x362 361x362+0+0 8-bit Gray 300B 0.000u 0:00.000";
+	ImageInfoResult result = new ImageInfoResult();
+	result.parse(line);
+
+	ImageInfo info = result.getImageInfo();
+	assertThat(info, notNullValue());
+	assertThat(info.getFileName(), equalTo("picture.png"));
+	assertThat(info.getFileSize(), equalTo(300));
+	assertThat(info.getType(), equalTo(MediaType.PNG));
+	assertThat(info.getWidth(), equalTo(361));
+	assertThat(info.getHeight(), equalTo(362));
+    }
 }

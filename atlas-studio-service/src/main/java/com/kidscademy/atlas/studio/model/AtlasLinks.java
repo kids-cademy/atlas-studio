@@ -53,7 +53,7 @@ public class AtlasLinks implements RepositoryObject {
     @PostLoad
     public void postLoad() {
 	if (iconName != null) {
-	    iconSrc = Files.mediaSrc(this, iconName, "96x96");
+	    iconSrc = Files.mediaSrc(this, iconName);
 	}
 	items = new ArrayList<>(links.size());
 	for (Link link : links) {

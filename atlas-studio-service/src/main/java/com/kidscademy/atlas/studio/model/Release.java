@@ -58,6 +58,10 @@ public class Release implements GraphicObject {
 	return id;
     }
 
+    public boolean isPersisted() {
+	return id != 0;
+    }
+
     @Override
     public Date getTimestamp() {
 	return timestamp;

@@ -10,40 +10,33 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.Displayable;
-import js.util.Strings;
 
 @Embeddable
-public class Link implements Displayable {
+public class Link implements Displayable, Domain {
     /**
      * Link URL to external source document. That document should provide data about
      * advertised features, see {@link #features}.
      */
     private URL url;
-    
+
     /**
      * URL base domain contains only domain and TLD. For example for
      * <code>www.softschools.com</code> links this domain value is
      * <code>softschools.com</code>.
      */
     private String domain;
-    
+
     /**
      * Link name displayed on user interface. May be subject of
      * internationalization.
      */
     private String display;
-    
+
     /**
      * Short description about linked resource content.
      */
     private String definition;
-    
-    /**
-     * Icon file name as stored into database. This value is used to set
-     * {@link #iconSrc} when load link from database.
-     */
-    private String iconName;
-    
+
     /**
      * Every link provides some kind of data, named features. This fields holds a
      * comma separated list of features and cannot be null or empty.
@@ -90,17 +83,7 @@ public class Link implements Displayable {
     }
 
     public void postLoad() {
-	iconSrc = Files.linkSrc(iconName);
-    }
-
-    public void postMerge(Link source) {
-	if (iconName == null && source.iconSrc != null) {
-	    iconName = source.iconSrc.fileName();
-	}
-    }
-
-    public void setIconName(String iconName) {
-	this.iconName = iconName;
+	iconSrc = Files.mediaSrc(this);
     }
 
     public void setIconSrc(MediaSRC iconSrc) {
@@ -111,6 +94,7 @@ public class Link implements Displayable {
 	return url;
     }
 
+    @Override
     public String getDomain() {
 	return domain;
     }
@@ -122,10 +106,6 @@ public class Link implements Displayable {
 
     public String getDefinition() {
 	return definition;
-    }
-
-    public String getIconName() {
-	return iconName;
     }
 
     public MediaSRC getIconSrc() {
@@ -190,8 +170,7 @@ public class Link implements Displayable {
 	link.display = linkMeta.getDisplay();
 	link.definition = definition;
 
-	link.iconName = Strings.concat(basedomain(articleURL), ".png");
-	link.iconSrc = Files.linkSrc(link.iconName);
+	link.iconSrc = Files.mediaSrc(link);
 	link.features = linkMeta.getFeatures();
 	return link;
     }
@@ -201,15 +180,6 @@ public class Link implements Displayable {
 
     private static String domain(URL url) {
 	Matcher matcher = DOMAIN_PATTERN.matcher(url.getHost());
-	matcher.find();
-	return matcher.group(1);
-    }
-
-    /** Pattern for domain without TLD. */
-    private static final Pattern BASEDOMAIN_PATTERN = Pattern.compile("^(?:[^.]+\\.)*([^.]+)\\..+$");
-
-    private static String basedomain(URL url) {
-	Matcher matcher = BASEDOMAIN_PATTERN.matcher(url.getHost());
 	matcher.find();
 	return matcher.group(1);
     }

@@ -249,7 +249,7 @@ public class MediaFileHandler {
 	if (version == -1) {
 	    throw new BugError("Attempt to create icon for not existing media file.");
 	}
-	return file(baseDir, basename + "_96x96", 0, extension);
+	return file(baseDir, basename, 0, extension);
     }
 
     /**

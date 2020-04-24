@@ -212,7 +212,6 @@ public class AtlasDaoWriteTest {
 	assertThat(expected.getCollection().getId(), equalTo(1));
 	assertThat(expected.getCollection().getName(), equalTo("instrument"));
 	assertThat(expected.getCollection().getDisplay(), equalTo("Instrument"));
-	assertThat(expected.getCollection().getIconName(), equalTo("instrument.png"));
 
 	assertThat(expected.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(expected.getName(), equalTo("banjo"));
@@ -286,14 +285,12 @@ public class AtlasDaoWriteTest {
 	Link link = expected.getLinks().get(0);
 	assertThat(link, notNullValue());
 	assertThat(link.toDisplay(), equalTo("Wikipedia"));
-	assertThat(link.getIconName(), equalTo("wikipedia.png"));
 	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/wikipedia.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
 
 	link = expected.getLinks().get(1);
 	assertThat(link, notNullValue());
 	assertThat(link.toDisplay(), equalTo("YouTube"));
-	assertThat(link.getIconName(), equalTo("youtube.png"));
 	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/youtube.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://www.youtube.com/watch?v=kXXhp_bZvck")));
 

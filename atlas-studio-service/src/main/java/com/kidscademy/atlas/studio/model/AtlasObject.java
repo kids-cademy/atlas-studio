@@ -227,12 +227,6 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	    }
 	}
 
-	if (links != null) {
-	    for (int i = 0; i < links.size(); ++i) {
-		links.get(i).postMerge(sourceObject.links.get(i));
-	    }
-	}
-
 	if (sampleName == null && sourceObject.sampleSrc != null) {
 	    sampleName = sourceObject.sampleSrc.fileName();
 	}
@@ -356,7 +350,7 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 
     public Image getImage(String imageKey) {
 	// image key is a public constant, e.g. Image.KEY_ICON
-	return images.get(imageKey);
+	return images != null ? images.get(imageKey) : null;
     }
 
     public Map<String, Image> getImages() {

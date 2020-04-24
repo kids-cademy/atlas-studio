@@ -221,29 +221,6 @@ com.kidscademy.atlas.studio.ReleaseService = {
 	},
 
 	/**
-	 * Create icon.
-	 *
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return void
-	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
-	 * @note since method return type is void, callback, and hence scope too, is optional.
-	 */
-	 createIcon: function() {
-		var __callback__ = arguments[0];
-		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#createIcon", "Callback is not a function.");
-		var __scope__ = arguments[1];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#createIcon", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "createIcon");
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
 	 * Get release items.
 	 *
 	 * @param int releaseId,

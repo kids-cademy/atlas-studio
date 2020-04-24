@@ -25,10 +25,9 @@ import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 import js.util.Classes;
-import js.util.Params;
 
 @Entity
-public class LinkMeta {
+public class LinkMeta implements Domain {
     private static final Log log = LogFactory.getLog(LinkMeta.class);
 
     @Id
@@ -38,7 +37,6 @@ public class LinkMeta {
     private String domain;
     private String display;
     private String definition;
-    private String iconName;
     private String features;
 
     /**
@@ -61,13 +59,7 @@ public class LinkMeta {
 
     @PostLoad
     public void postLoad() {
-	iconSrc = Files.linkSrc(iconName);
-    }
-
-    public void postMerge(LinkMeta source) {
-	if (iconName == null && source.iconSrc != null) {
-	    iconName = source.iconSrc.fileName();
-	}
+	iconSrc = Files.mediaSrc(this);
     }
 
     @PreRemove
@@ -82,34 +74,17 @@ public class LinkMeta {
 	return id;
     }
 
+    public boolean isPersisted() {
+	return id != 0;
+    }
+
+    @Override
     public String getDomain() {
 	return domain;
     }
 
     public String getDisplay() {
 	return display;
-    }
-
-    public void setIconName(String iconName) {
-	Params.notNullOrEmpty(iconName, "Icon name");
-	this.iconName = iconName;
-	iconSrc = Files.linkSrc(iconName);
-    }
-
-    public String getIconName() {
-	return iconName;
-    }
-
-    public boolean hasIconName() {
-	return iconName != null;
-    }
-
-    public String buildIconName() {
-	return Strings.concat(Files.basename(domain), ".png");
-    }
-
-    public void updateIconName() {
-	setIconName(Strings.concat(Files.basename(domain), ".png"));
     }
 
     public String getFeatures() {
