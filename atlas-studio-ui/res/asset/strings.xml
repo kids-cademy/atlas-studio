@@ -112,6 +112,9 @@
 	<taxon-name>taxon name</taxon-name>
 	<taxon-values>taxon values</taxon-values>
 	
+	<section-name>section name</section-name>
+	<section-definition>section definition</section-definition>
+	
 	<feature-name>Name</feature-name>
 	<feature-value>Value / Minimum</feature-value>
 	<feature-maximum>Maximum</feature-maximum>

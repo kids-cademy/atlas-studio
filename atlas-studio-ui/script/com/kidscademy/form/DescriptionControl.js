@@ -4,6 +4,8 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		this._descriptionMeta = null;
+
 		this._textEditors = this.getByCssClass("text-editors");
 		this._tabsView = this.getByCssClass("tabs-view")
 		this._tabsView.on("click", this._onTabsClick, this);
@@ -24,6 +26,15 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 
 		this._operation = null;
+	}
+
+	/**
+	 * Handler called by atlas object form just after object loaded. Note that this callback is 
+	 * invoked after {@link #setValue(Object)}.
+	 */
+	onCreate(formPage) {
+		super.onCreate(formPage);
+		this._descriptionMeta = formPage.getCollection().descriptionMeta;
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -114,7 +125,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	}
 
 	_onAddAllSections() {
-		const sectionNames = ["description", "habitat", "feeding", "predators", "breeding", "behavior"];
+		const sectionNames = this._descriptionMeta.map(meta => meta.name);
 		sectionNames.forEach(sectionName => this._addTextEditor(sectionName));
 		this._updateEditorIndex(0);
 	}

@@ -31,6 +31,46 @@
 
 		<fieldset>
 			<div class="header container">
+				<h2>Description Meta</h2>
+			</div>
+			<div class="content">
+				<div data-name="description-meta" class="container optional" data-class="com.kidscademy.collection.DescriptionMetaControl">
+					<table class="table full-width" data-class="com.kidscademy.TableView">
+						<thead>
+							<tr>
+								<th>@string/section-name</th>
+								<th>@string/section-definition</th>
+							</tr>
+						</thead>
+						<tbody class="view" data-list=".">
+							<tr class="item" draggable="true">
+								<td data-text="name"></td>
+								<td data-text="definition" class="full-width"></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="actions bar" data-class="com.kidscademy.Actions">
+						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" />
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+					</div>
+
+					<div class="editor exclude hidden" data-class="com.kidscademy.FormData">
+						<div class="controlset">
+							<label>@string/section-name</label><input name="name" />
+						</div>
+						<div class="controlset">
+							<label>@string/section-definition</label><textarea name="definition" class="small"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="header container">
 				<h2>Taxonomy Meta</h2>
 			</div>
 			<div class="content">
@@ -51,7 +91,10 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" />
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden">
@@ -91,7 +134,10 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/features-meta-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/features-meta-add" />
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/features-meta-done" /> 
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> 
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden">

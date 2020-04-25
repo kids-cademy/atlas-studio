@@ -48,6 +48,10 @@ public class AtlasCollection implements GraphicObject {
     @OrderColumn
     private List<TaxonMeta> taxonomyMeta;
 
+    @ElementCollection
+    @OrderColumn
+    private List<DescriptionMeta> descriptionMeta;
+
     @ManyToMany
     @OrderColumn
     private List<FeatureMeta> featuresMeta;
@@ -88,7 +92,7 @@ public class AtlasCollection implements GraphicObject {
 	    log.error("Cannot remove collection icon |%s|.", icon);
 	}
 
-	// remove collection objects media repository, that is, directory 
+	// remove collection objects media repository, that is, directory
 	File repositoryDir = Files.repositoryDir(name);
 	if (repositoryDir.isDirectory()) {
 	    String[] files = repositoryDir.list();
@@ -137,6 +141,10 @@ public class AtlasCollection implements GraphicObject {
     @Override
     public MediaSRC getIconSrc() {
 	return iconSrc;
+    }
+
+    public List<DescriptionMeta> getDescriptionMeta() {
+        return descriptionMeta;
     }
 
     public List<TaxonMeta> getTaxonomyMeta() {
