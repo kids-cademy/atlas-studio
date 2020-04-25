@@ -24,8 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
+import javax.persistence.PostRemove;
 import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
@@ -280,13 +280,11 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	waveformSrc = Files.mediaSrc(this, waveformName);
     }
 
-    @PreRemove
-    public void preRemove() throws IOException {
+    @PostRemove
+    public void postRemove() throws IOException {
 	File mediaDir = Files.objectDir(this);
 	if (mediaDir.exists()) {
-	    Files.removeFilesHierarchy(mediaDir);
-	    // Files.removeFilesHierarchy does not remove base directory itself
-	    mediaDir.delete();
+	    Files.removeFilesHierarchy(mediaDir).delete();
 	}
     }
 

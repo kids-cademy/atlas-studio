@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
+import javax.persistence.PostRemove;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
+
+import js.lang.BugError;
+import js.log.Log;
+import js.log.LogFactory;
 
 /**
  * Atlas collection groups together {@link AtlasObject} that have something in
@@ -23,8 +29,9 @@ import com.kidscademy.atlas.studio.util.Files;
  * @author Iulian Rotaru
  */
 @Entity
-// @Cacheable
 public class AtlasCollection implements GraphicObject {
+    private static final Log log = LogFactory.getLog(AtlasCollection.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -67,6 +74,31 @@ public class AtlasCollection implements GraphicObject {
     @PostLoad
     public void postLoad() {
 	iconSrc = Files.mediaSrc(this);
+    }
+
+    @PostRemove
+    public void postRemove() {
+	// remove collection icon and scaled variant
+	File icon = Files.mediaFile(this);
+	if (!icon.delete()) {
+	    log.error("Cannot remove collection icon |%s|.", icon);
+	}
+	icon = Files.mediaFile(this, "96x96");
+	if (!icon.delete()) {
+	    log.error("Cannot remove collection icon |%s|.", icon);
+	}
+
+	// remove collection objects media repository, that is, directory 
+	File repositoryDir = Files.repositoryDir(name);
+	if (repositoryDir.isDirectory()) {
+	    String[] files = repositoryDir.list();
+	    if (files != null && files.length > 0) {
+		throw new BugError("Empty collection |%s| should have empty media directory.", name);
+	    }
+	    if (!repositoryDir.delete()) {
+		log.error("Cannot remove media directory for collection |%s|.", name);
+	    }
+	}
     }
 
     public int getId() {

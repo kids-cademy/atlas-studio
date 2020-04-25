@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PostLoad;
-import javax.persistence.PreRemove;
+import javax.persistence.PostRemove;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
@@ -62,8 +62,8 @@ public class LinkMeta implements Domain {
 	iconSrc = Files.mediaSrc(this);
     }
 
-    @PreRemove
-    public void preRemove() throws IOException {
+    @PostRemove
+    public void postRemove() throws IOException {
 	File file = Files.mediaFile(this);
 	if (!file.delete()) {
 	    log.warn("Cannot remove link meta icon file |%s|.", file);

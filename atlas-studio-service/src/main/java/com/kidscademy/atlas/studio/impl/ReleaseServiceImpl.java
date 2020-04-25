@@ -102,18 +102,15 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void removeRelease(int releaseId) throws IOException, BusinessException {
 	businessRules.emptyRelease(releaseId);
+
 	AndroidApp app = dao.getAndroidAppByRelease(releaseId);
 	if (app != null) {
-	    File appDir = AndroidProject.appDir(app.getName());
-	    Files.removeFilesHierarchy(appDir);
-	    appDir.delete();
+	    Files.removeFilesHierarchy(AndroidProject.appDir(app.getName())).delete();
 	    dao.removeAndroidApp(app.getId());
 	}
 
 	Release release = dao.getReleaseById(releaseId);
-	File releaseDir = Files.mediaDir(release);
-	Files.removeFilesHierarchy(releaseDir);
-	releaseDir.delete();
+	Files.removeFilesHierarchy(Files.mediaDir(release)).delete();
 
 	dao.removeRelease(releaseId);
     }

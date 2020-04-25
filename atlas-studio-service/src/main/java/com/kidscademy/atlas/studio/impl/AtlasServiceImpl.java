@@ -127,24 +127,6 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public void removeAtlasCollection(int collectionId) throws BusinessException {
 	businessRules.emptyCollection(collectionId);
-	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
-
-	File icon = Files.mediaFile(collection);
-	if (!icon.delete()) {
-	    log.error("Cannot remove collection icon |%s|.", icon);
-	}
-
-	File repositoryDir = Files.repositoryDir(collection.getName());
-	if (repositoryDir.isDirectory()) {
-	    String[] files = repositoryDir.list();
-	    if (files != null && files.length > 0) {
-		throw new BugError("Empty collection |%s| should have empty media directory.", collection.getName());
-	    }
-	    if (!repositoryDir.delete()) {
-		log.error("Cannot remove media directory for collection |%s|.", collection.getName());
-	    }
-	}
-
 	atlasDao.removeAtlasCollection(collectionId);
     }
 
