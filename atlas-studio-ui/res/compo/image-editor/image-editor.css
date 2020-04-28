@@ -1,4 +1,4 @@
-.image-editor .args .form {
+.image-editor .args > * {
 	margin-top: 20px;
 	border-top: solid 1px #E6E6E6;
 	padding-top: 20px;	
@@ -17,6 +17,19 @@
 	padding: 20px;
 	margin-right: 10px;
 	background-color: white;
+}
+
+.image-editor .editor .info td {
+	padding: 4px;
+	font-size: 1.8rem;
+}
+
+.image-editor .editor .info .separator {
+	padding: 0 10px;
+}
+
+.image-editor .editor .info .value {
+	color: green;
 }
 
 .image-editor .editor .preview {

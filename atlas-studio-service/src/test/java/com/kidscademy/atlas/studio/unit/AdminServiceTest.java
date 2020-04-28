@@ -99,11 +99,11 @@ public class AdminServiceTest {
     @Test
     public void uploadAudioSample() throws IOException {
 	Form form = Mockito.mock(Form.class);
-	when(form.getValue("atlas-object-id")).thenReturn("1");
+	when(form.getValue("object-id")).thenReturn("1");
 
 	AtlasCollection collection = new AtlasCollection(1, "instrument");
 	AtlasItem atlasItem = new AtlasItem(collection, 1, "test");
-	when(atlasDao.getAtlasItem(1)).thenReturn(atlasItem);
+	when(atlasDao.getObjectById(AtlasItem.class, 1)).thenReturn(atlasItem);
 
 	File uploadFile = new File("fixture/upload.mp3");
 	Files.copy(new File("fixture/audio/sample.mp3"), uploadFile);

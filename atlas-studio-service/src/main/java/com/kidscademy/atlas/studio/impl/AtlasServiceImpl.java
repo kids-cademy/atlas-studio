@@ -587,7 +587,7 @@ public class AtlasServiceImpl implements AtlasService {
      * @throws IOException
      */
     private Image uploadCollectionImage(Form imageForm, File imageFile) throws IOException {
-	AtlasCollection collection = getAtlasCollectionByForm(imageForm);
+	AtlasCollection collection = getObjectByForm(AtlasCollection.class, imageForm);
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 
 	File targetFile = Files.mediaFile(collection);
@@ -612,7 +612,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadLinkImage(Form imageForm, File imageFile) throws IOException {
-	LinkMeta linkMeta = getLinkMetaByForm(imageForm);
+	LinkMeta linkMeta = getObjectByForm(LinkMeta.class, imageForm);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 	if (imageInfo.getType() != MediaType.PNG) {
@@ -644,7 +644,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadObjectImage(Form imageForm, File imageFile) throws IOException, BusinessException {
-	AtlasItem atlasItem = getAtlasItemByForm(imageForm);
+	AtlasItem atlasItem = getObjectByForm(AtlasItem.class, imageForm);
 	String imageKey = imageForm.getValue("image-key");
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
@@ -711,7 +711,8 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image replaceImage(Form imageForm, File imageFile) throws BusinessException, IOException {
-	AtlasItem atlasItem = getAtlasItemByForm(imageForm);
+	Params.EQ(imageForm.getValue("image-kind"), "OBJECT", "Object class");
+	AtlasItem atlasItem = getObjectByForm(AtlasItem.class, imageForm);
 	String imageKey = imageForm.getValue("image-key");
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
@@ -726,106 +727,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Image cloneImageToIcon(AtlasItem atlasItem, Image image) throws IOException {
-	image.setImageKey(Image.KEY_ICON);
-
-	// by convention image key is used as image file base name
-	File iconFile = Files.mediaFileExt(atlasItem, image.getImageKey(), Files.getExtension(image.getFileName()));
-	iconFile.getParentFile().mkdirs();
-	iconFile.delete();
-
-	Files.copy(Files.mediaFile(image.getSrc()), iconFile);
-
-	image.setUploadDate(new Date());
-	image.setFileName(iconFile.getName());
-	atlasDao.addObjectImage(atlasItem.getId(), image);
-
-	updateImage(image, iconFile, Files.mediaSrc(atlasItem, iconFile.getName()));
-	return image;
-    }
-
-    @Override
-    public Image trimImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.trim(handler.source(), handler.target());
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image flopImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.flop(handler.source(), handler.target());
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image flipImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.flip(handler.source(), handler.target());
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image rotateImageLeft(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.rotate(handler.source(), handler.target(), -22.5F);
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image rotateImageRight(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.rotate(handler.source(), handler.target(), 22.4F);
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
-    public Image cropImage(AtlasItem atlasItem, Image image, int width, int height, int xoffset, int yoffset)
-	    throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	imageProcessor.crop(handler.source(), handler.target(), width, height, xoffset, yoffset);
-	updateImage(image, handler.target(), handler.targetSrc());
-	return image;
-    }
-
-    @Override
     public void removeImage(AtlasItem atlasItem, Image image) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.delete();
 	image.removeIcon(atlasItem);
 	atlasDao.removeObjectImage(atlasItem.getId(), image);
-    }
-
-    @Override
-    public Image commitImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	handler.commit();
-
-	if (image.isIcon() && image.getWidth() > 512 && image.getHeight() > 512) {
-	    imageProcessor.resize(handler.source(), handler.source(), 0, 512);
-	}
-
-	updateImage(image, handler.source(), handler.sourceSrc());
-	return image;
-    }
-
-    @Override
-    public void rollbackImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	handler.rollback();
-    }
-
-    @Override
-    public Image undoImage(AtlasItem atlasItem, Image image) throws IOException {
-	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
-	handler.undo();
-	updateImage(image, handler.source(), handler.sourceSrc());
-	return image;
     }
 
     private void updateImage(Image image, File file, MediaSRC src) throws IOException {
@@ -841,7 +747,7 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public AudioSampleInfo uploadAudioSample(Form audioSampleForm) throws IOException {
-	AtlasItem atlasItem = getAtlasItemByForm(audioSampleForm);
+	AtlasItem atlasItem = getObjectByForm(AtlasItem.class, audioSampleForm);
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, "sample.mp3");
 	handler.upload(audioSampleForm.getFile("file"));
 	return getAudioSampleInfo(atlasItem, handler.source(), handler.sourceSrc());
@@ -933,39 +839,15 @@ public class AtlasServiceImpl implements AtlasService {
 
     // ----------------------------------------------------------------------------------------------
 
-    private AtlasCollection getAtlasCollectionByForm(Form mediaForm) {
+    private <T> T getObjectByForm(Class<T> type, Form mediaForm) {
 	String objectId = mediaForm.getValue("object-id");
 	if (objectId == null) {
 	    throw new BugError("Media form should have <object-id> field.");
 	}
 	try {
-	    return atlasDao.getCollectionById(Integer.parseInt(objectId));
+	    return atlasDao.getObjectById(type, Integer.parseInt(objectId));
 	} catch (NumberFormatException unused) {
 	    throw new BugError("Media form <object-id> field should be numeric.");
-	}
-    }
-
-    private LinkMeta getLinkMetaByForm(Form mediaForm) {
-	String objectId = mediaForm.getValue("object-id");
-	if (objectId == null) {
-	    throw new BugError("Media form should have <object-id> field.");
-	}
-	try {
-	    return atlasDao.getLinkMetaById(Integer.parseInt(objectId));
-	} catch (NumberFormatException unused) {
-	    throw new BugError("Media form <object-id> field should be numeric.");
-	}
-    }
-
-    private AtlasItem getAtlasItemByForm(Form mediaForm) {
-	String objectId = mediaForm.getValue("atlas-object-id");
-	if (objectId == null) {
-	    throw new BugError("Media form should have <atlas-object-id> field.");
-	}
-	try {
-	    return atlasDao.getAtlasItem(Integer.parseInt(objectId));
-	} catch (NumberFormatException unused) {
-	    throw new BugError("Media form <atlas-object-id> field should be numeric.");
 	}
     }
 

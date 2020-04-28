@@ -35,6 +35,8 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		 */
 		this._keyHanders = {};
 
+		this._disabled = [];
+
 		/**
 		 * Name of the action executed previous to current one, possible null if no operation was invoked yet. This value is updated
 		 * after every action handler invocation.
@@ -70,14 +72,15 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 			const containerHandler = container[handlerName(name)];
 			if (typeof containerHandler !== "function") {
-				throw `Missing handler for action ${name}.`;
+				return;
 			}
 
 			// create a closure to keep action handler state that include current action name and optional arguments form
 			// container handler can obtain current action via this._actions.getCurrentAction()
 			const actions = this;
 			const actionHandler = function () {
-				containerHandler.call(container, actions._args.getArgsForm(name));
+				const argsForm = actions._args.open(name);
+				containerHandler.call(container, argsForm != null ? argsForm : arguments[0]);
 				actions._previousAction = name;
 			}.bind(container);
 
@@ -114,6 +117,17 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		return this;
 	}
 
+	disable(...names) {
+		names.forEach(name => {
+			const action = this.getByName(name);
+			$assert(action != null, "com.kidscademy.Actions#show", "Action |%s| not found.", name);
+			action.hide();
+			if (!this._disabled.includes(name)) {
+				this._disabled.push(name);
+			}
+		})
+	}
+
 	show(...args) {
 		if (args.length === 0) {
 			return;
@@ -129,12 +143,22 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			names = args;
 		}
 
-		names.forEach(name => this.getByName(name).show(show));
+		names.forEach(name => {
+			if (this._disabled.includes(name)) {
+				return;
+			}
+			const action = this.getByName(name);
+			$assert(action != null, "com.kidscademy.Actions#show", "Action |%s| not found.", name);
+			action.show(show);
+		});
 		return this._update();
 	}
 
 	showOnly(...names) {
 		this.getChildren().forEach(action => {
+			if (this._disabled.includes(action.getName())) {
+				return;
+			}
 			action.show(names.includes(action.getName()));
 		});
 		return this._update();
@@ -142,6 +166,9 @@ com.kidscademy.Actions = class extends js.dom.Element {
 
 	showAll() {
 		this.getChildren().forEach(child => {
+			if (this._disabled.includes(child.getName())) {
+				return;
+			}
 			child.show();
 		});
 		return this._update();
@@ -209,10 +236,20 @@ com.kidscademy.Actions.Args = class {
 		if (this._container != null) {
 			this._container.getChildren().forEach(child => child.hide());
 		}
+		/**
+		 * Currently selected arguments form data, possible null if named action does not have arguments.
+		 * @type {com.kidscademy.FormData}
+		 */
 		this._argsForm = null;
 	}
 
-	getArgsForm(actionName) {
+	/**
+	 * Open data form arguments for named action. Returns null if named action does not have arguments.
+	 * 
+	 * @param {String} actionName action name.
+	 * @return {com.kidscademy.FormData} action arguments form or null. 
+	 */
+	open(actionName) {
 		// is legal for action bar to not have arguments at all in which case arguments container is null
 		if (this._container == null) {
 			return null;

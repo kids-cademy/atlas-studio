@@ -28,6 +28,8 @@ import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 
 public interface AtlasDao {
+    <T> T getObjectById(Class<T> type, int id);
+
     void saveAtlasCollection(AtlasCollection collection);
 
     void removeAtlasCollection(int collectionId);

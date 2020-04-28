@@ -32,14 +32,13 @@ com.kidscademy.release.GraphicAssets = class extends js.dom.Control {
         this._editor.show();
     }
 
-    _onUpload() {
-
+    _onUpload(ev) {
+        if (!this._editor.isValid()) {
+            ev.halt();
+        }
     }
 
     _onUploadFile(ev) {
-        if (!this._metaForm.isValid()) {
-            return;
-        }
         const release = WinMain.page.getRelease();
 
         const formData = this._editor.getFormData();

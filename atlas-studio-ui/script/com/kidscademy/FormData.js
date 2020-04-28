@@ -15,7 +15,8 @@ com.kidscademy.FormData = class extends js.dom.Element {
 	 */
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
-
+		this.addCssClass("exclude");
+		
 		/**
 		 * Iterable for controls owned by this form data.
 		 * @type {js.dom.ControlsIterable}

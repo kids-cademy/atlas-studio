@@ -7245,7 +7245,7 @@ js.event.EventsMap = {
 $package("js.event");
 
 js.event.Handler = function (targetNode, type, listener, scope, capture) {
-    this.node = targetNode.node;
+	this.node = targetNode.node;
 
     this.type = type;
 
@@ -9799,7 +9799,7 @@ js.net.XHR.prototype = {
 			try {
 				this._timeout.stop();
 				var response = this._processResponse();
-				if (typeof response !== "undefined") {
+				if (this._state === js.net.XHR.StateMachine.DONE) {
 					this._events.fire("load", response);
 				}
 			} catch (er) {
@@ -9879,7 +9879,7 @@ js.net.XHR.prototype = {
 			this._state = js.net.XHR.StateMachine.ERROR;
 			return undefined;
 		}
-		
+
 		if (this._request.status === 400) {
 			if (contentType.indexOf("application/json") !== -1) {
 				er = js.lang.JSON.parse(this._request.responseText);
@@ -9918,18 +9918,25 @@ js.net.XHR.prototype = {
 		// there one can use XML
 
 		if (contentType === "text/html") {
+			this._state = js.net.XHR.StateMachine.ABORTED;
 			$error("js.net.XHR#_processResponse", "Got HTML page from server, most probably login form. Force page reload.");
 			WinMain.reload();
 			return undefined;
 		}
 
-		this._state = js.net.XHR.StateMachine.DONE;
 		var redirect = this._request.getResponseHeader("X-JSLIB-Location");
 		// XMLHttpRequest mandates null for not existing response header but there is at least one browser that returns
 		// empty string; so we need to test for both conditions
 		if (redirect) {
+			this._state = js.net.XHR.StateMachine.ABORTED;
 			$debug("js.net.XHR#_processResponse", "Server side redirect to |%s|.", redirect);
 			WinMain.assign(redirect);
+			return undefined;
+		}
+
+		// return undefined to signal void content when there is no content type in response header
+		this._state = js.net.XHR.StateMachine.DONE;
+		if (!contentType) {
 			return undefined;
 		}
 

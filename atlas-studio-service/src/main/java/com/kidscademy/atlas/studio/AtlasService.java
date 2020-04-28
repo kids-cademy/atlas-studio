@@ -135,23 +135,9 @@ public interface AtlasService {
      */
     Image uploadImageBySource(Form form) throws IOException, BusinessException;
 
-    Image cloneImageToIcon(AtlasItem object, Image image) throws IOException;
-
     Image replaceImage(Form form) throws IOException, BusinessException;
 
     Image replaceImageBySource(Form form) throws IOException, BusinessException;
-    
-    Image trimImage(AtlasItem object, Image image) throws IOException;
-
-    Image flopImage(AtlasItem object, Image image) throws IOException;
-
-    Image flipImage(AtlasItem object, Image image) throws IOException;
-
-    Image rotateImageLeft(AtlasItem object, Image image) throws IOException;
-
-    Image rotateImageRight(AtlasItem object, Image image) throws IOException;
-
-    Image cropImage(AtlasItem object, Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
     /**
      * Remove object picture from media repository and from database.
@@ -163,12 +149,6 @@ public interface AtlasService {
      * @throws IOException
      */
     void removeImage(AtlasItem object, Image image) throws IOException;
-
-    Image undoImage(AtlasItem object, Image image) throws IOException;
-
-    Image commitImage(AtlasItem object, Image image) throws IOException;
-
-    void rollbackImage(AtlasItem object, Image image) throws IOException;
 
     // ----------------------------------------------------------------------------------------------
     // OBJECT AUDIO SAMPLE SERVICES

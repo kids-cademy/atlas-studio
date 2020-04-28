@@ -44,6 +44,11 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public <T> T getObjectById(Class<T> type, int id) {
+	return em.find(type, id);
+    }
+
+    @Override
     @Mutable
     public void removeAtlasCollection(int collectionId) {
 	AtlasCollection collection = em.find(AtlasCollection.class, collectionId);

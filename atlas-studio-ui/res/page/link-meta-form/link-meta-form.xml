@@ -6,6 +6,7 @@
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/util/Strings.js</script>
 		<script>script/com/kidscademy/IconControl.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>

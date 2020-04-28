@@ -7,6 +7,9 @@ com.kidscademy.page.LinkMetaform = class extends com.kidscademy.Page {
         this._linkMeta = null;
         this._form = this.getByTag("form");
 
+        this._domainControl = this._form.getByName("domain");
+        this._domainControl.on("paste", this._onDomainPaste, this);
+
         this._iconSection = this.getByCssClass("icon-section");
         this._iconControl = this.getByClass(com.kidscademy.IconControl);
 
@@ -37,6 +40,13 @@ com.kidscademy.page.LinkMetaform = class extends com.kidscademy.Page {
         }
 
         this._form.setObject(linkMeta);
+    }
+
+    _onDomainPaste(ev) {
+        ev.halt();
+        const url = ev.getData();
+        const domain = Strings.basedomain(url);
+        this._domainControl.setValue(domain != null ? domain : url);
     }
 
     _onSave(ev) {

@@ -1,17 +1,60 @@
 <body xmlns:w="js-lib.com/wood">
+	<div class="container">
+		<div class="buttons-bar large">
+			<button name="icon-control">icon control</button>
+			<button name="graphic-assets">graphic assets</button>
+		</div>
+	</div>
+
 	<form>
-		<fieldset>
+		<fieldset class="icon-control hidden" data-class="IconControl">
 			<div class="content">
 				<div class="container">
 					<div class="view">
 						<img class="image" src="/media/atlas/test/image-editor/cougar.png" />
 					</div>
-					<div class="meta exclude hidden" data-class="com.kidscademy.FormData">
+					
+					<div class="meta hidden" data-class="com.kidscademy.FormData">
 						<div class="controlset">
 							<label>source</label> <input name="source" class="large optional" />
 						</div>
 					</div>
+					
 					<div w:compo="compo/image-editor"></div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="graphic-assets hiddenx" data-class="GraphicAssets">
+			<div class="content">
+				<div class="container">
+					<div class="view">
+						<ul data-name="images" class="images inline" data-list=".">
+							<li data-id="id" class="item">
+								<img data-src="src" data-reload="true" />
+								<h4 data-text="imageKey"></h4>
+								<h4><span data-text="width"></span> x <span data-text="height"></span></h4>
+								<h4 data-text="fileSize" data-format="js.format.FileSize"></h4>
+							</li>
+						</ul>
+					</div>
+
+					<div class="meta hidden" data-class="com.kidscademy.FormData">
+						<div class="controlset">
+							<label>name</label><select name="image-key" w:compo="compo/image-key-select"></select>
+						</div>
+						<div class="controlset">
+							<label>source</label><input name="source" class="large optional" />
+						</div>
+						<div class="controlset">
+							<label>caption</label><textarea name="caption" class="optional"></textarea>
+						</div>
+						<div class="controlset exclude hidden">
+							<label>license</label><select name="license" class="optional" w:compo="compo/license-select"></select>
+						</div>
+					</div>
+					
+					<div w:compo="compo/image-editor"></div>					
 				</div>
 			</div>
 		</fieldset>

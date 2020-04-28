@@ -12,7 +12,6 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Strings;
 
 import js.rmi.BusinessException;
-import js.tiny.container.core.Factory;
 
 public class BusinessRules {
     private static final int UNIQUE_PICTURE_FILE_NAME = 0x0001;

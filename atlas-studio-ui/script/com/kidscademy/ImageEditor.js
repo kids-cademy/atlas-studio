@@ -4,10 +4,13 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
-        this._aspectRatio = 1;
+        this._aspectRatio = 0;
 
-        this._image = null;
-
+		/**
+		 * Number of transforms performed on current image per current working session. This value is incremented for each 
+		 * transform and decreased on undo.
+		 * @type {Number}
+		 */
         this._transformsCount = 0;
 
 		/**
@@ -31,10 +34,10 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 
         /**
          * Image element that display the actual image preview.
-         * @type {js.dom.Image}
+         * @type {com.kidscademy.ImageView}
          */
-        this._previewImage = this.getByCss(".preview img");
-        this._previewImage.on("load", this._onPreviewImageLoad, this);
+        this._preview = this.getByClass(com.kidscademy.ImageView);
+        this._preview.on("load", this._onPreviewLoaded, this);
 
 		/**
 		 * Crop mask is used by user to select crop area. It is overlayed on {@link #_previewImage}.
@@ -44,66 +47,58 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
         this._actions.showOnly("add");
-        // register event for hidden input of type file to trigger image loading from host OS
-        this.getByName("file-upload").on("change", this._onFileUpload, this);
 
         /**
          * Optional action arguments form.
          * @type {com.kidscademy.FormData}
          */
         this._argsForm = null;
-
-        this._events = this.getCustomEvents();
-        this._events.register("open", "close", "upload", "link", "change", "remove");
     }
 
     config(config) {
         this._aspectRatio = config.aspectRatio;
     }
 
+    setAspectRatio(aspectRatio) {
+        this._aspectRatio = aspectRatio;
+    }
+
     open(image, callback) {
-        // this._actions.show("remove");
         this._callback = callback;
-        this._image = image;
-        this._previewImage.setSrc(image.src);
-        this._events.fire("open");
+        this._preview.setImage(image);
     }
 
-    _onAdd() {
-        this._actions.show("upload", "link", "close");
+    close(image = null) {
+        this._callback(image);
+        this._actions.showOnly("add");
         this._editor.hide();
-        this._events.fire("open");
+        this._preview.reset();
+        this._transformsCount = 0;
+        this._callback = null;
     }
 
-    _onUpload() {
+    getActions() {
+        return this._actions;
     }
 
-    _onFileUpload(ev) {
-        const handler = {
-            file: ev.target._node.files[0],
-            callback: image => {
-                this._image = image;
-                this._previewImage.reload(image.src);
-            }
-        }
-        this._events.fire("upload", handler);
+    getImage() {
+        return this._preview.getImage();
     }
 
-    _onLink() {
-        const callback = image => {
-            this._image = image;
-            this._previewImage.reload(image.src);
-        };
-        this._events.fire("link", callback);
+    isVisible() {
+        return this._editor.isVisible();
     }
+
+    // --------------------------------------------------------------------------------------------
+    // IMAGE TRANSFORM HANDLERS
 
     _onCropFree() {
         this._cropMask.open({
             type: "FREE",
-            width: this._previewImage._node.width,
-            height: this._previewImage._node.height,
-            naturalWidth: this._previewImage._node.naturalWidth,
-            naturalHeight: this._previewImage._node.naturalHeight,
+            width: this._preview._node.width,
+            height: this._preview._node.height,
+            naturalWidth: this._preview._node.naturalWidth,
+            naturalHeight: this._preview._node.naturalHeight,
             aspectRatio: this._aspectRatio
         }, this._onCropUpdate, this);
     }
@@ -111,10 +106,10 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
     _onCropCircle() {
         this._cropMask.open({
             type: "CIRCLE",
-            width: this._previewImage._node.width,
-            height: this._previewImage._node.height,
-            naturalWidth: this._previewImage._node.naturalWidth,
-            naturalHeight: this._previewImage._node.naturalHeight,
+            width: this._preview._node.width,
+            height: this._preview._node.height,
+            naturalWidth: this._preview._node.naturalWidth,
+            naturalHeight: this._preview._node.naturalHeight,
             aspectRatio: 1
         }, this._onCropUpdate, this);
     }
@@ -130,15 +125,15 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
     }
 
     _onTrim() {
-        ImageService.trimImage(this._image, this._onProcessingDone, this);
+        ImageService.trimImage(this._preview.getImage(), this._onProcessingDone, this);
     }
 
     _onFlop() {
-        ImageService.flopImage(this._image, this._onProcessingDone, this);
+        ImageService.flopImage(this._preview.getImage(), this._onProcessingDone, this);
     }
 
     _onFlip() {
-        ImageService.flipImage(this._image, this._onProcessingDone, this);
+        ImageService.flipImage(this._preview.getImage(), this._onProcessingDone, this);
     }
 
     _onRotate(argsForm) {
@@ -159,59 +154,53 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
             case "crop-free":
                 crop = this._cropMask.getCropArea();
                 this._cropMask.hide();
-                ImageService.cropRectangleImage(this._image, crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                ImageService.cropRectangleImage(this._preview.getImage(), crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
                 break;
 
             case "crop-circle":
                 crop = this._cropMask.getCropArea();
                 this._cropMask.hide();
-                ImageService.cropCircleImage(this._image, crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                ImageService.cropCircleImage(this._preview.getImage(), crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
                 break;
 
             case "rotate":
                 args = this._getActionArgs("rotate");
-                ImageService.rotateImage(this._image, args.direction, Number(args.angle), this._onProcessingDone, this);
+                ImageService.rotateImage(this._preview.getImage(), args.direction, Number(args.angle), this._onProcessingDone, this);
                 break;
 
             case "brightness-contrast":
                 args = this._getActionArgs("brightness-contrast");
-                ImageService.adjustBrightnessContrast(this._image, Number(args.brightness), Number(args.contrast), this._onProcessingDone, this);
+                ImageService.adjustBrightnessContrast(this._preview.getImage(), Number(args.brightness), Number(args.contrast), this._onProcessingDone, this);
                 break;
 
             default:
-                ImageService.commitImage(this._image, image => {
-                    this._image = image;
-                    this._closeImageEditor();
-                    //this._callback(image);
-                });
+                ImageService.commitImage(this._preview.getImage(), image => this.close(image));
         }
     }
 
     _onUndo() {
-        ImageService.undoImage(this._image, image => {
-            --this._transformsCount;
-            this._image = image;
-            this._previewImage.reload(image.src);
+        ImageService.undoImage(this._preview.getImage(), image => {
+            if (this._transformsCount > 0) {
+                --this._transformsCount;
+            }
+            this._preview.setImage(image);
         });
     }
 
     _onClose() {
-        if (this._transformsCount === 0) {
-            this._closeImageEditor();
+        if (this._argsForm != null) {
+            this._argsForm = null;
             return;
         }
+
+        if (this._transformsCount === 0) {
+            this.close();
+            return;
+        }
+
         js.ua.System.confirm("@string/confirm-image-rollback", answer => {
             if (answer === true) {
-                ImageService.rollbackImage(this._image, this._closeImageEditor, this);
-            }
-        });
-    }
-
-    _onRemove() {
-        js.ua.System.confirm("@string/confirm-image-remove", answer => {
-            if (answer === true) {
-                this._events.fire("remove", this._image);
-                this._closeImageEditor();
+                ImageService.rollbackImage(this._preview.getImage(), this.close, this);
             }
         });
     }
@@ -225,13 +214,6 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         return args;
     }
 
-    _closeImageEditor() {
-        this._actions.showOnly("add");
-        this._editor.hide();
-        this._events.fire("close", this._image);
-        this._image = null;
-    }
-
 	/**
 	 * Callback invoked when server image processing is complete. This method updates preview image and fires <change> event.
 	 * 
@@ -239,17 +221,14 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 	 */
     _onProcessingDone(image) {
         ++this._transformsCount;
-        this._image = image;
-        this._previewImage.reload(image.src);
-        this._events.fire("change", image);
+        this._preview.setImage(image);
     }
 
-    _onPreviewImageLoad(ev) {
-        this._transformsCount = 0;
-        this._actions.showAll().hide("add", "upload", "link");
+    _onPreviewLoaded(ev) {
+        this._actions.showAll().hide("add");
         this._cropMask.hide();
         this._editor.show();
-        this._fileInfoView.setObject(this._image);
+        this._fileInfoView.setObject(this._preview.getImage());
     }
 
     toString() {

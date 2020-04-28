@@ -1,6 +1,6 @@
 $package("com.kidscademy.workspace");
 
-com.kidscademy.IconControl = class extends js.dom.Element {
+com.kidscademy.IconControl = class extends js.dom.Control {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
@@ -13,17 +13,16 @@ com.kidscademy.IconControl = class extends js.dom.Element {
             aspectRatio: 1
         });
 
-        this._imageEditor.on("open", this._onImageEditorOpen, this);
-        this._imageEditor.on("close", this._onImageEditorClose, this);
-        this._imageEditor.on("upload", this._onImageEditorUpload, this);
-        this._imageEditor.on("link", this._onImageEditorLink, this);
-        this._imageEditor.on("change", this._onImageEditorChange, this);
-        this._imageEditor.on("remove", this._onImageEditorRemove, this);
-
         this._metaForm = this.getByClass(com.kidscademy.FormData);
 
         this._imageView = this.getByClass(js.dom.ImageControl);
         this._imageView.on("click", this._onImageClick, this);
+
+        this._actions = this._imageEditor.getActions().bind(this);
+        this._actions.disable("image-remove");
+        this._actions.showOnly("add");
+        // register event for hidden input of type file to trigger image loading from host OS
+        this._actions.getByName("file-upload").on("change", this._onUploadFile, this);
     }
 
     config(config) {
@@ -31,64 +30,93 @@ com.kidscademy.IconControl = class extends js.dom.Element {
         this._imageKind = config.imageKind;
     }
 
+    // --------------------------------------------------------------------------------------------
+    // CONTROL INTERFACE
+
+    setValue(iconSrc) {
+        this._imageView.setValue(iconSrc);
+    }
+
+    getValue() {
+        return this._imageView.getValue();
+    }
+
+    isValid() {
+        return this._imageView.isValid();
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // ACTION HANDLERS
+
+    _onAdd() {
+        this._actions.showOnly("image-upload", "image-link", "close");
+        this._imageEditor.show();
+        this._metaForm.open();
+    }
+
+    _onImageUpload(ev) {
+        if (!this._metaForm.isValid()) {
+            // stop bubbling and default behavior for click event
+            // by doing this, 'change' event for inner file input is not longer fired
+            // and next _onUploadFile handler is not invoked
+            ev.halt();
+            return;
+        }
+
+        // here object name exists and meta form is valid, so we can upload media file
+        // after this click handler exit, 'change' event for inner file input is fired
+        // and next _onUploadFile is executed
+
+        this._metaForm.hide();
+    }
+
+    _onUploadFile(ev) {
+        $assert(this._imageKind != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object class.");
+        $assert(this._object != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object.");
+
+        const formData = this._metaForm.getFormData();
+        formData.append("image-key", "ICON");
+        formData.append("image-kind", this._imageKind);
+        formData.append("object-id", this._object.id);
+        formData.append("media-file", ev.target._node.files[0]);
+
+        AtlasService.uploadImage(formData, image => this._imageEditor.open(image, this._onEditorDone.bind(this)));
+    }
+
+    _onImageLink(ev) {
+        $assert(this._imageKind != null, "com.kidscademy.IconControl#onImageLink", "Null parent object class.");
+        $assert(this._object != null, "com.kidscademy.IconControl#onImageLink", "Null parent object.");
+
+        if (!this._metaForm.isValid()) {
+            ev.halt();
+            return;
+        }
+        const formData = this._metaForm.getFormData();
+        formData.append("image-key", "ICON");
+        formData.append("image-kind", this._imageKind);
+        formData.append("object-id", this._object.id);
+
+        AtlasService.uploadImageBySource(formData, image => this._imageEditor.open(image, this._onEditorDone.bind(this)));
+    }
+
+    _onMetaForm() {
+        this._metaForm.show(!this._metaForm.isVisible());
+    }
+
+    // --------------------------------------------------------------------------------------------
+
     _onImageClick(ev) {
         this._metaForm.open();
         this._image.src = ev.target.getAttr("src");
-        this._imageEditor.open(this._image, image => {
-            this._imageView.setValue(image.src);
-        });
+        this._imageEditor.open(this._image, this._onEditorDone.bind(this));
     }
 
-    _onImageEditorOpen() {
-        this._metaForm.open();
-    }
-
-    /**
-     * Handler invoked when underlying image editor is closed.
-     * @param {Object} image optional image descriptor, possible null.
-     */
-    _onImageEditorClose(image) {
+    _onEditorDone(image) {
+        this._actions.showOnly("add");
         this._metaForm.hide();
         if (image != null) {
             this._imageView.setValue(image.src);
         }
-    }
-
-    _onImageEditorUpload(handler) {
-        const formData = this._metaForm.getFormData();
-        formData.append("image-kind", this._imageKind);
-        formData.append("object-id", this._object.id);
-        formData.append("media-file", handler.file);
-
-        AtlasService.uploadImage(formData, image => {
-            this._image = image;
-            this._imageView.setValue(image.src);
-            handler.callback(image);
-        });
-    }
-
-    _onImageEditorLink(callback) {
-        if (!this._metaForm.isValid()) {
-            return;
-        }
-
-        const formData = this._metaForm.getFormData();
-        formData.append("image-kind", this._imageKind);
-        formData.append("object-id", this._object.id);
-
-        AtlasService.uploadImageBySource(formData, image => {
-            this._image = image;
-            this._imageView.setValue(image.src);
-            callback(image);
-        });
-    }
-
-    _onImageEditorChange(image) {
-        this._metaForm.setObject(image);
-    }
-
-    _onImageEditorRemove(image) {
-        this._imageView.remove();
     }
 
     toString() {

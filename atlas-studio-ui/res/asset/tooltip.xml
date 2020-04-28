@@ -23,7 +23,7 @@
 	<graphic-search>search for object image</graphic-search>
 	<graphic-link>upload object image from internet</graphic-link>
 	<graphic-clone-to-icon>clone selected image to object icon</graphic-clone-to-icon>
-	<graphic-edit>edit meta-data for object image</graphic-edit>
+	<graphic-form>toggle meta-data form</graphic-form>
 	<graphic-trim>trim unused space from image</graphic-trim>
 	<graphic-crop>crop image</graphic-crop>
 	<graphic-icon>create object icon from image</graphic-icon>

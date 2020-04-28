@@ -24,6 +24,10 @@ button {
 	text-transform: uppercase;
 }
 
+.buttons-bar.large button {
+	padding: 0.6em 1.8em;
+}
+
 button:active {
 	background-color: @color/button-active-background;
 	box-shadow: none;

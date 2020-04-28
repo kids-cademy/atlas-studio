@@ -96,6 +96,7 @@
 	<link-meta-create>Create Link Meta</link-meta-create>
 	<link-meta-edit>Edit Link Meta</link-meta-edit>
 	<link-meta-remove>Remove Link Meta</link-meta-remove>
+	<link-meta-references>References List</link-meta-references>
 
 	<feature-meta-create>Create Feature Meta</feature-meta-create>
 	<feature-meta-edit>Edit Feature Meta</feature-meta-edit>

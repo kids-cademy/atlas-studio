@@ -25,7 +25,7 @@
 				<h2>Icon</h2>
 			</div>
 			<div class="content">
-				<div class="container" w:compo="compo/icon-control"></div>
+				<div data-name="icon-src" class="container" w:compo="compo/icon-control"></div>
 			</div>
 		</fieldset>
 
@@ -57,7 +57,7 @@
 						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
 					</div>
 
-					<div class="editor exclude hidden" data-class="com.kidscademy.FormData">
+					<div class="editor hidden" data-class="com.kidscademy.FormData">
 						<div class="controlset">
 							<label>@string/section-name</label><input name="name" />
 						</div>
@@ -144,7 +144,8 @@
 						<div class="form-bar with-actions">
 							<input name="search-input" />
 							<div class="actions inline" data-class="com.kidscademy.Actions">
-								<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> <img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
+								<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> 
+								<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
 							</div>
 						</div>
 

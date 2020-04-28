@@ -91,15 +91,15 @@ public class MediaFileHandler {
      * Initialize internal state from given arguments and version value by scanning
      * file system.
      * 
-     * @param repositoryObject
+     * @param object
      *            collection item owning media file,
      * @param mediaFile
      *            media file name.
      * @throws IllegalArgumentException
      *             if arguments are null or media file has no extension.
      */
-    public MediaFileHandler(RepositoryObject repositoryObject, String mediaFile) {
-	this(Files.mediaSrc(repositoryObject.getRepositoryName(), repositoryObject.getName(), mediaFile));
+    public MediaFileHandler(RepositoryObject object, String mediaFile) {
+	this(Files.mediaSrc(object.getRepositoryName(), object.getName(), mediaFile));
     }
 
     public MediaFileHandler(MediaSRC mediaSrc) {

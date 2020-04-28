@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Image Editor</title>
-	<description>Image editor with basic operations like crop, flip and rotate.</description>
+	<title>Icon Control</title>
+	<description>Icon editor with basic operations like crop, flip and rotate.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
@@ -12,5 +12,6 @@
 		<script>script/com/kidscademy/ImageView.js</script>
 		<script>script/com/kidscademy/CropMask.js</script>
 		<script>script/com/kidscademy/ImageEditor.js</script>
+		<script>script/com/kidscademy/IconControl.js</script>
 	</scripts>
 </page>

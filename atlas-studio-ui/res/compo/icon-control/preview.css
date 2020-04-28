@@ -1,0 +1,23 @@
+.image {
+	height: 100px;
+	cursor: pointer;
+}
+
+.meta {
+	margin-top: 20px;
+	border-top: solid 1px #E6E6E6;
+	padding-top: 20px;
+}
+
+.images .item {
+	margin-right: 40px;	
+}
+
+.images h4 {
+	margin: 0;
+	font-size: 1.6rem;	
+}
+
+.images img {
+	height: 96px;
+}

@@ -1,12 +1,14 @@
 <div class="image-editor" data-class="com.kidscademy.ImageEditor" xmlns:w="js-lib.com/wood">
 	<div class="actions bar exclude" data-class="com.kidscademy.Actions">
 		<img name="add" src="@image/action/add" title="@tip/graphic-add" />
-		<span data-name="upload" class="upload-icon">
+		<span data-name="image-upload" class="upload-icon">
 			<img src="@image/action/upload" />
 			<input name="file-upload" type="file" title="@tip/graphic-upload" accept="image/*" />
 		</span>
-		<img name="link" src="@image/action/link" title="@tip/graphic-link" />
+		<img name="image-link" src="@image/action/link" title="@tip/graphic-link" />
+		<img name="meta-form" src="@image/action/form" title="@tip/graphic-form" />
 		<span class="separator"></span>
+		
 		<img name="crop-free" src="@image/action/crop-free" title="@tip/graphic-crop" />
 		<img name="crop-circle" src="@image/action/crop-circle" title="@tip/graphic-crop" />
 		<img name="trim" src="@image/action/image-trim" title="@tip/graphic-trim" />
@@ -15,15 +17,17 @@
 		<img name="rotate" src="@image/action/rotate" title="@tip/graphic-rotate" />
 		<img name="brightness-contrast" src="@image/action/brightness" title="@tip/graphic-brightness" />
 		<span class="separator"></span>
+		
 		<img name="done" data-key="ENTER" src="@image/action/done" title="@tip/graphic-done" />
 		<img name="undo" src="@image/action/undo" title="@tip/graphic-undo" />
+		
 		<!-- right float actions are displayed in reverse order -->
 		<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
-		<img name="remove" src="@image/action/remove" title="@tip/graphic-remove" class="rfloat" />
+		<img name="image-remove" src="@image/action/remove" title="@tip/graphic-remove" class="rfloat" />
 	</div>
 
-	<div class="actions args exclude">
-		<div class="rotate form" data-class="com.kidscademy.FormData">
+	<div class="actions args">
+		<div class="rotate" data-class="com.kidscademy.FormData">
 			<div class="controlset">
 				<label>direction</label><select name="direction" w:compo="compo/clock-direction-select"></select>
 			</div>
@@ -31,7 +35,7 @@
 				<label>angle</label><input name="angle" class="small" />
 			</div>
 		</div>
-		<div class="brightness-contrast form" data-class="com.kidscademy.FormData">
+		<div class="brightness-contrast" data-class="com.kidscademy.FormData">
 			<div class="controlset">
 				<label>brightness</label><input name="brightness" class="small" />
 			</div>
@@ -45,32 +49,61 @@
 		<div class="info">
 			<div class="file-info">
 				<h3 data-text="fileName"></h3>
-				<dl class="inline">
-					<dt data-if="kind">Type</dt>
-					<dd data-if="kind" data-text="kind"></dd>
-					<dt>Size</dt>
-					<dd data-text="fileSize" data-format="js.format.FileSize"></dd>
-					<dt>Date</dt>
-					<dd data-text="uploadDate" data-format="js.format.StandardDate"></dd>
-					<dt>Width</dt>
-					<dd data-text="width"></dd>
-					<dt>Height</dt>
-					<dd data-text="height"></dd>
-				</dl>
+				<table>
+					<tr data-if="kind">
+						<td>Type</td>
+						<td class="separator">:</td>
+						<td class="value" data-text="kind"></td>
+					</tr>
+					<tr>
+						<td>Size</td>
+						<td class="separator">:</td>
+						<td class="value" data-text="fileSize" data-format="js.format.FileSize"></td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td class="separator">:</td>
+						<td class="value" data-text="uploadDate" data-format="js.format.StandardDate"></td>
+					</tr>
+					<tr>
+						<td>Width</td>
+						<td class="separator">:</td>
+						<td class="value" data-text="width"></td>
+					</tr>
+					<tr>
+						<td>Height</td>
+						<td class="separator">:</td>
+						<td class="value" data-text="height"></td>
+					</tr>
+				</table>
 			</div>
-			<dl class="crop-info inline hidden">
-				<dt>Left</dt>
-				<dd data-text="left"></dd>
-				<dt>Top</dt>
-				<dd data-text="top"></dd>
-				<dt>Width</dt>
-				<dd data-text="width"></dd>
-				<dt>Height</dt>
-				<dd data-text="height"></dd>
-			</dl>
+			
+			<table class="crop-info hidden">
+				<tr>
+					<td>Left</td>
+					<td class="separator">:</td>
+					<td class="value" data-text="left"></td>
+				</tr>
+				<tr>
+					<td>Top</td>
+					<td class="separator">:</td>
+					<td class="value" data-text="top"></td>
+				</tr>
+				<tr>
+					<td>Width</td>
+					<td class="separator">:</td>
+					<td class="value" data-text="width"></td>
+				</tr>
+				<tr>
+					<td>Height</td>
+					<td class="separator">:</td>
+					<td class="value" data-text="height"></td>
+				</tr>
+			</table>
 		</div>
+		
 		<div class="preview">
-			<img />
+			<img data-class="com.kidscademy.ImageView" />
 			<div class="crop-mask circle hidden" data-class="com.kidscademy.CropMask">
 				<div class="x-offset outer"></div>
 				<div class="crop-column">
