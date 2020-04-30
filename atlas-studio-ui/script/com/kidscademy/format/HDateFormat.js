@@ -1,32 +1,10 @@
 $package("com.kidscademy.format");
 
-com.kidscademy.format.HDateFormat = function () {
-};
+com.kidscademy.format.HDateFormat = class {
+	constructor() {
+	}
 
-com.kidscademy.format.HDateFormat.Format = ["DATE", "YEAR", "DECADE", "CENTURY", "MILLENNIA", "KYA", "MYA", "BYA"];
-
-com.kidscademy.format.HDateFormat.Period = ["FULL", "BEGINNING", "MIDDLE", "END"];
-
-com.kidscademy.format.HDateFormat.Era = ["CE", "BCE"];
-
-com.kidscademy.format.HDateFormat.RomanSymbols = {
-	M: 1000,
-	CM: 900,
-	D: 500,
-	CD: 400,
-	C: 100,
-	XC: 90,
-	L: 50,
-	XL: 40,
-	X: 10,
-	IX: 9,
-	V: 5,
-	IV: 4,
-	I: 1
-};
-
-com.kidscademy.format.HDateFormat.prototype = {
-	format: function (hdate) {
+	format(hdate) {
 		switch (this.getFormat(hdate)) {
 			case "YEAR":
 				return `${hdate.value} ${this.getEra(hdate)}`;
@@ -68,7 +46,7 @@ com.kidscademy.format.HDateFormat.prototype = {
 		}
 
 		return "";
-	},
+	}
 
 	roman(number) {
 		const symbols = com.kidscademy.format.HDateFormat.RomanSymbols;
@@ -81,9 +59,9 @@ com.kidscademy.format.HDateFormat.prototype = {
 		}
 
 		return value;
-	},
+	}
 
-	suffix: function (value) {
+	suffix(value) {
 		switch (value) {
 			case 1:
 				return "st";
@@ -97,39 +75,60 @@ com.kidscademy.format.HDateFormat.prototype = {
 			default:
 				return "th";
 		}
-	},
+	}
 
-	getFormat: function (hdate) {
+	getFormat(hdate) {
 		if (!hdate.mask) {
 			return null;
 		}
 		return com.kidscademy.format.HDateFormat.Format[hdate.mask & 0x000000FF];
-	},
+	}
 
-	getPeriod: function (hdate) {
+	getPeriod(hdate) {
 		if (!hdate.mask) {
 			return null;
 		}
 		return com.kidscademy.format.HDateFormat.Period[(hdate.mask & 0x0000FF00) >> 8];
-	},
+	}
 
-	getEra: function (hdate) {
+	getEra(hdate) {
 		if (!hdate.mask) {
 			return null;
 		}
 		return com.kidscademy.format.HDateFormat.Era[(hdate.mask & 0x00FF0000) >> 16];
-	},
+	}
 
-	parse: function (value) {
+	parse(value) {
 		return null;
-	},
+	}
 
-	test: function (value) {
+	test(value) {
 		return !!value;
-	},
+	}
 
-	toString: function () {
+	toString() {
 		return "com.kidscademy.format.HDateFormat";
 	}
 };
-$extends(com.kidscademy.format.HDateFormat, Object);
+
+com.kidscademy.format.HDateFormat.Format = ["DATE", "YEAR", "DECADE", "CENTURY", "MILLENNIA", "KYA", "MYA", "BYA"];
+
+com.kidscademy.format.HDateFormat.Period = ["FULL", "BEGINNING", "MIDDLE", "END"];
+
+com.kidscademy.format.HDateFormat.Era = ["CE", "BCE"];
+
+com.kidscademy.format.HDateFormat.RomanSymbols = {
+	M: 1000,
+	CM: 900,
+	D: 500,
+	CD: 400,
+	C: 100,
+	XC: 90,
+	L: 50,
+	XL: 40,
+	X: 10,
+	IX: 9,
+	V: 5,
+	IV: 4,
+	I: 1
+};

@@ -95,5 +95,7 @@ public class ExportFeature {
 	EN.put("ship.beam.maximum", "Maximum Ship Beam");
 	EN.put("ship.draft", "Ship Draft");
 	EN.put("ship.displacement", "Ship Displacement");
+	EN.put("radius", "Mean Radius");
+	EN.put("mass", "Mass");
     }
 }

@@ -17,6 +17,8 @@ com.kidscademy.FormData = class extends js.dom.Element {
 		super(ownerDoc, node);
 		this.addCssClass("exclude");
 		
+		this._object = null;
+
 		/**
 		 * Iterable for controls owned by this form data.
 		 * @type {js.dom.ControlsIterable}
@@ -46,6 +48,7 @@ com.kidscademy.FormData = class extends js.dom.Element {
 	}
 
 	setObject(object) {
+		this._object = object;
 		this._controls.forEach(control => {
 			const opp = this._getOPPath(control);
 			if (opp !== null) {
@@ -59,9 +62,13 @@ com.kidscademy.FormData = class extends js.dom.Element {
 	}
 
 	getObject(object) {
-		if (typeof object === "undefined") {
+		if (!object) {
+			object = this._object;
+		}
+		if (!object) {
 			object = {};
 		}
+
 		this._controls.forEach(control => {
 			const opp = this._getOPPath(control);
 			if (opp !== null) {

@@ -8,25 +8,26 @@
 
 	<atlascollection>
 		<id>1</id>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>instrument</name>
 		<display>Instrument</display>
 		<definition>Musical instrument.</definition>
-		<iconName>instrument.png</iconName>
-		<progenitor>1</progenitor>
 		<endDate>1</endDate>
+		<progenitor>1</progenitor>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
+		<spreading>1</spreading>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
 		<display>Bird</display>
 		<definition>Wild bird.</definition>
-		<iconName>bird.png</iconName>
-		<progenitor>1</progenitor>
 		<endDate>1</endDate>
+		<progenitor>1</progenitor>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
+		<spreading>1</spreading>
 	</atlascollection>
 
 	<atlascollection_taxonomymeta>
@@ -86,7 +87,7 @@
 		<taxonomymeta_order>6</taxonomymeta_order>
 		<values></values>
 	</atlascollection_taxonomymeta>
-	
+
 	<featuremeta>
 		<id>1</id>
 		<name>height</name>
@@ -105,7 +106,22 @@
 		<featuresmeta_id>1</featuresmeta_id>
 		<featuresmeta_order>0</featuresmeta_order>
 	</atlascollection_featuremeta>
-		
+
+	<atlascollection_descriptionmeta>
+		<id>1</id>
+		<atlascollection_id>1</atlascollection_id>
+		<descriptionmeta_order>0</descriptionmeta_order>
+		<name>description</name>
+		<definition>Object description.</definition>
+	</atlascollection_descriptionmeta>
+	<atlascollection_descriptionmeta>
+		<id>2</id>
+		<atlascollection_id>1</atlascollection_id>
+		<descriptionmeta_order>1</descriptionmeta_order>
+		<name>uses</name>
+		<definition>Object uses.</definition>
+	</atlascollection_descriptionmeta>
+
 	<atlasobject>
 		<id>1</id>
 		<collection_id>1</collection_id>
@@ -249,24 +265,22 @@
 		<facts>Fact #2 description.</facts>
 	</atlasobject_facts>
 
-	<atlasobject_features>
+	<feature>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
 		<features_order>0</features_order>
-		<name>lifespan</name>
-		<value>536520000</value>
+		<meta_id>1</meta_id>
+		<value>5.3</value>
 		<maximum></maximum>
-		<quantity>TIME</quantity>
-	</atlasobject_features>
-	<atlasobject_features>
+	</feature>
+	<feature>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
 		<features_order>1</features_order>
-		<name>wingspan</name>
+		<meta_id>2</meta_id>
 		<value>1.00584</value>
 		<maximum>1.09728</maximum>
-		<quantity>LENGTH</quantity>
-	</atlasobject_features>
+	</feature>
 
 	<atlasobject_links>
 		<id>1</id>
@@ -276,7 +290,6 @@
 		<domain>wikipedia.org</domain>
 		<display>Wikipedia</display>
 		<definition>Wikipedia article about accordion.</definition>
-		<iconName>wikipedia.png</iconName>
 		<features>description</features>
 	</atlasobject_links>
 	<atlasobject_links>
@@ -287,7 +300,6 @@
 		<domain>britannica.com</domain>
 		<display>Britannica</display>
 		<definition>Britannica article about bandoneon.</definition>
-		<iconName>britannica.png</iconName>
 		<features>description</features>
 	</atlasobject_links>
 
@@ -311,7 +323,7 @@
 		<related>cimbalom</related>
 		<related_order>1</related_order>
 	</atlasobject_related>
-	
+
 	<release>
 		<id>1</id>
 		<timestamp>2020-03-25 21:14:32</timestamp>
@@ -319,14 +331,15 @@
 		<display>Wild Birds</display>
 		<brief>Wild birds brief</brief>
 		<definition>Wild birds description.</definition>
+		<graphicsBackground>FFFFFF</graphicsBackground>
+		<publisher>Published by kids (a)cademy</publisher>
 		<edition>community edition</edition>
 		<version>Release 1.0</version>
-		<publisher>Published by kids (a)cademy</publisher>
 		<license>public domain knowledge</license>
 		<readme>Wild birds readme.</readme>
 		<privacy>Wild birds policy.</privacy>
 	</release>
-	
+
 	<release_atlasitem>
 		<release_id>1</release_id>
 		<objects_id>1</objects_id>
@@ -335,4 +348,15 @@
 		<release_id>1</release_id>
 		<objects_id>2</objects_id>
 	</release_atlasitem>
+
+	<androidapp>
+		<id>1</id>
+		<release_id>1</release_id>
+		<timestamp>2020-03-25 21:14:32</timestamp>
+		<packageName>com.kidscademy.app</packageName>
+		<versionCode>1</versionCode>
+		<gitRepository>http://github.com/app.git</gitRepository>
+		<gitUserName>user</gitUserName>
+		<gitPassword>passwd</gitPassword>
+	</androidapp>
 </data-set>

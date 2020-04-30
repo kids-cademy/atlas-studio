@@ -235,14 +235,14 @@ public class AtlasDaoReadTest {
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), not(empty()));
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("lifespan"));
-	assertThat(object.getFeatures().get(0).getValue(), equalTo(536520000.0));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
+	assertThat(object.getFeatures().get(0).getValue(), equalTo(5.3));
 	assertThat(object.getFeatures().get(0).getMaximum(), nullValue());
-	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.TIME));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("wingspan"));
+	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
 	assertThat(object.getFeatures().get(1).getValue(), equalTo(1.00584));
 	assertThat(object.getFeatures().get(1).getMaximum(), equalTo(1.09728));
-	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.MASS));
 
 	assertThat(object.getLinks(), notNullValue());
 	assertThat(object.getLinks(), hasSize(2));
@@ -310,20 +310,8 @@ public class AtlasDaoReadTest {
 	AtlasObject object = dao.getAtlasObject(1);
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("lifespan"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("wingspan"));
-    }
-
-    @Test
-    public void getAtlasObject_ResetObjectSample() {
-	dao.resetObjectSample(1);
-
-	AtlasObject object = dao.getAtlasObject(1);
-	assertThat(object.getSampleTitle(), nullValue());
-	assertThat(object.getSampleName(), nullValue());
-	assertThat(object.getSampleSrc(), nullValue());
-	assertThat(object.getWaveformName(), nullValue());
-	assertThat(object.getWaveformSrc(), nullValue());
+	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
     }
 
     @Test
@@ -360,8 +348,6 @@ public class AtlasDaoReadTest {
 
     @Test
     public void getReleaseById() {
-	when(context.getProperty("releases.repository.path", File.class)).thenReturn(new File("fixture/release/"));
-
 	Release release = dao.getReleaseById(1);
 	assertThat(release, notNullValue());
     }

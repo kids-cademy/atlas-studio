@@ -2616,6 +2616,12 @@ js.dom.Element.prototype = {
 		return data;
 	},
 
+	getListData : function() {
+		return this.getChildren().map(function(child) {
+			return child.getUserData();
+		});
+	},
+
 	bind : function(selectors, typeName) {
 		js.dom.Node.bind(this._node, selectors, typeName);
 		return this;

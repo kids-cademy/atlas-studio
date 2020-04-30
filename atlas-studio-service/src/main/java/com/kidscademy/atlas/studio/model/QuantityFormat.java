@@ -11,27 +11,29 @@ import java.util.List;
 import java.util.Map;
 
 import js.lang.BugError;
-import js.lang.Pair;
 
-public class QuantityFormat implements Comparator<Pair> {
+public class QuantityFormat implements Comparator<Variant> {
     private final String value;
     private final String units;
 
     public QuantityFormat(double value, PhysicalQuantity physicalQuantity) {
 	Unit[] units = quantityUnits(physicalQuantity);
 
-	NumberFormat numberFormat = NumberFormat.getNumberInstance();
-	numberFormat.setMaximumFractionDigits(10);
-	numberFormat.setGroupingUsed(false);
-
-	List<Pair> displayVariants = new ArrayList<>();
+	List<Variant> variants = new ArrayList<>();
 	for (Unit unit : units) {
-	    displayVariants.add(new Pair(numberFormat.format(round(value * unit.factor(), 2)), unit.symbol()));
+	    variants.add(new Variant(value, unit));
 	}
 
-	Collections.sort(displayVariants, this);
-	this.value = displayVariants.get(0).first();
-	this.units = displayVariants.get(0).second();
+	Collections.sort(variants, this);
+	Variant variant = variants.get(0);
+
+	String stringValue = variant.formattedValue;
+	if (stringValue.length() > 8) {
+	    stringValue = String.format("%.4E", variant.numericValue);
+	}
+
+	this.value = stringValue;
+	this.units = variant.units;
     }
 
     public String value() {
@@ -43,9 +45,9 @@ public class QuantityFormat implements Comparator<Pair> {
     }
 
     @Override
-    public int compare(Pair leftQuantity, Pair rightQuantity) {
-	final DecimalNumeral left = new DecimalNumeral(leftQuantity.first());
-	final DecimalNumeral right = new DecimalNumeral(rightQuantity.first());
+    public int compare(Variant leftQuantity, Variant rightQuantity) {
+	final DecimalNumeral left = new DecimalNumeral(leftQuantity.formattedValue);
+	final DecimalNumeral right = new DecimalNumeral(rightQuantity.formattedValue);
 
 	if (left.isZero()) {
 	    return 1;
@@ -103,11 +105,6 @@ public class QuantityFormat implements Comparator<Pair> {
 	return units;
     }
 
-    private static double round(double value, int scale) {
-	BigDecimal decimal = new BigDecimal(value).setScale(scale, RoundingMode.HALF_EVEN);
-	return decimal.doubleValue();
-    }
-
     private static class DecimalNumeral {
 	private final int length;
 	private final String integerPart;
@@ -158,7 +155,7 @@ public class QuantityFormat implements Comparator<Pair> {
 	UNITS.put(PhysicalQuantity.FOOD_ENERGY, FoodEnergyUnits.values());
     }
 
-    private interface Unit {
+    interface Unit {
 	double factor();
 
 	String symbol();
@@ -309,5 +306,28 @@ public class QuantityFormat implements Comparator<Pair> {
 	public String symbol() {
 	    return symbol;
 	}
+    }
+}
+
+final class Variant {
+    private static final NumberFormat numberFormat = NumberFormat.getNumberInstance();
+    static {
+	numberFormat.setMaximumFractionDigits(10);
+	numberFormat.setGroupingUsed(true);
+    }
+
+    final double numericValue;
+    final String formattedValue;
+    final String units;
+
+    Variant(double value, QuantityFormat.Unit unit) {
+	this.numericValue = round(value * unit.factor(), 2);
+	this.formattedValue = numberFormat.format(this.numericValue);
+	this.units = unit.symbol();
+    }
+
+    private static double round(double value, int scale) {
+	BigDecimal decimal = new BigDecimal(value).setScale(scale, RoundingMode.HALF_EVEN);
+	return decimal.doubleValue();
     }
 }

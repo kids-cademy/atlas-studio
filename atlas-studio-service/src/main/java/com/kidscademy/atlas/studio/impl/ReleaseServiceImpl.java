@@ -100,6 +100,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
+    public void clearRelease(int releaseId) {
+	dao.removeReleaseChildren(releaseId);
+    }
+
+    @Override
     public void removeRelease(int releaseId) throws IOException, BusinessException {
 	businessRules.emptyRelease(releaseId);
 

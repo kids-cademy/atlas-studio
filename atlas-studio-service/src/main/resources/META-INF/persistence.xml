@@ -10,7 +10,6 @@
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 
 		<!-- embeddables -->
-		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
 		<class>com.kidscademy.atlas.studio.model.Region</class>
@@ -26,6 +25,7 @@
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 
+		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.LinkMeta</class>
 

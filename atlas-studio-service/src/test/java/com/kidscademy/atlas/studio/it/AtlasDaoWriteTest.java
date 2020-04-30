@@ -192,8 +192,8 @@ public class AtlasDaoWriteTest {
 	object.setFacts(facts);
 
 	List<Feature> features = new ArrayList<>();
-	features.add(new Feature("length", 0.3556, 0.4826, PhysicalQuantity.LENGTH));
-	features.add(new Feature("height", 0.4826, 0.5334, PhysicalQuantity.LENGTH));
+	features.add(new Feature(dao.getFeatureMetaById(1), 0.3556, 0.4826));
+	features.add(new Feature(dao.getFeatureMetaById(2), 0.4826));
 	object.setFeatures(features);
 
 	List<String> related = new ArrayList<>();
@@ -270,14 +270,14 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), not(empty()));
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("length"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
 	assertThat(object.getFeatures().get(0).getValue(), equalTo(0.3556));
 	assertThat(object.getFeatures().get(0).getMaximum(), equalTo(0.4826));
 	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
 	assertThat(object.getFeatures().get(1).getValue(), equalTo(0.4826));
-	assertThat(object.getFeatures().get(1).getMaximum(), equalTo(0.5334));
-	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	assertThat(object.getFeatures().get(1).getMaximum(), nullValue());
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.MASS));
 
 	assertThat(expected.getLinks(), notNullValue());
 	assertThat(expected.getLinks(), hasSize(2));
@@ -305,20 +305,20 @@ public class AtlasDaoWriteTest {
 	AtlasObject object = dao.getAtlasObject(1);
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("lifespan"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("wingspan"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
 
 	Feature feature = object.getFeatures().remove(0);
 	object.getFeatures().add(feature);
-	assertThat(object.getFeatures().get(0).getName(), equalTo("wingspan"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("lifespan"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
 	dao.saveAtlasObject(object);
 
 	object = dao.getAtlasObject(1);
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("wingspan"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("lifespan"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
     }
 
     @Test
@@ -389,6 +389,18 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getRelated(), notNullValue());
 	assertThat(object.getRelated(), hasSize(2));
 	assertThat(object.getRelated().get(0), equalTo("bandoneon-changed"));
+    }
+
+    @Test
+    public void resetObjectSample() {
+	dao.resetObjectSample(1);
+
+	AtlasObject object = dao.getAtlasObject(1);
+	assertThat(object.getSampleTitle(), nullValue());
+	assertThat(object.getSampleName(), nullValue());
+	assertThat(object.getSampleSrc(), nullValue());
+	assertThat(object.getWaveformName(), nullValue());
+	assertThat(object.getWaveformSrc(), nullValue());
     }
 
     @Test

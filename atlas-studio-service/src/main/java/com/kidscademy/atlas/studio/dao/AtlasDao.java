@@ -149,6 +149,8 @@ public interface AtlasDao {
 
     void saveRelease(Release release) throws IOException;
 
+    void removeReleaseChildren(int releaseId);
+
     void removeRelease(int releaseId);
 
     ReleaseParent getReleaseParentById(int releaseId);

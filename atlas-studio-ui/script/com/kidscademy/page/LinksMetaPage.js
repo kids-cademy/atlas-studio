@@ -13,6 +13,7 @@ com.kidscademy.page.LinksMetaPage = class extends com.kidscademy.Page {
         this._contextMenu = this.getByCssClass("context-menu");
         this._contextMenu.on("edit-link-meta", this._onEditLinkMeta, this);
         this._contextMenu.on("remove-link-meta", this._onRemoveLinkMeta, this);
+        this._contextMenu.on("display-references", this._onDisplayReferences, this);
 
         this._linksMetaView = this.getByClass(com.kidscademy.ListView);
         this._linksMetaView.setContextMenu(this._contextMenu);
@@ -50,6 +51,11 @@ com.kidscademy.page.LinksMetaPage = class extends com.kidscademy.Page {
                 AtlasService.removeLinkMeta(linkMeta.id, () => linkMetaView.remove());
             }
         });
+    }
+
+    _onDisplayReferences(linkMetaView) {
+        const linkMeta = linkMetaView.getUserData();
+        WinMain.assign("@link/link-references", { link: linkMeta.id });
     }
 
     toString() {

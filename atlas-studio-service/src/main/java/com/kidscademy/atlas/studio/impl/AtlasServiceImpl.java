@@ -55,7 +55,6 @@ import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.LifeFormWikipediaArticle;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
-import com.kidscademy.atlas.studio.www.NationalGeographicArticle;
 import com.kidscademy.atlas.studio.www.PlantVillage;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
@@ -418,50 +417,6 @@ public class AtlasServiceImpl implements AtlasService {
 		facts.put(Strings.excerpt(fact), fact);
 	    }
 	    return facts;
-
-	default:
-	    return null;
-	}
-    }
-
-    @Override
-    public List<Feature> importObjectFeatures(Link link) {
-	switch (link.getDomain()) {
-	case "nationalgeographic.com":
-	    NationalGeographicArticle article = new NationalGeographicArticle(link.getUrl());
-	    List<Feature> features = new ArrayList<>();
-
-	    if (article.hasLifespan()) {
-		features.add(new Feature("lifespan", article.getMinimumLifespan(), article.getMaximumLifespan(),
-			PhysicalQuantity.TIME));
-	    }
-
-	    if (article.hasWingspan()) {
-		features.add(new Feature("wingspan", article.getMinimumWingspan(), article.getMaximumWingspan(),
-			PhysicalQuantity.LENGTH));
-	    }
-
-	    if (article.hasLength()) {
-		features.add(new Feature("length", article.getMinimumLength(), article.getMaximumLength(),
-			PhysicalQuantity.LENGTH));
-	    }
-
-	    if (article.hasBillLength()) {
-		features.add(new Feature("length.bill", article.getMinimumBillLength(), article.getMaximumBillLength(),
-			PhysicalQuantity.LENGTH));
-	    }
-
-	    if (article.hasHeight()) {
-		features.add(new Feature("height", article.getMinimumHeight(), article.getMaximumHeight(),
-			PhysicalQuantity.LENGTH));
-	    }
-
-	    if (article.hasWeight()) {
-		features.add(new Feature("weight", article.getMinimumWeight(), article.getMaximumWeight(),
-			PhysicalQuantity.MASS));
-	    }
-
-	    return features;
 
 	default:
 	    return null;

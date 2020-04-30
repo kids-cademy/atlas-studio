@@ -11,6 +11,7 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
 
         this._sidebar.showObject();
         this._sidebar.on("edit-release", this._onEditRelease, this);
+        this._sidebar.on("clear-release", this._onClearRelease, this);
         this._sidebar.on("remove-release", this._onRemoveRelease, this);
         this._sidebar.on("android-app", this._onAndroidApp, this);
 
@@ -46,6 +47,19 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
 
     _onEditRelease() {
         WinMain.assign("@link/release-form", { release: this._release.id });
+    }
+
+    _onClearRelease() {
+        js.ua.System.confirm("@string/confirm-release-clear", ok => {
+            if (ok) {
+                ReleaseService.clearRelease(this._release.id, () => {
+                    this._objectsList.resetTimestamp();
+                    ReleaseService.getReleaseItems(this._release.id, releases => {
+                        this._objectsList.setObject(releases)
+                    });
+                });
+            }
+        });
     }
 
     _onRemoveRelease() {

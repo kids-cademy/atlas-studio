@@ -10,6 +10,7 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.Page {
 		super();
 
 		this._sidebar.on("update-index", this._onUpdateIndex, this);
+		this._sidebar.on("add-all-to-release", this._onAddAllToRelease, this);
 
 		this._searchInput = this.getByName("search-input");
 		this._searchInput.setValue(this.getPageAttr("search-input"));
@@ -21,6 +22,7 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.Page {
 		this._searchResult.on("contextmenu", this._onContextMenu, this);
 
 		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
+		this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
 
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 		this._actions.fire("search-submit");
@@ -78,6 +80,14 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.Page {
 
 	_onUpdateIndex() {
 		AtlasService.updateIndex(() => js.ua.System.alert('done'));
+	}
+
+	_onAddAllToRelease() {
+		const childIds = this._searchResult.getChildren().map(child => child.getAttr("id"));
+		ReleaseService.getReleases(releases => this._itemSelect.load(releases));
+		this._itemSelect.open(release => {
+			ReleaseService.addReleaseChildren(release.id, childIds, () => js.ua.System.alert("@string/alert-processing-done"));
+		});
 	}
 
 	// --------------------------------------------------------------------------------------------

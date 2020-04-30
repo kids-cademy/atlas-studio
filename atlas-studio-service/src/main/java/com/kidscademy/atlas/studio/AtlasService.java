@@ -96,8 +96,6 @@ public interface AtlasService {
 
     Map<String, String> importObjectFacts(Link link);
 
-    List<Feature> importObjectFeatures(Link link);
-
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
     
     boolean checkAtlasObjectName(String name);

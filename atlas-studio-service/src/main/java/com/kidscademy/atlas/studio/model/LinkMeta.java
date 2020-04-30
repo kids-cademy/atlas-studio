@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,18 +28,25 @@ import js.log.LogFactory;
 import js.util.Classes;
 
 @Entity
-public class LinkMeta implements Domain {
+public class LinkMeta implements Domain, GraphicObject {
     private static final Log log = LogFactory.getLog(LinkMeta.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "External Source";
+
+    private Date timestamp;
     private String domain;
     private String display;
     private String definition;
     private String features;
 
+    @Transient
+    private String name;
+    
     /**
      * Root-relative media SRC for link icon. This value is initialized when load
      * link from database with some contextual path and icon file name from
@@ -59,6 +67,7 @@ public class LinkMeta implements Domain {
 
     @PostLoad
     public void postLoad() {
+	name = domain;
 	iconSrc = Files.mediaSrc(this);
     }
 
@@ -83,8 +92,34 @@ public class LinkMeta implements Domain {
 	return domain;
     }
 
+    @Override
+    public Date getTimestamp() {
+	return timestamp;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
+    }
+
+    @Override
+    public String getName() {
+	return name;
+    }
+
+    @Override
     public String getDisplay() {
 	return display;
+    }
+
+    @Override
+    public String getDefinition() {
+	return definition;
+    }
+
+    @Override
+    public MediaSRC getIconSrc() {
+	return iconSrc;
     }
 
     public String getFeatures() {

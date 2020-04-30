@@ -1,15 +1,14 @@
 $package("com.kidscademy.format");
 
-com.kidscademy.format.ImageFormat = function () {
-};
+com.kidscademy.format.ImageFormat = class {
+    constructor() {
+    }
 
-com.kidscademy.format.ImageFormat.prototype = {
-    format: function (path) {
+    format(path) {
         return "/media/" + path;
-    },
+    }
 
-    toString: function () {
+    toString() {
         return "com.kidscademy.format.ImageFormat";
     }
 };
-$extends(com.kidscademy.format.ImageFormat, Object);

@@ -28,6 +28,8 @@ public interface ReleaseService {
 
     Release saveRelease(Release release) throws IOException;
 
+    void clearRelease(int releaseId);
+
     void removeRelease(int releaseId) throws IOException, BusinessException;
 
     void updateReleaseGraphics(int releaseId, String background) throws IOException;

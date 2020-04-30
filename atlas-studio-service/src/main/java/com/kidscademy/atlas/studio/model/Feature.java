@@ -1,8 +1,10 @@
 package com.kidscademy.atlas.studio.model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 /**
@@ -15,13 +17,14 @@ import javax.persistence.Transient;
  * 
  * @author Iulian Rotaru
  */
-@Embeddable
+@Entity
 public class Feature {
-    /**
-     * System unique feature name is for internal use only; it is not meant to be
-     * displayed on user interface.
-     */
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne
+    private FeatureMeta meta;
 
     /**
      * Mandatory numeric value. If optional {@link #maximum} value is provided this
@@ -37,15 +40,6 @@ public class Feature {
     private Double maximum;
 
     /**
-     * Physical quantity is used to determine measurement unit. Features always use
-     * non prefixed units from International System of Units, also known as metric.
-     * Non prefixed units are one (1) references without any factor, e.g. meter not
-     * kilometer or other multiple or submultiple.
-     */
-    @Enumerated(EnumType.STRING)
-    private PhysicalQuantity quantity;
-
-    /**
      * Display is used on atlas studio user interface and is not strictly part of
      * domain model.
      */
@@ -53,22 +47,21 @@ public class Feature {
     private String display;
 
     public Feature() {
-
     }
 
-    public Feature(String name, PhysicalQuantity quantity) {
-	this.name = name;
-	this.quantity = quantity;
-    }
-
-    public Feature(String name, double value, PhysicalQuantity quantity) {
-	this(name, quantity);
+    /**
+     * Test constructor.
+     * 
+     * @param meta
+     * @param value
+     * @param maximum
+     */
+    public Feature(FeatureMeta meta, double value, Double... maximum) {
+	this.meta = meta;
 	this.value = value;
-    }
-
-    public Feature(String name, double value, double maximum, PhysicalQuantity quantity) {
-	this(name, value, quantity);
-	this.maximum = maximum;
+	if (maximum.length == 1) {
+	    this.maximum = maximum[0];
+	}
     }
 
     public void postLoad() {
@@ -76,11 +69,7 @@ public class Feature {
     }
 
     public boolean isScalar() {
-	return quantity == PhysicalQuantity.SCALAR;
-    }
-
-    public String getName() {
-	return name;
+	return meta.getQuantity() == PhysicalQuantity.SCALAR;
     }
 
     public double getValue() {
@@ -95,16 +84,20 @@ public class Feature {
 	return maximum != null;
     }
 
-    public PhysicalQuantity getQuantity() {
-	return quantity;
-    }
-
     public void setDisplay(String display) {
 	this.display = display;
     }
 
+    public String getName() {
+	return meta.getName();
+    }
+
+    public PhysicalQuantity getQuantity() {
+	return meta.getQuantity();
+    }
+
     @Override
     public String toString() {
-	return name;
+	return meta.getName();
     }
 }

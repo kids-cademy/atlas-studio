@@ -37,6 +37,11 @@ public class QuantityFormatTest {
 	assertThat(mass(123000), equalTo("123 tons"));
     }
 
+    @Test
+    public void mass_large() {
+	assertThat(mass(1251000000000000000000.0), equalTo("1.2510E+18 tons"));
+    }
+
     private static String mass(double value) {
 	QuantityFormat qf = new QuantityFormat(value, PhysicalQuantity.MASS);
 	return Strings.concat(qf.value(), ' ', qf.units());
@@ -49,7 +54,7 @@ public class QuantityFormatTest {
 	assertThat(time(100), equalTo("1.67 min"));
 	assertThat(time(1000), equalTo("16.67 min"));
 	assertThat(time(10000), equalTo("2.78 h"));
-	assertThat(time(10000000), equalTo("2777.78 h"));
+	assertThat(time(10000000), equalTo("2,777.78 h"));
 	assertThat(time(100000000), equalTo("3.17 years"));
 	assertThat(time(1000000000), equalTo("31.69 years"));
 	assertThat(time(10000000000.0), equalTo("316.89 years"));
@@ -64,7 +69,7 @@ public class QuantityFormatTest {
 	assertThat(time(12300), equalTo("3.42 h"));
 	assertThat(time(123000), equalTo("34.17 h"));
 	assertThat(time(1230000), equalTo("341.67 h"));
-	assertThat(time(12300000), equalTo("3416.67 h"));
+	assertThat(time(12300000), equalTo("3,416.67 h"));
 	assertThat(time(123000000), equalTo("3.9 years"));
 	assertThat(time(1230000000), equalTo("38.98 years"));
 	assertThat(time(12300000000.0), equalTo("389.77 years"));
@@ -110,9 +115,9 @@ public class QuantityFormatTest {
 	assertThat(speed(1), equalTo("3.6 km/h"));
 	assertThat(speed(10), equalTo("36 km/h"));
 	assertThat(speed(100), equalTo("360 km/h"));
-	assertThat(speed(1000), equalTo("3600 km/h"));
-	assertThat(speed(10000), equalTo("36000 km/h"));
-	assertThat(speed(100000), equalTo("360000 km/h"));
+	assertThat(speed(1000), equalTo("3,600 km/h"));
+	assertThat(speed(10000), equalTo("36,000 km/h"));
+	assertThat(speed(100000), equalTo("360,000 km/h"));
     }
 
     @Test
@@ -121,9 +126,9 @@ public class QuantityFormatTest {
 	assertThat(speed(1.23), equalTo("4.43 km/h"));
 	assertThat(speed(12.3), equalTo("44.28 km/h"));
 	assertThat(speed(123.0), equalTo("442.8 km/h"));
-	assertThat(speed(1230), equalTo("4428 km/h"));
+	assertThat(speed(1230), equalTo("4,428 km/h"));
     }
-
+    
     private static String speed(double value) {
 	QuantityFormat qf = new QuantityFormat(value, PhysicalQuantity.SPEED);
 	return Strings.concat(qf.value(), ' ', qf.units());

@@ -7,12 +7,6 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._featuresMeta = null;
 
 		/**
-		 * Atlas object features is an array of feature objects.
-		 * @type {Array}
-		 */
-		this._features = null;
-
-		/**
 		 * This view displays current value(s) of the atlas object features.
 		 * @type {js.dom.Element}
 		 */
@@ -23,8 +17,8 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 		this._featureForm = this.getByClass(com.kidscademy.FormData);
 
-		this._featureNameSelect = this._featureForm.getByName("name");
-		this._featureNameSelect.on("change", this._onFeatureNameChange, this);
+		this._featureNameSelect = this._featureForm.getByName("meta.name");
+		this._featureNameSelect.on("change", this._onFeatureMetaNameChange, this);
 
 		this._unitsSelect = this._featureForm.getByName("units");
 		this._unitsSelect.on("change", this._onUnitsChange, this);
@@ -49,14 +43,13 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	}
 
 	setValue(features) {
-		this._features = features;
 		this._featuresView.setObject(features);
 		this._updateActions();
 		return this;
 	}
 
 	getValue() {
-		return this._featuresView.getChildren().map(featureView => featureView.getUserData());
+		return this._featuresView.getListData();
 	}
 
 	isValid() {
@@ -66,42 +59,14 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
-	_onImport() {
-		const load = (link) => AtlasService.importObjectFeatures(link, features => this.setValue(features));
-
-		const links = this._formPage.getLinks("features");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("No provider link for features.");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linkSelect.open(links, load);
-				this._actions.show("close");
-		}
-	}
-
-	_onLoad() {
-		AtlasService.getFeatureTemplates(this._featuresClass, templates => this.setValue(templates));
-	}
-
 	_onAdd() {
 		// feature name select options should display only not already used names
-		const currentNames = this._featuresView.getChildren().map(featureView => featureView.getUserData().name);
+		const currentNames = this._featuresView.getChildren().map(featureView => featureView.getUserData().meta.name);
 		const options = this._featuresMeta.filter(featureMeta => currentNames.indexOf(featureMeta.name) == -1);
 		options.unshift({ id: 0, name: "" });
 		this._featureNameSelect.setOptions(options);
 
-		this._featureForm.setObject({
-			name: null,
-			value: null,
-			maximum: null,
-			quantity: null
-		}).show();
+		this._featureForm.reset().show();
 		this._selectedFeatureView = null;
 	}
 
@@ -114,8 +79,8 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		}
 
 		const feature = this._featureForm.getObject();
-		// feature name select store id into option value and we need feature name, stored on text
-		feature.name = this._featureNameSelect.getText();
+		// feature meta name select store id into option value and we need feature name, stored on text
+		feature.meta.name = this._featureNameSelect.getText();
 		feature.value = this._round(feature.value * this._getUnitsValue());
 		if (feature.maximum) {
 			feature.maximum = this._round(feature.maximum * this._getUnitsValue());
@@ -174,21 +139,12 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._featureNameSelect.setOptions(this._featuresMeta);
 
 		const feature = this._selectedFeatureView.getUserData();
-		this._updateFeatureForm(feature, (ok) => {
-			if (!ok) {
-				js.ua.System.alert("@string/alert-inconsistent-db");
-				this._selectedFeatureView.remove();
-				return;
-			}
-
-			// create new object instance in order to avoid scalling value of the edited feature reference 
-			this._featureForm.setObject({
-				name: feature.name,
-				definition: feature.definition,
-				value: this._round(feature.value / this._getUnitsValue()),
-				maximum: feature.maximum != null ? this._round(feature.maximum / this._getUnitsValue()) : null,
-				quantity: feature.quantity
-			}).show();
+		this._initFeatureForm(feature.meta, () => {
+			this._featureForm.setObject(feature);
+			const factor = this._unitsSelect.getValue();
+			this._featureForm.setValue("value", this._round(feature.value / factor));
+			this._featureForm.setValue("maximum", feature.maximum != null ? this._round(feature.maximum / factor) : null);
+			this._featureForm.show();
 		});
 	}
 
@@ -196,54 +152,63 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._actions.showAll();
 	}
 
-	_onQuantityChange(ev) {
-		this._updateFeatureForm();
-	}
-
 	_onUnitsChange(ev) {
 		const feature = this._featureForm.getObject();
-		this._formPage.setPageAttr(feature.quantity, this._unitsSelect.getText());
+		// feature meta name select store id into option value and we need feature name, stored on text
+		feature.meta.name = this._featureNameSelect.getText();
+		this._formPage.setPageAttr(feature.meta.name, this._unitsSelect.getText());
 
 		const factor = this._unitsSelect.getValue();
 		this._featureForm.setValue("value", this._round(feature.value * factor));
 		this._featureForm.setValue("maximum", feature.maximum != null ? this._round(feature.maximum * factor) : null);
 	}
 
-	_onFeatureNameChange(ev) {
-		const feature = ev.target.getObject();
-		this._updateFeatureForm(feature);
+	_onFeatureMetaNameChange(ev) {
+		const featureMeta = ev.target.getObject();
+		this._initFeatureForm(featureMeta);
 	}
 
-	_updateFeatureForm(feature, callback) {
-		this._featureForm.setValue("name", feature.name);
-		this._featureForm.setValue("quantity", feature.quantity);
-
-		// feature definition is found on meta
-		const featureMeta = this._featuresMeta.find(featureMeta => featureMeta.name === feature.name);
-		if (!featureMeta) {
-			if (callback) { callback(false); }
+	/**
+	 * Initialize feature form from given feature meta object. This method invokes services on server and
+	 * need to be executed asynchronously. Callback function has no arguments.
+	 * 
+	 * @param {Object} featureMeta feature meta object,
+	 * @param {Function} callback optional callback invoked after initialization completes.
+	 */
+	_initFeatureForm(featureMeta, callback = null) {
+		if (featureMeta.id === 0) {
+			this._unitsSelect.clearOptions();
+			this._featureForm.reset();
+			if (callback != null) {
+				callback();
+			}
 			return;
 		}
-		this._featureForm.setValue("definition", featureMeta.definition);
 
-		if (feature.quantity === "SCALAR") {
+		const feature = { meta: featureMeta };
+		this._featureForm.setObject(feature);
+
+		if (featureMeta.quantity === "SCALAR") {
 			this._unitsSelect.hide();
-			if (callback) { callback(true); }
+			if (callback != null) {
+				callback();
+			}
 			return;
 		}
 
 		this._unitsSelect.show();
-		AtlasService.getQuantityUnits(feature.quantity, units => {
+		AtlasService.getQuantityUnits(featureMeta.quantity, units => {
 			this._unitsSelect.setOptions(units);
 
-			var unitText = this._formPage.getPageAttr(feature.quantity);
+			var unitText = this._formPage.getPageAttr(featureMeta.name);
 			if (unitText == null) {
 				unitText = units[0].text;
-				this._formPage.setPageAttr(feature.quantity, unitText);
+				this._formPage.setPageAttr(featureMeta.name, unitText);
 			}
 			this._unitsSelect.setValue(unitText);
-
-			if (callback) { callback(true); }
+			if (callback != null) {
+				callback();
+			}
 		});
 	}
 
@@ -255,11 +220,6 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		return Number(number.toFixed(9));
 	}
 
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.form.FeaturesControl";
 	}
