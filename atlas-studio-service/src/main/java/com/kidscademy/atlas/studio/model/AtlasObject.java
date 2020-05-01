@@ -201,8 +201,9 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
     public AtlasObject() {
     }
 
-    public AtlasObject(int id) {
-	this.id = id;
+    public AtlasObject(AtlasCollection collection) {
+	Params.notNull(collection, "Atlas collection");
+	this.collection = collection;
     }
 
     /**
@@ -210,8 +211,8 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
      * 
      * @param collection
      */
-    public AtlasObject(AtlasCollection collection) {
-	this.collection = collection;
+    public AtlasObject(int id) {
+	this.id = id;
     }
 
     /**
@@ -577,7 +578,16 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	AtlasObject object = new AtlasObject();
 	object.collection = collection;
 	object.state = AtlasObject.State.CREATED;
-	object.description = "<text><section name='text'></section></text>";
+
+	StringBuilder description = new StringBuilder();
+	description.append("<text>");
+	for (DescriptionMeta descriptionMeta : collection.getDescriptionMeta()) {
+	    description.append("<section name='");
+	    description.append(descriptionMeta.getName());
+	    description.append("'></section>");
+	}
+	description.append("</text>");
+	object.description = description.toString();
 
 	object.taxonomy = new ArrayList<>();
 	for (TaxonMeta taxonMeta : collection.getTaxonomyMeta()) {

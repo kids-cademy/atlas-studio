@@ -7,8 +7,15 @@ public class DescriptionMeta {
     private String name;
     private String definition;
 
+    public DescriptionMeta() {
+    }
+
     public String getName() {
 	return name;
+    }
+
+    public DescriptionMeta(String name) {
+	this.name = name;
     }
 
     public String getDefinition() {

@@ -68,8 +68,7 @@ public class AtlasDaoWriteTest {
      */
     @Test
     public void prePersistObject() {
-	AtlasObject object = new AtlasObject();
-	object.setCollection(new AtlasCollection(1, "instrument"));
+	AtlasObject object = new AtlasObject(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
@@ -104,8 +103,7 @@ public class AtlasDaoWriteTest {
      */
     @Test
     public void postMergeAtlasObject() {
-	AtlasObject object = new AtlasObject();
-	object.setCollection(new AtlasCollection(1, "instrument"));
+	AtlasObject object = new AtlasObject(new AtlasCollection(1, "instrument"));
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setName("banjo");
 	object.setDisplay("Banjo");
@@ -143,8 +141,7 @@ public class AtlasDaoWriteTest {
 
     @Test
     public void saveAtlasObject() throws MalformedURLException {
-	AtlasObject object = new AtlasObject();
-	object.setCollection(new AtlasCollection(1, "instrument"));
+	AtlasObject object = new AtlasObject(new AtlasCollection(1, "instrument"));
 
 	object.setState(AtlasObject.State.DEVELOPMENT);
 	object.setName("banjo");

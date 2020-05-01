@@ -11,16 +11,16 @@ import com.kidscademy.atlas.studio.tool.GradlewProcess;
 import js.util.Classes;
 
 public class AndroidToolsTest {
-    //@Test
+    @Test
     public void build() throws IOException {
-	GradlewProcess gradlew = new GradlewProcess(new File("D:\\tmp\\apps\\www"));
+	GradlewProcess gradlew = new GradlewProcess(new File("fixture/tools/wild-birds"));
 	gradlew.exec("clean build");
     }
-    
+
     @Test
     public void gitInit() throws IOException {
 	Classes.setFieldValue(GitProcess.class, "BIN", "C://Program Files/Git/cmd/git.exe");
-	GitProcess git = new GitProcess(new File("D://tmp/apps/www"));
+	GitProcess git = new GitProcess(new File("fixture/tools/wild-birds"));
 	git.exec("init");
     }
 }

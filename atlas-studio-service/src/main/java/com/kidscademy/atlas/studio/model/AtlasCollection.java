@@ -1,6 +1,8 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +75,10 @@ public class AtlasCollection implements GraphicObject {
     public AtlasCollection(int id, String name) {
 	this.id = id;
 	this.name = name;
+	this.taxonomyMeta = Collections.emptyList();
+	this.descriptionMeta = Arrays.asList(new DescriptionMeta("text"));
+	this.featuresMeta = Collections.emptyList();
+	this.flags = new Flags(true);
     }
 
     @PostLoad
@@ -144,7 +150,7 @@ public class AtlasCollection implements GraphicObject {
     }
 
     public List<DescriptionMeta> getDescriptionMeta() {
-        return descriptionMeta;
+	return descriptionMeta;
     }
 
     public List<TaxonMeta> getTaxonomyMeta() {

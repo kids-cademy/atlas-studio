@@ -30,6 +30,18 @@ public class Flags {
      */
     private boolean spreading;
 
+    public Flags() {
+
+    }
+
+    public Flags(boolean defaultValue) {
+	endDate = defaultValue;
+	progenitor = defaultValue;
+	conservationStatus = defaultValue;
+	audioSample = defaultValue;
+	spreading = defaultValue;
+    }
+
     public void setEndDate(boolean endDate) {
 	this.endDate = endDate;
     }
@@ -39,11 +51,11 @@ public class Flags {
     }
 
     public boolean hasProgenitor() {
-        return progenitor;
+	return progenitor;
     }
 
     public void setProgenitor(boolean progenitor) {
-        this.progenitor = progenitor;
+	this.progenitor = progenitor;
     }
 
     public void setConservationStatus(boolean conservationStatus) {

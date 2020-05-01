@@ -428,8 +428,7 @@ public class AtlasServiceImpl implements AtlasService {
 	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(articleURL);
 
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
-	AtlasObject object = new AtlasObject();
-	object.setCollection(collection);
+	AtlasObject object = AtlasObject.create(collection);
 
 	object.setName(Strings.scientificToDashedName(article.getScientificName()));
 	if (object.getName() == null) {
