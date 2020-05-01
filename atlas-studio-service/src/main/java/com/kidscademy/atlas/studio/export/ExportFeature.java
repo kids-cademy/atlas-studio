@@ -84,6 +84,10 @@ public class ExportFeature {
 	EN.put("mineral.potassium", "Potassium");
 	EN.put("mineral.sodium", "Sodium");
 	EN.put("mineral.zinc", "Zinc");
+	EN.put("orbit.radius", "Mean Orbit Radius");
+	EN.put("orbit.eccentricity", "Orbital Eccentricity");
+	EN.put("orbit.period", "Orbital Period");
+	EN.put("orbit.speed", "Orbital Speed");
 	EN.put("orbit.aphelion", "Orbit Aphelion");
 	EN.put("orbit.perihelion", "Orbit Perihelion");
 	EN.put("width", "Width");
@@ -97,5 +101,11 @@ public class ExportFeature {
 	EN.put("ship.displacement", "Ship Displacement");
 	EN.put("radius", "Mean Radius");
 	EN.put("mass", "Mass");
+	EN.put("albedo", "Albedo");
+	EN.put("density", "Mean Density");
+	EN.put("speed.escape", "Escape velocity");
+	EN.put("gravity", "Surface Gravity");
+	EN.put("rotation.period", "Rotation Period");
+	EN.put("axial.tilt", "Axial Tilt");
     }
 }

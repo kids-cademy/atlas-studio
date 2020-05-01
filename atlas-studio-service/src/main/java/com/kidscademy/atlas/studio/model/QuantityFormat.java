@@ -153,6 +153,9 @@ public class QuantityFormat implements Comparator<Variant> {
 	UNITS.put(PhysicalQuantity.SPEED, SpeedUnits.values());
 	UNITS.put(PhysicalQuantity.POWER, PowerUnits.values());
 	UNITS.put(PhysicalQuantity.FOOD_ENERGY, FoodEnergyUnits.values());
+	UNITS.put(PhysicalQuantity.DENSITY, DensityUnits.values());
+	UNITS.put(PhysicalQuantity.ACCELERATION, AccelerationUnits.values());
+	UNITS.put(PhysicalQuantity.ANGLE, AngleUnits.values());
     }
 
     interface Unit {
@@ -199,7 +202,8 @@ public class QuantityFormat implements Comparator<Variant> {
     }
 
     private enum TimeUnits implements Unit {
-	SECOND(1, "s"), MINUTE(1.0 / 60.0, "min"), HOUR(1.0 / 3600.0, "h"), YEAR(1.0 / 31556952.0, "years");
+	SECOND(1, "s"), MINUTE(1.0 / 60.0, "min"), HOUR(1.0 / 3600.0, "h"), DAY(1.0 / 86400.0,
+		"days"), YEAR(1.0 / 31556952.0, "years");
 
 	private double factor;
 	private String symbol;
@@ -221,7 +225,7 @@ public class QuantityFormat implements Comparator<Variant> {
     }
 
     private enum LengthUnits implements Unit {
-	MILLIMETRE(1000, "mm"), CENTIMETRE(100, "cm"), METRE(1, "m"), KILOMETRE(0.001, "km");
+	MILLIMETRE(1000, "mm"), CENTIMETRE(100, "cm"), METRE(1, "m"), KILOMETRE(1 / 1000.0, "km"), AU(1 / 149597870700.0, "AU");
 
 	private double factor;
 	private String symbol;
@@ -243,7 +247,7 @@ public class QuantityFormat implements Comparator<Variant> {
     }
 
     private enum SpeedUnits implements Unit {
-	KILOMETRE_PER_HOUR(3.6, "km/h");
+	KILOMETRE_PER_HOUR(3.6, "km/h"), KILOMETRE_PER_SECOND(1 / 1000.0, "km/s");
 
 	private double factor;
 	private String symbol;
@@ -307,6 +311,72 @@ public class QuantityFormat implements Comparator<Variant> {
 	    return symbol;
 	}
     }
+
+    private enum DensityUnits implements Unit {
+	KILOGRAM_PER_CUBIC_METER(1, "kg/m3"), GRAM_PER_CUBIC_CENTIMETER(0.001, "g/cm3");
+
+	private double factor;
+	private String symbol;
+
+	private DensityUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum AccelerationUnits implements Unit {
+	METER_PER_SQUARE_SECOND(1, "m/s2");
+
+	private double factor;
+	private String symbol;
+
+	private AccelerationUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum AngleUnits implements Unit {
+	DEGREE(1, "°");
+
+	private double factor;
+	private String symbol;
+
+	private AngleUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
 }
 
 final class Variant {
@@ -321,7 +391,7 @@ final class Variant {
     final String units;
 
     Variant(double value, QuantityFormat.Unit unit) {
-	this.numericValue = round(value * unit.factor(), 2);
+	this.numericValue = round(value * unit.factor(), 4);
 	this.formattedValue = numberFormat.format(this.numericValue);
 	this.units = unit.symbol();
     }

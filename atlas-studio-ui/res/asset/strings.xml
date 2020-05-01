@@ -133,6 +133,9 @@
 	<quantity-speed>SPEED</quantity-speed>
 	<quantity-power>POWER</quantity-power>
 	<quantity-food-energy>FOOD_ENERGY</quantity-food-energy>
+	<quantity-density>DENSITY</quantity-density>
+	<quantity-acceleration>ACCELERATION</quantity-acceleration>
+	<quantity-angle>ANGLE</quantity-angle>
 
 	<release-create>Create Release</release-create>
 	<release-edit>Edit Release</release-edit>
