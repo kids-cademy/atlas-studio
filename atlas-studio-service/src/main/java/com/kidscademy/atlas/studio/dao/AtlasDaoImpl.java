@@ -152,16 +152,18 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public List<AtlasItem> getAtlasCollectionItems(int collectionId) {
+	return em.createQuery("select i from AtlasItem i where i.collection.id=:collectionId order by i.display", AtlasItem.class)
+		.setParameter("collectionId", collectionId).getResultList();
+    }
+
+    @Override
     public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon) {
 	List<Integer> ids = em.createQuery(
 		"select o.id from AtlasObject o join o.taxonomy t where o.collection.id=:collectionId and t.name=:taxonName and t.value=:taxonValue",
 		Integer.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxon.getName())
 		.setParameter("taxonValue", taxon.getValue()).getResultList();
-	if (ids.isEmpty()) {
-	    return Collections.emptyList();
-	}
-	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class).setParameter("ids", ids)
-		.getResultList();
+	return getAtlasItems(ids);
     }
 
     @Override
@@ -387,7 +389,10 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getAtlasItems(List<Integer> objectIds) {
-	return em.createQuery("select i from AtlasItem i where i.id in :ids", AtlasItem.class)
+	if (objectIds.isEmpty()) {
+	    return Collections.emptyList();
+	}
+	return em.createQuery("select i from AtlasItem i where i.id in :ids order by i.display", AtlasItem.class)
 		.setParameter("ids", objectIds).getResultList();
     }
 

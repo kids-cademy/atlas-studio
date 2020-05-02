@@ -14,6 +14,7 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 		this._relatedView.on("drop", this._onRelatedViewDrop, this);
 
 		this._candidatesView = this.getByCss(".icons-list.candidates");
+		this._candidatesView.on("click", this._onCandidatesClick, this);
 		this._candidatesView.on("dragstart", this._onDragStart, this);
 		this._candidatesView.on("dragover", this._onDragOver, this);
 		this._candidatesView.on("drop", this._onCandidatesViewDrop, this);
@@ -27,14 +28,14 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	onCreate(formPage) {
 		super.onCreate(formPage);
 		const taxonomy = formPage.getObject().taxonomy;
-		this._taxonomySelect.setOptions(taxonomy);
+		this._taxonomySelect.setOptions([{ name: null, value: "ALL" }].concat(taxonomy));
 	}
 
 	// --------------------------------------------------------------------------------------------
 	// CONTROL INTERFACE
 
 	setValue(names) {
-		if(names.length === 0) {
+		if (names.length === 0) {
 			this._relatedView.setObject([]);
 			return;
 		}
@@ -65,30 +66,21 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 
 	_onSearch() {
 		const object = this._formPage.getObject();
-
-		var taxon = null;
-		switch (object.taxonomy.length) {
-			case 0:
-				js.ua.System.alert("Please set atlas object taxonomy. It is needed to filter out related objects.");
-				return;
-
-			case 1:
-				this._getCollectionItemsByTaxon(object.taxonomy[0]);
-				break;
-
-			default:
-				this._candidatesView.hide();
-				this._taxonomySelect.show();
-				this._taxonomySelect.reset();
-			// _getCollectionItemsByTaxon(taxon) is invoked when user make taxon selection, see _onTaxonomySelectChange(ev)
+		if (object.taxonomy.length === 0) {
+			js.ua.System.alert("Please set atlas object taxonomy. It is needed to filter out related objects.");
+			return;
 		}
+
+		this._candidatesView.hide();
+		this._taxonomySelect.show();
+		this._taxonomySelect.reset();
 	}
 
 	_onAddAll() {
-		while(this._candidatesView.hasChildren()) {
+		while (this._candidatesView.hasChildren()) {
 			this._relatedView.addChildFirst(this._candidatesView.getFirstChild());
 		}
-		this._onClose();	
+		this._onClose();
 	}
 
 	_onClose() {
@@ -103,11 +95,8 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 	}
 
 	_getCollectionItemsByTaxon(taxon) {
-		const excludes = [];
-		this._relatedView.getChildren().forEach(view => excludes.push({ id: view.getAttr("id") }));
-		excludes.push({
-			id: this._formPage.getObject().id
-		});
+		const excludes = this._relatedView.getChildren().map(view => { return { id: view.getAttr("id") } });
+		excludes.push({ id: this._formPage.getObject().id });
 
 		const collectionId = this._formPage.getCollection().id;
 		AtlasService.getCollectionItemsByTaxon(collectionId, taxon, excludes, items => {
@@ -167,6 +156,14 @@ com.kidscademy.form.RelatedControl = class extends com.kidscademy.form.FormContr
 		}
 		this._candidatesView.addChild(this._relatedView.getByIndex(data.index));
 		this._fireEvent("input");
+	}
+
+	_onCandidatesClick(ev) {
+		const candidateView = ev.target.getParentByCssClass("item");
+		if (candidateView != null) {
+			ev.halt();
+			this._relatedView.addChild(candidateView);
+		}
 	}
 
 	/**

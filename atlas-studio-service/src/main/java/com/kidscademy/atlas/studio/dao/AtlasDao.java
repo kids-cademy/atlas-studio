@@ -129,6 +129,8 @@ public interface AtlasDao {
 
     List<AtlasItem> getAtlasItems(List<Integer> objectIds);
 
+    List<AtlasItem> getAtlasCollectionItems(int collectionId);
+
     int getCollectionSize(int collectionId);
 
     int getReleaseSize(int releaseId);

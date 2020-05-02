@@ -178,7 +178,12 @@ public class AtlasServiceImpl implements AtlasService {
 
     @Override
     public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon, List<AtlasItem> excludes) {
-	List<AtlasItem> items = atlasDao.getCollectionItemsByTaxon(collectionId, taxon);
+	List<AtlasItem> items;
+	if (taxon.isWildcard()) {
+	    items = atlasDao.getAtlasCollectionItems(collectionId);
+	} else {
+	    items = atlasDao.getCollectionItemsByTaxon(collectionId, taxon);
+	}
 	items.removeAll(excludes);
 	return items;
     }

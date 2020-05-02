@@ -8,6 +8,7 @@
 .action-bar-select .abs-control {
 	display: inline-block;
 	width: auto;
+	box-sizing: border-box;
 	border: solid 1px @color/mute;
 }
 
@@ -24,8 +25,8 @@
 	box-sizing: border-box;
 	vertical-align: top;
 	width: 260px;
-	height: @dimen/input-height;
-	line-height: @dimen/input-height;
+	height: @eval(SUB @dimen/action-icon-size 2);
+	line-height: @eval(SUB @dimen/action-icon-size 2);
 	margin: 0;
 	padding: @dimen/input-padding;
 	border: 0;
@@ -33,13 +34,13 @@
 }
 
 .action-bar-select .abs-icon {
-	display: inline-block;
-	box-sizing: border-box;
-	vertical-align: top;
-	width: @dimen/input-height;
-	height: @dimen/input-height;
-	cursor: pointer;
-	margin: 1px;
+	xdisplay: inline-block;
+	xbox-sizing: border-box;
+	xvertical-align: top;
+	width: @eval(SUB @dimen/action-icon-size 2);
+	height: @eval(SUB @dimen/action-icon-size 2);
+	xcursor: pointer;
+	xmargin: 1px;
 }
 
 .action-bar-select .abs-options {

@@ -39,6 +39,10 @@ public class Taxon implements Displayable {
 	this.value = value;
     }
 
+    public boolean isWildcard() {
+	return name == null;
+    }
+
     @Override
     public String toDisplay() {
 	return Strings.concat(name, ' ', value);
