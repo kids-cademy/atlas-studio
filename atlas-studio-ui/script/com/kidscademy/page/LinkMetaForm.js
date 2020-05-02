@@ -1,8 +1,13 @@
 $package("com.kidscademy.page");
 
-com.kidscademy.page.LinkMetaform = class extends com.kidscademy.Page {
+com.kidscademy.page.LinkMetaForm = class extends com.kidscademy.Page {
     constructor() {
         super();
+
+        this._sidebar.setTitle("@string/link-meta");
+        this._sidebar.on("collections", this._onCollections, this);
+        this._sidebar.on("links-meta", this._onLinksMeta, this);
+        this._sidebar.on("features-meta", this._onFeaturesMeta, this);
 
         this._linkMeta = null;
         this._form = this.getByTag("form");
@@ -59,9 +64,21 @@ com.kidscademy.page.LinkMetaform = class extends com.kidscademy.Page {
         WinMain.back();
     }
 
+    _onCollections() {
+        WinMain.assign("@link/collections");
+    }
+
+    _onLinksMeta() {
+        WinMain.assign("@link/links-meta");
+    }
+
+    _onFeaturesMeta() {
+        WinMain.assign("@link/features-meta");
+    }
+
     toString() {
-        return "com.kidscademy.page.LinkMetaform";
+        return "com.kidscademy.page.LinkMetaForm";
     }
 };
 
-WinMain.createPage(com.kidscademy.page.LinkMetaform);
+WinMain.createPage(com.kidscademy.page.LinkMetaForm);

@@ -4,8 +4,9 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
     constructor() {
         super();
 
-        this._sidebar.showObject();
+        this._sidebar.setTitle("@string/collections");
         this._sidebar.on("collections", this._onCollections, this);
+        this._sidebar.on("links-meta", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
 
         this._form = this.getByTag("form");
@@ -40,14 +41,6 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
         this._form.setObject(collection);
     }
 
-    _onCollections() {
-        WinMain.assign("@link/collections");
-    }
-
-    _onFeaturesMeta() {
-        WinMain.assign("@link/features-meta");
-    }
-
     _onSave(ev) {
         if (this._form.isValid()) {
             AtlasService.saveAtlasCollection(this._form.getObject(this._collection), () => WinMain.back());
@@ -56,6 +49,18 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
 
     _onCancel(ev) {
         WinMain.back();
+    }
+
+    _onCollections() {
+        WinMain.assign("@link/collections");
+    }
+
+    _onLinksMeta() {
+        WinMain.assign("@link/links-meta");
+    }
+
+    _onFeaturesMeta() {
+        WinMain.assign("@link/features-meta");
     }
 
     toString() {

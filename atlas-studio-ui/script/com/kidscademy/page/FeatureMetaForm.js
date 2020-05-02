@@ -4,6 +4,11 @@ com.kidscademy.page.FeatureMetaForm = class extends com.kidscademy.Page {
     constructor() {
         super();
 
+        this._sidebar.setTitle("@string/feature-meta");
+        this._sidebar.on("collections", this._onCollections, this);
+        this._sidebar.on("links-meta", this._onLinksMeta, this);
+        this._sidebar.on("features-meta", this._onFeaturesMeta, this);
+
         this._feature = null;
         this._form = this.getByTag("form");
 
@@ -32,6 +37,18 @@ com.kidscademy.page.FeatureMetaForm = class extends com.kidscademy.Page {
 
     _onCancel(ev) {
         WinMain.back();
+    }
+
+    _onCollections() {
+        WinMain.assign("@link/collections");
+    }
+
+    _onLinksMeta() {
+        WinMain.assign("@link/links-meta");
+    }
+
+    _onFeaturesMeta() {
+        WinMain.assign("@link/features-meta");
     }
 
     toString() {

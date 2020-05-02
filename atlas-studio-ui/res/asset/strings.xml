@@ -13,7 +13,7 @@
 	<release>release</release>
 	<logout>logout</logout>
 	
-	<collections>Collections</collections>
+	<collections>Atlas Collections</collections>
 	<features-meta>Features Meta</features-meta>
 	<links-meta>External Sources</links-meta>
 	<link-references>External References</link-references>
@@ -80,7 +80,7 @@
 	<object-related>Related</object-related>
 	<object-links>Links</object-links>
 
-	<workspace-collections>Collections</workspace-collections>
+	<workspace-collections>Atlas Collections</workspace-collections>
 	<workspace-export>Export All Collections</workspace-export>
 	<workspace-external-sources>External Sources</workspace-external-sources>
 	<workspace-register-external-source>Register External Source</workspace-register-external-source>
@@ -95,11 +95,13 @@
 	<collection-import-wikipedia>Import Wikipedia Article</collection-import-wikipedia>
 	<collection-add-all-to-release>Add All To Release</collection-add-all-to-release>
 
-	<link-meta-create>Create Link Meta</link-meta-create>
-	<link-meta-edit>Edit Link Meta</link-meta-edit>
-	<link-meta-remove>Remove Link Meta</link-meta-remove>
+	<link-meta>External Source</link-meta>
+	<link-meta-create>Create External Source</link-meta-create>
+	<link-meta-edit>Edit External Source</link-meta-edit>
+	<link-meta-remove>Remove External Source</link-meta-remove>
 	<link-meta-references>References List</link-meta-references>
 
+	<feature-meta>Feature Meta</feature-meta>
 	<feature-meta-create>Create Feature Meta</feature-meta-create>
 	<feature-meta-edit>Edit Feature Meta</feature-meta-edit>
 	<feature-meta-remove>Remove Feature Meta</feature-meta-remove>

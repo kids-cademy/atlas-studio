@@ -33,8 +33,6 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
         WinMain.assign("@link/features-meta");
     }
 
-    // --------------------------------------------------------------------------------------------
-
     _onCreateFeatureMeta() {
         WinMain.assign("@link/feature-meta-form");
     }
