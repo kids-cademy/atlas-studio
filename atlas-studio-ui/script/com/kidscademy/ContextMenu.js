@@ -21,6 +21,7 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 
 		this._contextView = null;
 
+		this._defaultActions = [];
 		this.getByCssClass("close").on("click", this.hide, this);
 	}
 
@@ -29,7 +30,7 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 		$assert(action != null, "com.kidscademy.ContextMenu#on", "No menu item for action |%s|.", actionName);
 
 		if (action.hasCssClass("default-action")) {
-			this._defaultAction = { name: actionName, listener: listener, scope: scope };
+			this._defaultActions.push({ name: actionName, listener: listener, scope: scope });
 		}
 
 		const _this = this;
@@ -40,8 +41,36 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 		action.on("click", actionHandler);
 	}
 
-	getDefaultAction() {
-		return this._defaultAction;
+	/**
+	 * Get default context action handler executed on item click. Optional mouse event click can be used to
+	 * select action and special keys combinations: shift, alt and ctrl. Action element should have, beside
+	 * 'default-action' CSS class the one identifying expected key. For example default action executed when click
+	 * item plus ctrl key should have CSS classes 'default-action' and 'ctrl'.
+	 * 
+	 * Return found default action handler or null if none defined. Returned object has 'listener' and 'scope' properties.
+	 * 
+	 * @param {js.dom.Event} ev optional mouse click event.
+	 * @return {Object} default action handler or null if none defined.
+	 */
+	getDefaultAction(ev = null) {
+		for (let i = 0; i < this._defaultActions.length; ++i) {
+			const actionHandler = this._defaultActions[i];
+			const action = this.getByCss("li[data-name='%s']", actionHandler.name);
+			let accept = true;
+			if (ev.shiftKey) {
+				accept = accept && action.hasCssClass("shift");
+			}
+			if (ev.altKey) {
+				accept = accept && action.hasCssClass("alt");
+			}
+			if (ev.ctrlKey) {
+				accept = accept && action.hasCssClass("ctrl");
+			}
+			if (accept) {
+				return actionHandler;
+			}
+		}
+		return null;
 	}
 
 	/**

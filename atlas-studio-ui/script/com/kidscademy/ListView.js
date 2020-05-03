@@ -78,7 +78,7 @@ com.kidscademy.ListView = class extends js.dom.Element {
         const item = ev.target.getParentByTag("li");
         if (item != null) {
             if (this._contextMenu != null) {
-                const action = this._contextMenu.getDefaultAction();
+                const action = this._contextMenu.getDefaultAction(ev);
                 if (action != null) {
                     action.listener.call(action.scope, item);
                 }
