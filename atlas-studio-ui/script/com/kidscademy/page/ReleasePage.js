@@ -40,9 +40,7 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
         this._sidebar.setObject(release);
 
         this._objectsList.resetTimestamp();
-        ReleaseService.getReleaseItems(release.id, releases => {
-            this._objectsList.setObject(releases)
-        });
+        ReleaseService.getReleaseItems(release.id, items => this._objectsList.setObject(items));
     }
 
     _onEditRelease() {

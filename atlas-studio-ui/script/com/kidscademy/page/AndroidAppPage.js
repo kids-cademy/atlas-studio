@@ -14,6 +14,9 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._sidebar.on("build-apk", this._onBuildAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
 
+        this._releaseView = this.getByCssClass("release");
+        this._objectsList = this.getByCssClass("objects-list");
+
         const release = WinMain.url.parameters.release;
         if (release) {
             ReleaseService.getAndroidAppForRelease(release, app => {
@@ -33,6 +36,9 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
     _onAppLoaded(app) {
         this._app = app;
+        this._releaseView.setObject(app);
+        this._objectsList.resetTimestamp();
+        ReleaseService.getReleaseItems(app.release.id, items => this._objectsList.setObject(items));
     }
 
     _onOpenRelease() {

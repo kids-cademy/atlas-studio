@@ -1,4 +1,54 @@
-<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
+<div class="android-app" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<div class="release">
+		<div class="object-view">
+			<img class="iconx" data-src="icon-src" width="@dimen/icon-size-large" height="@dimen/icon-size-large" />
+			<h1 class="display" data-text="display"></h1>
+			<p class="definition" data-text="release.definition"></p>
+		</div>
+
+		<table class="properties">
+			<tr>
+				<td>App Name</td>
+				<td data-text="name"></td>
+			</tr>
+			<tr>
+				<td>Release Update</td>
+				<td data-text="release.timestamp" data-format="js.format.StandardDateTime"></td>
+			</tr>
+			<tr>
+				<td>Atlas Update</td>
+				<td data-text="release.content-timestamp" data-format="js.format.StandardDateTime"></td>
+			</tr>
+			<tr>
+				<td>Package Name</td>
+				<td data-text="package-name"></td>
+			</tr>
+			<tr>
+				<td>Version Code</td>
+				<td data-text="version-code"></td>
+			</tr>
+			<tr>
+				<td>Publisher</td>
+				<td data-text="release.publisher"></td>
+			</tr>
+			<tr>
+				<td>Edition</td>
+				<td data-text="release.edition"></td>
+			</tr>
+			<tr>
+				<td>Version</td>
+				<td data-text="release.version"></td>
+			</tr>
+			<tr>
+				<td>License</td>
+				<td data-text="release.license"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="objects-list" w:compo="compo/list-view"></div>
+
+	<div class="console"></div>
 </div>
 
 <div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
@@ -7,7 +57,6 @@
 		<li data-name="android-listing"><img src="@image/action/google-play" /><span>@string/android-store-listing</span></li>
 		<li data-name="android-settings"><img src="@image/action/settings" /><span>@string/android-settings</span></li>
 	</ul>
-
 	<ul class="menu">
 		<li data-name="clean-project"><img src="@image/action/clean-project" /><span>@string/android-clean-project</span></li>
 		<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
