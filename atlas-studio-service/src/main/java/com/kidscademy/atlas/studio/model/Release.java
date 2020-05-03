@@ -26,6 +26,7 @@ public class Release implements GraphicObject {
     private final String title = "Release";
 
     private Date timestamp;
+    private Date contentTimestamp;
     private String name;
     private String display;
     private String brief;
@@ -62,13 +63,21 @@ public class Release implements GraphicObject {
 	return id != 0;
     }
 
+    public void setTimestamp(Date timestamp) {
+	this.timestamp = timestamp;
+    }
+
     @Override
     public Date getTimestamp() {
 	return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-	this.timestamp = timestamp;
+    public Date getContentTimestamp() {
+        return contentTimestamp;
+    }
+
+    public void setContentTimestamp(Date contentTimestamp) {
+        this.contentTimestamp = contentTimestamp;
     }
 
     @Override
@@ -103,6 +112,10 @@ public class Release implements GraphicObject {
 	return graphicsBackground;
     }
 
+    public void setReadme(String readme) {
+        this.readme = readme;
+    }
+
     public String getReadme() {
 	return readme;
     }
@@ -121,6 +134,10 @@ public class Release implements GraphicObject {
 
     public String getLicense() {
 	return license;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
     }
 
     public String getPrivacy() {
@@ -143,8 +160,6 @@ public class Release implements GraphicObject {
 	release.edition = "community edition";
 	release.version = "Release 1.0";
 	release.license = "Apache License 2.0";
-	release.readme = "readme...";
-	release.privacy = "privacy...";
 	return release;
     }
 }

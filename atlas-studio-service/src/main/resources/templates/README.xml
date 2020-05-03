@@ -1,13 +1,13 @@
 <description>
-	<h1>${app_name}</h1>
-	<p>${app_definition}</p>
-	<p>It is focused on facts, with reasonable amount of text and media content. </p>
-	<p>It is not meant to be exhaustive but rather to be used as a quick reference on a particular subject or field. For complete reference, the reader can visit the external sources that are linked on every article.</p>
-	<p>Atlas is an open source and non-profit project. Updated sources are available on GitHub, https://github.com/kids-cademy/ under Apache License 2.0.</p>
-	<p>Content, including media is contributed by volunteers and most part is compiled from sources from Internet, mostly Wikipedia but by no means limited to. See the list of used sources at the end of this document.  </p>
+	<h1>${app-name}</h1>
+	<p>${app-definition}</p>
+	<p>It is focused on facts, with reasonable amount of text and media content.</p>
+	<p>${app-name} is not meant to be exhaustive but rather to be used as a quick reference on a particular subject or field. For complete reference, the reader can visit the external sources that are linked on every article.</p>
+	<p>${app-name} is an open source and non-profit project. Updated sources are available on GitHub, https://github.com/kids-cademy/ under Apache License 2.0.</p>
+	<p>Content, including media is contributed by volunteers and most part is compiled from sources from Internet, mostly Wikipedia but by no means limited to. See the list of used sources at the end of this document.</p>
 	<p>When copied, content is believed to be covered by the fair use amendment, as define by https://en.wikipedia.org/wiki/Fair_use. For rights violation please contact kids (a)cademy.</p>
-	<p>Any feedback is welcomed, especially the critical one. We really are committed to improve both presentation and content quality. You can, of course, contribute. Please visit http://kids-cademy.com.</p>
-	<p>Thank you for using the atlas, please help improving and spread the word.</p>
+	<p>Any feedback is welcomed, especially the critical one. We really are committed to improve both presentation and content quality. You can, of course, contribute. There is Atlas Studio created exactly for that. Please visit http://atlas.kids-cademy.com.</p>
+	<p>Thank you for using ${app-name}, please help improving and spread the word.</p>
 	<h2>Sources</h2>
 	<table>
 		<tr>

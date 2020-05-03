@@ -4,6 +4,7 @@ com.kidscademy.page.ReleasesPage = class extends com.kidscademy.Page {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
+        this._sidebar.setTitle("@string/releases");
         this._sidebar.on("create-release", this._onCreateRelease, this);
 
         this._contextMenu = this.getByCssClass("context-menu");

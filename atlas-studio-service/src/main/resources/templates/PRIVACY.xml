@@ -1,6 +1,6 @@
 <policy>
 	<h1>Privacy Policy</h1>
-	<p>${app_name} is a release from a collection of applications named Atlas. Perhaps the name is pretentious or even misleading. Is not on purpose. We really did not found a better one.</p>
+	<p>${app-name} is a release from a collection of applications named Atlas. Perhaps the name is pretentious or even misleading. Is not on purpose. We really did not found a better one.</p>
 	<p>In a nutshell Atlas is a quick reference on a particular subject. It is focused on facts, with reasonable amount of text and media content. It is not meant to be exhaustive but rather to be used as a quick reference on a particular subject or field. For complete reference one can visit external sources that are linked on every article.</p>
 	<p>Atlas is completely free. Free of annoying ads, no misleading in-app payment, no spy-ware. Development effort is donated. It is a humble way to show gratitude to Internet community that gives us all so much.</p>
 	<p>Atlas is distributed under Apache License 2.0, the same used by Android. This basically means anyone can do anything with application and sources but no warranty from kids (a)cademy. Source code on https://github.com/kids-cademy/.</p>

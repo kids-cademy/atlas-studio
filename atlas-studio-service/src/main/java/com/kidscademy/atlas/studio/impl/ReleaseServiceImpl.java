@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.ReleaseService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -41,9 +40,9 @@ import js.lang.BugError;
 import js.rmi.BusinessException;
 import js.tiny.container.http.form.Form;
 import js.util.Classes;
+import js.util.TextTemplate;
 
 public class ReleaseServiceImpl implements ReleaseService {
-    private final Application application;
     private final AtlasDao dao;
     private final AndroidTools androidTools;
     private final ImageProcessor imageProcessor;
@@ -51,7 +50,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools, ImageProcessor imageProcessor,
 	    BusinessRules businessRules) {
-	this.application = Application.instance();
 	this.dao = dao;
 	this.androidTools = androidTools;
 	this.imageProcessor = imageProcessor;
@@ -81,6 +79,8 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public Release saveRelease(Release release) throws IOException {
 	if (!release.isPersisted()) {
+	    release.setContentTimestamp(new Date());
+	    loadReleasePolicyFiles(release);
 	    createReleaseGraphics(release);
 	} else {
 	    Release currentRelease = dao.getReleaseById(release.getId());
@@ -126,53 +126,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 	release.setGraphicsBackground(background);
 	createReleaseGraphics(release);
 	dao.saveRelease(release);
-    }
-
-    private void createReleaseGraphics(Release release) throws IOException {
-	String background = release.getGraphicsBackground();
-
-	File iconFile = Files.mediaFile(release, "icon");
-	iconFile.delete();
-	imageProcessor.exec(
-		"-size 512x512 -define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} ${iconFile}",
-		background, iconFile);
-
-	File featureFile = Files.mediaFile(release, "feature");
-	featureFile.delete();
-	imageProcessor.exec(
-		"-size 1024x500 -define gradient:center=192,256 -define gradient:radii=700,384 radial-gradient:white-#${background} ${featureFile}",
-		background, featureFile);
-
-	File coverFile = Files.mediaFile(release, "cover");
-	coverFile.delete();
-	imageProcessor.exec( //
-		"-size 788x788 " + // overall size
-			"xc:none -fill #${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
-											 // circle
-			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} "
-			+ // second layer is gradient
-			"-compose srcin -composite ${coverFile}", // compose
-		background, background, coverFile);
-
-	File releaseFile = Files.mediaFile(release, "release");
-	if (releaseFile.exists()) {
-	    File imageFile = Files.mediaFile(release, "image");
-	    imageProcessor.exec(
-		    "${releaseFile} -resize 460x460 -gravity center -background none -extent 512x512 ${imageFile}",
-		    releaseFile, imageFile);
-	    imageProcessor.exec("${iconFile} ${imageFile} -compose over -composite ${iconFile}", iconFile, imageFile,
-		    iconFile);
-	    imageProcessor.exec("${featureFile} ${imageFile} -compose over -composite ${featureFile}", featureFile,
-		    imageFile, featureFile);
-
-	    imageProcessor.exec(
-		    "${releaseFile} -resize 540x540 -gravity center -background none -extent 558x558 ${imageFile}",
-		    releaseFile, imageFile);
-	    imageProcessor.exec("${coverFile} ${imageFile} -gravity center -compose over -composite ${coverFile}",
-		    coverFile, imageFile, coverFile);
-
-	    imageFile.delete();
-	}
     }
 
     @Override
@@ -331,13 +284,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 		copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
 		copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
 
-		AndroidProject project = new AndroidProject(application, app.getName());
+		AndroidProject project = new AndroidProject(app);
 		File atlasDir = project.getAtlasDir();
-		Files.removeFilesHierarchy(atlasDir);
-
-		ExportTarget target = new FsExportTarget(atlasDir);
-		Exporter exporter = new Exporter(dao, target, dao.getReleaseItems(app.getRelease().getId()));
-		exporter.serialize(null);
+		updateAndroidAppContent(release, atlasDir);
 
 		if (createProject) {
 		    androidTools.initLocalGitRepository(app);
@@ -384,6 +333,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void buildAndroidApp(int appId) throws IOException {
 	AndroidApp app = dao.getAndroidAppById(appId);
+	AndroidProject prj = new AndroidProject(app);
+	File atlasDir = prj.getAtlasDir();
+	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
+	    updateAndroidAppContent(app.getRelease(), atlasDir);
+	}
 	androidTools.build(app.getDir());
     }
 
@@ -419,5 +373,72 @@ public class ReleaseServiceImpl implements ReleaseService {
 	listing.put("email", "contact@kids-cademy.com");
 	listing.put("privacy", app.getGitRepository().toExternalForm().replace(".git", "/") + "blob/master/PRIVACY.md");
 	return listing;
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    private void loadReleasePolicyFiles(Release release) throws IOException {
+	TextTemplate readme = new TextTemplate(Classes.getResourceAsString("templates/README.xml"));
+	readme.put("app-name", release.getDisplay());
+	readme.put("app-definition", release.getDefinition());
+	release.setReadme(readme.toString());
+
+	TextTemplate privacy = new TextTemplate(Classes.getResourceAsString("templates/PRIVACY.xml"));
+	privacy.put("app-name", release.getDisplay());
+	release.setPrivacy(privacy.toString());
+    }
+
+    private void createReleaseGraphics(Release release) throws IOException {
+	String background = release.getGraphicsBackground();
+
+	File iconFile = Files.mediaFile(release, "icon");
+	iconFile.delete();
+	imageProcessor.exec(
+		"-size 512x512 -define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} ${iconFile}",
+		background, iconFile);
+
+	File featureFile = Files.mediaFile(release, "feature");
+	featureFile.delete();
+	imageProcessor.exec(
+		"-size 1024x500 -define gradient:center=192,256 -define gradient:radii=700,384 radial-gradient:white-#${background} ${featureFile}",
+		background, featureFile);
+
+	File coverFile = Files.mediaFile(release, "cover");
+	coverFile.delete();
+	imageProcessor.exec( //
+		"-size 788x788 " + // overall size
+			"xc:none -fill #${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
+											 // circle
+			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} "
+			+ // second layer is gradient
+			"-compose srcin -composite ${coverFile}", // compose
+		background, background, coverFile);
+
+	File releaseFile = Files.mediaFile(release, "release");
+	if (releaseFile.exists()) {
+	    File imageFile = Files.mediaFile(release, "image");
+	    imageProcessor.exec(
+		    "${releaseFile} -resize 460x460 -gravity center -background none -extent 512x512 ${imageFile}",
+		    releaseFile, imageFile);
+	    imageProcessor.exec("${iconFile} ${imageFile} -compose over -composite ${iconFile}", iconFile, imageFile,
+		    iconFile);
+	    imageProcessor.exec("${featureFile} ${imageFile} -compose over -composite ${featureFile}", featureFile,
+		    imageFile, featureFile);
+
+	    imageProcessor.exec(
+		    "${releaseFile} -resize 540x540 -gravity center -background none -extent 558x558 ${imageFile}",
+		    releaseFile, imageFile);
+	    imageProcessor.exec("${coverFile} ${imageFile} -gravity center -compose over -composite ${coverFile}",
+		    coverFile, imageFile, coverFile);
+
+	    imageFile.delete();
+	}
+    }
+
+    private void updateAndroidAppContent(Release release, File atlasDir) throws IllegalArgumentException, IOException {
+	Files.removeFilesHierarchy(atlasDir);
+	ExportTarget target = new FsExportTarget(atlasDir);
+	Exporter exporter = new Exporter(dao, target, dao.getReleaseItems(release.getId()));
+	exporter.serialize(null);
     }
 }

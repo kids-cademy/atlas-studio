@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,12 +19,22 @@ public class ReleaseParent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private Date contentTimestamp;
+
     @ManyToMany
-    @JoinTable(name="release_atlasitem", joinColumns = @JoinColumn(name = "release_id"),inverseJoinColumns = @JoinColumn(name = "objects_id"))
+    @JoinTable(name = "release_atlasitem", joinColumns = @JoinColumn(name = "release_id"), inverseJoinColumns = @JoinColumn(name = "objects_id"))
     private List<ReleaseChild> children;
 
     public int getId() {
 	return id;
+    }
+
+    public Date getContentTimestamp() {
+	return contentTimestamp;
+    }
+
+    public void updateContentTimestamp() {
+	this.contentTimestamp = new Date();
     }
 
     public List<ReleaseChild> getChildren() {

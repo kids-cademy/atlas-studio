@@ -28,9 +28,9 @@ public class AndroidProject {
     private final String name;
     private Document strings;
 
-    public AndroidProject(Application application, String name) {
-	this.location = new File(appsDir(), name);
-	this.name = name;
+    public AndroidProject(AndroidApp app) {
+	this.location = new File(appsDir(), app.getName());
+	this.name = app.getName();
 
 	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
 	try {
