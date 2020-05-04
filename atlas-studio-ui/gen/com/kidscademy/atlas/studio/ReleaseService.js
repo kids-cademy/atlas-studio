@@ -27,6 +27,28 @@ com.kidscademy.atlas.studio.ReleaseService = {
 	},
 
 	/**
+	 * Get applications.
+	 *
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.ReleaseItem>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getApplications: function() {
+		var __callback__ = arguments[0];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#getApplications", "Callback is not a function.");
+		var __scope__ = arguments[1];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#getApplications", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "getApplications");
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Create release.
 	 *
 	 * @param Function callback function to invoke on RMI completion,

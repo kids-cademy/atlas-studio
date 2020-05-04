@@ -4,7 +4,7 @@ com.kidscademy.page.AppsPage = class extends js.ua.Page {
     constructor() {
         super();
         this._appsListView = this.getByCssClass("icons-list");
-        ReleaseService.getReleases(this._onAppsLoaded, this);
+        ReleaseService.getApplications(this._onAppsLoaded, this);
     }
 
     _onAppsLoaded(apps) {

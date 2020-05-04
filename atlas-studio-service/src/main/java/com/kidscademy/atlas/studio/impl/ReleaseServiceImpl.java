@@ -8,6 +8,7 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,19 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public List<ReleaseItem> getReleases() {
 	return dao.getReleases();
+    }
+
+    @Override
+    public List<ReleaseItem> getApplications() {
+	List<ReleaseItem> releases = dao.getReleases();
+	Iterator<ReleaseItem> it = releases.iterator();
+	while (it.hasNext()) {
+	    AndroidProject project = new AndroidProject(it.next().getName());
+	    if (!project.getApkDebugFile().exists()) {
+		it.remove();
+	    }
+	}
+	return releases;
     }
 
     @Override
@@ -371,6 +385,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	Map<String, String> listing = new HashMap<>();
+	listing.put("releaseId", Integer.toString(app.getRelease().getId()));
 	listing.put("title", app.getDisplay());
 	listing.put("shortDescription", app.getRelease().getBrief());
 	listing.put("fullDescription", readme.toString());
@@ -442,7 +457,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     private AndroidApp updateAndroidAppContent(int appId) throws IllegalArgumentException, IOException {
 	AndroidApp app = dao.getAndroidAppById(appId);
-	AndroidProject prj = new AndroidProject(app);
+	// by convention project and application names are the same
+	AndroidProject prj = new AndroidProject(app.getName());
 	File atlasDir = prj.getAtlasDir();
 	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
 	    Files.removeFilesHierarchy(atlasDir);

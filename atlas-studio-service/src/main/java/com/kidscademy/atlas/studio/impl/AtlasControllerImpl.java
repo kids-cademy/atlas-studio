@@ -21,51 +21,54 @@ import js.tiny.container.http.Resource;
 import js.tiny.container.mvc.Redirect;
 import js.tiny.container.mvc.View;
 
-public class AtlasControllerImpl implements AtlasController
-{
-  private final AppContext context;
-  private final AtlasDao atlasDao;
+public class AtlasControllerImpl implements AtlasController {
+    private final AppContext context;
+    private final AtlasDao atlasDao;
 
-  public AtlasControllerImpl(AppContext context, AtlasDao atlasDao) {
-    this.context = context;
-    this.atlasDao = atlasDao;
-  }
-
-  @Override
-  public Resource login(Login login) {
-    if(!context.login(login.getEmailAddress(), login.getPassword())) {
-      return new Redirect("home.htm");
+    public AtlasControllerImpl(AppContext context, AtlasDao atlasDao) {
+	this.context = context;
+	this.atlasDao = atlasDao;
     }
-    return new Redirect("library.htm");
-  }
 
-  @Override
-  public View exportAllAtlasCollections() {
-    return new AtlasCollectionExportView(atlasDao);
-  }
+    @Override
+    public Resource login(Login login) {
+	if (!context.login(login.getEmailAddress(), login.getPassword())) {
+	    return new Redirect("home.htm");
+	}
+	return new Redirect("library.htm");
+    }
 
-  @Override
-  public View exportAtlasCollection(int collectionId, AtlasObject.State state) {
-    return new AtlasCollectionExportView(atlasDao, collectionId, state);
-  }
+    @Override
+    public View exportAllAtlasCollections() {
+	return new AtlasCollectionExportView(atlasDao);
+    }
 
-  @Override
-  public Resource apk(final String name) {
-    return new Resource()
-    {
-      @Override
-      public void serialize(HttpServletResponse httpResponse) throws IOException {
-        File apkFile = new File(AndroidProject.appDir(name), "app/build/outputs/apk/debug/app-debug.apk");
-        InputStream apkStream = new FileInputStream(apkFile);
-        try {
-          httpResponse.setContentType(ContentType.APPLICATION_STREAM.getValue());
-          httpResponse.setContentLength((int)apkFile.length());
-          Files.copy(apkStream, httpResponse.getOutputStream());
-        }
-        finally {
-          apkStream.close();
-        }
-      }
-    };
-  }
+    @Override
+    public View exportAtlasCollection(int collectionId, AtlasObject.State state) {
+	return new AtlasCollectionExportView(atlasDao, collectionId, state);
+    }
+
+    @Override
+    public Resource apk(final String name) {
+	return new Resource() {
+	    @Override
+	    public void serialize(HttpServletResponse httpResponse) throws IOException {
+		AndroidProject project = new AndroidProject(name);
+		File apkFile = project.getApkDebugFile();
+		if (!apkFile.exists()) {
+		    httpResponse.sendError(404);
+		    return;
+		}
+
+		InputStream apkStream = new FileInputStream(apkFile);
+		try {
+		    httpResponse.setContentType(ContentType.APPLICATION_STREAM.getValue());
+		    httpResponse.setContentLength((int) apkFile.length());
+		    Files.copy(apkStream, httpResponse.getOutputStream());
+		} finally {
+		    apkStream.close();
+		}
+	    }
+	};
+    }
 }

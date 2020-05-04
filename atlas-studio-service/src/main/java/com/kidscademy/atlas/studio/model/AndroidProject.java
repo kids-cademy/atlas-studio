@@ -19,22 +19,32 @@ import js.util.Strings;
 
 public class AndroidProject {
     /** Strings resources XML file path, relative to project root. */
-    private static final String STRINGS_PATH = "app/src/main/res/values/strings.xml";
+    private static final String PATH_STRINGS = "app/src/main/res/values/strings.xml";
 
-    private static final String ATLAS_DIR = "app/src/main/assets/atlas";
+    private static final String DIR_ATLAS = "app/src/main/assets/atlas";
+
+    private static final String PATH_APK_DEBUG = "app/build/outputs/apk/debug/app-debug.apk";
+    private static final String PATH_APK_RELEASE_UNSIGNED = "app/build/outputs/apk/release/app-release-unsigned.apk";
 
     /** Project location on file system, absolute path. */
     private final File location;
     private final String name;
+
+    private final File apkDebugFile;
+    private final File apkReleaseUnsignedFile;
+
     private Document strings;
 
-    public AndroidProject(AndroidApp app) {
-	this.location = new File(appsDir(), app.getName());
-	this.name = app.getName();
+    public AndroidProject(String name) {
+	this.location = new File(appsDir(), name);
+	this.name = name;
+
+	this.apkDebugFile = new File(location, PATH_APK_DEBUG);
+	this.apkReleaseUnsignedFile = new File(location, PATH_APK_RELEASE_UNSIGNED);
 
 	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
 	try {
-	    this.strings = builder.loadXML(stringsFile());
+	    this.strings = builder.loadXML(getStringValuesFile());
 	} catch (IllegalArgumentException | FileNotFoundException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -74,19 +84,23 @@ public class AndroidProject {
 	    }
 	    valueEl.setText(Strings.escapeXML(entry.getValue()));
 	}
-	strings.serialize(new FileWriter(stringsFile()), true);
-    }
-
-    private File stringsFile() {
-	return new File(location, STRINGS_PATH);
+	strings.serialize(new FileWriter(getStringValuesFile()), true);
     }
 
     public File getAtlasDir() {
-	return new File(location, ATLAS_DIR);
+	return new File(location, DIR_ATLAS);
     }
 
     public File getAtlasObjectDir(String objectName) {
-	return new File(new File(location, ATLAS_DIR), objectName);
+	return new File(getAtlasDir(), objectName);
+    }
+
+    public File getApkDebugFile() {
+	return apkDebugFile;
+    }
+
+    public File getApkReleaseUnsignedFile() {
+	return apkReleaseUnsignedFile;
     }
 
     public void setReadme(String description) {
@@ -100,6 +114,10 @@ public class AndroidProject {
     }
 
     // --------------------------------------------------------------------------------------------
+
+    private File getStringValuesFile() {
+	return new File(location, PATH_STRINGS);
+    }
 
     private static File appsDir;
 

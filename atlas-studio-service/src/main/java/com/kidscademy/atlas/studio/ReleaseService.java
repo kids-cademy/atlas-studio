@@ -20,6 +20,8 @@ import js.tiny.container.http.form.Form;
 public interface ReleaseService {
     List<ReleaseItem> getReleases();
 
+    List<ReleaseItem> getApplications();
+
     Release createRelease() throws IOException;
 
     Release getRelease(int releaseId);
