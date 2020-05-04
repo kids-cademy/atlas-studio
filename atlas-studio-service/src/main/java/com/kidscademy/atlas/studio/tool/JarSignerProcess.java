@@ -4,11 +4,11 @@ import java.io.File;
 
 import js.tiny.container.annotation.ContextParam;
 
-public class GitProcess extends CommandProcess {
-    @ContextParam("git.client")
+public class JarSignerProcess extends CommandProcess {
+    @ContextParam("java.jarsigner")
     private static String COMMAND_PATH;
 
-    public GitProcess(File appDir) {
+    public JarSignerProcess(File appDir) {
 	super(appDir);
     }
 

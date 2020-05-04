@@ -23,6 +23,9 @@
 		<convert-process class="com.kidscademy.atlas.studio.tool.ConvertProcess" />
 		<android-tools interface="com.kidscademy.atlas.studio.tool.AndroidTools" class="com.kidscademy.atlas.studio.tool.AndroidToolsImpl" />
 		<git-process class="com.kidscademy.atlas.studio.tool.GitProcess" />
+		<jar-signer class="com.kidscademy.atlas.studio.tool.JarSignerProcess" />
+		<apk-signer class="com.kidscademy.atlas.studio.tool.ApkSignerProcess" />
+		<zip-align class="com.kidscademy.atlas.studio.tool.ZipAlignProcess" />
 
 		<wikipedia interface="com.kidscademy.atlas.studio.www.Wikipedia" type="REMOTE" url="https:rest://en.wikipedia.org/api/rest_v1/" />
 		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />

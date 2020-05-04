@@ -566,6 +566,64 @@ com.kidscademy.atlas.studio.ReleaseService = {
 	},
 
 	/**
+	 * Build signed android app.
+	 *
+	 * @param int appId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 buildSignedAndroidApp: function(appId) {
+		$assert(typeof appId !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#buildSignedAndroidApp", "App id argument is undefined.");
+		$assert(js.lang.Types.isNumber(appId), "com.kidscademy.atlas.studio.ReleaseService#buildSignedAndroidApp", "App id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#buildSignedAndroidApp", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#buildSignedAndroidApp", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "buildSignedAndroidApp");
+		rmi.setParameters(appId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
+	 * Build android bundle.
+	 *
+	 * @param int appId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return void
+	 * @throws java.io.IOException
+	 * @assert callback is a {@link Function} and scope is an {@link Object}, if they are defined.
+	 * @note since method return type is void, callback, and hence scope too, is optional.
+	 */
+	 buildAndroidBundle: function(appId) {
+		$assert(typeof appId !== "undefined", "com.kidscademy.atlas.studio.ReleaseService#buildAndroidBundle", "App id argument is undefined.");
+		$assert(js.lang.Types.isNumber(appId), "com.kidscademy.atlas.studio.ReleaseService#buildAndroidBundle", "App id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(typeof __callback__ === "undefined" || js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ReleaseService#buildAndroidBundle", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ReleaseService#buildAndroidBundle", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.ReleaseService", "buildAndroidBundle");
+		rmi.setParameters(appId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Get android store listing.
 	 *
 	 * @param int appId,

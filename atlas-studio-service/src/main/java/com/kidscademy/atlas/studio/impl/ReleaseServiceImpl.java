@@ -284,9 +284,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
 		copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
 
-		AndroidProject project = new AndroidProject(app);
-		File atlasDir = project.getAtlasDir();
-		updateAndroidAppContent(release, atlasDir);
+		updateAndroidAppContent(app.getId());
 
 		if (createProject) {
 		    androidTools.initLocalGitRepository(app);
@@ -332,13 +330,20 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public void buildAndroidApp(int appId) throws IOException {
-	AndroidApp app = dao.getAndroidAppById(appId);
-	AndroidProject prj = new AndroidProject(app);
-	File atlasDir = prj.getAtlasDir();
-	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
-	    updateAndroidAppContent(app.getRelease(), atlasDir);
-	}
-	androidTools.build(app.getDir());
+	AndroidApp app = updateAndroidAppContent(appId);
+	androidTools.buildAPK(app.getDir());
+    }
+
+    @Override
+    public void buildSignedAndroidApp(int appId) throws IOException {
+	AndroidApp app = updateAndroidAppContent(appId);
+	androidTools.buildSignedAPK(app.getDir());
+    }
+
+    @Override
+    public void buildAndroidBundle(int appId) throws IOException {
+	AndroidApp app = updateAndroidAppContent(appId);
+	androidTools.buildBundle(app.getDir());
     }
 
     @Override
@@ -435,10 +440,16 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
     }
 
-    private void updateAndroidAppContent(Release release, File atlasDir) throws IllegalArgumentException, IOException {
-	Files.removeFilesHierarchy(atlasDir);
-	ExportTarget target = new FsExportTarget(atlasDir);
-	Exporter exporter = new Exporter(dao, target, dao.getReleaseItems(release.getId()));
-	exporter.serialize(null);
+    private AndroidApp updateAndroidAppContent(int appId) throws IllegalArgumentException, IOException {
+	AndroidApp app = dao.getAndroidAppById(appId);
+	AndroidProject prj = new AndroidProject(app);
+	File atlasDir = prj.getAtlasDir();
+	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
+	    Files.removeFilesHierarchy(atlasDir);
+	    ExportTarget target = new FsExportTarget(atlasDir);
+	    Exporter exporter = new Exporter(dao, target, dao.getReleaseItems(app.getRelease().getId()));
+	    exporter.serialize(null);
+	}
+	return app;
     }
 }

@@ -153,6 +153,7 @@
 	<android-settings>Project Settings</android-settings>	
 	<android-clean-project>Clean Project</android-clean-project>
 	<android-build-apk>Build APK</android-build-apk>
+	<android-build-signed-apk>Build Signed APK</android-build-signed-apk>
 	<android-build-bundle>Build Bundle</android-build-bundle>
 	<android-download-apk>Download APK</android-download-apk>
 	<android-download-bundle>Download Bundle</android-download-bundle>

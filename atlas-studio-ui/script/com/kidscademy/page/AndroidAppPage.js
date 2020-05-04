@@ -12,6 +12,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._sidebar.on("android-listing", this._onAndroidListing, this);
         this._sidebar.on("clean-project", this._onCleanProject, this);
         this._sidebar.on("build-apk", this._onBuildAPK, this);
+        this._sidebar.on("build-signed-apk", this._onBuildSignedAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
 
         this._releaseView = this.getByCssClass("release");
@@ -61,8 +62,12 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         ReleaseService.buildAndroidApp(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
     }
 
-    _onBuildBundle() {
+    _onBuildSignedAPK() {
+        ReleaseService.buildSignedAndroidApp(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+    }
 
+    _onBuildBundle() {
+        ReleaseService.buildAndroidBundle(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
     }
 
     toString() {

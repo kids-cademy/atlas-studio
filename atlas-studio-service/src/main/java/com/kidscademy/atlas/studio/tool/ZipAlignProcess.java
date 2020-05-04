@@ -4,11 +4,11 @@ import java.io.File;
 
 import js.tiny.container.annotation.ContextParam;
 
-public class GitProcess extends CommandProcess {
-    @ContextParam("git.client")
+public class ZipAlignProcess extends CommandProcess {
+    @ContextParam("android.zipalign")
     private static String COMMAND_PATH;
 
-    public GitProcess(File appDir) {
+    public ZipAlignProcess(File appDir) {
 	super(appDir);
     }
 

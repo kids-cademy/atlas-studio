@@ -22,11 +22,16 @@
         password="kids_cademy"
 	/>
 
+	<Parameter name="android.zipalign" value="C:\Users\DEV\AppData\Local\Android\Sdk\build-tools\28.0.3\zipalign.exe" />
+	<Parameter name="android.apksigner" value="C:\Users\DEV\AppData\Local\Android\Sdk\build-tools\28.0.3\apksigner.bat" />
+	<Parameter name="java.jarsigner" value="D://java/jdk1.8.0_161/bin/jarsigner.exe" />
+	<Parameter name="atlas.keystore" value="D://private/android-keys/kids-cademy.com/keystore.p12" />
+	<Parameter name="atlas.keypass" value="keypass" />
 	<Parameter name="android.apps.path" value="D://tmp/apps/" />
 	<Parameter name="captcha.repository.path" value="${catalina.base}/webapps/media/captcha" />
 	<Parameter name="git.client" value="C://Program Files/Git/cmd/git.exe" />
 	<Parameter name="image.magick.convert" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe" />
 	<Parameter name="image.magick.identify" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/identify.exe" />
-	<Parameter name="google.api.key" value="AIzaSyDXsSQ09TUEbXgwnz-cHiKzilkSMIc3Pt4" />
-	<Parameter name="google.search.context" value="003611088101111466045:kgiceengbsg" />
+	<Parameter name="google.api.key" value="api.key" />
+	<Parameter name="google.search.context" value="search.context" />
 </Context>

@@ -66,5 +66,9 @@ public interface ReleaseService {
 
     void buildAndroidApp(int appId) throws IOException;
 
+    void buildSignedAndroidApp(int appId) throws IOException;
+
+    void buildAndroidBundle(int appId) throws IOException;
+
     Map<String, String> getAndroidStoreListing(int appId);
 }
