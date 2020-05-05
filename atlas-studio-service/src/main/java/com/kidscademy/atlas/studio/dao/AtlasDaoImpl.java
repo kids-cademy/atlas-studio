@@ -110,6 +110,12 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public List<AtlasItem> getRecentUsedAtlasObjects() {
+	return em.createQuery("select i from AtlasItem i order by i.timestamp desc", AtlasItem.class).setMaxResults(10)
+		.getResultList();
+    }
+
+    @Override
     public List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId) {
 	return getCollectionItems(AtlasItem.class, filter, collectionId);
     }
@@ -198,6 +204,7 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     @Mutable
     public void saveAtlasObject(AtlasObject object) {
+	object.updateTimestamp();
 	if (object.getId() == 0) {
 	    em.persist(object);
 	} else {

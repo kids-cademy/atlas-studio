@@ -44,6 +44,8 @@ public interface AtlasService {
 
     List<AtlasCollection> getCollections();
 
+    List<AtlasItem> getRecentUsedAtlasObjects();
+
     List<AtlasItem> getCollectionItems(Map<String, String> filter, int collectionId);
 
     List<AtlasImages> getCollectionImages(Map<String, String> filter, int collectionId);
@@ -97,7 +99,7 @@ public interface AtlasService {
     Map<String, String> importObjectFacts(Link link);
 
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
-    
+
     boolean checkAtlasObjectName(String name);
 
     List<Taxon> importAtlasObjectTaxonomy(URL pageURL);

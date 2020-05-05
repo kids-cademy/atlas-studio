@@ -328,8 +328,8 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-	this.timestamp = timestamp;
+    public void updateTimestamp() {
+	this.timestamp = new Date();
     }
 
     @Override
@@ -588,11 +588,6 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	}
 	description.append("</text>");
 	object.description = description.toString();
-
-	object.taxonomy = new ArrayList<>();
-	for (TaxonMeta taxonMeta : collection.getTaxonomyMeta()) {
-	    object.taxonomy.add(new Taxon(taxonMeta.getName()));
-	}
 
 	object.aliases = Collections.emptyList();
 	object.images = Collections.emptyMap();

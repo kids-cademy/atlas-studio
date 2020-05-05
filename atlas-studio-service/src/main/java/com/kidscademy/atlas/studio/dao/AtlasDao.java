@@ -44,6 +44,8 @@ public interface AtlasDao {
 
     List<AtlasCollection> getCollections();
 
+    List<AtlasItem> getRecentUsedAtlasObjects();
+
     List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId);
 
     List<AtlasImages> getCollectionImages(SearchFilter filter, int collectionId);

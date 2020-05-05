@@ -10,16 +10,31 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
         this._sidebar.on("create-collection", this._onCreateCollection, this);
 
-        this._contextMenu = this.getByCssClass("context-menu");
-        this._contextMenu.on("edit-collection", this._onEditCollection, this);
-        this._contextMenu.on("remove-collection", this._onRemoveCollection, this);
-        this._contextMenu.on("manage-objects", this._onManageObjects, this);
+        this._collectionsMenu = this.getByCssClass("collections-menu");
+        this._collectionsMenu.on("edit-collection", this._onEditCollection, this);
+        this._collectionsMenu.on("remove-collection", this._onRemoveCollection, this);
+        this._collectionsMenu.on("manage-objects", this._onManageObjects, this);
 
-        this._listView = this.getByCssClass("list-view");
-        this._listView.setContextMenu(this._contextMenu);
+        this._collectionsView = this.getByCssClass("collections-view");
+        this._collectionsView.setContextMenu(this._collectionsMenu);
 
-        this._listView.resetTimestamp();
-        AtlasService.getCollections(collections => this._listView.setObject(collections));
+        this._objectsMenu = this.getByCssClass("objects-menu");
+		// objects context menu handler are implemented by com.kidscademy.ObjectsContextMenu mixin
+        this._objectsMenu.on("edit-object", this._onEditObject, this);
+        this._objectsMenu.on("preview-object", this._onPreviewObject, this);
+        this._objectsMenu.on("remove-object", this._onRemoveObject, this);
+        this._objectsMenu.on("move-object", this._onMoveObject, this);
+        this._objectsMenu.on("add-to-release", this._onAddToRelease, this);
+
+        this._objectsView = this.getByCssClass("objects-view");
+        this._objectsView.setContextMenu(this._objectsMenu);
+        this._collectionsView.bindSlaveList(this._objectsView);
+
+        this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
+
+        this._collectionsView.resetTimestamp();
+        AtlasService.getCollections(collections => this._collectionsView.setObject(collections));
+        AtlasService.getRecentUsedAtlasObjects(objects => this._objectsView.setObject(objects).show());
     }
 
     _onCollections() {
@@ -62,4 +77,5 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
     }
 };
 
+Object.assign(com.kidscademy.page.CollectionsPage.prototype, com.kidscademy.ObjectsContextMenu);
 WinMain.createPage(com.kidscademy.page.CollectionsPage);

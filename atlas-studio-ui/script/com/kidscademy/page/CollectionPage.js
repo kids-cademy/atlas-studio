@@ -33,10 +33,16 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 		this._listControl.on("click", this._onItemClick, this);
 		this._listControl.on("contextmenu", this._onContextMenu, this);
 
-		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu).bind(this);
-		this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
+		this._contextMenu = this.getByClass(com.kidscademy.ContextMenu);
+		// context menu handler are implemented by com.kidscademy.ObjectsContextMenu mixin
+        this._contextMenu.on("edit-object", this._onEditObject, this);
+        this._contextMenu.on("preview-object", this._onPreviewObject, this);
+        this._contextMenu.on("remove-object", this._onRemoveObject, this);
+        this._contextMenu.on("move-object", this._onMoveObject, this);
+        this._contextMenu.on("add-to-release", this._onAddToRelease, this);
 
 		this._loadingInfoView = this.getByCssClass("loading-info");
+		this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
 		this._frameView = this.getByClass(com.kidscademy.FrameView);
 
 		const exportAnchor = this._sidebar.getByCssClass("export");
@@ -161,46 +167,6 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 	}
 
 	// --------------------------------------------------------------------------------------------
-	// CONTEXT MENU HANDLERS
-
-	_onEditObject(objectView) {
-		const object = objectView.getUserData();
-		this.setPageAttr(this._ATTR_OBJECT, object.id);
-		WinMain.assign("@link/object-form", { object: object.id });
-	}
-
-	_onPreviewObject(objectView) {
-		const object = objectView.getUserData();
-		this.setPageAttr(this._ATTR_OBJECT, object.id);
-		WinMain.assign("@link/reader", { object: object.id });
-	}
-
-	_onRemoveObject(objectView) {
-		js.ua.System.confirm("@string/confirm-object-remove", (ok) => {
-			if (ok) {
-				const object = objectView.getUserData();
-				AtlasService.removeAtlasObject(object.id, () => objectView.remove());
-			}
-		});
-	}
-
-	_onMoveObject(objectView) {
-		AtlasService.getCollections(collections => this._itemSelect.load(collections));
-		this._itemSelect.open(collection => {
-			const object = objectView.getUserData();
-			AtlasService.moveAtlasObject(object, collection.id, () => objectView.remove());
-		});
-	}
-
-	_onAddToRelease(objectView) {
-		ReleaseService.getReleases(releases => this._itemSelect.load(releases));
-		this._itemSelect.open(release => {
-			const object = objectView.getUserData();
-			ReleaseService.addReleaseChild(release.id, object.id);
-		});
-	}
-
-	// --------------------------------------------------------------------------------------------
 
 	_onItemClick(ev) {
 		const objectView = ev.target.getParentByTag("li");
@@ -229,4 +195,5 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 	}
 };
 
+Object.assign(com.kidscademy.page.CollectionPage.prototype, com.kidscademy.ObjectsContextMenu);
 WinMain.createPage(com.kidscademy.page.CollectionPage);

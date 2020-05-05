@@ -157,6 +157,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public List<AtlasItem> getRecentUsedAtlasObjects() {
+	return atlasDao.getRecentUsedAtlasObjects();
+    }
+
+    @Override
     public List<AtlasItem> getCollectionItems(Map<String, String> criteria, int collectionId) {
 	return atlasDao.getCollectionItems(new SearchFilter(criteria), collectionId);
     }
@@ -452,7 +457,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	List<Taxon> taxonomy = loadAtlasObjectTaxonomy(object.getName());
-	if (taxonomy.isEmpty()) {
+	if (taxonomy == null) {
 	    taxonomy = article.getTaxonomy();
 	}
 	if (!taxonomy.isEmpty()) {
@@ -467,7 +472,7 @@ public class AtlasServiceImpl implements AtlasService {
 	object.setState(AtlasObject.State.CREATED);
 	object.setAliases(new ArrayList<String>());
 	object.setImages(new HashMap<String, Image>());
-	object.setTimestamp(new Date());
+	object.updateTimestamp();
 
 	saveAtlasObject(object);
 	return atlasDao.getAtlasItem(object.getId());
@@ -490,6 +495,9 @@ public class AtlasServiceImpl implements AtlasService {
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
 	Params.notNullOrEmpty(objectName, "Atlas object name");
 	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.dashedToScientificName(objectName));
+	if (sourceTaxonomy.isEmpty()) {
+	    return null;
+	}
 	List<Taxon> taxonomy = new ArrayList<>(TAXON_NAMES.length);
 	for (String taxonName : TAXON_NAMES) {
 	    if (sourceTaxonomy.containsKey(taxonName)) {

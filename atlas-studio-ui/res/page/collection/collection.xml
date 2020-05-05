@@ -12,6 +12,7 @@
 		<script>script/com/kidscademy/Actions.js</script>
 		<script>script/com/kidscademy/FrameView.js</script>
 		<script>script/com/kidscademy/ContextMenu.js</script>
+		<script>script/com/kidscademy/ObjectsContextMenu.js</script>
 		<script>script/com/kidscademy/ItemSelect.js</script>
 		<script>script/com/kidscademy/PageHeader.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>

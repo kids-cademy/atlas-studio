@@ -1,0 +1,11 @@
+.collections {
+	
+}
+
+.collections .divider {
+	margin-top: 60px;
+	border-top: solid 1px #E6E6E6;
+	padding-top: 10px;
+	font-size: 1.8rem;
+	padding: 20px;
+}

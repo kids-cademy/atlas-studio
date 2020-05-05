@@ -18,9 +18,18 @@ com.kidscademy.ListView = class extends js.dom.Element {
         this._listControl.setLayout("icons");
         this._listControl.on("click", this._onListClick, this);
 
-        this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+        this._actions = this.getByClass(com.kidscademy.Actions);
+        if (this._actions != null) {
+            this._actions.bind(this);
+        }
+
+        this._slaveLists = [];
 
         this.on("contextmenu", this._onContextMenu, this);
+    }
+
+    bindSlaveList(slaveList) {
+        this._slaveLists.push(slaveList);
     }
 
     setContextMenu(contextMenu) {
@@ -33,14 +42,18 @@ com.kidscademy.ListView = class extends js.dom.Element {
 
     setObject(objects) {
         if (this._timestamp !== 0) {
-            this._loadingInfoView.setObject({
-                objectsCount: objects.length,
-                ellapsedTime: Date.now() - this._timestamp
-            }).show();
+            if (this._loadingInfoView != null) {
+                this._loadingInfoView.setObject({
+                    objectsCount: objects.length,
+                    ellapsedTime: Date.now() - this._timestamp
+                }).show();
+            }
             this._timestamp = 0;
         }
         else {
-            this._loadingInfoView.hide();
+            if (this._loadingInfoView != null) {
+                this._loadingInfoView.hide();
+            }
         }
 
         this._listControl.setObject(objects).show();
@@ -57,19 +70,24 @@ com.kidscademy.ListView = class extends js.dom.Element {
     }
 
     _onIconsView() {
-        this._listControl.setLayout("icons");
+        this._setLayout("icons");
     }
 
     _onTilesView() {
-        this._listControl.setLayout("tiles");
+        this._setLayout("tiles");
     }
 
     _onDetailsView() {
-        this._listControl.setLayout("details");
+        this._setLayout("details");
     }
 
     _onCardsView() {
-        this._listControl.setLayout("cards");
+        this._setLayout("cards");
+    }
+
+    _setLayout(layout) {
+        this._listControl.setLayout(layout);
+        this._slaveLists.forEach(slaveList => slaveList._listControl.setLayout(layout));
     }
 
     // --------------------------------------------------------------------------------------------

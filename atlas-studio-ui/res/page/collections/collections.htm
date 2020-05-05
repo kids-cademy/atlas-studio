@@ -1,9 +1,14 @@
-<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div w:compo="compo/list-view"></div>
-	<div w:compo="page/collections/context-menu"></div>
+<div class="collections" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<div class="collections-view" w:compo="compo/list-view"></div>
+	<h1 class="divider">Recent Updated Atlas Objects</h1>
+	<ul class="objects-view" w:compo="compo/slave-list-view"></ul>
+	
+	<div class="collections-menu" w:compo="page/collections/collections-menu"></div>
+	<div class="objects-menu" w:compo="page/collections/objects-menu"></div>
+	<div w:compo="compo/item-select"></div>
 </div>
 
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+<div class="collections" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
 		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
 		<li data-name="links-meta"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
@@ -11,5 +16,5 @@
 	</ul>
 	<ul class="menu">
 		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
-	</ul>	
+	</ul>
 </div>
