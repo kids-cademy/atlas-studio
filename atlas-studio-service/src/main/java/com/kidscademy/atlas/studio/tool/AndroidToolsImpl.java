@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import com.kidscademy.atlas.studio.model.AndroidApp;
+import com.kidscademy.atlas.studio.model.AndroidProject;
 
 import js.tiny.container.annotation.ContextParam;
 
@@ -26,33 +27,36 @@ public class AndroidToolsImpl implements AndroidTools {
     }
 
     @Override
-    public void buildSignedAPK(File appDir) throws IOException {
-	gradlew(appDir, "build");
+    public void buildSignedAPK(AndroidApp app) throws IOException {
+	gradlew(app.getDir(), "build");
 
-	String unsignedapk = "app/build/outputs/apk/release/app-release-unsigned.apk";
-	File alignedapk = new File(appDir, "app/build/outputs/apk/release/app-release-aligned.apk");
-	alignedapk.delete();
+	AndroidProject prj = app.getProject();
+	File unsignedAPK = prj.getApkReleaseUnsignedFile();
+	File alignedAPK = prj.getApkReleaseAlignedFile();
+	alignedAPK.delete();
 
-	File signedapk = new File(appDir, "app/release/app-release.apk");
-	signedapk.getParentFile().mkdirs();
-	String alias = "atlas.wild-wirds.test";
+	zipalign(app.getDir(), "-v -p 4 %s %s", unsignedAPK.getPath(), alignedAPK.getPath());
 
-	zipalign(appDir, "-v -p 4 %s %s", unsignedapk, alignedapk.getPath());
+	File signedAPK = prj.getApkReleaseSignedFile();
+	signedAPK.getParentFile().mkdirs();
+	// by convention keystore alias is the application package
+	String alias = app.getPackageName();
 
-	apksigner(appDir, "sign --ks %s --ks-pass pass:%s --ks-key-alias %s --out %s %s", KEYSTORE.getAbsolutePath(),
-		KEYPASS, alias, signedapk.getPath(), alignedapk.getPath());
+	apksigner(app.getDir(), "sign --ks %s --ks-pass pass:%s --ks-key-alias %s --out %s %s",
+		KEYSTORE.getAbsolutePath(), KEYPASS, alias, signedAPK.getPath(), alignedAPK.getPath());
     }
 
     @Override
-    public void buildBundle(File appDir) throws IOException {
-	// gradlew(appDir, "bundleDebug");
-	gradlew(appDir, "bundleRelease");
+    public void buildBundle(AndroidApp app) throws IOException {
+	// gradlew(app.getDir(), "bundleDebug");
+	gradlew(app.getDir(), "bundleRelease");
 
-	// String bundle = "app/build/outputs/bundle/debug/app-debug.aab";
-	String bundle = "app/build/outputs/bundle/release/app-release.aab";
-	String alias = "atlas.wild-wirds.test";
-	jarsigner(appDir, "-verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore %s -storepass %s %s %s",
-		KEYSTORE.getAbsolutePath(), KEYPASS, bundle, alias);
+	AndroidProject prj = app.getProject();
+	File bundle = prj.getBundleReleaseFile();
+	// by convention keystore alias is the application package
+	String alias = app.getPackageName();
+	jarsigner(app.getDir(), "-verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore %s -storepass %s %s %s",
+		KEYSTORE.getAbsolutePath(), KEYPASS, bundle.getPath(), alias);
     }
 
     @Override

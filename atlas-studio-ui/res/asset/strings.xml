@@ -139,6 +139,9 @@
 	<quantity-density>DENSITY</quantity-density>
 	<quantity-acceleration>ACCELERATION</quantity-acceleration>
 	<quantity-angle>ANGLE</quantity-angle>
+	<quantity-area>AREA</quantity-area>
+	<quantity-population-density>POPULATION_DENSITY</quantity-population-density>
+	<quantity-currency>CURRENCY</quantity-currency>
 
 	<release-create>Create Release</release-create>
 	<release-edit>Edit Release</release-edit>

@@ -351,13 +351,13 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void buildSignedAndroidApp(int appId) throws IOException {
 	AndroidApp app = updateAndroidAppContent(appId);
-	androidTools.buildSignedAPK(app.getDir());
+	androidTools.buildSignedAPK(app);
     }
 
     @Override
     public void buildAndroidBundle(int appId) throws IOException {
 	AndroidApp app = updateAndroidAppContent(appId);
-	androidTools.buildBundle(app.getDir());
+	androidTools.buildBundle(app);
     }
 
     @Override

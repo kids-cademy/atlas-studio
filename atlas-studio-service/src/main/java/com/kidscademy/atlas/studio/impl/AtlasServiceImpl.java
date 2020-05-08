@@ -618,7 +618,6 @@ public class AtlasServiceImpl implements AtlasService {
 	Params.notNullOrEmpty(imageKey, "Image key");
 
 	businessRules.uniqueImage(atlasItem.getId(), imageKey);
-	businessRules.transparentImage(imageKey, imageFile);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 	String targetExtension = null;

@@ -110,6 +110,10 @@ public class AndroidApp implements GraphicObject {
 	return AndroidProject.appDir(name);
     }
 
+    public AndroidProject getProject() {
+	return new AndroidProject(name);
+    }
+
     public static AndroidApp create(Release release) {
 	AndroidApp app = new AndroidApp();
 	app.timestamp = new Date();

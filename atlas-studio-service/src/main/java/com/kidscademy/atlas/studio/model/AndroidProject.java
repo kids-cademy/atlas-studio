@@ -25,6 +25,10 @@ public class AndroidProject {
 
     private static final String PATH_APK_DEBUG = "app/build/outputs/apk/debug/app-debug.apk";
     private static final String PATH_APK_RELEASE_UNSIGNED = "app/build/outputs/apk/release/app-release-unsigned.apk";
+    private static final String PATH_APK_RELEASE_ALIGNED = "app/build/outputs/apk/release/app-release-aligned.apk";
+    private static final String PATH_APK_RELEASE_SIGNED = "app/release/app-release.apk";
+    private static final String PATH_BUNDLE_DEBUG = "app/build/outputs/bundle/debug/app-debug.aab";
+    private static final String PATH_BUNDLE_RELEASE = "app/build/outputs/bundle/release/app-release.aab";
 
     /** Project location on file system, absolute path. */
     private final File location;
@@ -32,6 +36,10 @@ public class AndroidProject {
 
     private final File apkDebugFile;
     private final File apkReleaseUnsignedFile;
+    private final File apkReleaseAlignedFile;
+    private final File apkReleaseSignedFile;
+    private final File bundleDebug;
+    private final File bundleRelease;
 
     private Document strings;
 
@@ -41,6 +49,10 @@ public class AndroidProject {
 
 	this.apkDebugFile = new File(location, PATH_APK_DEBUG);
 	this.apkReleaseUnsignedFile = new File(location, PATH_APK_RELEASE_UNSIGNED);
+	this.apkReleaseAlignedFile = new File(location, PATH_APK_RELEASE_ALIGNED);
+	this.apkReleaseSignedFile = new File(location, PATH_APK_RELEASE_SIGNED);
+	this.bundleDebug = new File(location, PATH_BUNDLE_DEBUG);
+	this.bundleRelease = new File(location, PATH_BUNDLE_RELEASE);
 
 	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
 	try {
@@ -101,6 +113,22 @@ public class AndroidProject {
 
     public File getApkReleaseUnsignedFile() {
 	return apkReleaseUnsignedFile;
+    }
+
+    public File getApkReleaseAlignedFile() {
+	return apkReleaseAlignedFile;
+    }
+
+    public File getApkReleaseSignedFile() {
+	return apkReleaseSignedFile;
+    }
+
+    public File getBundleDebugFile() {
+        return bundleDebug;
+    }
+
+    public File getBundleReleaseFile() {
+        return bundleRelease;
     }
 
     public void setReadme(String description) {

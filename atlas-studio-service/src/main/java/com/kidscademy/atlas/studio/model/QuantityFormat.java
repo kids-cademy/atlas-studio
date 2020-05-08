@@ -28,7 +28,7 @@ public class QuantityFormat implements Comparator<Variant> {
 	Variant variant = variants.get(0);
 
 	String stringValue = variant.formattedValue;
-	if (stringValue.length() > 8) {
+	if (stringValue.length() > 10) {
 	    stringValue = String.format("%.4E", variant.numericValue);
 	}
 
@@ -156,6 +156,9 @@ public class QuantityFormat implements Comparator<Variant> {
 	UNITS.put(PhysicalQuantity.DENSITY, DensityUnits.values());
 	UNITS.put(PhysicalQuantity.ACCELERATION, AccelerationUnits.values());
 	UNITS.put(PhysicalQuantity.ANGLE, AngleUnits.values());
+	UNITS.put(PhysicalQuantity.AREA, AreaUnits.values());
+	UNITS.put(PhysicalQuantity.POPULATION_DENSITY, PopulationDensityUnits.values());
+	UNITS.put(PhysicalQuantity.CURRENCY, CurrencyUnits.values());
     }
 
     interface Unit {
@@ -225,7 +228,8 @@ public class QuantityFormat implements Comparator<Variant> {
     }
 
     private enum LengthUnits implements Unit {
-	MILLIMETRE(1000, "mm"), CENTIMETRE(100, "cm"), METRE(1, "m"), KILOMETRE(1 / 1000.0, "km"), AU(1 / 149597870700.0, "AU");
+	MILLIMETER(1000, "mm"), CENTIMETER(100, "cm"), METER(1, "m"), KILOMETER(1 / 1000.0,
+		"km"), AU(1 / 149597870700.0, "AU");
 
 	private double factor;
 	private String symbol;
@@ -247,7 +251,7 @@ public class QuantityFormat implements Comparator<Variant> {
     }
 
     private enum SpeedUnits implements Unit {
-	KILOMETRE_PER_HOUR(3.6, "km/h"), KILOMETRE_PER_SECOND(1 / 1000.0, "km/s");
+	KILOMETER_PER_HOUR(3.6, "km/h"), KILOMETER_PER_SECOND(1 / 1000.0, "km/s");
 
 	private double factor;
 	private String symbol;
@@ -363,6 +367,72 @@ public class QuantityFormat implements Comparator<Variant> {
 	private String symbol;
 
 	private AngleUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum AreaUnits implements Unit {
+	SQUARE_METER(1, "m2"), SQUARE_KILOMETER(1 / 1000000.0, "km2");
+
+	private double factor;
+	private String symbol;
+
+	private AreaUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum PopulationDensityUnits implements Unit {
+	PER_SQUARE_METER(1, "per m2"), PER_SQUARE_KILOMETER(1000000.0, "per km2");
+
+	private double factor;
+	private String symbol;
+
+	private PopulationDensityUnits(double factor, String symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public String symbol() {
+	    return symbol;
+	}
+    }
+
+    private enum CurrencyUnits implements Unit {
+	USD(1, "USD"), EUR(1, "EUR"), JPY(1, "JPY"), GBP(1, "GBP");
+
+	private double factor;
+	private String symbol;
+
+	private CurrencyUnits(double factor, String symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}

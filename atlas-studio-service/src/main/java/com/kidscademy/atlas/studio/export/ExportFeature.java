@@ -107,5 +107,12 @@ public class ExportFeature {
 	EN.put("gravity", "Surface Gravity");
 	EN.put("rotation.period", "Rotation Period");
 	EN.put("axial.tilt", "Axial Tilt");
+	EN.put("population.urban", "Urban Population");
+	EN.put("population.metro", "Metro Population");
+	EN.put("population.density", "Population Density");
+	EN.put("area.urban", "Urban Area");
+	EN.put("area.metro", "Metro Area");
+	EN.put("gva.total", "Total GVA");
+	EN.put("gva.percapita", "GVA per capita");
     }
 }

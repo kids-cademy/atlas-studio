@@ -54,7 +54,7 @@ public class Image {
 
     @Transient
     private String path;
-
+    
     public Image() {
     }
 

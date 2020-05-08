@@ -17,10 +17,15 @@
 }
 
 .intro .circle.large {
-	width: 380px;
-	height: 380px;
-	top: 38px;
+	width: 370px;
+	height: 370px;
+	top: 40px;
+	left: 8px;
 	background-color: rgba(255,255,255,0.25);
+}
+
+.intro.square-image .circle.large {
+	xdisplay: none;	
 }
 
 .intro .circle.small {
@@ -32,9 +37,25 @@
 }
 
 .intro .image {
-	max-height: 36vh;
+	max-height: 38vh;
+	max-width: 700px;
 	margin-left: 2vh;
 	margin-top: 8vh;	
+}
+
+.intro.narrow-image .image {
+	max-height: 50vh;
+	margin-top: 2vh;
+	margin-left: 4vh;
+}
+
+.intro.square-image .image {
+	max-height: 46vh;
+	margin-left: 0;
+	margin-top: 2vh;
+	xpadding: 2px;
+	xborder: solid 2px white;
+	xborder-radius: 50%;
 }
 
 .intro .text-container {

@@ -10,16 +10,16 @@ public interface AndroidTools {
 
     void buildAPK(File appDir) throws IOException;
 
-    void buildSignedAPK(File appDir) throws IOException;
+    void buildSignedAPK(AndroidApp app) throws IOException;
 
     /**
      * Build signed application bundle.
      * 
-     * @param appDir
-     *            application project root directory.
+     * @param app
+     *            android application.
      * @throws IOException
      */
-    void buildBundle(File appDir) throws IOException;
+    void buildBundle(AndroidApp app) throws IOException;
 
     void buildClean(File appDir) throws IOException;
 
