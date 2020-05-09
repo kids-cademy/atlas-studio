@@ -60,6 +60,15 @@ com.kidscademy.ListView = class extends js.dom.Element {
         return this;
     }
 
+    addObject(object) {
+        this._listControl.addObject(object).show();
+        return this;
+    }
+
+    isEmpty() {
+        return this._listControl.getChildrenCount() === 0;
+    }
+
     // --------------------------------------------------------------------------------------------
     // FILTER ACTION HANDLERS
 

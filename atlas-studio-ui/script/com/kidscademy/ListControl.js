@@ -17,6 +17,7 @@ com.kidscademy.ListControl = class extends js.dom.Element {
         this._currentLayout = null;
 
         this._layouts.forEach(layout => this.removeCssClass(layout));
+        this.setObject([]);
     }
 
     setLayout(layout) {

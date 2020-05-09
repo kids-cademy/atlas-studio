@@ -51,23 +51,43 @@ com.kidscademy.Page = class extends js.ua.Page {
     // --------------------------------------------------------------------------------------------
 
     setPageAttr(name, object) {
-        localStorage.setItem(this._pageRelativeName(name), js.lang.JSON.stringify(object));
+        this.setContextAttr(this._pageRelativeName(name), object);
     }
 
     getPageAttr(name) {
-        var value = localStorage.getItem(this._pageRelativeName(name));
+        return this.getContextAttr(this._pageRelativeName(name));
+    }
+
+    removePageAttr(name) {
+        this.removeContextAttr(this._pageRelativeName(name));
+    }
+
+    _pageRelativeName(name) {
+        return `${this.toString()}.${name}`;
+    }
+
+    setContextAttr(name, object) {
+        localStorage.setItem(name, js.lang.JSON.stringify(object));
+    }
+
+    getContextAttr(name) {
+        var value = localStorage.getItem(name);
         if (value == null) {
             return null;
         }
         return js.lang.JSON.parse(value);
     }
 
-    removePageAttr(name) {
-        localStorage.removeItem(this._pageRelativeName(name));
+    removeContextAttr(name) {
+        localStorage.removeItem(name);
     }
 
-    _pageRelativeName(name) {
-        return `${this.toString()}.${name}`;
+    findContextAttr(rex, callback) {
+        for (let name in localStorage) {
+            if (name.match(rex) != null) {
+                callback(this.getContextAttr(name));
+            }
+        }
     }
 
     // --------------------------------------------------------------------------------------------

@@ -1,9 +1,16 @@
 <div class="collections" w:template="template/page#content" xmlns:w="js-lib.com/wood">
 	<div class="collections-view" w:compo="compo/list-view"></div>
+
+	<section class="drafts-section hidden">
+		<h1 class="divider">Draft Atlas Objects</h1>
+		<ul class="drafts-view" w:compo="compo/slave-list-view"></ul>
+	</section>
+
 	<h1 class="divider">Recent Updated Atlas Objects</h1>
 	<ul class="objects-view" w:compo="compo/slave-list-view"></ul>
-	
+
 	<div class="collections-menu" w:compo="page/collections/collections-menu"></div>
+	<div class="drafts-menu" w:compo="page/collections/drafts-menu"></div>
 	<div class="objects-menu" w:compo="page/collections/objects-menu"></div>
 	<div w:compo="compo/item-select"></div>
 </div>

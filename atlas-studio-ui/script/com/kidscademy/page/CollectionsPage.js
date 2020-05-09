@@ -18,13 +18,21 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._collectionsView = this.getByCssClass("collections-view");
         this._collectionsView.setContextMenu(this._collectionsMenu);
 
+        this._draftsMenu = this.getByCssClass("drafts-menu");
+        // drafts context menu handlers are implemented by com.kidscademy.ObjectsContextMenu mixin
+        this._draftsMenu.on("edit-object", this._onEditObject, this);
+        this._draftsMenu.on("preview-object", this._onPreviewObject, this);
+
+        this._draftsSection = this.getByCssClass("drafts-section");
+        this._draftsView = this.getByCssClass("drafts-view");
+        this._draftsView.setContextMenu(this._draftsMenu);
+        this._collectionsView.bindSlaveList(this._draftsView);
+
         this._objectsMenu = this.getByCssClass("objects-menu");
-		// objects context menu handler are implemented by com.kidscademy.ObjectsContextMenu mixin
+        // objects context menu handlers, less open-collection, are implemented by com.kidscademy.ObjectsContextMenu mixin
         this._objectsMenu.on("edit-object", this._onEditObject, this);
         this._objectsMenu.on("preview-object", this._onPreviewObject, this);
-        this._objectsMenu.on("remove-object", this._onRemoveObject, this);
-        this._objectsMenu.on("move-object", this._onMoveObject, this);
-        this._objectsMenu.on("add-to-release", this._onAddToRelease, this);
+        this._objectsMenu.on("open-collection", this._onOpenCollection, this);
 
         this._objectsView = this.getByCssClass("objects-view");
         this._objectsView.setContextMenu(this._objectsMenu);
@@ -35,6 +43,10 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._collectionsView.resetTimestamp();
         AtlasService.getCollections(collections => this._collectionsView.setObject(collections));
         AtlasService.getRecentUsedAtlasObjects(objects => this._objectsView.setObject(objects).show());
+
+        const DRAFT_ATTR_REX = /^atlas-object-draft-(\d+)$/;
+        this.findContextAttr(DRAFT_ATTR_REX, object => this._draftsView.addObject(object));
+        this._draftsSection.show(!this._draftsView.isEmpty());
     }
 
     _onCollections() {
@@ -70,6 +82,11 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
     _onManageObjects(collectionView) {
         const collection = collectionView.getUserData();
         WinMain.assign("@link/collection", { collection: collection.id });
+    }
+
+    _onOpenCollection(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/collection", { collection: object.collection.id });
     }
 
     toString() {

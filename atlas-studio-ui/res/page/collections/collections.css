@@ -3,7 +3,7 @@
 }
 
 .collections .divider {
-	margin-top: 60px;
+	margin: 60px 0 0;
 	border-top: solid 1px #E6E6E6;
 	padding-top: 10px;
 	font-size: 1.8rem;
