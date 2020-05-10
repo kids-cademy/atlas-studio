@@ -53,7 +53,7 @@ public interface ImageProcessor {
 
     void crop(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
 
-    void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
+    void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset, String borderColor, int borderWidth) throws IOException;
 
     void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException;
 

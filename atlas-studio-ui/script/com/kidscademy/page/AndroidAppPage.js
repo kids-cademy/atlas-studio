@@ -15,8 +15,14 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._sidebar.on("build-signed-apk", this._onBuildSignedAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
 
+        const contextMenu = this.getByCssClass("context-menu");
+        contextMenu.on("edit-object", this._onEditObject, this);
+        contextMenu.on("preview-object", this._onPreviewObject, this);
+        contextMenu.on("open-collection", this._onOpenCollection, this);
+
         this._releaseView = this.getByCssClass("release");
         this._objectsList = this.getByCssClass("objects-list");
+        this._objectsList.setContextMenu(contextMenu);
 
         const release = WinMain.url.parameters.release;
         if (release) {
@@ -68,6 +74,21 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
     _onBuildBundle() {
         ReleaseService.buildAndroidBundle(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+    }
+
+    _onEditObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/object-form", { object: object.id });
+    }
+
+    _onPreviewObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/reader", { object: object.id });
+    }
+
+    _onOpenCollection(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/collection", { collection: object.collection.id });
     }
 
     toString() {

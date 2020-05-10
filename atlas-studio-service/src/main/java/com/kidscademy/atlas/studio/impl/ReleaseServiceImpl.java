@@ -149,7 +149,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	Release release = getAtlasReleaseByForm(imageForm);
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
-	businessRules.imageDimensions(Math.min(imageInfo.getWidth(), imageInfo.getHeight()), 558);
+	businessRules.imageDimensions(Math.max(imageInfo.getWidth(), imageInfo.getHeight()), 900);
 	int size = Math.max(imageInfo.getWidth(), imageInfo.getHeight());
 
 	File targetFile = Files.mediaFile(release, Image.KEY_RELEASE);

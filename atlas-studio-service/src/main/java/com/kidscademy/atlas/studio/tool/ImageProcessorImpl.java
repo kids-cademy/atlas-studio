@@ -87,20 +87,37 @@ public class ImageProcessorImpl implements ImageProcessor {
     }
 
     @Override
-    public void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset)
-	    throws IOException {
+    public void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset,
+	    String borderColor, int borderWidth) throws IOException {
 	exec("${imageFile} -crop ${width}x${height}+${xoffset}+${yoffset} ${targetFile}", imageFile, width, height,
 		xoffset, yoffset, targetFile);
 
+	int y = 1;
+	if (borderColor != null) {
+	    int borderPadding = (int) (Math.max(width, height) * 0.008);
+	    y = borderWidth + borderPadding;
+	    width += 2 * y;
+	    height += 2 * y;
+	}
 	int cx = width / 2;
 	int cy = height / 2;
-	exec("-size ${width}x${height} xc:none -fill ${targetFile} -draw \"circle ${cx},${cy} ${cx},1\" ${targetFile}",
-		width, height, targetFile, cx, cy, cx, targetFile);
+	exec("-size ${width}x${height} xc:none -fill ${targetFile} -draw \"circle ${cx},${cy} ${cx},${y}\" ${targetFile}",
+		width, height, targetFile, cx, cy, cx, y, targetFile);
+
+	if (borderColor != null) {
+	    y = borderWidth / 2;
+	    File borderFile = new File(targetFile.getParentFile(), "border.png");
+	    exec("-size ${width}x${height} xc:none -stroke ${borderColor} -fill #FF000000 -strokewidth ${borderWidth} -draw \"circle ${cx},${cy} ${cx},${y}\" ${borderFile}",
+		    width, height, borderColor, borderWidth, cx, cy, cx, y, borderFile);
+
+	    exec("-composite ${borderFile} ${targetFile} ${targetFile}", borderFile, targetFile, targetFile);
+	}
     }
 
     @Override
     public void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException {
-	exec("-composite -compose ${compose} ${imageFile} ${maskFile} ${imageFile}", compose.value(), imageFile, maskFile, imageFile);
+	exec("-composite -compose ${compose} ${imageFile} ${maskFile} ${imageFile}", compose.value(), imageFile,
+		maskFile, imageFile);
     }
 
     @Override

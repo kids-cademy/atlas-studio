@@ -103,7 +103,8 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         }, this._onCropUpdate, this);
     }
 
-    _onCropCircle() {
+    _onCropCircle(argsForm) {
+        this._argsForm = argsForm;
         this._cropMask.open({
             type: "CIRCLE",
             width: this._preview._node.width,
@@ -160,7 +161,8 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
             case "crop-circle":
                 crop = this._cropMask.getCropArea();
                 this._cropMask.hide();
-                ImageService.cropCircleImage(this._preview.getImage(), crop.cx, crop.cy, crop.x, crop.y, this._onProcessingDone, this);
+                args = this._getActionArgs("crop-circle");
+                ImageService.cropCircleImage(this._preview.getImage(), crop.cx, crop.cy, crop.x, crop.y, args.borderColor, Number(args.borderWidth), this._onProcessingDone, this);
                 break;
 
             case "rotate":

@@ -38,6 +38,12 @@ body>.flex-content .sidebar {
 	overflow: hidden;
 }
 
+body>.flex-content .sidebar.collapsed {
+	width: @dimen/page-sidebar-collapsed-width;
+	/* for unknown reasons above width is not working */
+	max-width: @dimen/page-sidebar-collapsed-width;
+}
+
 body>.flex-content .sidebar .caption {
 	height: @dimen/window-caption-height;
 	line-height: @dimen/window-caption-height;
@@ -51,19 +57,49 @@ body>.flex-content .sidebar .caption .title {
 	color: @color/text-inverse;
 }
 
-body>.flex-content .sidebar .caption .close {
+body>.flex-content .sidebar.collapsed .title {
+	display: none;
+}
+
+body>.flex-content .sidebar .caption .collapse {
 	float: right;
 	height: @dimen/window-caption-height;
 	filter: invert(100%);
 	cursor: pointer;
 }
 
+body>.flex-content .sidebar.collapsed .caption .collapse {
+	transform: rotate(180deg);
+}
+
 body>.flex-content .sidebar .object-view {
 	padding: 10px;
 }
 
+body>.flex-content .sidebar.collapsed .object-view {
+	display: none;
+}
+
 body>.flex-content .sidebar .menu {
 	margin-top: 40px;
+}
+
+body>.flex-content .sidebar.collapsed .menu li {
+	height: 80px;
+	line-height: normal;
+	white-space: normal;
+	text-align: center;
+	padding: 8px;
+}
+
+body>.flex-content .sidebar.collapsed .menu li img {
+	margin: 0 0 8px 0;
+}
+
+body>.flex-content .sidebar.collapsed .menu li span {
+	display: block;
+	font-size: 12px;
+	xline-height: 11px;
 }
 
 body>.flex-content .body {

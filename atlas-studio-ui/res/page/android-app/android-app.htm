@@ -12,12 +12,12 @@
 				<td data-text="name"></td>
 			</tr>
 			<tr>
-				<td>Release Update</td>
-				<td data-text="release.timestamp" data-format="js.format.StandardDateTime"></td>
-			</tr>
-			<tr>
 				<td>Atlas Update</td>
 				<td data-text="release.content-timestamp" data-format="js.format.StandardDateTime"></td>
+			</tr>
+			<tr>
+				<td>Atlas Build</td>
+				<td data-text="content-build" data-format="js.format.StandardDateTime"></td>
 			</tr>
 			<tr>
 				<td>Package Name</td>
@@ -49,6 +49,8 @@
 	<div class="objects-list" w:compo="compo/list-view"></div>
 
 	<div class="console"></div>
+
+	<div w:compo="page/android-app/context-menu"></div>
 </div>
 
 <div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">

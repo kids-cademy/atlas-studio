@@ -164,13 +164,15 @@ com.kidscademy.atlas.studio.ImageService = {
 	 * @param int height,
 	 * @param int xoffset,
 	 * @param int yoffset,
+	 * @param java.lang.String borderColor,
+	 * @param int borderWidth,
 	 * @param Function callback function to invoke on RMI completion,
 	 * @param Object scope optional callback run-time scope, default to global scope.
 	 * @return com.kidscademy.atlas.studio.model.Image
 	 * @throws java.io.IOException
 	 * @assert callback is a {@link Function} and scope is an {@link Object}.
 	 */
-	 cropCircleImage: function(image, width, height, xoffset, yoffset) {
+	 cropCircleImage: function(image, width, height, xoffset, yoffset, borderColor, borderWidth) {
 		$assert(typeof image !== "undefined", "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Image argument is undefined.");
 		$assert(typeof width !== "undefined", "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Width argument is undefined.");
 		$assert(js.lang.Types.isNumber(width), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Width argument is not a number.");
@@ -180,10 +182,14 @@ com.kidscademy.atlas.studio.ImageService = {
 		$assert(js.lang.Types.isNumber(xoffset), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Xoffset argument is not a number.");
 		$assert(typeof yoffset !== "undefined", "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Yoffset argument is undefined.");
 		$assert(js.lang.Types.isNumber(yoffset), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Yoffset argument is not a number.");
+		$assert(typeof borderColor !== "undefined", "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Border color argument is undefined.");
+		$assert(borderColor === null || js.lang.Types.isString(borderColor), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Border color argument is not a string.");
+		$assert(typeof borderWidth !== "undefined", "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Border width argument is undefined.");
+		$assert(js.lang.Types.isNumber(borderWidth), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Border width argument is not a number.");
 
-		var __callback__ = arguments[5];
+		var __callback__ = arguments[7];
 		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Callback is not a function.");
-		var __scope__ = arguments[6];
+		var __scope__ = arguments[8];
 		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.ImageService#cropCircleImage", "Scope is not an object.");
 		if(!js.lang.Types.isObject(__scope__)) {
 			__scope__ = window;
@@ -191,7 +197,7 @@ com.kidscademy.atlas.studio.ImageService = {
 
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.ImageService", "cropCircleImage");
-		rmi.setParameters(image, width, height, xoffset, yoffset);
+		rmi.setParameters(image, width, height, xoffset, yoffset, borderColor, borderWidth);
 		rmi.exec(__callback__, __scope__);
 	},
 

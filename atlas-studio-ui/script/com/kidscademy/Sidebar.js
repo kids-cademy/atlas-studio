@@ -4,6 +4,8 @@ com.kidscademy.Sidebar = class extends js.dom.Element {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
+        this.CONTEXT_ATTR = "side-bar-collapsed";
+
         this._titleView = this.getByCssClass("title");
         this._objectView = this.getByCssClass("object-view");
 
@@ -11,6 +13,9 @@ com.kidscademy.Sidebar = class extends js.dom.Element {
         if (viewTabs != null) {
             viewTabs.on("click", this._onViewTabsClick, this);
         }
+
+        this.addCssClass("collapsed", WinMain.page.getContextAttr(this.CONTEXT_ATTR));
+        this.getByCssClass("collapse").on("click", this._onCollapse, this);
 
         this._events = this.getCustomEvents();
         this._events.register("view-selected");
@@ -53,6 +58,11 @@ com.kidscademy.Sidebar = class extends js.dom.Element {
         if (item != null) {
             this._events.fire("view-selected", item.getName());
         }
+    }
+
+    _onCollapse() {
+        this.toggleCssClass("collapsed");
+        WinMain.page.setContextAttr(this.CONTEXT_ATTR, this.hasCssClass("collapsed"));
     }
 
     toString() {

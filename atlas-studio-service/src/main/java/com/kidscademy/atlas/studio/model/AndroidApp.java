@@ -21,6 +21,8 @@ public class AndroidApp implements GraphicObject {
 
     private Date timestamp;
     @Transient
+    private Date contentBuild;
+    @Transient
     private final String title = "Android App";
     @Transient
     private String name;
@@ -46,6 +48,9 @@ public class AndroidApp implements GraphicObject {
 	display = release.getDisplay();
 	definition = release.getDefinition();
 	iconSrc = release.getIconSrc();
+
+	AndroidProject prj = new AndroidProject(name);
+	contentBuild = new Date(prj.getAtlasDir().lastModified());
     }
 
     public int getId() {

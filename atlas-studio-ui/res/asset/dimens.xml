@@ -3,6 +3,7 @@
 	<page-header-height>80px</page-header-height>
 	<sys-message-height>60px</sys-message-height>
 	<page-sidebar-width>360px</page-sidebar-width>
+	<page-sidebar-collapsed-width>96px</page-sidebar-collapsed-width>
 
 	<container-width>1200px</container-width>
 

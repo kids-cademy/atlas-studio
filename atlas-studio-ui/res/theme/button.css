@@ -2,6 +2,11 @@
 	padding-top: @dimen/buttons-top;
 }
 
+.buttons-bar.container {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .buttons-bar button {
 	margin-left: @dimen/button-space;	
 }

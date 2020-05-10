@@ -60,17 +60,9 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException {
-	// File imageFile = Files.mediaFile(image.getSrc());
-	// ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
-	// if (imageInfo.getType() != MediaType.PNG) {
-	// File pngFile = Files.replaceExtension(imageFile, "png");
-	// imageProcessor.convert(imageFile, pngFile);
-	// image.replaceExtension("png");
-	// }
-
+    public Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset, String borderColor, int borderWidth) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
-	imageProcessor.cropCircle(handler.source(), handler.target(), width, height, xoffset, yoffset);
+	imageProcessor.cropCircle(handler.source(), handler.target(), width, height, xoffset, yoffset, borderColor, borderWidth);
 	updateImage(image, handler.target(), handler.targetSrc());
 	return image;
     }

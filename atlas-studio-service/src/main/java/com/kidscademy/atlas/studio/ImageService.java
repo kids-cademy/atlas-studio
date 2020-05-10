@@ -21,7 +21,7 @@ public interface ImageService {
 
     Image cropRectangleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
-    Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
+    Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset, String borderColor, int borderWidth) throws IOException;
 
     Image adjustBrightnessContrast(Image image, int brightness, int contrast) throws IOException;
 

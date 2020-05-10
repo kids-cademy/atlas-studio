@@ -39,10 +39,6 @@
 			<td>https://www.britannica.com/</td>
 		</tr>
 		<tr>
-			<td>Integrated Taxonomic Information System</td>
-			<td>https://www.itis.gov/</td>
-		</tr>
-		<tr>
 			<td>IUCN Red List</td>
 			<td>https://www.iucnredlist.org/</td>
 		</tr>
@@ -67,6 +63,10 @@
 			<td>https://dosits.org/</td>
 		</tr>
 		<tr>
+			<td>Taxonomic Information System</td>
+			<td>https://www.itis.gov/</td>
+		</tr>
+		<tr>
 			<td>The Free Dictionary</td>
 			<td>http://www.thefreedictionary.com/</td>
 		</tr>
@@ -79,7 +79,7 @@
 			<td>https://www.wikihow.com/Main-Page</td>
 		</tr>
 		<tr>
-			<td>Wikipedia The Free Encyclopedia</td>
+			<td>Wikipedia</td>
 			<td>https://en.wikipedia.org/wiki/Main_Page</td>
 		</tr>
 	</table>
