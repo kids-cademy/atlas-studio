@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,19 +30,21 @@ public class ImageProcessorTest {
     private ImageMagickProcess convert;
     @Mock
     private ImageMagickProcess identify;
+    @Mock
+    private PrintStream console;
 
     private ImageProcessor processor;
 
     @Before
     public void beforeTest() {
-	processor = new ImageProcessorImpl(convert, identify);
+	processor = new ImageProcessorImpl(convert, identify, console);
     }
 
     @Test
     public void getImageInfo() throws IOException {
 	ImageInfoResult result = new ImageInfoResult();
 	result.parse("picture.jpg JPEG 920x560 920x560+0+0 8-bit sRGB 178854B 0.047u 0:00.045");
-	
+
 	when(identify.exec(eq(ImageInfoResult.class), anyString())).thenReturn(result);
 
 	File imageFile = new File("picture.jpg");
@@ -59,7 +62,7 @@ public class ImageProcessorTest {
     public void getImageInfo_Gray256c() throws IOException {
 	ImageInfoResult result = new ImageInfoResult();
 	result.parse("picture.jpg JPEG 1256x1256 1256x1256+0+0 8-bit Gray 256c 251950B 0.000u 0:00.000");
-	
+
 	when(identify.exec(eq(ImageInfoResult.class), anyString())).thenReturn(result);
 
 	File imageFile = new File("picture.jpg");

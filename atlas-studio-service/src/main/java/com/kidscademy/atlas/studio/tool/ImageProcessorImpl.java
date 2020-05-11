@@ -4,23 +4,31 @@ import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.buildCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.List;
 
+import com.kidscademy.atlas.studio.util.EventPrintStream;
+
 import js.tiny.container.annotation.TestConstructor;
+import js.tiny.container.net.EventStreamManager;
 
 public class ImageProcessorImpl implements ImageProcessor {
     private final ImageMagickProcess convert;
     private final ImageMagickProcess identify;
 
-    public ImageProcessorImpl() {
-	this.convert = new ConvertProcess();
-	this.identify = new IdentifyProcess();
+    private final PrintStream console;
+
+    public ImageProcessorImpl(EventStreamManager eventStream) {
+	this(new ConvertProcess(), new IdentifyProcess(), new PrintStream(new EventPrintStream(eventStream)));
     }
 
     @TestConstructor
-    public ImageProcessorImpl(ImageMagickProcess convert, ImageMagickProcess identify) {
+    public ImageProcessorImpl(ImageMagickProcess convert, ImageMagickProcess identify, PrintStream console) {
 	this.convert = convert;
 	this.identify = identify;
+	this.console = console;
+	this.convert.setConsole(this.console);
+	this.identify.setConsole(this.console);
     }
 
     @Override

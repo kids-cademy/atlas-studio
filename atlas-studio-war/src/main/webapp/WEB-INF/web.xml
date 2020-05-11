@@ -48,6 +48,11 @@
 		<servlet-class>js.tiny.container.rest.RestServlet</servlet-class>
 		<load-on-startup>3</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>event-stream</servlet-name>
+		<servlet-class>js.tiny.container.net.EventStreamServlet</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>xsp-servlet</servlet-name>
@@ -61,6 +66,10 @@
 	<servlet-mapping>
 		<servlet-name>rest-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>event-stream</servlet-name>
+		<url-pattern>*.event</url-pattern>
 	</servlet-mapping>
 
 	<session-config>

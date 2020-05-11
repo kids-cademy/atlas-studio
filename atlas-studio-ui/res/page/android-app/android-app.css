@@ -1,10 +1,16 @@
+body .body>.scroll-y {
+	overflow: hidden;	
+}
+
 .android-app {
-	
+	display: flex;
+	flex-direction: row;
+	height: 100%;	
 }
 
 .android-app .release {
 	display: inline-block;
-	width: 100%;
+	flex-grow: 1;
 }
 
 .android-app .release .object-view {
@@ -61,6 +67,41 @@
 	color: green;
 }
 
-.android-app .objects-list {
+.android-app .release .objects-list {
 	margin-top: 40px;
+}
+
+.android-app .console {
+	display: inline-block;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	height: 100%;
+	flex-basis: 40%;
+	flex-grow: 0;
+	flex-shrink: 0;
+	border-left: solid 1px #C0C0C0;
+}
+
+.android-app .console .actions {
+	background-color: #F8F8F8;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 6px;
+	border-bottom: solid 1px #E6E6E6;
+	margin-bottom: 4px;
+}
+
+.android-app .console .screen {
+	flex-grow: 1;
+	padding: 10px;
+	background-color: black;
+}
+
+.android-app .console p {
+	color: white;
+	font-family: monospace;
+	font-size: 1.2rem;
+	margin-top: 6px;
+	line-height: normal;
 }

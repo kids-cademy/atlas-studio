@@ -38,7 +38,7 @@ public abstract class ImageMagickProcess extends AbstractToolProcess {
 		try {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
-			System.out.println(line);
+			console.println(line);
 			((ResultParser) result).parse(line);
 		    }
 		} catch (IOException e) {

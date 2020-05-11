@@ -18,6 +18,9 @@ import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
@@ -27,10 +30,15 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.tool.ImageProcessorImpl;
 import com.kidscademy.atlas.studio.tool.MediaType;
 
+import js.tiny.container.net.EventStreamManager;
 import js.util.Classes;
 import js.util.Files;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ImageMagickTest {
+    @Mock
+    private EventStreamManager eventStream;
+
     private ImageProcessor image;
 
     @BeforeClass
@@ -42,7 +50,7 @@ public class ImageMagickTest {
 
     @Before
     public void beforeTest() {
-	image = new ImageProcessorImpl();
+	image = new ImageProcessorImpl(eventStream);
     }
 
     @Test

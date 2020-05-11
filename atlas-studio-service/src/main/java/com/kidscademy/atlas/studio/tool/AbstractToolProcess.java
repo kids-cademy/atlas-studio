@@ -2,6 +2,7 @@ package com.kidscademy.atlas.studio.tool;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.util.List;
 
@@ -15,26 +16,40 @@ public abstract class AbstractToolProcess implements ToolProcess {
 
     private static final long EXECUTION_TIMEOUT = 16000L;
 
+    protected PrintStream console;
+
+    protected AbstractToolProcess() {
+	this.console = System.out;
+    }
+
+    public void setConsole(PrintStream console) {
+        this.console = console;
+    }
+    
     public void exec(String command) throws IOException {
 	exec(VoidResult.class, command);
     }
 
-    protected static Process start(List<String> command) throws IOException {
+    protected Process start(List<String> command) throws IOException {
 	ProcessBuilder builder = new ProcessBuilder(command);
 	// redirect STDERR to STDOUT so that reading process.getInputStream get them
 	// both
 	builder.redirectErrorStream(true);
 	log.debug("Create process |%s|.", Strings.join(command));
+	console.println("-------------------------------------------");
+	console.printf("Create process |%s|.\n", Strings.join(command));
 	return builder.start();
     }
 
-    protected static Process start(File directory, List<String> command) throws IOException {
+    protected Process start(File directory, List<String> command) throws IOException {
 	ProcessBuilder builder = new ProcessBuilder(command);
 	builder.directory(directory);
 	// redirect STDERR to STDOUT so that reading process.getInputStream get them
 	// both
 	builder.redirectErrorStream(true);
 	log.debug("Create process |%s|.", Strings.join(command));
+	console.println("-------------------------------------------");
+	console.printf("Create process |%s|.\n", Strings.join(command));
 	return builder.start();
     }
 

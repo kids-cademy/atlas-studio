@@ -2,12 +2,15 @@ package com.kidscademy.atlas.studio.tool;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AndroidProject;
+import com.kidscademy.atlas.studio.util.EventPrintStream;
 
 import js.tiny.container.annotation.ContextParam;
+import js.tiny.container.net.EventStreamManager;
 
 public class AndroidToolsImpl implements AndroidTools {
     @ContextParam("atlas.keystore")
@@ -15,6 +18,12 @@ public class AndroidToolsImpl implements AndroidTools {
 
     @ContextParam("atlas.keypass")
     private static String KEYPASS;
+
+    private final PrintStream console;
+
+    public AndroidToolsImpl(EventStreamManager eventStream) {
+	this.console = new PrintStream(new EventPrintStream(eventStream));
+    }
 
     @Override
     public void cleanProject(File appDir) throws IOException {
@@ -80,28 +89,33 @@ public class AndroidToolsImpl implements AndroidTools {
 
     // --------------------------------------------------------------------------------------------
 
-    private static void gradlew(File appDir, String command) throws IOException {
+    private void gradlew(File appDir, String command) throws IOException {
 	GradlewProcess gradlew = new GradlewProcess(appDir);
+	gradlew.setConsole(console);
 	gradlew.exec(command);
     }
 
-    private static void git(File appDir, String command, Object... args) throws IOException {
+    private void git(File appDir, String command, Object... args) throws IOException {
 	GitProcess git = new GitProcess(appDir);
+	git.setConsole(console);
 	git.exec(String.format(command, args));
     }
 
-    private static void jarsigner(File appDir, String command, Object... args) throws IOException {
+    private void jarsigner(File appDir, String command, Object... args) throws IOException {
 	JarSignerProcess jarsigner = new JarSignerProcess(appDir);
+	jarsigner.setConsole(console);
 	jarsigner.exec(String.format(command, args));
     }
 
-    private static void zipalign(File appDir, String command, Object... args) throws IOException {
+    private void zipalign(File appDir, String command, Object... args) throws IOException {
 	ZipAlignProcess zipalign = new ZipAlignProcess(appDir);
+	zipalign.setConsole(console);
 	zipalign.exec(String.format(command, args));
     }
 
-    private static void apksigner(File appDir, String command, Object... args) throws IOException {
+    private void apksigner(File appDir, String command, Object... args) throws IOException {
 	ApkSignerProcess apksigner = new ApkSignerProcess(appDir);
+	apksigner.setConsole(console);
 	apksigner.exec(String.format(command, args));
     }
 }

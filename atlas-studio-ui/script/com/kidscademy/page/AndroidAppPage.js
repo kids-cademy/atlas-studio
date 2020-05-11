@@ -5,6 +5,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         super();
 
         this._app = null;
+        this._timestamp = 0;
 
         this._sidebar.setTitle("Android App");
         this._sidebar.on("open-release", this._onOpenRelease, this);
@@ -14,6 +15,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._sidebar.on("build-apk", this._onBuildAPK, this);
         this._sidebar.on("build-signed-apk", this._onBuildSignedAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
+        this._sidebar.on("toggle-console", this._onToggleConsole, this);
 
         const contextMenu = this.getByCssClass("context-menu");
         contextMenu.on("edit-object", this._onEditObject, this);
@@ -24,6 +26,11 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._objectsList = this.getByCssClass("objects-list");
         this._objectsList.setContextMenu(contextMenu);
 
+        this._console = this.getByClass(com.kidscademy.Console);
+        this._load();
+    }
+
+    _load() {
         const release = WinMain.url.parameters.release;
         if (release) {
             ReleaseService.getAndroidAppForRelease(release, app => {
@@ -61,19 +68,43 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
     }
 
     _onCleanProject() {
-        ReleaseService.cleanAndroidProject(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+        this._beforeProcessing();
+        ReleaseService.cleanAndroidProject(this._app.id, this._afterProcessing, this);
     }
 
     _onBuildAPK() {
-        ReleaseService.buildAndroidApp(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+        this._beforeProcessing();
+        ReleaseService.buildAndroidApp(this._app.id, this._afterProcessing, this);
     }
 
     _onBuildSignedAPK() {
-        ReleaseService.buildSignedAndroidApp(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+        this._beforeProcessing();
+        ReleaseService.buildSignedAndroidApp(this._app.id, this._afterProcessing, this);
     }
 
     _onBuildBundle() {
-        ReleaseService.buildAndroidBundle(this._app.id, () => js.ua.System.alert("@string/alert-processing-done"));
+        this._beforeProcessing();
+        ReleaseService.buildAndroidBundle(this._app.id, this._afterProcessing, this);
+    }
+
+    _beforeProcessing() {
+        this._timestamp = Date.now();
+        this._console.show();
+    }
+
+    _afterProcessing() {
+        var done = "-- PROCESSING DONE";
+        if (this._timestamp !== 0) {
+            done += `: ${Date.now() - this._timestamp} msec.`;
+            this._timestamp = 0;
+        }
+
+        this._console.println(done);
+        this._load();
+    }
+
+    _onToggleConsole() {
+        this._console.toggleCssClass("hidden");
     }
 
     _onEditObject(objectView) {

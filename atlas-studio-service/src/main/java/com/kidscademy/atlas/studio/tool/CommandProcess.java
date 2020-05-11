@@ -21,6 +21,7 @@ public abstract class CommandProcess extends AbstractToolProcess {
     private final File appDir;
 
     public CommandProcess(File appDir) {
+	super();
 	this.appDir = appDir;
     }
 
@@ -28,7 +29,6 @@ public abstract class CommandProcess extends AbstractToolProcess {
     public <T> T exec(final Type resultType, String command) throws IOException {
 	List<String> args = Strings.split(Strings.concat(getCommandPath(), ' ', command));
 	final Process process = start(appDir, args);
-
 	final Object lock = new Object();
 
 	class StdinReader implements Runnable {
@@ -39,7 +39,7 @@ public abstract class CommandProcess extends AbstractToolProcess {
 		try {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
-			System.out.println(line);
+			console.println(line);
 		    }
 		} catch (IOException e) {
 		    log.error(e);

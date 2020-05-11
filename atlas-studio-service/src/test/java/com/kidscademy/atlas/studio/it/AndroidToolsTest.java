@@ -24,7 +24,7 @@ public class AndroidToolsTest {
 
     @Test
     public void gitInit() throws IOException {
-	Classes.setFieldValue(GitProcess.class, "BIN", "C://Program Files/Git/cmd/git.exe");
+	Classes.setFieldValue(GitProcess.class, "COMMAND_PATH", "C://Program Files/Git/cmd/git.exe");
 	GitProcess git = new GitProcess(new File("fixture/tools/wild-birds"));
 	git.exec("init");
 

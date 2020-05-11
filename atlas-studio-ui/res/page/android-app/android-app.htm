@@ -1,54 +1,62 @@
 <div class="android-app" w:template="template/page#content" xmlns:w="js-lib.com/wood">
 	<div class="release">
-		<div class="object-view">
-			<img class="iconx" data-src="icon-src" width="@dimen/icon-size-large" height="@dimen/icon-size-large" />
-			<h1 class="display" data-text="display"></h1>
-			<p class="definition" data-text="release.definition"></p>
-		</div>
+		<div class="scroll-y">
+			<div class="object-view">
+				<img class="iconx" data-src="icon-src" width="@dimen/icon-size-large" height="@dimen/icon-size-large" />
+				<h1 class="display" data-text="display"></h1>
+				<p class="definition" data-text="release.definition"></p>
+			</div>
 
-		<table class="properties">
-			<tr>
-				<td>App Name</td>
-				<td data-text="name"></td>
-			</tr>
-			<tr>
-				<td>Atlas Update</td>
-				<td data-text="release.content-timestamp" data-format="js.format.StandardDateTime"></td>
-			</tr>
-			<tr>
-				<td>Atlas Build</td>
-				<td data-text="content-build" data-format="js.format.StandardDateTime"></td>
-			</tr>
-			<tr>
-				<td>Package Name</td>
-				<td data-text="package-name"></td>
-			</tr>
-			<tr>
-				<td>Version Code</td>
-				<td data-text="version-code"></td>
-			</tr>
-			<tr>
-				<td>Publisher</td>
-				<td data-text="release.publisher"></td>
-			</tr>
-			<tr>
-				<td>Edition</td>
-				<td data-text="release.edition"></td>
-			</tr>
-			<tr>
-				<td>Version</td>
-				<td data-text="release.version"></td>
-			</tr>
-			<tr>
-				<td>License</td>
-				<td data-text="release.license"></td>
-			</tr>
-		</table>
+			<table class="properties">
+				<tr>
+					<td>App Name</td>
+					<td data-text="name"></td>
+				</tr>
+				<tr>
+					<td>Atlas Update</td>
+					<td data-text="release.content-timestamp" data-format="js.format.StandardDateTime"></td>
+				</tr>
+				<tr>
+					<td>Atlas Build</td>
+					<td data-text="content-build" data-format="js.format.StandardDateTime"></td>
+				</tr>
+				<tr>
+					<td>Package Name</td>
+					<td data-text="package-name"></td>
+				</tr>
+				<tr>
+					<td>Version Code</td>
+					<td data-text="version-code"></td>
+				</tr>
+				<tr>
+					<td>Publisher</td>
+					<td data-text="release.publisher"></td>
+				</tr>
+				<tr>
+					<td>Edition</td>
+					<td data-text="release.edition"></td>
+				</tr>
+				<tr>
+					<td>Version</td>
+					<td data-text="release.version"></td>
+				</tr>
+				<tr>
+					<td>License</td>
+					<td data-text="release.license"></td>
+				</tr>
+			</table>
+
+			<div class="objects-list no-search" w:compo="compo/list-view"></div>
+		</div>
 	</div>
 
-	<div class="objects-list" w:compo="compo/list-view"></div>
-
-	<div class="console"></div>
+	<div class="console hidden" data-class="com.kidscademy.Console">
+		<div class="actions" data-class="com.kidscademy.Actions">
+			<img name="clear" src="@image/action/remove" title="@tip/taxonomy-close" />
+			<img name="close" src="@image/action/close" title="@tip/taxonomy-close" />
+		</div>
+		<div class="screen"></div>
+	</div>
 
 	<div w:compo="page/android-app/context-menu"></div>
 </div>
@@ -64,5 +72,8 @@
 		<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
 		<li data-name="build-signed-apk"><img src="@image/action/build-signed-apk" /><span>@string/android-build-signed-apk</span></li>
 		<li data-name="build-bundle"><img src="@image/action/build-bundle" /><span>@string/android-build-bundle</span></li>
+	</ul>
+	<ul class="menu">
+		<li data-name="toggle-console"><img src="@image/action/console" /><span>@string/android-toggle-console</span></li>
 	</ul>
 </div>

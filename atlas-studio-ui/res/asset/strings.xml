@@ -162,4 +162,5 @@
 	<android-download-bundle>Download Bundle</android-download-bundle>
 	<android-edit-release>Edit Release</android-edit-release>
 	<android-remove>Remove Android App</android-remove>
+	<android-toggle-console>Toggle Console</android-toggle-console>
 </string>
