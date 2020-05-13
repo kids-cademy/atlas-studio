@@ -58,7 +58,8 @@ public class ExportFeature {
 	EN.put("wingspan", "Wingspan");
 	EN.put("weight", "Weight");
 	EN.put("speed", "Speed");
-	EN.put("speed.full", "Full Speed");
+	EN.put("speed.full", "Speed Record");
+	EN.put("speed.record", "Full Speed");
 	EN.put("speed.gliding", "Gliding Speed");
 	EN.put("speed.diving", "Diving Speed");
 	EN.put("flying.height", "Flying Height");

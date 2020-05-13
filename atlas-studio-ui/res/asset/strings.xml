@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <string>
-	<logo-type>kids (a)cademy</logo-type>
-	<slogan>learn by playing</slogan>
+	<logo-type>atlas studio</logo-type>
 
 	<!-- top menu labels -->
 	<workspace>workspace</workspace>
@@ -28,6 +27,11 @@
 	<cancel>Cancel</cancel>
 	<three-no>3xNO</three-no>
 	<message>Mesage for script variable.</message>
+	<email-address>email address</email-address>
+	<password>password</password>
+	<confirm-password>confirm password</confirm-password>
+	<forgot-password>forgot password</forgot-password>
+	<private-space>community private space</private-space>
 
 	<alert-no-definition-provider>No provider link for object definition.</alert-no-definition-provider>
 	<alert-no-description-provider>No provider link for object description.</alert-no-description-provider>

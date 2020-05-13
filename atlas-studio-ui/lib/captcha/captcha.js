@@ -101,7 +101,7 @@ js.widget.Captcha.prototype = {
 	 * 
 	 * @type String
 	 */
-	_SERVER_CAPTCHA_CLASS : "js.http.captcha.Captcha",
+	_SERVER_CAPTCHA_CLASS : "js.tiny.container.http.captcha.Captcha",
 
 	/**
 	 * Mark CSS class to identify invalid state.

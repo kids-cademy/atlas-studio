@@ -8,6 +8,7 @@
 		<!-- attribute converters -->
 		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
 
 		<!-- embeddables -->
 		<class>com.kidscademy.atlas.studio.model.Link</class>
@@ -84,6 +85,7 @@
 
 		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>

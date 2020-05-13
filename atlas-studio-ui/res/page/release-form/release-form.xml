@@ -5,6 +5,7 @@
 	<description>Releaseform.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
 		<script>script/com/kidscademy/FormData.js</script>

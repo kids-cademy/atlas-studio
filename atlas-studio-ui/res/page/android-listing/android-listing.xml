@@ -5,6 +5,7 @@
 	<description>Android application listing for atlas release publishing on Google Play.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/util/Sound.js</script>

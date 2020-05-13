@@ -38,9 +38,13 @@
 	<!--<observer period="60000" />-->
 	<login>
 		<property name="realm" value="Atlas Studio" />
-		<property name="page" value="home.htm" />
+		<property name="page" value="login.htm" />
 	</login>
 	<views>
 		<repository path="${catalina.base}/webapps/atlas-studio/" files-pattern="*.htm" />
 	</views>
+	<captcha>
+		<property name="captcha.repository.path" value="${captcha.repository.path}" />
+		<property name="captcha.set.size" value="6" />
+	</captcha>
 </app-descriptor>

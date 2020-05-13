@@ -1,0 +1,81 @@
+<body class="login" xmlns:w="js-lib.com/wood">
+	<section class="page-section caption">
+		<div class="container">
+			<h1>@string/logo-type</h1>
+			<h1>@string/private-space</h1>
+		</div>
+		<div class="section-icon bottom">
+			<img src="@image/login-required-icon" />
+		</div>
+	</section>
+
+	<section class="login-section">
+		<div class="container">
+			<form>
+				<fieldset>
+					<div class="controlset">
+						<label>@string/email-address</label><input name="emailAddress" />
+					</div>	 
+					<div class="controlset">
+						<label>@string/password</label><input name="password" type="password" />
+					</div>	
+				</fieldset>
+			</form>
+			<div class="buttons-bar">
+				<button>@string/ok</button>
+			</div>
+		</div>
+	</section>
+	
+	<section data-class="com.kidscademy.CollapsibleSection">
+		<div class="container head">
+			<h2>
+				<span>@string/join</span><img class="expand-icon" src="@image/action/expand" />
+			</h2>
+		</div>
+		<div class="container body">
+			<form>
+				<fieldset>
+					<div class="controlset">
+						<label>@string/email-address</label><input type="email" />
+					</div> 
+					<div class="controlset">
+						<label>@string/password</label><input type="password" />
+					</div>	 
+					<div class="controlset">
+						<label>@string/confirm-password</label><input type="password" />
+					</div>	
+					<div class="controlset">
+						<div w:compo="compo/captcha"></div>
+					</div>
+				</fieldset>		
+			</form>
+			<div class="buttons-bar">
+				<button>@string/ok</button>
+			</div>
+		</div>
+	</section>
+
+	<section data-class="com.kidscademy.CollapsibleSection">
+		<div class="container head">
+			<h2>
+				<span>@string/forgot-password</span><img class="expand-icon" src="@image/action/expand" />
+			</h2>
+		</div>
+		<div class="container body">
+			<form>
+				<fieldset>
+					<div class="controlset">
+						<label>@string/email-address</label><input name="emailAddress" type="email" />
+					</div>	
+					<div class="controlset">
+						<div w:compo="compo/captcha"></div>
+					</div>
+				</fieldset>		
+			</form>
+			<div class="buttons-bar">
+				<button>@string/ok</button>
+			</div>
+		</div>
+	</section>
+</body>

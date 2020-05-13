@@ -5,6 +5,7 @@
 	<description>Atlas search.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
 		<script>script/com/kidscademy/ItemSelect.js</script>
@@ -14,4 +15,6 @@
 		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/SearchPage.js</script>
 	</scripts>
+	<path>/librarian/</path>
+	<path>/editor/</path>
 </page>

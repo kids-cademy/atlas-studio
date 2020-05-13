@@ -20,6 +20,7 @@ com.kidscademy.Page = class extends js.ua.Page {
         }
 
         this.getByCss("header .back.action").on("click", this._onBack, this);
+        this.getByCss("header .logout.action").on("click", this._onLogout, this);
 
         WinMain.on("unload", this._onUnload, this);
         WinMain.page = this;
@@ -94,6 +95,10 @@ com.kidscademy.Page = class extends js.ua.Page {
 
     _onBack() {
         WinMain.back();
+    }
+
+    _onLogout() {
+        AdminService.logout(() => WinMain.assign("@link/login"));
     }
 
     toString() {

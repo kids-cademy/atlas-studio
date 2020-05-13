@@ -5,6 +5,7 @@
 	<description>Collection form from editor workspace.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/FormData.js</script>
 		<script>script/com/kidscademy/Actions.js</script>

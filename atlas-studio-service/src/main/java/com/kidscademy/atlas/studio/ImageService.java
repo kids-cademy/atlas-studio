@@ -5,11 +5,9 @@ import java.io.IOException;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.RotateDirection;
 
-import js.tiny.container.annotation.Public;
 import js.tiny.container.annotation.Service;
 
 @Service
-@Public
 public interface ImageService {
     Image trimImage(Image image) throws IOException;
 
@@ -21,7 +19,8 @@ public interface ImageService {
 
     Image cropRectangleImage(Image image, int width, int height, int xoffset, int yoffset) throws IOException;
 
-    Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset, String borderColor, int borderWidth) throws IOException;
+    Image cropCircleImage(Image image, int width, int height, int xoffset, int yoffset, String borderColor,
+	    int borderWidth) throws IOException;
 
     Image adjustBrightnessContrast(Image image, int brightness, int contrast) throws IOException;
 

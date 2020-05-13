@@ -25,14 +25,10 @@ import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
 import js.rmi.BusinessException;
-import js.tiny.container.annotation.Public;
-import js.tiny.container.annotation.RolesAllowed;
 import js.tiny.container.annotation.Service;
 import js.tiny.container.http.form.Form;
 
 @Service
-// @RolesAllowed("EDITOR")
-@Public
 public interface AtlasService {
     AtlasCollection createAtlasCollection();
 
@@ -69,7 +65,6 @@ public interface AtlasService {
 
     AtlasObject saveAtlasObject(AtlasObject object) throws IOException, BusinessException;
 
-    @RolesAllowed("LIBRARIAN")
     void removeAtlasObject(int objectId);
 
     void moveAtlasObject(AtlasItem object, int collectionId);

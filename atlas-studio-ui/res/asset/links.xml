@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <link>
+	<login>login.htm</login>
 	<workspace>workspace.htm</workspace>
 	<collections>collections.htm</collections>
 	<collection>collection.htm</collection>

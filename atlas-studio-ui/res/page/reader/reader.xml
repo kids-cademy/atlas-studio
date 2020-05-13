@@ -5,6 +5,7 @@
 	<description>Atlas object reader, mainly for objects preview.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/ColumnText.js</script>
 		<script>script/com/kidscademy/TextColumn.js</script>

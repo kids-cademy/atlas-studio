@@ -4,6 +4,7 @@
 	<title>Object Form</title>
 	<description>Form page for atlas object.</description>
 	<scripts>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Form.js</script>
 		<script>script/com/kidscademy/TableView.js</script>

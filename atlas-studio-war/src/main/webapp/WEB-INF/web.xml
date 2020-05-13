@@ -21,7 +21,7 @@
 		<filter-class>js.tiny.container.servlet.RequestPreprocessor</filter-class>
 		<init-param>
 			<param-name>security-domain</param-name>
-			<param-value>service</param-value>
+			<param-value>librarian,editor</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

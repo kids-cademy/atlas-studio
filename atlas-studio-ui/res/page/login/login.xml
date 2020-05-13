@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Login</title>
+	<description>Atlas Studio authentication, registration and password recovery.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
+		<script>script/com/kidscademy/CollapsibleSection.js</script>
+		<script>script/com/kidscademy/page/LoginPage.js</script>
+	</scripts>
+</page>

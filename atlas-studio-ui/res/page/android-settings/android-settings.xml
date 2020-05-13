@@ -5,6 +5,7 @@
 	<description>Android project settings.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>

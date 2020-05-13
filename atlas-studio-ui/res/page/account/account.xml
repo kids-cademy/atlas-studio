@@ -5,6 +5,7 @@
 	<description>Developer account settings.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/AccountPage.js</script>
