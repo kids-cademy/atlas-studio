@@ -11,7 +11,7 @@
 	<name>User Interface</name>
 
 	<properties>
-		<wood.version>1.1.7</wood.version>
+		<wood.version>1.1.5</wood.version>
 	</properties>
 
 	<build>
