@@ -58,7 +58,7 @@ CREATE TABLE `atlascollection` (
   `spreading` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_ATLAS_COLLECTION_NAME` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `atlasobject` (
   UNIQUE KEY `UQ_ATLASOBJECT_NAME` (`name`),
   KEY `IX_ATLASOBJECT_COLLECTION_ID` (`collection_id`),
   CONSTRAINT `FK_ATLASOBJECT_COLLECTION_ID` FOREIGN KEY (`collection_id`) REFERENCES `atlascollection` (`id`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=838 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=856 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `atlasobject_aliases` (
   PRIMARY KEY (`id`),
   KEY `fk_alias_atlas_object1_idx` (`atlasobject_id`),
   CONSTRAINT `fk_alias_objec_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `atlasobject_facts` (
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`facts_key`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object1` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4332 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4389 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,7 +231,7 @@ CREATE TABLE `atlasobject_images` (
   UNIQUE KEY `UQ_IMAGE_KEY` (`atlasobject_id`,`imageKey`),
   KEY `IX_IMAGE_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `FK_ATLASOBJECT_IMAGES_ATLASOBJECT_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4174 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4305 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +253,7 @@ CREATE TABLE `atlasobject_links` (
   PRIMARY KEY (`id`),
   KEY `IX_ATLASOBJECT_LINKS_ATLASOBJECT_ID` (`atlasobject_id`),
   CONSTRAINT `fk_link_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2748 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2812 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,8 +270,8 @@ CREATE TABLE `atlasobject_related` (
   PRIMARY KEY (`atlasobject_id`,`related`),
   KEY `ix_atlasobject_related_id` (`atlasobject_id`),
   KEY `IX_ATLASOBJECT_RELATED_NAME` (`related`),
-  CONSTRAINT `FK_ATLASOBJECT_RELATED_NAME` FOREIGN KEY (`related`) REFERENCES `atlasobject` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_ATLASOBJECT_RELATED_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
+  CONSTRAINT `FK_ATLASOBJECT_RELATED_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_ATLASOBJECT_RELATED_NAME` FOREIGN KEY (`related`) REFERENCES `atlasobject` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -294,7 +294,7 @@ CREATE TABLE `atlasobject_spreading` (
   UNIQUE KEY `uq_region_area` (`atlasobject_id`,`name`,`area`),
   KEY `idx_region_atlasobject_id` (`atlasobject_id`),
   CONSTRAINT `fk_region_atlasobject_id` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=328 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +314,7 @@ CREATE TABLE `atlasobject_taxonomy` (
   UNIQUE KEY `uq_atlasobject_facts_key` (`atlasobject_id`,`name`),
   KEY `id_atlasobject_facts_object_id` (`atlasobject_id`),
   CONSTRAINT `fk_fact_object11` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3979 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3999 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +353,7 @@ CREATE TABLE `feature` (
   KEY `IX_FEATURE_FEATUREMETA_ID` (`meta_id`),
   CONSTRAINT `FK_FEATURE_ATLASOBJECT_ID` FOREIGN KEY (`atlasobject_id`) REFERENCES `atlasobject` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_FEATURE_FEATUREMETA_ID` FOREIGN KEY (`meta_id`) REFERENCES `featuremeta` (`id`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17364 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17664 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,11 +366,11 @@ DROP TABLE IF EXISTS `featuremeta`;
 CREATE TABLE `featuremeta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `quantity` enum('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','POWER','FOOD_ENERGY','DENSITY','ACCELERATION','ANGLE') NOT NULL,
+  `quantity` enum('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','POWER','FOOD_ENERGY','DENSITY','ACCELERATION','ANGLE','AREA','POPULATION_DENSITY','CURRENCY') NOT NULL,
   `definition` tinytext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_FEATUREMETA_NAME` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,6 +415,21 @@ CREATE TABLE `linkmeta` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `quantity`
+--
+
+DROP TABLE IF EXISTS `quantity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quantity` (
+  `id` int(11) NOT NULL,
+  `name` enum('NONE','SCALAR','MASS','TIME','LENGTH','SPEED','POWER','FOOD_ENERGY','DENSITY','ACCELERATION','ANGLE','AREA','POPULATION_DENSITY','CURRENCY') NOT NULL,
+  `display` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `release`
 --
 
@@ -424,7 +439,7 @@ DROP TABLE IF EXISTS `release`;
 CREATE TABLE `release` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `contentTimestamp` timestamp NULL DEFAULT NULL,
+  `contentTimestamp` timestamp NOT NULL DEFAULT '2019-12-31 22:00:00',
   `name` varchar(45) NOT NULL,
   `display` varchar(45) NOT NULL,
   `brief` varchar(45) NOT NULL,
@@ -459,6 +474,24 @@ CREATE TABLE `release_atlasitem` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `units`
+--
+
+DROP TABLE IF EXISTS `units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `units` (
+  `id` int(11) NOT NULL,
+  `quantity_id` int(11) NOT NULL,
+  `factor` varchar(45) NOT NULL,
+  `symbol` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_units_quantity1_idx` (`quantity_id`),
+  CONSTRAINT `fk_units_quantity1` FOREIGN KEY (`quantity_id`) REFERENCES `quantity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
@@ -469,9 +502,10 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `emailAddress` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
+  `roles` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `emailAddress_UNIQUE` (`emailAddress`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,4 +574,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-03  9:16:32
+-- Dump completed on 2020-05-14 19:49:35
