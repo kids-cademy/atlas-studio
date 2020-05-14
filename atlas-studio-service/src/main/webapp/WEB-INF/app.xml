@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app-descriptor>
+	<managed-classes>
+		<app interface="js.tiny.container.core.App" class="com.kidscademy.atlas.studio.Application" />
+		<constants class="com.kidscademy.atlas.studio.CT" />
+
+		<admin-service interface="com.kidscademy.atlas.studio.AdminService" class="com.kidscademy.atlas.studio.impl.AdminServiceImpl" />
+		<atlas-service interface="com.kidscademy.atlas.studio.AtlasService" class="com.kidscademy.atlas.studio.impl.AtlasServiceImpl" />
+		<atlas-controller interface="com.kidscademy.atlas.studio.AtlasController" class="com.kidscademy.atlas.studio.impl.AtlasControllerImpl" />
+		<image-service interface="com.kidscademy.atlas.studio.ImageService" class="com.kidscademy.atlas.studio.impl.ImageServiceImpl" />
+		<release-service interface="com.kidscademy.atlas.studio.ReleaseService" class="com.kidscademy.atlas.studio.impl.ReleaseServiceImpl" />
+		
+		<business-rules class="com.kidscademy.atlas.studio.BusinessRules" />
+
+		<entity-manager interface="javax.persistence.EntityManager" class="js.transaction.eclipselink.EntityManagerImpl" />
+		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />
+		<atlas-dao interface="com.kidscademy.atlas.studio.dao.AtlasDao" class="com.kidscademy.atlas.studio.dao.AtlasDaoImpl" type="PROXY" />
+		<taxonomy-dao interface="com.kidscademy.atlas.studio.dao.TaxonomyDao" class="com.kidscademy.atlas.studio.dao.TaxonomyDaoImpl" type="PROXY" />
+
+		<audio-processor interface="com.kidscademy.atlas.studio.tool.AudioProcessor" class="com.kidscademy.atlas.studio.tool.AudioProcessorImpl" />
+		<image-processor interface="com.kidscademy.atlas.studio.tool.ImageProcessor" class="com.kidscademy.atlas.studio.tool.ImageProcessorImpl" />
+		<identify-process class="com.kidscademy.atlas.studio.tool.IdentifyProcess" />
+		<convert-process class="com.kidscademy.atlas.studio.tool.ConvertProcess" />
+		<android-tools interface="com.kidscademy.atlas.studio.tool.AndroidTools" class="com.kidscademy.atlas.studio.tool.AndroidToolsImpl" />
+		<git-process class="com.kidscademy.atlas.studio.tool.GitProcess" />
+		<jar-signer class="com.kidscademy.atlas.studio.tool.JarSignerProcess" />
+		<apk-signer class="com.kidscademy.atlas.studio.tool.ApkSignerProcess" />
+		<zip-align class="com.kidscademy.atlas.studio.tool.ZipAlignProcess" />
+
+		<wikipedia interface="com.kidscademy.atlas.studio.www.Wikipedia" type="REMOTE" url="https:rest://en.wikipedia.org/api/rest_v1/" />
+		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />
+		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
+		<cambridge-dictionary interface="com.kidscademy.atlas.studio.www.CambridgeDictionary" type="REMOTE" url="https:xpath://dictionary.cambridge.org/" />
+		<merriam-webster interface="com.kidscademy.atlas.studio.www.MerriamWebster" type="REMOTE" url="https:xpath://www.merriam-webster.com/dictionary/" />
+		<wiki-how interface="com.kidscademy.atlas.studio.www.WikiHow" type="REMOTE" url="https:xpath://www.wikihow.com/" />
+		<plant-village interface="com.kidscademy.atlas.studio.www.PlantVillage" type="REMOTE" url="https:xpath://plantvillage.psu.edu/" />
+	</managed-classes>
+	<!--<observer period="60000" />-->
+	<login>
+		<property name="realm" value="Atlas Studio" />
+		<property name="page" value="login.htm" />
+	</login>
+	<views>
+		<repository path="${catalina.base}/webapps/atlas-studio/" files-pattern="*.htm" />
+	</views>
+	<captcha>
+		<property name="captcha.repository.path" value="${captcha.repository.path}" />
+		<property name="captcha.set.size" value="6" />
+	</captcha>
+</app-descriptor>
