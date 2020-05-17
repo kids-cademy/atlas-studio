@@ -54,6 +54,7 @@
 		<shared-cache-mode>ALL</shared-cache-mode>
 
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>

@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Type;
 
 import org.hamcrest.Description;
@@ -40,12 +41,14 @@ public class AudioProcessorTest {
     private ToolProcess ffprobe;
     @Mock
     private Waveform waveform;
+    @Mock
+    private PrintStream console;
 
     private AudioProcessor audio;
 
     @Before
     public void beforeTest() throws IOException {
-	audio = new AudioProcessorImpl(ffmpeg, ffprobe, waveform);
+	audio = new AudioProcessorImpl(ffmpeg, ffprobe, waveform, console);
     }
 
     @Test
@@ -125,7 +128,8 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -ss 12.3 -to 45.67 \"%s\"", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(),
+		equalToFormat("-i \"%s\" -ss 12.3 -to 45.67 \"%s\"", audioFile, targetFile));
     }
 
     @Test
@@ -137,7 +141,8 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af pan=mono|c0=0.5*c0+0.5*c1 \"%s\"", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(),
+		equalToFormat("-i \"%s\" -af pan=mono|c0=0.5*c0+0.5*c1 \"%s\"", audioFile, targetFile));
     }
 
     @Test

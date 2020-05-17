@@ -28,10 +28,13 @@
 	<Parameter name="atlas.keystore" value="D://private/android-keys/kids-cademy.com.p12" />
 	<Parameter name="atlas.keypass" value="keypass" />
 	<Parameter name="android.apps.path" value="D://tmp/apps/" />
-	<Parameter name="captcha.repository.path" value="${catalina.base}/webapps/media/captcha" />
+	<Parameter name="media.repository.path" value="${catalina.base}/webapps" />
+	<Parameter name="captcha.repository.path" value="${catalina.base}/work/captcha" />
 	<Parameter name="git.client" value="C://Program Files/Git/cmd/git.exe" />
 	<Parameter name="image.magick.convert" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/convert.exe" />
 	<Parameter name="image.magick.identify" value="C://Program Files/ImageMagick-6.9.9-Q16-HDRI/identify.exe" />
+    <Parameter name="audio.tool.ffmpeg" value="C://ffmpeg/ffmpeg.exe" />
+    <Parameter name="audio.tool.ffprobe" value="C://ffmpeg/ffprobe" />
 	<Parameter name="google.api.key" value="api.key" />
 	<Parameter name="google.search.context" value="search.context" />
 </Context>

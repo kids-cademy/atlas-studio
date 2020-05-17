@@ -4,13 +4,16 @@ import static com.kidscademy.atlas.studio.tool.AbstractToolProcess.buildCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Type;
 
 import com.kidscademy.atlas.studio.CT;
+import com.kidscademy.atlas.studio.util.EventPrintStream;
 
 import js.log.Log;
 import js.log.LogFactory;
 import js.tiny.container.annotation.TestConstructor;
+import js.tiny.container.net.EventStreamManager;
 import js.util.Files;
 
 public class AudioProcessorImpl implements AudioProcessor {
@@ -23,25 +26,18 @@ public class AudioProcessorImpl implements AudioProcessor {
     private final ToolProcess ffprobe;
     private final Waveform waveform;
 
-    public AudioProcessorImpl() throws IOException {
-	log.trace("AudioProcessorImpl()");
-	ffmpeg = new FFmpegProcess();
-	ffprobe = new FFprobeProcess();
-	waveform = new Waveform();
+    public AudioProcessorImpl(EventStreamManager eventStream) throws IOException {
+	this(new FFmpegProcess(), new FFprobeProcess(), new Waveform(),
+		new PrintStream(new EventPrintStream(eventStream)));
     }
 
-    /**
-     * Test constructor.
-     * 
-     * @param image
-     * @param ffmpeg
-     * @param ffprobe
-     */
     @TestConstructor
-    public AudioProcessorImpl(ToolProcess ffmpeg, ToolProcess ffprobe, Waveform waveform) {
+    public AudioProcessorImpl(ToolProcess ffmpeg, ToolProcess ffprobe, Waveform waveform, PrintStream console) {
 	this.ffmpeg = ffmpeg;
 	this.ffprobe = ffprobe;
 	this.waveform = waveform;
+	this.ffmpeg.setConsole(console);
+	this.ffprobe.setConsole(console);
     }
 
     @Override

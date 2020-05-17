@@ -25,7 +25,7 @@ import js.util.Strings;
 public class MediFileHandlerTest {
     @BeforeClass
     public static void beforeClass() {
-	Classes.setFieldValue(Files.class, "REPOSITORY_DIR", "fixture/tomcat/webapps");
+	Classes.setFieldValue(Files.class, "REPOSITORY_DIR", "fixture/tomcat/webapps/");
     }
 
     @Test

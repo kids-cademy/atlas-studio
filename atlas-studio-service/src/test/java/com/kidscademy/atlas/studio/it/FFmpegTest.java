@@ -11,21 +11,37 @@ import java.io.IOException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioProcessorImpl;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
+import com.kidscademy.atlas.studio.tool.FFmpegProcess;
+import com.kidscademy.atlas.studio.tool.FFprobeProcess;
+
+import js.tiny.container.net.EventStreamManager;
+import js.util.Classes;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FFmpegTest {
+    @Mock
+    private EventStreamManager eventStream;
+
     private AudioProcessor audio;
+
+    @BeforeClass
+    public static void beforeClass() {
+	Classes.setFieldValue(FFmpegProcess.class, "BIN", "C://ffmpeg/ffmpeg.exe");
+	Classes.setFieldValue(FFprobeProcess.class, "BIN", "C://ffmpeg/ffprobe.exe");
+    }
 
     @Before
     public void beforeTest() throws IOException {
-	audio = new AudioProcessorImpl();
+	audio = new AudioProcessorImpl(eventStream);
     }
 
     @After

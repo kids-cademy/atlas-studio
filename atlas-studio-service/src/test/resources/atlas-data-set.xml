@@ -4,6 +4,7 @@
 		<id>1</id>
 		<emailAddress>john.doe@email.com</emailAddress>
 		<password>secret</password>
+		<roles>MASTER,LIBRARIAN,EDITOR,READER</roles>
 	</user>
 
 	<atlascollection>

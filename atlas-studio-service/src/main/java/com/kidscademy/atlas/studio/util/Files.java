@@ -10,10 +10,14 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
+import js.tiny.container.annotation.ContextParam;
 import js.util.Params;
 import js.util.Strings;
 
 public final class Files extends js.util.Files {
+    @ContextParam("media.repository.path")
+    private static File REPOSITORY_DIR;
+
     private Files() {
     }
 
@@ -61,8 +65,6 @@ public final class Files extends js.util.Files {
     public static MediaSRC mediaSrc(AtlasCollection collection) {
 	return new MediaSRC(mediaPath(collection));
     }
-
-    private static File REPOSITORY_DIR = new File(System.getProperty("catalina.base") + "/webapps");
 
     public static File mediaFile(AtlasCollection collection, String... variant) {
 	// repository dir := ${catalina.base}/webapps

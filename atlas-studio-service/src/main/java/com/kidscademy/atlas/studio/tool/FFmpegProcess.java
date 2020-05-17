@@ -9,6 +9,7 @@ import java.util.List;
 import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
+import js.tiny.container.annotation.ContextParam;
 import js.util.Classes;
 import js.util.Strings;
 import js.util.Types;
@@ -16,13 +17,16 @@ import js.util.Types;
 public class FFmpegProcess extends AbstractToolProcess {
     private static final Log log = LogFactory.getLog(FFmpegProcess.class);
 
+    @ContextParam("audio.tool.ffmpeg")
+    private static String BIN;
+
     @Override
     public <T> T exec(Type resultType, String command) throws IOException {
 	if (!Types.isKindOf(resultType, ResultParser.class)) {
 	    throw new BugError("FFmpeg processor requires result parser class.");
 	}
 
-	List<String> args = Strings.split("ffmpeg -y " + command);
+	List<String> args = Strings.split(Strings.concat(BIN, " -y ", command));
 	final Process process = start(args);
 	final T result = Classes.newInstance(resultType);
 
@@ -36,7 +40,7 @@ public class FFmpegProcess extends AbstractToolProcess {
 		try {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
-			System.out.println(line);
+			console.println(line);
 			((ResultParser) result).parse(line);
 		    }
 		} catch (IOException e) {

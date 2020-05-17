@@ -22,6 +22,7 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	this.console = System.out;
     }
 
+    @Override
     public void setConsole(PrintStream console) {
         this.console = console;
     }

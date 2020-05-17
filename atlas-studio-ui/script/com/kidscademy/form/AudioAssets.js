@@ -45,7 +45,7 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 		this._sampleInfoView.resetObject();
 
 		const data = new FormData();
-		data.append("atlas-object-id", object.id);
+		data.append("object-id", object.id);
 		data.append("file", ev.target._node.files[0]);
 
 		const xhr = new js.net.XHR();
