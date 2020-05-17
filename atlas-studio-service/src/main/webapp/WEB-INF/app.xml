@@ -11,6 +11,7 @@
 		<release-service interface="com.kidscademy.atlas.studio.ReleaseService" class="com.kidscademy.atlas.studio.impl.ReleaseServiceImpl" />
 		
 		<business-rules class="com.kidscademy.atlas.studio.BusinessRules" />
+		<files-util class="com.kidscademy.atlas.studio.util.Files" />
 
 		<entity-manager interface="javax.persistence.EntityManager" class="js.transaction.eclipselink.EntityManagerImpl" />
 		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />
@@ -21,6 +22,8 @@
 		<image-processor interface="com.kidscademy.atlas.studio.tool.ImageProcessor" class="com.kidscademy.atlas.studio.tool.ImageProcessorImpl" />
 		<identify-process class="com.kidscademy.atlas.studio.tool.IdentifyProcess" />
 		<convert-process class="com.kidscademy.atlas.studio.tool.ConvertProcess" />
+		<ffmpeg-process class="com.kidscademy.atlas.studio.tool.FFmpegProcess" />
+		<ffprobe-process class="com.kidscademy.atlas.studio.tool.FFprobeProcess" />
 		<android-tools interface="com.kidscademy.atlas.studio.tool.AndroidTools" class="com.kidscademy.atlas.studio.tool.AndroidToolsImpl" />
 		<git-process class="com.kidscademy.atlas.studio.tool.GitProcess" />
 		<jar-signer class="com.kidscademy.atlas.studio.tool.JarSignerProcess" />
