@@ -182,4 +182,19 @@ public class ImageInfoResultTest {
 	assertThat(info.getWidth(), equalTo(361));
 	assertThat(info.getHeight(), equalTo(362));
     }
+
+    @Test
+    public void getImageInfo5() {
+	String line = "picture.jpg JPEG 880x660 880x660+0+0 8-bit sRGB 88.8KB 0.000u 0:00.000";
+	ImageInfoResult result = new ImageInfoResult();
+	result.parse(line);
+
+	ImageInfo info = result.getImageInfo();
+	assertThat(info, notNullValue());
+	assertThat(info.getFileName(), equalTo("picture.jpg"));
+	assertThat(info.getFileSize(), equalTo(88800));
+	assertThat(info.getType(), equalTo(MediaType.JPEG));
+	assertThat(info.getWidth(), equalTo(880));
+	assertThat(info.getHeight(), equalTo(660));
+    }
 }
