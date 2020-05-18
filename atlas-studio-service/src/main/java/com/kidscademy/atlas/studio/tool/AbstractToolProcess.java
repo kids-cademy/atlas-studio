@@ -24,9 +24,9 @@ public abstract class AbstractToolProcess implements ToolProcess {
 
     @Override
     public void setConsole(PrintStream console) {
-        this.console = console;
+	this.console = console;
     }
-    
+
     public void exec(String command) throws IOException {
 	exec(VoidResult.class, command);
     }
@@ -120,6 +120,9 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	// 3: VARIABLE
 	int state = 1;
 
+	String os = System.getProperty("os.name");
+	boolean windows = os != null && os.toLowerCase().contains("win");
+
 	StringBuilder valueBuilder = new StringBuilder();
 	for (int charIndex = 0, argIndex = 0; charIndex < commandTemplate.length(); ++charIndex) {
 	    char c = commandTemplate.charAt(charIndex);
@@ -147,7 +150,12 @@ public abstract class AbstractToolProcess implements ToolProcess {
 		    Object argument = arguments[argIndex];
 		    String value;
 		    if (argument instanceof File) {
-			value = Strings.concat('"', ((File) argument).getAbsolutePath(), '"');
+			value = ((File) argument).getAbsolutePath();
+			if (windows) {
+			    // windows allows for space on file name that can be treated by process builder
+			    // as separated arguments; work around is to double quote file arguments
+			    value = Strings.concat('"', value, '"');
+			}
 		    } else {
 			value = argument.toString();
 		    }

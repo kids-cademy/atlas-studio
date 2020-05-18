@@ -637,14 +637,18 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	File targetFile = Files.mediaFileExt(atlasItem, imageKey, targetExtension);
-	targetFile.getParentFile().mkdirs();
-	targetFile.delete();
+	if (!targetFile.getParentFile().mkdirs()) {
+	    throw new IOException(String.format("Unable to create directories path for target file |%s|.", targetFile));
+	}
+	if (targetFile.exists() && !targetFile.delete()) {
+	    throw new IOException(String.format("Unable to create remove target file |%s|.", targetFile));
+	}
 
 	if (!imageInfo.getType().extension().equals(targetExtension)) {
 	    imageProcessor.convert(imageFile, (imageFile = Files.replaceExtension(imageFile, targetExtension)));
 	}
 	if (!imageFile.renameTo(targetFile)) {
-	    throw new IOException("Unable to upload " + targetFile);
+	    throw new IOException(String.format("Unable to rename |%s| to |%s|.", imageFile, targetFile));
 	}
 
 	Image image = new Image();
