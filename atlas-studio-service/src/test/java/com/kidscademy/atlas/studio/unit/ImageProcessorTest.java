@@ -47,7 +47,7 @@ public class ImageProcessorTest {
 
 	when(identify.exec(eq(ImageInfoResult.class), anyString())).thenReturn(result);
 
-	File imageFile = new File("picture.jpg");
+	File imageFile = new File("fixture/picture.jpg");
 	ImageInfo imageInfo = processor.getImageInfo(imageFile);
 
 	assertThat(imageInfo, notNullValue());
@@ -65,7 +65,7 @@ public class ImageProcessorTest {
 
 	when(identify.exec(eq(ImageInfoResult.class), anyString())).thenReturn(result);
 
-	File imageFile = new File("picture.jpg");
+	File imageFile = new File("fixture/picture.jpg");
 	ImageInfo imageInfo = processor.getImageInfo(imageFile);
 
 	assertThat(imageInfo, notNullValue());

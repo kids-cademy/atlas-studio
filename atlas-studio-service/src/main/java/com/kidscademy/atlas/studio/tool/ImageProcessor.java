@@ -31,9 +31,30 @@ public interface ImageProcessor {
 
     ImageInfo getImageInfo(File source) throws IOException;
 
-    void generateXAxis(File imageFile, int canvasWidth, int canvasHeight, String xaxisColor) throws IOException;
+    /**
+     * Generate horizontal axis. If target file does exist it will be silently
+     * overridden.
+     * 
+     * @param targetFile
+     *            not existing target file,
+     * @param canvasWidth
+     * @param canvasHeight
+     * @param xaxisColor
+     * @throws IOException
+     */
+    void generateXAxis(File targetFile, int canvasWidth, int canvasHeight, String xaxisColor) throws IOException;
 
-    void generateRainbowGradient(File imageFile, int canvasWidth, int canvasHeight) throws IOException;
+    /**
+     * Generate rainbow gradient. If target file does exist it will be silently
+     * overridden.
+     * 
+     * @param targetFile
+     *            not existing target file,
+     * @param canvasWidth
+     * @param canvasHeight
+     * @throws IOException
+     */
+    void generateRainbowGradient(File targetFile, int canvasWidth, int canvasHeight) throws IOException;
 
     /**
      * Remove unused space around image. This option removes any edges that are
@@ -53,7 +74,8 @@ public interface ImageProcessor {
 
     void crop(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset) throws IOException;
 
-    void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset, String borderColor, int borderWidth) throws IOException;
+    void cropCircle(File imageFile, File targetFile, int width, int height, int xoffset, int yoffset,
+	    String borderColor, int borderWidth) throws IOException;
 
     void compose(File imageFile, File maskFile, ImageCompose compose) throws IOException;
 
@@ -112,6 +134,6 @@ public interface ImageProcessor {
     <T> T info(File imageFile, String attribute, Class<T> type) throws IOException;
 
     boolean isOpaque(File imageFile) throws IOException;
-    
+
     void exec(String format, Object... args) throws IOException;
 }
