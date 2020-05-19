@@ -637,7 +637,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	File targetFile = Files.mediaFileExt(atlasItem, imageKey, targetExtension);
-	if (!targetFile.getParentFile().mkdirs()) {
+	if (!targetFile.getParentFile().exists() && !targetFile.getParentFile().mkdirs()) {
 	    throw new IOException(String.format("Unable to create directories path for target file |%s|.", targetFile));
 	}
 	if (targetFile.exists() && !targetFile.delete()) {
