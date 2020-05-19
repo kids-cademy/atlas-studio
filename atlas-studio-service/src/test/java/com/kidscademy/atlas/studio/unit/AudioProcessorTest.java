@@ -33,6 +33,8 @@ import com.kidscademy.atlas.studio.tool.ToolProcess;
 import com.kidscademy.atlas.studio.tool.VolumeInfo;
 import com.kidscademy.atlas.studio.tool.Waveform;
 
+import js.util.Strings;
+
 @RunWith(MockitoJUnitRunner.class)
 public class AudioProcessorTest {
     @Mock
@@ -79,7 +81,7 @@ public class AudioProcessorTest {
 
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" \"%s\"", audioFile, new File("audio.wav")));
+	assertThat(commandCaptor.getValue(), equalToFormat("-i %s %s", path(audioFile), path("audio.wav")));
 
 	ArgumentCaptor<File> wavFileCaptor = ArgumentCaptor.forClass(File.class);
 	ArgumentCaptor<File> waveformFileCaptor = ArgumentCaptor.forClass(File.class);
@@ -98,8 +100,8 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(), equalToFormat(
-		"-i \"%s\" -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse,silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse \"%s\"",
-		audioFile, targetFile));
+		"-i %s -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse,silenceremove=start_periods=1:start_duration=0.5:start_threshold=-60dB:detection=peak,aformat=dblp,areverse %s",
+		path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -115,8 +117,8 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(), equalToFormat(
-		"-i \"%s\" -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-65dB:detection=peak,silenceremove=stop_periods=1:stop_duration=0.5:stop_threshold=-65dB:detection=peak \"%s\"",
-		audioFile, targetFile));
+		"-i %s -af silenceremove=start_periods=1:start_duration=0.5:start_threshold=-65dB:detection=peak,silenceremove=stop_periods=1:stop_duration=0.5:stop_threshold=-65dB:detection=peak %s",
+		path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -129,7 +131,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i \"%s\" -ss 12.3 -to 45.67 \"%s\"", audioFile, targetFile));
+		equalToFormat("-i %s -ss 12.3 -to 45.67 %s", path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -142,7 +144,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i \"%s\" -af pan=mono|c0=0.5*c0+0.5*c1 \"%s\"", audioFile, targetFile));
+		equalToFormat("-i %s -af pan=mono|c0=0.5*c0+0.5*c1 %s", path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -160,10 +162,12 @@ public class AudioProcessorTest {
 
 	verify(ffmpeg).exec(typeCaptor.capture(), commandCaptor.capture());
 	assertThat(typeCaptor.getValue(), equalTo((Type) VolumeInfo.class));
-	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af volumedetect -f null /dev/null", audioFile));
+	assertThat(commandCaptor.getValue(),
+		equalToFormat("-i %s -af volumedetect -f null /dev/null", path(audioFile)));
 
 	verify(ffmpeg).exec(commandCaptor.capture());
-	assertThat(commandCaptor.getValue(), equalToFormat("-i \"%s\" -af volume=3.2dB \"%s\"", audioFile, targetFile));
+	assertThat(commandCaptor.getValue(),
+		equalToFormat("-i %s -af volume=3.2dB %s", path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -176,7 +180,7 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i \"%s\" -af afade=t=in:ss=0:d=12.345:curve=tri \"%s\"", audioFile, targetFile));
+		equalToFormat("-i %s -af afade=t=in:ss=0:d=12.345:curve=tri %s", path(audioFile), path(targetFile)));
     }
 
     @Test
@@ -192,10 +196,31 @@ public class AudioProcessorTest {
 	ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
 	verify(ffmpeg).exec(commandCaptor.capture());
 	assertThat(commandCaptor.getValue(),
-		equalToFormat("-i \"%s\" -af afade=t=out:st=21.0:d=2.1:curve=tri \"%s\"", audioFile, targetFile));
+		equalToFormat("-i %s -af afade=t=out:st=21.0:d=2.1:curve=tri %s", path(audioFile), path(targetFile)));
     }
 
     // --------------------------------------------------------------------------------------------
+
+    private static boolean WINDOWS;
+    static {
+	String os = System.getProperty("os.name");
+	if (os != null) {
+	    WINDOWS = os.toLowerCase().contains("win");
+	}
+    }
+
+    private static String path(File file) {
+	// AbstractToolProcessor#buildCommand surrounds Windows files with quotes to
+	// escape spaces; otherwise spaces are considered as arguments separator
+	if (WINDOWS) {
+	    return Strings.concat('"', file.getAbsolutePath(), '"');
+	}
+	return file.getAbsolutePath();
+    }
+
+    private static String path(String path) {
+	return path(new File(path));
+    }
 
     private static Matcher<String> equalToFormat(String format, Object... args) {
 	class FormatToMatcher extends TypeSafeMatcher<String> {
