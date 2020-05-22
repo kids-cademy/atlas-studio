@@ -11,17 +11,6 @@
         password="kids_cademy"
 	/>
 
-	<Resource
-		name="jdbc/itis"
-        type="com.mchange.v2.c3p0.ComboPooledDataSource"
-        factory="org.apache.naming.factory.BeanFactory"
-        driverClass="com.mysql.jdbc.Driver"
-        jdbcUrl="jdbc:mysql://localhost:3306/itis"
-        auth="Container"
-        user="kids_cademy"
-        password="kids_cademy"
-	/>
-
 	<Parameter name="android.zipalign" value="C:\Users\DEV\AppData\Local\Android\Sdk\build-tools\28.0.3\zipalign.exe" />
 	<Parameter name="android.apksigner" value="C:\Users\DEV\AppData\Local\Android\Sdk\build-tools\28.0.3\apksigner.bat" />
 	<Parameter name="java.jarsigner" value="D://java/jdk1.8.0_161/bin/jarsigner.exe" />

@@ -9,6 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>Web Application</name>
+	<description>Creates Atlas Studio web application, for both development and production environments. This module depends on server services and user interface modules.</description>
 
 	<build>
 		<finalName>${app.name}</finalName>

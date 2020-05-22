@@ -24,7 +24,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -52,8 +51,6 @@ public class AdminServiceTest {
     AppContext context;
     @Mock
     private AtlasDao atlasDao;
-    @Mock
-    private TaxonomyDao taxonomyDao;
     @Mock
     private AudioProcessor audioProcessor;
     @Mock
@@ -87,7 +84,6 @@ public class AdminServiceTest {
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
 	when(context.getInstance(AudioProcessor.class)).thenReturn(audioProcessor);
 	when(context.getInstance(BusinessRules.class)).thenReturn(businessRules);
-
 
 	service = new AtlasServiceImpl(context);
 

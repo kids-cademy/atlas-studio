@@ -24,7 +24,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
@@ -41,8 +40,6 @@ public class AtlasServiceTest {
     @Mock
     private AtlasDao atlasDao;
     @Mock
-    private TaxonomyDao taxonomyDao;
-    @Mock
     private BusinessRules businessRules;
 
     private AtlasService service;
@@ -51,7 +48,6 @@ public class AtlasServiceTest {
     public void beforeTest() throws IOException {
 	when(context.getAppFile(anyString())).thenReturn(new File("fixture/fake-file"));
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
-	when(context.getInstance(TaxonomyDao.class)).thenReturn(taxonomyDao);
 	when(context.getInstance(BusinessRules.class)).thenReturn(businessRules);
 	service = new AtlasServiceImpl(context);
     }

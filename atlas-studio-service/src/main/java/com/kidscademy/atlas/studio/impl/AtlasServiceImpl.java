@@ -18,7 +18,6 @@ import java.util.Set;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.dao.TaxonomyDao;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
@@ -79,7 +78,6 @@ public class AtlasServiceImpl implements AtlasService {
     private final Json json;
 
     private final AtlasDao atlasDao;
-    private final TaxonomyDao taxonomyDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
     private final SoftSchools softSchools;
@@ -97,7 +95,6 @@ public class AtlasServiceImpl implements AtlasService {
 	this.json = context.loadService(Json.class);
 
 	this.atlasDao = context.getInstance(AtlasDao.class);
-	this.taxonomyDao = context.getInstance(TaxonomyDao.class);
 	this.audioProcessor = context.getInstance(AudioProcessor.class);
 	this.imageProcessor = context.getInstance(ImageProcessor.class);
 	this.softSchools = context.getInstance(SoftSchools.class);
@@ -488,23 +485,10 @@ public class AtlasServiceImpl implements AtlasService {
 	return null;
     }
 
-    private static final String[] TAXON_NAMES = new String[] { "kingdom", "phylum", "class", "order", "suborder",
-	    "family", "genus", "species", "subspecies" };
-
     @Override
     public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
 	Params.notNullOrEmpty(objectName, "Atlas object name");
-	Map<String, String> sourceTaxonomy = taxonomyDao.getObjectTaxonomy(Strings.dashedToScientificName(objectName));
-	if (sourceTaxonomy.isEmpty()) {
-	    return null;
-	}
-	List<Taxon> taxonomy = new ArrayList<>(TAXON_NAMES.length);
-	for (String taxonName : TAXON_NAMES) {
-	    if (sourceTaxonomy.containsKey(taxonName)) {
-		taxonomy.add(new Taxon(taxonName, sourceTaxonomy.get(taxonName)));
-	    }
-	}
-	return taxonomy;
+	return null;
     }
 
     // ----------------------------------------------------------------------------------------------

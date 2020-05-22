@@ -16,7 +16,6 @@
 		<entity-manager interface="javax.persistence.EntityManager" class="js.transaction.eclipselink.EntityManagerImpl" />
 		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />
 		<atlas-dao interface="com.kidscademy.atlas.studio.dao.AtlasDao" class="com.kidscademy.atlas.studio.dao.AtlasDaoImpl" type="PROXY" />
-		<taxonomy-dao interface="com.kidscademy.atlas.studio.dao.TaxonomyDao" class="com.kidscademy.atlas.studio.dao.TaxonomyDaoImpl" type="PROXY" />
 
 		<audio-processor interface="com.kidscademy.atlas.studio.tool.AudioProcessor" class="com.kidscademy.atlas.studio.tool.AudioProcessorImpl" />
 		<image-processor interface="com.kidscademy.atlas.studio.tool.ImageProcessor" class="com.kidscademy.atlas.studio.tool.ImageProcessorImpl" />
