@@ -6,6 +6,8 @@ import java.io.IOException;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 
 public interface AndroidTools {
+    String sdkDir();
+    
     void cleanProject(File appDir) throws IOException;
 
     void buildAPK(File appDir) throws IOException;

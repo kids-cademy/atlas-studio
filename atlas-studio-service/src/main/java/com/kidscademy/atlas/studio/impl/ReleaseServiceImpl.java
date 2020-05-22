@@ -223,6 +223,12 @@ public class ReleaseServiceImpl implements ReleaseService {
 	return dao.getAndroidAppById(appId);
     }
 
+    private static String normalizePath(String path) {
+	// tilde is used to avoid files like 'local.properties' to be processed by git push
+	// on android app template file is named '~local.properties'
+	return path.replaceAll("~", "");
+    }
+    
     @Override
     public AndroidApp updateAndroidApp(final AndroidApp app) throws IOException {
 	if (app.getId() == 0) {
@@ -243,7 +249,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		if (path.charAt(0) == '!') {
 		    path = path.substring(1);
 		}
-		File targetFile = new File(appDir, path);
+		File targetFile = new File(appDir, normalizePath(path));
 		File targetDir = targetFile.getParentFile();
 		if (!targetDir.exists() && !targetDir.mkdirs()) {
 		    throw new IOException("Cannot create parent directory for target file " + targetFile);
@@ -270,6 +276,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		variables.put("publisher", app.getRelease().getPublisher());
 		variables.put("edition", app.getRelease().getEdition());
 		variables.put("license", app.getRelease().getLicense());
+		variables.put("sdk-dir", androidTools.sdkDir());
 
 		BufferedReader layoutDescriptor = new BufferedReader(
 			Classes.getResourceAsReader("/android-app/layout"));
@@ -281,7 +288,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		    path = path.substring(1);
 
 		    String sourcePath = "/android-app/template/" + path;
-		    File targetFile = new File(appDir, path);
+		    File targetFile = new File(appDir, normalizePath(path));
 		    Writer writer = new VariablesWriter(new FileWriter(targetFile), variables);
 		    Files.copy(Classes.getResourceAsReader(sourcePath), writer);
 		}

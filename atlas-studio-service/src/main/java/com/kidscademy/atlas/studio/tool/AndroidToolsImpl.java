@@ -13,6 +13,9 @@ import js.tiny.container.annotation.ContextParam;
 import js.tiny.container.net.EventStreamManager;
 
 public class AndroidToolsImpl implements AndroidTools {
+    @ContextParam("android.sdk.dir")
+    private static String SDK_DIR;
+
     @ContextParam("atlas.keystore")
     private static File KEYSTORE;
 
@@ -23,6 +26,11 @@ public class AndroidToolsImpl implements AndroidTools {
 
     public AndroidToolsImpl(EventStreamManager eventStream) {
 	this.console = new PrintStream(new EventPrintStream(eventStream));
+    }
+
+    @Override
+    public String sdkDir() {
+	return SDK_DIR;
     }
 
     @Override
