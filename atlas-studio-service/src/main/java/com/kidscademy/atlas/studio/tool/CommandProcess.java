@@ -14,7 +14,7 @@ import js.util.Strings;
 public abstract class CommandProcess extends AbstractToolProcess {
     private static final Log log = LogFactory.getLog(CommandProcess.class);
 
-    private static final long DEFAULT_TIMEOUT = 60000L;
+    private static final long DEFAULT_TIMEOUT = 5*60000L;
 
     protected abstract String getCommandPath();
 
