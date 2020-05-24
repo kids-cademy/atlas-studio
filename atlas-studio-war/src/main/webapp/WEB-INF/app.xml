@@ -37,10 +37,10 @@
 		<wiki-how interface="com.kidscademy.atlas.studio.www.WikiHow" type="REMOTE" url="https:xpath://www.wikihow.com/" />
 		<plant-village interface="com.kidscademy.atlas.studio.www.PlantVillage" type="REMOTE" url="https:xpath://plantvillage.psu.edu/" />
 	</managed-classes>
-	<!--<observer period="60000" />-->
+	<observer period="60000" />
 	<login>
 		<property name="realm" value="Atlas Studio" />
-		<property name="page" value="login.htm" />
+		<property name="page" value="${login.form.url}" />
 	</login>
 	<views>
 		<repository path="${catalina.base}/webapps/atlas-studio/" files-pattern="*.htm" />
