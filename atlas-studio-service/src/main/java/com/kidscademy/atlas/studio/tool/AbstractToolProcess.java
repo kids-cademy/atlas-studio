@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import java.io.Reader;
 import java.util.List;
 
+import com.kidscademy.atlas.studio.util.OS;
+
 import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
@@ -120,9 +122,6 @@ public abstract class AbstractToolProcess implements ToolProcess {
 	// 3: VARIABLE
 	int state = 1;
 
-	String os = System.getProperty("os.name");
-	boolean windows = os != null && os.toLowerCase().contains("win");
-
 	StringBuilder valueBuilder = new StringBuilder();
 	for (int charIndex = 0, argIndex = 0; charIndex < commandTemplate.length(); ++charIndex) {
 	    char c = commandTemplate.charAt(charIndex);
@@ -151,7 +150,7 @@ public abstract class AbstractToolProcess implements ToolProcess {
 		    String value;
 		    if (argument instanceof File) {
 			value = ((File) argument).getAbsolutePath();
-			if (windows) {
+			if (OS.isWindows()) {
 			    // windows allows for space on file name that can be treated by process builder
 			    // as separated arguments; work around is to double quote file arguments
 			    value = Strings.concat('"', value, '"');
