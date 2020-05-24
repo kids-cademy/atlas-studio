@@ -12,7 +12,7 @@ gradle/wrapper/gradle-wrapper.properties
 ~.gitignore
 build.gradle
 gradle.properties
-gradlew
-gradlew.bat
+*gradlew
+*gradlew.bat
 LICENSE
 !settings.gradle

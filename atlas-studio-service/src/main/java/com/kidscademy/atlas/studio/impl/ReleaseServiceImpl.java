@@ -224,11 +224,12 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     private static String normalizePath(String path) {
-	// tilde is used to avoid files like 'local.properties' to be processed by git push
+	// tilde is used to avoid files like 'local.properties' to be processed by git
+	// push
 	// on android app template file is named '~local.properties'
 	return path.replaceAll("~", "");
     }
-    
+
     @Override
     public AndroidApp updateAndroidApp(final AndroidApp app) throws IOException {
 	if (app.getId() == 0) {
@@ -249,12 +250,22 @@ public class ReleaseServiceImpl implements ReleaseService {
 		if (path.charAt(0) == '!') {
 		    path = path.substring(1);
 		}
+
+		boolean executable = false;
+		if (path.charAt(0) == '*') {
+		    path = path.substring(1);
+		    executable = true;
+		}
+
 		File targetFile = new File(appDir, normalizePath(path));
 		File targetDir = targetFile.getParentFile();
 		if (!targetDir.exists() && !targetDir.mkdirs()) {
 		    throw new IOException("Cannot create parent directory for target file " + targetFile);
 		}
 		Files.copy(Classes.getResourceAsStream("/android-app/template/" + path), targetFile);
+		if (executable) {
+		    targetFile.setExecutable(true);
+		}
 	    }
 	}
 
