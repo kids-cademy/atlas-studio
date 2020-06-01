@@ -404,6 +404,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	Map<String, String> listing = new HashMap<>();
 	listing.put("releaseId", Integer.toString(app.getRelease().getId()));
+	listing.put("name", app.getName());
 	listing.put("title", app.getDisplay());
 	listing.put("shortDescription", app.getRelease().getBrief());
 	listing.put("fullDescription", readme.toString());

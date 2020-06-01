@@ -7,6 +7,8 @@ com.kidscademy.page.AndroidListingPage = class extends com.kidscademy.Page {
         this._sidebar.setTitle("Android Store Listing");
         this._sidebar.on("edit-release", this._onEditRelease, this);
         this._sidebar.on("android-app", this._onAndroidApp, this);
+        this._sidebar.getByName("download-apk").on("click", this._onDownloadAPK, this);
+        this._sidebar.getByName("download-bundle").on("click", this._onDownloadBundle, this);
 
         this._form = this.getByTag("form");
         this._form.on("click", this._onClick, this);
@@ -34,6 +36,18 @@ com.kidscademy.page.AndroidListingPage = class extends com.kidscademy.Page {
             control.copyToClipboard();
             control.setAttr("disabled", "disabled");
         }
+    }
+
+    _onDownloadAPK(ev) {
+        const anchor = ev.target.getParentByTag("a");
+        anchor.setAttr("download", `${this._listing.name}.apk`);
+        anchor.setAttr("href", `export-android-apk.xsp?name=${this._listing.name}`);
+    }
+
+    _onDownloadBundle(ev) {
+        const anchor = ev.target.getParentByTag("a");
+        anchor.setAttr("download", `${this._listing.name}.aab`);
+        anchor.setAttr("href", `export-android-bundle.xsp?name=${this._listing.name}`);
     }
 
     toString() {

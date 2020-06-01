@@ -1,21 +1,15 @@
 package com.kidscademy.atlas.studio.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.http.HttpServletResponse;
 
 import com.kidscademy.atlas.studio.AtlasController;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.export.AtlasCollectionExportView;
 import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.util.Files;
 
 import js.tiny.container.http.ContentType;
-import js.tiny.container.http.Resource;
+import js.tiny.container.mvc.FileResource;
 import js.tiny.container.mvc.View;
 
 public class AtlasControllerImpl implements AtlasController {
@@ -36,26 +30,16 @@ public class AtlasControllerImpl implements AtlasController {
     }
 
     @Override
-    public Resource apk(final String name) {
-	return new Resource() {
-	    @Override
-	    public void serialize(HttpServletResponse httpResponse) throws IOException {
-		AndroidProject project = new AndroidProject(name);
-		File apkFile = project.getApkDebugFile();
-		if (!apkFile.exists()) {
-		    httpResponse.sendError(404);
-		    return;
-		}
+    public FileResource exportAndroidApk(String name) {
+	AndroidProject project = new AndroidProject(name);
+	File apkFile = project.getApkDebugFile();
+	return new FileResource(apkFile, ContentType.APPLICATION_STREAM);
+    }
 
-		InputStream apkStream = new FileInputStream(apkFile);
-		try {
-		    httpResponse.setContentType(ContentType.APPLICATION_STREAM.getValue());
-		    httpResponse.setContentLength((int) apkFile.length());
-		    Files.copy(apkStream, httpResponse.getOutputStream());
-		} finally {
-		    apkStream.close();
-		}
-	    }
-	};
+    @Override
+    public FileResource exportAndroidBundle(String name) {
+	AndroidProject project = new AndroidProject(name);
+	File apkFile = project.getBundleReleaseFile();
+	return new FileResource(apkFile, ContentType.APPLICATION_STREAM);
     }
 }

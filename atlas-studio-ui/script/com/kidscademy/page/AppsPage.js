@@ -9,7 +9,7 @@ com.kidscademy.page.AppsPage = class extends js.ua.Page {
 
     _onAppsLoaded(apps) {
         apps.forEach(app => {
-            app.href = `apk.xsp?name=${app.name}`;
+            app.href = `export-android-apk.xsp?name=${app.name}`;
             app.download = `${app.name}.apk`;
         });
         this._appsListView.setObject(apps).show();
