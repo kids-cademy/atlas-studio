@@ -97,11 +97,11 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 	_onPlay() {
 		if (!this._audioPlayer.isPlaying()) {
 			this._audioPlayer.play();
-			this._playAction.setSrc("@image/action/stop");
+			this._playAction.setSrc("media/asset-action_stop.svg");
 		}
 		else {
 			this._audioPlayer.stop();
-			this._playAction.setSrc("@image/action/play");
+			this._playAction.setSrc("media/asset-action_play.svg");
 		}
 	}
 
@@ -148,7 +148,7 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 	}
 
 	_onPlayerStop() {
-		this._playAction.setSrc("@image/action/play");
+		this._playAction.setSrc("media/asset-action_play.svg");
 	}
 
 	/**
