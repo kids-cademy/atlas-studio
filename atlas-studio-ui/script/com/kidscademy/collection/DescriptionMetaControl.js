@@ -11,6 +11,7 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
 
         this._currentRow = null;
 
+        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
     }
 
@@ -37,6 +38,13 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
     _onAdd() {
         this._currentRow = null;
         this._metaEditor.reset().show();
+    }
+
+    _onClone() {
+        AtlasService.getCollections(collections => this._itemSelect.load(collections));
+        this._itemSelect.open(collection => {
+            AtlasService.getCollectionDescriptionMeta(collection.id, descriptionMeta => this._tableView.setObject(descriptionMeta));
+        });
     }
 
     _onDone() {

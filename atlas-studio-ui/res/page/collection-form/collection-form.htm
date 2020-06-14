@@ -51,10 +51,11 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" />
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/collection-description-add" />
+						<img name="clone" src="@image/action/clone" title="@tip/collection-description-clone" />
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/collection-description-done" />
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/collection-description-remove" />
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/collection-description-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden" data-class="com.kidscademy.FormData">
@@ -201,6 +202,8 @@
 		<button name="save">@string/save</button>
 		<button name="cancel">@string/cancel</button>
 	</div>
+	
+	<div w:compo="compo/item-select"></div>
 </div>
 
 <div class="collection-form" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">

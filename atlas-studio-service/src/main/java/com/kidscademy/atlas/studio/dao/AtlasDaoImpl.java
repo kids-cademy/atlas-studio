@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -73,6 +74,12 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     public AtlasCollection getCollectionById(int collectionId) {
 	return em.find(AtlasCollection.class, collectionId);
+    }
+
+    @Override
+    public List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId) {
+	return em.createQuery("select c.descriptionMeta from AtlasCollection c where c.id=:id", DescriptionMeta.class)
+		.setParameter("id", collectionId).getResultList();
     }
 
     @Override

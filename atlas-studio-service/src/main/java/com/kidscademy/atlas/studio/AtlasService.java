@@ -13,6 +13,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
@@ -83,6 +84,8 @@ public interface AtlasService {
 
     LinkMeta saveLinkMeta(LinkMeta linkMeta);
 
+    List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
+    
     void removeLinkMeta(int linkMetaId);
 
     String importObjectDefinition(Link link);

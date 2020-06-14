@@ -2,11 +2,11 @@
 <tip>
 	<identity-check-name>check uniqueness for atlas object name</identity-check-name>
 	<identity-copy-name>copy atlas object name to clipboard</identity-copy-name>
-	
+
 	<definition-import>import object definition from external source</definition-import>
 	<definition-remove-all>remove object definition</definition-remove-all>
 	<definition-close>close object definition editor</definition-close>
-	
+
 	<description-import>import object description from external source</description-import>
 	<description-add-all-sections>add recommended description sections</description-add-all-sections>
 	<description-add-section>add new description section</description-add-section>
@@ -78,7 +78,7 @@
 	<features-meta-done>accept feature meta edits</features-meta-done>
 	<features-meta-remove>remove feature meta</features-meta-remove>
 	<features-meta-close>close feature meta editor without saving</features-meta-close>
-	
+
 	<spreading-add>add new spreading</spreading-add>
 	<spreading-import>import spreading is not yet implemented</spreading-import>
 	<spreading-done>accept spreading edits</spreading-done>
@@ -88,7 +88,7 @@
 	<related-add-all>add all related candidates</related-add-all>
 	<related-search>search for related candidates</related-search>
 	<related-close>close related objects editor</related-close>
-	
+
 	<link-add>add source link</link-add>
 	<link-browse>browser source link</link-browse>
 	<link-done>save source link</link-done>
@@ -97,7 +97,14 @@
 
 	<captcha-reload>reload images puzzle</captcha-reload>
 	<captcha-help>captcha help not yet implemented</captcha-help>
-	
+
 	<search-submit>perform search by criteria from search input</search-submit>
 	<search-reset>reset search input</search-reset>
+
+	<collection-description-add>add description section</collection-description-add>
+	<collection-description-clone>clone description section from another collection</collection-description-clone>
+	<collection-description-done>commit description section changes</collection-description-done>
+	<collection-description-remove>remove selected description section</collection-description-remove>
+	<collection-description-close>close description section form without save</collection-description-close>
+
 </tip>

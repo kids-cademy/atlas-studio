@@ -26,6 +26,7 @@ import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
@@ -151,6 +152,11 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public List<AtlasCollection> getCollections() {
 	return atlasDao.getCollections();
+    }
+
+    @Override
+    public List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId) {
+	return atlasDao.getCollectionDescriptionMeta(collectionId);
     }
 
     @Override

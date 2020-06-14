@@ -12,6 +12,7 @@
 		<script>script/com/kidscademy/IconControl.js</script>
 		<script>script/com/kidscademy/TableView.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/ItemSelect.js</script>
 		<script>script/com/kidscademy/collection/DescriptionMetaControl.js</script>
 		<script>script/com/kidscademy/collection/TaxonomyMetaControl.js</script>
 		<script>script/com/kidscademy/collection/FeaturesMetaControl.js</script>

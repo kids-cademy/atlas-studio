@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -35,6 +36,8 @@ public interface AtlasDao {
     void removeAtlasCollection(int collectionId);
 
     AtlasCollection getCollectionById(int collectionId);
+    
+    List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
 
     boolean uniqueCollectionName(AtlasCollection collection);
 

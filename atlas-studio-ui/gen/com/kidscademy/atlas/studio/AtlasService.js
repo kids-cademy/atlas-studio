@@ -625,6 +625,33 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
+	 * Get collection description meta.
+	 *
+	 * @param int collectionId,
+	 * @param Function callback function to invoke on RMI completion,
+	 * @param Object scope optional callback run-time scope, default to global scope.
+	 * @return java.util.List<com.kidscademy.atlas.studio.model.DescriptionMeta>
+	 * @assert callback is a {@link Function} and scope is an {@link Object}.
+	 */
+	 getCollectionDescriptionMeta: function(collectionId) {
+		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#getCollectionDescriptionMeta", "Collection id argument is undefined.");
+		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#getCollectionDescriptionMeta", "Collection id argument is not a number.");
+
+		var __callback__ = arguments[1];
+		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#getCollectionDescriptionMeta", "Callback is not a function.");
+		var __scope__ = arguments[2];
+		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#getCollectionDescriptionMeta", "Scope is not an object.");
+		if(!js.lang.Types.isObject(__scope__)) {
+			__scope__ = window;
+		}
+
+		var rmi = new js.net.RMI();
+		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "getCollectionDescriptionMeta");
+		rmi.setParameters(collectionId);
+		rmi.exec(__callback__, __scope__);
+	},
+
+	/**
 	 * Remove link meta.
 	 *
 	 * @param int linkMetaId,
