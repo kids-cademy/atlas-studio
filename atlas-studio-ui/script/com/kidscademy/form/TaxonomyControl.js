@@ -23,12 +23,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 		this._meta = null;
 
 		/**
-		 * Import link editor.
-		 * @type {com.kidscademy.form.TaxonomyControl.LinkEditor}
-		 */
-		this._linkEditor = this.getByCss(".editor.link");
-
-		/**
 		 * Taxon meta editor.
 		 * @type {com.kidscademy.form.TaxonomyControl.MetaEditor}
 		 */
@@ -128,8 +122,24 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	// ACTION HANDLERS
 
 	_onImport() {
-		this._actions.showOnly("done", "close");
-		this._linkEditor.open();
+		this._actions.showOnly("close");
+		this._fireEvent("input");
+		const load = (link) => AtlasService.importAtlasObjectTaxonomy(link, taxonomy => this.setValue(taxonomy));
+
+		const links = this._formPage.getLinks("taxonomy");
+		switch (links.length) {
+			case 0:
+				js.ua.System.alert("No provider link for taxonomy.");
+				break;
+
+			case 1:
+				load(links[0]);
+				break;
+
+			default:
+				this._linkSelect.open(links, load);
+				this._actions.show("close");
+		}
 	}
 
 	/**
@@ -180,12 +190,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 			return;
 		}
 
-		if (this._linkEditor.isVisible()) {
-			this._linkEditor.hide();
-			AtlasService.importAtlasObjectTaxonomy(this._linkEditor.getValue(), this.setValue, this);
-			return;
-		}
-
 		if (this._metaEditor.isVisible()) {
 			this._metaEditor.hide();
 
@@ -230,7 +234,6 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 	_onClose() {
 		this._batchEdit = false;
-		this._linkEditor.hide();
 		this._metaEditor.hide();
 		this._valueEditor.hide();
 		this._updateActions();
@@ -424,26 +427,5 @@ com.kidscademy.form.TaxonomyControl.MetaEditor = class extends js.dom.Element {
 
 	toString() {
 		return "com.kidscademy.form.TaxonomyControl.MetaEditor";
-	}
-};
-
-com.kidscademy.form.TaxonomyControl.LinkEditor = class extends js.dom.Element {
-	constructor(ownerDoc, node) {
-		super(ownerDoc, node);
-		this._input = this.getByTag("input");
-	}
-
-	open() {
-		this._input.reset();
-		this.show();
-		this._input.focus();
-	}
-
-	getValue() {
-		return this._input.getValue();
-	}
-
-	toString() {
-		return "com.kidscademy.form.TaxonomyControl.LinkEditor";
 	}
 };

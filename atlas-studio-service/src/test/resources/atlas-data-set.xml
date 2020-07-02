@@ -97,6 +97,18 @@
 	</featuremeta>
 	<featuremeta>
 		<id>2</id>
+		<name>width</name>
+		<definition>width</definition>
+		<quantity>LENGTH</quantity>
+	</featuremeta>
+	<featuremeta>
+		<id>3</id>
+		<name>length</name>
+		<definition>length</definition>
+		<quantity>LENGTH</quantity>
+	</featuremeta>
+	<featuremeta>
+		<id>4</id>
 		<name>weight</name>
 		<definition>weight</definition>
 		<quantity>MASS</quantity>
@@ -106,6 +118,16 @@
 		<atlascollection_id>1</atlascollection_id>
 		<featuresmeta_id>1</featuresmeta_id>
 		<featuresmeta_order>0</featuresmeta_order>
+	</atlascollection_featuremeta>
+	<atlascollection_featuremeta>
+		<atlascollection_id>1</atlascollection_id>
+		<featuresmeta_id>2</featuresmeta_id>
+		<featuresmeta_order>2</featuresmeta_order>
+	</atlascollection_featuremeta>
+	<atlascollection_featuremeta>
+		<atlascollection_id>1</atlascollection_id>
+		<featuresmeta_id>3</featuresmeta_id>
+		<featuresmeta_order>1</featuresmeta_order>
 	</atlascollection_featuremeta>
 
 	<atlascollection_descriptionmeta>

@@ -38,7 +38,9 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	 */
 	onCreate(formPage) {
 		super.onCreate(formPage);
-		this._featuresMeta = formPage.getCollection().featuresMeta;
+		const collection = formPage.getCollection();
+		this._collectionId = collection.id;
+		this._featuresMeta = collection.featuresMeta;
 		this._updateActions();
 	}
 
@@ -58,6 +60,26 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
+
+	_onImport() {
+		this._fireEvent("input");
+		const load = (link) => AtlasService.importObjectFeatures(this._collectionId, link, features => this.setValue(features));
+
+		const links = this._formPage.getLinks("features");
+		switch (links.length) {
+			case 0:
+				js.ua.System.alert("No provider link for features.");
+				break;
+
+			case 1:
+				load(links[0]);
+				break;
+
+			default:
+				this._linkSelect.open(links, load);
+				this._actions.show("close");
+		}
+	}
 
 	_onAdd() {
 		// feature name select options should display only not already used names

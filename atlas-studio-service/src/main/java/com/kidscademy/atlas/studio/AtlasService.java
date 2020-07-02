@@ -96,13 +96,13 @@ public interface AtlasService {
 
     Map<String, String> importObjectFacts(Link link);
 
+    List<Feature> importObjectFeatures(int collectionId, Link link);
+
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
 
     boolean checkAtlasObjectName(String name);
 
-    List<Taxon> importAtlasObjectTaxonomy(URL pageURL);
-
-    List<Taxon> loadAtlasObjectTaxonomy(String objectName);
+    List<Taxon> importAtlasObjectTaxonomy(Link link);
 
     FeatureMeta createFeatureMeta();
 

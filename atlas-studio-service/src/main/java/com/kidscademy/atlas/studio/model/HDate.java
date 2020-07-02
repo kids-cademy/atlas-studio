@@ -2,12 +2,11 @@ package com.kidscademy.atlas.studio.model;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.persistence.Embeddable;
 
 import js.lang.Displayable;
+import js.util.Params;
 
 @Embeddable
 public class HDate implements Comparable<HDate>, Displayable {
@@ -31,6 +30,28 @@ public class HDate implements Comparable<HDate>, Displayable {
 
     public HDate(long value) {
 	this(value, Format.DATE, Period.FULL, Era.CE);
+    }
+
+    /**
+     * Initialize HDate from geological date expressed in YA, years ago.
+     * 
+     * @param ya
+     *            years ago value.
+     */
+    public HDate(Double ya) {
+	Params.notNull(ya, "Years ago");
+	Format format = null;
+	if (ya >= 1000000000.0) {
+	    this.value = ya / 1000000000.0;
+	    format = Format.BYA;
+	} else if (ya >= 1000000.0) {
+	    this.value = ya / 1000000.0;
+	    format = Format.MYA;
+	} else {
+	    this.value = ya / 1000.0;
+	    format = Format.KYA;
+	}
+	this.mask = format.ordinal() + (Period.FULL.ordinal() << 8) + (Era.CE.ordinal() << 16);
     }
 
     // 1822 CE : new HDate(1822, HDate.Unit.YEAR)
@@ -189,17 +210,6 @@ public class HDate implements Comparable<HDate>, Displayable {
 
     public enum Format {
 	DATE, YEAR, DECADE, CENTURY, MILLENNIA, KYA, MYA, BYA;
-
-	private static Map<String, HDate.Format> FORMATS = new HashMap<>();
-	static {
-	    FORMATS.put("ka", HDate.Format.KYA);
-	    FORMATS.put("ma", HDate.Format.MYA);
-	    FORMATS.put("ga", HDate.Format.BYA);
-	}
-
-	public static Format yearsAgo(String value) {
-	    return FORMATS.get(value);
-	}
     }
 
     public enum Period {

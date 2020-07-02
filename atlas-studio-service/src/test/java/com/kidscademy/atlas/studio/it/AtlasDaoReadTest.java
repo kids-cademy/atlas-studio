@@ -32,6 +32,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.MediaSRC;
@@ -150,14 +151,30 @@ public class AtlasDaoReadTest {
     public void getCollectionById() {
 	AtlasCollection collection = dao.getCollectionById(1);
 	assertThat(collection, notNullValue());
-	assertThat(collection.getFeaturesMeta(), notNullValue());
-	assertThat(collection.getFeaturesMeta(), hasSize(1));
-	assertThat(collection.getFeaturesMeta().get(0).getId(), equalTo(1));
-	assertThat(collection.getFeaturesMeta().get(0).getName(), equalTo("height"));
-	assertThat(collection.getFeaturesMeta().get(0).getDefinition(), equalTo("height"));
-	assertThat(collection.getFeaturesMeta().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	
+	assertCollectionFeaturesMeta(collection.getFeaturesMeta());
     }
 
+    @Test
+    public void getCollectionFeaturesMeta() {
+	assertCollectionFeaturesMeta(dao.getCollectionFeaturesMeta(1));
+    }
+    
+    private static void assertCollectionFeaturesMeta(List<FeatureMeta> featuresMeta) {
+	assertThat(featuresMeta, notNullValue());
+	assertThat(featuresMeta, hasSize(3));
+	
+	assertThat(featuresMeta.get(0).getId(), equalTo(1));
+	assertThat(featuresMeta.get(0).getName(), equalTo("height"));
+	assertThat(featuresMeta.get(0).getDefinition(), equalTo("height"));
+	assertThat(featuresMeta.get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+	assertThat(featuresMeta.get(0).getId(), equalTo(1));
+
+	assertThat(featuresMeta.get(0).getName(), equalTo("height"));
+	assertThat(featuresMeta.get(1).getName(), equalTo("length"));
+	assertThat(featuresMeta.get(2).getName(), equalTo("width"));
+    }
+    
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
@@ -236,10 +253,10 @@ public class AtlasDaoReadTest {
 	assertThat(object.getFeatures().get(0).getValue(), equalTo(5.3));
 	assertThat(object.getFeatures().get(0).getMaximum(), nullValue());
 	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
 	assertThat(object.getFeatures().get(1).getValue(), equalTo(1.00584));
 	assertThat(object.getFeatures().get(1).getMaximum(), equalTo(1.09728));
-	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.MASS));
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
 
 	assertThat(object.getLinks(), notNullValue());
 	assertThat(object.getLinks(), hasSize(2));
@@ -308,7 +325,7 @@ public class AtlasDaoReadTest {
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
 	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
     }
 
     @Test

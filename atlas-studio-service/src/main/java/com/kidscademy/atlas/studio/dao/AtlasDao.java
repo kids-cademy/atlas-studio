@@ -36,7 +36,7 @@ public interface AtlasDao {
     void removeAtlasCollection(int collectionId);
 
     AtlasCollection getCollectionById(int collectionId);
-    
+
     List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
 
     boolean uniqueCollectionName(AtlasCollection collection);
@@ -142,7 +142,11 @@ public interface AtlasDao {
 
     List<FeatureMeta> getFeaturesMeta();
 
+    List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
+
     FeatureMeta getFeatureMetaById(int featureMetaId);
+
+    FeatureMeta getFeatureMetaByKey(int collectionId, String featureKey);
 
     void saveFeatureMeta(FeatureMeta featureMeta);
 

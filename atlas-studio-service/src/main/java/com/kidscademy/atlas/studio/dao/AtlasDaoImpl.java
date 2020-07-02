@@ -330,8 +330,43 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public List<FeatureMeta> getCollectionFeaturesMeta(int collectionId) {
+	// JPA @OrderColumn is used to automatically handle order column
+	// - in our case featuresMeta_ORDER
+	// JPA takes care of insert, update, reorder, delete, retrieve...
+
+	// anyway, it is working only when select AtlasObject itself
+	// when try to use join - implicit or explicit order is not handled by JPA and
+	// retrieved list is in database ID order
+
+	// keep next commented query as reminder
+
+	// return em
+	// .createQuery("select c.featuresMeta from AtlasCollection c where
+	// c.id=:collectionId", FeatureMeta.class)
+	// .setParameter("collectionId", collectionId).getResultList();
+
+	return em.find(AtlasCollection.class, collectionId).getFeaturesMeta();
+    }
+
+    @Override
     public FeatureMeta getFeatureMetaById(int featureMetaId) {
 	return em.find(FeatureMeta.class, featureMetaId);
+    }
+
+    @Override
+    public FeatureMeta getFeatureMetaByKey(int collectionId, String featureKey) {
+	List<FeatureMeta> result = em.createQuery(
+		"select m from AtlasCollection c join c.featuresMeta m where c.id=:collectionId and m.name like :featureKey",
+		FeatureMeta.class).setParameter("collectionId", collectionId)
+		.setParameter("featureKey", "%" + featureKey).getResultList();
+	if (result.isEmpty()) {
+	    return null;
+	}
+	if (result.size() > 1) {
+	    throw new BugError("Ambiguous key |%s|.", featureKey);
+	}
+	return result.get(0);
     }
 
     @Override

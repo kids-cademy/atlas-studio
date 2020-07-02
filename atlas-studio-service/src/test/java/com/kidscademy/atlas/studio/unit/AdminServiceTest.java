@@ -37,7 +37,6 @@ import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
-import com.kidscademy.atlas.studio.www.Wikipedia;
 
 import js.json.Json;
 import js.rmi.BusinessException;
@@ -55,8 +54,6 @@ public class AdminServiceTest {
     private AudioProcessor audioProcessor;
     @Mock
     private ImageProcessor imageProcessor;
-    @Mock
-    private Wikipedia wikipedia;
     @Mock
     private SoftSchools softSchools;
     @Mock

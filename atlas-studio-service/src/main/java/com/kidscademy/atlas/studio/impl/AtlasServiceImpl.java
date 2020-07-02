@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.kidscademy.apiservice.client.Wikipedia;
+import com.kidscademy.apiservice.model.LifeForm;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -29,6 +31,7 @@ import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkMeta;
@@ -53,7 +56,6 @@ import com.kidscademy.atlas.studio.tool.MediaType;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
-import com.kidscademy.atlas.studio.www.LifeFormWikipediaArticle;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
 import com.kidscademy.atlas.studio.www.PlantVillage;
 import com.kidscademy.atlas.studio.www.SoftSchools;
@@ -86,6 +88,7 @@ public class AtlasServiceImpl implements AtlasService {
     private final CambridgeDictionary cambridgeDictionary;
     private final MerriamWebster merriamWebster;
     private final BusinessRules businessRules;
+    private final Wikipedia wikipedia;
 
     private KeywordTree<KeywordIndex<Integer>> index;
 
@@ -103,6 +106,7 @@ public class AtlasServiceImpl implements AtlasService {
 	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
 	this.merriamWebster = context.getInstance(MerriamWebster.class);
 	this.businessRules = context.getInstance(BusinessRules.class);
+	this.wikipedia = context.getInstance(Wikipedia.class);
 
 	File file = context.getAppFile("search-index");
 	List<KeywordIndex<Integer>> searchIndex;
@@ -437,33 +441,69 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public List<Feature> importObjectFeatures(int collectionId, Link link) {
+	switch (link.getDomain()) {
+	case "wikipedia.org":
+	    List<Feature> features = new ArrayList<>();
+	    Map<String, Double> values = wikipedia.getNutritionalValue(Files.basename(link.getPath()));
+	    for (FeatureMeta meta : atlasDao.getCollectionFeaturesMeta(collectionId)) {
+		// to avoid full scan we can create a name resolver with hash map
+		// but at current sizes is not really helping
+		for (String label : values.keySet()) {
+		    if (meta.getName().endsWith(Strings.toDotCase(label))) {
+			Feature feature = new Feature(meta, values.get(label));
+			features.add(feature);
+			break;
+		    }
+		}
+	    }
+	    return features;
+
+	default:
+	    return null;
+	}
+    }
+
+    @Override
     public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException {
-	LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(articleURL);
+	LifeForm lifeForm = wikipedia.getLifeForm(Files.basename(articleURL.getPath()));
 
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
 	AtlasObject object = AtlasObject.create(collection);
 
-	object.setName(Strings.scientificToDashedName(article.getScientificName()));
+	object.setName(Strings.scientificToDashedName(lifeForm.getScientificName()));
 	if (object.getName() == null) {
-	    object.setName(article.getCommonName().trim().toLowerCase().replaceAll("[()]", "").replaceAll(" ", "-"));
+	    object.setName(lifeForm.getCommonName().trim().toLowerCase().replaceAll("[()]", "").replaceAll(" ", "-"));
 	}
-	object.setDisplay(article.getCommonName());
-	object.setDefinition(article.getDefinition());
-	object.setDescription(article.getDescription());
+	object.setDisplay(lifeForm.getCommonName());
+	object.setDefinition(lifeForm.getDefinition());
 
-	object.setStartDate(article.getStartDate());
-	if (collection.getFlags().hasEndDate()) {
-	    object.setEndDate(article.getEndDate());
+	StringBuilder builder = new StringBuilder();
+	builder.append("<text><section name=\"wikipedia\">");
+	for (String line : lifeForm.getDescription()) {
+	    builder.append("<p>");
+	    builder.append(line);
+	    builder.append("</p>");
+	}
+	builder.append("</section></text>");
+	object.setDescription(builder.toString());
+
+	if (lifeForm.getStartDate() != null) {
+	    object.setStartDate(new HDate(lifeForm.getStartDate()));
+	}
+	if (lifeForm.getEndDate() != null && collection.getFlags().hasEndDate()) {
+	    object.setEndDate(new HDate(lifeForm.getEndDate()));
 	}
 	if (collection.getFlags().hasConservationStatus()) {
-	    object.setConservation(ConservationStatus.forDisplay(article.getConservationStatus()));
+	    object.setConservation(ConservationStatus.forDisplay(lifeForm.getConservationStatus()));
 	}
 
-	List<Taxon> taxonomy = loadAtlasObjectTaxonomy(object.getName());
-	if (taxonomy == null) {
-	    taxonomy = article.getTaxonomy();
-	}
-	if (!taxonomy.isEmpty()) {
+	List<Taxon> taxonomy = null;
+	if (!lifeForm.getTaxonomy().isEmpty()) {
+	    taxonomy = new ArrayList<Taxon>();
+	    for (Map.Entry<String, String> entry : lifeForm.getTaxonomy().entrySet()) {
+		taxonomy.add(new Taxon(entry.getKey(), entry.getValue()));
+	    }
 	    object.setTaxonomy(taxonomy);
 	}
 
@@ -482,19 +522,22 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<Taxon> importAtlasObjectTaxonomy(URL pageURL) {
-	switch (Strings.basedomain(pageURL)) {
+    public List<Taxon> importAtlasObjectTaxonomy(Link link) {
+	LinkedHashMap<String, String> taxonomy = null;
+	switch (link.getDomain()) {
 	case "wikipedia.org":
-	    LifeFormWikipediaArticle article = new LifeFormWikipediaArticle(pageURL);
-	    return article.getTaxonomy();
+	    taxonomy = wikipedia.getTaxonomy(link.getFileName());
+	    break;
 	}
-	return null;
-    }
+	if (taxonomy == null) {
+	    return null;
+	}
 
-    @Override
-    public List<Taxon> loadAtlasObjectTaxonomy(String objectName) {
-	Params.notNullOrEmpty(objectName, "Atlas object name");
-	return null;
+	List<Taxon> taxaList = new ArrayList<>();
+	for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
+	    taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
+	}
+	return taxaList;
     }
 
     // ----------------------------------------------------------------------------------------------

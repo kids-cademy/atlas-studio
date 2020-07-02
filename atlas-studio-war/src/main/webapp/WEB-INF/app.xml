@@ -29,7 +29,8 @@
 		<apk-signer class="com.kidscademy.atlas.studio.tool.ApkSignerProcess" />
 		<zip-align class="com.kidscademy.atlas.studio.tool.ZipAlignProcess" />
 
-		<wikipedia interface="com.kidscademy.atlas.studio.www.Wikipedia" type="REMOTE" url="https:rest://en.wikipedia.org/api/rest_v1/" />
+		<wikipedia interface="com.kidscademy.apiservice.client.Wikipedia" type="REMOTE" url="http:rest://localhost:8081/api-service/wikipedia/" />
+		
 		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />
 		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
 		<cambridge-dictionary interface="com.kidscademy.atlas.studio.www.CambridgeDictionary" type="REMOTE" url="https:xpath://dictionary.cambridge.org/" />
