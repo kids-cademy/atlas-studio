@@ -50,7 +50,7 @@ public class ApiServiceImpl implements ApiService {
 	switch (link.getDomain()) {
 	case "wikipedia.org":
 	    return wikipedia.getDefinitions(link.getBasename()).get(0).getDefinition();
-	    
+
 	case "thefreedictionary.com":
 	    return freeDictionary.getDefinition(link.getBasename());
 
@@ -144,7 +144,10 @@ public class ApiServiceImpl implements ApiService {
 	    // to avoid full scan we can create a name resolver with hash map
 	    // but at current sizes is not really helping
 	    for (String label : values.keySet()) {
-		if (meta.getName().endsWith(Strings.toDotCase(label))) {
+		// all feature meta names related to nutrients have at least one dot
+		// if not used dot on name scanning there is confusion between 'saturated' and
+		// 'monounsaturated' because both ends with 'saturated'
+		if (meta.getName().endsWith("." + Strings.toDotCase(label))) {
 		    Feature feature = new Feature(meta, values.get(label));
 		    features.add(feature);
 		    break;
