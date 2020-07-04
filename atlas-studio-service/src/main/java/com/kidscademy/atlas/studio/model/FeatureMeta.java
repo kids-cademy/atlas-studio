@@ -17,6 +17,7 @@ public class FeatureMeta {
     private PhysicalQuantity quantity;
     
     private String name;
+    private String display;
     private String definition;
 
     public int getId() {
@@ -29,6 +30,10 @@ public class FeatureMeta {
 
     public PhysicalQuantity getQuantity() {
 	return quantity;
+    }
+
+    public String getDisplay() {
+        return display;
     }
 
     public String getDefinition() {

@@ -84,12 +84,12 @@ public class Feature {
 	return maximum != null;
     }
 
-    public void setDisplay(String display) {
-	this.display = display;
-    }
-
     public String getName() {
 	return meta.getName();
+    }
+
+    public String getDisplay() {
+	return meta.getDisplay();
     }
 
     public PhysicalQuantity getQuantity() {

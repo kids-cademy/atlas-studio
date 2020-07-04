@@ -1,0 +1,83 @@
+name,display
+lifespan,Lifespan
+lifespan.record,"Lifespan Record"
+lifespan.captivity,"Lifespan in Captivity"
+length,"Body Length"
+length.bill,"Bill Length"
+length.tail,"Tail Length"
+length.claw,"Claws Size"
+height,Height
+height.shoulder,"Height at Shoulder"
+height.hip,"Height at Hip"
+wingspan,Wingspan
+weight,Weight
+speed,Speed
+speed.full,"Full Speed"
+speed.gliding,"Gliding Speed"
+speed.diving,"Diving Speed"
+flying.height,"Flying Height"
+elevation,Elevation
+depth,"Diving Depth"
+nutrient.calories,"Food Energy"
+nutrient.protein,Protein
+nutrient.fat,"Total Fat"
+nutrient.sugars,Sugars
+nutrient.dietary.fiber,"Dietary Fiber"
+nutrient.ethanol,"Drinking Alcohol"
+nutrient.carbohydrates,Carbohydrates
+nutrient.vitamin.a,"Vitamin A"
+nutrient.vitamin.thiamine,Thiamine
+nutrient.vitamin.niacin,Niacin
+nutrient.vitamin.b6,"Vitamin B6"
+nutrient.vitamin.c,"Vitamin C"
+nutrient.vitamin.e,"Vitamin E"
+nutrient.vitamin.k,"Vitamin K"
+nutrient.vitamin.d,"Vitamin D"
+nutrient.mineral.magnesium,Magnesium
+nutrient.mineral.manganese,Manganese
+nutrient.mineral.phosphorus,Phosphorus
+nutrient.mineral.potassium,Potassium
+nutrient.mineral.calcium,Calcium
+nutrient.mineral.iron,Iron
+nutrient.vitamin.b12,"Vitamin B12"
+nutrient.mineral.sodium,Sodium
+nutrient.mineral.zinc,Zinc
+nutrient.water,Water
+nutrient.starch,Starch
+width,Width
+orbit.aphelion,"Orbit Aphelion"
+orbit.perihelion,"Orbit Perihelion"
+crew,Crew
+range,Range
+range.maximum,"Maximum Range"
+engine.power,"Engine Power"
+ship.displacement,"Ship Displacement"
+ship.beam,"Ship Beam"
+ship.beam.maximum,"Maximum Ship Beam"
+ship.draft,"Ship Draft"
+radius,"Mean Radius"
+mass,Mass
+density,"Mean Density"
+orbit.radius,"Mean Orbit Radius"
+orbit.period,"Orbital Period"
+orbit.speed,"Orbital Speed"
+albedo,Albedo
+speed.escape,"Escape velocity"
+gravity,"Surface Gravity"
+orbit.eccentricity,"Orbital Eccentricity"
+rotation.period,"Rotation Period"
+axial.tilt,"Axial Tilt"
+population.urban,"Urban Population"
+population.metro,"Metro Population"
+population.density,"Population Density"
+area.urban,"Urban Area"
+area.metro,"Metro Area"
+gva.total,"Total GVA"
+gva.percapita,"GVA per capita"
+speed.record,"Speed Record"
+nutrient.vitamin.riboflavin,Riboflavin
+nutrient.vitamin.pantothenic.acid,Pantothenic
+nutrient.vitamin.folate,Folate
+nutrient.vitamin.choline,Choline
+nutrient.mineral.copper,Copper
+nutrient.mineral.selenium,Selenium
