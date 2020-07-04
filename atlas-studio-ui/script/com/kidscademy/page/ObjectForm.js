@@ -38,6 +38,8 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
+		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
+
 		if (this._objectId === 0) {
 			AtlasService.createAtlasObject(this._collectionId, this._onObjectLoaded, this);
 			return;
@@ -128,12 +130,26 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		return atlasItem;
 	}
 
-	getLinks(feature) {
+	importFromLink(feature, load) {
 		const object = this.getObject();
 		if (!object.links) {
-			return [];
+			return;
 		}
-		return object.links.filter(link => link.features.indexOf(feature) !== -1);
+		const links = object.links.filter(link => link.features.indexOf(feature) !== -1);
+
+		switch (links.length) {
+			case 0:
+				js.ua.System.alert(`No provider link for ${feature}.`);
+				break;
+
+			case 1:
+				load(links[0]);
+				break;
+
+			default:
+				this._linkSelect.open(links, load);
+				this._actions.show("close");
+		}
 	}
 
 	_getDefinitionControl() {

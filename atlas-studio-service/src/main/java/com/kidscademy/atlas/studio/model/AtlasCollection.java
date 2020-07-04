@@ -57,7 +57,7 @@ public class AtlasCollection implements GraphicObject {
     @ManyToMany
     @OrderColumn
     private List<FeatureMeta> featuresMeta;
-
+    
     private Flags flags;
 
     @Transient

@@ -12,7 +12,6 @@ import com.kidscademy.atlas.studio.model.ReleaseItem;
 
 import js.rmi.BusinessException;
 import js.tiny.container.annotation.Public;
-import js.tiny.container.annotation.RolesAllowed;
 import js.tiny.container.annotation.Service;
 import js.tiny.container.http.form.Form;
 

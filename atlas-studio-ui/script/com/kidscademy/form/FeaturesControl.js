@@ -23,8 +23,6 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 		this._unitsSelect = this._featureForm.getByName("units");
 		this._unitsSelect.on("change", this._onUnitsChange, this);
 
-		this._linkSelect = this.getByClass(com.kidscademy.form.LinkSelect);
-
 		/**
 		 * This control actions handler.
 		 * @type {com.kidscademy.Actions}
@@ -63,22 +61,8 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 	_onImport() {
 		this._fireEvent("input");
-		const load = (link) => AtlasService.importObjectFeatures(this._collectionId, link, features => this.setValue(features));
-
-		const links = this._formPage.getLinks("features");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("No provider link for features.");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linkSelect.open(links, load);
-				this._actions.show("close");
-		}
+		const load = (link) => ApiService.getFeatures(this._collectionId, link, features => this.setValue(features));
+		this._formPage.importFromLink("features", load);
 	}
 
 	_onAdd() {

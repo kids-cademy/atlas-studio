@@ -5,12 +5,6 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 		super(ownerDoc, node);
 
 		this._textarea = this.getByTag("textarea");
-		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
-
-		/**
-		 * Actions manager.
-		 * @type {com.kidscademy.Actions}
-		 */
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 	}
 
@@ -43,25 +37,8 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 	 * If there are more than one link display them and let user choose one.
 	 */
 	_onImport() {
-		const load = (link) => {
-			AtlasService.importObjectDefinition(link, definition => {
-				this._textarea.setValue(definition);
-			});
-		}
-
-		const links = this._formPage.getLinks("definition");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("@string/alert-no-definition-provider");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linksSelect.open(links, load);
-		}
+		const load = (link) => ApiService.getDefinition(link, definition => this._textarea.setValue(definition));
+		this._formPage.importFromLink("definition", load);
 	}
 
 	_onRemoveAll() {

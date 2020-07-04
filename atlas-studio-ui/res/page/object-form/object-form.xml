@@ -5,12 +5,14 @@
 	<description>Form page for atlas object.</description>
 	<scripts>
 		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
+		<script>gen/com/kidscademy/atlas/studio/ApiService.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Form.js</script>
 		<script>script/com/kidscademy/TableView.js</script>
 		<script>script/com/kidscademy/form/DescriptionControl.js</script>
 		<script>script/com/kidscademy/form/HDateControl.js</script>
 		<script>script/com/kidscademy/form/FormControl.js</script>
+		<script>script/com/kidscademy/form/LinkSelect.js</script>
 		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/ObjectForm.js</script>
 	</scripts>

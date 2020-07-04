@@ -17,14 +17,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		this._editorControls = this.getByCssClass("editor-controls");
 		this._sectionNameInput = this.getByName("section-name");
 
-		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
-
-		/**
-		 * Actions manager.
-		 * @type {com.kidscademy.Actions}
-		 */
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-
 		this._operation = null;
 	}
 
@@ -97,7 +90,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	 */
 	_onImport() {
 		const load = (link) => {
-			AtlasService.importObjectDescription(link, description => {
+			ApiService.getDescription(link, description => {
 				for (let section in description) {
 					let textEditor = this._getTextEditorByName(section);
 					if (textEditor == null) {
@@ -108,20 +101,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 				}
 			});
 		}
-
-		const links = this._formPage.getLinks("description");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("@string/alert-no-description-provider");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linksSelect.open(links, load);
-		}
+		this._formPage.importFromLink("description", load);
 	}
 
 	_onAddAllSections() {

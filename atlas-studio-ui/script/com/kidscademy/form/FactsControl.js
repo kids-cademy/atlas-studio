@@ -19,8 +19,6 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 		this._definitionInput = this._editor.getByName("definition");
 		this._termOnEdit = null;
 
-		this._linkSelect = this.getByClass(com.kidscademy.form.LinkSelect);
-
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
 
 		this._showEditor(false);
@@ -58,22 +56,8 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 
 	_onImport() {
 		this._fireEvent("input");
-		const load = (link) => AtlasService.importObjectFacts(link, facts => this.setValue(facts));
-
-		const links = this._formPage.getLinks("facts");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("No provider link for facts.");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linkSelect.open(links, load);
-				this._actions.show("close");
-		}
+		const load = (link) => ApiService.getFacts(link, facts => this.setValue(facts));
+		this._formPage.importFromLink("facts", load);
 	}
 
 	_onAdd() {

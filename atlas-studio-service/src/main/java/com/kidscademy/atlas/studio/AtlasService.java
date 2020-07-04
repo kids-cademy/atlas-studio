@@ -88,21 +88,11 @@ public interface AtlasService {
     
     void removeLinkMeta(int linkMetaId);
 
-    String importObjectDefinition(Link link);
-
-    Map<String, String> importObjectDescription(Link link);
-
     String formatLines(String text, String separator);
-
-    Map<String, String> importObjectFacts(Link link);
-
-    List<Feature> importObjectFeatures(int collectionId, Link link);
 
     AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
 
     boolean checkAtlasObjectName(String name);
-
-    List<Taxon> importAtlasObjectTaxonomy(Link link);
 
     FeatureMeta createFeatureMeta();
 

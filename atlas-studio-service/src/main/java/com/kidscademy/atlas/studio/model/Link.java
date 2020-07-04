@@ -139,6 +139,10 @@ public class Link implements Displayable, Domain {
 	return path.substring(lastPathseparator);
     }
 
+    public String getBasename() {
+	return Files.basename(url.getPath());
+    }
+
     /**
      * Return a comma separated list of features provided by this link.
      * 

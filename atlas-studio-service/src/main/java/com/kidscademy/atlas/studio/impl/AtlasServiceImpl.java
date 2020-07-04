@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +54,7 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.tool.MediaType;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
-import com.kidscademy.atlas.studio.www.CambridgeDictionary;
-import com.kidscademy.atlas.studio.www.MerriamWebster;
-import com.kidscademy.atlas.studio.www.PlantVillage;
-import com.kidscademy.atlas.studio.www.SoftSchools;
-import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikiHow;
-import com.kidscademy.atlas.studio.www.WikipediaArticleText;
 
 import js.json.Json;
 import js.lang.BugError;
@@ -83,10 +76,6 @@ public class AtlasServiceImpl implements AtlasService {
     private final AtlasDao atlasDao;
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
-    private final SoftSchools softSchools;
-    private final TheFreeDictionary freeDictionary;
-    private final CambridgeDictionary cambridgeDictionary;
-    private final MerriamWebster merriamWebster;
     private final BusinessRules businessRules;
     private final Wikipedia wikipedia;
 
@@ -101,10 +90,6 @@ public class AtlasServiceImpl implements AtlasService {
 	this.atlasDao = context.getInstance(AtlasDao.class);
 	this.audioProcessor = context.getInstance(AudioProcessor.class);
 	this.imageProcessor = context.getInstance(ImageProcessor.class);
-	this.softSchools = context.getInstance(SoftSchools.class);
-	this.freeDictionary = context.getInstance(TheFreeDictionary.class);
-	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
-	this.merriamWebster = context.getInstance(MerriamWebster.class);
 	this.businessRules = context.getInstance(BusinessRules.class);
 	this.wikipedia = context.getInstance(Wikipedia.class);
 
@@ -376,92 +361,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public String importObjectDefinition(Link link) {
-	switch (link.getDomain()) {
-	case "thefreedictionary.com":
-	    return freeDictionary.getDefinition(link.getFileName());
-
-	case "cambridge.org":
-	    return cambridgeDictionary.getDefinition(link.getFileName());
-
-	case "merriam-webster.com":
-	    return merriamWebster.getDefinition(link.getFileName());
-
-	default:
-	    return null;
-	}
-    }
-
-    @Override
-    public Map<String, String> importObjectDescription(Link link) {
-	Map<String, String> sections = new LinkedHashMap<>();
-	switch (link.getDomain()) {
-	case "softschools.com":
-	    sections.put("softschools", Strings
-		    .join(Strings.breakSentences(softSchools.getFacts(link.getPath()).getDescription()), "\r\n\r\n"));
-	    break;
-
-	case "wikipedia.org":
-	    WikipediaArticleText article = new WikipediaArticleText(link.getUrl());
-	    sections.put("wikipedia", article.getText());
-	    break;
-
-	case "psu.edu":
-	    PlantVillage plantVillage = context.getInstance(PlantVillage.class);
-	    plantVillage.getArticle(link.getPath()).getSections(sections);
-	    break;
-
-	default:
-	    break;
-	}
-	return sections;
-    }
-
-    @Override
     public String formatLines(String text, String separator) {
 	if (text == null) {
 	    return null;
 	}
 	return Strings.join(Strings.breakSentences(text), separator);
-    }
-
-    @Override
-    public Map<String, String> importObjectFacts(Link link) {
-	switch (link.getDomain()) {
-	case "softschools.com":
-	    Map<String, String> facts = new HashMap<>();
-	    for (String fact : softSchools.getFacts(link.getPath()).getFacts()) {
-		facts.put(Strings.excerpt(fact), fact);
-	    }
-	    return facts;
-
-	default:
-	    return null;
-	}
-    }
-
-    @Override
-    public List<Feature> importObjectFeatures(int collectionId, Link link) {
-	switch (link.getDomain()) {
-	case "wikipedia.org":
-	    List<Feature> features = new ArrayList<>();
-	    Map<String, Double> values = wikipedia.getNutritionalValue(Files.basename(link.getPath()));
-	    for (FeatureMeta meta : atlasDao.getCollectionFeaturesMeta(collectionId)) {
-		// to avoid full scan we can create a name resolver with hash map
-		// but at current sizes is not really helping
-		for (String label : values.keySet()) {
-		    if (meta.getName().endsWith(Strings.toDotCase(label))) {
-			Feature feature = new Feature(meta, values.get(label));
-			features.add(feature);
-			break;
-		    }
-		}
-	    }
-	    return features;
-
-	default:
-	    return null;
-	}
     }
 
     @Override
@@ -519,25 +423,6 @@ public class AtlasServiceImpl implements AtlasService {
 
 	saveAtlasObject(object);
 	return atlasDao.getAtlasItem(object.getId());
-    }
-
-    @Override
-    public List<Taxon> importAtlasObjectTaxonomy(Link link) {
-	LinkedHashMap<String, String> taxonomy = null;
-	switch (link.getDomain()) {
-	case "wikipedia.org":
-	    taxonomy = wikipedia.getTaxonomy(link.getFileName());
-	    break;
-	}
-	if (taxonomy == null) {
-	    return null;
-	}
-
-	List<Taxon> taxaList = new ArrayList<>();
-	for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
-	    taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
-	}
-	return taxaList;
     }
 
     // ----------------------------------------------------------------------------------------------

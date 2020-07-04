@@ -124,22 +124,8 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_onImport() {
 		this._actions.showOnly("close");
 		this._fireEvent("input");
-		const load = (link) => AtlasService.importAtlasObjectTaxonomy(link, taxonomy => this.setValue(taxonomy));
-
-		const links = this._formPage.getLinks("taxonomy");
-		switch (links.length) {
-			case 0:
-				js.ua.System.alert("No provider link for taxonomy.");
-				break;
-
-			case 1:
-				load(links[0]);
-				break;
-
-			default:
-				this._linkSelect.open(links, load);
-				this._actions.show("close");
-		}
+		const load = (link) => ApiService.getTaxonomy(link, taxonomy => this.setValue(taxonomy));
+		this._formPage.importFromLink("taxonomy", load);
 	}
 
 	/**

@@ -6,6 +6,7 @@
 
 		<admin-service interface="com.kidscademy.atlas.studio.AdminService" class="com.kidscademy.atlas.studio.impl.AdminServiceImpl" />
 		<atlas-service interface="com.kidscademy.atlas.studio.AtlasService" class="com.kidscademy.atlas.studio.impl.AtlasServiceImpl" />
+		<api-service interface="com.kidscademy.atlas.studio.ApiService" class="com.kidscademy.atlas.studio.impl.ApiServiceImpl" />
 		<atlas-controller interface="com.kidscademy.atlas.studio.AtlasController" class="com.kidscademy.atlas.studio.impl.AtlasControllerImpl" />
 		<image-service interface="com.kidscademy.atlas.studio.ImageService" class="com.kidscademy.atlas.studio.impl.ImageServiceImpl" />
 		<release-service interface="com.kidscademy.atlas.studio.ReleaseService" class="com.kidscademy.atlas.studio.impl.ReleaseServiceImpl" />
@@ -29,7 +30,7 @@
 		<apk-signer class="com.kidscademy.atlas.studio.tool.ApkSignerProcess" />
 		<zip-align class="com.kidscademy.atlas.studio.tool.ZipAlignProcess" />
 
-		<wikipedia interface="com.kidscademy.apiservice.client.Wikipedia" type="REMOTE" url="http:rest://localhost:8081/api-service/wikipedia/" />
+		<wikipedia interface="com.kidscademy.apiservice.client.Wikipedia" type="REMOTE" url="http:rest://api.kids-cademy.com/wikipedia/" />
 		
 		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />
 		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />

@@ -680,58 +680,6 @@ com.kidscademy.atlas.studio.AtlasService = {
 	},
 
 	/**
-	 * Import object definition.
-	 *
-	 * @param com.kidscademy.atlas.studio.model.Link link,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.lang.String
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 importObjectDefinition: function(link) {
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectDefinition", "Link argument is undefined.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectDefinition", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectDefinition", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectDefinition");
-		rmi.setParameters(link);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
-	 * Import object description.
-	 *
-	 * @param com.kidscademy.atlas.studio.model.Link link,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.Map<java.lang.String,java.lang.String>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 importObjectDescription: function(link) {
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectDescription", "Link argument is undefined.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectDescription", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectDescription", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectDescription");
-		rmi.setParameters(link);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
 	 * Format lines.
 	 *
 	 * @param java.lang.String text,
@@ -758,61 +706,6 @@ com.kidscademy.atlas.studio.AtlasService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "formatLines");
 		rmi.setParameters(text, separator);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
-	 * Import object facts.
-	 *
-	 * @param com.kidscademy.atlas.studio.model.Link link,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.Map<java.lang.String,java.lang.String>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 importObjectFacts: function(link) {
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Link argument is undefined.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectFacts", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectFacts");
-		rmi.setParameters(link);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
-	 * Import object features.
-	 *
-	 * @param int collectionId,
-	 * @param com.kidscademy.atlas.studio.model.Link link,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.List<com.kidscademy.atlas.studio.model.Feature>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 importObjectFeatures: function(collectionId, link) {
-		$assert(typeof collectionId !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Collection id argument is undefined.");
-		$assert(js.lang.Types.isNumber(collectionId), "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Collection id argument is not a number.");
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Link argument is undefined.");
-
-		var __callback__ = arguments[2];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Callback is not a function.");
-		var __scope__ = arguments[3];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importObjectFeatures", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importObjectFeatures");
-		rmi.setParameters(collectionId, link);
 		rmi.exec(__callback__, __scope__);
 	},
 
@@ -872,32 +765,6 @@ com.kidscademy.atlas.studio.AtlasService = {
 		var rmi = new js.net.RMI();
 		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "checkAtlasObjectName");
 		rmi.setParameters(name);
-		rmi.exec(__callback__, __scope__);
-	},
-
-	/**
-	 * Import atlas object taxonomy.
-	 *
-	 * @param com.kidscademy.atlas.studio.model.Link link,
-	 * @param Function callback function to invoke on RMI completion,
-	 * @param Object scope optional callback run-time scope, default to global scope.
-	 * @return java.util.List<com.kidscademy.atlas.studio.model.Taxon>
-	 * @assert callback is a {@link Function} and scope is an {@link Object}.
-	 */
-	 importAtlasObjectTaxonomy: function(link) {
-		$assert(typeof link !== "undefined", "com.kidscademy.atlas.studio.AtlasService#importAtlasObjectTaxonomy", "Link argument is undefined.");
-
-		var __callback__ = arguments[1];
-		$assert(js.lang.Types.isFunction(__callback__), "com.kidscademy.atlas.studio.AtlasService#importAtlasObjectTaxonomy", "Callback is not a function.");
-		var __scope__ = arguments[2];
-		$assert(typeof __scope__ === "undefined" || js.lang.Types.isObject(__scope__), "com.kidscademy.atlas.studio.AtlasService#importAtlasObjectTaxonomy", "Scope is not an object.");
-		if(!js.lang.Types.isObject(__scope__)) {
-			__scope__ = window;
-		}
-
-		var rmi = new js.net.RMI();
-		rmi.setMethod("com.kidscademy.atlas.studio.AtlasService", "importAtlasObjectTaxonomy");
-		rmi.setParameters(link);
 		rmi.exec(__callback__, __scope__);
 	},
 
