@@ -149,6 +149,7 @@ public class ApiServiceImpl implements ApiService {
 		// 'monounsaturated' because both ends with 'saturated'
 		if (meta.getName().endsWith("." + Strings.toDotCase(label))) {
 		    Feature feature = new Feature(meta, values.get(label));
+		    feature.postLoad();
 		    features.add(feature);
 		    break;
 		}
