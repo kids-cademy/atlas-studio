@@ -15,7 +15,7 @@
 	
 	<collections>Atlas Collections</collections>
 	<features-meta>Features Meta</features-meta>
-	<links-meta>External Sources</links-meta>
+	<external-sources>External Sources</external-sources>
 	<link-references>External References</link-references>
 	<releases>Releases</releases>
 
@@ -59,7 +59,7 @@
 	<confirm-area-remove>Please confirm geographical area remove.</confirm-area-remove>
 	<confirm-all-area-remove>Please confirm all geographical areas remove.</confirm-all-area-remove>
 	<confirm-link-remove>Please confirm link remove.</confirm-link-remove>
-	<confirm-link-meta-remove>Please confirm link deregistration.</confirm-link-meta-remove>
+	<confirm-external-source-remove>Please confirm external source deregistration.</confirm-external-source-remove>
 	<confirm-feature-meta-remove>Please confirm object feature remove.</confirm-feature-meta-remove>
 	<confirm-object-save>Atlas object is changed. To save it?</confirm-object-save>
 	<confirm-object-not-saved>Atlas object is not saved. Please confirm page leaving.</confirm-object-not-saved>
@@ -68,7 +68,7 @@
 	<confirm-app-remove>Please confirm application remove.</confirm-app-remove>
 	<confirm-remove-from-release>Please confirm object remove from release.</confirm-remove-from-release>
 	<confirm-feature-meta-remove>Please confirm feature meta remove.</confirm-feature-meta-remove>
-	<confirm-link-meta-remove>Please confirm external source remove.</confirm-link-meta-remove>
+	<confirm-external-source-remove>Please confirm external source remove.</confirm-external-source-remove>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 
@@ -101,11 +101,11 @@
 	<collection-import-wikipedia>Import Wikipedia Article</collection-import-wikipedia>
 	<collection-add-all-to-release>Add All To Release</collection-add-all-to-release>
 
-	<link-meta>External Source</link-meta>
-	<link-meta-create>Create External Source</link-meta-create>
-	<link-meta-edit>Edit External Source</link-meta-edit>
-	<link-meta-remove>Remove External Source</link-meta-remove>
-	<link-meta-references>References List</link-meta-references>
+	<external-source>External Source</external-source>
+	<external-source-create>Create External Source</external-source-create>
+	<external-source-edit>Edit External Source</external-source-edit>
+	<external-source-remove>Remove External Source</external-source-remove>
+	<external-source-references>References List</external-source-references>
 
 	<feature-meta>Feature Meta</feature-meta>
 	<feature-meta-create>Create Feature Meta</feature-meta-create>

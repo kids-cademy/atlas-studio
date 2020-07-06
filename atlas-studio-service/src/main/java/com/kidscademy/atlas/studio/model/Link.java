@@ -166,16 +166,16 @@ public class Link implements Displayable, Domain {
 	return url != null ? url.toExternalForm() : "null";
     }
 
-    public static Link create(LinkMeta linkMeta, URL articleURL, String definition) {
+    public static Link create(ExternalSource externalSource, URL articleURL, String definition) {
 	Link link = new Link();
 	link.url = articleURL;
-	link.domain = linkMeta.getDomain();
+	link.domain = externalSource.getDomain();
 
-	link.display = linkMeta.getDisplay();
+	link.display = externalSource.getDisplay();
 	link.definition = definition;
 
 	link.iconSrc = Files.mediaSrc(link);
-	link.features = linkMeta.getFeatures();
+	link.features = externalSource.getFeatures();
 	return link;
     }
 

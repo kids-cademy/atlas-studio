@@ -28,7 +28,7 @@
 
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
-		<class>com.kidscademy.atlas.studio.model.LinkMeta</class>
+		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
@@ -96,7 +96,7 @@
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
-		<class>com.kidscademy.atlas.studio.model.LinkMeta</class>
+		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 

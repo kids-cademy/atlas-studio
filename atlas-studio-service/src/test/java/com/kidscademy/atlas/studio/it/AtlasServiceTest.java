@@ -28,7 +28,7 @@ import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 
 import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
@@ -55,8 +55,8 @@ public class AtlasServiceTest {
     @Test
     public void importWikipediaObject() throws IOException, BusinessException {
 	when(atlasDao.getCollectionById(2)).thenReturn(new AtlasCollection(2, "wild-birds"));
-	when(atlasDao.getLinkMetaByDomain("wikipedia.org"))
-		.thenReturn(new LinkMeta("wikipedia.org", "Wikipedia", "Wikipedia article about ${display}"));
+	when(atlasDao.getExternalSourceByDomain("wikipedia.org"))
+		.thenReturn(new ExternalSource("wikipedia.org", "Wikipedia", "Wikipedia article about ${display}"));
 
 	URL articleURL = new URL("https://en.wikipedia.org/wiki/Common_raven");
 	service.importWikipediaObject(2, articleURL);

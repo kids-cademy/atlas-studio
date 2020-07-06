@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<version>1</version>
-	<title>Links Meta</title>
+	<title>External Sources</title>
 	<description>Manager for external sources metadata.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
@@ -10,6 +10,6 @@
 		<script>script/com/kidscademy/ContextMenu.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/page/LinksMetaPage.js</script>
+		<script>script/com/kidscademy/page/ExternalSourcesPage.js</script>
 	</scripts>
 </page>

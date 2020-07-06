@@ -5,19 +5,19 @@ com.kidscademy.page.LinkReferencesPage = class extends com.kidscademy.Page {
         super();
 
         this._sidebar.showObject();
-        this._sidebar.on("links-meta", this._onLinksMeta, this);
+        this._sidebar.on("external-sources", this._onExternalSources, this);
 
-        const linkMetaId = Number(WinMain.url.parameters.link);
-        AtlasService.getLinkMeta(linkMetaId, this._onLinkMetaLoaded, this);
+        const externalSourceId = Number(WinMain.url.parameters.link);
+        AtlasService.getExternalSource(externalSourceId, this._onExternalSourceLoaded, this);
     }
 
-    _onLinkMetaLoaded(linkMeta) {
-        this._sidebar.setObject(linkMeta);
+    _onExternalSourceLoaded(externalSource) {
+        this._sidebar.setObject(externalSource);
         this._sidebar.setTitle("@string/link-references");
     }
 
-    _onLinksMeta() {
-        WinMain.assign("@link/links-meta");
+    _onExternalSources() {
+        WinMain.assign("@link/external-sources");
     }
 
     toString() {

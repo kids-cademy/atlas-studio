@@ -6,7 +6,7 @@ com.kidscademy.page.FeatureMetaForm = class extends com.kidscademy.Page {
 
         this._sidebar.setTitle("@string/feature-meta");
         this._sidebar.on("collections", this._onCollections, this);
-        this._sidebar.on("links-meta", this._onLinksMeta, this);
+        this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
 
         this._feature = null;
@@ -44,7 +44,7 @@ com.kidscademy.page.FeatureMetaForm = class extends com.kidscademy.Page {
     }
 
     _onLinksMeta() {
-        WinMain.assign("@link/links-meta");
+        WinMain.assign("@link/external-sources");
     }
 
     _onFeaturesMeta() {

@@ -160,7 +160,7 @@ public class ApiServiceImpl implements ApiService {
 	    return null;
 	}
 
-	// TODO: get collection ID from link meta and remove method parameter
+	// TODO: get collection ID from external source and remove method parameter
 	// int collectionId = link.getMeta().getCollectionId();
 
 	List<Feature> features = new ArrayList<>();

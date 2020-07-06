@@ -33,7 +33,7 @@ import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
@@ -276,29 +276,29 @@ public class AtlasServiceImpl implements AtlasService {
     public Link createLink(Link link) throws BusinessException {
 	businessRules.registeredLinkDomain(link.getUrl());
 	URL articleURL = link.getUrl();
-	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(articleURL));
-	return Link.create(linkMeta, articleURL, link.getDefinition());
+	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(Strings.basedomain(articleURL));
+	return Link.create(externalSource, articleURL, link.getDefinition());
     }
 
     @Override
     public String getLinkDefinition(URL link, String objectDisplay) {
-	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(link));
-	return linkMeta != null ? linkMeta.getLinkDefinition(link, objectDisplay) : null;
+	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(Strings.basedomain(link));
+	return externalSource != null ? externalSource.getLinkDefinition(link, objectDisplay) : null;
     }
 
     @Override
-    public LinkMeta createLinkMeta() {
-	return LinkMeta.create();
+    public ExternalSource createExternalSource() {
+	return ExternalSource.create();
     }
 
     @Override
-    public LinkMeta getLinkMeta(int linkMetaId) {
-	return atlasDao.getLinkMetaById(linkMetaId);
+    public ExternalSource getExternalSource(int externalSourceId) {
+	return atlasDao.getExternalSourceById(externalSourceId);
     }
 
     @Override
-    public List<LinkMeta> getLinksMeta() {
-	return atlasDao.getLinksMeta();
+    public List<ExternalSource> getExternalSources() {
+	return atlasDao.getExternalSources();
     }
 
     @Override
@@ -335,24 +335,24 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public LinkMeta saveLinkMeta(LinkMeta linkMeta) {
-	if (linkMeta.isPersisted()) {
-	    LinkMeta currentLinkMeta = atlasDao.getLinkMetaById(linkMeta.getId());
-	    if (!currentLinkMeta.getDomain().equals(linkMeta.getDomain())) {
-		File currentIcon = Files.mediaFile(currentLinkMeta);
-		File newIcon = Files.mediaFile(linkMeta);
+    public ExternalSource saveExternalSource(ExternalSource externalSource) {
+	if (externalSource.isPersisted()) {
+	    ExternalSource currentExternalSource = atlasDao.getExternalSourceById(externalSource.getId());
+	    if (!currentExternalSource.getDomain().equals(externalSource.getDomain())) {
+		File currentIcon = Files.mediaFile(currentExternalSource);
+		File newIcon = Files.mediaFile(externalSource);
 		currentIcon.renameTo(newIcon);
 	    }
 	}
 
-	Files.mediaFile(linkMeta, "96x96").delete();
-	atlasDao.saveLinkMeta(linkMeta);
-	return linkMeta;
+	Files.mediaFile(externalSource, "96x96").delete();
+	atlasDao.saveExternalSource(externalSource);
+	return externalSource;
     }
 
     @Override
-    public void removeLinkMeta(int linkMetaId) {
-	atlasDao.removeLinkMeta(linkMetaId);
+    public void removeExternalSource(int externalSourceId) {
+	atlasDao.removeExternalSource(externalSourceId);
     }
 
     @Override
@@ -412,8 +412,8 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	List<Link> links = new ArrayList<>();
-	LinkMeta linkMeta = atlasDao.getLinkMetaByDomain(Strings.basedomain(articleURL));
-	links.add(Link.create(linkMeta, articleURL, linkMeta.getLinkDefinition(articleURL, object.getDisplay())));
+	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(Strings.basedomain(articleURL));
+	links.add(Link.create(externalSource, articleURL, externalSource.getLinkDefinition(articleURL, object.getDisplay())));
 	object.setLinks(links);
 
 	object.setState(AtlasObject.State.CREATED);
@@ -497,7 +497,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     private Image uploadLinkImage(Form imageForm, File imageFile) throws IOException {
-	LinkMeta linkMeta = getObjectByForm(LinkMeta.class, imageForm);
+	ExternalSource externalSource = getObjectByForm(ExternalSource.class, imageForm);
 
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
 	if (imageInfo.getType() != MediaType.PNG) {
@@ -507,7 +507,7 @@ public class AtlasServiceImpl implements AtlasService {
 	    imageInfo = imageProcessor.getImageInfo(imageFile);
 	}
 
-	File targetFile = Files.mediaFile(linkMeta);
+	File targetFile = Files.mediaFile(externalSource);
 	targetFile.getParentFile().mkdirs();
 	targetFile.delete();
 
@@ -524,7 +524,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setFileSize(imageInfo.getFileSize());
 	image.setWidth(imageInfo.getWidth());
 	image.setHeight(imageInfo.getHeight());
-	image.setSrc(Files.mediaSrc(linkMeta));
+	image.setSrc(Files.mediaSrc(externalSource));
 	return image;
     }
 

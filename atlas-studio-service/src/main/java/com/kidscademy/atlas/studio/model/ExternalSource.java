@@ -28,8 +28,8 @@ import js.log.LogFactory;
 import js.util.Classes;
 
 @Entity
-public class LinkMeta implements Domain, GraphicObject {
-    private static final Log log = LogFactory.getLog(LinkMeta.class);
+public class ExternalSource implements Domain, GraphicObject {
+    private static final Log log = LogFactory.getLog(ExternalSource.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,11 +56,11 @@ public class LinkMeta implements Domain, GraphicObject {
     @Transient
     private MediaSRC iconSrc;
 
-    public LinkMeta() {
+    public ExternalSource() {
 
     }
 
-    public LinkMeta(String domain, String display, String definition) {
+    public ExternalSource(String domain, String display, String definition) {
 	this.domain = domain;
 	this.display = display;
 	this.definition = definition;
@@ -76,7 +76,7 @@ public class LinkMeta implements Domain, GraphicObject {
     public void postRemove() throws IOException {
 	File file = Files.mediaFile(this);
 	if (!file.delete()) {
-	    log.warn("Cannot remove link meta icon file |%s|.", file);
+	    log.warn("Cannot remove external source icon file |%s|.", file);
 	}
     }
 
@@ -131,9 +131,9 @@ public class LinkMeta implements Domain, GraphicObject {
 	return features;
     }
 
-    public static LinkMeta create() {
-	LinkMeta linkMeta = new LinkMeta();
-	return linkMeta;
+    public static ExternalSource create() {
+	ExternalSource externalSource = new ExternalSource();
+	return externalSource;
     }
 
     public String getLinkDefinition(URL link, String objectDisplay) {
@@ -192,7 +192,7 @@ public class LinkMeta implements Domain, GraphicObject {
 
 	switch (parts.get(0)) {
 	case "API":
-	    method = Classes.getMethod(LinkMeta.class, methodName, URL.class);
+	    method = Classes.getMethod(ExternalSource.class, methodName, URL.class);
 	    instance = this;
 	    parameters = new Object[] { link };
 	    break;
@@ -204,7 +204,7 @@ public class LinkMeta implements Domain, GraphicObject {
 	    break;
 
 	default:
-	    throw new BugError("Invalid syntax on link meta definition.");
+	    throw new BugError("Invalid syntax on external source definition.");
 	}
 
 	try {

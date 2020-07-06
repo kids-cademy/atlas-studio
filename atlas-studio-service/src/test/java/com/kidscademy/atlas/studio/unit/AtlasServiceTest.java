@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 
 import js.tiny.container.core.AppContext;
 
@@ -41,9 +41,9 @@ public class AtlasServiceTest {
     public void getLinkDefinition_toLowerCase() throws MalformedURLException {
 	URL link = new URL("https://en.wikipedia.org/wiki/Sperm_whale");
 	String display = "Sperm Whale";
-	LinkMeta linkMeta = new LinkMeta("wikipedia.org", display, "Wikipedia article about ${display.toLowerCase}.");
+	ExternalSource externalSource = new ExternalSource("wikipedia.org", display, "Wikipedia article about ${display.toLowerCase}.");
 
-	when(atlasDao.getLinkMetaByDomain("wikipedia.org")).thenReturn(linkMeta);
+	when(atlasDao.getExternalSourceByDomain("wikipedia.org")).thenReturn(externalSource);
 	String definition = service.getLinkDefinition(link, display);
 	
 	assertThat(definition, notNullValue());
@@ -54,9 +54,9 @@ public class AtlasServiceTest {
     public void getLinkDefinition_getYouTubeTitle() throws MalformedURLException {
 	URL link = new URL("https://www.youtube.com/watch?v=DT-TDegf-Xo");
 	String display = "Sperm Whale";
-	LinkMeta linkMeta = new LinkMeta("youtube.com", display, "${API.getYouTubeTitle}.");
+	ExternalSource externalSource = new ExternalSource("youtube.com", display, "${API.getYouTubeTitle}.");
 
-	when(atlasDao.getLinkMetaByDomain("youtube.com")).thenReturn(linkMeta);
+	when(atlasDao.getExternalSourceByDomain("youtube.com")).thenReturn(externalSource);
 	String definition = service.getLinkDefinition(link, display);
 	
 	assertThat(definition, notNullValue());

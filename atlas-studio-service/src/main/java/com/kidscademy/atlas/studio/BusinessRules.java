@@ -69,7 +69,7 @@ public class BusinessRules {
     }
 
     public void registeredLinkDomain(URL link) throws BusinessException {
-	if (atlasDao.getLinkMetaByDomain(Strings.basedomain(link)) == null) {
+	if (atlasDao.getExternalSourceByDomain(Strings.basedomain(link)) == null) {
 	    throw new BusinessException(REGISTERED_LINK_DOMAIN);
 	}
     }

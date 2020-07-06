@@ -21,7 +21,7 @@ import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
@@ -100,15 +100,15 @@ public interface AtlasDao {
 
     List<Link> getObjectLinks(AtlasItem object);
 
-    List<LinkMeta> getLinksMeta();
+    List<ExternalSource> getExternalSources();
 
-    LinkMeta getLinkMetaById(int linkMetaId);
+    ExternalSource getExternalSourceById(int externalSourceId);
 
-    LinkMeta getLinkMetaByDomain(String domain);
+    ExternalSource getExternalSourceByDomain(String domain);
 
-    void saveLinkMeta(LinkMeta linkMeta);
+    void saveExternalSource(ExternalSource externalSource);
 
-    void removeLinkMeta(int linkMeta);
+    void removeExternalSource(int externalSource);
 
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 

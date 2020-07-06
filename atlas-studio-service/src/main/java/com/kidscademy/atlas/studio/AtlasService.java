@@ -18,7 +18,7 @@ import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
@@ -76,17 +76,17 @@ public interface AtlasService {
 
     String getLinkDefinition(URL link, String objectDisplay);
 
-    LinkMeta createLinkMeta();
+    ExternalSource createExternalSource();
 
-    LinkMeta getLinkMeta(int linkMetaId);
+    ExternalSource getExternalSource(int externalSourceId);
 
-    List<LinkMeta> getLinksMeta();
+    List<ExternalSource> getExternalSources();
 
-    LinkMeta saveLinkMeta(LinkMeta linkMeta);
+    ExternalSource saveExternalSource(ExternalSource externalSource);
 
     List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
     
-    void removeLinkMeta(int linkMetaId);
+    void removeExternalSource(int externalSourceId);
 
     String formatLines(String text, String separator);
 

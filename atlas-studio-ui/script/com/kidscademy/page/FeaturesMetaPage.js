@@ -6,7 +6,7 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
 
         this._sidebar.setTitle("@string/features-meta");
         this._sidebar.on("collections", this._onCollections, this);
-        this._sidebar.on("links-meta", this._onLinksMeta, this);
+        this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
         this._sidebar.on("create-feature-meta", this._onCreateFeatureMeta, this);
 
@@ -26,7 +26,7 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
     }
 
     _onLinksMeta() {
-        WinMain.assign("@link/links-meta");
+        WinMain.assign("@link/external-sources");
     }
 
     _onFeaturesMeta() {

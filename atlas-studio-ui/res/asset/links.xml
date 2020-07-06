@@ -17,8 +17,8 @@
 	<reader>reader.htm</reader>
 	<features-meta>features-meta.htm</features-meta>
 	<feature-meta-form>feature-meta-form.htm</feature-meta-form>
-	<links-meta>links-meta.htm</links-meta>
-	<link-meta-form>link-meta-form.htm</link-meta-form>
+	<external-sources>external-sources.htm</external-sources>
+	<external-source-form>external-source-form.htm</external-source-form>
 	<link-references>link-references.htm</link-references>
 	<android-app>android-app.htm</android-app>
 	<android-settings>android-settings.htm</android-settings>

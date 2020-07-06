@@ -21,7 +21,7 @@ import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.LinkMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseChild;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
@@ -286,41 +286,41 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<LinkMeta> getLinksMeta() {
-	return em.createQuery("select l from LinkMeta l order by l.display", LinkMeta.class).getResultList();
+    public List<ExternalSource> getExternalSources() {
+	return em.createQuery("select s from ExternalSource s order by s.display", ExternalSource.class).getResultList();
     }
 
     @Override
-    public LinkMeta getLinkMetaById(int linkMetaId) {
-	return em.find(LinkMeta.class, linkMetaId);
+    public ExternalSource getExternalSourceById(int externalSourceId) {
+	return em.find(ExternalSource.class, externalSourceId);
     }
 
     @Override
-    public LinkMeta getLinkMetaByDomain(String domain) {
-	List<LinkMeta> result = em.createQuery("select l from LinkMeta l where l.domain=:domain", LinkMeta.class)
+    public ExternalSource getExternalSourceByDomain(String domain) {
+	List<ExternalSource> result = em.createQuery("select s from ExternalSource s where s.domain=:domain", ExternalSource.class)
 		.setParameter("domain", domain).getResultList();
 	if (result.size() > 1) {
-	    throw new BugError("Database inconsistency. Not unique link meta domain.");
+	    throw new BugError("Database inconsistency. Not unique external source domain.");
 	}
 	return result.size() == 1 ? result.get(0) : null;
     }
 
     @Override
     @Mutable
-    public void saveLinkMeta(LinkMeta linkMeta) {
-	if (linkMeta.getId() == 0) {
-	    em.persist(linkMeta);
+    public void saveExternalSource(ExternalSource externalSource) {
+	if (externalSource.getId() == 0) {
+	    em.persist(externalSource);
 	} else {
-	    em.merge(linkMeta);
+	    em.merge(externalSource);
 	}
     }
 
     @Override
     @Mutable
-    public void removeLinkMeta(int linkMetaId) {
-	LinkMeta linkMeta = em.find(LinkMeta.class, linkMetaId);
-	if (linkMeta != null) {
-	    em.remove(linkMeta);
+    public void removeExternalSource(int externalSourceId) {
+	ExternalSource externalSource = em.find(ExternalSource.class, externalSourceId);
+	if (externalSource != null) {
+	    em.remove(externalSource);
 	}
     }
 
