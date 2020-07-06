@@ -18,6 +18,10 @@ com.kidscademy.page.ExternalSourceForm = class extends com.kidscademy.Page {
         this._iconSection = this.getByCssClass("icon-section");
         this._iconControl = this.getByClass(com.kidscademy.IconControl);
 
+        /**
+         * APIs list view display all APIs available on back-end. This list has checkboxes selected 
+         * only for APIs actually implemented for current external source.
+         */
         this._apisListView = this.getByCssClass("apis-list");
 
         const externalSourceId = Number(WinMain.url.parameters.link);
@@ -46,12 +50,12 @@ com.kidscademy.page.ExternalSourceForm = class extends com.kidscademy.Page {
             });
         }
 
-        const features = externalSource.features.split(',');
-        ApiService.getAvailableApis(apis => {
-            this._apisListView.setObject(apis);
+        const apis = externalSource.apis.split(',');
+        ApiService.getAvailableApis(availableAPIs => {
+            this._apisListView.setObject(availableAPIs);
 
             this._apisListView.findByTag("tr").forEach(tr => {
-                tr.getByTag("input").check(features.includes(tr.getByCssClass("name").getText()));
+                tr.getByTag("input").check(apis.includes(tr.getByCssClass("name").getText()));
             });
         });
         this._form.setObject(externalSource);
@@ -66,13 +70,14 @@ com.kidscademy.page.ExternalSourceForm = class extends com.kidscademy.Page {
 
     _onSave(ev) {
         if (this._form.isValid()) {
-            var features = [];
+            var apis = [];
             this._apisListView.findByTag("tr").forEach(tr => {
                 if (tr.getByTag("input").checked()) {
-                    features.push(tr.getByCssClass("name").getText());
+                    apis.push(tr.getByCssClass("name").getText());
                 }
             });
-            this._externalSource.features = features.join();
+            // on back-end APIs are stored as comma separated list of strings
+            this._externalSource.apis = apis.join();
             AtlasService.saveExternalSource(this._form.getObject(this._externalSource), () => WinMain.back());
         }
     }

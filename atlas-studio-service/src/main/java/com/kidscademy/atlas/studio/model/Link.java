@@ -175,7 +175,7 @@ public class Link implements Displayable, Domain {
 	link.definition = definition;
 
 	link.iconSrc = Files.mediaSrc(link);
-	link.features = externalSource.getFeatures();
+	link.features = externalSource.getApis();
 	return link;
     }
 

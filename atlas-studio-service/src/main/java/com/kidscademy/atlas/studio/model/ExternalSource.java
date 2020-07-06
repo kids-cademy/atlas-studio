@@ -16,6 +16,7 @@ import javax.persistence.PostLoad;
 import javax.persistence.PostRemove;
 import javax.persistence.Transient;
 
+import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 
@@ -43,11 +44,20 @@ public class ExternalSource implements Domain, GraphicObject {
     private String domain;
     private String display;
     private String definition;
-    private String features;
+
+    /**
+     * Designators list of import APIs available for this external source. APIs are
+     * provided by back-end services, see {@link ApiService} and an external source
+     * may implement only part of them.
+     * <p>
+     * This field contains a list of comma separated strings. If there is no import
+     * API support for an external source this field is empty.
+     */
+    private String apis;
 
     @Transient
     private String name;
-    
+
     /**
      * Root-relative media SRC for link icon. This value is initialized when load
      * link from database with some contextual path and icon file name from
@@ -89,7 +99,7 @@ public class ExternalSource implements Domain, GraphicObject {
     }
 
     public String getHome() {
-        return home;
+	return home;
     }
 
     @Override
@@ -127,8 +137,8 @@ public class ExternalSource implements Domain, GraphicObject {
 	return iconSrc;
     }
 
-    public String getFeatures() {
-	return features;
+    public String getApis() {
+	return apis;
     }
 
     public static ExternalSource create() {
