@@ -18,6 +18,8 @@ com.kidscademy.page.LinkMetaForm = class extends com.kidscademy.Page {
         this._iconSection = this.getByCssClass("icon-section");
         this._iconControl = this.getByClass(com.kidscademy.IconControl);
 
+        this._apisListView = this.getByCssClass("apis-list");
+
         const linkMetaId = Number(WinMain.url.parameters.link);
         if (linkMetaId) {
             AtlasService.getLinkMeta(linkMetaId, this._onLinkMetaLoaded, this);
@@ -44,6 +46,14 @@ com.kidscademy.page.LinkMetaForm = class extends com.kidscademy.Page {
             });
         }
 
+        const features = linkMeta.features.split(',');
+        ApiService.getAvailableApis(apis => {
+            this._apisListView.setObject(apis);
+
+            this._apisListView.findByTag("tr").forEach(tr => {
+                tr.getByTag("input").check(features.includes(tr.getByCssClass("name").getText()));
+            });
+        });
         this._form.setObject(linkMeta);
     }
 
@@ -56,6 +66,13 @@ com.kidscademy.page.LinkMetaForm = class extends com.kidscademy.Page {
 
     _onSave(ev) {
         if (this._form.isValid()) {
+            var features = [];
+            this._apisListView.findByTag("tr").forEach(tr => {
+                if (tr.getByTag("input").checked()) {
+                    features.push(tr.getByCssClass("name").getText());
+                }
+            });
+            this._linkMeta.features = features.join();
             AtlasService.saveLinkMeta(this._form.getObject(this._linkMeta), () => WinMain.back());
         }
     }

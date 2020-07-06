@@ -5,7 +5,7 @@
 	<description>Form for external sources metadata.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
+		<script>gen/com/kidscademy/atlas/studio/ApiService.js</script>
 		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
 		<script>script/com/kidscademy/util/Strings.js</script>
 		<script>script/com/kidscademy/IconControl.js</script>

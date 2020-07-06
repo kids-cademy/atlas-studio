@@ -39,6 +39,7 @@ public class LinkMeta implements Domain, GraphicObject {
     private final String title = "External Source";
 
     private Date timestamp;
+    private String home;
     private String domain;
     private String display;
     private String definition;
@@ -85,6 +86,10 @@ public class LinkMeta implements Domain, GraphicObject {
 
     public boolean isPersisted() {
 	return id != 0;
+    }
+
+    public String getHome() {
+        return home;
     }
 
     @Override

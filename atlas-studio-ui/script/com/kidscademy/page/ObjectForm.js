@@ -38,7 +38,7 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
-		this._linksSelect = this.getByClass(com.kidscademy.form.LinkSelect);
+		this._linkSelect = this.getByClass(com.kidscademy.ItemSelect);
 
 		if (this._objectId === 0) {
 			AtlasService.createAtlasObject(this._collectionId, this._onObjectLoaded, this);
@@ -147,8 +147,8 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 				break;
 
 			default:
-				this._linkSelect.open(links, load);
-				this._actions.show("close");
+				this._linkSelect.load(links);
+				this._linkSelect.open(load);
 		}
 	}
 

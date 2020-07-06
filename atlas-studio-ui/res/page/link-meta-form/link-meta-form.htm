@@ -7,17 +7,16 @@
 			<div class="content">
 				<div class="container">
 					<div class="controlset">
+						<label>home</label><input name="home" />
+					</div>
+					<div class="controlset">
 						<label>domain</label><input name="domain" />
 					</div>
 					<div class="controlset">
 						<label>display</label><input name="display" />
 					</div>
 					<div class="controlset">
-						<label>definition</label>
-						<textarea name="definition" class="small"></textarea>
-					</div>
-					<div class="controlset">
-						<label>features</label><input name="features" />
+						<label>definition</label><input name="definition" />
 					</div>
 				</div>
 			</div>
@@ -30,6 +29,25 @@
 			<div class="content">
 				<div data-name="icon-src" class="container" w:compo="compo/icon-control"></div>
 			</div>
+		</fieldset>
+		
+		<fieldset>
+			<div class="header container">
+				<h2>Import APIs</h2>
+			</div>
+			<div class="content">
+				<div class="container">
+					<table class="table body">
+						<tbody class="table-view apis-list" data-list=".">
+							<tr class="api-view">
+								<td><input type="checkbox" /></td>
+								<td data-text="name" class="name"></td>
+								<td data-text="description"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>	
 		</fieldset>
 	</form>
 

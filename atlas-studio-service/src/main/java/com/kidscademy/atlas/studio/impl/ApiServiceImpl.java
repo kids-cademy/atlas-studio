@@ -1,7 +1,8 @@
 package com.kidscademy.atlas.studio.impl;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Map;
 import com.kidscademy.apiservice.client.Wikipedia;
 import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.model.API;
+import com.kidscademy.atlas.studio.model.ApiDescriptor;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Link;
@@ -25,6 +28,8 @@ import com.kidscademy.atlas.studio.www.WikipediaArticleText;
 import js.tiny.container.core.AppContext;
 
 public class ApiServiceImpl implements ApiService {
+    private final List<ApiDescriptor> availableApis;
+
     private final AppContext context;
     private final AtlasDao atlasDao;
 
@@ -34,7 +39,16 @@ public class ApiServiceImpl implements ApiService {
     private final MerriamWebster merriamWebster;
     private final Wikipedia wikipedia;
 
-    public ApiServiceImpl(AppContext context) throws IOException {
+    public ApiServiceImpl(AppContext context) {
+	this.availableApis = new ArrayList<>();
+	for (Method method : getClass().getDeclaredMethods()) {
+	    API api = method.getAnnotation(API.class);
+	    if (api != null) {
+		this.availableApis.add(new ApiDescriptor(api));
+	    }
+	}
+	Collections.sort(this.availableApis);
+
 	this.context = context;
 	this.atlasDao = context.getInstance(AtlasDao.class);
 
@@ -46,6 +60,12 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    public List<ApiDescriptor> getAvailableApis() {
+	return availableApis;
+    }
+
+    @Override
+    @API(name = "definition", description = "Definition is a brief description, usually one statement.")
     public String getDefinition(Link link) {
 	switch (link.getDomain()) {
 	case "wikipedia.org":
@@ -66,6 +86,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    @API(name = "description", description = "Description is organized on named sections with statements related by meaning.")
     public LinkedHashMap<String, String> getDescription(Link link) {
 	LinkedHashMap<String, String> sections = new LinkedHashMap<>();
 	switch (link.getDomain()) {
@@ -91,6 +112,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    @API(name = "facts", description = "A fact is a paragraph describing a piece of reality and has only one independent statement.")
     public Map<String, String> getFacts(Link link) {
 	switch (link.getDomain()) {
 	case "softschools.com":
@@ -106,6 +128,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    @API(name = "taxonomy", description = "Object classification. For now only life forms taxonomy is supported.")
     public List<Taxon> getTaxonomy(Link link) {
 	LinkedHashMap<String, String> taxonomy = null;
 	switch (link.getDomain()) {
@@ -125,6 +148,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    @API(name = "features", description = "A feature is a named characteristic with a physical quantity.")
     public List<Feature> getFeatures(int collectionId, Link link) {
 	Map<String, Double> values = null;
 	switch (link.getDomain()) {
