@@ -13,6 +13,8 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
         this._iconSection = this._form.getByCssClass("icon-section");
         this._iconControl = this._form.getByClass(com.kidscademy.IconControl);
 
+        this._apisSelect = this._form.getByClass(com.kidscademy.ApisSelect);
+
         const collectionId = Number(WinMain.url.parameters.collection);
         if (collectionId) {
             AtlasService.getCollection(collectionId, this._onCollectionLoaded, this);
@@ -23,6 +25,10 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
 
         this.getByName("save").on("click", this._onSave, this);
         this.getByName("cancel").on("click", this._onCancel, this);
+    }
+
+    getCollectionId() {
+        return this._collection.id;
     }
 
     _onCollectionLoaded(collection) {

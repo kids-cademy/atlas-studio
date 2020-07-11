@@ -1,50 +1,40 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.Displayable;
+import js.util.Params;
 
 @Embeddable
 public class Link implements Displayable, Domain {
-    /**
-     * Link URL to external source document. That document should provide data about
-     * advertised features, see {@link #features}.
-     */
-    private URL url;
+    @ManyToOne
+    private LinkSource linkSource;
 
     /**
-     * URL base domain contains only domain and TLD. For example for
-     * <code>www.softschools.com</code> links this domain value is
-     * <code>softschools.com</code>.
+     * Link URL to external source document. That document should provide data about
+     * advertised features, see {@link #apis}.
      */
-    private String domain;
+    private URL url;
 
     /**
      * Link name displayed on user interface. May be subject of
      * internationalization.
      */
+    @Transient
     private String display;
 
     /**
-     * Short description about linked resource content.
+     * Brief link description displayed on user interface. Usually is created
+     * automatically from external source definition template or loaded from article
+     * URL. Anyway, user is free to change it at will.
      */
     private String definition;
-
-    /**
-     * Every link provides some kind of data, named features. This fields holds a
-     * comma separated list of features and cannot be null or empty.
-     * <p>
-     * Current supported features are object <code>description</code> and
-     * <code>facts</code> dictionary.
-     */
-    private String features;
 
     /**
      * Root-relative media SRC for link icon. This value is initialized when load
@@ -60,29 +50,16 @@ public class Link implements Displayable, Domain {
     public Link() {
     }
 
-    /**
-     * Test constructor. Initialize provided fields and features to hard coded
-     * "description".
-     * 
-     * @param url
-     *            URL for external source document.
-     * @param display
-     *            link name displayed on user interface,
-     * @param definition
-     *            short description about linked resource content,
-     * @param iconName
-     *            icon file name.
-     */
-    public Link(URL url, String display, String definition, MediaSRC iconSrc) {
+    public Link(LinkSource linkSource, URL url, String definition) {
+	Params.notNull(linkSource, "Link source");
+	Params.notNull(linkSource.getExternalSource(), "External source");
+	this.linkSource = linkSource;
 	this.url = url;
-	this.domain = domain(url);
-	this.display = display;
 	this.definition = definition;
-	this.iconSrc = iconSrc;
-	this.features = "description";
     }
 
     public void postLoad() {
+	display = linkSource.getExternalSource().getDisplay();
 	iconSrc = Files.mediaSrc(this);
     }
 
@@ -96,7 +73,7 @@ public class Link implements Displayable, Domain {
 
     @Override
     public String getDomain() {
-	return domain;
+	return linkSource.getExternalSource().getDomain();
     }
 
     @Override
@@ -144,13 +121,13 @@ public class Link implements Displayable, Domain {
     }
 
     /**
-     * Return a comma separated list of features provided by this link.
+     * Return a comma separated list of import APIs provided by this link source.
      * 
      * @return this link features.
-     * @see #features
+     * @see #apis
      */
-    public String getFeatures() {
-	return features;
+    public String getApis() {
+	return linkSource.getApis();
     }
 
     public void setIconPath(String iconPath) {
@@ -166,25 +143,9 @@ public class Link implements Displayable, Domain {
 	return url != null ? url.toExternalForm() : "null";
     }
 
-    public static Link create(ExternalSource externalSource, URL articleURL, String definition) {
-	Link link = new Link();
-	link.url = articleURL;
-	link.domain = externalSource.getDomain();
-
-	link.display = externalSource.getDisplay();
-	link.definition = definition;
-
-	link.iconSrc = Files.mediaSrc(link);
-	link.features = externalSource.getApis();
+    public static Link create(LinkSource linkSource, URL articleURL, String definition) {
+	Link link = new Link(linkSource, articleURL, definition);
+	link.postLoad();
 	return link;
-    }
-
-    /** Pattern for domain and TLD. */
-    private static final Pattern DOMAIN_PATTERN = Pattern.compile("^(?:[^.]+\\.)*([^.]+\\.[^.]+)$");
-
-    private static String domain(URL url) {
-	Matcher matcher = DOMAIN_PATTERN.matcher(url.getHost());
-	matcher.find();
-	return matcher.group(1);
     }
 }

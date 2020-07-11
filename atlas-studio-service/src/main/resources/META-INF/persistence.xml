@@ -18,6 +18,7 @@
 		<!-- entities -->
 		<class>com.kidscademy.atlas.studio.model.User</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasCollection</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasCollectionKey</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasObject</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasImages</class>
@@ -29,6 +30,7 @@
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
+		<class>com.kidscademy.atlas.studio.model.LinkSource</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
@@ -54,9 +56,12 @@
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
 		<class>com.kidscademy.atlas.studio.model.Region</class>
+		<class>com.kidscademy.atlas.studio.model.LinkSource</class>
+		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
 
 		<class>com.kidscademy.atlas.studio.model.User</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasCollection</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasCollectionKey</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasObject</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
@@ -90,6 +95,7 @@
 
 		<class>com.kidscademy.atlas.studio.model.User</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasCollection</class>
+		<class>com.kidscademy.atlas.studio.model.AtlasCollectionKey</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasObject</class>
 		<class>com.kidscademy.atlas.studio.model.AtlasItem</class>
 		<class>com.kidscademy.atlas.studio.model.Image</class>
@@ -97,6 +103,7 @@
 
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
+		<class>com.kidscademy.atlas.studio.model.LinkSource</class>
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 

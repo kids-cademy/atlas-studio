@@ -38,7 +38,7 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
-		this._linkSelect = this.getByClass(com.kidscademy.ItemSelect);
+		this._linkSelect = this.getByClass(com.kidscademy.ApisSelect);
 
 		if (this._objectId === 0) {
 			AtlasService.createAtlasObject(this._collectionId, this._onObjectLoaded, this);
@@ -125,21 +125,22 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		const atlasItem = {
 			id: this._object.id,
 			collection: this._object.collection,
-			name: this._object.name
+			name: this._object.name,
+			display: this._object.display
 		}
 		return atlasItem;
 	}
 
-	importFromLink(feature, load) {
+	importFromLink(api, load) {
 		const object = this.getObject();
 		if (!object.links) {
 			return;
 		}
-		const links = object.links.filter(link => link.features.indexOf(feature) !== -1);
+		const links = object.links.filter(link => link.linkSource.apis.indexOf(api) !== -1);
 
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert(`No provider link for ${feature}.`);
+				js.ua.System.alert(`No provider link for ${api}.`);
 				break;
 
 			case 1:

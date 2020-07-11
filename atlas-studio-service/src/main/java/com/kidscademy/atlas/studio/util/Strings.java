@@ -89,15 +89,22 @@ public class Strings extends js.util.Strings {
     private static Pattern BASE_DOMAIN_PATTERN = Pattern
 	    .compile("^(?:http|https|ftp|file):\\/\\/(?:[^.]+\\.)*([^.]+\\.[^:/]+)\\/.*$");
 
-    public static String basedomain(URL url) {
+    public static String basedomain(String url) {
 	if (url == null) {
 	    return null;
 	}
-	Matcher matcher = BASE_DOMAIN_PATTERN.matcher(url.toExternalForm());
+	Matcher matcher = BASE_DOMAIN_PATTERN.matcher(url);
 	if (!matcher.find()) {
 	    return null;
 	}
 	return matcher.group(1);
+    }
+
+    public static String basedomain(URL url) {
+	if (url == null) {
+	    return null;
+	}
+	return basedomain(url.toExternalForm());
     }
 
     public static <T> T load(URL url, Class<T> type) throws IOException {

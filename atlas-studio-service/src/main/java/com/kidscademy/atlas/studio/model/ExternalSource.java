@@ -26,6 +26,7 @@ import js.dom.Element;
 import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
+import js.tiny.container.annotation.TestConstructor;
 import js.util.Classes;
 
 @Entity
@@ -41,8 +42,23 @@ public class ExternalSource implements Domain, GraphicObject {
 
     private Date timestamp;
     private String home;
+    /**
+     * URL base domain contains only domain and TLD. For example for
+     * <code>www.softschools.com</code> links this domain value is
+     * <code>softschools.com</code>.
+     */
     private String domain;
+    /**
+     * Link name displayed on user interface. May be subject of
+     * internationalization.
+     */
     private String display;
+    /**
+     * Short description about linked resource content. This is a template used to
+     * instantiate concrete link definition, see
+     * {@link #getLinkDefinition(URL, String)}.
+     * TODO: rename to definitionTemplate
+     */
     private String definition;
 
     /**
@@ -70,9 +86,13 @@ public class ExternalSource implements Domain, GraphicObject {
 
     }
 
-    public ExternalSource(String domain, String display, String definition) {
-	this.domain = domain;
-	this.display = display;
+    @TestConstructor
+    public ExternalSource(int id, String home, String definition, String apis) {
+	this.id = id;
+	this.home = home;
+	this.domain = Strings.basedomain(home);
+	this.name = Files.basename(this.domain);
+	this.display = Strings.toTitleCase(this.name);
 	this.definition = definition;
     }
 
@@ -141,9 +161,29 @@ public class ExternalSource implements Domain, GraphicObject {
 	return apis;
     }
 
-    public static ExternalSource create() {
-	ExternalSource externalSource = new ExternalSource();
-	return externalSource;
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((domain == null) ? 0 : domain.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	ExternalSource other = (ExternalSource) obj;
+	if (domain == null) {
+	    if (other.domain != null)
+		return false;
+	} else if (!domain.equals(other.domain))
+	    return false;
+	return true;
     }
 
     public String getLinkDefinition(URL link, String objectDisplay) {
@@ -250,5 +290,10 @@ public class ExternalSource implements Domain, GraphicObject {
 
     private static class YouTubeResult {
 	String title;
+    }
+
+    public static ExternalSource create() {
+	ExternalSource externalSource = new ExternalSource();
+	return externalSource;
     }
 }

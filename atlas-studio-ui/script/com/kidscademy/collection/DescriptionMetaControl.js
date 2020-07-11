@@ -11,7 +11,7 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
 
         this._currentRow = null;
 
-        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
+        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ApisSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
     }
 

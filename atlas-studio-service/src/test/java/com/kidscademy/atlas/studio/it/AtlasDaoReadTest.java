@@ -32,9 +32,11 @@ import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
@@ -151,19 +153,35 @@ public class AtlasDaoReadTest {
     public void getCollectionById() {
 	AtlasCollection collection = dao.getCollectionById(1);
 	assertThat(collection, notNullValue());
-	
+
 	assertCollectionFeaturesMeta(collection.getFeaturesMeta());
+
+	assertThat(collection.getLinkSources(), notNullValue());
+	assertThat(collection.getLinkSources(), hasSize(2));
+
+	LinkSource linkSource = collection.getLinkSources().iterator().next();
+	ExternalSource source = linkSource.getExternalSource();
+	assertThat(source, notNullValue());
+	assertThat(source.getId(), equalTo(1));
+	assertThat(source.getHome(), equalTo("https://en.wikipedia.org/wiki/"));
+	assertThat(source.getDomain(), equalTo("wikipedia.org"));
+	assertThat(source.getDisplay(), equalTo("Wikipedia"));
+	assertThat(source.getDefinition(), equalTo("${display} article on Wikipedia."));
+	assertThat(source.getName(), equalTo("wikipedia.org"));
+
+	assertThat(source.getApis(), equalTo("definition,description,features,taxonomy"));
+	assertThat(linkSource.getApis(), equalTo("definition,description,taxonomy"));
     }
 
     @Test
     public void getCollectionFeaturesMeta() {
 	assertCollectionFeaturesMeta(dao.getCollectionFeaturesMeta(1));
     }
-    
+
     private static void assertCollectionFeaturesMeta(List<FeatureMeta> featuresMeta) {
 	assertThat(featuresMeta, notNullValue());
 	assertThat(featuresMeta, hasSize(3));
-	
+
 	assertThat(featuresMeta.get(0).getId(), equalTo(1));
 	assertThat(featuresMeta.get(0).getName(), equalTo("height"));
 	assertThat(featuresMeta.get(0).getDefinition(), equalTo("height"));
@@ -174,7 +192,7 @@ public class AtlasDaoReadTest {
 	assertThat(featuresMeta.get(1).getName(), equalTo("length"));
 	assertThat(featuresMeta.get(2).getName(), equalTo("width"));
     }
-    
+
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
@@ -384,6 +402,19 @@ public class AtlasDaoReadTest {
 	assertThat(items, hasSize(2));
 	assertThat(items.get(0).getName(), equalTo("accordion"));
 	assertThat(items.get(1).getName(), equalTo("eagle"));
+    }
+
+    @Test
+    public void getLinkSourceByDomain() {
+	LinkSource source = dao.getLinkSourceByDomain(1, "wikipedia.org");
+	assertThat(source, notNullValue());
+    }
+
+    public void getExternalSourceCandidates() {
+	List<ExternalSource> candidates = dao.getExternalSourceCandidates(Arrays.asList(1, 3));
+	assertThat(candidates, notNullValue());
+	assertThat(candidates, hasSize(1));
+	assertThat(candidates.get(0).getId(), equalTo(2));
     }
 
     // ----------------------------------------------------------------------------------------------

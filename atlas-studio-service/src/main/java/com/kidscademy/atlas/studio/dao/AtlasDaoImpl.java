@@ -18,10 +18,11 @@ import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseChild;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
@@ -55,6 +56,12 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (collection != null) {
 	    em.remove(collection);
 	}
+    }
+
+    @Override
+    public String getCollectionName(int collectionId) {
+	return em.createQuery("select c.name from AtlasCollection c where c.id=:collectionId", String.class)
+		.setParameter("collectionId", collectionId).getSingleResult();
     }
 
     @Override
@@ -286,8 +293,27 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public LinkSource getLinkSourceByDomain(int collectionId, String domain) {
+	List<LinkSource> result = em.createQuery(
+		"select l from LinkSource l join l.atlasCollection c join l.externalSource e where c.id=:collectionId and e.domain=:domain",
+		LinkSource.class).setParameter("collectionId", collectionId).setParameter("domain", domain)
+		.getResultList();
+	if (result.size() > 1) {
+	    throw new BugError("Database inconsistency. Not unique colleciton link source domain.");
+	}
+	return result.size() == 1 ? result.get(0) : null;
+    }
+
+    @Override
     public List<ExternalSource> getExternalSources() {
-	return em.createQuery("select s from ExternalSource s order by s.display", ExternalSource.class).getResultList();
+	return em.createQuery("select s from ExternalSource s order by s.display", ExternalSource.class)
+		.getResultList();
+    }
+
+    @Override
+    public List<ExternalSource> getExternalSourceCandidates(List<Integer> excludeIds) {
+	return em.createQuery("select s from ExternalSource s where s.id not in :excludeIds order by s.display",
+		ExternalSource.class).setParameter("excludeIds", excludeIds).getResultList();
     }
 
     @Override
@@ -297,7 +323,8 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public ExternalSource getExternalSourceByDomain(String domain) {
-	List<ExternalSource> result = em.createQuery("select s from ExternalSource s where s.domain=:domain", ExternalSource.class)
+	List<ExternalSource> result = em
+		.createQuery("select s from ExternalSource s where s.domain=:domain", ExternalSource.class)
 		.setParameter("domain", domain).getResultList();
 	if (result.size() > 1) {
 	    throw new BugError("Database inconsistency. Not unique external source domain.");

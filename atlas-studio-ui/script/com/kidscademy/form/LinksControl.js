@@ -32,6 +32,8 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		this._definitionInput = this._editor.getByName("definition");
 		this._formData = this.getByClass(com.kidscademy.FormData);
 
+		this._linkSourceGroupView = this.getByCssClass("link-source");
+
 		/**
 		 * Actions manager.
 		 * @type {com.kidscademy.Actions}
@@ -63,14 +65,17 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 
 	_onAdd() {
 		this._editLink = null;
+		this._linkSourceGroupView.hide();
 		this._showEditor(true);
 		this._formData.reset();
 	}
 
-	_onBrowse() {
-		const url = this._formData.getValue("url");
+	_onBrowse(url) {
+		if (!url) {
+			url = this._formData.getValue("url");
+		}
 		if (url != null) {
-			WinMain.open(url);
+			window.open(url);
 		}
 	}
 
@@ -79,16 +84,19 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 			return;
 		}
 
+		const collectionId = this._formPage.getCollection().id;
+		const formData = this._formData.getObject();
+
 		if (this._editLink == null) {
 			// edit link is not set therefore we are in append mode
-			AtlasService.createLink(this._formData.getObject(), link => {
+			AtlasService.createLink(collectionId, formData, link => {
 				this._linksView.addObject(link);
 			});
 		}
 		else {
 			// edit link is set therefore we are in edit mode
 			// since link URL can be changed need to recreate link and update currently edited link view
-			AtlasService.createLink(this._formData.getObject(), link => {
+			AtlasService.createLink(collectionId, formData, link => {
 				this._editLink.setObject(link);
 			});
 		}
@@ -158,10 +166,20 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 
 	_onLinksViewClick(ev) {
 		this._editLink = ev.target.getParentByTag("li");
-		if (this._editLink != null) {
-			this._showEditor(true);
-			this._formData.setObject(this._editLink.getUserData());
+		if (this._editLink == null) {
+			return;
 		}
+
+		const link = this._editLink.getUserData();
+		if (ev.ctrlKey) {
+			this._onBrowse(link.url);
+			return;
+		}
+
+		this._linkSourceGroupView.show();
+		this._showEditor(true);
+		this._formData.reset();
+		this._formData.setObject(link);
 	}
 
 	_showEditor(show) {

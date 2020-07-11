@@ -10,32 +10,38 @@ com.kidscademy.FrameView = class extends js.dom.Element {
          * 
          * @type js.dom.Element
          */
-        this._view = this.getFirstChild();
+        this._selectedView = this.getFirstChild();
+    }
+
+    setObject(childViews) {
+        $assert(this._selectedView, "com.kidscademy.FrameView#setObject", "Invalid state. No child view selected.");
+        this._selectedView.setObject(childViews);
     }
 
     /**
-     * Select current view identified by its name. By convention child view name is stored on layout using 'data-name' attribute.
+     * Select current child view identified by CSS class.
      * 
      * @param {String} viewName the name of child view to select.
+     * @returns {js.dom.Element} newly selected child view.
+     * @assert view name argument is not undefined, null or empty.
      */
     select(viewName) {
-        $assert(viewName != null, "com.kidscademy.FrameView#select", "Null view name.");
-        this._view.hide();
-        this._view = this.getByCss(`:scope > .%s`, viewName);
-        $assert(this._view != null, "com.kidscademy.FrameView#select", "No child view with class |%s|.", viewName);
-        return this._view.show();
+        $assert(viewName, "com.kidscademy.FrameView#select", "Undefined, null or empty view name.");
+        this.show();
+        this._selectedView.hide();
+        this._selectedView = this.getByCss(`:scope > .${viewName}`);
+        $assert(this._selectedView != null, "com.kidscademy.FrameView#select", `No child view with class |${viewName}|.`);
+        return this._selectedView.show();
     }
 
-    setObject(items) {
-        $assert(this._view != null, "com.kidscademy.FrameView#setObject", "Invalid state. Null selected view.");
-        this._view.setObject(items);
+    isSelected(viewName) {
+        $assert(this._selectedView, "com.kidscademy.FrameView#setObject", "Invalid state. No child view selected.");
+        return this._selectedView.hasCssClass(viewName);
     }
 
-    scrollIntoView(childId) {
-        const childView = this._view.getByCss("li[id='%s']", childId);
-        if (childView != null) {
-            childView.scrollIntoView();
-        }
+    scrollIntoView() {
+        $assert(this._selectedView, "com.kidscademy.FrameView#setObject", "Invalid state. No child view selected.");
+        this._selectedView.scrollIntoView();
     }
 
     toString() {

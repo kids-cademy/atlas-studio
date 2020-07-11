@@ -2,6 +2,8 @@ package com.kidscademy.atlas.studio.model;
 
 import javax.persistence.Embeddable;
 
+import js.tiny.container.annotation.TestConstructor;
+
 @Embeddable
 public class DescriptionMeta {
     private String name;
@@ -10,12 +12,14 @@ public class DescriptionMeta {
     public DescriptionMeta() {
     }
 
-    public String getName() {
-	return name;
+    @TestConstructor
+    public DescriptionMeta(String name, String definition) {
+	this.name = name;
+	this.definition = definition;
     }
 
-    public DescriptionMeta(String name) {
-	this.name = name;
+    public String getName() {
+	return name;
     }
 
     public String getDefinition() {

@@ -3,6 +3,8 @@ package com.kidscademy.atlas.studio.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import js.tiny.container.annotation.TestConstructor;
+
 @Embeddable
 public class TaxonMeta {
     private String name;
@@ -18,6 +20,12 @@ public class TaxonMeta {
     public TaxonMeta() {
     }
 
+    @TestConstructor
+    public TaxonMeta(String name) {
+	this.name = name;
+    }
+
+    @TestConstructor
     public TaxonMeta(String name, String values) {
 	this.name = name;
 	this.values = values;

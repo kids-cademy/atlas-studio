@@ -28,12 +28,13 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
@@ -273,11 +274,14 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Link createLink(Link link) throws BusinessException {
-	businessRules.registeredLinkDomain(link.getUrl());
-	URL articleURL = link.getUrl();
-	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(Strings.basedomain(articleURL));
-	return Link.create(externalSource, articleURL, link.getDefinition());
+    public Link createLink(int collectionId, Link formData) {
+	String domain = Strings.basedomain(formData.getUrl());
+	LinkSource linkSource = atlasDao.getLinkSourceByDomain(collectionId, domain);
+	if (linkSource == null) {
+	    log.warn("Domain |%s| not handled by collection |%s|.", domain, atlasDao.getCollectionName(collectionId));
+	    return null;
+	}
+	return Link.create(linkSource, formData.getUrl(), formData.getDefinition());
     }
 
     @Override
@@ -299,6 +303,11 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public List<ExternalSource> getExternalSources() {
 	return atlasDao.getExternalSources();
+    }
+
+    @Override
+    public List<ExternalSource> getExternalSourceCandidates(List<Integer> excludeIds) {
+	return atlasDao.getExternalSourceCandidates(excludeIds);
     }
 
     @Override
@@ -412,8 +421,8 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 
 	List<Link> links = new ArrayList<>();
-	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(Strings.basedomain(articleURL));
-	links.add(Link.create(externalSource, articleURL, externalSource.getLinkDefinition(articleURL, object.getDisplay())));
+	LinkSource linkSource = atlasDao.getLinkSourceByDomain(collectionId, Strings.basedomain(articleURL));
+	links.add(Link.create(linkSource, articleURL, getLinkDefinition(articleURL, object.getDisplay())));
 	object.setLinks(links);
 
 	object.setState(AtlasObject.State.CREATED);

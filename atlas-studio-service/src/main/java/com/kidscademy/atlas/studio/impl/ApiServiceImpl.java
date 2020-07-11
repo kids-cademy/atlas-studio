@@ -65,6 +65,17 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    public List<ApiDescriptor> getApiDescriptors(List<String> apiNames) {
+	List<ApiDescriptor> apis = new ArrayList<>();
+	for (ApiDescriptor api : availableApis) {
+	    if (apiNames.contains(api.getName())) {
+		apis.add(api);
+	    }
+	}
+	return apis;
+    }
+
+    @Override
     @API(name = "definition", description = "Definition is a brief description, usually one statement.")
     public String getDefinition(Link link) {
 	switch (link.getDomain()) {

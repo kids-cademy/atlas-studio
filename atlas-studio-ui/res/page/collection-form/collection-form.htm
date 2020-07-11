@@ -51,11 +51,7 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/collection-description-add" />
-						<img name="clone" src="@image/action/clone" title="@tip/collection-description-clone" />
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/collection-description-done" />
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/collection-description-remove" />
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/collection-description-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/collection-description-add" /> <img name="clone" src="@image/action/clone" title="@tip/collection-description-clone" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/collection-description-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/collection-description-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/collection-description-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden" data-class="com.kidscademy.FormData">
@@ -63,7 +59,8 @@
 							<label>@string/section-name</label><input name="name" />
 						</div>
 						<div class="controlset">
-							<label>@string/section-definition</label><textarea name="definition" class="small"></textarea>
+							<label>@string/section-definition</label>
+							<textarea name="definition" class="small"></textarea>
 						</div>
 					</div>
 				</div>
@@ -92,10 +89,7 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" />
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" />
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" />
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/taxonomy-add" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden">
@@ -135,18 +129,14 @@
 					</table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/features-meta-add" />
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/features-meta-done" /> 
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> 
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/features-meta-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
 					</div>
 
 					<div class="editor hidden">
 						<div class="form-bar with-actions">
 							<input name="search-input" />
 							<div class="actions inline" data-class="com.kidscademy.Actions">
-								<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> 
-								<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
+								<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> <img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
 							</div>
 						</div>
 
@@ -167,6 +157,49 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+
+		<fieldset>
+			<div class="header container">
+				<h2>Link Sources</h2>
+			</div>
+			
+			<div class="content">
+				<div data-name="link-sources" class="container" data-class="com.kidscademy.collection.LinkSourcesControl">
+					<ul class="link-sources" w:compo="compo/icons-list"></ul>
+
+					<div class="actions bar" data-class="com.kidscademy.Actions">
+						<img name="add" src="@image/action/add" title="@tip/link-add" />
+						<img name="browse" src="@image/action/browse" title="@tip/link-browse" /> 
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/link-done" /> 
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/link-remove" /> 
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/link-close" class="rfloat" />
+					</div>
+					
+					<div class="editor hidden" data-class="com.kidscademy.FrameView">
+						<div class="link-form" data-class="com.kidscademy.FormData">
+							<div class="controlset">
+								<label>home</label> <input name="external-source.home" disabled="disabled" />
+							</div>
+							<div class="controlset">
+								<label>domain</label> <input name="external-source.domain" disabled="disabled" />
+							</div>
+							<div class="controlset">
+								<label>display</label> <input name="external-source.display" disabled="disabled" />
+							</div>
+							<div class="controlset">
+								<label>definition template</label> <input name="external-source.definition" disabled="disabled" />
+							</div>
+							<div class="controlset apis-select">
+								<table data-name="apis" w:compo="compo/apis-select"></table>
+							</div>
+						</div>
+
+						<ul class="candidates hidden" w:compo="compo/icons-list"></ul>
 					</div>
 				</div>
 			</div>
@@ -202,7 +235,7 @@
 		<button name="save">@string/save</button>
 		<button name="cancel">@string/cancel</button>
 	</div>
-	
+
 	<div w:compo="compo/item-select"></div>
 </div>
 

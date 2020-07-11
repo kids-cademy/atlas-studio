@@ -28,15 +28,20 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.transaction.TransactionFactory;
@@ -60,6 +65,59 @@ public class AtlasDaoWriteTest {
     public void beforeTest() throws SQLException {
 	database.load(Classes.getResourceAsStream("atlas-data-set.xml"));
 	dao = factory.newInstance(AtlasDaoImpl.class);
+    }
+
+    @Test
+    public void saveAtlasCollection() {
+	AtlasCollection collection = new AtlasCollection(3, "farm-animals");
+	collection.setDisplay("Farm Animals");
+	collection.setDefinition("Domesticated animals, both mammals and birds.");
+
+	List<DescriptionMeta> descriptionMeta = new ArrayList<>();
+	descriptionMeta.add(new DescriptionMeta("description", "Morphological description."));
+	descriptionMeta.add(new DescriptionMeta("habitat", "Bird natural habitat."));
+	descriptionMeta.add(new DescriptionMeta("feeding", "Feeding behavior and diet."));
+	collection.setDescriptionMeta(descriptionMeta);
+
+	List<TaxonMeta> taxonomyMeta = new ArrayList<>();
+	taxonomyMeta.add(new TaxonMeta("kingdom", "Animalia"));
+	taxonomyMeta.add(new TaxonMeta("phylum", "Chordata"));
+	taxonomyMeta.add(new TaxonMeta("class"));
+	collection.setTaxonomyMeta(taxonomyMeta);
+
+	List<FeatureMeta> featuresMeta = new ArrayList<>();
+	featuresMeta.add(new FeatureMeta(5, PhysicalQuantity.LENGTH, "depth", "Diving Depth",
+		"Depth range, measured from sea level, where a particular family of objects can be found or operate."));
+	featuresMeta.add(new FeatureMeta(6, PhysicalQuantity.ANGLE, "axial.tilt", "Axial Tilt",
+		"In astronomy, axial tilt is the angle between an object's rotational axis and its orbital axis, or, equivalently, the angle between its equatorial plane and orbital plane."));
+	featuresMeta.add(new FeatureMeta(7, PhysicalQuantity.TIME, "lifespan", "Lifespan",
+		"Average life expectancy observed on a particular species."));
+	collection.setFeaturesMeta(featuresMeta);
+
+	List<LinkSource> linkSources = new ArrayList<>();
+	linkSources.add(new LinkSource(3, dao.getExternalSourceById(1)));
+	linkSources.add(new LinkSource(4, dao.getExternalSourceById(2)));
+	linkSources.add(new LinkSource(5, dao.getExternalSourceById(3)));
+	collection.setLinkSources(linkSources);
+
+	dao.saveAtlasCollection(collection);
+    }
+
+    @Test
+    public void saveAtlasCollection_UpdateLinkSource() {
+	AtlasCollection collection = dao.getCollectionById(1);
+	assertThat(collection, notNullValue());
+	
+	List<LinkSource> linkSources = collection.getLinkSources();
+	assertThat(linkSources, notNullValue());
+	assertThat(linkSources, hasSize(2));
+	
+	LinkSource linkSource = linkSources.get(0);
+	assertThat(linkSource, notNullValue());
+	assertThat(linkSource.getApis(), equalTo("definition,description,taxonomy"));
+	
+	linkSource.setApis("definition,description,features,taxonomy");
+	dao.saveAtlasCollection(collection);
     }
 
     /**
@@ -176,11 +234,13 @@ public class AtlasDaoWriteTest {
 
 	object.setStartDate(new HDate(1821, HDate.Format.YEAR, HDate.Period.MIDDLE));
 
+	ExternalSource externalSource = new ExternalSource(1, "https://en.wikipedia.org/wiki/",
+		"Wikipedia article about ${display}", "definition,description,features,taxonomy");
 	List<Link> links = new ArrayList<>();
-	links.add(new Link(new URL("https://en.wikipedia.org/wiki/Accordion"), "Wikipedia", "Wikipedia article",
-		new MediaSRC("/media/link/wikipedia.png")));
-	links.add(new Link(new URL("https://www.youtube.com/watch?v=kXXhp_bZvck"), "YouTube", "YouTube video",
-		new MediaSRC("/media/link/youtube.png")));
+	links.add(new Link(new LinkSource(1, externalSource), new URL("https://en.wikipedia.org/wiki/Accordion"),
+		"Accordion"));
+	links.add(new Link(new LinkSource(2, externalSource), new URL("https://www.youtube.com/watch?v=kXXhp_bZvck"),
+		"Accordion"));
 	object.setLinks(links);
 
 	Map<String, String> facts = new HashMap<>();
@@ -271,10 +331,10 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getFeatures().get(0).getValue(), equalTo(0.3556));
 	assertThat(object.getFeatures().get(0).getMaximum(), equalTo(0.4826));
 	assertThat(object.getFeatures().get(0).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
 	assertThat(object.getFeatures().get(1).getValue(), equalTo(0.4826));
 	assertThat(object.getFeatures().get(1).getMaximum(), nullValue());
-	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.MASS));
+	assertThat(object.getFeatures().get(1).getQuantity(), equalTo(PhysicalQuantity.LENGTH));
 
 	assertThat(expected.getLinks(), notNullValue());
 	assertThat(expected.getLinks(), hasSize(2));
@@ -287,8 +347,8 @@ public class AtlasDaoWriteTest {
 
 	link = expected.getLinks().get(1);
 	assertThat(link, notNullValue());
-	assertThat(link.toDisplay(), equalTo("YouTube"));
-	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/youtube.png")));
+	assertThat(link.toDisplay(), equalTo("Britannica"));
+	assertThat(link.getIconSrc(), equalTo(new MediaSRC("/media/link/britannica.png")));
 	assertThat(link.getUrl(), equalTo(new URL("https://www.youtube.com/watch?v=kXXhp_bZvck")));
 
 	assertThat(expected.getRelated(), notNullValue());
@@ -303,18 +363,18 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
 	assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
-	assertThat(object.getFeatures().get(1).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
 
 	Feature feature = object.getFeatures().remove(0);
 	object.getFeatures().add(feature);
-	assertThat(object.getFeatures().get(0).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("width"));
 	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
 	dao.saveAtlasObject(object);
 
 	object = dao.getAtlasObject(1);
 	assertThat(object.getFeatures(), notNullValue());
 	assertThat(object.getFeatures(), hasSize(2));
-	assertThat(object.getFeatures().get(0).getName(), equalTo("weight"));
+	assertThat(object.getFeatures().get(0).getName(), equalTo("width"));
 	assertThat(object.getFeatures().get(1).getName(), equalTo("height"));
     }
 

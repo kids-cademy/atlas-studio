@@ -13,9 +13,11 @@
 		<script>script/com/kidscademy/TableView.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/ItemSelect.js</script>
+		<script>script/com/kidscademy/FrameView.js</script>
 		<script>script/com/kidscademy/collection/DescriptionMetaControl.js</script>
 		<script>script/com/kidscademy/collection/TaxonomyMetaControl.js</script>
 		<script>script/com/kidscademy/collection/FeaturesMetaControl.js</script>
+		<script>script/com/kidscademy/collection/LinkSourcesControl.js</script>
 		<script>script/com/kidscademy/Page.js</script>
 		<script>script/com/kidscademy/page/CollectionForm.js</script>
 	</scripts>

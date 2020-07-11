@@ -14,6 +14,8 @@ import js.tiny.container.annotation.Service;
 @Service
 public interface ApiService {
     List<ApiDescriptor> getAvailableApis();
+
+    List<ApiDescriptor> getApiDescriptors(List<String> apiNames);
     
     String getDefinition(Link link);
 

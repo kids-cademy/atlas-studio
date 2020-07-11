@@ -6,12 +6,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostLoad;
 import javax.persistence.PostRemove;
@@ -57,7 +60,12 @@ public class AtlasCollection implements GraphicObject {
     @ManyToMany
     @OrderColumn
     private List<FeatureMeta> featuresMeta;
-    
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "atlascollection_id")
+    @OrderColumn
+    private List<LinkSource> linkSources;
+
     private Flags flags;
 
     @Transient
@@ -74,10 +82,12 @@ public class AtlasCollection implements GraphicObject {
      */
     public AtlasCollection(int id, String name) {
 	this.id = id;
+	this.timestamp = new Date();
 	this.name = name;
 	this.taxonomyMeta = Collections.emptyList();
-	this.descriptionMeta = Arrays.asList(new DescriptionMeta("text"));
+	this.descriptionMeta = Arrays.asList(new DescriptionMeta("wikipedia", "Wikipedia description."));
 	this.featuresMeta = Collections.emptyList();
+	this.linkSources = Collections.emptyList();
 	this.flags = new Flags(true);
     }
 
@@ -134,9 +144,17 @@ public class AtlasCollection implements GraphicObject {
 	return name;
     }
 
+    public void setDisplay(String display) {
+	this.display = display;
+    }
+
     @Override
     public String getDisplay() {
 	return display;
+    }
+
+    public void setDefinition(String definition) {
+	this.definition = definition;
     }
 
     @Override
@@ -149,20 +167,44 @@ public class AtlasCollection implements GraphicObject {
 	return iconSrc;
     }
 
+    public void setDescriptionMeta(List<DescriptionMeta> descriptionMeta) {
+	this.descriptionMeta = descriptionMeta;
+    }
+
     public List<DescriptionMeta> getDescriptionMeta() {
 	return descriptionMeta;
+    }
+
+    public void setTaxonomyMeta(List<TaxonMeta> taxonomyMeta) {
+	this.taxonomyMeta = taxonomyMeta;
     }
 
     public List<TaxonMeta> getTaxonomyMeta() {
 	return taxonomyMeta;
     }
 
-    public Flags getFlags() {
-	return flags;
+    public void setFeaturesMeta(List<FeatureMeta> featuresMeta) {
+	this.featuresMeta = featuresMeta;
     }
 
     public List<FeatureMeta> getFeaturesMeta() {
 	return featuresMeta;
+    }
+
+    public void setLinkSources(List<LinkSource> linkSources) {
+	this.linkSources = linkSources;
+    }
+
+    public List<LinkSource> getLinkSources() {
+	return linkSources;
+    }
+
+    public void setFlags(Flags flags) {
+	this.flags = flags;
+    }
+
+    public Flags getFlags() {
+	return flags;
     }
 
     public static AtlasCollection create() {

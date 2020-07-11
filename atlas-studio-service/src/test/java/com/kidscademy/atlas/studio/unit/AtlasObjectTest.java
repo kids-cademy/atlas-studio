@@ -10,9 +10,10 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.MediaSRC;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.Region;
 
 import js.json.Json;
@@ -42,11 +43,11 @@ public class AtlasObjectTest {
 	spreading.add(new Region("Africa", Region.Area.NORTH));
 	object.setSpreading(spreading);
 
+	ExternalSource externalSource = new ExternalSource(1, "https://en.wikipedia.org/wiki/", "Wikipedia article about ${display}", "definition,description,features,taxonomy");
+	LinkSource linkSource = new LinkSource(1, externalSource);
 	List<Link> links = new ArrayList<>();
-	links.add(new Link(new URL("https://en.wikipedia.org/wiki/AccordionXXX"), "Wikipedia-xxx", "Wikipedia article",
-		new MediaSRC("/media/link/wikipedia.png")));
-	links.add(new Link(new URL("http://en.wikipedia.org:443/wiki/Accordion"), "Wikipedia-www", "Wikipedia article",
-		new MediaSRC("/media/link/wikipedia.png")));
+	links.add(new Link(linkSource, new URL("https://en.wikipedia.org/wiki/AccordionXXX"), object.getDisplay()));
+	links.add(new Link(linkSource, new URL("http://en.wikipedia.org:443/wiki/Accordion"), object.getDisplay()));
 	object.setLinks(links);
 
 	Map<String, String> facts = new HashMap<>();

@@ -21,6 +21,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.kidscademy.apiservice.client.Wikipedia;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -29,12 +30,21 @@ import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.LinkSource;
 
 import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
+import js.tiny.container.unit.TestContext;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AtlasServiceTest {
+    private static final String DESCRIPTOR = "" //
+	    + "<app-descriptor>" //
+	    + "  <managed-classes>" //
+	    + "    <wikipedia interface='com.kidscademy.apiservice.client.Wikipedia' type='REMOTE' url='http:rest://api.kids-cademy.com/wikipedia/' />" //
+	    + "  </managed-classes>" //
+	    + "</app-descriptor>";
+
     @Mock
     private AppContext context;
     @Mock
@@ -45,18 +55,26 @@ public class AtlasServiceTest {
     private AtlasService service;
 
     @Before
-    public void beforeTest() throws IOException {
+    public void beforeTest() throws Exception {
+
 	when(context.getAppFile(anyString())).thenReturn(new File("fixture/fake-file"));
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
 	when(context.getInstance(BusinessRules.class)).thenReturn(businessRules);
+
+	Wikipedia wikipedia = TestContext.start(DESCRIPTOR).getInstance(Wikipedia.class);
+	when(context.getInstance(Wikipedia.class)).thenReturn(wikipedia);
+
 	service = new AtlasServiceImpl(context);
     }
 
     @Test
     public void importWikipediaObject() throws IOException, BusinessException {
 	when(atlasDao.getCollectionById(2)).thenReturn(new AtlasCollection(2, "wild-birds"));
-	when(atlasDao.getExternalSourceByDomain("wikipedia.org"))
-		.thenReturn(new ExternalSource("wikipedia.org", "Wikipedia", "Wikipedia article about ${display}"));
+	
+	ExternalSource externalSource = new ExternalSource(1, "https://en.wikipedia.org/wiki/",
+		"Wikipedia article about ${display}", "definition,description,features,taxonomy");
+	when(atlasDao.getExternalSourceByDomain("wikipedia.org")).thenReturn(externalSource);
+	when(atlasDao.getLinkSourceByDomain(2, "wikipedia.org")).thenReturn(new LinkSource(1, externalSource));
 
 	URL articleURL = new URL("https://en.wikipedia.org/wiki/Common_raven");
 	service.importWikipediaObject(2, articleURL);
@@ -77,7 +95,7 @@ public class AtlasServiceTest {
 	assertThat(object.getDisplay(), equalTo("Common raven"));
 
 	assertThat(object.getDescription(), notNullValue());
-	assertThat(object.getDescription(), startsWith("The common raven"));
+	assertThat(object.getDescription(), startsWith("<text><section name=\"wikipedia\"><p>The common raven"));
 
 	assertThat(object.getConservation(), notNullValue());
 	assertThat(object.getConservation(), equalTo(ConservationStatus.LC));

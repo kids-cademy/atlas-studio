@@ -8,3 +8,11 @@
 	margin-top: 20px;
 }
 
+.controlset.apis-select {
+	padding-top: 10px;
+	border-top: solid 1px #E6E6E6;
+}
+
+table.apis-select {
+	width: 100%;
+}

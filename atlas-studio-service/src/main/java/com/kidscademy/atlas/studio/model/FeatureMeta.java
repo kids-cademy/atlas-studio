@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import js.tiny.container.annotation.TestConstructor;
+
 @Entity
 public class FeatureMeta {
     @Id
@@ -19,6 +21,20 @@ public class FeatureMeta {
     private String name;
     private String display;
     private String definition;
+
+    public FeatureMeta() {
+    }
+    
+    @TestConstructor
+    public FeatureMeta(int id, PhysicalQuantity quantity, String name, String display, String definition) {
+	super();
+	this.id = id;
+	this.quantity = quantity;
+	this.name = name;
+	this.display = display;
+	this.definition = definition;
+    }
+
 
     public int getId() {
 	return id;

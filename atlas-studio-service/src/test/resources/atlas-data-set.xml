@@ -92,24 +92,28 @@
 	<featuremeta>
 		<id>1</id>
 		<name>height</name>
+		<display>Height</display>
 		<definition>height</definition>
 		<quantity>LENGTH</quantity>
 	</featuremeta>
 	<featuremeta>
 		<id>2</id>
 		<name>width</name>
+		<display>Width</display>
 		<definition>width</definition>
 		<quantity>LENGTH</quantity>
 	</featuremeta>
 	<featuremeta>
 		<id>3</id>
 		<name>length</name>
+		<display>Length</display>
 		<definition>length</definition>
 		<quantity>LENGTH</quantity>
 	</featuremeta>
 	<featuremeta>
 		<id>4</id>
 		<name>weight</name>
+		<display>Weight</display>
 		<definition>weight</definition>
 		<quantity>MASS</quantity>
 	</featuremeta>
@@ -144,6 +148,49 @@
 		<name>uses</name>
 		<definition>Object uses.</definition>
 	</atlascollection_descriptionmeta>
+
+	<externalsource>
+		<id>1</id>
+		<timestamp>2019-01-30 12:30:00</timestamp>
+		<home>https://en.wikipedia.org/wiki/</home>
+		<domain>wikipedia.org</domain>
+		<display>Wikipedia</display>
+		<definition>${display} article on Wikipedia.</definition>
+		<apis>definition,description,features,taxonomy</apis>
+	</externalsource>
+	<externalsource>
+		<id>2</id>
+		<timestamp>2019-01-30 12:30:10</timestamp>
+		<home>https://www.britannica.com/</home>
+		<domain>britannica.com</domain>
+		<display>Britannica</display>
+		<definition>${display} article on Wikipedia.</definition>
+		<apis>definition,description</apis>
+	</externalsource>
+	<externalsource>
+		<id>3</id>
+		<timestamp>2019-01-30 12:30:20</timestamp>
+		<home>https://animaldiversity.org/</home>
+		<domain>animaldiversity.org</domain>
+		<display>Animal Diversity Web</display>
+		<definition>${display} on Animal Diversity Web..</definition>
+		<apis>definition,description,features</apis>
+	</externalsource>
+
+	<linksource>
+		<id>1</id>
+		<atlascollection_id>1</atlascollection_id>
+		<linksources_order>0</linksources_order>
+		<externalsource_id>1</externalsource_id>
+		<apis>definition,description,taxonomy</apis>
+	</linksource>
+	<linksource>
+		<id>2</id>
+		<atlascollection_id>1</atlascollection_id>
+		<linksources_order>1</linksources_order>
+		<externalsource_id>2</externalsource_id>
+		<apis>definition,description</apis>
+	</linksource>
 
 	<atlasobject>
 		<id>1</id>
@@ -307,23 +354,19 @@
 
 	<atlasobject_links>
 		<id>1</id>
+		<linksource_id>1</linksource_id>
 		<atlasobject_id>1</atlasobject_id>
 		<links_order>0</links_order>
 		<url>https://en.wikipedia.org/wiki/Accordion</url>
-		<domain>wikipedia.org</domain>
-		<display>Wikipedia</display>
 		<definition>Wikipedia article about accordion.</definition>
-		<features>description</features>
 	</atlasobject_links>
 	<atlasobject_links>
 		<id>2</id>
+		<linksource_id>2</linksource_id>
 		<atlasobject_id>1</atlasobject_id>
 		<links_order>1</links_order>
 		<url>https://www.britannica.com/art/bandonion</url>
-		<domain>britannica.com</domain>
-		<display>Britannica</display>
-		<definition>Britannica article about bandoneon.</definition>
-		<features>description</features>
+		<definition>Bandonion on Britannica.</definition>
 	</atlasobject_links>
 
 	<atlasobject_spreading>
