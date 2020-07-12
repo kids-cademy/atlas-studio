@@ -30,29 +30,38 @@ import js.tiny.container.annotation.TestConstructor;
 import js.util.Classes;
 
 @Entity
-public class ExternalSource implements Domain {
+public class ExternalSource implements GraphicObject, Domain {
     private static final Log log = LogFactory.getLog(ExternalSource.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Transient
+    private final String title = "External Source";
+
+    @Transient
+    private String name;
+
+    @Transient
+    private String definition;
+
     private Date timestamp;
     private String home;
-    
+
     /**
      * URL base domain contains only domain and TLD. For example for
      * <code>www.softschools.com</code> links this domain value is
      * <code>softschools.com</code>.
      */
     private String domain;
-    
+
     /**
      * Link name displayed on user interface. May be subject of
      * internationalization.
      */
     private String display;
-    
+
     /**
      * Short description about linked resource content. This is a template used to
      * instantiate concrete link definition, see
@@ -87,12 +96,16 @@ public class ExternalSource implements Domain {
 	this.id = id;
 	this.home = home;
 	this.domain = Strings.basedomain(home);
-	this.display = Strings.toTitleCase(Files.basename(this.domain));
+	this.name = Files.basename(this.domain);
+	this.display = Strings.toTitleCase(this.name);
 	this.definitionTemplate = definitionTemplate;
+	this.definition = this.definitionTemplate;
     }
 
     @PostLoad
     public void postLoad() {
+	name = Files.basename(domain);
+	definition = definitionTemplate;
 	iconSrc = Files.mediaSrc(this);
     }
 
@@ -104,8 +117,39 @@ public class ExternalSource implements Domain {
 	}
     }
 
+    @Override
     public int getId() {
 	return id;
+    }
+
+    @Override
+    public String getTitle() {
+	return title;
+    }
+
+    @Override
+    public String getName() {
+	return name;
+    }
+
+    @Override
+    public String getDisplay() {
+	return display;
+    }
+
+    @Override
+    public String getDefinition() {
+	return definition;
+    }
+
+    @Override
+    public MediaSRC getIconSrc() {
+	return iconSrc;
+    }
+
+    @Override
+    public String getDomain() {
+	return domain;
     }
 
     public boolean isPersisted() {
@@ -116,25 +160,12 @@ public class ExternalSource implements Domain {
 	return home;
     }
 
-    @Override
-    public String getDomain() {
-	return domain;
-    }
-
     public Date getTimestamp() {
 	return timestamp;
     }
 
-    public String getDisplay() {
-	return display;
-    }
-
     public String getDefinitionTemplate() {
 	return definitionTemplate;
-    }
-
-    public MediaSRC getIconSrc() {
-	return iconSrc;
     }
 
     public String getApis() {

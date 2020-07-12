@@ -71,6 +71,7 @@ public class AtlasImages implements GraphicObject, RepositoryObject {
 	return collection.getName();
     }
 
+    @Override
     public int getId() {
 	return id;
     }
@@ -93,7 +94,6 @@ public class AtlasImages implements GraphicObject, RepositoryObject {
 	return state;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

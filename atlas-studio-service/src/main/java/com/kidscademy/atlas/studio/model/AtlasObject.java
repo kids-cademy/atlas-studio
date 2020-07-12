@@ -301,7 +301,8 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	this.id = id;
     }
 
-    public Integer getId() {
+    @Override
+    public int getId() {
 	return id;
     }
 
@@ -322,7 +323,6 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	this.state = state;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

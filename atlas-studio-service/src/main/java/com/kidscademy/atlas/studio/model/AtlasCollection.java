@@ -121,6 +121,7 @@ public class AtlasCollection implements GraphicObject {
 	}
     }
 
+    @Override
     public int getId() {
 	return id;
     }
@@ -129,7 +130,6 @@ public class AtlasCollection implements GraphicObject {
 	return id != 0;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

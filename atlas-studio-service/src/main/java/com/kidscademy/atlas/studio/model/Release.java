@@ -55,6 +55,7 @@ public class Release implements GraphicObject {
 	images.put("cover", new MediaSRC(Strings.concat("/media/release/", name, "/cover.png")));
     }
 
+    @Override
     public int getId() {
 	return id;
     }
@@ -67,7 +68,6 @@ public class Release implements GraphicObject {
 	this.timestamp = timestamp;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

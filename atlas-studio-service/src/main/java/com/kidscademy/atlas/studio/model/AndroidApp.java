@@ -57,7 +57,6 @@ public class AndroidApp implements GraphicObject {
 	return id;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

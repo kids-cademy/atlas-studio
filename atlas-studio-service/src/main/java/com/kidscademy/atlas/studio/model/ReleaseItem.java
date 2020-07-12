@@ -36,11 +36,11 @@ public class ReleaseItem implements GraphicObject {
 	iconSrc = new MediaSRC(Strings.concat("/media/release/", name, "/icon.png"));
     }
 
+    @Override
     public int getId() {
 	return id;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }

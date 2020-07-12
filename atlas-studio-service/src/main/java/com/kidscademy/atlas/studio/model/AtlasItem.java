@@ -72,6 +72,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
 	}
     }
 
+    @Override
     public int getId() {
 	return id;
     }
@@ -89,7 +90,6 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
 	return collection.getName();
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }
