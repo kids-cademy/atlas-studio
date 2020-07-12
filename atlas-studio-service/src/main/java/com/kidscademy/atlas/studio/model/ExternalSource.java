@@ -30,36 +30,35 @@ import js.tiny.container.annotation.TestConstructor;
 import js.util.Classes;
 
 @Entity
-public class ExternalSource implements Domain, GraphicObject {
+public class ExternalSource implements Domain {
     private static final Log log = LogFactory.getLog(ExternalSource.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Transient
-    private final String title = "External Source";
-
     private Date timestamp;
     private String home;
+    
     /**
      * URL base domain contains only domain and TLD. For example for
      * <code>www.softschools.com</code> links this domain value is
      * <code>softschools.com</code>.
      */
     private String domain;
+    
     /**
      * Link name displayed on user interface. May be subject of
      * internationalization.
      */
     private String display;
+    
     /**
      * Short description about linked resource content. This is a template used to
      * instantiate concrete link definition, see
      * {@link #getLinkDefinition(URL, String)}.
-     * TODO: rename to definitionTemplate
      */
-    private String definition;
+    private String definitionTemplate;
 
     /**
      * Designators list of import APIs available for this external source. APIs are
@@ -70,9 +69,6 @@ public class ExternalSource implements Domain, GraphicObject {
      * API support for an external source this field is empty.
      */
     private String apis;
-
-    @Transient
-    private String name;
 
     /**
      * Root-relative media SRC for link icon. This value is initialized when load
@@ -87,18 +83,16 @@ public class ExternalSource implements Domain, GraphicObject {
     }
 
     @TestConstructor
-    public ExternalSource(int id, String home, String definition, String apis) {
+    public ExternalSource(int id, String home, String definitionTemplate, String apis) {
 	this.id = id;
 	this.home = home;
 	this.domain = Strings.basedomain(home);
-	this.name = Files.basename(this.domain);
-	this.display = Strings.toTitleCase(this.name);
-	this.definition = definition;
+	this.display = Strings.toTitleCase(Files.basename(this.domain));
+	this.definitionTemplate = definitionTemplate;
     }
 
     @PostLoad
     public void postLoad() {
-	name = domain;
 	iconSrc = Files.mediaSrc(this);
     }
 
@@ -127,32 +121,18 @@ public class ExternalSource implements Domain, GraphicObject {
 	return domain;
     }
 
-    @Override
     public Date getTimestamp() {
 	return timestamp;
     }
 
-    @Override
-    public String getTitle() {
-	return title;
-    }
-
-    @Override
-    public String getName() {
-	return name;
-    }
-
-    @Override
     public String getDisplay() {
 	return display;
     }
 
-    @Override
-    public String getDefinition() {
-	return definition;
+    public String getDefinitionTemplate() {
+	return definitionTemplate;
     }
 
-    @Override
     public MediaSRC getIconSrc() {
 	return iconSrc;
     }
@@ -191,8 +171,8 @@ public class ExternalSource implements Domain, GraphicObject {
 	StringBuilder variableBuilder = new StringBuilder();
 
 	State state = State.TEXT;
-	for (int i = 0; i < definition.length(); ++i) {
-	    char c = definition.charAt(i);
+	for (int i = 0; i < definitionTemplate.length(); ++i) {
+	    char c = definitionTemplate.charAt(i);
 	    switch (state) {
 	    case TEXT:
 		if (c == '$') {
@@ -294,6 +274,7 @@ public class ExternalSource implements Domain, GraphicObject {
 
     public static ExternalSource create() {
 	ExternalSource externalSource = new ExternalSource();
+	externalSource.apis = "";
 	return externalSource;
     }
 }

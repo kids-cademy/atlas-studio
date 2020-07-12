@@ -155,7 +155,7 @@
 		<home>https://en.wikipedia.org/wiki/</home>
 		<domain>wikipedia.org</domain>
 		<display>Wikipedia</display>
-		<definition>${display} article on Wikipedia.</definition>
+		<definitionTemplate>${display} article on Wikipedia.</definitionTemplate>
 		<apis>definition,description,features,taxonomy</apis>
 	</externalsource>
 	<externalsource>
@@ -164,7 +164,7 @@
 		<home>https://www.britannica.com/</home>
 		<domain>britannica.com</domain>
 		<display>Britannica</display>
-		<definition>${display} article on Wikipedia.</definition>
+		<definitionTemplate>${display} article on Wikipedia.</definitionTemplate>
 		<apis>definition,description</apis>
 	</externalsource>
 	<externalsource>
@@ -173,7 +173,7 @@
 		<home>https://animaldiversity.org/</home>
 		<domain>animaldiversity.org</domain>
 		<display>Animal Diversity Web</display>
-		<definition>${display} on Animal Diversity Web..</definition>
+		<definitionTemplate>${display} on Animal Diversity Web.</definitionTemplate>
 		<apis>definition,description,features</apis>
 	</externalsource>
 

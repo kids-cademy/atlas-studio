@@ -166,8 +166,7 @@ public class AtlasDaoReadTest {
 	assertThat(source.getHome(), equalTo("https://en.wikipedia.org/wiki/"));
 	assertThat(source.getDomain(), equalTo("wikipedia.org"));
 	assertThat(source.getDisplay(), equalTo("Wikipedia"));
-	assertThat(source.getDefinition(), equalTo("${display} article on Wikipedia."));
-	assertThat(source.getName(), equalTo("wikipedia.org"));
+	assertThat(source.getDefinitionTemplate(), equalTo("${display} article on Wikipedia."));
 
 	assertThat(source.getApis(), equalTo("definition,description,features,taxonomy"));
 	assertThat(linkSource.getApis(), equalTo("definition,description,taxonomy"));
