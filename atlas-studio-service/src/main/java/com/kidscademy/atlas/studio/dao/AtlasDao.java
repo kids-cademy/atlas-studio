@@ -40,7 +40,7 @@ public interface AtlasDao {
 
     String getCollectionName(int collectionId);
 
-    List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
+    List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId);
 
     boolean uniqueCollectionName(AtlasCollection collection);
 

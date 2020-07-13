@@ -13,6 +13,7 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
 
         this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+        this._actions.showOnly("add", "clone");
     }
 
     setValue(descriptionMeta) {
@@ -32,18 +33,23 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
         this._currentRow = ev.target.getParentByTag("tr");
         if (this._currentRow != null) {
             this._metaEditor.setObject(this._currentRow.getUserData()).show();
+            this._actions.show("remove", "done", "close");
         }
     }
 
     _onAdd() {
         this._currentRow = null;
         this._metaEditor.reset().show();
+        this._actions.show("done", "close");
     }
 
     _onClone() {
         AtlasService.getCollections(collections => this._itemSelect.load(collections));
         this._itemSelect.open(collection => {
-            AtlasService.getCollectionDescriptionMeta(collection.id, descriptionMeta => this._tableView.setObject(descriptionMeta));
+            AtlasService.getCollectionDescriptionsMeta(collection.id, descriptionsMeta => {
+                descriptionsMeta.forEach(descriptionMeta => descriptionMeta.id = 0);
+                this._tableView.setObject(descriptionsMeta)
+            });
         });
     }
 
@@ -68,6 +74,7 @@ com.kidscademy.collection.DescriptionMetaControl = class extends js.dom.Control 
     _onClose() {
         this._currentRow = null;
         this._metaEditor.hide();
+        this._actions.showOnly("add", "clone");
     }
 
     toString() {

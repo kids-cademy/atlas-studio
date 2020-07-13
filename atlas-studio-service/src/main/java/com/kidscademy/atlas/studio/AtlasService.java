@@ -86,7 +86,7 @@ public interface AtlasService {
 
     ExternalSource saveExternalSource(ExternalSource externalSource);
 
-    List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
+    List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId);
 
     List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
 

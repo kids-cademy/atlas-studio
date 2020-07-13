@@ -85,9 +85,9 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId) {
-	return em.createQuery("select c.descriptionMeta from AtlasCollection c where c.id=:id", DescriptionMeta.class)
-		.setParameter("id", collectionId).getResultList();
+    public List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId) {
+	// see getCollectionFeaturesMeta comment
+	return em.find(AtlasCollection.class, collectionId).getDescriptionMeta();
     }
 
     @Override

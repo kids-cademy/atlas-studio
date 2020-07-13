@@ -32,6 +32,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
@@ -192,6 +193,17 @@ public class AtlasDaoReadTest {
 	assertThat(featuresMeta.get(2).getName(), equalTo("width"));
     }
 
+    @Test
+    public void getCollectionDescriptionMeta() {
+	List<DescriptionMeta> descriptionsMeta = dao.getCollectionDescriptionsMeta(1);
+	assertThat(descriptionsMeta, notNullValue());
+	assertThat(descriptionsMeta, hasSize(4));
+	assertThat(descriptionsMeta.get(0).getName(), equalTo("description"));
+	assertThat(descriptionsMeta.get(1).getName(), equalTo("uses"));
+	assertThat(descriptionsMeta.get(2).getName(), equalTo("cultivation"));
+	assertThat(descriptionsMeta.get(3).getName(), equalTo("origin"));
+    }
+    
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));

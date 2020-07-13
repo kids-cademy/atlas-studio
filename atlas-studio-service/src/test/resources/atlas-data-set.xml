@@ -137,16 +137,30 @@
 	<atlascollection_descriptionmeta>
 		<id>1</id>
 		<atlascollection_id>1</atlascollection_id>
-		<descriptionmeta_order>0</descriptionmeta_order>
-		<name>description</name>
-		<definition>Object description.</definition>
+		<descriptionmeta_order>3</descriptionmeta_order>
+		<name>origin</name>
+		<definition>Origin.</definition>
 	</atlascollection_descriptionmeta>
 	<atlascollection_descriptionmeta>
 		<id>2</id>
 		<atlascollection_id>1</atlascollection_id>
+		<descriptionmeta_order>2</descriptionmeta_order>
+		<name>cultivation</name>
+		<definition>Cultivation.</definition>
+	</atlascollection_descriptionmeta>
+	<atlascollection_descriptionmeta>
+		<id>3</id>
+		<atlascollection_id>1</atlascollection_id>
+		<descriptionmeta_order>0</descriptionmeta_order>
+		<name>description</name>
+		<definition>Description.</definition>
+	</atlascollection_descriptionmeta>
+	<atlascollection_descriptionmeta>
+		<id>4</id>
+		<atlascollection_id>1</atlascollection_id>
 		<descriptionmeta_order>1</descriptionmeta_order>
 		<name>uses</name>
-		<definition>Object uses.</definition>
+		<definition>Uses.</definition>
 	</atlascollection_descriptionmeta>
 
 	<externalsource>

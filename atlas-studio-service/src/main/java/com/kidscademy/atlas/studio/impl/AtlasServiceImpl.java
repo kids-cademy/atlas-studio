@@ -145,8 +145,8 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId) {
-	return atlasDao.getCollectionDescriptionMeta(collectionId);
+    public List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId) {
+	return atlasDao.getCollectionDescriptionsMeta(collectionId);
     }
 
     @Override
