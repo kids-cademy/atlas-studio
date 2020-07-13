@@ -279,13 +279,10 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Link createLink(int collectionId, Link formData) {
+    public Link createLink(int collectionId, Link formData) throws BusinessException {
 	String domain = Strings.basedomain(formData.getUrl());
 	LinkSource linkSource = atlasDao.getLinkSourceByDomain(collectionId, domain);
-	if (linkSource == null) {
-	    log.warn("Domain |%s| not handled by collection |%s|.", domain, atlasDao.getCollectionName(collectionId));
-	    return null;
-	}
+	businessRules.registeredLinkSource(linkSource);
 	return Link.create(linkSource, formData.getUrl(), formData.getDefinition());
     }
 

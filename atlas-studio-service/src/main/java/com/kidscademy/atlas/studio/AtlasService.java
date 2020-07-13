@@ -72,7 +72,7 @@ public interface AtlasService {
 
     List<AtlasItem> getRelatedAtlasObjects(int collectionId, List<String> relatedNames);
 
-    Link createLink(int collectionId, Link formData);
+    Link createLink(int collectionId, Link formData) throws BusinessException;
 
     String getLinkDefinition(URL link, String objectDisplay);
 

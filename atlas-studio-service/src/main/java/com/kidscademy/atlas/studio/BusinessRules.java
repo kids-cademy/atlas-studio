@@ -8,6 +8,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Strings;
 
@@ -22,6 +23,7 @@ public class BusinessRules {
     private static final int EMPTY_RELEASE = 0x0006;
     private static final int REGISTERED_LINK_DOMAIN = 0x0007;
     private static final int IMAGE_DIMENSIONS = 0x0008;
+    private static final int NO_LINK_SOURCE = 0x0009;
 
     private final AtlasDao atlasDao;
     private final ImageProcessor imageProcessor;
@@ -77,6 +79,12 @@ public class BusinessRules {
     public void imageDimensions(int dimension, int desired) throws BusinessException {
 	if (dimension < desired) {
 	    throw new BusinessException(IMAGE_DIMENSIONS);
+	}
+    }
+
+    public void registeredLinkSource(LinkSource linkSource) throws BusinessException {
+	if (linkSource == null) {
+	    throw new BusinessException(NO_LINK_SOURCE);
 	}
     }
 }
