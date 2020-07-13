@@ -313,6 +313,9 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<ExternalSource> getExternalSourceCandidates(List<Integer> excludeIds) {
+	if (excludeIds.isEmpty()) {
+	    return getExternalSources();
+	}
 	return em.createQuery("select s from ExternalSource s where s.id not in :excludeIds order by s.display",
 		ExternalSource.class).setParameter("excludeIds", excludeIds).getResultList();
     }
