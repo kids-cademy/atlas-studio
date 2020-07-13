@@ -1,31 +1,5 @@
 <div class="features-meta" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form-bar with-actions">
-		<input name="search-input" />
-		<div class="actions inline"  data-class="com.kidscademy.Actions">
-			<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
-			<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
-		</div>
-	</form>
-
-	<table class="table body">
-		<thead>
-			<tr>
-				<th>@string/feature-name</th>
-				<th>@string/feature-quantity</th>
-				<th>@string/feature-display</th>
-				<th>@string/feature-definition</th>
-			</tr>
-		</thead>
-		<tbody class="table-view" data-list=".">
-			<tr class="feature-view" data-id="id">
-				<td data-text="name"></td>
-				<td data-text="quantity"></td>
-				<td data-text="display"></td>
-				<td data-text="definition"></td>
-			</tr>
-		</tbody>
-	</table>
-
+	<div class="features-list large" w:compo="compo/features-meta"></div>
 	<div w:compo="page/features-meta/context-menu"></div>
 </div>
 

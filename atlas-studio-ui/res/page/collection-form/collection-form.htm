@@ -110,54 +110,17 @@
 			</div>
 			<div class="content">
 				<div data-name="features-meta" class="container optional" data-class="com.kidscademy.collection.FeaturesMetaControl">
-					<table class="table full-width" data-class="com.kidscademy.TableView">
-						<thead>
-							<tr>
-								<th>@string/feature-name</th>
-								<th>@string/feature-quantity</th>
-								<th>@string/feature-definition</th>
-							</tr>
-						</thead>
-						<tbody class="features-list" data-list=".">
-							<tr class="feature-view" data-id="id" draggable="true">
-								<td data-text="name"></td>
-								<td data-text="quantity"></td>
-								<!-- nowrap directly on td does not work; workaround is the next double inner spans with flex and absolute display -->
-								<td class="single-line"><span><span data-text="definition"></span></span></td>
-							</tr>
-						</tbody>
-					</table>
+					<table class="features draggable" w:compo="compo/features-meta-table"></table>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/features-meta-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
+						<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> 
+						<img name="clone" src="@image/action/clone" title="@tip/features-meta-clone" /> 
+						<img name="add-all" src="@image/action/add-all" title="@tip/features-meta-add-all" /> 
+						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> 
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
 					</div>
 
-					<div class="editor hidden">
-						<div class="form-bar with-actions">
-							<input name="search-input" />
-							<div class="actions inline" data-class="com.kidscademy.Actions">
-								<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> <img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
-							</div>
-						</div>
-
-						<table class="table full-width">
-							<thead>
-								<tr>
-									<th>@string/feature-name</th>
-									<th>@string/feature-quantity</th>
-									<th>@string/feature-definition</th>
-								</tr>
-							</thead>
-							<tbody class="candidates-list" data-list=".">
-								<tr class="feature-view" data-id="id">
-									<td data-text="name"></td>
-									<td data-text="quantity"></td>
-									<!-- nowrap directly on td does not work; workaround is the next double inner spans with flex and absolute display -->
-									<td class="single-line"><span><span data-text="definition"></span></span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<div class="editor hidden" w:compo="compo/features-meta"></div>
 				</div>
 			</div>
 		</fieldset>

@@ -74,7 +74,9 @@
 	<features-load>initialize features from kids (a)cademy database</features-load>
 	<features-edit>edit current feature value</features-edit>
 
-	<features-meta-add>select feature meta</features-meta-add>
+	<features-meta-add>open features meta selector</features-meta-add>
+	<features-meta-clone>clone features meta from another atlas collection</features-meta-clone>
+	<features-meta-add-all>add all features meta</features-meta-add-all>
 	<features-meta-done>accept feature meta edits</features-meta-done>
 	<features-meta-remove>remove feature meta</features-meta-remove>
 	<features-meta-close>close feature meta editor without saving</features-meta-close>

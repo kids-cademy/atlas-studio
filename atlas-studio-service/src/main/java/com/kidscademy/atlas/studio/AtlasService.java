@@ -88,6 +88,8 @@ public interface AtlasService {
 
     List<DescriptionMeta> getCollectionDescriptionMeta(int collectionId);
 
+    List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
+
     void removeExternalSource(int externalSourceId);
 
     String formatLines(String text, String separator);
@@ -100,9 +102,15 @@ public interface AtlasService {
 
     FeatureMeta getFeatureMeta(int featureMetaId);
 
-    List<FeatureMeta> getFeaturesMeta();
-
-    List<FeatureMeta> getFeaturesMetaCandidates(List<FeatureMeta> current);
+    /**
+     * 
+     * @param search
+     *            optional name search, substring accepted, null if not used,
+     * @param excludes
+     *            optional excludes list, empty if not used.
+     * @return
+     */
+    List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes);
 
     FeatureMeta saveFeatureMeta(FeatureMeta featureMeta);
 

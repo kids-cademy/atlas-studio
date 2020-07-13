@@ -4,20 +4,20 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
     constructor(ownerDoc, node) {
         super(ownerDoc, node);
 
-        this._featuresListView = this.getByCssClass("features-list");
+        this._featuresListView = this.getByCss(".features .list-view");
         this._featuresListView.on("click", this._onFeaturesClick, this);
 
-        this._editor = this.getByCssClass("editor");
-        this._candidatesListView = this.getByCssClass("candidates-list");
+        this._candidatesListView = this.getByCssClass("editor");
         this._candidatesListView.on("click", this._onCandidatesClick, this);
 
-        this._currentRow = null;
-
+        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+        this._actions.showOnly("add", "clone");
     }
 
     setValue(featuresMeta) {
         this._featuresListView.setObject(featuresMeta);
+        this._updateCandidatesExcludes();
         return this;
     }
 
@@ -30,28 +30,18 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
     }
 
     _onFeaturesClick(ev) {
-        if (this._currentRow != null) {
-            this._currentRow.removeCssClass("selected");
-        }
-
         const row = ev.target.getParentByTag("tr");
-        if (this._currentRow == row) {
-            this._currentRow = null;
-            return;
+        if (row != null) {
+            row.toggleCssClass("selected");
+            this._actions.show(this._getSelectedFeatures().length > 0, "remove");
         }
-
-        this._currentRow = row;
-        if (this._currentRow == null) {
-            return;
-        }
-        this._currentRow.addCssClass("selected");
     }
-
 
     _onCandidatesClick(ev) {
         const row = ev.target.getParentByTag("tr");
-        if(row != null) {
+        if (row != null) {
             this._featuresListView.addChild(row);
+            this._updateCandidatesExcludes();
         }
     }
 
@@ -59,38 +49,50 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
     // ACTION HANDLERS
 
     _onAdd() {
-        this._editor.show();
-        AtlasService.getFeaturesMetaCandidates(this.getValue(), candidates => this._candidatesListView.setObject(candidates));
+        this._candidatesListView.load();
+        this._actions.show("add-all", "close");
     }
 
-    _onDone() {
-        const taxon = {
-            name: this._taxonNameInput.getValue(),
-            values: this._taxonValuesInput.getValue()
-        };
-
-        if (this._currentRow == null) {
-            this._taxonomyMetaView.addObject(taxon);
-            this._onClose();
-            return;
-        }
-
-        this._currentRow.setObject(taxon);
+    _onAddAll() {
+        this._candidatesListView.getItems().forEach(row => this._featuresListView.addChild(row));
+        this._updateCandidatesExcludes();
         this._onClose();
     }
 
+    _onClone() {
+        AtlasService.getCollections(collections => this._itemSelect.load(collections));
+        this._itemSelect.open(collection => {
+            AtlasService.getCollectionFeaturesMeta(collection.id, featuresMeta => this.setValue(featuresMeta));
+        });
+    }
+
     _onRemove() {
-        this._currentRow.remove();
-        this._currentRow = null;
+        this._getSelectedFeatures().forEach(row => row.remove());
+        this._updateCandidatesExcludes();
         this._onClose();
     }
 
     _onClose() {
-        //this._currentRow = null;
-        this._editor.hide();
+        this._candidatesListView.hide();
+        this._actions.showOnly("add", "clone");
     }
 
     // --------------------------------------------------------------------------------------------
+
+    _updateCandidatesExcludes() {
+        const excludes = this._featuresListView.getChildren().map(row => row.getUserData().id);
+        this._candidatesListView.setExcludes(excludes);
+    }
+
+    _getSelectedFeatures() {
+        const rows = [];
+        this._featuresListView.getChildren().forEach(row => {
+            if (row.hasCssClass("selected")) {
+                rows.push(row);
+            }
+        });
+        return rows;
+    }
 
     toString() {
         return "com.kidscademy.collection.FeaturesMetaControl";

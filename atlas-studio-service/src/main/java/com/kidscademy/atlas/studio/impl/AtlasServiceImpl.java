@@ -150,6 +150,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public List<FeatureMeta> getCollectionFeaturesMeta(int collectionId) {
+	return atlasDao.getCollectionFeaturesMeta(collectionId);
+    }
+
+    @Override
     public List<AtlasItem> getRecentUsedAtlasObjects() {
 	return atlasDao.getRecentUsedAtlasObjects();
     }
@@ -321,13 +326,6 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<FeatureMeta> getFeaturesMetaCandidates(List<FeatureMeta> current) {
-	List<FeatureMeta> featuresMeta = atlasDao.getFeaturesMeta();
-	featuresMeta.removeAll(current);
-	return featuresMeta;
-    }
-
-    @Override
     public FeatureMeta saveFeatureMeta(FeatureMeta featureMeta) {
 	atlasDao.saveFeatureMeta(featureMeta);
 	return featureMeta;
@@ -365,8 +363,11 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public List<FeatureMeta> getFeaturesMeta() {
-	return atlasDao.getFeaturesMeta();
+    public List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes) {
+	if (search != null) {
+	    return atlasDao.searchFeaturesMeta(search, excludes);
+	}
+	return atlasDao.getFeaturesMeta(excludes);
     }
 
     @Override

@@ -1,0 +1,12 @@
+.features-meta.large .optional {
+	display: table-cell;	
+}
+
+.features-meta .table-container {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.features-meta.large .table-container {
+	padding: 20px;
+}

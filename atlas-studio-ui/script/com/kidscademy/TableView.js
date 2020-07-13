@@ -5,6 +5,9 @@ com.kidscademy.TableView = class extends js.dom.Element {
         super(ownerDoc, node);
 
         this._tbody = this.getByTag("tbody");
+        if (this.hasCssClass("draggable")) {
+            this._tbody.getUserData("item-template").setAttr("draggable", "true");
+        }
 
 		this._tbody.on("dragstart", this._onDragStart, this);
 		this._tbody.on("dragover", this._onDragOver, this);
