@@ -4167,7 +4167,7 @@ js.dom.Image = function(ownerDoc, node) {
 js.dom.Image.prototype = {
 	_TRANSPARENT_DOT : 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
 
-	_SRC_REX : /^.+\/[^/_]+_\d+x\d+\..+$/,
+	_SRC_REX : /^.+\/[^/_]+_\d*x\d*\..+$/,
 		
 	setSrc : function(src) {
 		if (!src || /^\s+|(?:&nbsp;)+$/g.test(src)) {
@@ -4246,7 +4246,7 @@ js.dom.ImageControl = function(ownerDoc, node) {
 };
 
 js.dom.ImageControl.prototype = {
-	_SRC_REX : /^.+\/[^/_]+_\d+x\d+\..+$/,
+	_SRC_REX : /^.+\/[^/_]+_\d*x\d*\..+$/,
 		
 	reset : function() {
 		this._error = false;
