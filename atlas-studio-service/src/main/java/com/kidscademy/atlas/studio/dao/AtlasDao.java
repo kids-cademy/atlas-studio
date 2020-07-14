@@ -94,7 +94,7 @@ public interface AtlasDao {
 
     void removeAtlasObject(int objectId);
 
-    AtlasItem moveAtlasObject(int objectId, int collectionId);
+    void moveAtlasObject(int objectId, int collectionId);
 
     AtlasItem getAtlasItem(int objectId);
 

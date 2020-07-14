@@ -266,10 +266,12 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     synchronized public void moveAtlasObject(AtlasItem object, int collectionId) {
 	File objectDir = Files.objectDir(object);
-	object = atlasDao.moveAtlasObject(object.getId(), collectionId);
-	if (object != null) {
-	    File newObjectDir = Files.objectDir(object);
-	    objectDir.renameTo(newObjectDir);
+	atlasDao.moveAtlasObject(object.getId(), collectionId);
+
+	object = atlasDao.getAtlasItem(object.getId());
+	File newObjectDir = Files.objectDir(object);
+	if (!objectDir.renameTo(newObjectDir)) {
+	    log.error("Fail to move object media directory |%s| to new location |%s|.", objectDir, newObjectDir);
 	}
     }
 

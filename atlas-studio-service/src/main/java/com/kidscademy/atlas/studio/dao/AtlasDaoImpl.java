@@ -17,6 +17,7 @@ import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.AtlasObjectKey;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
@@ -253,16 +254,14 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     @Mutable
-    public AtlasItem moveAtlasObject(int objectId, int collectionId) {
-	AtlasObject object = em.find(AtlasObject.class, objectId);
+    public void moveAtlasObject(int objectId, int collectionId) {
+	AtlasObjectKey object = em.find(AtlasObjectKey.class, objectId);
 	if (object != null) {
-	    AtlasCollection collection = em.find(AtlasCollection.class, collectionId);
+	    AtlasCollectionKey collection = em.find(AtlasCollectionKey.class, collectionId);
 	    if (collection != null) {
 		object.setCollection(collection);
-		return getAtlasItem(objectId);
 	    }
 	}
-	return null;
     }
 
     @Override
