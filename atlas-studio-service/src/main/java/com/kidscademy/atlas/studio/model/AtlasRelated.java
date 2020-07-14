@@ -28,7 +28,7 @@ public class AtlasRelated implements RepositoryObject {
     private int id;
 
     @ManyToOne
-    private AtlasCollection collection;
+    private AtlasCollectionKey collection;
 
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
@@ -73,7 +73,7 @@ public class AtlasRelated implements RepositoryObject {
 	return id;
     }
 
-    public AtlasCollection getCollection() {
+    public AtlasCollectionKey getCollection() {
 	return collection;
     }
 

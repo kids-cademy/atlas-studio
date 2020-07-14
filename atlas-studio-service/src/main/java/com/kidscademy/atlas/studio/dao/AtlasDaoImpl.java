@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasCollectionKey;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
@@ -77,6 +78,11 @@ public class AtlasDaoImpl implements AtlasDao {
 	Number count = (Number) em.createQuery("select count(r.children) from ReleaseParent r where r.id=:id")
 		.setParameter("id", releaseId).getSingleResult();
 	return count.intValue();
+    }
+
+    @Override
+    public AtlasCollectionKey getCollectionKeyById(int collectionId) {
+	return em.find(AtlasCollectionKey.class, collectionId);
     }
 
     @Override
@@ -248,12 +254,12 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     @Mutable
     public AtlasItem moveAtlasObject(int objectId, int collectionId) {
-	AtlasItem object = em.find(AtlasItem.class, objectId);
+	AtlasObject object = em.find(AtlasObject.class, objectId);
 	if (object != null) {
 	    AtlasCollection collection = em.find(AtlasCollection.class, collectionId);
 	    if (collection != null) {
 		object.setCollection(collection);
-		return object;
+		return getAtlasItem(objectId);
 	    }
 	}
 	return null;

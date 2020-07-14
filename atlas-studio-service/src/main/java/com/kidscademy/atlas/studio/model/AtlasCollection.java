@@ -34,7 +34,7 @@ import js.log.LogFactory;
  * @author Iulian Rotaru
  */
 @Entity
-public class AtlasCollection implements GraphicObject {
+public class AtlasCollection implements Key, GraphicObject {
     private static final Log log = LogFactory.getLog(AtlasCollection.class);
 
     @Id

@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasCollectionKey;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
@@ -35,6 +36,8 @@ public interface AtlasDao {
     void saveAtlasCollection(AtlasCollection collection);
 
     void removeAtlasCollection(int collectionId);
+
+    AtlasCollectionKey getCollectionKeyById(int collectionId);
 
     AtlasCollection getCollectionById(int collectionId);
 

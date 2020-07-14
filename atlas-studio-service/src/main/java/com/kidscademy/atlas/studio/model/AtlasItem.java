@@ -30,7 +30,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
     private final String title = "Atlas Object";
 
     @ManyToOne
-    private AtlasCollection collection;
+    private AtlasCollectionKey collection;
 
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
@@ -59,7 +59,7 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
      * @param id
      * @param name
      */
-    public AtlasItem(AtlasCollection collection, int id, String name) {
+    public AtlasItem(AtlasCollectionKey collection, int id, String name) {
 	this.collection = collection;
 	this.id = id;
 	this.name = name;
@@ -77,11 +77,11 @@ public class AtlasItem implements RepositoryObject, GraphicObject {
 	return id;
     }
 
-    public void setCollection(AtlasCollection collection) {
+    public void setCollection(AtlasCollectionKey collection) {
 	this.collection = collection;
     }
 
-    public AtlasCollection getCollection() {
+    public AtlasCollectionKey getCollection() {
 	return collection;
     }
 

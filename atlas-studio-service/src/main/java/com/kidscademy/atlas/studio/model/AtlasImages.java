@@ -30,7 +30,7 @@ public class AtlasImages implements GraphicObject, RepositoryObject {
     private final String title = "Atlas Images";
 
     @ManyToOne
-    private AtlasCollection collection;
+    private AtlasCollectionKey collection;
 
     @Enumerated(EnumType.STRING)
     private AtlasObject.State state;
@@ -76,7 +76,7 @@ public class AtlasImages implements GraphicObject, RepositoryObject {
 	return id;
     }
 
-    public AtlasCollection getCollection() {
+    public AtlasCollectionKey getCollection() {
 	return collection;
     }
 

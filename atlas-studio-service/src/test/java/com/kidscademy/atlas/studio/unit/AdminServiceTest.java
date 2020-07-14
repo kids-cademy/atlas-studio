@@ -26,6 +26,7 @@ import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasCollectionKey;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.MediaSRC;
@@ -94,7 +95,7 @@ public class AdminServiceTest {
 	Form form = Mockito.mock(Form.class);
 	when(form.getValue("object-id")).thenReturn("1");
 
-	AtlasCollection collection = new AtlasCollection(1, "instrument");
+	AtlasCollectionKey collection = new AtlasCollectionKey(1, "instrument");
 	AtlasItem atlasItem = new AtlasItem(collection, 1, "test");
 	when(atlasDao.getObjectById(AtlasItem.class, 1)).thenReturn(atlasItem);
 
@@ -286,7 +287,7 @@ public class AdminServiceTest {
     // ----------------------------------------------------------------------------------------------
 
     private static AtlasItem atlasItem() {
-	AtlasCollection collection = new AtlasCollection(1, "instrument");
+	AtlasCollectionKey collection = new AtlasCollectionKey(1, "instrument");
 	return new AtlasItem(collection, 1, "test");
     }
 

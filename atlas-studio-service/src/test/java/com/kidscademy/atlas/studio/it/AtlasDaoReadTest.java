@@ -30,6 +30,7 @@ import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasCollectionKey;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
@@ -88,12 +89,12 @@ public class AtlasDaoReadTest {
 	assertThat(atlasItem, notNullValue());
 	assertThat(atlasItem.getId(), equalTo(1));
 
-	AtlasCollection collection = atlasItem.getCollection();
+	AtlasCollectionKey collection = atlasItem.getCollection();
 	assertThat(collection, notNullValue());
 	assertThat(collection.getId(), equalTo(1));
 	assertThat(collection.getName(), equalTo("instrument"));
-	assertThat(collection.getDisplay(), equalTo("Instrument"));
-	assertThat(collection.getIconSrc(), equalTo(Files.mediaSrc(collection)));
+//	assertThat(collection.getDisplay(), equalTo("Instrument"));
+//	assertThat(collection.getIconSrc(), equalTo(Files.mediaSrc(collection)));
 
 	assertThat(atlasItem.getRepositoryName(), equalTo("instrument"));
 	assertThat(atlasItem.getName(), equalTo("accordion"));
@@ -211,17 +212,17 @@ public class AtlasDaoReadTest {
 	assertThat(object.getCollection(), notNullValue());
 	assertThat(object.getCollection().getId(), equalTo(1));
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
-	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
-
-	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
-	assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
-	assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("family"));
-	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
-		equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
-
-	assertTrue(object.getCollection().getFlags().hasEndDate());
-	assertTrue(object.getCollection().getFlags().hasConservationStatus());
-	assertTrue(object.getCollection().getFlags().hasAudioSample());
+//	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
+//
+//	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
+//	assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
+//	assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("family"));
+//	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
+//		equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
+//
+//	assertTrue(object.getCollection().getFlags().hasEndDate());
+//	assertTrue(object.getCollection().getFlags().hasConservationStatus());
+//	assertTrue(object.getCollection().getFlags().hasAudioSample());
 
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(object.getName(), equalTo("accordion"));

@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.Domain;
+import com.kidscademy.atlas.studio.model.Key;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
@@ -62,17 +62,17 @@ public final class Files extends js.util.Files {
 	return builder.toString();
     }
 
-    public static MediaSRC mediaSrc(AtlasCollection collection) {
+    public static MediaSRC mediaSrc(Key collection) {
 	return new MediaSRC(mediaPath(collection));
     }
 
-    public static File mediaFile(AtlasCollection collection, String... variant) {
+    public static File mediaFile(Key collection, String... variant) {
 	// repository dir := ${catalina.base}/webapps
 	// media SRC := /media/collection/${collection.iconName}
 	return new File(REPOSITORY_DIR, mediaPath(collection, variant));
     }
 
-    private static String mediaPath(AtlasCollection collection, String... variant) {
+    private static String mediaPath(Key collection, String... variant) {
 	StringBuilder builder = new StringBuilder();
 	builder.append("/media/collection/");
 	builder.append(collection.getName());

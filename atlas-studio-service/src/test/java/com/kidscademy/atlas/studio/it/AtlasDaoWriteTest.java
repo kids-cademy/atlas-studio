@@ -268,7 +268,6 @@ public class AtlasDaoWriteTest {
 	assertThat(expected.getCollection(), notNullValue());
 	assertThat(expected.getCollection().getId(), equalTo(1));
 	assertThat(expected.getCollection().getName(), equalTo("instrument"));
-	assertThat(expected.getCollection().getDisplay(), equalTo("Instrument"));
 
 	assertThat(expected.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(expected.getName(), equalTo("banjo"));
