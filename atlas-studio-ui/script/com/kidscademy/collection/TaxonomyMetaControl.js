@@ -51,7 +51,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     _onDone() {
         const taxon = {
             name: this._taxonNameInput.getValue(),
-            values: this._taxonValuesInput.getValue()
+            values: this._normalizeValues(this._taxonValuesInput.getValue())
         };
 
         if (this._currentRow == null) {
@@ -72,6 +72,17 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     _onClose() {
         this._currentRow = null;
         this._taxonEditor.hide();
+    }
+
+    /**
+     * Taxonomy meta value should not be empty. It can be null or not empty. It also cannot have only white spaces.
+     * @param {String} value 
+     */
+    _normalizeValues(value) {
+        if (value) {
+            value = value.trim();
+        }
+        return value ? value : null;
     }
 
     toString() {

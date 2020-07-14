@@ -343,6 +343,7 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 	}
 
 	setObject(taxonMeta, taxon) {
+		$assert(typeof taxonMeta.values !== "undefined" && taxonMeta.values !== "", "com.kidscademy.form.TaxonomyControl.ValueEditor#setObject", "Undefined or empty taxon meta values.");
 		if (taxonMeta.values == null) {
 			this._valueSelect.hide();
 			this._valueControl = this._valueInput.show();
