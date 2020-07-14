@@ -269,9 +269,13 @@ public class AtlasServiceImpl implements AtlasService {
 	atlasDao.moveAtlasObject(object.getId(), collectionId);
 
 	object = atlasDao.getAtlasItem(object.getId());
-	File newObjectDir = Files.objectDir(object);
-	if (!objectDir.renameTo(newObjectDir)) {
-	    log.error("Fail to move object media directory |%s| to new location |%s|.", objectDir, newObjectDir);
+	File targetObjectDir = Files.objectDir(object);
+	File targetCollectionDir = targetObjectDir.getParentFile();
+	if (!targetCollectionDir.exists() && !targetObjectDir.getParentFile().mkdirs()) {
+	    log.error("Fail to create missing collectiopn directory |%s|.", targetCollectionDir);
+	}
+	if (!objectDir.renameTo(targetObjectDir)) {
+	    log.error("Fail to move object media directory |%s| to new location |%s|.", objectDir, targetObjectDir);
 	}
     }
 
