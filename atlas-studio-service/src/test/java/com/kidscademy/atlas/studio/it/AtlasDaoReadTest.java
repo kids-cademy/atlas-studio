@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -93,8 +92,8 @@ public class AtlasDaoReadTest {
 	assertThat(collection, notNullValue());
 	assertThat(collection.getId(), equalTo(1));
 	assertThat(collection.getName(), equalTo("instrument"));
-//	assertThat(collection.getDisplay(), equalTo("Instrument"));
-//	assertThat(collection.getIconSrc(), equalTo(Files.mediaSrc(collection)));
+	// assertThat(collection.getDisplay(), equalTo("Instrument"));
+	// assertThat(collection.getIconSrc(), equalTo(Files.mediaSrc(collection)));
 
 	assertThat(atlasItem.getRepositoryName(), equalTo("instrument"));
 	assertThat(atlasItem.getName(), equalTo("accordion"));
@@ -204,7 +203,7 @@ public class AtlasDaoReadTest {
 	assertThat(descriptionsMeta.get(2).getName(), equalTo("cultivation"));
 	assertThat(descriptionsMeta.get(3).getName(), equalTo("origin"));
     }
-    
+
     private static void assertAtlasObject(AtlasObject object) throws MalformedURLException {
 	assertThat(object, notNullValue());
 	assertThat(object.getId(), equalTo(1));
@@ -212,17 +211,18 @@ public class AtlasDaoReadTest {
 	assertThat(object.getCollection(), notNullValue());
 	assertThat(object.getCollection().getId(), equalTo(1));
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
-//	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
-//
-//	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
-//	assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
-//	assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("family"));
-//	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
-//		equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
-//
-//	assertTrue(object.getCollection().getFlags().hasEndDate());
-//	assertTrue(object.getCollection().getFlags().hasConservationStatus());
-//	assertTrue(object.getCollection().getFlags().hasAudioSample());
+	// assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
+	//
+	// assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
+	// assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
+	// assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(),
+	// equalTo("family"));
+	// assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
+	// equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
+	//
+	// assertTrue(object.getCollection().getFlags().hasEndDate());
+	// assertTrue(object.getCollection().getFlags().hasConservationStatus());
+	// assertTrue(object.getCollection().getFlags().hasAudioSample());
 
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(object.getName(), equalTo("accordion"));
