@@ -4177,16 +4177,8 @@ js.dom.Image.prototype = {
 		if (this._format !== null) {
 			src = this._format.format(src);
 		}
-
-		if(this.hasAttr("width") && this.hasAttr("height") && !this._SRC_REX.test(src)) {
-			var argumentsIndex = src.lastIndexOf('?');
-			if (argumentsIndex === -1) {
-				argumentsIndex = src.length;
-			}
-			var extensionIndex = src.lastIndexOf('.', argumentsIndex);
-			if (extensionIndex > 0) {
-				src = src.substring(0, extensionIndex) + '_' + parseInt(this.getAttr("width")) + 'x' + parseInt(this.getAttr("height")) + src.substring(extensionIndex);
-			}
+		if((this.hasAttr("width") || this.hasAttr("height")) && !this._SRC_REX.test(src)) {
+			src = js.util.Strings.getSrcSizeVariant(this, src);
 		}
 
 		this._node.src = src;
@@ -4254,6 +4246,8 @@ js.dom.ImageControl = function(ownerDoc, node) {
 };
 
 js.dom.ImageControl.prototype = {
+	_SRC_REX : /^.+\/[^/_]+_\d+x\d+\..+$/,
+		
 	reset : function() {
 		this._error = false;
 		if (this._defaultSrc != null) {
@@ -4276,7 +4270,11 @@ js.dom.ImageControl.prototype = {
 		if (!src || /^\s+|(?:&nbsp;)+$/g.test(src)) {
 			return this.reset();
 		}
-		
+
+		if((this.hasAttr("width") || this.hasAttr("height")) && !this._SRC_REX.test(src)) {
+			src = js.util.Strings.getSrcSizeVariant(this, src);
+		}
+
 		this._error = false;
 		var random = Math.random().toString(36).substr(2);
 
@@ -10730,6 +10728,28 @@ js.util.Strings = {
 		}
 
 		return pairs;
+	},
+
+	getSrcSizeVariant : function(image, src) {
+		var argumentsIndex = src.lastIndexOf('?');
+		if (argumentsIndex === -1) {
+			argumentsIndex = src.length;
+		}
+		var extensionIndex = src.lastIndexOf('.', argumentsIndex);
+		if (extensionIndex > 0) {
+			var srcBuilder = src.substring(0, extensionIndex);
+			srcBuilder += '_';
+			if(image.hasAttr("width")) {
+				srcBuilder += parseInt(image.getAttr("width"));
+			}
+			srcBuilder += 'x';
+			if(image.hasAttr("height")) {
+				srcBuilder += parseInt(image.getAttr("height"));
+			}
+			srcBuilder += src.substring(extensionIndex); // extension includes dot separator
+			src = srcBuilder;
+		}
+		return src;
 	},
 
 	toString : function() {
