@@ -27,13 +27,13 @@ public class QuantityFormat implements Comparator<Variant> {
 	Collections.sort(variants, this);
 	Variant variant = variants.get(0);
 
-	String stringValue = variant.formattedValue;
+	String stringValue = variant.formattedValue();
 	if (stringValue.length() > 10) {
-	    stringValue = String.format("%.4E", variant.numericValue);
+	    stringValue = String.format("%.4E", variant.numericValue());
 	}
 
 	this.value = stringValue;
-	this.units = variant.units;
+	this.units = variant.units();
     }
 
     public String value() {
@@ -46,8 +46,8 @@ public class QuantityFormat implements Comparator<Variant> {
 
     @Override
     public int compare(Variant leftQuantity, Variant rightQuantity) {
-	final DecimalNumeral left = new DecimalNumeral(leftQuantity.formattedValue);
-	final DecimalNumeral right = new DecimalNumeral(rightQuantity.formattedValue);
+	final DecimalNumeral left = new DecimalNumeral(leftQuantity.formattedValue());
+	final DecimalNumeral right = new DecimalNumeral(rightQuantity.formattedValue());
 
 	if (left.isZero()) {
 	    return 1;
@@ -90,7 +90,8 @@ public class QuantityFormat implements Comparator<Variant> {
     public static List<Option> getOptions(PhysicalQuantity quantity) {
 	List<Option> options = new ArrayList<>();
 	for (Unit unit : quantityUnits(quantity)) {
-	    options.add(new Option(unit.symbol(), Double.toString(1.0 / unit.factor())));
+	    // on user interface uses unit singular form
+	    options.add(new Option(unit.symbol().singular(), Double.toString(1.0 / unit.factor())));
 	}
 	return options;
     }
@@ -164,7 +165,7 @@ public class QuantityFormat implements Comparator<Variant> {
     interface Unit {
 	double factor();
 
-	String symbol();
+	Symbol symbol();
     }
 
     private enum ScalarUnits implements Unit {
@@ -176,19 +177,20 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return null;
 	}
     }
 
     private enum MassUnits implements Unit {
-	MICROGRAM(1000000000, "micrograms"), MILLIGRAM(1000000, "milligrams"), GRAM(1000, "grams"), KILOGRAM(1,
-		"kg"), TON(0.001, "tons");
+	MICROGRAM(1000000000, new Symbol("microgram", "micrograms")), MILLIGRAM(1000000,
+		new Symbol("milligram", "milligrams")), GRAM(1000, new Symbol("gram", "grams")), KILOGRAM(1,
+			new Symbol("kg")), TON(0.001, new Symbol("ton", "tons"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private MassUnits(double factor, String symbol) {
+	private MassUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -199,19 +201,19 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum TimeUnits implements Unit {
-	SECOND(1, "s"), MINUTE(1.0 / 60.0, "min"), HOUR(1.0 / 3600.0, "h"), DAY(1.0 / 86400.0,
-		"days"), YEAR(1.0 / 31556952.0, "years");
+	SECOND(1, new Symbol("s")), MINUTE(1.0 / 60.0, new Symbol("min")), HOUR(1.0 / 3600.0, new Symbol("h")), DAY(
+		1.0 / 86400.0, new Symbol("day", "days")), YEAR(1.0 / 31556952.0, new Symbol("year", "years"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private TimeUnits(double factor, String symbol) {
+	private TimeUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -222,19 +224,19 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum LengthUnits implements Unit {
-	MILLIMETER(1000, "mm"), CENTIMETER(100, "cm"), METER(1, "m"), KILOMETER(1 / 1000.0,
-		"km"), AU(1 / 149597870700.0, "AU");
+	MILLIMETER(1000, new Symbol("mm")), CENTIMETER(100, new Symbol("cm")), METER(1,
+		new Symbol("m")), KILOMETER(1 / 1000.0, new Symbol("km")), AU(1 / 149597870700.0, new Symbol("AU"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private LengthUnits(double factor, String symbol) {
+	private LengthUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -245,18 +247,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum SpeedUnits implements Unit {
-	KILOMETER_PER_HOUR(3.6, "km/h"), KILOMETER_PER_SECOND(1 / 1000.0, "km/s");
+	KILOMETER_PER_HOUR(3.6, new Symbol("km/h")), KILOMETER_PER_SECOND(1 / 1000.0, new Symbol("km/s"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private SpeedUnits(double factor, String symbol) {
+	private SpeedUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -267,18 +269,19 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum PowerUnits implements Unit {
-	WATT(1, "W"), KILOWATT(1 / 1000.0, "kW"), MEGAWATT(1 / 1000000.0, "MW"), HORSEPOWER(1 / 735.5, "hp");
+	WATT(1, new Symbol("W")), KILOWATT(1 / 1000.0, new Symbol("kW")), MEGAWATT(1 / 1000000.0,
+		new Symbol("MW")), HORSEPOWER(1 / 735.5, new Symbol("hp"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private PowerUnits(double factor, String symbol) {
+	private PowerUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -289,18 +292,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum FoodEnergyUnits implements Unit {
-	CALORIE(1, "calories");
+	CALORIE(1, new Symbol("calorie", "calories"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private FoodEnergyUnits(double factor, String symbol) {
+	private FoodEnergyUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -311,18 +314,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum DensityUnits implements Unit {
-	KILOGRAM_PER_CUBIC_METER(1, "kg/m3"), GRAM_PER_CUBIC_CENTIMETER(0.001, "g/cm3");
+	KILOGRAM_PER_CUBIC_METER(1, new Symbol("kg/m3")), GRAM_PER_CUBIC_CENTIMETER(0.001, new Symbol("g/cm3"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private DensityUnits(double factor, String symbol) {
+	private DensityUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -333,18 +336,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum AccelerationUnits implements Unit {
-	METER_PER_SQUARE_SECOND(1, "m/s2");
+	METER_PER_SQUARE_SECOND(1, new Symbol("m/s2"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private AccelerationUnits(double factor, String symbol) {
+	private AccelerationUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -355,18 +358,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum AngleUnits implements Unit {
-	DEGREE(1, "°");
+	DEGREE(1, new Symbol("°"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private AngleUnits(double factor, String symbol) {
+	private AngleUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -377,18 +380,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum AreaUnits implements Unit {
-	SQUARE_METER(1, "m2"), SQUARE_KILOMETER(1 / 1000000.0, "km2");
+	SQUARE_METER(1, new Symbol("m2")), SQUARE_KILOMETER(1 / 1000000.0, new Symbol("km2"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private AreaUnits(double factor, String symbol) {
+	private AreaUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -399,18 +402,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum PopulationDensityUnits implements Unit {
-	PER_SQUARE_METER(1, "per m2"), PER_SQUARE_KILOMETER(1000000.0, "per km2");
+	PER_SQUARE_METER(1, new Symbol("per m2")), PER_SQUARE_KILOMETER(1000000.0, new Symbol("per km2"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private PopulationDensityUnits(double factor, String symbol) {
+	private PopulationDensityUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -421,18 +424,18 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
     }
 
     private enum CurrencyUnits implements Unit {
-	USD(1, "USD"), EUR(1, "EUR"), JPY(1, "JPY"), GBP(1, "GBP");
+	USD(1, new Symbol("USD")), EUR(1, new Symbol("EUR")), JPY(1, new Symbol("JPY")), GBP(1, new Symbol("GBP"));
 
 	private double factor;
-	private String symbol;
+	private Symbol symbol;
 
-	private CurrencyUnits(double factor, String symbol) {
+	private CurrencyUnits(double factor, Symbol symbol) {
 	    this.factor = factor;
 	    this.symbol = symbol;
 	}
@@ -443,9 +446,32 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
 
 	@Override
-	public String symbol() {
+	public Symbol symbol() {
 	    return symbol;
 	}
+    }
+}
+
+final class Symbol {
+    private final String singular;
+    private final String plural;
+
+    public Symbol(String value) {
+	this.singular = value;
+	this.plural = value;
+    }
+
+    public Symbol(String singular, String plural) {
+	this.singular = singular;
+	this.plural = plural;
+    }
+
+    public String singular() {
+	return singular;
+    }
+
+    public String plural() {
+	return plural;
     }
 }
 
@@ -456,18 +482,30 @@ final class Variant {
 	numberFormat.setGroupingUsed(true);
     }
 
-    final double numericValue;
-    final String formattedValue;
-    final String units;
+    private final double numericValue;
+    private final String formattedValue;
+    private final String units;
 
     Variant(double value, QuantityFormat.Unit unit) {
 	this.numericValue = round(value * unit.factor(), 4);
 	this.formattedValue = numberFormat.format(this.numericValue);
-	this.units = unit.symbol();
+	this.units = this.numericValue == 1.0 ? unit.symbol().singular() : unit.symbol().plural();
     }
 
     private static double round(double value, int scale) {
 	BigDecimal decimal = new BigDecimal(value).setScale(scale, RoundingMode.HALF_EVEN);
 	return decimal.doubleValue();
+    }
+
+    public double numericValue() {
+        return numericValue;
+    }
+
+    public String formattedValue() {
+        return formattedValue;
+    }
+
+    public String units() {
+        return units;
     }
 }

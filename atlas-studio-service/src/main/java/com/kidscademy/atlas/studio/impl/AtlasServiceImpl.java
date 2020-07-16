@@ -384,6 +384,7 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException {
 	LifeForm lifeForm = wikipedia.getLifeForm(Files.basename(articleURL.getPath()));
+	log.debug("Import life form |%s|.", lifeForm.getCommonName());
 
 	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
 	AtlasObject object = AtlasObject.create(collection);

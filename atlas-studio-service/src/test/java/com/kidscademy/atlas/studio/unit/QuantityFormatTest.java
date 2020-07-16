@@ -13,13 +13,13 @@ import js.util.Strings;
 public class QuantityFormatTest {
     @Test
     public void mass_integer() {
-	assertThat(mass(0.001), equalTo("1 grams"));
+	assertThat(mass(0.001), equalTo("1 gram"));
 	assertThat(mass(0.01), equalTo("10 grams"));
 	assertThat(mass(0.1), equalTo("100 grams"));
 	assertThat(mass(1), equalTo("1 kg"));
 	assertThat(mass(10), equalTo("10 kg"));
 	assertThat(mass(100), equalTo("100 kg"));
-	assertThat(mass(1000), equalTo("1 tons"));
+	assertThat(mass(1000), equalTo("1 ton"));
 	assertThat(mass(10000), equalTo("10 tons"));
 	assertThat(mass(100000), equalTo("100 tons"));
     }
