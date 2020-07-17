@@ -107,7 +107,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
 
     _onImageClick(ev) {
         this._metaForm.open();
-        this._image.src = ev.target.getAttr("src");
+        this._image.src = ev.target.getValue();
         this._imageEditor.open(this._onEditorDone.bind(this), this._image);
     }
 

@@ -4161,6 +4161,8 @@ js.dom.Image = function(ownerDoc, node) {
 		this._defaultSrc = this._TRANSPARENT_DOT;
 	}
 
+	this._sizeVariant = null;
+
 	this.on("error", this._onError, this);
 	this._error = false;
 };
@@ -4179,7 +4181,30 @@ js.dom.Image.prototype = {
 			src = this._format.format(src);
 		}
 		if ((this.hasAttr("width") || this.hasAttr("height")) && !this._SRC_REX.test(src)) {
-			src = js.util.Strings.getSrcSizeVariant(this, src);
+			var argumentsIndex = src.lastIndexOf('?');
+			if (argumentsIndex === -1) {
+				argumentsIndex = src.length;
+			}
+			var extensionIndex = src.lastIndexOf('.', argumentsIndex);
+			if (extensionIndex > 0) {
+				var width = this.getAttr("width");
+				var height = this.getAttr("height");
+
+				this._sizeVariant = '_';
+				if (width != null) {
+					this._sizeVariant += parseInt(width);
+				}
+				this._sizeVariant += 'x';
+				if (height != null) {
+					this._sizeVariant += parseInt(height);
+				}
+
+				var srcBuilder = src.substring(0, extensionIndex);
+				srcBuilder += this._sizeVariant;
+				srcBuilder += src.substring(extensionIndex); // extension includes dot separator
+				src = srcBuilder;
+			}
+
 		}
 
 		this._node.src = src;
@@ -4187,7 +4212,14 @@ js.dom.Image.prototype = {
 	},
 
 	getSrc : function() {
-		return this._node.src;
+		return this._normalizeSrc(this._node.src);
+	},
+
+	_normalizeSrc : function(src) {
+		if (this._sizeVariant != null) {
+			src = src.replace(this._sizeVariant, '');
+		}
+		return src;
 	},
 
 	reload : function(src) {
@@ -4268,6 +4300,7 @@ js.dom.ImageControl.prototype = {
 			return null;
 		}
 
+		src = this._normalizeSrc(src);
 		var argsIndex = src.indexOf('?');
 		return argsIndex > 0 ? src.substr(0, argsIndex) : src;
 	},
@@ -10724,28 +10757,6 @@ js.util.Strings = {
 		}
 
 		return pairs;
-	},
-
-	getSrcSizeVariant : function(image, src) {
-		var argumentsIndex = src.lastIndexOf('?');
-		if (argumentsIndex === -1) {
-			argumentsIndex = src.length;
-		}
-		var extensionIndex = src.lastIndexOf('.', argumentsIndex);
-		if (extensionIndex > 0) {
-			var srcBuilder = src.substring(0, extensionIndex);
-			srcBuilder += '_';
-			if(image.hasAttr("width")) {
-				srcBuilder += parseInt(image.getAttr("width"));
-			}
-			srcBuilder += 'x';
-			if(image.hasAttr("height")) {
-				srcBuilder += parseInt(image.getAttr("height"));
-			}
-			srcBuilder += src.substring(extensionIndex); // extension includes dot separator
-			src = srcBuilder;
-		}
-		return src;
 	},
 
 	toString : function() {

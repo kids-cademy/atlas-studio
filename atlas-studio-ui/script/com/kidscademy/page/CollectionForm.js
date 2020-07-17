@@ -49,7 +49,7 @@ com.kidscademy.page.CollectionForm = class extends com.kidscademy.Page {
 
     _onSave(ev) {
         if (this._form.isValid()) {
-            AtlasService.saveAtlasCollection(this._form.getObject(this._collection), () => WinMain.back());
+            AtlasService.saveAtlasCollection(this._form.getObject(this._collection), () => WinMain.assign("@link/collections"));
         }
     }
 
