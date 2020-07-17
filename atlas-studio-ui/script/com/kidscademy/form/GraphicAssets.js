@@ -35,7 +35,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 
 	_onAdd() {
 		this._actions.showOnly("image-upload", "image-link", "close");
-		this._imageEditor.show();
+		this._openImageEditor();
 		this._metaForm.open();
 		this._metaForm.enable("image-key");
 	}
@@ -114,19 +114,27 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		this._openImageEditor(image);
 	}
 
-	_openImageEditor(image) {
-		var aspectRatio = 0;
-		switch (image.imageKey) {
-			case "icon":
-				aspectRatio = 1;
-				break;
+	/**
+	 * Display image editor on user interface for a new editing session. Image descriptor argument is
+	 * used only if editing an existing image, for a new image is not provided and defaults to null.
+	 * 
+	 * @param {Object} image optional image descriptor, default to null.
+	 */
+	_openImageEditor(image = null) {
+		if (image != null) {
+			var aspectRatio = 0;
+			switch (image.imageKey) {
+				case "icon":
+					aspectRatio = 1;
+					break;
 
-			case "contextual":
-				aspectRatio = 1.6428;
-				break;
+				case "contextual":
+					aspectRatio = 1.6428;
+					break;
+			}
+			this._imageEditor.setAspectRatio(aspectRatio);
 		}
-		this._imageEditor.setAspectRatio(aspectRatio);
-		this._imageEditor.open(image, this._onEditorDone.bind(this));
+		this._imageEditor.open(this._onEditorDone.bind(this), image);
 	}
 
 	_onEditorDone(image) {

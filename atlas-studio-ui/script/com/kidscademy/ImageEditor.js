@@ -63,18 +63,26 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         this._aspectRatio = aspectRatio;
     }
 
-    open(image, callback) {
+    /**
+     * Open a new editing session.
+     * 
+     * @param {Function} callback callback function invoked on image editor close,
+     * @param {Object} image optional image descriptor, default to null. 
+     */
+    open(callback, image = null) {
         this._callback = callback;
-        this._preview.setImage(image);
+        if (image != null) {
+            this._preview.setImage(image);
+        }
     }
 
     close(image = null) {
         this._callback(image);
+        this._callback = null;
         this._actions.showOnly("add");
         this._editor.hide();
         this._preview.reset();
         this._transformsCount = 0;
-        this._callback = null;
     }
 
     getActions() {

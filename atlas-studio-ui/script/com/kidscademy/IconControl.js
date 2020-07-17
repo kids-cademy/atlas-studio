@@ -50,7 +50,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
 
     _onAdd() {
         this._actions.showOnly("image-upload", "image-link", "close");
-        this._imageEditor.show();
+        this._imageEditor.open(this._onEditorDone.bind(this));
         this._metaForm.open();
     }
 
@@ -80,7 +80,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         formData.append("object-id", this._object.id);
         formData.append("media-file", ev.target._node.files[0]);
 
-        AtlasService.uploadImage(formData, image => this._imageEditor.open(image, this._onEditorDone.bind(this)));
+        AtlasService.uploadImage(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
     }
 
     _onImageLink(ev) {
@@ -96,7 +96,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         formData.append("image-kind", this._imageKind);
         formData.append("object-id", this._object.id);
 
-        AtlasService.uploadImageBySource(formData, image => this._imageEditor.open(image, this._onEditorDone.bind(this)));
+        AtlasService.uploadImageBySource(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
     }
 
     _onMetaForm() {
@@ -108,7 +108,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
     _onImageClick(ev) {
         this._metaForm.open();
         this._image.src = ev.target.getAttr("src");
-        this._imageEditor.open(this._image, this._onEditorDone.bind(this));
+        this._imageEditor.open(this._onEditorDone.bind(this), this._image);
     }
 
     _onEditorDone(image) {
