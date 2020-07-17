@@ -6,9 +6,9 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
 
         this._linksListView = this.getByCssClass("link-sources");
         this._linksListView.on("click", this._onLinksListViewClick, this);
-		this._linksListView.on("dragstart", this._onDragStart, this);
-		this._linksListView.on("dragover", this._onDragOver, this);
-		this._linksListView.on("drop", this._onDrop, this);
+        this._linksListView.on("dragstart", this._onDragStart, this);
+        this._linksListView.on("dragover", this._onDragOver, this);
+        this._linksListView.on("drop", this._onDrop, this);
 
         this._selectedLinkView = null;
 
@@ -19,7 +19,7 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
 
         this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-        this._actions.showOnly("add", "clone");
+        this._actions.showOnly("add", "clone", "remove-all");
     }
 
     // --------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         this._editor.select("candidates");
         const excludeIds = this._linksListView.getChildren().map(linkView => linkView.getUserData().externalSource.id);
         AtlasService.getExternalSourceCandidates(excludeIds, sources => this._candidatesListView.setObject(sources));
-        this._actions.show("close");
+        this._actions.show("close").hide("remove-all");
     }
 
     _onClone() {
@@ -77,51 +77,59 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         this._onClose();
     }
 
-    _onClose() {
-        this._editor.hide();
-        this._actions.showOnly("add", "clone");
+    _onRemoveAll() {
+        js.ua.System.confirm("@string/confirm-all-link-sources-remove", ok => {
+            if (ok) {
+                this._linksListView.removeChildren();
+            }
+        });
     }
 
-	// --------------------------------------------------------------------------------------------
-	// DRAG AND DROP
+    _onClose() {
+        this._editor.hide();
+        this._actions.showOnly("add", "clone", "remove-all");
+    }
 
-	_onDragStart(ev) {
-		const li = ev.target.getParentByTag("li");
-		ev.setData({
-			index: li.getChildIndex()
-		});
-	}
+    // --------------------------------------------------------------------------------------------
+    // DRAG AND DROP
 
-	_onDragOver(ev) {
-		ev.prevent();
-	}
+    _onDragStart(ev) {
+        const li = ev.target.getParentByTag("li");
+        ev.setData({
+            index: li.getChildIndex()
+        });
+    }
 
-	_onDrop(ev) {
-		ev.prevent();
-		const data = ev.getData();
-		const sourceElement = this._linksListView.getByIndex(data.index);
-		const targetElement = ev.target.getParentByTag("li");
+    _onDragOver(ev) {
+        ev.prevent();
+    }
 
-		if (targetElement == null) {
-			return;
-		}
-		if (targetElement === sourceElement) {
-			return;
-		}
+    _onDrop(ev) {
+        ev.prevent();
+        const data = ev.getData();
+        const sourceElement = this._linksListView.getByIndex(data.index);
+        const targetElement = ev.target.getParentByTag("li");
 
-		if (ev.ctrlKey) {
-			const siblingElement = targetElement.getNextSibling();
-			if (siblingElement == null) {
-				targetElement.getParent().addChild(sourceElement);
-			}
-			else {
-				siblingElement.insertBefore(sourceElement);
-			}
-		}
-		else {
-			targetElement.insertBefore(sourceElement);
-		}
-	}
+        if (targetElement == null) {
+            return;
+        }
+        if (targetElement === sourceElement) {
+            return;
+        }
+
+        if (ev.ctrlKey) {
+            const siblingElement = targetElement.getNextSibling();
+            if (siblingElement == null) {
+                targetElement.getParent().addChild(sourceElement);
+            }
+            else {
+                siblingElement.insertBefore(sourceElement);
+            }
+        }
+        else {
+            targetElement.insertBefore(sourceElement);
+        }
+    }
 
     // --------------------------------------------------------------------------------------------
 
@@ -137,7 +145,7 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         }
 
         this._editor.select("link-form");
-        this._actions.show("browse", "done", "remove", "close");
+        this._actions.show("browse", "done", "remove", "close").hide("remove-all");
 
         const apisSelect = this._linkForm._getControl("apis");
         apisSelect.load(link.externalSource.apis, () => this._linkForm.setObject(link));

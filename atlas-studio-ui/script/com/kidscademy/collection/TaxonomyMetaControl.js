@@ -15,7 +15,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
 
         this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-        this._actions.showOnly("add", "clone");
+        this._actions.showOnly("add", "clone", "remove-all");
     }
 
     setValue(taxonomyMeta) {
@@ -41,7 +41,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._taxonNameInput.setValue(taxon.name).focus();
         this._taxonValuesInput.setValue(taxon.values);
         this._taxonEditor.show();
-        this._actions.show("remove", "done", "close");
+        this._actions.show("remove", "done", "close").hide("remove-all");
     }
 
     _onAdd() {
@@ -49,7 +49,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._taxonEditor.show();
         this._taxonNameInput.reset();
         this._taxonValuesInput.reset();
-        this._actions.show("done", "close");
+        this._actions.show("done", "close").hide("remove-all");
     }
 
     _onClone() {
@@ -80,10 +80,19 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._onClose();
     }
 
+    _onRemoveAll() {
+        js.ua.System.confirm("@string/confirm-all-taxons-meta-remove", ok => {
+            if (ok) {
+                this._taxonomyMetaView.removeChildren();
+            }
+        });
+    }
+
+
     _onClose() {
         this._currentRow = null;
         this._taxonEditor.hide();
-        this._actions.showOnly("add", "clone");
+        this._actions.showOnly("add", "clone", "remove-all");
     }
 
     /**

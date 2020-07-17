@@ -60,6 +60,13 @@
 	<taxonomy-remove-all>remove atlas object taxonomy</taxonomy-remove-all>
 	<taxonomy-close>close taxonomy editor without saving</taxonomy-close>
 
+	<taxonomy-meta-add>add new taxon meta</taxonomy-meta-add>
+	<taxonomy-meta-clone>clone taxonomy meta from another collection</taxonomy-meta-clone>
+	<taxonomy-meta-done>accept taxonomy meta edits</taxonomy-meta-done>
+	<taxonomy-meta-remove>remove selected taxon meta value</taxonomy-meta-remove>
+	<taxonomy-meta-remove-all>remove entire taxonomy meta</taxonomy-meta-remove-all>
+	<taxonomy-meta-close>close taxon meta editor without saving</taxonomy-meta-close>
+
 	<facts-import>import facts from provider</facts-import>
 	<facts-add>add new facts</facts-add>
 	<facts-done>accept facts edits</facts-done>
@@ -80,6 +87,7 @@
 	<features-meta-add-all>add all features meta</features-meta-add-all>
 	<features-meta-done>accept feature meta edits</features-meta-done>
 	<features-meta-remove>remove feature meta</features-meta-remove>
+	<features-meta-remove-all>remove all features meta</features-meta-remove-all>
 	<features-meta-close>close feature meta editor without saving</features-meta-close>
 
 	<spreading-add>add new spreading</spreading-add>
@@ -99,6 +107,14 @@
 	<link-remove>remove source link</link-remove>
 	<link-close>close source link editor</link-close>
 
+	<link-sources-add>add new link source</link-sources-add>
+	<link-sources-clone>clone link sources from another collection</link-sources-clone>
+	<link-sources-browse>browser link source</link-sources-browse>
+	<link-sources-done>save link source edits</link-sources-done>
+	<link-sources-remove>remove selected link source</link-sources-remove>
+	<link-sources-remove-all>remove all link sources</link-sources-remove-all>
+	<link-sources-close>close link source editor without saving</link-sources-close>
+
 	<captcha-reload>reload images puzzle</captcha-reload>
 	<captcha-help>captcha help not yet implemented</captcha-help>
 
@@ -109,6 +125,7 @@
 	<collection-description-clone>clone description section from another collection</collection-description-clone>
 	<collection-description-done>commit description section changes</collection-description-done>
 	<collection-description-remove>remove selected description section</collection-description-remove>
+	<collection-description-remove-all>remove all description sections</collection-description-remove-all>
 	<collection-description-close>close description section form without save</collection-description-close>
 
 </tip>

@@ -12,7 +12,7 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
 
         this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-        this._actions.showOnly("add", "clone");
+        this._actions.showOnly("add", "clone", "remove-all");
     }
 
     setValue(featuresMeta) {
@@ -33,7 +33,8 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
         const row = ev.target.getParentByTag("tr");
         if (row != null) {
             row.toggleCssClass("selected");
-            this._actions.show(this._getSelectedFeatures().length > 0, "remove");
+            const featuresSelected = this._getSelectedFeatures().length > 0;
+            this._actions.show(featuresSelected, "remove").show(!featuresSelected, "remove-all");
         }
     }
 
@@ -50,7 +51,7 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
 
     _onAdd() {
         this._candidatesListView.load();
-        this._actions.show("add-all", "close");
+        this._actions.show("add-all", "close").hide("remove-all");
     }
 
     _onAddAll() {
@@ -72,9 +73,17 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
         this._onClose();
     }
 
+    _onRemoveAll() {
+        js.ua.System.confirm("@string/confirm-all-features-meta-remove", ok => {
+            if (ok) {
+                this._featuresListView.removeChildren();
+            }
+        });
+    }
+
     _onClose() {
         this._candidatesListView.hide();
-        this._actions.showOnly("add", "clone");
+        this._actions.showOnly("add", "clone", "remove-all");
     }
 
     // --------------------------------------------------------------------------------------------
