@@ -25,9 +25,6 @@ public class LinkSource implements Domain {
     private int id;
 
     @ManyToOne
-    private AtlasCollectionKey atlasCollection;
-
-    @ManyToOne
     private ExternalSource externalSource;
 
     private String apis;
@@ -54,16 +51,12 @@ public class LinkSource implements Domain {
 	iconSrc = Files.mediaSrc(this);
     }
 
-    public int getCollectionId() {
-        return atlasCollection.getId();
-    }
-
     public ExternalSource getExternalSource() {
 	return externalSource;
     }
 
     public void setApis(String apis) {
-        this.apis = apis;
+	this.apis = apis;
     }
 
     public String getApis() {

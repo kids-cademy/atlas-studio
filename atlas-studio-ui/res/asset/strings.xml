@@ -34,6 +34,26 @@
 	<forgot-password>forgot password</forgot-password>
 	<private-space>community private space</private-space>
 
+	<identity>Identity</identity>
+	<taxonomy>Taxonomy</taxonomy>
+	<taxonomy-meta>Taxonomy Meta</taxonomy-meta>
+	<definition>Definition</definition>
+	<description>Description</description>
+	<description-meta>Description Meta</description-meta>
+	<graphic-assets>Graphic Assets</graphic-assets>
+	<icon>Icon</icon>
+	<audio-assets>Audio Assets</audio-assets>
+	<flags>Flags</flags>
+	<facts>Facts</facts>
+	<features>Features</features>
+	<features-meta>Features Meta</features-meta>
+	<spreading>Spreading</spreading>
+	<related>Related</related>
+	<links>Links</links>
+	<link-sources>Link Sources</link-sources>
+
+	<published-object>Published Object</published-object>
+
 	<alert-no-definition-provider>No provider link for object definition.</alert-no-definition-provider>
 	<alert-no-description-provider>No provider link for object description.</alert-no-description-provider>
 	<alert-not-empty-section>Cannot remove non-empty description section.</alert-not-empty-section>
@@ -75,20 +95,6 @@
 	<confirm-all-taxons-meta-remove>Please confirm removing all taxonomy meta.</confirm-all-taxons-meta-remove>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
-
-	<published-object>Published Object</published-object>
-
-	<object-identity>Identity</object-identity>
-	<object-taxonomy>Taxonomy</object-taxonomy>
-	<object-definition>Definition</object-definition>
-	<object-description>Description</object-description>
-	<graphic-assets>Graphic Assets</graphic-assets>
-	<audio-assets>Audio Assets</audio-assets>
-	<object-facts>Facts</object-facts>
-	<object-features>Features</object-features>
-	<object-spreading>Spreading</object-spreading>
-	<object-related>Related</object-related>
-	<object-links>Links</object-links>
 
 	<workspace-collections>Atlas Collections</workspace-collections>
 	<workspace-export>Export All Collections</workspace-export>

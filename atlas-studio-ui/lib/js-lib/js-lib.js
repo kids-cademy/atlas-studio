@@ -4275,6 +4275,9 @@ js.dom.ImageControl = function(ownerDoc, node) {
 
 js.dom.ImageControl.prototype = {
 	setValue : function(src) {
+		if (!src) {
+			return this.reset();
+		}
 		this._error = false;
 		var random = Math.random().toString(36).substr(2);
 		var i = src.indexOf('?');

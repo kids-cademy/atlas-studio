@@ -32,6 +32,7 @@ import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.Flags;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -65,6 +66,35 @@ public class AtlasDaoWriteTest {
     public void beforeTest() throws SQLException {
 	database.load(Classes.getResourceAsStream("atlas-data-set.xml"));
 	dao = factory.newInstance(AtlasDaoImpl.class);
+    }
+
+    @Test
+    public void createAtlasCollection() {
+	AtlasCollection collection = new AtlasCollection();
+	collection.setName("mammals");
+	collection.setDisplay("Mammals");
+	collection.setDefinition("Wild mammals.");
+	collection.setFlags(new Flags());
+
+	List<DescriptionMeta> descriptionMeta = new ArrayList<>();
+	descriptionMeta.add(new DescriptionMeta("description", "Morphological description."));
+	descriptionMeta.add(new DescriptionMeta("habitat", "Natural habitat."));
+	descriptionMeta.add(new DescriptionMeta("feeding", "Feeding behavior and diet."));
+	collection.setDescriptionMeta(descriptionMeta);
+
+	List<TaxonMeta> taxonomyMeta = new ArrayList<>();
+	taxonomyMeta.add(new TaxonMeta("kingdom", "Animalia"));
+	taxonomyMeta.add(new TaxonMeta("phylum", "Chordata"));
+	taxonomyMeta.add(new TaxonMeta("class"));
+	collection.setTaxonomyMeta(taxonomyMeta);
+
+	List<LinkSource> linkSources = new ArrayList<>();
+	linkSources.add(new LinkSource(3, dao.getExternalSourceById(1)));
+	linkSources.add(new LinkSource(4, dao.getExternalSourceById(2)));
+	linkSources.add(new LinkSource(5, dao.getExternalSourceById(3)));
+	collection.setLinkSources(linkSources);
+
+	dao.saveAtlasCollection(collection);
     }
 
     @Test
@@ -107,17 +137,25 @@ public class AtlasDaoWriteTest {
     public void saveAtlasCollection_UpdateLinkSource() {
 	AtlasCollection collection = dao.getCollectionById(1);
 	assertThat(collection, notNullValue());
-	
+
 	List<LinkSource> linkSources = collection.getLinkSources();
 	assertThat(linkSources, notNullValue());
 	assertThat(linkSources, hasSize(2));
-	
+
 	LinkSource linkSource = linkSources.get(0);
 	assertThat(linkSource, notNullValue());
 	assertThat(linkSource.getApis(), equalTo("definition,description,taxonomy"));
-	
+
 	linkSource.setApis("definition,description,features,taxonomy");
 	dao.saveAtlasCollection(collection);
+    }
+
+    @Test
+    public void removeAtlasCollection() {
+	dao.removeAtlasObject(1);
+	dao.removeAtlasObject(2);
+
+	dao.removeAtlasCollection(1);
     }
 
     /**
@@ -445,6 +483,11 @@ public class AtlasDaoWriteTest {
 	assertThat(object.getRelated(), notNullValue());
 	assertThat(object.getRelated(), hasSize(2));
 	assertThat(object.getRelated().get(0), equalTo("bandoneon-changed"));
+    }
+
+    @Test
+    public void removeAtlasObject() {
+	dao.removeAtlasObject(1);
     }
 
     @Test

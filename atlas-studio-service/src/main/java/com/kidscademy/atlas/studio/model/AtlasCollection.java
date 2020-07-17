@@ -139,6 +139,10 @@ public class AtlasCollection implements Key, GraphicObject {
 	return title;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String getName() {
 	return name;

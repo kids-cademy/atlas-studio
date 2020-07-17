@@ -230,17 +230,18 @@ public class AtlasDaoImpl implements AtlasDao {
 	object.updateTimestamp();
 	if (object.getId() == 0) {
 	    em.persist(object);
-	} else {
-	    em.merge(object).postMerge(object);
+	    return;
+	}
 
-	    // update content timestamp for all releases containing this atlas object
-	    List<ReleaseParent> releases = em
-		    .createQuery("select p from ReleaseParent p join p.children c where c.id=:objectId",
-			    ReleaseParent.class)
-		    .setParameter("objectId", object.getId()).getResultList();
-	    for (ReleaseParent release : releases) {
-		release.updateContentTimestamp();
-	    }
+	em.merge(object).postMerge(object);
+
+	// update content timestamp for all releases containing this atlas object
+	List<ReleaseParent> releases = em
+		.createQuery("select p from ReleaseParent p join p.children c where c.id=:objectId",
+			ReleaseParent.class)
+		.setParameter("objectId", object.getId()).getResultList();
+	for (ReleaseParent release : releases) {
+	    release.updateContentTimestamp();
 	}
     }
 
@@ -302,7 +303,7 @@ public class AtlasDaoImpl implements AtlasDao {
     @Override
     public LinkSource getLinkSourceByDomain(int collectionId, String domain) {
 	List<LinkSource> result = em.createQuery(
-		"select l from LinkSource l join l.atlasCollection c join l.externalSource e where c.id=:collectionId and e.domain=:domain",
+		"select l from AtlasCollection c join c.linkSources l join l.externalSource e where c.id=:collectionId and e.domain=:domain",
 		LinkSource.class).setParameter("collectionId", collectionId).setParameter("domain", domain)
 		.getResultList();
 	if (result.size() > 1) {

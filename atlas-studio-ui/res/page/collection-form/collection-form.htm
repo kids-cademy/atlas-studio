@@ -1,8 +1,8 @@
 <div class="collection-form" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form">
-		<fieldset>
+	<form class="form" data-class="com.kidscademy.Form">
+		<fieldset id="identity">
 			<div class="header container">
-				<h2>Identity</h2>
+				<h2>@string/identity</h2>
 			</div>
 			<div class="content">
 				<div class="container">
@@ -20,21 +20,21 @@
 			</div>
 		</fieldset>
 
-		<fieldset class="icon-section">
+		<fieldset id="icon">
 			<div class="header container">
-				<h2>Icon</h2>
+				<h2>@string/icon</h2>
 			</div>
 			<div class="content">
 				<div data-name="icon-src" class="container" w:compo="compo/icon-control"></div>
 			</div>
 		</fieldset>
 
-		<fieldset>
+		<fieldset id="description-meta">
 			<div class="header container">
-				<h2>Description Meta</h2>
+				<h2>@string/description-meta</h2>
 			</div>
 			<div class="content">
-				<div data-name="description-meta" class="container optional" data-class="com.kidscademy.collection.DescriptionMetaControl">
+				<div data-name="description-meta" class="container" data-class="com.kidscademy.collection.DescriptionMetaControl">
 					<table class="table full-width" data-class="com.kidscademy.TableView">
 						<thead>
 							<tr>
@@ -72,12 +72,12 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
+		<fieldset id="taxonomy-meta">
 			<div class="header container">
-				<h2>Taxonomy Meta</h2>
+				<h2>@string/taxonomy-meta</h2>
 			</div>
 			<div class="content">
-				<div data-name="taxonomy-meta" class="container optional" data-class="com.kidscademy.collection.TaxonomyMetaControl">
+				<div data-name="taxonomy-meta" class="container" data-class="com.kidscademy.collection.TaxonomyMetaControl">
 					<table class="table full-width" data-class="com.kidscademy.TableView">
 						<thead>
 							<tr>
@@ -114,9 +114,9 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
+		<fieldset id="features-meta">
 			<div class="header container">
-				<h2>Features Meta</h2>
+				<h2>@string/features-meta</h2>
 			</div>
 			<div class="content">
 				<div data-name="features-meta" class="container optional" data-class="com.kidscademy.collection.FeaturesMetaControl">
@@ -137,13 +137,13 @@
 		</fieldset>
 
 
-		<fieldset>
+		<fieldset id="link-sources">
 			<div class="header container">
-				<h2>Link Sources</h2>
+				<h2>@string/link-sources</h2>
 			</div>
 			
 			<div class="content">
-				<div data-name="link-sources" class="container optional" data-class="com.kidscademy.collection.LinkSourcesControl">
+				<div data-name="link-sources" class="container" data-class="com.kidscademy.collection.LinkSourcesControl">
 					<ul class="link-sources" w:compo="compo/icons-list"></ul>
 
 					<div class="actions bar" data-class="com.kidscademy.Actions">
@@ -181,9 +181,9 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
+		<fieldset id="flags">
 			<div class="header container">
-				<h2>Flags</h2>
+				<h2>@string/flags</h2>
 			</div>
 			<div class="content">
 				<div class="container">
@@ -207,11 +207,6 @@
 		</fieldset>
 	</form>
 
-	<div class="container buttons-bar">
-		<button name="save">@string/save</button>
-		<button name="cancel">@string/cancel</button>
-	</div>
-
 	<div w:compo="compo/item-select"></div>
 </div>
 
@@ -220,5 +215,20 @@
 		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
 		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
 		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+	</ul>
+
+	<ul class="menu quick-links">
+		<li data-name="identity"><img src="@image/action/identity" /><span>@string/identity</span><span class="state"></span></li>
+		<li data-name="icon"><img src="@image/action/icon" /><span>@string/icon</span><span class="state"></span></li>
+		<li data-name="description-meta"><img src="@image/action/description" /><span>@string/description-meta</span><span class="state"></span></li>
+		<li data-name="taxonomy-meta"><img src="@image/action/taxonomy" /><span>@string/taxonomy-meta</span><span class="state"></span></li>
+		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/features-meta</span><span class="state"></span></li>
+		<li data-name="link-sources"><img src="@image/action/link" /><span>@string/link-sources</span><span class="state"></span></li>
+		<li data-name="flags"><img src="@image/action/definition" /><span>@string/flags</span><span class="state"></span></li>
+	</ul>
+
+	<ul class="menu actions bottom">
+		<li data-name="save"><img src="@image/action/save" /><span>@string/save</span></li>
+		<li data-name="cancel"><img src="@image/action/cancel" /><span>@string/cancel</span></li>
 	</ul>
 </div>
