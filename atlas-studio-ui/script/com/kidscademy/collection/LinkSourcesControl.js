@@ -17,8 +17,9 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         this._candidatesListView = this.getByCssClass("candidates");
         this._candidatesListView.on("click", this._onCandidatesClick, this);
 
+        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-        this._actions.showOnly("add");
+        this._actions.showOnly("add", "clone");
     }
 
     // --------------------------------------------------------------------------------------------
@@ -47,6 +48,13 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         this._actions.show("close");
     }
 
+    _onClone() {
+        AtlasService.getCollections(collections => this._itemSelect.load(collections));
+        this._itemSelect.open(collection => {
+            AtlasService.getCollectionLinkSources(collection.id, links => this.setValue(links));
+        });
+    }
+
     _onBrowse(homeURL) {
         if (!homeURL) {
             const link = this._selectedLinkView.getUserData();
@@ -71,7 +79,7 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
 
     _onClose() {
         this._editor.hide();
-        this._actions.showOnly("add");
+        this._actions.showOnly("add", "clone");
     }
 
 	// --------------------------------------------------------------------------------------------

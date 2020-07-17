@@ -14,15 +14,17 @@ import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
-import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
 import js.rmi.BusinessException;
@@ -88,8 +90,12 @@ public interface AtlasService {
 
     List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId);
 
+    List<TaxonMeta> getCollectionTaxonomyMeta(int collectionId);
+
     List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
 
+    List<LinkSource> getCollectionLinkSources(int collectionId);
+    
     void removeExternalSource(int externalSourceId);
 
     String formatLines(String text, String separator);

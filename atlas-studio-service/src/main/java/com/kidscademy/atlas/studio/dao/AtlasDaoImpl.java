@@ -31,6 +31,7 @@ import com.kidscademy.atlas.studio.model.ReleaseItem;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 
 import js.lang.BugError;
 import js.transaction.Immutable;
@@ -379,6 +380,16 @@ public class AtlasDaoImpl implements AtlasDao {
 	return em.createQuery(
 		"select f from FeatureMeta f where f.id not in :excludes and f.name like :search order by f.name",
 		FeatureMeta.class).setParameter("excludes", excludes).setParameter("search", search).getResultList();
+    }
+
+    @Override
+    public List<TaxonMeta> getCollectionTaxonomyMeta(int collectionId) {
+	return em.find(AtlasCollection.class, collectionId).getTaxonomyMeta();
+    }
+
+    @Override
+    public List<LinkSource> getCollectionLinkSources(int collectionId) {
+	return em.find(AtlasCollection.class, collectionId).getLinkSources();
     }
 
     @Override

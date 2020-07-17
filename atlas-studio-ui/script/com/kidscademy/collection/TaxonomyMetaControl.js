@@ -13,7 +13,9 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
 
         this._currentRow = null;
 
+        this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+        this._actions.showOnly("add", "clone");
     }
 
     setValue(taxonomyMeta) {
@@ -39,6 +41,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._taxonNameInput.setValue(taxon.name).focus();
         this._taxonValuesInput.setValue(taxon.values);
         this._taxonEditor.show();
+        this._actions.show("remove", "done", "close");
     }
 
     _onAdd() {
@@ -46,6 +49,14 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._taxonEditor.show();
         this._taxonNameInput.reset();
         this._taxonValuesInput.reset();
+        this._actions.show("done", "close");
+    }
+
+    _onClone() {
+        AtlasService.getCollections(collections => this._itemSelect.load(collections));
+        this._itemSelect.open(collection => {
+            AtlasService.getCollectionTaxonomyMeta(collection.id, taxonomyMeta => this.setValue(taxonomyMeta));
+        });
     }
 
     _onDone() {
@@ -72,6 +83,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     _onClose() {
         this._currentRow = null;
         this._taxonEditor.hide();
+        this._actions.showOnly("add", "clone");
     }
 
     /**

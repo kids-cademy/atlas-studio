@@ -29,6 +29,7 @@ import com.kidscademy.atlas.studio.model.ReleaseItem;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 
 public interface AtlasDao {
     <T> T getObjectById(Class<T> type, int id);
@@ -155,6 +156,10 @@ public interface AtlasDao {
     List<FeatureMeta> searchFeaturesMeta(String search, List<Integer> excludes);
 
     List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
+
+    List<TaxonMeta> getCollectionTaxonomyMeta(int collectionId);
+
+    List<LinkSource> getCollectionLinkSources(int collectionId);
 
     FeatureMeta getFeatureMetaById(int featureMetaId);
 

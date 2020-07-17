@@ -52,6 +52,7 @@
 
 	<taxonomy-import>import taxonomy from given link</taxonomy-import>
 	<taxonomy-add>initialize with empty taxonomy</taxonomy-add>
+	<taxonomy-clone>clone taxonomy section from another collection</taxonomy-clone>
 	<taxonomy-edit>edit current taxon value</taxonomy-edit>
 	<taxonomy-batch-edit>edit all taxon values in sequence</taxonomy-batch-edit>
 	<taxonomy-done>accept taxonomy edits</taxonomy-done>
@@ -92,6 +93,7 @@
 	<related-close>close related objects editor</related-close>
 
 	<link-add>add source link</link-add>
+	<link-clone>clone source links from another collection</link-clone>
 	<link-browse>browser source link</link-browse>
 	<link-done>save source link</link-done>
 	<link-remove>remove source link</link-remove>

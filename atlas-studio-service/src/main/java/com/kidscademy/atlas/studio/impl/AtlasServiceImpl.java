@@ -42,6 +42,7 @@ import com.kidscademy.atlas.studio.model.QuantityFormat;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
 import com.kidscademy.atlas.studio.search.KeywordTree;
@@ -150,8 +151,18 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
+    public List<TaxonMeta> getCollectionTaxonomyMeta(int collectionId) {
+	return atlasDao.getCollectionTaxonomyMeta(collectionId);
+    }
+
+    @Override
     public List<FeatureMeta> getCollectionFeaturesMeta(int collectionId) {
 	return atlasDao.getCollectionFeaturesMeta(collectionId);
+    }
+
+    @Override
+    public List<LinkSource> getCollectionLinkSources(int collectionId) {
+	return atlasDao.getCollectionLinkSources(collectionId);
     }
 
     @Override
