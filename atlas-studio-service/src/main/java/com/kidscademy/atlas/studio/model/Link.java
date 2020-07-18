@@ -63,12 +63,24 @@ public class Link implements Displayable, Domain {
 	iconSrc = Files.mediaSrc(this);
     }
 
+    public void setLinkSource(LinkSource linkSource) {
+        this.linkSource = linkSource;
+    }
+
+    public LinkSource getLinkSource() {
+        return linkSource;
+    }
+
     public void setIconSrc(MediaSRC iconSrc) {
 	this.iconSrc = iconSrc;
     }
 
     public URL getUrl() {
 	return url;
+    }
+
+    public ExternalSource getExternalSource() {
+	return linkSource.getExternalSource();
     }
 
     @Override

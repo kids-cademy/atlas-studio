@@ -95,7 +95,7 @@ public interface AtlasDao {
 
     void removeAtlasObject(int objectId);
 
-    void moveAtlasObject(int objectId, int collectionId);
+    void moveAtlasObject(int sourceObjectId, int targetCollectionId);
 
     AtlasItem getAtlasItem(int objectId);
 
@@ -105,7 +105,7 @@ public interface AtlasDao {
 
     String getAtlasObjectName(int objectId);
 
-    List<Link> getObjectLinks(AtlasItem object);
+    List<Link> getObjectLinks(int objectId);
 
     LinkSource getLinkSourceByDomain(int collectionId, String domain);
 

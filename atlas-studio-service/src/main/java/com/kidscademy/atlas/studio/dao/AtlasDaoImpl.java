@@ -256,13 +256,25 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     @Mutable
-    public void moveAtlasObject(int objectId, int collectionId) {
-	AtlasObjectKey object = em.find(AtlasObjectKey.class, objectId);
-	if (object != null) {
-	    AtlasCollectionKey collection = em.find(AtlasCollectionKey.class, collectionId);
-	    if (collection != null) {
-		object.setCollection(collection);
+    public void moveAtlasObject(int sourceObjectId, int targetCollectionId) {
+	AtlasCollection targetCollection = em.find(AtlasCollection.class, targetCollectionId);
+	if (targetCollection == null) {
+	    return;
+	}
+
+	for (Link link : getObjectLinks(sourceObjectId)) {
+	    LinkSource targetLinkSource = getLinkSourceByDomain(targetCollectionId, link.getDomain());
+	    if (targetLinkSource == null) {
+		targetLinkSource = new LinkSource(link.getExternalSource());
+		targetCollection.getLinkSources().add(targetLinkSource);
 	    }
+	    link.setLinkSource(targetLinkSource);
+	}
+
+	AtlasObjectKey object = em.find(AtlasObjectKey.class, sourceObjectId);
+	if (object != null) {
+	    AtlasCollectionKey collectionKey = em.find(AtlasCollectionKey.class, targetCollectionId);
+	    object.setCollection(collectionKey);
 	}
     }
 
@@ -291,13 +303,8 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
-    public List<Link> getObjectLinks(AtlasItem object) {
-	return em
-		.createQuery(
-			"select o.links from AtlasObject o where o.collection.name=:collectionName and o.name=:name",
-			Link.class)
-		.setParameter("collectionName", object.getRepositoryName()).setParameter("name", object.getName())
-		.getResultList();
+    public List<Link> getObjectLinks(int objectId) {
+	return em.find(AtlasObject.class, objectId).getLinks();
     }
 
     @Override

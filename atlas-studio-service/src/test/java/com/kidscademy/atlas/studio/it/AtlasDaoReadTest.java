@@ -37,6 +37,7 @@ import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
@@ -130,6 +131,23 @@ public class AtlasDaoReadTest {
 	assertThat(name, equalTo("accordion"));
     }
 
+    @Test
+    public void getObjectLinks() throws MalformedURLException {
+	List<Link> links = dao.getObjectLinks(1);
+	assertThat(links, notNullValue());
+	assertThat(links, hasSize(2));
+	
+	assertThat(links.get(0).getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
+	assertThat(links.get(0).getDefinition(), equalTo("Wikipedia article about accordion."));
+	assertThat(links.get(0).getDomain(), equalTo("wikipedia.org"));
+	assertThat(links.get(0).getLinkSource().getId(), equalTo(1));
+	
+	assertThat(links.get(1).getUrl(), equalTo(new URL("https://www.britannica.com/art/bandonion")));
+	assertThat(links.get(1).getDefinition(), equalTo("Bandonion on Britannica."));
+	assertThat(links.get(1).getDomain(), equalTo("britannica.com"));
+	assertThat(links.get(1).getLinkSource().getId(), equalTo(2));
+    }
+    
     @Test
     public void getCollectionItems() {
 	Map<String, String> criteria = new HashMap<>();

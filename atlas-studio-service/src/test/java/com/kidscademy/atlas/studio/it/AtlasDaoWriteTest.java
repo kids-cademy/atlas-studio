@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.it;
 
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
@@ -488,6 +489,35 @@ public class AtlasDaoWriteTest {
     @Test
     public void removeAtlasObject() {
 	dao.removeAtlasObject(1);
+	assertThat(dao.getAtlasObject(1), nullValue());
+    }
+
+    @Test
+    public void moveAtlasObject() {
+	final int sourceObjectId = 1;
+	final int targetCollectionId = 2;
+
+	// before move target collection has no link sources
+	List<LinkSource> linkSources = dao.getCollectionLinkSources(targetCollectionId);
+	assertThat(linkSources, empty());
+
+	List<Link> links = dao.getObjectLinks(sourceObjectId);
+	assertThat(links.get(0).getLinkSource().getId(), equalTo(1));
+	assertThat(links.get(1).getLinkSource().getId(), equalTo(2));
+
+	dao.moveAtlasObject(sourceObjectId, targetCollectionId);
+
+	// move operations takes care to create missing link sources
+	linkSources = dao.getCollectionLinkSources(targetCollectionId);
+	assertThat(linkSources, hasSize(2));
+
+	// after move object link is linked to newly create link sources
+	links = dao.getObjectLinks(sourceObjectId);
+	assertThat(links.get(0).getLinkSource().getId(), equalTo(linkSources.get(0).getId()));
+	assertThat(links.get(1).getLinkSource().getId(), equalTo(linkSources.get(1).getId()));
+
+	assertThat(linkSources, hasItem(links.get(0).getLinkSource()));
+	assertThat(linkSources, hasItem(links.get(1).getLinkSource()));
     }
 
     @Test

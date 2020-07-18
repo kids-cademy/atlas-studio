@@ -22,7 +22,6 @@ import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.util.Files;
 
-import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 
@@ -108,12 +107,13 @@ public class AtlasCollection implements Key, GraphicObject {
 	    log.error("Cannot remove collection icon |%s|.", icon);
 	}
 
-	// remove collection objects media repository, that is, directory
+	// remove collection objects media repository
 	File repositoryDir = Files.repositoryDir(name);
 	if (repositoryDir.isDirectory()) {
 	    String[] files = repositoryDir.list();
 	    if (files != null && files.length > 0) {
-		throw new BugError("Empty collection |%s| should have empty media directory.", name);
+		log.error("Empty collection |%s| should have empty media directory.", name);
+		return;
 	    }
 	    if (!repositoryDir.delete()) {
 		log.error("Cannot remove media directory for collection |%s|.", name);
@@ -140,7 +140,7 @@ public class AtlasCollection implements Key, GraphicObject {
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     @Override
