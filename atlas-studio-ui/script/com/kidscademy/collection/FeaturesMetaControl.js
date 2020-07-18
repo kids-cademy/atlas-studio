@@ -15,18 +15,32 @@ com.kidscademy.collection.FeaturesMetaControl = class extends js.dom.Control {
         this._actions.showOnly("add", "clone", "remove-all");
     }
 
+    /**
+     * Initialize internall features meta list. If provided argument is null clear the list.
+     * 
+     * @param {Array} featuresMeta features meta list, null accepted.
+     * @returns {com.kidscademy.collection.FeaturesMetaControl} this object.
+     */
     setValue(featuresMeta) {
         this._featuresListView.setObject(featuresMeta);
         this._updateCandidatesExcludes();
         return this;
     }
 
+    /**
+     * Returns features meta containing by this control internall list. If the list is empty returns null.
+     * 
+     * @returns {Array} features meta list or null.
+     */
     getValue() {
+        if (!this._featuresListView.hasChildren()) {
+            return null;
+        }
         return this._featuresListView.getChildren().map(row => row.getUserData());
     }
 
     isValid() {
-        return this.hasCssClass("optional") || this._featuresListView.getChildrenCount() > 0;
+        return this.hasCssClass("optional") || this._featuresListView.hasChildren();
     }
 
     _onFeaturesClick(ev) {

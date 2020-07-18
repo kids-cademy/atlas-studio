@@ -121,12 +121,22 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public AtlasCollection saveAtlasCollection(AtlasCollection collection) throws BusinessException {
 	businessRules.uniqueCollectionName(collection);
+
 	if (collection.isPersisted()) {
 	    AtlasCollection currentCollection = atlasDao.getCollectionById(collection.getId());
+
 	    if (!currentCollection.getName().equals(collection.getName())) {
 		File currentIcon = Files.mediaFile(currentCollection);
 		File newIcon = Files.mediaFile(collection);
 		currentIcon.renameTo(newIcon);
+	    }
+
+	    if (currentCollection.hasFeaturesMeta() && !collection.hasFeaturesMeta()) {
+		log.debug("Collection features meta remove detected. Remove all objects features.");
+		// collection features meta was removed; remove features from all child objects
+		for (Integer objectId : atlasDao.getCollectionObjectIds(collection.getId())) {
+		    atlasDao.removeObjectFeatures(objectId);
+		}
 	    }
 	}
 

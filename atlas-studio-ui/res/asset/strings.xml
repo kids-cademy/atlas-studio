@@ -91,7 +91,7 @@
 	<confirm-external-source-remove>Please confirm external source remove.</confirm-external-source-remove>
 	<confirm-all-link-sources-remove>Please confirm removing all link sources.</confirm-all-link-sources-remove>
 	<confirm-all-description-meta-remove>Please confirm removing all description meta sections.</confirm-all-description-meta-remove>
-	<confirm-all-features-meta-remove>Please confirm removing all features meta.</confirm-all-features-meta-remove>
+	<confirm-all-features-meta-remove>Please confirm removing all features meta.\r\nWarning! ALL objects features from collection will be removed!</confirm-all-features-meta-remove>
 	<confirm-all-taxons-meta-remove>Please confirm removing all taxonomy meta.</confirm-all-taxons-meta-remove>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>

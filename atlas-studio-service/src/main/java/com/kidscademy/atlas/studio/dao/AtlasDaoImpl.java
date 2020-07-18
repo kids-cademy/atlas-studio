@@ -144,6 +144,12 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public List<Integer> getCollectionObjectIds(int collectionId) {
+	return em.createQuery("select o.id from AtlasObject o where o.collection.id=?1", Integer.class)
+		.setParameter(1, collectionId).getResultList();
+    }
+
+    @Override
     public List<AtlasImages> getCollectionImages(SearchFilter filter, int collectionId) {
 	return getCollectionItems(AtlasImages.class, filter, collectionId);
     }
@@ -252,6 +258,13 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (object != null) {
 	    em.remove(object);
 	}
+    }
+
+    @Override
+    @Mutable
+    public void removeObjectFeatures(int objectId) {
+	em.createQuery("delete from AtlasObjectFeature f where f.objectId = :objectId")
+		.setParameter("objectId", objectId).executeUpdate();
     }
 
     @Override

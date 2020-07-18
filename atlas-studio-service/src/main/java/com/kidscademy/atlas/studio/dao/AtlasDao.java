@@ -57,6 +57,8 @@ public interface AtlasDao {
     List<AtlasItem> getRecentUsedAtlasObjects();
 
     List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId);
+    
+    List<Integer> getCollectionObjectIds(int collectionId);
 
     List<AtlasImages> getCollectionImages(SearchFilter filter, int collectionId);
 
@@ -97,6 +99,8 @@ public interface AtlasDao {
 
     void moveAtlasObject(int sourceObjectId, int targetCollectionId);
 
+    void removeObjectFeatures(int objectId);
+    
     AtlasItem getAtlasItem(int objectId);
 
     AtlasObject getAtlasObject(int objectId);

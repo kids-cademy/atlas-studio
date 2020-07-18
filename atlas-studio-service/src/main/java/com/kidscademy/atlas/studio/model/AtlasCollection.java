@@ -191,6 +191,10 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.featuresMeta = featuresMeta;
     }
 
+    public boolean hasFeaturesMeta() {
+	return featuresMeta != null && !featuresMeta.isEmpty();
+    }
+
     public List<FeatureMeta> getFeaturesMeta() {
 	return featuresMeta;
     }
