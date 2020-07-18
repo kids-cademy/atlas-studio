@@ -489,7 +489,13 @@ final class Variant {
     Variant(double value, QuantityFormat.Unit unit) {
 	this.numericValue = round(value * unit.factor(), 4);
 	this.formattedValue = numberFormat.format(this.numericValue);
-	this.units = this.numericValue == 1.0 ? unit.symbol().singular() : unit.symbol().plural();
+
+	// unit is possible to be null, e.g. scalar or percent values
+	if (unit.symbol() != null) {
+	    this.units = this.numericValue == 1.0 ? unit.symbol().singular() : unit.symbol().plural();
+	} else {
+	    this.units = null;
+	}
     }
 
     private static double round(double value, int scale) {
@@ -498,14 +504,14 @@ final class Variant {
     }
 
     public double numericValue() {
-        return numericValue;
+	return numericValue;
     }
 
     public String formattedValue() {
-        return formattedValue;
+	return formattedValue;
     }
 
     public String units() {
-        return units;
+	return units;
     }
 }
