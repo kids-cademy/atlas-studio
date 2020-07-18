@@ -2,6 +2,7 @@ package com.kidscademy.atlas.studio;
 
 import java.io.IOException;
 
+import com.kidscademy.atlas.studio.model.Gravity;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.RotateDirection;
 
@@ -10,6 +11,8 @@ import js.tiny.container.annotation.Service;
 @Service
 public interface ImageService {
     Image trimImage(Image image) throws IOException;
+
+    Image canvasSize(Image image, int width, int height, Gravity gravity) throws IOException;
 
     Image flopImage(Image image) throws IOException;
 

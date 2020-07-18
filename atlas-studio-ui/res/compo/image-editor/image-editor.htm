@@ -12,6 +12,7 @@
 		<img name="crop-free" src="@image/action/crop-free" title="@tip/graphic-crop" />
 		<img name="crop-circle" src="@image/action/crop-circle" title="@tip/graphic-crop" />
 		<img name="trim" src="@image/action/image-trim" title="@tip/graphic-trim" />
+		<img name="canvas-size" src="@image/action/canvas-size" title="@tip/graphic-canvas" />
 		<img name="flop" src="@image/action/flop" title="@tip/graphic-flop" />
 		<img name="flip" src="@image/action/flip" title="@tip/graphic-flip" />
 		<img name="rotate" src="@image/action/rotate" title="@tip/graphic-rotate" />
@@ -33,6 +34,17 @@
 			</div>
 			<div class="controlset">
 				<label>border width</label><input name="borderWidth" class="small" />
+			</div>
+		</div>
+		<div class="canvas-size" data-class="com.kidscademy.FormData">
+			<div class="controlset">
+				<label>width</label><input name="width" class="small" />
+			</div>
+			<div class="controlset">
+				<label>height</label><input name="height" class="small" />
+			</div>
+			<div class="controlset">
+				<label>gravity</label><select name="gravity" w:compo="compo/gravity-select"></select>
 			</div>
 		</div>
 		<div class="rotate" data-class="com.kidscademy.FormData">

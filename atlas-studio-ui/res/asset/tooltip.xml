@@ -26,6 +26,7 @@
 	<graphic-form>toggle meta-data form</graphic-form>
 	<graphic-trim>trim unused space from image</graphic-trim>
 	<graphic-crop>crop image</graphic-crop>
+	<graphic-canvas>resize canvas</graphic-canvas>
 	<graphic-icon>create object icon from image</graphic-icon>
 	<graphic-flop>flop, mirror image vertically</graphic-flop>
 	<graphic-flip>flip, mirror image horizontally</graphic-flip>

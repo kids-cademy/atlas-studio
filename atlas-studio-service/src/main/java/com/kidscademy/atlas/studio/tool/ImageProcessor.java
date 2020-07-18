@@ -29,6 +29,9 @@ public interface ImageProcessor {
      */
     void resize(File imageFile, File targetFile, int width, int height) throws IOException;
 
+    void canvasSize(File imageFile, File targetFile, int width, int height, String background, String gravity)
+	    throws IOException;
+
     ImageInfo getImageInfo(File source) throws IOException;
 
     /**

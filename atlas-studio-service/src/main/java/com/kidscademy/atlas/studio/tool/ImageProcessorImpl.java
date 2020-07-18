@@ -51,6 +51,13 @@ public class ImageProcessorImpl implements ImageProcessor {
     }
 
     @Override
+    public void canvasSize(File imageFile, File targetFile, int width, int height, String background, String gravity)
+	    throws IOException {
+	exec("${imageFile} -background ${background} -gravity ${gravity} -extent ${width}x${height} ${targetFile}",
+		imageFile, background, gravity, width, height, targetFile);
+    }
+
+    @Override
     public ImageInfo getImageInfo(File imageFile) throws IOException {
 	Params.isFile(imageFile, "Image file");
 	ImageInfoResult result = identify.exec(ImageInfoResult.class, buildCommand("${imageFile}", imageFile));
@@ -58,7 +65,8 @@ public class ImageProcessorImpl implements ImageProcessor {
     }
 
     @Override
-    public void generateXAxis(File targetFile, int canvasWidth, int canvasHeight, String xaxisColor) throws IOException {
+    public void generateXAxis(File targetFile, int canvasWidth, int canvasHeight, String xaxisColor)
+	    throws IOException {
 	float y = (canvasHeight - 1) / 2.0F;
 	exec("-size ${canvasWidth}x${canvasHeight} xc:transparent -fill white -stroke ${xaxisColor} -draw \"line 0,${y},${canvasWidth},${y}\" ${targetFile}",
 		canvasWidth, canvasHeight, xaxisColor, y, canvasWidth, y, targetFile);

@@ -137,6 +137,10 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         ImageService.trimImage(this._preview.getImage(), this._onProcessingDone, this);
     }
 
+    _onCanvasSize(argsForm) {
+        this._argsForm = argsForm;
+    }
+
     _onFlop() {
         ImageService.flopImage(this._preview.getImage(), this._onProcessingDone, this);
     }
@@ -158,7 +162,7 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 	 * handler execute it on server.
 	 */
     _onDone() {
-        var args, crop;
+        var args, crop, height;
         switch (this._actions.getPreviousAction()) {
             case "crop-free":
                 crop = this._cropMask.getCropArea();
@@ -171,6 +175,12 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
                 this._cropMask.hide();
                 args = this._getActionArgs("crop-circle");
                 ImageService.cropCircleImage(this._preview.getImage(), crop.cx, crop.cy, crop.x, crop.y, args.borderColor, Number(args.borderWidth), this._onProcessingDone, this);
+                break;
+
+            case "canvas-size":
+                args = this._getActionArgs("rotate");
+                height = Number(args.height ? args.height : args.width);
+                ImageService.canvasSize(this._preview.getImage(), Number(args.width), height, args.gravity, this._onProcessingDone, this);
                 break;
 
             case "rotate":

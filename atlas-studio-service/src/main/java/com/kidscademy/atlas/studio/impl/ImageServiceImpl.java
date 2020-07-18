@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import com.kidscademy.atlas.studio.ImageService;
+import com.kidscademy.atlas.studio.model.Gravity;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RotateDirection;
@@ -28,6 +29,15 @@ public class ImageServiceImpl implements ImageService {
     public Image trimImage(Image image) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
 	imageProcessor.trim(handler.source(), handler.target());
+	updateImage(image, handler.target(), handler.targetSrc());
+	return image;
+    }
+
+    @Override
+    public Image canvasSize(Image image, int width, int height, Gravity gravity) throws IOException {
+	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
+	String background = imageProcessor.isOpaque(handler.source()) ? "#FFFFFF" : "transparent";
+	imageProcessor.canvasSize(handler.source(), handler.target(), width, height, background, gravity.value());
 	updateImage(image, handler.target(), handler.targetSrc());
 	return image;
     }
