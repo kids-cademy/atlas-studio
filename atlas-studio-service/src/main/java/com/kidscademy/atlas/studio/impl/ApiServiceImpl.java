@@ -8,7 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kidscademy.apiservice.client.Animalia;
 import com.kidscademy.apiservice.client.Wikipedia;
+import com.kidscademy.apiservice.model.PhysicalTrait;
 import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.API;
@@ -39,6 +41,8 @@ public class ApiServiceImpl implements ApiService {
     private final TheFreeDictionary freeDictionary;
     private final CambridgeDictionary cambridgeDictionary;
     private final MerriamWebster merriamWebster;
+
+    private final Animalia animalia;
     private final Wikipedia wikipedia;
 
     public ApiServiceImpl(AppContext context) {
@@ -58,6 +62,8 @@ public class ApiServiceImpl implements ApiService {
 	this.freeDictionary = context.getInstance(TheFreeDictionary.class);
 	this.cambridgeDictionary = context.getInstance(CambridgeDictionary.class);
 	this.merriamWebster = context.getInstance(MerriamWebster.class);
+
+	this.animalia = context.getInstance(Animalia.class);
 	this.wikipedia = context.getInstance(Wikipedia.class);
     }
 
@@ -175,32 +181,45 @@ public class ApiServiceImpl implements ApiService {
     @Override
     @API(name = "features", description = "A feature is a named characteristic with a physical quantity.")
     public List<Feature> getFeatures(Link link) {
-	Map<String, Double> values = null;
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
+	List<Feature> features = new ArrayList<>();
+
 	switch (link.getDomain()) {
 	case "wikipedia.org":
-	    values = wikipedia.getEdibleNutrients(link.getBasename());
+	    Map<String, Double> nutrients = wikipedia.getEdibleNutrients(link.getBasename());
+	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
+		// to avoid full scan we can create a name resolver with hash map
+		// but at current sizes is not really helping
+		for (String label : nutrients.keySet()) {
+		    // all feature meta names related to nutrients have at least one dot
+		    // if not used dot on name scanning there is confusion between 'saturated' and
+		    // 'monounsaturated' because both ends with 'saturated'
+		    if (meta.getName().endsWith("." + Strings.toDotCase(label))) {
+			Feature feature = new Feature(meta, nutrients.get(label));
+			feature.postLoad();
+			features.add(feature);
+			break;
+		    }
+		}
+	    }
+	    break;
+
+	case "animalia.bio":
+	    List<PhysicalTrait> traits = animalia.getPhysicalTraits(link.getBasename());
+	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
+		for (PhysicalTrait trait : traits) {
+		    if(meta.getName().equals(trait.getName())) {
+			Feature feature = new Feature(meta, trait.getValue(), trait.getMaximum());
+			feature.postLoad();
+			features.add(feature);
+			break;
+		    }
+		}		
+	    }
 	    break;
 
 	default:
 	    return null;
-	}
-
-	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
-	List<Feature> features = new ArrayList<>();
-	for (FeatureMeta meta : collection.getFeaturesMeta()) {
-	    // to avoid full scan we can create a name resolver with hash map
-	    // but at current sizes is not really helping
-	    for (String label : values.keySet()) {
-		// all feature meta names related to nutrients have at least one dot
-		// if not used dot on name scanning there is confusion between 'saturated' and
-		// 'monounsaturated' because both ends with 'saturated'
-		if (meta.getName().endsWith("." + Strings.toDotCase(label))) {
-		    Feature feature = new Feature(meta, values.get(label));
-		    feature.postLoad();
-		    features.add(feature);
-		    break;
-		}
-	    }
 	}
 	return features;
     }

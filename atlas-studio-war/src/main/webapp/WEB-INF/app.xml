@@ -31,6 +31,7 @@
 		<zip-align class="com.kidscademy.atlas.studio.tool.ZipAlignProcess" />
 
 		<wikipedia interface="com.kidscademy.apiservice.client.Wikipedia" type="REMOTE" url="http:rest://api.kids-cademy.com/wikipedia/" />
+		<wikipedia interface="com.kidscademy.apiservice.client.Animalia" type="REMOTE" url="http:rest://api.kids-cademy.com/animalia/" />
 		
 		<soft-schools interface="com.kidscademy.atlas.studio.www.SoftSchools" type="REMOTE" url="https:xpath://www.softschools.com/" />
 		<the-free-dictionary interface="com.kidscademy.atlas.studio.www.TheFreeDictionary" type="REMOTE" url="https:xpath://www.thefreedictionary.com/" />
