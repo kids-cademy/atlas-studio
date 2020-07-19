@@ -37,7 +37,6 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 	onCreate(formPage) {
 		super.onCreate(formPage);
 		const collection = formPage.getCollection();
-		this._collectionId = collection.id;
 		this._featuresMeta = collection.featuresMeta;
 		this._updateActions();
 	}
@@ -61,7 +60,7 @@ com.kidscademy.form.FeaturesControl = class extends com.kidscademy.form.FormCont
 
 	_onImport() {
 		this._fireEvent("input");
-		const load = (link) => ApiService.getFeatures(this._collectionId, link, features => this.setValue(features));
+		const load = (link) => ApiService.getFeatures(link, features => this.setValue(features));
 		this._formPage.importFromLink("features", load);
 	}
 

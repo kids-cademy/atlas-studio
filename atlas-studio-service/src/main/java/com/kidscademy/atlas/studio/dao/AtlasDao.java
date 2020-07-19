@@ -42,6 +42,8 @@ public interface AtlasDao {
 
     AtlasCollection getCollectionById(int collectionId);
 
+    AtlasCollection getCollectionByLinkSource(int linkSourceId);
+
     String getCollectionName(int collectionId);
 
     List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId);

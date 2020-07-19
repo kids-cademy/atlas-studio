@@ -13,10 +13,12 @@ import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.API;
 import com.kidscademy.atlas.studio.model.ApiDescriptor;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
@@ -144,23 +146,35 @@ public class ApiServiceImpl implements ApiService {
 	LinkedHashMap<String, String> taxonomy = null;
 	switch (link.getDomain()) {
 	case "wikipedia.org":
-	    taxonomy = wikipedia.getTaxonomy(link.getBasename());
+	    taxonomy = wikipedia.getLifeTaxonomy(link.getBasename());
 	    break;
 
 	default:
 	    return null;
 	}
 
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
 	List<Taxon> taxaList = new ArrayList<>();
-	for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
-	    taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
+	for (TaxonMeta taxonMeta : collection.getTaxonomyMeta()) {
+	    for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
+		if (!taxonMeta.getName().equals(taxon.getKey())) {
+		    continue;
+		}
+		if (taxonMeta.getValues() != null) {
+		    if (!Strings.split(taxonMeta.getValues(), ',').contains(taxon.getValue())) {
+			continue;
+		    }
+		}
+		taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
+		break;
+	    }
 	}
 	return taxaList;
     }
 
     @Override
     @API(name = "features", description = "A feature is a named characteristic with a physical quantity.")
-    public List<Feature> getFeatures(int collectionId, Link link) {
+    public List<Feature> getFeatures(Link link) {
 	Map<String, Double> values = null;
 	switch (link.getDomain()) {
 	case "wikipedia.org":
@@ -171,11 +185,9 @@ public class ApiServiceImpl implements ApiService {
 	    return null;
 	}
 
-	// TODO: get collection ID from external source and remove method parameter
-	// int collectionId = link.getMeta().getCollectionId();
-
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
 	List<Feature> features = new ArrayList<>();
-	for (FeatureMeta meta : atlasDao.getCollectionFeaturesMeta(collectionId)) {
+	for (FeatureMeta meta : collection.getFeaturesMeta()) {
 	    // to avoid full scan we can create a name resolver with hash map
 	    // but at current sizes is not really helping
 	    for (String label : values.keySet()) {

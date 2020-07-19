@@ -117,7 +117,6 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 
 	_onClose() {
 		this._showEditor(false);
-		this._linkSelect.close();
 	}
 
 	// --------------------------------------------------------------------------------------------

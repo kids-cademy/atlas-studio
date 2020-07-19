@@ -93,6 +93,12 @@ public class AtlasDaoImpl implements AtlasDao {
     }
 
     @Override
+    public AtlasCollection getCollectionByLinkSource(int linkSourceId) {
+	return em.createQuery("select c from AtlasCollection c join c.linkSources l where l.id=:linkSourceId",
+		AtlasCollection.class).setParameter("linkSourceId", linkSourceId).getSingleResult();
+    }
+
+    @Override
     public List<DescriptionMeta> getCollectionDescriptionsMeta(int collectionId) {
 	// see getCollectionFeaturesMeta comment
 	return em.find(AtlasCollection.class, collectionId).getDescriptionMeta();

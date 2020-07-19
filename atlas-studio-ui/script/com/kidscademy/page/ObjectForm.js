@@ -38,7 +38,7 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._relatedControl = this.getByClass(com.kidscademy.form.RelatedControl);
 		this._linksControl = this.getByClass(com.kidscademy.form.LinksControl);
 
-		this._linkSelect = this.getByClass(com.kidscademy.ApisSelect);
+		this._linkSelect = this.getByClass(com.kidscademy.ItemSelect);
 
 		if (this._objectId === 0) {
 			AtlasService.createAtlasObject(this._collectionId, this._onObjectLoaded, this);

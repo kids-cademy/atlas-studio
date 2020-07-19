@@ -25,5 +25,5 @@ public interface ApiService {
 
     List<Taxon> getTaxonomy(Link link);
 
-    List<Feature> getFeatures(int collectionId, Link link);
+    List<Feature> getFeatures(Link link);
 }
