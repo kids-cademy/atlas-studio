@@ -142,7 +142,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 
 	_onImportWikipedia() {
 		js.ua.System.prompt("@string/prompt-wikipedia-url", url => {
-			AtlasService.importWikipediaObject(this._collectionId, url, object => this._listControl.addObject(object));
+			ApiService.importWikipediaObject(this._collectionId, url, object => this._listControl.addObject(object));
 		});
 	}
 

@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.impl;
 
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,17 +11,27 @@ import java.util.Map;
 
 import com.kidscademy.apiservice.client.Animalia;
 import com.kidscademy.apiservice.client.Wikipedia;
+import com.kidscademy.apiservice.model.LifeForm;
 import com.kidscademy.apiservice.model.PhysicalTrait;
 import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.API;
 import com.kidscademy.atlas.studio.model.ApiDescriptor;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
+import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.ConservationStatus;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.HDate;
+import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
+import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Strings;
 import com.kidscademy.atlas.studio.www.CambridgeDictionary;
 import com.kidscademy.atlas.studio.www.MerriamWebster;
@@ -29,9 +40,13 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikipediaArticleText;
 
+import js.log.Log;
+import js.log.LogFactory;
 import js.tiny.container.core.AppContext;
 
 public class ApiServiceImpl implements ApiService {
+    private static final Log log = LogFactory.getLog(ApiService.class);
+
     private final List<ApiDescriptor> availableApis;
 
     private final AppContext context;
@@ -160,22 +175,7 @@ public class ApiServiceImpl implements ApiService {
 	}
 
 	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
-	List<Taxon> taxaList = new ArrayList<>();
-	for (TaxonMeta taxonMeta : collection.getTaxonomyMeta()) {
-	    for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
-		if (!taxonMeta.getName().equals(taxon.getKey())) {
-		    continue;
-		}
-		if (taxonMeta.getValues() != null) {
-		    if (!Strings.split(taxonMeta.getValues(), ',').contains(taxon.getValue())) {
-			continue;
-		    }
-		}
-		taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
-		break;
-	    }
-	}
-	return taxaList;
+	return loadTaxonomy(collection.getTaxonomyMeta(), taxonomy);
     }
 
     @Override
@@ -208,13 +208,13 @@ public class ApiServiceImpl implements ApiService {
 	    List<PhysicalTrait> traits = animalia.getPhysicalTraits(link.getBasename());
 	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
 		for (PhysicalTrait trait : traits) {
-		    if(meta.getName().equals(trait.getName())) {
+		    if (meta.getName().equals(trait.getName())) {
 			Feature feature = new Feature(meta, trait.getValue(), trait.getMaximum());
 			feature.postLoad();
 			features.add(feature);
 			break;
 		    }
-		}		
+		}
 	    }
 	    break;
 
@@ -222,5 +222,88 @@ public class ApiServiceImpl implements ApiService {
 	    return null;
 	}
 	return features;
+    }
+
+    @Override
+    public AtlasItem importWikipediaObject(int collectionId, URL articleURL) {
+	LifeForm lifeForm = wikipedia.getLifeForm(Files.basename(articleURL.getPath()));
+	log.debug("Import life form |%s|.", lifeForm.getCommonName());
+
+	String domain = Strings.basedomain(articleURL);
+	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
+	AtlasObject object = AtlasObject.create(collection);
+
+	object.setName(Strings.scientificToDashedName(lifeForm.getScientificName()));
+	if (object.getName() == null) {
+	    object.setName(lifeForm.getCommonName().trim().toLowerCase().replaceAll("[()]", "").replaceAll(" ", "-"));
+	}
+	object.setDisplay(lifeForm.getCommonName());
+	object.setDefinition(lifeForm.getDefinition());
+
+	StringBuilder builder = new StringBuilder();
+	builder.append("<text>");
+	for (DescriptionMeta descriptionMeta : collection.getDescriptionMeta()) {
+	    builder.append("<section name=\"");
+	    builder.append(descriptionMeta.getName());
+	    builder.append("\"></section>");
+	}
+	builder.append("<section name=\"wikipedia\">");
+	for (String line : lifeForm.getDescription()) {
+	    builder.append("<p>");
+	    builder.append(line);
+	    builder.append("</p>");
+	}
+	builder.append("</section></text>");
+	object.setDescription(builder.toString());
+
+	if (lifeForm.getStartDate() != null) {
+	    object.setStartDate(new HDate(lifeForm.getStartDate()));
+	}
+	if (lifeForm.getEndDate() != null && collection.getFlags().hasEndDate()) {
+	    object.setEndDate(new HDate(lifeForm.getEndDate()));
+	}
+	if (collection.getFlags().hasConservationStatus()) {
+	    object.setConservation(ConservationStatus.forDisplay(lifeForm.getConservationStatus()));
+	}
+
+	object.setTaxonomy(loadTaxonomy(collection.getTaxonomyMeta(), lifeForm.getTaxonomy()));
+
+	ExternalSource externalSource = atlasDao.getExternalSourceByDomain(domain);
+	LinkSource linkSource = atlasDao.getLinkSourceByDomain(collectionId, domain);
+
+	List<Link> links = new ArrayList<>();
+	links.add(
+		Link.create(linkSource, articleURL, externalSource.getLinkDefinition(articleURL, object.getDisplay())));
+	object.setLinks(links);
+
+	object.setState(AtlasObject.State.CREATED);
+	object.setAliases(new ArrayList<String>());
+	object.setImages(new HashMap<String, Image>());
+	object.updateTimestamp();
+
+	atlasDao.saveAtlasObject(object);
+	return atlasDao.getAtlasItem(object.getId());
+    }
+
+    private static List<Taxon> loadTaxonomy(List<TaxonMeta> taxonomyMeta, Map<String, String> taxonomy) {
+	if (taxonomy.isEmpty()) {
+	    return null;
+	}
+	List<Taxon> taxaList = new ArrayList<>();
+	for (TaxonMeta taxonMeta : taxonomyMeta) {
+	    for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
+		if (!taxonMeta.getName().equals(taxon.getKey())) {
+		    continue;
+		}
+		if (taxonMeta.getValues() != null) {
+		    if (!Strings.split(taxonMeta.getValues(), ',').contains(taxon.getValue())) {
+			continue;
+		    }
+		}
+		taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
+		break;
+	    }
+	}
+	return taxaList;
     }
 }

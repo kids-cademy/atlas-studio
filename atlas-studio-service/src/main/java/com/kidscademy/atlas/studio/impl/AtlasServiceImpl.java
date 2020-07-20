@@ -8,14 +8,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.kidscademy.apiservice.client.Wikipedia;
-import com.kidscademy.apiservice.model.LifeForm;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -26,12 +23,10 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
-import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
-import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
@@ -79,7 +74,6 @@ public class AtlasServiceImpl implements AtlasService {
     private final AudioProcessor audioProcessor;
     private final ImageProcessor imageProcessor;
     private final BusinessRules businessRules;
-    private final Wikipedia wikipedia;
 
     private KeywordTree<KeywordIndex<Integer>> index;
 
@@ -93,7 +87,6 @@ public class AtlasServiceImpl implements AtlasService {
 	this.audioProcessor = context.getInstance(AudioProcessor.class);
 	this.imageProcessor = context.getInstance(ImageProcessor.class);
 	this.businessRules = context.getInstance(BusinessRules.class);
-	this.wikipedia = context.getInstance(Wikipedia.class);
 
 	File file = context.getAppFile("search-index");
 	List<KeywordIndex<Integer>> searchIndex;
@@ -128,7 +121,7 @@ public class AtlasServiceImpl implements AtlasService {
 	    if (!currentCollection.getName().equals(collection.getName())) {
 		File currentIcon = Files.mediaFile(currentCollection);
 		Files.removeVariants(currentIcon);
-		
+
 		File newIcon = Files.mediaFile(collection);
 		if (!currentIcon.renameTo(newIcon)) {
 		    log.error("Fail to rename collection icon |%s| to |%s|.", currentIcon, newIcon);
@@ -410,64 +403,6 @@ public class AtlasServiceImpl implements AtlasService {
 	    return null;
 	}
 	return Strings.join(Strings.breakSentences(text), separator);
-    }
-
-    @Override
-    public AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException {
-	LifeForm lifeForm = wikipedia.getLifeForm(Files.basename(articleURL.getPath()));
-	log.debug("Import life form |%s|.", lifeForm.getCommonName());
-
-	AtlasCollection collection = atlasDao.getCollectionById(collectionId);
-	AtlasObject object = AtlasObject.create(collection);
-
-	object.setName(Strings.scientificToDashedName(lifeForm.getScientificName()));
-	if (object.getName() == null) {
-	    object.setName(lifeForm.getCommonName().trim().toLowerCase().replaceAll("[()]", "").replaceAll(" ", "-"));
-	}
-	object.setDisplay(lifeForm.getCommonName());
-	object.setDefinition(lifeForm.getDefinition());
-
-	StringBuilder builder = new StringBuilder();
-	builder.append("<text><section name=\"wikipedia\">");
-	for (String line : lifeForm.getDescription()) {
-	    builder.append("<p>");
-	    builder.append(line);
-	    builder.append("</p>");
-	}
-	builder.append("</section></text>");
-	object.setDescription(builder.toString());
-
-	if (lifeForm.getStartDate() != null) {
-	    object.setStartDate(new HDate(lifeForm.getStartDate()));
-	}
-	if (lifeForm.getEndDate() != null && collection.getFlags().hasEndDate()) {
-	    object.setEndDate(new HDate(lifeForm.getEndDate()));
-	}
-	if (collection.getFlags().hasConservationStatus()) {
-	    object.setConservation(ConservationStatus.forDisplay(lifeForm.getConservationStatus()));
-	}
-
-	List<Taxon> taxonomy = null;
-	if (!lifeForm.getTaxonomy().isEmpty()) {
-	    taxonomy = new ArrayList<Taxon>();
-	    for (Map.Entry<String, String> entry : lifeForm.getTaxonomy().entrySet()) {
-		taxonomy.add(new Taxon(entry.getKey(), entry.getValue()));
-	    }
-	    object.setTaxonomy(taxonomy);
-	}
-
-	List<Link> links = new ArrayList<>();
-	LinkSource linkSource = atlasDao.getLinkSourceByDomain(collectionId, Strings.basedomain(articleURL));
-	links.add(Link.create(linkSource, articleURL, getLinkDefinition(articleURL, object.getDisplay())));
-	object.setLinks(links);
-
-	object.setState(AtlasObject.State.CREATED);
-	object.setAliases(new ArrayList<String>());
-	object.setImages(new HashMap<String, Image>());
-	object.updateTimestamp();
-
-	saveAtlasObject(object);
-	return atlasDao.getAtlasItem(object.getId());
     }
 
     // ----------------------------------------------------------------------------------------------

@@ -100,8 +100,6 @@ public interface AtlasService {
 
     String formatLines(String text, String separator);
 
-    AtlasItem importWikipediaObject(int collectionId, URL articleURL) throws IOException, BusinessException;
-
     boolean checkAtlasObjectName(String name);
 
     FeatureMeta createFeatureMeta();

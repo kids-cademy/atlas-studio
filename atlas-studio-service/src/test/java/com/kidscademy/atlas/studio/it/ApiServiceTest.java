@@ -22,10 +22,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.kidscademy.apiservice.client.Wikipedia;
-import com.kidscademy.atlas.studio.AtlasService;
+import com.kidscademy.atlas.studio.ApiService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
-import com.kidscademy.atlas.studio.impl.AtlasServiceImpl;
+import com.kidscademy.atlas.studio.impl.ApiServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
@@ -37,7 +37,7 @@ import js.tiny.container.core.AppContext;
 import js.tiny.container.unit.TestContext;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AtlasServiceTest {
+public class ApiServiceTest {
     private static final String DESCRIPTOR = "" //
 	    + "<app-descriptor>" //
 	    + "  <managed-classes>" //
@@ -52,7 +52,7 @@ public class AtlasServiceTest {
     @Mock
     private BusinessRules businessRules;
 
-    private AtlasService service;
+    private ApiService service;
 
     @Before
     public void beforeTest() throws Exception {
@@ -64,7 +64,7 @@ public class AtlasServiceTest {
 	Wikipedia wikipedia = TestContext.start(DESCRIPTOR).getInstance(Wikipedia.class);
 	when(context.getInstance(Wikipedia.class)).thenReturn(wikipedia);
 
-	service = new AtlasServiceImpl(context);
+	service = new ApiServiceImpl(context);
     }
 
     @Test
