@@ -1,7 +1,6 @@
 package com.kidscademy.atlas.studio.impl;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 
 import com.kidscademy.atlas.studio.ImageService;
@@ -11,14 +10,11 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.RotateDirection;
 import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
+import com.kidscademy.atlas.studio.util.Files;
 
-import js.log.Log;
-import js.log.LogFactory;
 import js.tiny.container.core.AppContext;
 
 public class ImageServiceImpl implements ImageService {
-    private static final Log log = LogFactory.getLog(ImageService.class);
-
     private final ImageProcessor imageProcessor;
 
     public ImageServiceImpl(AppContext context) {
@@ -97,25 +93,7 @@ public class ImageServiceImpl implements ImageService {
 	MediaFileHandler handler = new MediaFileHandler(image.getSrc());
 	handler.commit();
 	updateImage(image, handler.source(), handler.sourceSrc());
-
-	// search image parent directory for image variants and remove all
-	// images variants are generated on the fly using base image content
-	// by convention images name uses underscore ('_') for variants separator
-
-	File[] variants = handler.source().getParentFile().listFiles(new FilenameFilter() {
-	    @Override
-	    public boolean accept(File dir, String name) {
-		return name.contains("_");
-	    }
-	});
-	if (variants != null) {
-	    for (File variant : variants) {
-		if (!variant.delete()) {
-		    log.error("Fail to delete image variant file |%s|.", variant);
-		}
-	    }
-	}
-
+	Files.removeVariants(handler.source());
 	return image;
     }
 

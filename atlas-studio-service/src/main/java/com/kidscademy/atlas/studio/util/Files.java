@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.util;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,11 +11,15 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
+import js.log.Log;
+import js.log.LogFactory;
 import js.tiny.container.annotation.ContextParam;
 import js.util.Params;
 import js.util.Strings;
 
 public final class Files extends js.util.Files {
+    private static Log log = LogFactory.getLog(Files.class);
+
     @ContextParam("media.repository.path")
     private static File REPOSITORY_DIR;
 
@@ -182,5 +187,26 @@ public final class Files extends js.util.Files {
 
     public static String probeContentType(String path) {
 	return MEDIA_TYPES.get(getExtension(path));
+    }
+
+    public static void removeVariants(File imageFile) {
+	// search image parent directory for image variants and remove all
+	// images variants are generated on the fly using base image content
+	// by convention images name uses underscore ('_') for variants separator
+
+	final String imageVariantPattern = basename(imageFile) + "_";
+	File[] variants = imageFile.getParentFile().listFiles(new FilenameFilter() {
+	    @Override
+	    public boolean accept(File dir, String name) {
+		return name.contains(imageVariantPattern);
+	    }
+	});
+	if (variants != null) {
+	    for (File variant : variants) {
+		if (!variant.delete()) {
+		    log.error("Fail to delete image variant file |%s|.", variant);
+		}
+	    }
+	}
     }
 }

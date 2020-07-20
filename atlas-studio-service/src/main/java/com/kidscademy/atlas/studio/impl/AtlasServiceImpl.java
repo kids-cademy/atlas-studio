@@ -127,8 +127,18 @@ public class AtlasServiceImpl implements AtlasService {
 
 	    if (!currentCollection.getName().equals(collection.getName())) {
 		File currentIcon = Files.mediaFile(currentCollection);
+		Files.removeVariants(currentIcon);
+		
 		File newIcon = Files.mediaFile(collection);
-		currentIcon.renameTo(newIcon);
+		if (!currentIcon.renameTo(newIcon)) {
+		    log.error("Fail to rename collection icon |%s| to |%s|.", currentIcon, newIcon);
+		}
+
+		File currentRepository = Files.repositoryDir(currentCollection.getName());
+		File newRepository = Files.repositoryDir(collection.getName());
+		if (!currentRepository.renameTo(newRepository)) {
+		    log.error("Failt to rename collection repository |%s| to |%s|.", currentRepository, newRepository);
+		}
 	    }
 
 	    if (currentCollection.hasFeaturesMeta() && !collection.hasFeaturesMeta()) {
