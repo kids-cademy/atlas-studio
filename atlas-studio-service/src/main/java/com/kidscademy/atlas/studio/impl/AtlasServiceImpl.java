@@ -402,7 +402,7 @@ public class AtlasServiceImpl implements AtlasService {
 	if (text == null) {
 	    return null;
 	}
-	return Strings.join(Strings.breakSentences(text), separator);
+	return Strings.join(Strings.breakSentences(Strings.removeReferences(text)), separator);
     }
 
     // ----------------------------------------------------------------------------------------------
