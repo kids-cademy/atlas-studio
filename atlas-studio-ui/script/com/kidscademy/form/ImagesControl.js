@@ -72,6 +72,10 @@ com.kidscademy.form.ImagesControl = class extends com.kidscademy.form.FormContro
 		return true;
 	}
 
+	getImageKeys() {
+		return this.getChildren().map(element => element.getUserData().imageKey);
+	}
+
 	_onClick(ev) {
 		const item = ev.target.getParentByCssClass("item");
 		if (item) {

@@ -16,8 +16,18 @@ com.kidscademy.FormData = class extends js.dom.Element {
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 		this.addCssClass("exclude");
-		
+
 		this._object = null;
+
+		/**
+		 * Force optional control as mandatory for a single validity test. Usable when a control is optional 
+		 * most of the time but in a particular case need to be mandatory. This list is temporary and is used
+		 * in conjuction with {@link #isValid()} method.
+		 * <pre>
+		 * 		if(form.mandatory("source").isValid()) { ... }
+		 * </pre>  
+		 */
+		this._mandatory = [];
 
 		/**
 		 * Iterable for controls owned by this form data.
@@ -35,9 +45,10 @@ com.kidscademy.FormData = class extends js.dom.Element {
 		var valid = true;
 		this._controls.forEach(control => {
 			if (control.isVisible()) {
-				valid = control.isValid(includeOptional) && valid;
+				valid = control.isValid(includeOptional || this._mandatory.includes(control.getName())) && valid;
 			}
 		});
+		this._mandatory = [];
 		return valid;
 	}
 
@@ -137,7 +148,7 @@ com.kidscademy.FormData = class extends js.dom.Element {
 		if (controlNames.length === 0) {
 			return super.hide();
 		}
-		
+
 		controlNames.forEach(controlName => {
 			// need to hide both control and its parent set, if exists
 			// control should be hide to exclude from form validation
@@ -148,6 +159,24 @@ com.kidscademy.FormData = class extends js.dom.Element {
 				controlset.hide();
 			}
 		});
+		return this;
+	}
+
+	/**
+	 * Enable named select options, less those from given excludes list. If exludes argument is missing it defaults to
+	 * empty array and all options are enabled. Excludes list is compared with option text.
+	 * 
+	 * @param {String} selectName select control name,
+	 * @param {Array} excludes optional excludes list, default to empty array.
+	 */
+	enableOptions(selectName, excludes = []) {
+		const select = this._getControl(selectName);
+		$assert(select.getTag() === "select", "com.kidscademy.FormData#disableOptions", "Named control is not a select.");
+		select.getChildren().forEach(option => option._node.disabled = excludes.includes(option.getText()));
+	}
+
+	mandatory(...controlNames) {
+		this._mandatory = controlNames;
 		return this;
 	}
 

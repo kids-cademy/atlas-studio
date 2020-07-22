@@ -13,6 +13,8 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +31,10 @@ import com.kidscademy.atlas.studio.impl.ApiServiceImpl;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
+import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.LinkSource;
+import com.kidscademy.atlas.studio.model.TaxonMeta;
 
 import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
@@ -56,10 +60,7 @@ public class ApiServiceTest {
 
     @Before
     public void beforeTest() throws Exception {
-
-	when(context.getAppFile(anyString())).thenReturn(new File("fixture/fake-file"));
 	when(context.getInstance(AtlasDao.class)).thenReturn(atlasDao);
-	when(context.getInstance(BusinessRules.class)).thenReturn(businessRules);
 
 	Wikipedia wikipedia = TestContext.start(DESCRIPTOR).getInstance(Wikipedia.class);
 	when(context.getInstance(Wikipedia.class)).thenReturn(wikipedia);
@@ -69,7 +70,10 @@ public class ApiServiceTest {
 
     @Test
     public void importWikipediaObject() throws IOException, BusinessException {
-	when(atlasDao.getCollectionById(2)).thenReturn(new AtlasCollection(2, "wild-birds"));
+	AtlasCollection collection = new AtlasCollection(2, "wild-birds");
+	collection.setDescriptionMeta(descriptionMeta());
+	collection.setTaxonomyMeta(taxonomyMeta());
+	when(atlasDao.getCollectionById(2)).thenReturn(collection);
 	
 	ExternalSource externalSource = new ExternalSource(1, "https://en.wikipedia.org/wiki/",
 		"Wikipedia article about ${display}", "definition,description,features,taxonomy");
@@ -95,7 +99,7 @@ public class ApiServiceTest {
 	assertThat(object.getDisplay(), equalTo("Common raven"));
 
 	assertThat(object.getDescription(), notNullValue());
-	assertThat(object.getDescription(), startsWith("<text><section name=\"wikipedia\"><p>The common raven"));
+	assertThat(object.getDescription(), startsWith("<text><section name=\"description\"></section><section name=\"habitat\"></section><section name=\"wikipedia\"><p>The common raven"));
 
 	assertThat(object.getConservation(), notNullValue());
 	assertThat(object.getConservation(), equalTo(ConservationStatus.LC));
@@ -130,5 +134,24 @@ public class ApiServiceTest {
 	assertThat(object.getLinks().get(0).getUrl(), equalTo(articleURL));
 	assertThat(object.getLinks().get(0).getDefinition(), notNullValue());
 	assertThat(object.getLinks().get(0).getDefinition(), equalTo("Wikipedia article about Common raven"));
+    }
+
+    private static List<DescriptionMeta> descriptionMeta() {
+	List<DescriptionMeta> meta = new ArrayList<>();
+	meta.add(new DescriptionMeta("description", "Description definition."));
+	meta.add(new DescriptionMeta("habitat", "Habitat definition."));
+	return meta;
+    }
+
+    private static List<TaxonMeta> taxonomyMeta() {
+	List<TaxonMeta> meta = new ArrayList<>();
+	meta.add(new TaxonMeta("kingdom"));
+	meta.add(new TaxonMeta("phylum"));
+	meta.add(new TaxonMeta("class"));
+	meta.add(new TaxonMeta("order"));
+	meta.add(new TaxonMeta("family"));
+	meta.add(new TaxonMeta("genus"));
+	meta.add(new TaxonMeta("species"));
+	return meta;
     }
 }

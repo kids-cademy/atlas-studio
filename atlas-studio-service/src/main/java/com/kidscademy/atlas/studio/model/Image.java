@@ -1,7 +1,5 @@
 package com.kidscademy.atlas.studio.model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 import javax.persistence.Cacheable;
@@ -157,27 +155,6 @@ public class Image {
 
     public String getPath() {
 	return path;
-    }
-
-    public boolean isIcon() {
-	return KEY_ICON.equals(imageKey);
-    }
-
-    public void removeIcon(AtlasItem object) throws IOException {
-	if (KEY_ICON.equals(imageKey)) {
-	    File icon = icon(object, fileName);
-	    if (icon.exists() && !icon.delete()) {
-		throw new IOException(String.format("Unable to remove icon file |%s|.", icon.getName()));
-	    }
-	}
-    }
-
-    private static File icon(AtlasItem object, String fileName) {
-	StringBuilder iconName = new StringBuilder();
-	iconName.append(Files.basename(fileName));
-	iconName.append('.');
-	iconName.append(Files.getExtension(fileName));
-	return Files.mediaFile(object, iconName.toString());
     }
 
     @Override

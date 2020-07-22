@@ -25,4 +25,9 @@ public class DescriptionMeta {
     public String getDefinition() {
 	return definition;
     }
+
+    @Override
+    public String toString() {
+	return "DescriptionMeta [name=" + name + "]";
+    }
 }

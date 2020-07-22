@@ -143,7 +143,7 @@ public class MediaFileHandler {
      */
     public void upload(File file) throws IOException {
 	Params.isFile(file, "Source file");
-	File source = file(baseDir, basename, 0, extension);
+	File source = file(baseDir, basename, extension);
 	File parentDir = source.getParentFile();
 
 	if (!parentDir.exists() && !parentDir.mkdirs()) {
@@ -173,9 +173,7 @@ public class MediaFileHandler {
      * @see #source
      */
     public File source() {
-	if (version == -1) {
-	    throw new BugError("Attempt to processs not existing media file.");
-	}
+	assertExists();
 	if (source == null) {
 	    source = file(baseDir, basename, version, extension);
 	}
@@ -194,9 +192,7 @@ public class MediaFileHandler {
      * @see #sourceSrc
      */
     public MediaSRC sourceSrc() {
-	if (version == -1) {
-	    throw new BugError("Attempt to retrieve not existing media file.");
-	}
+	assertExists();
 	if (sourceSrc == null) {
 	    sourceSrc = src(basePath, basename, version, extension);
 	}
@@ -215,9 +211,7 @@ public class MediaFileHandler {
      * @see #target
      */
     public File target() {
-	if (version == -1) {
-	    throw new BugError("Attempt to processs not existing media file.");
-	}
+	assertExists();
 	if (target == null) {
 	    target = file(baseDir, basename, version + 1, extension);
 	}
@@ -236,9 +230,7 @@ public class MediaFileHandler {
      * @see #targetSrc
      */
     public MediaSRC targetSrc() {
-	if (version == -1) {
-	    throw new BugError("Attempt to retrieve not existing media file.");
-	}
+	assertExists();
 	if (targetSrc == null) {
 	    targetSrc = src(basePath, basename, version + 1, extension);
 	}
@@ -246,10 +238,8 @@ public class MediaFileHandler {
     }
 
     public File icon() {
-	if (version == -1) {
-	    throw new BugError("Attempt to create icon for not existing media file.");
-	}
-	return file(baseDir, basename, 0, extension);
+	assertExists();
+	return file(baseDir, basename, extension);
     }
 
     /**
@@ -279,7 +269,7 @@ public class MediaFileHandler {
 	    latestVersionFile = source();
 	}
 	// copy latest version to base file, that is, with version 0
-	Files.copy(latestVersionFile, file(baseDir, basename, 0, extension));
+	Files.copy(latestVersionFile, file(baseDir, basename, extension));
 
 	if (target.exists() && !target.delete()) {
 	    throw new IOException(String.format("Unable to remove media target file with version |%d|.", version + 1));
@@ -363,27 +353,37 @@ public class MediaFileHandler {
      *             if a file remove operation fails.
      */
     public void delete() throws IOException {
-	if (version == -1) {
-	    return;
-	}
-
-	File target = target();
-	if (target.exists() && !target.delete()) {
-	    throw new IOException(String.format("Unable to remove media target file with version |%d|.", version + 1));
-	}
-
-	for (; version >= 0; --version) {
-	    if (!file(baseDir, basename, version, extension).delete()) {
-		throw new IOException(String.format("Unable to remove media file with version |%d|.", version));
+	if (version >= 0) {
+	    File target = target();
+	    if (target.exists() && !target.delete()) {
+		throw new IOException(
+			String.format("Unable to remove media target file with version |%d|.", version + 1));
 	    }
-	}
 
-	this.source = null;
-	this.target = null;
+	    for (; version >= 0; --version) {
+		if (!file(baseDir, basename, version, extension).delete()) {
+		    throw new IOException(String.format("Unable to remove media file with version |%d|.", version));
+		}
+	    }
+
+	    this.source = null;
+	    this.target = null;
+	}
+	Files.removeVariants(file(baseDir, basename, extension));
     }
 
     // ----------------------------------------------------------------------------------------------
     // UTILITY FUNCTIONS
+
+    private void assertExists() {
+	if (version == -1) {
+	    throw new BugError("Attempt to process not existing media file |%s|.", file(baseDir, basename, extension));
+	}
+    }
+
+    private static File file(File dir, String basename, String extension) {
+	return file(dir, basename, 0, extension);
+    }
 
     private static File file(File dir, String basename, int version, String extension) {
 	StringBuilder fileName = new StringBuilder();

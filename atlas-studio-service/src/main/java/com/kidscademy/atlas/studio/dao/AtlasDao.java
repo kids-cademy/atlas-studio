@@ -59,7 +59,7 @@ public interface AtlasDao {
     List<AtlasItem> getRecentUsedAtlasObjects();
 
     List<AtlasItem> getCollectionItems(SearchFilter filter, int collectionId);
-    
+
     List<Integer> getCollectionObjectIds(int collectionId);
 
     List<AtlasImages> getCollectionImages(SearchFilter filter, int collectionId);
@@ -102,7 +102,7 @@ public interface AtlasDao {
     void moveAtlasObject(int sourceObjectId, int targetCollectionId);
 
     void removeObjectFeatures(int objectId);
-    
+
     AtlasItem getAtlasItem(int objectId);
 
     AtlasObject getAtlasObject(int objectId);
@@ -133,7 +133,17 @@ public interface AtlasDao {
 
     void removeObjectImage(int objectId, Image image);
 
-    void addObjectImage(int objectId, Image image);
+    /**
+     * Add image to atlas object. Object images are stored in a map with
+     * {@link Image#getImageKey()} as key. If image key already exists, given image
+     * replace existing one.
+     * 
+     * @param objectId
+     *            atlas object database ID,
+     * @param image
+     *            image descriptor to add.
+     */
+    void putObjectImage(int objectId, Image image);
 
     /**
      * Get atlas object image identified by its key. Key value is unique per atlas

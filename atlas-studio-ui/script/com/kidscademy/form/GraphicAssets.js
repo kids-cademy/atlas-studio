@@ -38,6 +38,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		this._openImageEditor();
 		this._metaForm.open();
 		this._metaForm.enable("image-key");
+		this._metaForm.enableOptions("image-key", this._imagesControl.getImageKeys());
 	}
 
 	_onImageUpload(ev) {
@@ -60,6 +61,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		// and next _onUploadFile is executed
 
 		this._metaForm.hide();
+		this._actions.showOnly("add");
 	}
 
 	_onUploadFile(ev) {
@@ -76,7 +78,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	}
 
 	_onImageLink(ev) {
-		if (!this._metaForm.isValid()) {
+		if (!this._metaForm.mandatory("source").isValid()) {
 			ev.halt();
 			return;
 		}

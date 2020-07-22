@@ -55,12 +55,9 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         });
     }
 
-    _onBrowse(homeURL) {
-        if (!homeURL) {
-            const link = this._selectedLinkView.getUserData();
-            homeURL = link.externalSource.home;
-        }
-        window.open(homeURL);
+    _onBrowse() {
+        const link = this._selectedLinkView.getUserData();
+        this._browse(link.externalSource.home);
     }
 
     _onRemove() {
@@ -140,7 +137,7 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
         }
         const link = this._selectedLinkView.getUserData();
         if (ev.ctrlKey) {
-            this._onBrowse(link.externalSource.home);
+            this._browse(link.externalSource.home);
             return;
         }
 
@@ -165,6 +162,10 @@ com.kidscademy.collection.LinkSourcesControl = class extends js.dom.Control {
             this._linksListView.addObject(link);
             externalSourceView.remove();
         }
+    }
+
+    _browse(homeURL) {
+        window.open(homeURL);
     }
 
     toString() {

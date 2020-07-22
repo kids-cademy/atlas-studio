@@ -80,7 +80,7 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			const actions = this;
 			const actionHandler = function () {
 				const argsForm = actions._args.open(name);
-				containerHandler.call(container, argsForm != null ? argsForm : null);
+				containerHandler.call(container, argsForm != null ? argsForm : arguments[0]);
 				actions._previousAction = name;
 			}.bind(container);
 

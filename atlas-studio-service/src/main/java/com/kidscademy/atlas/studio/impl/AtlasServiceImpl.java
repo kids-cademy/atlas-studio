@@ -559,7 +559,7 @@ public class AtlasServiceImpl implements AtlasService {
 	image.setWidth(imageInfo.getWidth());
 	image.setHeight(imageInfo.getHeight());
 
-	atlasDao.addObjectImage(atlasItem.getId(), image);
+	atlasDao.putObjectImage(atlasItem.getId(), image);
 
 	image.setSrc(Files.mediaSrc(atlasItem, targetFile.getName()));
 	return image;
@@ -591,6 +591,8 @@ public class AtlasServiceImpl implements AtlasService {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	imageFile.renameTo(handler.target());
 	updateImage(image, handler.target(), handler.targetSrc());
+
+	atlasDao.putObjectImage(atlasItem.getId(), image);
 	return image;
     }
 
@@ -598,7 +600,6 @@ public class AtlasServiceImpl implements AtlasService {
     public void removeImage(AtlasItem atlasItem, Image image) throws IOException {
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());
 	handler.delete();
-	image.removeIcon(atlasItem);
 	atlasDao.removeObjectImage(atlasItem.getId(), image);
     }
 

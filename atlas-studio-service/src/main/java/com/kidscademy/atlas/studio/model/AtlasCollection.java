@@ -1,7 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +83,7 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.timestamp = new Date();
 	this.name = name;
 	this.taxonomyMeta = Collections.emptyList();
-	this.descriptionMeta = Arrays.asList(new DescriptionMeta("wikipedia", "Wikipedia description."));
+	this.descriptionMeta = Collections.emptyList();
 	this.featuresMeta = Collections.emptyList();
 	this.linkSources = Collections.emptyList();
 	this.flags = new Flags(true);

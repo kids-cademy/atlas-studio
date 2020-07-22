@@ -511,11 +511,9 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     @Mutable
-    public void addObjectImage(int objectId, Image image) {
+    public void putObjectImage(int objectId, Image image) {
 	AtlasObject object = (AtlasObject) em.createQuery("select o from AtlasObject o where o.id=:id")
 		.setParameter("id", objectId).getSingleResult();
-	// object entity is managed in this scope and altering it will be synchronized
-	// on database
 	object.getImages().put(image.getImageKey(), image);
     }
 
