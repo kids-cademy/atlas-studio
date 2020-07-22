@@ -279,6 +279,7 @@ public class AtlasServiceImpl implements AtlasService {
 	    Files.mediaFile(object, icon.getFileName(), "96x96").delete();
 	}
 	atlasDao.saveAtlasObject(object);
+	object.postLoad();
 	return object;
     }
 

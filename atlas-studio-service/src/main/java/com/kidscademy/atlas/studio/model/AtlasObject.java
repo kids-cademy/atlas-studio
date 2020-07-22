@@ -34,6 +34,7 @@ import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
 
+import js.tiny.container.annotation.TestConstructor;
 import js.util.Params;
 
 @Entity
@@ -200,18 +201,13 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
     public AtlasObject() {
     }
 
+    @TestConstructor
     public AtlasObject(AtlasCollection collection) {
 	Params.notNull(collection, "Atlas collection");
 	this.collection = collection;
-    }
-
-    /**
-     * Test constructor.
-     * 
-     * @param collection
-     */
-    public AtlasObject(int id) {
-	this.id = id;
+	this.images = Collections.emptyMap();
+	this.features = Collections.emptyList();
+	this.links = Collections.emptyList();
     }
 
     /**
@@ -277,9 +273,7 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
 	}
 
 	Image icon = images.get(Image.KEY_ICON);
-	if (icon != null) {
-	    iconSrc = icon.getSrc();
-	}
+	iconSrc = icon != null ? icon.getSrc() : null;
 	sampleSrc = Files.mediaSrc(this, sampleName);
 	waveformSrc = Files.mediaSrc(this, waveformName);
     }

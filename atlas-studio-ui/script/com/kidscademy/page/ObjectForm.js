@@ -92,6 +92,12 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		this._linksControl.onCreate(this);
 
 		this._form.setObject(object);
+
+		if (object.iconSrc != null) {
+			var random = Math.random().toString(36).substr(2);
+			var i = object.iconSrc.indexOf('?');
+			object.iconSrc = object.iconSrc + (i !== -1 ? '&__random__=' : '?') + random;
+		}
 		this._sidebar.setObject(object);
 	}
 
