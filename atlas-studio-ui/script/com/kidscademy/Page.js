@@ -6,7 +6,6 @@ com.kidscademy.Page = class extends js.ua.Page {
 
         this.ERRORS = ["", // SUCCESS
             "Picture file name already used.", // UNIQUE_PICTURE_FILE_NAME
-            "Featured picture should have transparent background.", // TRANSPARENT_FEATURED_PICTURE
             "Collection name already used.", // UNIQUE_COLLECTION_NAME
             "Object name already used.", // UNIQUE_OBJECT_NAME
             "Collection should be empty.", // EMPTY_COLLECTION

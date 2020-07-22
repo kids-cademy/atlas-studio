@@ -566,26 +566,25 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public Image replaceImage(Form imageForm) throws IOException, BusinessException {
+    public Image replaceImage(Form imageForm) throws IOException {
 	UploadedFile uploadedFile = imageForm.getUploadedFile("media-file");
 	return replaceImage(imageForm, uploadedFile.getFile());
     }
 
     @Override
-    public Image replaceImageBySource(Form imageForm) throws IOException, BusinessException {
+    public Image replaceImageBySource(Form imageForm) throws IOException {
 	Params.notNull(imageForm.getValue("source"), "Picture source");
 	URL url = new URL(imageForm.getValue("source"));
 	return replaceImage(imageForm, Files.copy(url));
     }
 
-    private Image replaceImage(Form imageForm, File imageFile) throws BusinessException, IOException {
+    private Image replaceImage(Form imageForm, File imageFile) throws IOException {
 	Params.EQ(imageForm.getValue("image-kind"), "OBJECT", "Object class");
 	AtlasItem atlasItem = getObjectByForm(AtlasItem.class, imageForm);
 	String imageKey = imageForm.getValue("image-key");
 
 	Params.notZero(atlasItem.getId(), "Atlas item ID");
 	Params.notNullOrEmpty(imageKey, "Image key");
-	businessRules.transparentImage(imageKey, imageFile);
 
 	Image image = atlasDao.getImageByKey(atlasItem.getId(), imageKey);
 	MediaFileHandler handler = new MediaFileHandler(atlasItem, image.getFileName());

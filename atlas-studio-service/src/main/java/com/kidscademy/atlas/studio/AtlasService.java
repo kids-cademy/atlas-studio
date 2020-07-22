@@ -137,9 +137,9 @@ public interface AtlasService {
      */
     Image uploadImageBySource(Form form) throws IOException, BusinessException;
 
-    Image replaceImage(Form form) throws IOException, BusinessException;
+    Image replaceImage(Form form) throws IOException;
 
-    Image replaceImageBySource(Form form) throws IOException, BusinessException;
+    Image replaceImageBySource(Form form) throws IOException;
 
     /**
      * Remove object picture from media repository and from database.

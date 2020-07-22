@@ -145,7 +145,6 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public Image uploadReleaseImage(Form imageForm) throws IOException, BusinessException {
 	File imageFile = imageForm.getUploadedFile("media-file").getFile();
-	businessRules.transparentImage(Image.KEY_RELEASE, imageFile);
 
 	Release release = getAtlasReleaseByForm(imageForm);
 	ImageInfo imageInfo = imageProcessor.getImageInfo(imageFile);
