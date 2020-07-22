@@ -90,6 +90,10 @@
 	background-color: rgba(255,255,255,0.6);
 }
 
+.image-editor .crop-mask.inverse .outer {
+	background-color: rgba(0,0,0,0.2);
+}
+
 /** outer rectangle for horizontal offset */
 /** this element width is crop area X offset */
 .image-editor .crop-mask .x-offset {

@@ -67,6 +67,10 @@ com.kidscademy.CropMask = class extends js.dom.Element {
 
 	_onMouseDown(ev) {
 		ev.halt();
+		if (ev.ctrlKey) {
+			this.toggleCssClass("inverse");
+			return;
+		}
 
 		if (ev.target.hasCssClass("w")) {
 			this._moveType = this._RESIZE_W;
