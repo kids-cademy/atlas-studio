@@ -30,6 +30,11 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		this._actions.getByName("file-upload").on("change", this._onUploadFile, this);
 	}
 
+	onCreate(formPage) {
+		super.onCreate(formPage);
+		this._theme = formPage.getCollection().theme;
+	}
+
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
@@ -125,12 +130,22 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	_openImageEditor(image = null) {
 		if (image != null) {
 			var aspectRatio = 0;
-			switch (image.imageKey) {
-				case "icon":
+			switch (`${this._theme}-${image.imageKey}`) {
+				case "modern-icon":
+				case "classic-icon":
 					aspectRatio = 1;
 					break;
 
-				case "contextual":
+				case "modern-cover":
+					aspectRatio = 1.5287;
+					break;
+
+				case "modern-featured":
+					aspectRatio = 1.33;
+					break;
+
+				case "modern-contextual":
+				case "classic-contextual":
 					aspectRatio = 1.6428;
 					break;
 			}

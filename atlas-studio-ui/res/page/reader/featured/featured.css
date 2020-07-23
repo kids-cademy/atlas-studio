@@ -46,3 +46,20 @@
 	content: "-";
 	padding-right: 1em;
 }
+
+
+/* --------------------------------------------------------------------------------------------- */
+/* MODERN THEME */
+
+.reader.modern .featured {
+	width: 660px;
+}
+
+.reader.modern .featured .image {
+	border-bottom-right-radius: 80px;
+}
+
+.reader.modern .featured .caption-container {
+	bottom: auto;
+	border-top-left-radius: 80px;	
+}

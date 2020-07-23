@@ -35,6 +35,8 @@ com.kidscademy.page.ReaderPage = class extends js.ua.Page {
 	_onObjectLoaded(object) {
 		this._paragraphsCache.setHTML(object.description);
 		object.paragraphs = this._paragraphsCache;
+
+		this._objectView.addCssClass(object.theme);
 		this._objectView.setObject(object);
 
 		// adjust position of the featured image section, if is visible

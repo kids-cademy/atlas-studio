@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.kidscademy.atlas.studio.export.ExportItem;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.export.ExportRelatedObject;
+import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Region;
@@ -30,6 +31,8 @@ import com.kidscademy.atlas.studio.search.ObjectIndexer;
 @RunWith(MockitoJUnitRunner.class)
 public class ObjectIndexerTest {
     @Mock
+    private AtlasCollection atlasCollection;
+    @Mock
     private AtlasObject atlasObject;
     @Mock
     private ExportItem exportItem;
@@ -38,6 +41,9 @@ public class ObjectIndexerTest {
 
     @Before
     public void beforeTest() throws NoSuchMethodException {
+	when(atlasObject.getCollection()).thenReturn(atlasCollection);
+	when(atlasCollection.getTheme()).thenReturn("classic");
+	
 	ObjectFields<ExportObject> fields = new ObjectFields<>(ExportObject.class);
 	fields.addField("description"); // 1
 	fields.addField("facts"); // 2

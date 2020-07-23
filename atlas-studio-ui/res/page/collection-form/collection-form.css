@@ -16,3 +16,7 @@
 table.apis-select {
 	width: 100%;
 }
+
+.collection-form .divider {
+	margin-top: 20px;
+}

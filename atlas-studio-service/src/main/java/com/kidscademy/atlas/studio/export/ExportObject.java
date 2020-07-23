@@ -47,6 +47,8 @@ public class ExportObject {
     private final List<ExportRelatedObject> related;
     private final List<ExportLink> links;
 
+    private final String theme;
+    
     public ExportObject(AtlasObject object) {
 	this.name = object.getName();
 	this.display = object.getDisplay();
@@ -92,6 +94,8 @@ public class ExportObject {
 	for (Link link : object.getLinks()) {
 	    this.links.add(new ExportLink(link));
 	}
+	
+	this.theme = object.getCollection().getTheme();
     }
 
     public void setIndex(int index) {

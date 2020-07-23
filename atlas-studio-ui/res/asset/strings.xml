@@ -44,6 +44,7 @@
 	<icon>Icon</icon>
 	<audio-assets>Audio Assets</audio-assets>
 	<flags>Flags</flags>
+	<settings>Settings</settings>
 	<facts>Facts</facts>
 	<features>Features</features>
 	<features-meta>Features Meta</features-meta>

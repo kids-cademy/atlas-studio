@@ -64,6 +64,8 @@ public class AtlasCollection implements Key, GraphicObject {
     @OrderColumn
     private List<LinkSource> linkSources;
 
+    private String theme;
+    
     private Flags flags;
 
     @Transient
@@ -86,6 +88,7 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.descriptionMeta = Collections.emptyList();
 	this.featuresMeta = Collections.emptyList();
 	this.linkSources = Collections.emptyList();
+	this.theme = "classic";
 	this.flags = new Flags(true);
     }
 
@@ -204,6 +207,14 @@ public class AtlasCollection implements Key, GraphicObject {
 
     public List<LinkSource> getLinkSources() {
 	return linkSources;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public void setFlags(Flags flags) {

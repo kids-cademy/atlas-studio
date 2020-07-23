@@ -76,3 +76,25 @@
 	font-size: 1.3rem;
 	color: @color/text-inverse;
 }
+
+/* --------------------------------------------------------------------------------------------- */
+/* MODERN THEME */
+
+.reader.modern .intro .bg {
+	border-radius: 0;
+}
+
+.reader.modern .intro .circle.large {
+	display: none;
+}
+
+.reader.modern .intro .image {
+	max-height: 48vh;
+	max-width: 700px;
+	margin-left: 0;
+	margin-top: 8vh;	
+}
+
+.reader.modern .intro .text-container {
+	top: 60%;
+}

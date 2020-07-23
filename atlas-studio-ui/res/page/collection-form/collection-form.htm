@@ -181,12 +181,19 @@
 			</div>
 		</fieldset>
 
-		<fieldset id="flags">
+		<fieldset id="settings">
 			<div class="header container">
-				<h2>@string/flags</h2>
+				<h2>@string/settings</h2>
 			</div>
 			<div class="content">
 				<div class="container">
+					<div class="controlset">
+						<label>theme</label><select name="theme">
+							<option value="classic">Classic</option>
+							<option value="modern">Modern</option>
+						</select>
+					</div>
+					<hr class="divider" />
 					<div class="controlset">
 						<label>end date</label><input name="flags.end-date" type="checkbox" />
 					</div>
@@ -224,7 +231,7 @@
 		<li data-name="taxonomy-meta"><img src="@image/action/taxonomy" /><span>@string/taxonomy-meta</span><span class="state"></span></li>
 		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/features-meta</span><span class="state"></span></li>
 		<li data-name="link-sources"><img src="@image/action/link" /><span>@string/link-sources</span><span class="state"></span></li>
-		<li data-name="flags"><img src="@image/action/definition" /><span>@string/flags</span><span class="state"></span></li>
+		<li data-name="settings"><img src="@image/action/definition" /><span>@string/settings</span><span class="state"></span></li>
 	</ul>
 
 	<ul class="menu actions bottom">
