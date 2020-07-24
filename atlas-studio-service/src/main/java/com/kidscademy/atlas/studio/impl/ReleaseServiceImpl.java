@@ -445,7 +445,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	coverFile.delete();
 	imageProcessor.exec( //
 		"-size 788x788 " + // overall size
-			"xc:none -fill #${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
+			"xc:none -fill \"#${background}\" -draw \"circle 394,394 394,1\" " + // first layer is a solid
 											 // circle
 			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} "
 			+ // second layer is gradient

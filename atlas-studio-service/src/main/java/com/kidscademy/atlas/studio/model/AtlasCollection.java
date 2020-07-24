@@ -90,6 +90,7 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.linkSources = Collections.emptyList();
 	this.theme = "classic";
 	this.flags = new Flags(true);
+	this.theme = "classic";
     }
 
     @PostLoad

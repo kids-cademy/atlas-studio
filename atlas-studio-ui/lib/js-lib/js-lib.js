@@ -4271,6 +4271,8 @@ $package("js.dom");
 
 js.dom.ImageControl = function(ownerDoc, node) {
 	this.$super(ownerDoc, node);
+
+	this.__control__ = true;
 };
 
 js.dom.ImageControl.prototype = {

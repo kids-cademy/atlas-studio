@@ -18,6 +18,7 @@
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
+		<theme>classic</theme>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
@@ -29,6 +30,7 @@
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
+		<theme>modern</theme>
 	</atlascollection>
 
 	<atlascollection_taxonomymeta>
