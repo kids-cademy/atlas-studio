@@ -493,6 +493,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 	if (OS.isWindows()) {
 	    return color;
 	}
-	return color.charAt(0) == '#' ? Strings.concat("'", color, "'") : color;
+	return Strings.concat("'", color, "'");
     }
 }
