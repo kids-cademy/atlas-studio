@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 import js.util.Classes;
-import js.util.Strings;
 import js.util.Types;
 
 public abstract class ImageMagickProcess extends AbstractToolProcess {
@@ -24,8 +24,7 @@ public abstract class ImageMagickProcess extends AbstractToolProcess {
 	    throw new BugError("ImageMagick processor requires result parser class.");
 	}
 
-	List<String> args = Strings.split(args(command));
-	final Process process = start(args);
+	final Process process = start(split(args(command)));
 	final T result = Classes.newInstance(resultType);
 
 	final Object lock = new Object();
@@ -55,5 +54,55 @@ public abstract class ImageMagickProcess extends AbstractToolProcess {
 
 	wait(process, stdinReader, lock);
 	return result;
+    }
+
+    private static List<String> split(String command) {
+	List<String> args = new ArrayList<>();
+	StringBuilder arg = new StringBuilder();
+
+	SplitState state = SplitState.SPACE;
+	for (int i = 0; i < command.length(); ++i) {
+	    char c = command.charAt(i);
+
+	    switch (state) {
+	    case SPACE:
+		if (c == ' ') {
+		    break;
+		}
+		if (c == '"') {
+		    state = SplitState.ESCAPE;
+		    break;
+		}
+		state = SplitState.TEXT;
+		// fall through next case
+
+	    case TEXT:
+		if (c == ' ') {
+		    args.add(arg.toString());
+		    arg.setLength(0);
+		    state = SplitState.SPACE;
+		} else {
+		    arg.append(c);
+		}
+		break;
+
+	    case ESCAPE:
+		if (c == '"') {
+		    args.add(arg.toString());
+		    arg.setLength(0);
+		    state = SplitState.SPACE;
+		} else {
+		    arg.append(c);
+		}
+		break;
+	    }
+	}
+
+	args.add(arg.toString());
+	return args;
+    }
+
+    private enum SplitState {
+	SPACE, TEXT, ESCAPE
     }
 }

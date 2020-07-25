@@ -29,7 +29,6 @@ import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Html2Md;
-import com.kidscademy.atlas.studio.util.OS;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;
@@ -42,7 +41,6 @@ import js.lang.BugError;
 import js.rmi.BusinessException;
 import js.tiny.container.http.form.Form;
 import js.util.Classes;
-import js.util.Strings;
 import js.util.TextTemplate;
 
 public class ReleaseServiceImpl implements ReleaseService {
@@ -447,12 +445,12 @@ public class ReleaseServiceImpl implements ReleaseService {
 	coverFile.delete();
 	imageProcessor.exec( //
 		"-size 788x788 " + // overall size
-			"xc:none -fill ${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
-											// circle
-			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-${background} "
+			"xc:none -fill #${background} -draw \"circle 394,394 394,1\" " + // first layer is a solid
+											 // circle
+			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-#${background} "
 			+ // second layer is gradient
 			"-compose srcin -composite ${coverFile}", // compose
-		color(background), color(background), coverFile);
+		background, background, coverFile);
 
 	File releaseFile = Files.mediaFile(release, "release");
 	if (releaseFile.exists()) {
@@ -487,13 +485,5 @@ public class ReleaseServiceImpl implements ReleaseService {
 	    exporter.serialize(null);
 	}
 	return app;
-    }
-
-    private static String color(String color) {
-	color = Strings.concat('#', color);
-	if (OS.isWindows()) {
-	    return color;
-	}
-	return Strings.concat("'", color, "'");
     }
 }
