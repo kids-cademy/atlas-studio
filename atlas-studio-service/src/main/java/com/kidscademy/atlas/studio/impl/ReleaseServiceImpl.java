@@ -449,7 +449,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 											 // circle
 			"-define gradient:center=192,256 -define gradient:radii=384,384 radial-gradient:white-\"#${background}\" "
 			+ // second layer is gradient
-			"-compose srcin -compositex ${coverFile}", // compose
+			"-compose srcin -composite ${coverFile}", // compose
 		background, background, coverFile);
 
 	File releaseFile = Files.mediaFile(release, "release");
