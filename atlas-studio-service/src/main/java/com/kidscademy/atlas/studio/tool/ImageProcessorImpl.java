@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
-import com.kidscademy.atlas.studio.util.EventPrintStream;
-
 import js.tiny.container.annotation.TestConstructor;
 import js.tiny.container.net.EventStreamManager;
 import js.util.Params;
@@ -20,7 +18,7 @@ public class ImageProcessorImpl implements ImageProcessor {
     private final PrintStream console;
 
     public ImageProcessorImpl(EventStreamManager eventStream) {
-	this(new ConvertProcess(), new IdentifyProcess(), new PrintStream(new EventPrintStream(eventStream)));
+	this(new ConvertProcess(), new IdentifyProcess(), new PrintStream(new ProcessPrintStream(eventStream)));
     }
 
     @TestConstructor

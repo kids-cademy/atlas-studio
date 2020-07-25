@@ -1,4 +1,4 @@
-package com.kidscademy.atlas.studio.util;
+package com.kidscademy.atlas.studio.tool;
 
 import js.lang.Event;
 

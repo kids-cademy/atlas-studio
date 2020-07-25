@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import java.lang.reflect.Type;
 
 import com.kidscademy.atlas.studio.CT;
-import com.kidscademy.atlas.studio.util.EventPrintStream;
 
 import js.log.Log;
 import js.log.LogFactory;
@@ -28,7 +27,7 @@ public class AudioProcessorImpl implements AudioProcessor {
 
     public AudioProcessorImpl(EventStreamManager eventStream) throws IOException {
 	this(new FFmpegProcess(), new FFprobeProcess(), new Waveform(),
-		new PrintStream(new EventPrintStream(eventStream)));
+		new PrintStream(new ProcessPrintStream(eventStream)));
     }
 
     @TestConstructor

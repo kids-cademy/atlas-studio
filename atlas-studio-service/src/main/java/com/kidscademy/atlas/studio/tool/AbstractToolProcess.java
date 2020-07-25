@@ -9,13 +9,9 @@ import java.util.List;
 import com.kidscademy.atlas.studio.util.OS;
 
 import js.lang.BugError;
-import js.log.Log;
-import js.log.LogFactory;
 import js.util.Strings;
 
 public abstract class AbstractToolProcess implements ToolProcess {
-    private static final Log log = LogFactory.getLog(AbstractToolProcess.class);
-
     private static final long EXECUTION_TIMEOUT = 16000L;
 
     protected PrintStream console;
@@ -34,33 +30,26 @@ public abstract class AbstractToolProcess implements ToolProcess {
     }
 
     protected Process start(List<String> command) throws IOException {
-	ProcessBuilder builder = new ProcessBuilder(command);
-	// redirect STDERR to STDOUT so that reading process.getInputStream get them
-	// both
-	builder.redirectErrorStream(true);
-	log.debug("Create process |%s|.", Strings.join(command));
-	console.println("-------------------------------------------");
-	console.printf("Create process |%s|.\n", Strings.join(command));
-	return builder.start();
+	return start(new ProcessBuilder(command));
     }
 
     protected Process start(File directory, List<String> command) throws IOException {
-	ProcessBuilder builder = new ProcessBuilder(command);
-	builder.directory(directory);
+	return start(new ProcessBuilder(command).directory(directory));
+    }
+
+    private Process start(ProcessBuilder builder) throws IOException {
 	// redirect STDERR to STDOUT so that reading process.getInputStream get them
 	// both
 	builder.redirectErrorStream(true);
-	log.debug("Create process |%s|.", Strings.join(command));
-	console.println("-------------------------------------------");
-	console.printf("Create process |%s|.\n", Strings.join(command));
+	console.printf("Create process |%s|.\n", Strings.join(builder.command()));
 	return builder.start();
     }
 
-    protected static void wait(Process process, Thread stdinThread, Object lock) throws IOException {
+    protected void wait(Process process, Thread stdinThread, Object lock) throws IOException {
 	wait(process, EXECUTION_TIMEOUT, stdinThread, lock);
     }
 
-    protected static void wait(Process process, long timeout, Thread stdinThread, Object lock) throws IOException {
+    protected void wait(Process process, long timeout, Thread stdinThread, Object lock) throws IOException {
 	long timestamp = System.currentTimeMillis() + timeout;
 
 	synchronized (lock) {
@@ -78,26 +67,26 @@ public abstract class AbstractToolProcess implements ToolProcess {
 
 	if (timeout <= 0) {
 	    process.destroy();
-	    throw new IOException("Process execution timeout. See stdout logs for process printout.");
+	    throw new IOException("Process execution timeout. See process logs.");
 	}
 
 	int returnCode = -1;
 	try {
 	    returnCode = process.waitFor();
 	} catch (InterruptedException e) {
-	    log.error(e);
+	    e.printStackTrace(console);
 	}
 	if (returnCode != 0) {
 	    throw new IOException(String.format(
-		    "Process execution fail. Exit code |%d|. See stdout logs for process printout.", returnCode));
+		    "Process execution fail. Exit code |%d|. See process logs.", returnCode));
 	}
     }
 
-    protected static void close(Reader reader) {
+    protected void close(Reader reader) {
 	try {
 	    reader.close();
 	} catch (IOException e) {
-	    log.error(e);
+	    e.printStackTrace(console);
 	}
     }
 

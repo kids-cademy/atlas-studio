@@ -7,7 +7,6 @@ import java.net.URL;
 
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AndroidProject;
-import com.kidscademy.atlas.studio.util.EventPrintStream;
 
 import js.tiny.container.annotation.ContextParam;
 import js.tiny.container.net.EventStreamManager;
@@ -25,7 +24,7 @@ public class AndroidToolsImpl implements AndroidTools {
     private final PrintStream console;
 
     public AndroidToolsImpl(EventStreamManager eventStream) {
-	this.console = new PrintStream(new EventPrintStream(eventStream));
+	this.console = new PrintStream(new ProcessPrintStream(eventStream));
     }
 
     @Override
