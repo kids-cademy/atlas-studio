@@ -131,21 +131,21 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		if (image != null) {
 			var aspectRatio = 0;
 			switch (`${this._theme}-${image.imageKey}`) {
-				case "modern-icon":
-				case "classic-icon":
+				case "MODERN-icon":
+				case "CLASSIC-icon":
 					aspectRatio = 1;
 					break;
 
-				case "modern-cover":
+				case "MODERN-cover":
 					aspectRatio = 1.5287;
 					break;
 
-				case "modern-featured":
+				case "MODERN-featured":
 					aspectRatio = 1.33;
 					break;
 
-				case "modern-contextual":
-				case "classic-contextual":
+				case "MODERN-contextual":
+				case "CLASSIC-contextual":
 					aspectRatio = 1.6428;
 					break;
 			}
