@@ -29,6 +29,7 @@ import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Html2Md;
+import com.kidscademy.atlas.studio.util.OS;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;
@@ -288,7 +289,10 @@ public class ReleaseServiceImpl implements ReleaseService {
 		variables.put("edition", app.getRelease().getEdition());
 		variables.put("license", app.getRelease().getLicense());
 		variables.put("sdk-dir", androidTools.sdkDir());
-		variables.put("lib-path", new File(appDir.getParentFile(), "lib").getAbsolutePath());
+		// Windows uses backslash as path components separators
+		// library path from gradle configuration file should escape backslash
+		// on Unix like system last replaceAll has no effect
+		variables.put("lib-path", OS.escapePath(new File(appDir.getParentFile(), "lib")));
 
 		BufferedReader layoutDescriptor = new BufferedReader(
 			Classes.getResourceAsReader("/android-app/layout"));
@@ -483,7 +487,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
 	    Files.removeFilesHierarchy(atlasDir);
 	    ExportTarget target = new FsExportTarget(atlasDir);
-	    Exporter exporter = new Exporter(dao, target, dao.getReleaseItems(app.getRelease().getId()));
+	    Release release = app.getRelease();
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()));
 	    exporter.serialize(null);
 	}
 	return app;

@@ -6,11 +6,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -74,7 +72,7 @@ public class ApiServiceTest {
 	collection.setDescriptionMeta(descriptionMeta());
 	collection.setTaxonomyMeta(taxonomyMeta());
 	when(atlasDao.getCollectionById(2)).thenReturn(collection);
-	
+
 	ExternalSource externalSource = new ExternalSource(1, "https://en.wikipedia.org/wiki/",
 		"Wikipedia article about ${display}", "definition,description,features,taxonomy");
 	when(atlasDao.getExternalSourceByDomain("wikipedia.org")).thenReturn(externalSource);
@@ -99,7 +97,8 @@ public class ApiServiceTest {
 	assertThat(object.getDisplay(), equalTo("Common raven"));
 
 	assertThat(object.getDescription(), notNullValue());
-	assertThat(object.getDescription(), startsWith("<text><section name=\"description\"></section><section name=\"habitat\"></section><section name=\"wikipedia\"><p>The common raven"));
+	assertThat(object.getDescription(), startsWith(
+		"<text><section name=\"description\"></section><section name=\"habitat\"></section><section name=\"wikipedia\"><p>The common raven"));
 
 	assertThat(object.getConservation(), notNullValue());
 	assertThat(object.getConservation(), equalTo(ConservationStatus.LC));

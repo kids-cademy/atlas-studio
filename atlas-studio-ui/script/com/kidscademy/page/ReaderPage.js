@@ -26,7 +26,7 @@ com.kidscademy.page.ReaderPage = class extends js.ua.Page {
 		this._minLeft = 0;
 
 		const objectId = Number(WinMain.url.parameters.object);
-		AtlasService.getExportObject(objectId, this._onObjectLoaded, this);
+		AtlasService.getReaderObject(objectId, this._onObjectLoaded, this);
 
 
 		this.getByCss("header .back.action").on("click", WinMain.back, WinMain);

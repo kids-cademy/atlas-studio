@@ -39,7 +39,7 @@ public class AtlasCollectionExportView implements View
   @Override
   public void serialize(HttpServletResponse httpResponse) throws IOException {
     ExportTarget target = new ZipExportTarget();
-    Exporter exporter = new Exporter(atlasDao, target, items, true);
+    Exporter exporter = new Exporter(atlasDao, target, items);
 
     httpResponse.setContentType(ContentType.TEXT_PLAIN.getValue());
     exporter.serialize(httpResponse.getOutputStream());

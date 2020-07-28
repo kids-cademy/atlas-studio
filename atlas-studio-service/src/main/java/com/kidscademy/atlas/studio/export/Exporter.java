@@ -13,6 +13,7 @@ import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
+import com.kidscademy.atlas.studio.model.Theme;
 import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
@@ -27,20 +28,45 @@ import js.util.Strings;
 public class Exporter {
     private final AtlasDao dao;
     private final ExportTarget target;
+    private final Theme theme;
     private final List<ExportItem> items;
 
-    public Exporter(AtlasDao dao, ExportTarget target, List<AtlasItem> items) {
+    /**
+     * Exporter for application atlas content.
+     * 
+     * @param dao
+     *            persistence layer,
+     * @param target
+     *            where to export, for now file system or ZIP file,
+     * @param theme
+     *            release theme,
+     * @param items
+     *            release items.
+     */
+    public Exporter(AtlasDao dao, ExportTarget target, Theme theme, List<AtlasItem> items) {
 	this.dao = dao;
 	this.target = target;
 	this.items = new ArrayList<>(items.size());
+	this.theme = theme;
 	for (AtlasItem item : items) {
 	    this.items.add(new ExportItem(item));
 	}
     }
 
-    public Exporter(AtlasDao dao, ExportTarget target, List<ExportItem> items, boolean fake) {
+    /**
+     * Exporter for preview reader.
+     * 
+     * @param dao
+     *            persistence layer,
+     * @param target
+     *            where to export, for now file system or ZIP file,
+     * @param items
+     *            release items.
+     */
+    public Exporter(AtlasDao dao, ExportTarget target, List<ExportItem> items) {
 	this.dao = dao;
 	this.target = target;
+	this.theme = Theme.CLASSIC;
 	this.items = items;
     }
 
@@ -78,7 +104,7 @@ public class Exporter {
 
 	for (ExportItem item : items) {
 	    AtlasObject atlasObject = dao.getAtlasObject(item.getId());
-	    ExportObject exportObject = new ExportObject(atlasObject);
+	    ExportObject exportObject = new ExportObject(theme, atlasObject);
 	    exportObject.setIndex(item.getIndex());
 	    processor.createDirectIndex(exportObject);
 
@@ -110,7 +136,7 @@ public class Exporter {
     private static String filePath(AtlasObject object, String fileName) {
 	return Strings.concat(object.getName(), '/', fileName);
     }
-    
+
     /**
      * Target path.
      * 

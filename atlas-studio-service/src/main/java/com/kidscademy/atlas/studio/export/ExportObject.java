@@ -16,6 +16,7 @@ import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.Theme;
 
 @SuppressWarnings("unused")
 public class ExportObject {
@@ -48,8 +49,12 @@ public class ExportObject {
     private final List<ExportLink> links;
 
     private final String theme;
-    
+
     public ExportObject(AtlasObject object) {
+	this(object.getCollection().getTheme(), object);
+    }
+
+    public ExportObject(Theme theme, AtlasObject object) {
 	this.name = object.getName();
 	this.display = object.getDisplay();
 	this.definition = object.getDefinition();
@@ -94,8 +99,8 @@ public class ExportObject {
 	for (Link link : object.getLinks()) {
 	    this.links.add(new ExportLink(link));
 	}
-	
-	this.theme = object.getCollection().getTheme().cssStyle();
+
+	this.theme = theme.cssStyle();
     }
 
     public void setIndex(int index) {

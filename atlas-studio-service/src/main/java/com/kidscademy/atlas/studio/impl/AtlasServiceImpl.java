@@ -782,7 +782,7 @@ public class AtlasServiceImpl implements AtlasService {
     }
 
     @Override
-    public ExportObject getExportObject(int objectId) {
+    public ExportObject getReaderObject(int objectId) {
 	AtlasObject object = atlasDao.getAtlasObject(objectId);
 	ExportObject exportObject = new ExportObject(object);
 	for (AtlasItem related : atlasDao.getRelatedAtlasObjects(object.getCollection().getId(), object.getRelated())) {
