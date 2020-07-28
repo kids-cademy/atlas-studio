@@ -1,3 +1,8 @@
-<manifest package="${package}">
-
+<manifest 
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	xmlns:tools="http://schemas.android.com/tools"
+	package="${package}">
+	
+    <application android:theme="@style/AtlasTheme.${theme}" tools:replace="android:theme"></application>
+    
 </manifest>

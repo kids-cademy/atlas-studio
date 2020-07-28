@@ -278,6 +278,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		variables.put("update-date", new LongDate().format(new Date()));
 		variables.put("project", app.getName());
 		variables.put("package", app.getPackageName());
+		variables.put("theme", app.getRelease().getTheme().androidTheme());
 		variables.put("version-code", Integer.toString(app.getVersionCode()));
 		variables.put("version-name", app.getRelease().getVersion());
 		variables.put("app_name", app.getDisplay());
@@ -287,6 +288,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		variables.put("edition", app.getRelease().getEdition());
 		variables.put("license", app.getRelease().getLicense());
 		variables.put("sdk-dir", androidTools.sdkDir());
+		variables.put("lib-path", new File(appDir.getParentFile(), "lib").getAbsolutePath());
 
 		BufferedReader layoutDescriptor = new BufferedReader(
 			Classes.getResourceAsReader("/android-app/layout"));

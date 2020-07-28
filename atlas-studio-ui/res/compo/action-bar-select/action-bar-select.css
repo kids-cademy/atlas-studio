@@ -9,7 +9,7 @@
 	display: inline-block;
 	width: auto;
 	box-sizing: border-box;
-	border: solid 1px @color/mute;
+	border: solid 1px @color/text-mute;
 }
 
 .action-bar-select.invalid .abs-control {
@@ -58,7 +58,7 @@
 	vertical-align: middle;
 	white-space: nowrap;
 	cursor: default;
-	border: solid 1px @color/mute;
+	border: solid 1px @color/text-mute;
 	font-size: 1.8rem;
 }
 

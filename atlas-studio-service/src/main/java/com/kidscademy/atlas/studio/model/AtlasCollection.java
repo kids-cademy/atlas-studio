@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,8 +66,9 @@ public class AtlasCollection implements Key, GraphicObject {
     @OrderColumn
     private List<LinkSource> linkSources;
 
-    private String theme;
-    
+    @Enumerated(EnumType.STRING)
+    private Theme theme;
+
     private Flags flags;
 
     @Transient
@@ -88,9 +91,8 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.descriptionMeta = Collections.emptyList();
 	this.featuresMeta = Collections.emptyList();
 	this.linkSources = Collections.emptyList();
-	this.theme = "classic";
 	this.flags = new Flags(true);
-	this.theme = "classic";
+	this.theme = Theme.CLASSIC;
     }
 
     @PostLoad
@@ -210,12 +212,12 @@ public class AtlasCollection implements Key, GraphicObject {
 	return linkSources;
     }
 
-    public String getTheme() {
-        return theme;
+    public Theme getTheme() {
+	return theme;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
+    public void setTheme(Theme theme) {
+	this.theme = theme;
     }
 
     public void setFlags(Flags flags) {

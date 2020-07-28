@@ -44,6 +44,7 @@ import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.Theme;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.transaction.TransactionFactory;
@@ -76,7 +77,7 @@ public class AtlasDaoWriteTest {
 	collection.setDisplay("Mammals");
 	collection.setDefinition("Wild mammals.");
 	collection.setFlags(new Flags());
-	collection.setTheme("modern");
+	collection.setTheme(Theme.MODERN);
 
 	List<DescriptionMeta> descriptionMeta = new ArrayList<>();
 	descriptionMeta.add(new DescriptionMeta("description", "Morphological description."));

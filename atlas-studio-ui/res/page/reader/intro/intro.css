@@ -4,11 +4,11 @@
 
 .intro .bg {
 	position: absolute;
-	width: 460px;
+	width: 410px;
 	height: 100%;
 	background: rgba(255, 255, 255, 0.2);
 	border-radius: 0 0 100px 0;
-	left: 40px;
+	left: 90px;
 	z-index: -1;
 }
 
@@ -24,16 +24,12 @@
 	background-color: rgba(255,255,255,0.25);
 }
 
-.intro.square-image .circle.large {
-	xdisplay: none;	
-}
-
 .intro .circle.small {
-	width: 96px;
-	height: 96px;
-	right: 20px;
-	bottom: 20%;	
-	background-color: rgba(2,25,111,0.3);	
+	width: 140px;
+	height: 140px;
+	right: 30px;
+	bottom: 25%;	
+	background-color: rgba(2,25,111,0.2);	
 }
 
 .intro .image {
@@ -53,9 +49,6 @@
 	max-height: 46vh;
 	margin-left: 0;
 	margin-top: 2vh;
-	xpadding: 2px;
-	xborder: solid 2px white;
-	xborder-radius: 50%;
 }
 
 .intro .text-container {
@@ -74,7 +67,7 @@
 	margin: 0;
 	padding-right: 30px;
 	font-size: 1.3rem;
-	color: @color/text-inverse;
+	color: white;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -82,6 +75,15 @@
 
 .reader.modern .intro .bg {
 	border-radius: 0;
+}
+
+.reader.modern .intro .circle {
+	border-radius: 0;
+}
+
+.reader.modern .intro .circle.small {
+	width: 260px;
+	right: -60px;
 }
 
 .reader.modern .intro .circle.large {

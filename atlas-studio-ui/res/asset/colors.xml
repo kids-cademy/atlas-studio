@@ -3,9 +3,8 @@
 	<text>black</text>
 	<text-accent>yellow</text-accent>
 	<text-inverse>white</text-inverse>
+	<text-mute>#E0E0E0</text-mute>
 	
-	<mute>#E0E0E0</mute>
-	<accent>yellow</accent>
 	<rule>rgba(255, 255, 255, 0.5)</rule>
 	<white-t50>rgba(255, 255, 255, 0.5)</white-t50>
 	<black-t10>rgba(0, 0, 0, 0.0625)</black-t10>

@@ -76,5 +76,5 @@ ol li {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 1.2rem;
-	color: @color/mute;
+	color: @color/text-mute;
 }

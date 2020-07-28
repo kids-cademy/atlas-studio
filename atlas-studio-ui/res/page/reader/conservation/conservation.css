@@ -52,7 +52,7 @@
 	cursor: default;
 }
 
-.conservation .status li.active  .bullet {
+.conservation .status li.active .bullet {
 	border-top-right-radius: 0;
 }
 

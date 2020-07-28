@@ -18,7 +18,7 @@
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
-		<theme>classic</theme>
+		<theme>CLASSIC</theme>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
@@ -30,7 +30,7 @@
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
-		<theme>modern</theme>
+		<theme>MODERN</theme>
 	</atlascollection>
 
 	<atlascollection_taxonomymeta>
@@ -417,6 +417,7 @@
 		<graphicsBackground>FFFFFF</graphicsBackground>
 		<publisher>Published by kids (a)cademy</publisher>
 		<edition>community edition</edition>
+		<theme>CLASSIC</theme>
 		<version>Release 1.0</version>
 		<license>public domain knowledge</license>
 		<readme>Wild birds readme.</readme>

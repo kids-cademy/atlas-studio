@@ -25,7 +25,7 @@
 	margin-top: 40px;
 	margin-left: 160px;
 	text-transform: uppercase;
-	color: @color/accent;
+	color: @color/text-accent;
 	font-size: 1.8rem;
 }
 
@@ -37,5 +37,5 @@
 }
 
 .links .item .display {
-	color: @color/text-inverse;	
+	color: white;	
 }

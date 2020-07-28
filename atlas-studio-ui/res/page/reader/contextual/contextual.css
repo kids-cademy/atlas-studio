@@ -16,7 +16,7 @@
 } 
 
 .contextual .caption p {
-	margin-top: 20px;
+	margin: 20px 0 0;
 	font-size: 1.1rem;
 	line-height: 1.5rem;
 	color: yellow;
@@ -40,7 +40,7 @@
 }
 
 .contextual .sample-title .text {
-	color: @color/accent;
+	color: @color/text-accent;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -77,7 +77,8 @@
 .contextual .graphic {
 	display: inline-block;
 	vertical-align: middle;
-	margin-left: 10px;
+	margin-left: 20px;
+	border-radius: 50%;
 }
 
 .contextual .graphic.i1 {
@@ -98,4 +99,11 @@
 
 .contextual .graphic.i5 {
 	height: 20%;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/* MODERN THEME */
+
+.reader.modern .contextual .graphic {
+	border-radius: 0;
 }

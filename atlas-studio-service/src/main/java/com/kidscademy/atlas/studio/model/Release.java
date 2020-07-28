@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,8 @@ public class Release implements GraphicObject {
     private String graphicsBackground;
     private String publisher;
     private String edition;
+    @Enumerated(EnumType.STRING)
+    private Theme theme;
     private String version;
     private String license;
     private String readme;
@@ -128,6 +132,10 @@ public class Release implements GraphicObject {
 	return edition;
     }
 
+    public Theme getTheme() {
+        return theme;
+    }
+
     public String getVersion() {
 	return version;
     }
@@ -158,6 +166,7 @@ public class Release implements GraphicObject {
 	release.graphicsBackground = "0000D3";
 	release.publisher = "kids (a)cademy";
 	release.edition = "community edition";
+	release.theme = Theme.CLASSIC;
 	release.version = "Release 1.0";
 	release.license = "Apache License 2.0";
 	return release;

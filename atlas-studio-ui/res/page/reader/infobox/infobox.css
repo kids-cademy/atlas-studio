@@ -1,16 +1,22 @@
 .infobox {
+	border-left: solid 1px @color/rule;
+}
+
+.reader .section.infobox {
+	overflow: visible;	
 }
 
 .infobox .circle {
-	width: 264px;
-	height: 264px;
-	left: 10px;
-	bottom: 20%;
-	background-color: #4080CC;
+	width: 300px;
+	height: 300px;
+	left: -50px;
+	bottom: 25%;
+	background-color: rgba(255,255,255,0.2);
 	z-index: -10;
 }
 
 .infobox .container {
+	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
 	padding: @dimen/infobox-padding;
@@ -24,7 +30,7 @@
 	color: black;
 }
 
-.infobox .timestamp h2 {
+.infobox .last-updated h2 {
 	margin-top: 0;
 }
 
@@ -39,7 +45,7 @@
 .infobox p, .infobox li {
 	white-space: nowrap;
 	font-size: 1.4rem;
-	color: @color/accent;
+	color: @color/text-accent;
 }
 
 .infobox li {
@@ -47,24 +53,24 @@
 }
 
 .infobox .timestamp p {
-	color: @color/text-inverse;
+	color: white;
 }
 
 .infobox .name {
-	color: @color/text-inverse;
+	color: white;
 	text-transform: uppercase;	
 	font-size: 1.4rem;
 	padding: 6px 0px;
 }
 
 .infobox .separator {
-	color: @color/text;
+	color: black;
 	font-size: 1.4rem;
 	padding: 6px 10px;
 }
 
 .infobox .value {
-	color: @color/text-inverse;	
+	color: white;	
 	text-transform: lowercase;	
 	font-size: 1.4rem;
 	padding: 6px 0;
@@ -73,6 +79,6 @@
 /* --------------------------------------------------------------------------------------------- */
 /* MODERN THEME */
 
-.reader.modern .infobox {
-	margin-left: 20px;	
+.reader.modern .infobox .circle {
+	border-radius: 0;
 }

@@ -95,7 +95,7 @@ public class ExportObject {
 	    this.links.add(new ExportLink(link));
 	}
 	
-	this.theme = object.getCollection().getTheme();
+	this.theme = object.getCollection().getTheme().cssStyle();
     }
 
     public void setIndex(int index) {

@@ -89,33 +89,41 @@ public class Exporter {
 		}
 	    }
 
-	    target.write(exportObject, path(atlasObject, "object_en.json"));
+	    target.write(exportObject, filePath(atlasObject, "object_en.json"));
 
 	    target.write(file(atlasObject, atlasObject.getSampleName()),
-		    path(atlasObject, atlasObject.getSampleName()));
+		    filePath(atlasObject, atlasObject.getSampleName()));
 	    target.write(file(atlasObject, atlasObject.getWaveformName()),
-		    path(atlasObject, atlasObject.getWaveformName()));
+		    filePath(atlasObject, atlasObject.getWaveformName()));
 
-	    target.write(file(atlasObject, "icon", 96, 96), path(atlasObject, "icon.jpg"));
-	    target.write(file(atlasObject, "trivia", 500, 0), path(atlasObject, "trivia.png"));
-	    target.write(file(atlasObject, "cover", 0, 500), path(atlasObject, "cover.png"));
-	    target.write(file(atlasObject, "featured", 560, 0), path(atlasObject, "featured.png"));
-	    target.write(file(atlasObject, "contextual", 920, 560), path(atlasObject, "contextual.jpg"));
+	    target.write(file(atlasObject, "icon", 96, 96), imagePath(atlasObject, "icon"));
+	    target.write(file(atlasObject, "trivia", 500, 0), imagePath(atlasObject, "trivia"));
+	    target.write(file(atlasObject, "cover", 0, 500), imagePath(atlasObject, "cover"));
+	    target.write(file(atlasObject, "featured", 560, 0), imagePath(atlasObject, "featured"));
+	    target.write(file(atlasObject, "contextual", 920, 560), imagePath(atlasObject, "contextual"));
 	}
 
 	target.write(processor.updateSearchIndex(), "search-index.json");
 	target.write(itemsMap.keySet(), "objects-list.json");
     }
 
+    private static String filePath(AtlasObject object, String fileName) {
+	return Strings.concat(object.getName(), '/', fileName);
+    }
+    
     /**
      * Target path.
      * 
      * @param object
-     * @param fileName
+     * @param imageKey
      * @return
      */
-    private static String path(AtlasObject object, String fileName) {
-	return Strings.concat(object.getName(), '/', fileName);
+    private static String imagePath(AtlasObject object, String imageKey) {
+	Image image = object.getImage(imageKey);
+	if (image == null) {
+	    return null;
+	}
+	return Strings.concat(object.getName(), '/', image.getFileName());
     }
 
     /**
@@ -143,11 +151,11 @@ public class Exporter {
      * @throws IOException
      */
     private static File file(AtlasObject object, String imageKey, int width, int height) throws IOException {
-	Image picture = object.getImage(imageKey);
-	if (picture == null) {
+	Image image = object.getImage(imageKey);
+	if (image == null) {
 	    return null;
 	}
-	File file = Files.mediaFile(object, picture.getFileName());
+	File file = Files.mediaFile(object, image.getFileName());
 	if (!file.exists()) {
 	    return null;
 	}
@@ -158,7 +166,7 @@ public class Exporter {
 	ImageProcessor processor = new ImageProcessorImpl(
 		application.getContext().getInstance(EventStreamManager.class));
 
-	File targetFile = File.createTempFile("picture", picture.getFileName());
+	File targetFile = File.createTempFile("picture", image.getFileName());
 	targetFile.deleteOnExit();
 	processor.resize(file, targetFile, width, height);
 	return targetFile;

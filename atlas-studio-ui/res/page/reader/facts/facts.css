@@ -12,6 +12,7 @@
 	list-style: none;
 	position: relative;
 	width: 100%;
+	padding-top: 10px;	
 	margin-bottom: @dimen/divider-size;
 	background: none !important;
 }
@@ -96,9 +97,9 @@
 .facts .item .name {
 	height: @dimen/bullet-size;
 	line-height: @dimen/bullet-size;
-	margin: 10px 0 2px 0;
+	margin: 10px 0 10px 0;
 	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
-	color: @color/text-inverse;
+	color: white;
 	font-size: 1.8rem;
 	font-weight: lighter;
 	white-space: nowrap;
@@ -111,11 +112,18 @@
 	display: none;
 	margin: 0;
 	padding-left: @eval(add @eval(mul @dimen/bullet-size 0.5) @dimen/paragraph-indent);
-	color: @color/mute;
+	color: @color/text-mute;
 	font-size: 1.4rem;
 	text-align: left;
 }
 
 .facts .item.opened .value {
 	display: block;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/* MODERN THEME */
+
+.reader.modern .facts .item .circle {
+	border-radius: 0;
 }

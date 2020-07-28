@@ -24,6 +24,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.Theme;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 import com.kidscademy.atlas.studio.search.ObjectFields;
 import com.kidscademy.atlas.studio.search.ObjectIndexer;
@@ -42,7 +43,7 @@ public class ObjectIndexerTest {
     @Before
     public void beforeTest() throws NoSuchMethodException {
 	when(atlasObject.getCollection()).thenReturn(atlasCollection);
-	when(atlasCollection.getTheme()).thenReturn("classic");
+	when(atlasCollection.getTheme()).thenReturn(Theme.CLASSIC);
 	
 	ObjectFields<ExportObject> fields = new ObjectFields<>(ExportObject.class);
 	fields.addField("description"); // 1
