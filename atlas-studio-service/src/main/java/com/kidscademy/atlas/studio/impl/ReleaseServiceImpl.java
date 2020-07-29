@@ -111,6 +111,11 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	Files.mediaFile(release, Image.KEY_ICON, "96x96").delete();
 	dao.saveRelease(release);
+
+	AndroidApp app = dao.getAndroidAppByRelease(release.getId());
+	if (app != null) {
+	    updateAndroidProjectFiles(app);
+	}
 	return release;
     }
 
@@ -240,6 +245,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	final boolean createProject = !appDir.exists();
 
 	if (createProject) {
+	    // create project directory and copy files structure from template
+
 	    if (!appDir.mkdir()) {
 		throw new IOException("Cannot create application directory " + appDir);
 	    }
@@ -274,55 +281,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	AsyncTask<Void> task = new AsyncTask<Void>() {
 	    @Override
 	    protected Void execute() throws Throwable {
-
-		Map<String, String> variables = new HashMap<>();
-		variables.put("update-date", new LongDate().format(new Date()));
-		variables.put("project", app.getName());
-		variables.put("package", app.getPackageName());
-		variables.put("theme", app.getRelease().getTheme().androidTheme());
-		variables.put("version-code", Integer.toString(app.getVersionCode()));
-		variables.put("version-name", app.getRelease().getVersion());
-		variables.put("app_name", app.getDisplay());
-		variables.put("app_logotype", app.getRelease().getBrief());
-		variables.put("app_definition", app.getDefinition());
-		variables.put("publisher", app.getRelease().getPublisher());
-		variables.put("edition", app.getRelease().getEdition());
-		variables.put("license", app.getRelease().getLicense());
-		variables.put("sdk-dir", androidTools.sdkDir());
-		// Windows uses backslash as path components separators
-		// library path from gradle configuration file should escape backslash
-		// on Unix like system last replaceAll has no effect
-		variables.put("lib-path", OS.escapePath(new File(appDir.getParentFile(), "lib")));
-
-		BufferedReader layoutDescriptor = new BufferedReader(
-			Classes.getResourceAsReader("/android-app/layout"));
-		String path = null;
-		while ((path = layoutDescriptor.readLine()) != null) {
-		    if (path.charAt(0) != '!') {
-			continue;
-		    }
-		    path = path.substring(1);
-
-		    String sourcePath = "/android-app/template/" + path;
-		    File targetFile = new File(appDir, normalizePath(path));
-		    Writer writer = new VariablesWriter(new FileWriter(targetFile), variables);
-		    Files.copy(Classes.getResourceAsReader(sourcePath), writer);
-		}
-
-		final Release release = app.getRelease();
-		copy(release.getReadme(), new File(appDir, "README.md"));
-		copy(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
-
-		copy(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
-		copy(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
-		copy(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
-
-		copy(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
-		copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
-		copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
-
+		updateAndroidProjectFiles(app);
 		updateAndroidAppContent(app.getId());
-
 		if (createProject) {
 		    androidTools.initLocalGitRepository(app);
 		}
@@ -477,6 +437,56 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	    imageFile.delete();
 	}
+    }
+
+    private void updateAndroidProjectFiles(AndroidApp app) throws IOException {
+	File appDir = app.getDir();
+
+	Map<String, String> variables = new HashMap<>();
+	variables.put("update-date", new LongDate().format(new Date()));
+	variables.put("project", app.getName());
+	variables.put("package", app.getPackageName());
+	variables.put("theme", app.getRelease().getTheme().androidTheme());
+	variables.put("version-code", Integer.toString(app.getVersionCode()));
+	variables.put("version-name", app.getRelease().getVersion());
+	variables.put("app_name", app.getDisplay());
+	variables.put("app_logotype", app.getRelease().getBrief());
+	variables.put("app_definition", app.getDefinition());
+	variables.put("publisher", app.getRelease().getPublisher());
+	variables.put("edition", app.getRelease().getEdition());
+	variables.put("license", app.getRelease().getLicense());
+	variables.put("sdk-dir", androidTools.sdkDir());
+	// Windows uses backslash as path components separators
+	// library path from gradle configuration file should escape backslash
+	// on Unix like system last replaceAll has no effect
+	variables.put("lib-path", OS.escapePath(new File(appDir.getParentFile(), "lib")));
+
+	BufferedReader layoutDescriptor = new BufferedReader(Classes.getResourceAsReader("/android-app/layout"));
+	String path = null;
+	while ((path = layoutDescriptor.readLine()) != null) {
+	    if (path.charAt(0) != '!') {
+		continue;
+	    }
+	    path = path.substring(1);
+
+	    String sourcePath = "/android-app/template/" + path;
+	    File targetFile = new File(appDir, normalizePath(path));
+	    Writer writer = new VariablesWriter(new FileWriter(targetFile), variables);
+	    Files.copy(Classes.getResourceAsReader(sourcePath), writer);
+	}
+
+	final Release release = app.getRelease();
+	copy(release.getReadme(), new File(appDir, "README.md"));
+	copy(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
+
+	copy(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
+	copy(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
+	copy(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
+
+	copy(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
+	copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
+	copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
+
     }
 
     private AndroidApp updateAndroidAppContent(int appId) throws IllegalArgumentException, IOException {
