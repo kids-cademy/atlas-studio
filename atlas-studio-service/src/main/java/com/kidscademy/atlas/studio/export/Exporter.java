@@ -80,9 +80,13 @@ public class Exporter {
      * @throws IOException
      */
     public void serialize(OutputStream stream) throws IOException {
+	serialize(stream, true);
+    }
+
+    public void serialize(OutputStream stream, boolean mediaProcessing) throws IOException {
 	target.open(stream);
 	try {
-	    serialize();
+	    serialize(mediaProcessing);
 	} catch (NoSuchMethodException e) {
 	    throw new IOException(e);
 	} finally {
@@ -90,7 +94,7 @@ public class Exporter {
 	}
     }
 
-    private void serialize() throws NoSuchMethodException, IOException {
+    private void serialize(boolean mediaProcessing) throws NoSuchMethodException, IOException {
 	SearchIndexProcessor processor = new SearchIndexProcessor();
 
 	// uses linked hash map to preserve insertion order
@@ -117,16 +121,18 @@ public class Exporter {
 
 	    target.write(exportObject, filePath(atlasObject, "object_en.json"));
 
-	    target.write(file(atlasObject, atlasObject.getSampleName()),
-		    filePath(atlasObject, atlasObject.getSampleName()));
-	    target.write(file(atlasObject, atlasObject.getWaveformName()),
-		    filePath(atlasObject, atlasObject.getWaveformName()));
+	    if (mediaProcessing) {
+		target.write(file(atlasObject, atlasObject.getSampleName()),
+			filePath(atlasObject, atlasObject.getSampleName()));
+		target.write(file(atlasObject, atlasObject.getWaveformName()),
+			filePath(atlasObject, atlasObject.getWaveformName()));
 
-	    target.write(file(atlasObject, "icon", 96, 96), imagePath(atlasObject, "icon"));
-	    target.write(file(atlasObject, "trivia", 500, 0), imagePath(atlasObject, "trivia"));
-	    target.write(file(atlasObject, "cover", 0, 500), imagePath(atlasObject, "cover"));
-	    target.write(file(atlasObject, "featured", 560, 0), imagePath(atlasObject, "featured"));
-	    target.write(file(atlasObject, "contextual", 920, 560), imagePath(atlasObject, "contextual"));
+		target.write(file(atlasObject, "icon", 96, 96), imagePath(atlasObject, "icon"));
+		target.write(file(atlasObject, "trivia", 500, 0), imagePath(atlasObject, "trivia"));
+		target.write(file(atlasObject, "cover", 0, 500), imagePath(atlasObject, "cover"));
+		target.write(file(atlasObject, "featured", 560, 0), imagePath(atlasObject, "featured"));
+		target.write(file(atlasObject, "contextual", 920, 560), imagePath(atlasObject, "contextual"));
+	    }
 	}
 
 	target.write(processor.updateSearchIndex(), "search-index.json");

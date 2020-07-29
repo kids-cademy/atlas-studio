@@ -115,6 +115,11 @@ public class ReleaseServiceImpl implements ReleaseService {
 	AndroidApp app = dao.getAndroidAppByRelease(release.getId());
 	if (app != null) {
 	    updateAndroidProjectFiles(app);
+
+	    AndroidProject prj = new AndroidProject(app.getName());
+	    ExportTarget target = new FsExportTarget(prj.getAtlasDir());
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()));
+	    exporter.serialize(null, false);
 	}
 	return release;
     }
