@@ -9,43 +9,43 @@
 
 			<table class="properties">
 				<tr>
-					<td>App Name</td>
+					<td>@string/android-app-name</td>
 					<td data-text="name"></td>
 				</tr>
 				<tr>
-					<td>Atlas Update</td>
+					<td>@string/android-content-update</td>
 					<td data-text="release.content-timestamp" data-format="js.format.StandardDateTime"></td>
 				</tr>
 				<tr>
-					<td>Atlas Build</td>
+					<td>@string/android-content-build</td>
 					<td data-text="content-build" data-format="js.format.StandardDateTime"></td>
 				</tr>
 				<tr>
-					<td>Package Name</td>
+					<td>@string/android-package-name</td>
 					<td data-text="package-name"></td>
 				</tr>
 				<tr>
-					<td>Version Code</td>
+					<td>@string/android-version-code</td>
 					<td data-text="version-code"></td>
 				</tr>
 				<tr>
-					<td>Publisher</td>
+					<td>@string/android-publisher</td>
 					<td data-text="release.publisher"></td>
 				</tr>
 				<tr>
-					<td>Edition</td>
+					<td>@string/android-edition</td>
 					<td data-text="release.edition"></td>
 				</tr>
 				<tr>
-					<td>Theme</td>
+					<td>@string/android-theme</td>
 					<td data-text="release.theme"></td>
 				</tr>
 				<tr>
-					<td>Version</td>
+					<td>@string/android-version</td>
 					<td data-text="release.version"></td>
 				</tr>
 				<tr>
-					<td>License</td>
+					<td>@string/android-license</td>
 					<td data-text="release.license"></td>
 				</tr>
 			</table>
@@ -68,11 +68,12 @@
 <div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
 	<ul class="menu">
 		<li data-name="open-release"><img src="@image/action/edit" /><span>@string/release-edit</span></li>
+		<li data-name="release-settings"><img src="@image/action/release-settings" /><span>@string/release-settings</span></li>
 		<li data-name="android-listing"><img src="@image/action/google-play" /><span>@string/android-store-listing</span></li>
 		<li data-name="android-settings"><img src="@image/action/settings" /><span>@string/android-settings</span></li>
 	</ul>
 	<ul class="menu">
-		<li data-name="clean-project"><img src="@image/action/clean-project" /><span>@string/android-clean-project</span></li>
+		<li data-name="clean-build"><img src="@image/action/clean-build" /><span>@string/android-clean-build</span></li>
 		<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
 		<li data-name="build-signed-apk"><img src="@image/action/build-signed-apk" /><span>@string/android-build-signed-apk</span></li>
 		<li data-name="build-bundle"><img src="@image/action/build-bundle" /><span>@string/android-build-bundle</span></li>

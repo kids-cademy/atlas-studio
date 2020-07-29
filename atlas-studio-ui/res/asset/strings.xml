@@ -161,6 +161,7 @@
 
 	<release-create>Create Release</release-create>
 	<release-edit>Edit Release</release-edit>
+	<release-settings>Release Settings</release-settings>
 	<release-clear>Clear Release</release-clear>
 	<release-remove>Remove Release</release-remove>
 	<release-remove-object>Remove From Release</release-remove-object>
@@ -170,7 +171,7 @@
 	<android-application>Application</android-application>
 	<android-store-listing>Store Listing</android-store-listing>
 	<android-settings>Project Settings</android-settings>	
-	<android-clean-project>Clean Project</android-clean-project>
+	<android-clean-build>Clean Build</android-clean-build>
 	<android-build-apk>Build APK</android-build-apk>
 	<android-build-signed-apk>Build Signed APK</android-build-signed-apk>
 	<android-build-bundle>Build Bundle</android-build-bundle>
@@ -179,4 +180,15 @@
 	<android-edit-release>Edit Release</android-edit-release>
 	<android-remove>Remove Android App</android-remove>
 	<android-toggle-console>Toggle Console</android-toggle-console>
+	<android-app-name>App Name</android-app-name>
+	<android-content-update>Content Update</android-content-update>
+	<android-content-build>Content Build</android-content-build>
+	<android-package-name>Package Name</android-package-name>
+	<android-version-code>Version Code</android-version-code>
+	<android-publisher>Publisher</android-publisher>
+	<android-edition>Edition</android-edition>
+	<android-theme>Theme</android-theme>
+	<android-version>Version</android-version>
+	<android-license>License</android-license>
+	
 </string>

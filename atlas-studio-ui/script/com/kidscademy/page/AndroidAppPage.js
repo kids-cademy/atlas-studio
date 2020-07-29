@@ -9,9 +9,10 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
         this._sidebar.setTitle("Android App");
         this._sidebar.on("open-release", this._onOpenRelease, this);
-        this._sidebar.on("android-settings", this._onAndroidSettings, this);
+        this._sidebar.on("release-settings", this._onReleaseSettings, this);
         this._sidebar.on("android-listing", this._onAndroidListing, this);
-        this._sidebar.on("clean-project", this._onCleanProject, this);
+        this._sidebar.on("android-settings", this._onAndroidSettings, this);
+        this._sidebar.on("clean-build", this._onCleanBuild, this);
         this._sidebar.on("build-apk", this._onBuildAPK, this);
         this._sidebar.on("build-signed-apk", this._onBuildSignedAPK, this);
         this._sidebar.on("build-bundle", this._onBuildBundle, this);
@@ -59,15 +60,18 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         WinMain.assign("@link/release", { release: this._app.name });
     }
 
-    _onAndroidSettings() {
-        WinMain.assign("@link/android-settings", { app: this._app.id });
+    _onReleaseSettings() {
+        WinMain.assign("@link/release-form", { release: this._app.release.id });
     }
 
     _onAndroidListing() {
         WinMain.assign("@link/android-listing", { app: this._app.id });
     }
+    _onAndroidSettings() {
+        WinMain.assign("@link/android-settings", { app: this._app.id });
+    }
 
-    _onCleanProject() {
+    _onCleanBuild() {
         this._beforeProcessing();
         ReleaseService.cleanAndroidProject(this._app.id, this._afterProcessing, this);
     }
