@@ -123,6 +123,7 @@ public class AndroidApp implements GraphicObject {
 	app.timestamp = new Date();
 	app.release = release;
 	app.name = release.getName();
+	app.packageName = "com.kidscademy.atlas." + app.name.replaceAll("-", "_");
 	app.display = release.getDisplay();
 	app.definition = release.getDefinition();
 	app.iconSrc = release.getIconSrc();

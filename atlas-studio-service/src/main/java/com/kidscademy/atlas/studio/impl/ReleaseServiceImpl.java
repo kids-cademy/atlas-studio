@@ -99,6 +99,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	    release.setContentTimestamp(new Date());
 	    loadReleasePolicyFiles(release);
 	    createReleaseGraphics(release);
+	    copyToMarkdown(release.getPrivacy(), release.getPrivacyPath());
 	} else {
 	    Release currentRelease = dao.getReleaseById(release.getId());
 	    if (!currentRelease.getName().equals(release.getName())) {
@@ -161,6 +162,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	Release release = dao.getReleaseById(releaseId);
 	Files.removeFilesHierarchy(Files.mediaDir(release)).delete();
+	release.getPrivacyPath().delete();
 
 	dao.removeRelease(releaseId);
     }
@@ -380,27 +382,30 @@ public class ReleaseServiceImpl implements ReleaseService {
 		readme.append(element.getText());
 	    } else {
 		EList rows = element.findByTag("tr");
-		for (int i = 1;;) {
-		    readme.append("- ");
-		    readme.append(rows.item(i).getFirstChild().getText().trim());
-		    if (++i == rows.size()) {
-			break;
+		if (rows.size() > 1) {
+		    for (int i = 1;;) {
+			readme.append("- ");
+			readme.append(rows.item(i).getFirstChild().getText().trim());
+			if (++i == rows.size()) {
+			    break;
+			}
+			readme.append("\r\n");
 		    }
-		    readme.append("\r\n");
 		}
 	    }
 	    readme.append("\r\n\r\n");
 	}
 
+	Release release = app.getRelease();
 	Map<String, String> listing = new HashMap<>();
-	listing.put("releaseId", Integer.toString(app.getRelease().getId()));
+	listing.put("releaseId", Integer.toString(release.getId()));
 	listing.put("name", app.getName());
 	listing.put("title", app.getDisplay());
-	listing.put("shortDescription", app.getRelease().getBrief());
+	listing.put("shortDescription", release.getBrief());
 	listing.put("fullDescription", readme.toString());
 	listing.put("website", "http://kids-cademy.com/");
 	listing.put("email", "contact@kids-cademy.com");
-	listing.put("privacy", app.getGitRepository().toExternalForm().replace(".git", "/") + "blob/master/PRIVACY.md");
+	listing.put("privacy", release.getPrivacyURL());
 	return listing;
     }
 
@@ -499,7 +504,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	copyToMarkdown(release.getReadme(), new File(appDir, "README.md"));
-	copyToMarkdown(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
 
 	copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
 	copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);

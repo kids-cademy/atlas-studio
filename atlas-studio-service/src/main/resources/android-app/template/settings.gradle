@@ -1,2 +1,2 @@
-include ':app', ':atlas'
+include ':app'
 rootProject.name='${project}'

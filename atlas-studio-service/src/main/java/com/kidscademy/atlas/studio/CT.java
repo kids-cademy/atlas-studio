@@ -11,12 +11,26 @@ public class CT {
     @ContextParam("image.magick.path")
     private static String IMAGE_MAGICK_PATH;
 
+    @ContextParam("release.privacy.url")
+    private static String PRIVACY_URL;
+
+    @ContextParam("release.privacy.path")
+    private static File PRIVACY_PATH;
+
     public static File repositoryDir() {
 	return REPOSITORY_DIR;
     }
 
     public static String imageMagickPath() {
 	return IMAGE_MAGICK_PATH;
+    }
+
+    public static String privacyURL() {
+	return PRIVACY_URL;
+    }
+
+    public static File privacyPath() {
+	return PRIVACY_PATH;
     }
 
     /**

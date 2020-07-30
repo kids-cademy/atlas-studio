@@ -14,10 +14,16 @@
 	border: none;
 }
 
-.actions.controlset {
+.controlset > .actions {
 	margin: 0 0 0 @dimen/action-margin !important;
 	padding: 0;
 	border: none;
+}
+
+.controlset > .actions img {
+	vertical-align: top;
+	width: @dimen/input-height;
+	height: @dimen/input-height;
 }
 
 .actions .space {
@@ -64,12 +70,6 @@
 }
 
 .actions.inline img {
-}
-
-.actions.controlset img {
-	vertical-align: top;
-	width: @dimen/input-height;
-	height: @dimen/input-height;
 }
 
 .actions img.last {

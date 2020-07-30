@@ -29,12 +29,22 @@ com.kidscademy.page.AndroidListingPage = class extends com.kidscademy.Page {
     }
 
     _onClick(ev) {
-        if (ev.target.hasCssClass("action-for-input")) {
-            Sound.beep();
-            const control = ev.target.getPreviousSibling();
-            control.removeAttr("disabled");
-            control.copyToClipboard();
-            control.setAttr("disabled", "disabled");
+        function attachedControl(action) {
+            return action.getParent().getPreviousSibling();
+        }
+
+        switch (ev.target.getName()) {
+            case "copy":
+                Sound.beep();
+                const control = attachedControl(ev.target);
+                control.removeAttr("disabled");
+                control.copyToClipboard();
+                control.setAttr("disabled", "disabled");
+                break;
+
+            case "browse":
+                window.open(attachedControl(ev.target).getValue());
+                break;
         }
     }
 

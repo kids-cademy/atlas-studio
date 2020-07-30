@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.kidscademy.atlas.studio.CT;
 
 import js.util.Strings;
 
@@ -77,11 +80,11 @@ public class Release implements GraphicObject {
     }
 
     public Date getContentTimestamp() {
-        return contentTimestamp;
+	return contentTimestamp;
     }
 
     public void setContentTimestamp(Date contentTimestamp) {
-        this.contentTimestamp = contentTimestamp;
+	this.contentTimestamp = contentTimestamp;
     }
 
     @Override
@@ -117,7 +120,7 @@ public class Release implements GraphicObject {
     }
 
     public void setReadme(String readme) {
-        this.readme = readme;
+	this.readme = readme;
     }
 
     public String getReadme() {
@@ -133,7 +136,7 @@ public class Release implements GraphicObject {
     }
 
     public Theme getTheme() {
-        return theme;
+	return theme;
     }
 
     public String getVersion() {
@@ -145,7 +148,7 @@ public class Release implements GraphicObject {
     }
 
     public void setPrivacy(String privacy) {
-        this.privacy = privacy;
+	this.privacy = privacy;
     }
 
     public String getPrivacy() {
@@ -159,6 +162,14 @@ public class Release implements GraphicObject {
 
     public Map<String, MediaSRC> getImages() {
 	return images;
+    }
+
+    public String getPrivacyURL() {
+	return Strings.concat(CT.privacyURL(), name, ".md");
+    }
+
+    public File getPrivacyPath() {
+	return new File(CT.privacyPath(), name + ".md");
     }
 
     public static Release create() {

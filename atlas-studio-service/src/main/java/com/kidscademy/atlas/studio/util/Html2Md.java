@@ -14,14 +14,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class Html2Md {
-    private NodeList elements;
+    private NodeList nodes;
 
     public Html2Md(String html) {
 	try {
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    DocumentBuilder builder = factory.newDocumentBuilder();
 	    Document doc = builder.parse(new InputSource(new StringReader(html)));
-	    elements = doc.getDocumentElement().getChildNodes();
+	    nodes = doc.getDocumentElement().getChildNodes();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -29,8 +29,12 @@ public class Html2Md {
 
     public String converter() {
 	StringBuilder builder = new StringBuilder();
-	for (int i = 0; i < elements.getLength(); ++i) {
-	    Element element = (Element) elements.item(i);
+	for (int i = 0; i < nodes.getLength(); ++i) {
+	    Node node = nodes.item(i);
+	    if(!(node instanceof Element)) {
+		continue;
+	    }
+	    Element element = (Element) node;
 
 	    switch (element.getTagName()) {
 	    case "h1":
@@ -105,16 +109,18 @@ public class Html2Md {
 		}
 		builder.append("\r\n");
 
-		for (int j = 1;;) {
-		    for (int k = 0; k < layout.get(j).size(); ++k) {
-			builder.append("| ");
-			builder.append(text(layout.get(j).get(k), columnWidths.get(k), ' '));
-			builder.append(' ');
+		if (layout.size() > 1) {
+		    for (int j = 1;;) {
+			for (int k = 0; k < layout.get(j).size(); ++k) {
+			    builder.append("| ");
+			    builder.append(text(layout.get(j).get(k), columnWidths.get(k), ' '));
+			    builder.append(' ');
+			}
+			if (++j == layout.size()) {
+			    break;
+			}
+			builder.append("\r\n");
 		    }
-		    if (++j == layout.size()) {
-			break;
-		    }
-		    builder.append("\r\n");
 		}
 		break;
 	    }
