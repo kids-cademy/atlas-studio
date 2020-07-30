@@ -2,6 +2,8 @@ package com.kidscademy.atlas.studio.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +13,11 @@ import com.kidscademy.atlas.studio.model.MediaSRC;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.RepositoryObject;
 
+import js.io.VariablesWriter;
 import js.log.Log;
 import js.log.LogFactory;
 import js.tiny.container.annotation.ContextParam;
+import js.util.Classes;
 import js.util.Params;
 import js.util.Strings;
 
@@ -208,5 +212,9 @@ public final class Files extends js.util.Files {
 		}
 	    }
 	}
+    }
+
+    public static void copy(String templateResource, Map<String, String> variables, Writer writer) throws IOException {
+	Files.copy(Classes.getResourceAsReader(templateResource), new VariablesWriter(writer, variables));
     }
 }

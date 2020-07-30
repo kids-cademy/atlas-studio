@@ -92,6 +92,15 @@ public class ExternalSource implements GraphicObject, Domain {
     }
 
     @TestConstructor
+    public ExternalSource(String home, String display) {
+	this.id = 0;
+	this.home = home;
+	this.domain = Strings.basedomain(home);
+	this.name = Files.basename(this.domain);
+	this.display = display;
+    }
+
+    @TestConstructor
     public ExternalSource(int id, String home, String definitionTemplate, String apis) {
 	this.id = id;
 	this.home = home;

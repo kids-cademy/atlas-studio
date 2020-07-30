@@ -634,12 +634,30 @@ public class AtlasDaoImpl implements AtlasDao {
 
     @Override
     public List<AtlasItem> getReleaseItems(int releaseId) {
+	return getAtlasItems(getReleaseItemIds(releaseId));
+    }
+
+    @Override
+    public List<ExternalSource> getReleaseExternalSources(int releaseId) {
+	List<Integer> ids = getReleaseItemIds(releaseId);
+	if (ids.isEmpty()) {
+	    return Collections.emptyList();
+	}
+	return em.createQuery(
+		"select distinct e from AtlasObject o join o.links l join l.linkSource s join s.externalSource e where o.id in :ids order by e.display",
+		ExternalSource.class).setParameter("ids", ids).getResultList();
+    }
+
+    private List<Integer> getReleaseItemIds(int releaseId) {
 	ReleaseParent release = em.find(ReleaseParent.class, releaseId);
+	if (release == null) {
+	    return Collections.emptyList();
+	}
 	List<Integer> ids = new ArrayList<>();
 	for (ReleaseChild child : release.getChildren()) {
 	    ids.add(child.getId());
 	}
-	return getAtlasItems(ids);
+	return ids;
     }
 
     @Override

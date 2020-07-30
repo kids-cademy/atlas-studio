@@ -225,6 +225,8 @@ public interface AtlasDao {
 
     List<AtlasItem> getReleaseItems(int releaseId);
 
+    List<ExternalSource> getReleaseExternalSources(int releaseId);
+
     AndroidApp getAndroidAppByName(String name);
 
     void saveAndroidApp(AndroidApp app);

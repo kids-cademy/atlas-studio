@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.Writer;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +21,7 @@ import com.kidscademy.atlas.studio.export.FsExportTarget;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasItem;
+import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseItem;
@@ -36,7 +37,6 @@ import js.dom.DocumentBuilder;
 import js.dom.EList;
 import js.dom.Element;
 import js.format.LongDate;
-import js.io.VariablesWriter;
 import js.lang.AsyncTask;
 import js.lang.BugError;
 import js.rmi.BusinessException;
@@ -46,13 +46,15 @@ import js.util.TextTemplate;
 
 public class ReleaseServiceImpl implements ReleaseService {
     private final AtlasDao dao;
+    private final DocumentBuilder documentBuilder;
     private final AndroidTools androidTools;
     private final ImageProcessor imageProcessor;
     private final BusinessRules businessRules;
 
-    public ReleaseServiceImpl(AtlasDao dao, AndroidTools androidTools, ImageProcessor imageProcessor,
-	    BusinessRules businessRules) {
+    public ReleaseServiceImpl(AtlasDao dao, DocumentBuilder documentBuilder, AndroidTools androidTools,
+	    ImageProcessor imageProcessor, BusinessRules businessRules) {
 	this.dao = dao;
+	this.documentBuilder = documentBuilder;
 	this.androidTools = androidTools;
 	this.imageProcessor = imageProcessor;
 	this.businessRules = businessRules;
@@ -110,6 +112,24 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	Files.mediaFile(release, Image.KEY_ICON, "96x96").delete();
+
+	if (release.isPersisted()) {
+	    Document document = documentBuilder.loadXML(new StringReader(release.getReadme()));
+	    Element externalSourcesTable = document.getByTag("table");
+	    while (externalSourcesTable.getChildren().size() > 1) {
+		externalSourcesTable.getLastChild().remove();
+	    }
+	    for (ExternalSource externalSource : dao.getReleaseExternalSources(release.getId())) {
+		Element tr = document.createElement("tr");
+		externalSourcesTable.addChild(tr);
+		tr.addChild(document.createElement("td").setText(externalSource.getDisplay()));
+		tr.addChild(document.createElement("td").setText(externalSource.getHome()));
+	    }
+	    StringWriter readme = new StringWriter();
+	    document.serialize(readme);
+	    release.setReadme(readme.toString());
+	}
+
 	dao.saveRelease(release);
 
 	AndroidApp app = dao.getAndroidAppByRelease(release.getId());
@@ -299,12 +319,12 @@ public class ReleaseServiceImpl implements ReleaseService {
 	return app;
     }
 
-    private static void copy(String html, File file) throws IOException {
+    private static void copyToMarkdown(String html, File file) throws IOException {
 	Html2Md html2md = new Html2Md(html);
 	Files.copy(new StringReader(html2md.converter()), new FileWriter(file));
     }
 
-    private void copy(Release release, String imageKey, File appDir, String imagePath, int width, int height)
+    private void copyResizeImage(Release release, String imageKey, File appDir, String imagePath, int width, int height)
 	    throws IOException {
 	File releaseImage = Files.mediaFile(release, imageKey);
 	if (!releaseImage.exists()) {
@@ -445,21 +465,22 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     private void updateAndroidProjectFiles(AndroidApp app) throws IOException {
+	Release release = app.getRelease();
 	File appDir = app.getDir();
 
 	Map<String, String> variables = new HashMap<>();
 	variables.put("update-date", new LongDate().format(new Date()));
 	variables.put("project", app.getName());
 	variables.put("package", app.getPackageName());
-	variables.put("theme", app.getRelease().getTheme().androidTheme());
+	variables.put("theme", release.getTheme().androidTheme());
 	variables.put("version-code", Integer.toString(app.getVersionCode()));
-	variables.put("version-name", app.getRelease().getVersion());
-	variables.put("app_name", app.getDisplay());
-	variables.put("app_logotype", app.getRelease().getBrief());
-	variables.put("app_definition", app.getDefinition());
-	variables.put("publisher", app.getRelease().getPublisher());
-	variables.put("edition", app.getRelease().getEdition());
-	variables.put("license", app.getRelease().getLicense());
+	variables.put("version-name", release.getVersion());
+	variables.put("app-name", app.getDisplay());
+	variables.put("app-logotype", release.getBrief());
+	variables.put("app-definition", app.getDefinition());
+	variables.put("publisher", release.getPublisher());
+	variables.put("edition", release.getEdition());
+	variables.put("license", release.getLicense());
 	variables.put("sdk-dir", androidTools.sdkDir());
 	// Windows uses backslash as path components separators
 	// library path from gradle configuration file should escape backslash
@@ -473,25 +494,20 @@ public class ReleaseServiceImpl implements ReleaseService {
 		continue;
 	    }
 	    path = path.substring(1);
-
-	    String sourcePath = "/android-app/template/" + path;
-	    File targetFile = new File(appDir, normalizePath(path));
-	    Writer writer = new VariablesWriter(new FileWriter(targetFile), variables);
-	    Files.copy(Classes.getResourceAsReader(sourcePath), writer);
+	    String templateResource = "/android-app/template/" + path;
+	    Files.copy(templateResource, variables, new FileWriter(new File(appDir, normalizePath(path))));
 	}
 
-	final Release release = app.getRelease();
-	copy(release.getReadme(), new File(appDir, "README.md"));
-	copy(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
+	copyToMarkdown(release.getReadme(), new File(appDir, "README.md"));
+	copyToMarkdown(release.getPrivacy(), new File(appDir, "PRIVACY.md"));
 
-	copy(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
-	copy(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
-	copy(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
+	copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
+	copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
+	copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
 
-	copy(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
-	copy(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
-	copy(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
-
+	copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
+	copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
+	copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
     }
 
     private AndroidApp updateAndroidAppContent(int appId) throws IllegalArgumentException, IOException {

@@ -9,6 +9,7 @@ import javax.persistence.Transient;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.lang.Displayable;
+import js.tiny.container.annotation.TestConstructor;
 import js.util.Params;
 
 @Embeddable
@@ -58,6 +59,11 @@ public class Link implements Displayable, Domain {
 	this.definition = definition;
     }
 
+    @TestConstructor
+    public Link(ExternalSource externalSource) {
+	this.linkSource = new LinkSource(externalSource);
+    }
+    
     public void postLoad() {
 	display = linkSource.getExternalSource().getDisplay();
 	iconSrc = Files.mediaSrc(this);

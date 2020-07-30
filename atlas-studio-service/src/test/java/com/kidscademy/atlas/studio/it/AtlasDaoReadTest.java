@@ -136,18 +136,18 @@ public class AtlasDaoReadTest {
 	List<Link> links = dao.getObjectLinks(1);
 	assertThat(links, notNullValue());
 	assertThat(links, hasSize(2));
-	
+
 	assertThat(links.get(0).getUrl(), equalTo(new URL("https://en.wikipedia.org/wiki/Accordion")));
 	assertThat(links.get(0).getDefinition(), equalTo("Wikipedia article about accordion."));
 	assertThat(links.get(0).getDomain(), equalTo("wikipedia.org"));
 	assertThat(links.get(0).getLinkSource().getId(), equalTo(1));
-	
+
 	assertThat(links.get(1).getUrl(), equalTo(new URL("https://www.britannica.com/art/bandonion")));
 	assertThat(links.get(1).getDefinition(), equalTo("Bandonion on Britannica."));
 	assertThat(links.get(1).getDomain(), equalTo("britannica.com"));
 	assertThat(links.get(1).getLinkSource().getId(), equalTo(2));
     }
-    
+
     @Test
     public void getCollectionItems() {
 	Map<String, String> criteria = new HashMap<>();
@@ -432,6 +432,17 @@ public class AtlasDaoReadTest {
 	assertThat(items, hasSize(2));
 	assertThat(items.get(0).getName(), equalTo("accordion"));
 	assertThat(items.get(1).getName(), equalTo("eagle"));
+    }
+
+    @Test
+    public void getReleaseExternalSources() {
+	List<ExternalSource> sources = dao.getReleaseExternalSources(1);
+	assertThat(sources, notNullValue());
+	assertThat(sources, hasSize(2));
+	assertThat(sources.get(0).getDisplay(), equalTo("Wikipedia"));
+	assertThat(sources.get(0).getHome(), equalTo("https://en.wikipedia.org/wiki/"));
+	assertThat(sources.get(1).getDisplay(), equalTo("Britannica"));
+	assertThat(sources.get(1).getHome(), equalTo("https://www.britannica.com/"));
     }
 
     @Test

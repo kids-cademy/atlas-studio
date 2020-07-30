@@ -1,0 +1,15 @@
+<description>
+	<h1>${app-name}</h1>
+	<table>
+		<tr>
+			<th>Authority</th>
+			<th>Link</th>
+		</tr>
+#foreach(${source} in ${external-sources})
+		<tr>
+			<td>${source.display}</td>
+			<td>${source.home}</td>
+		</tr>
+#end
+	</table>
+</description>

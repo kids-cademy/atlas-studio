@@ -18,6 +18,8 @@
 		<admin-dao interface="com.kidscademy.atlas.studio.dao.AdminDao" class="com.kidscademy.atlas.studio.dao.AdminDaoImpl" type="PROXY" />
 		<atlas-dao interface="com.kidscademy.atlas.studio.dao.AtlasDao" class="com.kidscademy.atlas.studio.dao.AtlasDaoImpl" type="PROXY" />
 
+		<document-builder interface="js.dom.DocumentBuilder" type="SERVICE" />
+		
 		<audio-processor interface="com.kidscademy.atlas.studio.tool.AudioProcessor" class="com.kidscademy.atlas.studio.tool.AudioProcessorImpl" />
 		<image-processor interface="com.kidscademy.atlas.studio.tool.ImageProcessor" class="com.kidscademy.atlas.studio.tool.ImageProcessorImpl" />
 		<identify-process class="com.kidscademy.atlas.studio.tool.IdentifyProcess" />

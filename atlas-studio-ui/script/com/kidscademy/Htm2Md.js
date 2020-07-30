@@ -78,14 +78,16 @@ com.kidscademy.Htm2Md = class {
                     }
                     markdown += "\r\n";
 
-                    for (let i = 1; ;) {
-                        for (let j = 0; j < layout[i].length; ++j) {
-                            markdown += `| ${text(layout[i][j], columnWidths[j], ' ')} `;
+                    if (layout.length > 1) {
+                        for (let i = 1; ;) {
+                            for (let j = 0; j < layout[i].length; ++j) {
+                                markdown += `| ${text(layout[i][j], columnWidths[j], ' ')} `;
+                            }
+                            if (++i == layout.length) {
+                                break;
+                            }
+                            markdown += "\r\n";
                         }
-                        if (++i == layout.length) {
-                            break;
-                        }
-                        markdown += "\r\n";
                     }
                     break;
             }

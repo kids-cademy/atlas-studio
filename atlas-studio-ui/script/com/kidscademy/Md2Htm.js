@@ -172,7 +172,9 @@ com.kidscademy.Md2Htm = class {
 
                 case 7: // TABLE_BODY
                     if (c === '\n') {
-                        this._html += "</td></tr>";
+                        if (cellIndex > 0) {
+                            this._html += "</td></tr>";
+                        }
                         cellIndex = 0;
                         state = 8; // TABLE_BODY_END
                         break;
