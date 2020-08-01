@@ -439,10 +439,10 @@ public class AtlasDaoReadTest {
 	List<ExternalSource> sources = dao.getReleaseExternalSources(1);
 	assertThat(sources, notNullValue());
 	assertThat(sources, hasSize(2));
-	assertThat(sources.get(0).getDisplay(), equalTo("Wikipedia"));
-	assertThat(sources.get(0).getHome(), equalTo("https://en.wikipedia.org/wiki/"));
-	assertThat(sources.get(1).getDisplay(), equalTo("Britannica"));
-	assertThat(sources.get(1).getHome(), equalTo("https://www.britannica.com/"));
+	assertThat(sources.get(0).getDisplay(), equalTo("Britannica"));
+	assertThat(sources.get(0).getHome(), equalTo("https://www.britannica.com/"));
+	assertThat(sources.get(1).getDisplay(), equalTo("Wikipedia"));
+	assertThat(sources.get(1).getHome(), equalTo("https://en.wikipedia.org/wiki/"));
     }
 
     @Test

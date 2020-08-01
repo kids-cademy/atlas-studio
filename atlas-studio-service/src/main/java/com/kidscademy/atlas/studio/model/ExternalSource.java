@@ -206,6 +206,11 @@ public class ExternalSource implements GraphicObject, Domain {
 	return true;
     }
 
+    @Override
+    public String toString() {
+	return "ExternalSource [name=" + name + ", home=" + home + "]";
+    }
+
     public String getLinkDefinition(URL link, String objectDisplay) {
 	StringBuilder definitionBuilder = new StringBuilder();
 	StringBuilder variableBuilder = new StringBuilder();

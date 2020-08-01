@@ -1,7 +1,6 @@
 package com.kidscademy.atlas.studio.export;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,11 @@ import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.Theme;
 
+import js.dom.Document;
+import js.dom.DocumentBuilder;
+import js.dom.Element;
+import js.util.Classes;
+
 @SuppressWarnings("unused")
 public class ExportObject {
     private int index;
@@ -25,7 +29,7 @@ public class ExportObject {
     private String name;
     private String display;
     private String definition;
-    private String description;
+    private List<String> description;
 
     private Map<String, ExportImage> images;
 
@@ -134,7 +138,7 @@ public class ExportObject {
 	return definition;
     }
 
-    public String getDescription() {
+    public List<String> getDescription() {
 	return description;
     }
 
@@ -174,65 +178,19 @@ public class ExportObject {
 	return images.get(imageKey);
     }
 
-    private static String exportDescription(String description) {
+    private static List<String> exportDescription(String description) {
 	if (description == null) {
 	    return null;
 	}
-	StringBuilder exportBuilder = new StringBuilder();
-	StringBuilder tagBuilder = new StringBuilder();
 
-	DescriptionState state = DescriptionState.LINE;
-	boolean endTag = false;
-	for (int i = 0; i < description.length(); ++i) {
-	    char c = description.charAt(i);
+	DocumentBuilder builder = Classes.loadService(DocumentBuilder.class);
+	Document document = builder.parseXML(description);
 
-	    switch (state) {
-	    case TAG:
-		if (c == '/') {
-		    endTag = true;
-		    break;
-		}
-		if (c == '>') {
-		    if (!excludes(tagBuilder.toString())) {
-			exportBuilder.append('<');
-			if (endTag) {
-			    exportBuilder.append('/');
-			}
-			exportBuilder.append(tagBuilder);
-			exportBuilder.append('>');
-		    }
-		    endTag = false;
-		    tagBuilder.setLength(0);
-		    state = DescriptionState.LINE;
-		    break;
-		}
-		tagBuilder.append(c);
-		break;
-
-	    case LINE:
-		if (c == '<') {
-		    state = DescriptionState.TAG;
-		    break;
-		}
-		exportBuilder.append(c);
-		break;
-	    }
+	List<String> paragraphs = new ArrayList<String>();
+	for (Element paragraph : document.findByTag("p")) {
+	    paragraphs.add(paragraph.getText());
 	}
 
-	return exportBuilder.toString();
-    }
-
-    private static List<String> DESCRIPTION_EXCLUDE_TAGS = Arrays.asList("text", "section", "em", "strong");
-
-    private static boolean excludes(String tag) {
-	int tagNameEndPosition = tag.indexOf(' ');
-	if (tagNameEndPosition == -1) {
-	    tagNameEndPosition = tag.length();
-	}
-	return DESCRIPTION_EXCLUDE_TAGS.contains(tag.substring(0, tagNameEndPosition));
-    }
-
-    private enum DescriptionState {
-	TAG, LINE
+	return paragraphs;
     }
 }

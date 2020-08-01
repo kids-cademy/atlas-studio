@@ -1,7 +1,7 @@
 package com.kidscademy.atlas.studio.unit;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -63,7 +63,7 @@ public class SearchIndexProcessorTest {
 
 	when(object1.getIndex()).thenReturn(2);
 	when(object1.getDisplay()).thenReturn("Bandoneon");
-	when(object1.getDescription()).thenReturn("Bandoneon is related to accordion.");
+	when(object1.getDescription()).thenReturn(Arrays.asList("Bandoneon is related to accordion."));
 
 	when(object2.getIndex()).thenReturn(3);
 	when(object2.getDisplay()).thenReturn("Melodica");

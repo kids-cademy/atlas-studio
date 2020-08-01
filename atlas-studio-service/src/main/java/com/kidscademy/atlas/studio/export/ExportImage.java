@@ -1,12 +1,22 @@
 package com.kidscademy.atlas.studio.export;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 
+import js.dom.Document;
+import js.dom.DocumentBuilder;
+import js.dom.Element;
+import js.util.Classes;
+
 public class ExportImage {
+    private static final DocumentBuilder documentBuilder = Classes.loadService(DocumentBuilder.class);
+
     private String path;
     private String src;
-    private String caption;
+    private List<String> caption;
     private String style;
 
     public ExportImage() {
@@ -20,9 +30,11 @@ public class ExportImage {
 	if (caption == null) {
 	    this.caption = null;
 	} else {
-	    // TODO: HACK
-	    // <caption>...</caption>
-	    this.caption = caption.substring(9, caption.length() - 10);
+	    Document document = documentBuilder.parseXML(caption);
+	    this.caption = new ArrayList<>();
+	    for (Element paragraph : document.findByTag("p")) {
+		this.caption.add(paragraph.getText());
+	    }
 	}
 
 	double ratio = (double) image.getWidth() / (double) image.getHeight();
@@ -43,7 +55,7 @@ public class ExportImage {
 	return src;
     }
 
-    public String getCaption() {
+    public List<String> getCaption() {
 	return caption;
     }
 

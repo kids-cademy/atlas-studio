@@ -68,7 +68,7 @@ public class ObjectIndexerTest {
 	when(atlasObject.getName()).thenReturn("accordion");
 	when(atlasObject.getWaveformSrc()).thenReturn(new MediaSRC());
 	
-	when(atlasObject.getDescription()).thenReturn("The accordion is a musical instrument."); // 1
+	when(atlasObject.getDescription()).thenReturn("<text><p>The accordion is a musical instrument.</p></text>"); // 1
 	when(atlasObject.getFacts()).thenReturn(facts); // 2
 	when(atlasObject.getDefinition()).thenReturn("A portable wind instrument."); // 4
 	when(atlasObject.getSampleTitle()).thenReturn("Vittorio Monti"); // 8
