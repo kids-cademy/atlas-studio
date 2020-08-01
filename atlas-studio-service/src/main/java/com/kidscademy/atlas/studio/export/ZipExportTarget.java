@@ -7,10 +7,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import js.json.Json;
+import js.json.impl.JsonParserException;
+import js.lang.BugError;
 import js.util.Classes;
 import js.util.Params;
 
@@ -34,11 +37,21 @@ public class ZipExportTarget implements ExportTarget {
     }
 
     @Override
-    public void write(Object object, String path) throws IOException {
+    public void write(Object object, String path, Type type) throws IOException, JsonParserException {
+	Params.notNull(object, "Null object");
+	Params.notNullOrEmpty(path, "File path");
+
 	ZipEntry entry = new ZipEntry(path);
 	zip.putNextEntry(entry);
-	zip.write(json.stringify(object).getBytes("UTF-8"));
+	String stringifiedObject = json.stringify(object);
+	zip.write(stringifiedObject.getBytes("UTF-8"));
 	zip.closeEntry();
+
+	try {
+	    json.parse(stringifiedObject, type);
+	} catch (Exception e) {
+	    throw new BugError("Bad serialization for |%s|: %s", path, e.getMessage());
+	}
     }
 
     @Override

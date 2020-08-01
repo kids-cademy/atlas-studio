@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -14,6 +15,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Theme;
+import com.kidscademy.atlas.studio.search.KeywordIndex;
 import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
@@ -21,6 +23,7 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.tool.ImageProcessorImpl;
 import com.kidscademy.atlas.studio.util.Files;
 
+import js.lang.GType;
 import js.tiny.container.net.EventStreamManager;
 import js.util.Classes;
 import js.util.Strings;
@@ -119,7 +122,7 @@ public class Exporter {
 		}
 	    }
 
-	    target.write(exportObject, filePath(atlasObject, "object_en.json"));
+	    target.write(exportObject, filePath(atlasObject, "object_en.json"), ExportObject.class);
 
 	    if (mediaProcessing) {
 		target.write(file(atlasObject, atlasObject.getSampleName()),
@@ -135,8 +138,9 @@ public class Exporter {
 	    }
 	}
 
-	target.write(processor.updateSearchIndex(), "search-index.json");
-	target.write(itemsMap.keySet(), "objects-list.json");
+	target.write(processor.updateSearchIndex(), "search-index.json",
+		new GType(List.class, new GType(KeywordIndex.class, Integer.class)));
+	target.write(itemsMap.keySet(), "objects-list.json", new GType(Set.class, String.class));
     }
 
     private static String filePath(AtlasObject object, String fileName) {

@@ -4,10 +4,13 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 
 public class ExportImage {
-    private final String path;
-    private final String src;
-    private final String caption;
-    private final String style;
+    private String path;
+    private String src;
+    private String caption;
+    private String style;
+
+    public ExportImage() {
+    }
 
     public ExportImage(AtlasObject object, Image image) {
 	this.path = Util.path(object.getName(), image.getFileName());
@@ -22,7 +25,7 @@ public class ExportImage {
 	    this.caption = caption.substring(9, caption.length() - 10);
 	}
 
-	double ratio = (double)image.getWidth() / (double)image.getHeight();
+	double ratio = (double) image.getWidth() / (double) image.getHeight();
 	if (ratio < 0.75) {
 	    style = "narrow-image";
 	} else if (ratio < 1.1) {

@@ -9,11 +9,14 @@ import js.util.Strings;
 
 @SuppressWarnings("unused")
 public class ExportLink {
-    private final URL url;
-    private final String display;
-    private final String description;
-    private final String iconPath;
-    private final String iconSrc;
+    private URL url;
+    private String display;
+    private String description;
+    private String iconPath;
+    private String iconSrc;
+
+    public ExportLink() {
+    }
 
     public ExportLink(Link link) {
 	this.url = link.getUrl();

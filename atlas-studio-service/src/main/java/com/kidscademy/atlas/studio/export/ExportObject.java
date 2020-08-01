@@ -22,33 +22,36 @@ import com.kidscademy.atlas.studio.model.Theme;
 public class ExportObject {
     private int index;
 
-    private final String name;
-    private final String display;
-    private final String definition;
-    private final String description;
+    private String name;
+    private String display;
+    private String definition;
+    private String description;
 
-    private final Map<String, ExportImage> images;
+    private Map<String, ExportImage> images;
 
-    private final Date lastUpdated;
-    private final List<ExportTaxon> taxonomy;
-    private final List<String> aliases;
-    private final List<Region> spreading;
-    private final HDate startDate;
-    private final HDate endDate;
-    private final String progenitor;
-    private final ConservationStatus conservation;
+    private Date lastUpdated;
+    private List<ExportTaxon> taxonomy;
+    private List<String> aliases;
+    private List<Region> spreading;
+    private HDate startDate;
+    private HDate endDate;
+    private String progenitor;
+    private ConservationStatus conservation;
 
-    private final String sampleTitle;
-    private final String samplePath;
-    private final String waveformPath;
-    private final String waveformSrc;
+    private String sampleTitle;
+    private String samplePath;
+    private String waveformPath;
+    private String waveformSrc;
 
-    private final List<ExportFact> facts;
-    private final List<ExportFeature> features;
-    private final List<ExportRelatedObject> related;
-    private final List<ExportLink> links;
+    private List<ExportFact> facts;
+    private List<ExportFeature> features;
+    private List<ExportRelatedObject> related;
+    private List<ExportLink> links;
 
-    private final String theme;
+    private String theme;
+
+    public ExportObject() {
+    }
 
     public ExportObject(AtlasObject object) {
 	this(object.getCollection().getTheme(), object);

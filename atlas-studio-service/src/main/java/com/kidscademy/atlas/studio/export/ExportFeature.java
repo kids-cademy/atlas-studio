@@ -8,13 +8,16 @@ import js.util.Strings;
 
 @SuppressWarnings("unused")
 public class ExportFeature {
-    private final String name;
-    private final double value;
-    private final Double maximum;
-    private final PhysicalQuantity quantity;
+    private String name;
+    private double value;
+    private Double maximum;
+    private PhysicalQuantity quantity;
 
-    private final String nameDisplay;
-    private final String valueDisplay;
+    private String nameDisplay;
+    private String valueDisplay;
+
+    public ExportFeature() {
+    }
 
     public ExportFeature(Feature feature) {
 	this.name = feature.getName();

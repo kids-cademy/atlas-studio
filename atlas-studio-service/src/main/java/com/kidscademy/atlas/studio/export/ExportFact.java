@@ -6,10 +6,13 @@ import js.lang.Displayable;
 import js.util.Strings;
 
 public class ExportFact implements Displayable {
-    private final String name;
-    private final String value;
+    private String name;
+    private String value;
 
-    ExportFact(Map.Entry<String, String> fact) {
+    public ExportFact() {
+    }
+
+    public ExportFact(Map.Entry<String, String> fact) {
 	this.name = fact.getKey();
 	this.value = fact.getValue();
     }

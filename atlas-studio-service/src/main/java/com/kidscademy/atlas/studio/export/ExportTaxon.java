@@ -10,9 +10,12 @@ import js.lang.Displayable;
 import js.util.Strings;
 
 public class ExportTaxon implements Displayable {
-    private final String name;
-    private final String display;
-    private final String value;
+    private String name;
+    private String display;
+    private String value;
+
+    public ExportTaxon() {
+    }
 
     public ExportTaxon(Taxon taxon) {
 	this.name = taxon.getName();

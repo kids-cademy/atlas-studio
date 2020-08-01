@@ -6,11 +6,14 @@ import js.lang.Displayable;
 
 @SuppressWarnings("unused")
 public class ExportRelatedObject implements Displayable {
-    private final int index;
-    private final String display;
-    private final String definition;
-    private final String iconPath;
-    private final String iconSrc;
+    private int index;
+    private String display;
+    private String definition;
+    private String iconPath;
+    private String iconSrc;
+
+    public ExportRelatedObject() {
+    }
 
     public ExportRelatedObject(ExportItem item) {
 	this.index = item.getIndex();
