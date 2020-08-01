@@ -30,7 +30,6 @@ import com.kidscademy.atlas.studio.tool.ImageInfo;
 import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.util.Files;
 import com.kidscademy.atlas.studio.util.Html2Md;
-import com.kidscademy.atlas.studio.util.OS;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;
@@ -487,10 +486,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 	variables.put("edition", release.getEdition());
 	variables.put("license", release.getLicense());
 	variables.put("sdk-dir", androidTools.sdkDir());
-	// Windows uses backslash as path components separators
-	// library path from gradle configuration file should escape backslash
-	// on Unix like system last replaceAll has no effect
-	variables.put("lib-path", OS.escapePath(new File(appDir.getParentFile(), "lib")));
 
 	BufferedReader layoutDescriptor = new BufferedReader(Classes.getResourceAsReader("/android-app/layout"));
 	String path = null;
