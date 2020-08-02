@@ -131,5 +131,8 @@
 	<text-development>#f74498</text-development>
 	<text-released>#1985e2</text-released>
 	<text-published>#409d65</text-published>
-		
+	
+	<!-- reader -->
+	<reader-image-caption-bg>rgba(0, 0, 0, 0.4)</reader-image-caption-bg>
+	<reader-image-caption-text>yellow</reader-image-caption-text>	
 </color>

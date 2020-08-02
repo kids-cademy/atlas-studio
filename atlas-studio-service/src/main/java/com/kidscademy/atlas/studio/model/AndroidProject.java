@@ -124,11 +124,11 @@ public class AndroidProject {
     }
 
     public File getBundleDebugFile() {
-        return bundleDebug;
+	return bundleDebug;
     }
 
     public File getBundleReleaseFile() {
-        return bundleRelease;
+	return bundleRelease;
     }
 
     public void setReadme(String description) {
@@ -139,6 +139,10 @@ public class AndroidProject {
     public void setPrivacy(String policy) {
 	// TODO convert HTML to TXT and write to PRIVACY file
 
+    }
+
+    public boolean isCleanBuild() {
+	return !appDir("build").exists();
     }
 
     // --------------------------------------------------------------------------------------------

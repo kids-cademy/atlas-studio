@@ -38,8 +38,8 @@ public class AndroidToolsImpl implements AndroidTools {
     }
 
     @Override
-    public void buildAPK(File appDir) throws IOException {
-	gradlew(appDir, "build");
+    public void buildAPK(File appDir, boolean refreshDependencies) throws IOException {
+	gradlew(appDir, refreshDependencies ? "build --refresh-dependencies" : "build");
     }
 
     @Override

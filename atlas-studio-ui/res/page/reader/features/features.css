@@ -93,25 +93,26 @@
 
 .features .image-frame {
 	flex-grow: 1;
-	position: relative;
 	margin-top: 40px;	
 }
 
+.features .image {
+	max-width: 100%;	
+}
+
 .features .caption {
-	position: absolute;
-	width: 100%;
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.2);
-	padding: @dimen/infobox-padding;
 	box-sizing: border-box;
+	width: 100%;
+	margin: @dimen/reader-image-caption-margin;
+	padding: @dimen/reader-image-caption-padding;
+	background: @color/reader-image-caption-bg;
 }
 
 .features .caption p {
-	margin: 0;
 	margin-top: 1.5em;
-	line-height: 1.5em;
-	font-size: 0.9rem;
-	color: yellow;
+	line-height: @dimen/reader-image-caption-line-height;
+	font-size: @dimen/reader-image-caption-font-size;
+	color: @color/reader-image-caption-text;
 }
 
 .features .caption p:first-child {

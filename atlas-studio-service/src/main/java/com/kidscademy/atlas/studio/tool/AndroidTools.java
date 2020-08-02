@@ -10,7 +10,7 @@ public interface AndroidTools {
     
     void cleanProject(File appDir) throws IOException;
 
-    void buildAPK(File appDir) throws IOException;
+    void buildAPK(File appDir, boolean refreshDependnecies) throws IOException;
 
     void buildSignedAPK(AndroidApp app) throws IOException;
 

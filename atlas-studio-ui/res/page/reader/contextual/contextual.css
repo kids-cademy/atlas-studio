@@ -10,16 +10,16 @@
 .contextual .caption {
 	box-sizing: border-box;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.3);
-	padding: @dimen/infobox-padding;
-	margin-top: 20px;
+	margin: @dimen/reader-image-caption-margin;
+	background: @color/reader-image-caption-bg;
+	padding: @dimen/reader-image-caption-padding;
 } 
 
 .contextual .caption p {
 	margin: 20px 0 0;
-	font-size: 1.1rem;
-	line-height: 1.5rem;
-	color: yellow;
+	line-height: @dimen/reader-image-caption-line-height;
+	font-size: @dimen/reader-image-caption-font-size;
+	color: @color/reader-image-caption-text;
 }
 
 .contextual .caption p:first-child {

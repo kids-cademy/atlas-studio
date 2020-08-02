@@ -354,7 +354,8 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void buildAndroidApp(int appId) throws IOException {
 	AndroidApp app = updateAndroidAppContent(appId);
-	androidTools.buildAPK(app.getDir());
+	// if is clean build set refresh dependencies flag - second argument, to true
+	androidTools.buildAPK(app.getDir(), app.getProject().isCleanBuild());
     }
 
     @Override

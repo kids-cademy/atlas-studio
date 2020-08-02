@@ -33,7 +33,7 @@ com.kidscademy.page.ReaderPage = class extends js.ua.Page {
 	}
 
 	_onObjectLoaded(object) {
-		this._paragraphsCache.setHTML(object.description);
+		this._paragraphsCache.setObject(object.description);
 		object.paragraphs = this._paragraphsCache;
 
 		this._objectView.addCssClass(object.theme);

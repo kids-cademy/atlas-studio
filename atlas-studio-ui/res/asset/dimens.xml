@@ -80,4 +80,9 @@
 	<icon-size-large>128px</icon-size-large>
 	<icon-radius>10px</icon-radius>
 	
+	<!-- reader -->
+	<reader-image-caption-margin>40px 0 0 0</reader-image-caption-margin>
+	<reader-image-caption-padding>40px</reader-image-caption-padding>
+	<reader-image-caption-line-height>1.5rem</reader-image-caption-line-height>
+	<reader-image-caption-font-size>0.9rem</reader-image-caption-font-size>
 </dimen>
