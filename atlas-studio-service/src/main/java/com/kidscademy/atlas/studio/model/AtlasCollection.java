@@ -61,6 +61,14 @@ public class AtlasCollection implements Key, GraphicObject {
     @OrderColumn
     private List<FeatureMeta> featuresMeta;
 
+    /**
+     * There are more than a single import API used to populate object features.
+     * Depending on its objects specifics a collection can have a single features
+     * type. For example, if collection deals with edibles its features type is
+     * <code>edible-nutrients</code>.
+     */
+    private String featuresType;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "atlascollection_id")
     @OrderColumn
@@ -90,6 +98,7 @@ public class AtlasCollection implements Key, GraphicObject {
 	this.taxonomyMeta = Collections.emptyList();
 	this.descriptionMeta = Collections.emptyList();
 	this.featuresMeta = Collections.emptyList();
+	this.featuresType = "none";
 	this.linkSources = Collections.emptyList();
 	this.flags = new Flags(true);
 	this.theme = Theme.CLASSIC;
@@ -202,6 +211,14 @@ public class AtlasCollection implements Key, GraphicObject {
 
     public List<FeatureMeta> getFeaturesMeta() {
 	return featuresMeta;
+    }
+
+    public String getFeaturesType() {
+	return featuresType;
+    }
+
+    public void setFeaturesType(String featuresAlias) {
+	this.featuresType = featuresAlias;
     }
 
     public void setLinkSources(List<LinkSource> linkSources) {

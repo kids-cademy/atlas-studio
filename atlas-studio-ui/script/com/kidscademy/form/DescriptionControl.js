@@ -89,19 +89,16 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 	 * If there are more than one link display them and let user choose one.
 	 */
 	_onImport() {
-		const load = (link) => {
-			ApiService.getDescription(link, description => {
-				for (let section in description) {
-					let textEditor = this._getTextEditorByName(section);
-					if (textEditor == null) {
-						textEditor = this._addTextEditor(section);
-					}
-					textEditor.setValue(description[section]);
-					this._updateEditorIndex(textEditor.getChildIndex());
+		this._formPage.importFromLink("description", description => {
+			for (let section in description) {
+				let textEditor = this._getTextEditorByName(section);
+				if (textEditor == null) {
+					textEditor = this._addTextEditor(section);
 				}
-			});
-		}
-		this._formPage.importFromLink("description", load);
+				textEditor.setValue(description[section]);
+				this._updateEditorIndex(textEditor.getChildIndex());
+			}
+		});
 	}
 
 	_onAddAllSections() {

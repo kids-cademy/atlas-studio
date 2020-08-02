@@ -13,24 +13,26 @@
 		<name>instrument</name>
 		<display>Instrument</display>
 		<definition>Musical instrument.</definition>
+		<featuresType>none</featuresType>
+		<theme>CLASSIC</theme>
 		<endDate>1</endDate>
 		<progenitor>1</progenitor>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
-		<theme>CLASSIC</theme>
 	</atlascollection>
 	<atlascollection>
 		<id>2</id>
 		<name>bird</name>
 		<display>Bird</display>
 		<definition>Wild bird.</definition>
+		<featuresType>physical-traits</featuresType>
+		<theme>MODERN</theme>
 		<endDate>1</endDate>
 		<progenitor>1</progenitor>
 		<conservationStatus>1</conservationStatus>
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
-		<theme>MODERN</theme>
 	</atlascollection>
 
 	<atlascollection_taxonomymeta>

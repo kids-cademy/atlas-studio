@@ -124,8 +124,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_onImport() {
 		this._actions.showOnly("close");
 		this._fireEvent("input");
-		const load = (link) => ApiService.getTaxonomy(link, taxonomy => this.setValue(taxonomy));
-		this._formPage.importFromLink("taxonomy", load);
+		this._formPage.importFromLink("taxonomy", taxonomy => this.setValue(taxonomy));
 	}
 
 	/**

@@ -137,16 +137,17 @@ com.kidscademy.page.ObjectForm = class extends com.kidscademy.Page {
 		return atlasItem;
 	}
 
-	importFromLink(api, load) {
+	importFromLink(apiName, callback) {
 		const object = this.getObject();
 		if (!object.links) {
 			return;
 		}
-		const links = object.links.filter(link => link.linkSource.apis.indexOf(api) !== -1);
+		const links = object.links.filter(link => link.linkSource.apis.indexOf(apiName) !== -1);
+		const load = link => ApiService.invokeAPI(apiName, link, value => callback(value));
 
 		switch (links.length) {
 			case 0:
-				js.ua.System.alert(`No provider link for ${api}.`);
+				js.ua.System.alert(`No provider link for ${apiName}.`);
 				break;
 
 			case 1:

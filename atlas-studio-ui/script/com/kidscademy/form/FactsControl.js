@@ -56,8 +56,7 @@ com.kidscademy.form.FactsControl = class extends com.kidscademy.form.FormControl
 
 	_onImport() {
 		this._fireEvent("input");
-		const load = (link) => ApiService.getFacts(link, facts => this.setValue(facts));
-		this._formPage.importFromLink("facts", load);
+		this._formPage.importFromLink("facts", facts => this.setValue(facts));
 	}
 
 	_onAdd() {

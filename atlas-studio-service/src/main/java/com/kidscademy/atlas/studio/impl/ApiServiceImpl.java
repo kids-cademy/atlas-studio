@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import com.kidscademy.atlas.studio.www.SoftSchools;
 import com.kidscademy.atlas.studio.www.TheFreeDictionary;
 import com.kidscademy.atlas.studio.www.WikipediaArticleText;
 
+import js.lang.BugError;
 import js.log.Log;
 import js.log.LogFactory;
 import js.tiny.container.core.AppContext;
@@ -48,6 +50,7 @@ public class ApiServiceImpl implements ApiService {
     private static final Log log = LogFactory.getLog(ApiService.class);
 
     private final List<ApiDescriptor> availableApis;
+    private final Map<String, Method> apiMethods;
 
     private final AppContext context;
     private final AtlasDao atlasDao;
@@ -62,10 +65,13 @@ public class ApiServiceImpl implements ApiService {
 
     public ApiServiceImpl(AppContext context) {
 	this.availableApis = new ArrayList<>();
+	this.apiMethods = new HashMap<>();
 	for (Method method : getClass().getDeclaredMethods()) {
 	    API api = method.getAnnotation(API.class);
 	    if (api != null) {
 		this.availableApis.add(new ApiDescriptor(api));
+		method.setAccessible(true);
+		this.apiMethods.put(api.name(), method);
 	    }
 	}
 	Collections.sort(this.availableApis);
@@ -96,6 +102,20 @@ public class ApiServiceImpl implements ApiService {
 	    }
 	}
 	return apis;
+    }
+
+    @Override
+    public Object invokeAPI(String apiName, Link link) {
+	Method method = apiMethods.get(apiName);
+	if (method == null) {
+	    throw new BugError("Not registered import API |%s|.", apiName);
+	}
+	try {
+	    return method.invoke(this, link);
+	} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+	    log.error(e);
+	    throw new RuntimeException(String.format("Error executing import API |%s|.", apiName));
+	}
     }
 
     @Override
@@ -179,17 +199,48 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    @API(name = "features", description = "A feature is a named characteristic with a physical quantity.")
-    public List<Feature> getFeatures(Link link) {
+    @API(name = "physical-traits", description = "Common physical traits for a specific animal species.")
+    public List<Feature> getPhysicalTraits(Link link) {
 	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
 	List<Feature> features = new ArrayList<>();
 
+	List<PhysicalTrait> traits = null;
+	switch (link.getDomain()) {
+	case "animalia.bio":
+	    traits = animalia.getPhysicalTraits(link.getBasename());
+	    break;
+	}
+
+	if (traits != null) {
+	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
+		for (PhysicalTrait trait : traits) {
+		    if (meta.getName().equals(trait.getName())) {
+			Feature feature = new Feature(meta, trait.getValue(), trait.getMaximum());
+			feature.postLoad();
+			features.add(feature);
+			break;
+		    }
+		}
+	    }
+	}
+	return features;
+    }
+
+    @Override
+    @API(name = "edible-nutrients", description = "Nutritional values for 100 grams of an edible plant or animal.")
+    public List<Feature> getEdibleNutrients(Link link) {
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
+	List<Feature> features = new ArrayList<>();
+
+	Map<String, Double> nutrients = null;
 	switch (link.getDomain()) {
 	case "wikipedia.org":
-	    Map<String, Double> nutrients = wikipedia.getEdibleNutrients(link.getBasename());
+	    nutrients = wikipedia.getEdibleNutrients(link.getBasename());
+	    break;
+	}
+
+	if (nutrients != null) {
 	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
-		// to avoid full scan we can create a name resolver with hash map
-		// but at current sizes is not really helping
 		for (String label : nutrients.keySet()) {
 		    // all feature meta names related to nutrients have at least one dot
 		    // if not used dot on name scanning there is confusion between 'saturated' and
@@ -202,25 +253,68 @@ public class ApiServiceImpl implements ApiService {
 		    }
 		}
 	    }
-	    break;
+	}
 
-	case "animalia.bio":
-	    List<PhysicalTrait> traits = animalia.getPhysicalTraits(link.getBasename());
+	return features;
+    }
+
+    @Override
+    @API(name = "metro-statistics", description = "Statistical values regarding metropolitan area, like population size and density.")
+    public List<Feature> getMetroStatistics(Link link) {
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
+	List<Feature> features = new ArrayList<>();
+
+	Map<String, Double> statistics = null;
+	switch (link.getDomain()) {
+	case "wikipedia.org":
+	    // statistics = wikipedia.getMetroStatistics(link.getBasename());
+	    statistics = Collections.emptyMap();
+	    break;
+	}
+
+	if (statistics != null) {
 	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
-		for (PhysicalTrait trait : traits) {
-		    if (meta.getName().equals(trait.getName())) {
-			Feature feature = new Feature(meta, trait.getValue(), trait.getMaximum());
+		for (String label : statistics.keySet()) {
+		    if (meta.getName().equals(label)) {
+			Feature feature = new Feature(meta, statistics.get(label));
 			feature.postLoad();
 			features.add(feature);
 			break;
 		    }
 		}
 	    }
-	    break;
-
-	default:
-	    return null;
 	}
+
+	return features;
+    }
+
+    @Override
+    @API(name = "military-specifications", description = "Technical specifications for military technology.")
+    public List<Feature> getMilitarySpecifications(Link link) {
+	AtlasCollection collection = atlasDao.getCollectionByLinkSource(link.getLinkSource().getId());
+	List<Feature> features = new ArrayList<>();
+
+	Map<String, Double> statistics = null;
+	switch (link.getDomain()) {
+	case "wikipedia.org":
+	    // statistics = wikipedia.getMilitarySpecifications(link.getBasename());
+	    statistics = Collections.emptyMap();
+	    break;
+	}
+
+	if (statistics != null) {
+	    for (FeatureMeta meta : collection.getFeaturesMeta()) {
+		for (String label : statistics.keySet()) {
+		    if (meta.getName().equals(label)) {
+			Feature feature = new Feature(meta, statistics.get(label));
+			feature.postLoad();
+			features.add(feature);
+			break;
+		    }
+		}
+	    }
+	}
+
 	return features;
     }
 

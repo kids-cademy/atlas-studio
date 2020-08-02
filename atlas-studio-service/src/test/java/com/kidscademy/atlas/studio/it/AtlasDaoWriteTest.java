@@ -77,6 +77,7 @@ public class AtlasDaoWriteTest {
 	collection.setDisplay("Mammals");
 	collection.setDefinition("Wild mammals.");
 	collection.setFlags(new Flags());
+	collection.setFeaturesType("none");
 	collection.setTheme(Theme.MODERN);
 
 	List<DescriptionMeta> descriptionMeta = new ArrayList<>();

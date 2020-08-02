@@ -63,19 +63,25 @@ public class ApiServiceTest {
     public void getAvailableApis() {
 	List<ApiDescriptor> apis = service.getAvailableApis();
 	assertThat(apis, notNullValue());
-	assertThat(apis, hasSize(5));
+	assertThat(apis, hasSize(8));
 
 	assertThat(apis.get(0).getName(), equalTo("definition"));
 	assertThat(apis.get(1).getName(), equalTo("description"));
-	assertThat(apis.get(2).getName(), equalTo("facts"));
-	assertThat(apis.get(3).getName(), equalTo("features"));
-	assertThat(apis.get(4).getName(), equalTo("taxonomy"));
+	assertThat(apis.get(2).getName(), equalTo("edible-nutrients"));
+	assertThat(apis.get(3).getName(), equalTo("facts"));
+	assertThat(apis.get(4).getName(), equalTo("metro-statistics"));
+	assertThat(apis.get(5).getName(), equalTo("military-specifications"));
+	assertThat(apis.get(6).getName(), equalTo("physical-traits"));
+	assertThat(apis.get(7).getName(), equalTo("taxonomy"));
 
 	assertThat(apis.get(0).getDescription(), startsWith("Definition is a brief description"));
 	assertThat(apis.get(1).getDescription(), startsWith("Description is organized on named sections"));
-	assertThat(apis.get(2).getDescription(), startsWith("A fact is a paragraph describing"));
-	assertThat(apis.get(3).getDescription(), startsWith("A feature is a named characteristic"));
-	assertThat(apis.get(4).getDescription(), startsWith("Object classification."));
+	assertThat(apis.get(2).getDescription(), startsWith("Nutritional values for 100 grams"));
+	assertThat(apis.get(3).getDescription(), startsWith("A fact is a paragraph describing"));
+	assertThat(apis.get(4).getDescription(), startsWith("Statistical values regarding metropolitan area"));
+	assertThat(apis.get(5).getDescription(), startsWith("Technical specifications for military technology"));
+	assertThat(apis.get(6).getDescription(), startsWith("Common physical traits for a specific animal"));
+	assertThat(apis.get(7).getDescription(), startsWith("Object classification."));
     }
 
     @Test

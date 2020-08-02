@@ -19,6 +19,8 @@ public interface ApiService {
 
     List<ApiDescriptor> getApiDescriptors(List<String> apiNames);
     
+    Object invokeAPI(String apiName, Link link);
+    
     String getDefinition(Link link);
 
     LinkedHashMap<String, String> getDescription(Link link);
@@ -26,8 +28,14 @@ public interface ApiService {
     Map<String, String> getFacts(Link link);
 
     List<Taxon> getTaxonomy(Link link);
+    
+    List<Feature> getPhysicalTraits(Link link);
+    
+    List<Feature> getEdibleNutrients(Link link);
 
-    List<Feature> getFeatures(Link link);
+    List<Feature> getMetroStatistics(Link link);
 
+    List<Feature> getMilitarySpecifications(Link link);
+    
     AtlasItem importWikipediaObject(int collectionId, URL articleURL);
 }

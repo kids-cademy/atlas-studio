@@ -37,8 +37,7 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 	 * If there are more than one link display them and let user choose one.
 	 */
 	_onImport() {
-		const load = (link) => ApiService.getDefinition(link, definition => this._textarea.setValue(definition));
-		this._formPage.importFromLink("definition", load);
+		this._formPage.importFromLink("definition", definition => this._textarea.setValue(definition));
 	}
 
 	_onRemoveAll() {
