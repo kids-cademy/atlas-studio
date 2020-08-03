@@ -151,6 +151,7 @@
 	<quantity-length>LENGTH</quantity-length>
 	<quantity-speed>SPEED</quantity-speed>
 	<quantity-power>POWER</quantity-power>
+	<quantity-electric-charge>ELECTRC_CHARGE</quantity-electric-charge>
 	<quantity-food-energy>FOOD_ENERGY</quantity-food-energy>
 	<quantity-density>DENSITY</quantity-density>
 	<quantity-acceleration>ACCELERATION</quantity-acceleration>

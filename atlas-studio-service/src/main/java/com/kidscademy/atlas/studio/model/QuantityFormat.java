@@ -153,6 +153,7 @@ public class QuantityFormat implements Comparator<Variant> {
 	UNITS.put(PhysicalQuantity.LENGTH, LengthUnits.values());
 	UNITS.put(PhysicalQuantity.SPEED, SpeedUnits.values());
 	UNITS.put(PhysicalQuantity.POWER, PowerUnits.values());
+	UNITS.put(PhysicalQuantity.ELECTRC_CHARGE, ElectricChargeUnits.values());
 	UNITS.put(PhysicalQuantity.FOOD_ENERGY, FoodEnergyUnits.values());
 	UNITS.put(PhysicalQuantity.DENSITY, DensityUnits.values());
 	UNITS.put(PhysicalQuantity.ACCELERATION, AccelerationUnits.values());
@@ -297,6 +298,28 @@ public class QuantityFormat implements Comparator<Variant> {
 	}
     }
 
+    private enum ElectricChargeUnits implements Unit {
+	AH(1, new Symbol("A⋅h")),MAH(1000, new Symbol("mA⋅h"));
+	
+	private double factor;
+	private Symbol symbol;
+
+	private ElectricChargeUnits(double factor, Symbol symbol) {
+	    this.factor = factor;
+	    this.symbol = symbol;
+	}
+
+	@Override
+	public double factor() {
+	    return factor;
+	}
+
+	@Override
+	public Symbol symbol() {
+	    return symbol;
+	}
+    }
+    
     private enum FoodEnergyUnits implements Unit {
 	CALORIE(1, new Symbol("calorie", "calories"));
 
