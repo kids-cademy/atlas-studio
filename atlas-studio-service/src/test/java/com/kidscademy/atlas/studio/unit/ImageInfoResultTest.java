@@ -122,6 +122,27 @@ public class ImageInfoResultTest {
 	assertThat(matcher.group(12), equalTo("B"));
     }
     
+    @Test
+    public void formatPattern6() {
+	String line = "picture file.jpg JPEG 1024x780 1024x780+0+0 8-bit Grayscale Gray 256c 205KB 0.000u 0:00.000";
+	Pattern format = Classes.getFieldValue(ImageInfoResult.class, "FORMAT");
+	Matcher matcher = format.matcher(line);
+	assertTrue(matcher.find());
+	assertThat(matcher.groupCount(), equalTo(12));
+	assertThat(matcher.group(1), equalTo("picture file.jpg"));
+	assertThat(matcher.group(2), equalTo("JPEG"));
+	assertThat(matcher.group(3), equalTo("1024"));
+	assertThat(matcher.group(4), equalTo("780"));
+	assertThat(matcher.group(5), equalTo("1024"));
+	assertThat(matcher.group(6), equalTo("780"));
+	assertThat(matcher.group(7), equalTo("0"));
+	assertThat(matcher.group(8), equalTo("0"));
+	assertThat(matcher.group(9), equalTo("8"));
+	assertThat(matcher.group(10), equalTo("Grayscale Gray 256c"));
+	assertThat(matcher.group(11), equalTo("205"));
+	assertThat(matcher.group(12), equalTo("KB"));
+    }
+    
 
     @Test
     public void getImageInfo1() {
@@ -196,5 +217,20 @@ public class ImageInfoResultTest {
 	assertThat(info.getType(), equalTo(MediaType.JPEG));
 	assertThat(info.getWidth(), equalTo(880));
 	assertThat(info.getHeight(), equalTo(660));
+    }
+
+    @Test
+    public void getImageInfo6() {
+	String line = "picture.jpg JPEG 1024x780 1024x780+0+0 8-bit Grayscale Gray 256c 205KB 0.000u 0:00.000";
+	ImageInfoResult result = new ImageInfoResult();
+	result.parse(line);
+
+	ImageInfo info = result.getImageInfo();
+	assertThat(info, notNullValue());
+	assertThat(info.getFileName(), equalTo("picture.jpg"));
+	assertThat(info.getFileSize(), equalTo(205000));
+	assertThat(info.getType(), equalTo(MediaType.JPEG));
+	assertThat(info.getWidth(), equalTo(1024));
+	assertThat(info.getHeight(), equalTo(780));
     }
 }
