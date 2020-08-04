@@ -142,7 +142,7 @@ public class AndroidProject {
     }
 
     public boolean isCleanBuild() {
-	return !appDir("build").exists();
+	return !new File(location, "build").exists();
     }
 
     // --------------------------------------------------------------------------------------------
