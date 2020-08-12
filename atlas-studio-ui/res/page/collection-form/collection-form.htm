@@ -84,12 +84,14 @@
 						<thead>
 							<tr>
 								<th>@string/taxon-name</th>
+								<th>@string/taxon-display</th>
 								<th>@string/taxon-values</th>
 							</tr>
 						</thead>
 						<tbody class="taxonomy-view" data-list=".">
 							<tr class="item" draggable="true">
 								<td data-text="name"></td>
+								<td data-text="display"></td>
 								<td data-text="values" class="full-width"></td>
 							</tr>
 						</tbody>
@@ -107,6 +109,9 @@
 					<div class="editor hidden">
 						<div class="controlset">
 							<label>@string/taxon-name</label><input class="taxon-name" />
+						</div>
+						<div class="controlset">
+							<label>@string/taxon-display</label><input class="taxon-display" />
 						</div>
 						<div class="controlset">
 							<label>@string/taxon-values</label><input class="taxon-values large" />

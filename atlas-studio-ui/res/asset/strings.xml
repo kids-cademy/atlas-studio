@@ -132,6 +132,7 @@
 	<object-save>Save</object-save>
 	
 	<taxon-name>taxon name</taxon-name>
+	<taxon-display>taxon display</taxon-display>
 	<taxon-values>taxon values</taxon-values>
 	
 	<section-name>section name</section-name>

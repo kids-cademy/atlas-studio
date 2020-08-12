@@ -9,6 +9,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
 
         this._taxonEditor = this.getByCssClass("editor");
         this._taxonNameInput = this._taxonEditor.getByCssClass("taxon-name");
+        this._taxonDisplayInput = this._taxonEditor.getByCssClass("taxon-display");
         this._taxonValuesInput = this._taxonEditor.getByCssClass("taxon-values");
 
         this._currentRow = null;
@@ -39,6 +40,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
 
         const taxon = this._currentRow.getUserData();
         this._taxonNameInput.setValue(taxon.name).focus();
+        this._taxonDisplayInput.setValue(taxon.display);
         this._taxonValuesInput.setValue(taxon.values);
         this._taxonEditor.show();
         this._actions.show("remove", "done", "close").hide("remove-all");
@@ -48,6 +50,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
         this._currentRow = null;
         this._taxonEditor.show();
         this._taxonNameInput.reset();
+        this._taxonDisplayInput.reset();
         this._taxonValuesInput.reset();
         this._actions.show("done", "close").hide("remove-all");
     }
@@ -62,6 +65,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     _onDone() {
         const taxon = {
             name: this._taxonNameInput.getValue(),
+            display: this._taxonDisplayInput.getValue(),
             values: this._normalizeValues(this._taxonValuesInput.getValue())
         };
 
