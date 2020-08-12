@@ -11,6 +11,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -30,6 +31,7 @@ import javax.persistence.PostRemove;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.kidscademy.atlas.studio.dao.StringsListConverter;
 import com.kidscademy.atlas.studio.tool.AudioProcessor;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 import com.kidscademy.atlas.studio.util.Files;
@@ -67,8 +69,7 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
      */
     private String display;
 
-    @ElementCollection
-    @OrderColumn
+    @Convert(converter = StringsListConverter.class)
     private List<String> aliases;
 
     private String definition;
