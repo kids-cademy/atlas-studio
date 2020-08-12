@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.impl;
 
 import java.io.File;
+import java.util.Arrays;
 
 import com.kidscademy.atlas.studio.AtlasController;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -21,12 +22,12 @@ public class AtlasControllerImpl implements AtlasController {
 
     @Override
     public View exportAllAtlasCollections() {
-	return new AtlasCollectionExportView(atlasDao);
+	return new AtlasCollectionExportView(atlasDao, Arrays.asList("EN"));
     }
 
     @Override
     public View exportAtlasCollection(int collectionId, AtlasObject.State state) {
-	return new AtlasCollectionExportView(atlasDao, collectionId, state);
+	return new AtlasCollectionExportView(atlasDao, collectionId, state, Arrays.asList("EN"));
     }
 
     @Override

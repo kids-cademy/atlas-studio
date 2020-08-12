@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -42,7 +43,7 @@ public class ExportTest
   public void exportAtlasCollection() throws IOException {
     when(httpResponse.getOutputStream()).thenReturn(new HttpResponseStream("fixture/atlas.zip"));
 
-    View export = new AtlasCollectionExportView(atlasDao, 2, AtlasObject.State.PUBLISHED);
+    View export = new AtlasCollectionExportView(atlasDao, 2, AtlasObject.State.PUBLISHED, Arrays.asList("EN"));
     export.serialize(httpResponse);
   }
 

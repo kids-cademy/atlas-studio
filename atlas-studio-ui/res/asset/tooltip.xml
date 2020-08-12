@@ -2,8 +2,12 @@
 <tip>
 	<identity-check-name>check uniqueness for atlas object name</identity-check-name>
 	<identity-copy-name>copy atlas object name to clipboard</identity-copy-name>
+	<identity-copy-display>copy atlas object display to clipboard</identity-copy-display>
+	<identity-translate-display>translate atlas object display</identity-translate-display>
+	<identity-translate-aliases>translate atlas object aliases</identity-translate-aliases>
 
 	<definition-import>import object definition from external source</definition-import>
+	<definition-translate>translate atlas object definition</definition-translate>
 	<definition-remove-all>remove object definition</definition-remove-all>
 	<definition-close>close object definition editor</definition-close>
 
@@ -17,6 +21,7 @@
 	<description-remove-section>remove current description section</description-remove-section>
 	<description-remove-all>remove object description</description-remove-all>
 	<description-close>discard current operation</description-close>
+	<description-translate>translate atlas object description</description-translate>
 
 	<graphic-add>add new image to object</graphic-add>
 	<graphic-upload>upload image from local storage</graphic-upload>
@@ -50,6 +55,7 @@
 	<audio-clear>clear all audio sample processing</audio-clear>
 	<audio-done>commit all audio sample processing</audio-done>
 	<audio-remove-all>remove audio sample</audio-remove-all>
+	<audio-translate>translate title of the audio sample for atlas object</audio-translate>
 
 	<taxonomy-import>import taxonomy from given link</taxonomy-import>
 	<taxonomy-add>initialize with empty taxonomy</taxonomy-add>

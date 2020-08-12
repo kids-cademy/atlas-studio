@@ -80,6 +80,18 @@
 		</profile>
 	</profiles>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.cloud</groupId>
+				<artifactId>libraries-bom</artifactId>
+				<version>8.1.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.kidscademy</groupId>
@@ -176,6 +188,10 @@
 			<artifactId>js-dom</artifactId>
 			<version>1.1.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-translate</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

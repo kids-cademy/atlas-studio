@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,6 +22,7 @@ import javax.persistence.PostLoad;
 import javax.persistence.PostRemove;
 import javax.persistence.Transient;
 
+import com.kidscademy.atlas.studio.dao.StringsListConverter;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.log.Log;
@@ -48,6 +50,14 @@ public class AtlasCollection implements Key, GraphicObject {
     private String name;
     private String display;
     private String definition;
+
+    /**
+     * Atlas collection languages. These are languages that all objects from
+     * collection should support and for which there are translation records
+     * created.
+     */
+    @Convert(converter = StringsListConverter.class)
+    private List<String> languages;
 
     @ElementCollection
     @OrderColumn
@@ -178,6 +188,14 @@ public class AtlasCollection implements Key, GraphicObject {
     @Override
     public String getDefinition() {
 	return definition;
+    }
+
+    public List<String> getLanguages() {
+	return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+	this.languages = languages;
     }
 
     @Override

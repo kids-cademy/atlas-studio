@@ -189,6 +189,7 @@
 	<android-publisher>Publisher</android-publisher>
 	<android-edition>Edition</android-edition>
 	<android-theme>Theme</android-theme>
+	<android-languages>Languages</android-languages>
 	<android-version>Version</android-version>
 	<android-license>License</android-license>
 	

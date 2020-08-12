@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
@@ -16,6 +17,7 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.Theme;
+import com.kidscademy.atlas.studio.model.Translator;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;
@@ -27,7 +29,9 @@ public class ExportObject {
     private int index;
 
     private String name;
+    private String language;
     private String display;
+    private List<String> aliases;
     private String definition;
     private List<String> description;
 
@@ -35,7 +39,6 @@ public class ExportObject {
 
     private Date lastUpdated;
     private List<ExportTaxon> taxonomy;
-    private List<String> aliases;
     private List<Region> spreading;
     private HDate startDate;
     private HDate endDate;
@@ -58,14 +61,29 @@ public class ExportObject {
     }
 
     public ExportObject(AtlasObject object) {
-	this(object.getCollection().getTheme(), object);
+	this(object, Translator.getDefaultInstance(), object.getCollection().getTheme());
     }
 
-    public ExportObject(Theme theme, AtlasObject object) {
+    public ExportObject(AtlasObject object, Translator translator) {
+	this(object, translator, object.getCollection().getTheme());
+    }
+
+    public ExportObject(AtlasObject object, Translator translator, Theme theme) {
 	this.name = object.getName();
-	this.display = object.getDisplay();
-	this.definition = object.getDefinition();
-	this.description = exportDescription(object.getDescription());
+
+	if (translator.isDefaultLanguage()) {
+	    this.language = "EN";
+	    this.display = object.getDisplay();
+	    this.aliases = object.getAliases();
+	    this.definition = object.getDefinition();
+	    this.description = exportDescription(object.getDescription());
+	} else {
+	    this.language = translator.getLanguage();
+	    this.display = translator.getAtlasObjectDisplay(object.getId());
+	    this.aliases = translator.getAtlasObjectAliases(object.getId());
+	    this.definition = translator.getAtlasObjectDefinition(object.getId());
+	    this.description = exportDescription(translator.getAtlasObjectDescription(object.getId()));
+	}
 
 	this.images = new HashMap<>();
 	for (Map.Entry<String, Image> entry : object.getImages().entrySet()) {
@@ -78,7 +96,6 @@ public class ExportObject {
 	    this.taxonomy.add(new ExportTaxon(taxon));
 	}
 
-	this.aliases = object.getAliases();
 	this.spreading = object.getSpreading();
 	this.startDate = object.getStartDate();
 	this.endDate = object.getEndDate();
@@ -108,6 +125,10 @@ public class ExportObject {
 	}
 
 	this.theme = theme.cssStyle();
+    }
+
+    public String getLanguage() {
+	return language;
     }
 
     public void setIndex(int index) {

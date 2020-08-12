@@ -67,6 +67,10 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
      */
     private String display;
 
+    @ElementCollection
+    @OrderColumn
+    private List<String> aliases;
+
     private String definition;
 
     /**
@@ -98,10 +102,6 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
     @ElementCollection
     @OrderColumn
     private List<Taxon> taxonomy;
-
-    @ElementCollection
-    @OrderColumn
-    private List<String> aliases;
 
     /** Optional object spreading, empty list if not applicable. */
     @ElementCollection

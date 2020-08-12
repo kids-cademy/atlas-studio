@@ -46,6 +46,8 @@ import com.kidscademy.atlas.studio.model.Release;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
+import com.kidscademy.atlas.studio.model.TranslationKey;
+import com.kidscademy.atlas.studio.model.TranslationKey.Discriminator;
 import com.kidscademy.atlas.studio.util.Files;
 
 import js.json.Json;
@@ -172,6 +174,12 @@ public class AtlasDaoReadTest {
     public void getCollectionById() {
 	AtlasCollection collection = dao.getCollectionById(1);
 	assertThat(collection, notNullValue());
+
+	List<String> languages = collection.getLanguages();
+	assertThat(languages, notNullValue());
+	assertThat(languages, hasSize(2));
+	assertThat(languages.get(0), equalTo("EN"));
+	assertThat(languages.get(1), equalTo("RO"));
 
 	assertCollectionFeaturesMeta(collection.getFeaturesMeta());
 
@@ -575,6 +583,14 @@ public class AtlasDaoReadTest {
 	assertThat(featureMeta.getDisplay(), equalTo("Height"));
 	assertThat(featureMeta.getDefinition(), equalTo("height"));
 	assertThat(featureMeta.getQuantity(), equalTo(PhysicalQuantity.LENGTH));
+    }
+
+    @Test
+    public void getTranslation() {
+	assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, 1, "RO")),
+		equalTo("Instrument"));
+	assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, 1, "RO")),
+		equalTo("Instrument muzical."));
     }
 
     // ----------------------------------------------------------------------------------------------

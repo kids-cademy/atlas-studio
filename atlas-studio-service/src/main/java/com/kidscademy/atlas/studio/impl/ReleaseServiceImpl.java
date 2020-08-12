@@ -15,9 +15,9 @@ import java.util.Map;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.ReleaseService;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.export.AndroidExportTarget;
 import com.kidscademy.atlas.studio.export.ExportTarget;
 import com.kidscademy.atlas.studio.export.Exporter;
-import com.kidscademy.atlas.studio.export.FsExportTarget;
 import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasItem;
@@ -137,8 +137,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	    updateAndroidProjectFiles(app);
 
 	    AndroidProject prj = new AndroidProject(app.getName());
-	    ExportTarget target = new FsExportTarget(prj.getAtlasDir());
-	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()));
+	    ExportTarget target = new AndroidExportTarget(prj);
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), release.getLanguages());
 	    exporter.serialize(null, false);
 	}
 	return release;
@@ -517,9 +517,11 @@ public class ReleaseServiceImpl implements ReleaseService {
 	File atlasDir = prj.getAtlasDir();
 	if (atlasDir.lastModified() < app.getRelease().getContentTimestamp().getTime()) {
 	    Files.removeFilesHierarchy(atlasDir);
-	    ExportTarget target = new FsExportTarget(atlasDir);
+	    // TODO: hard coded assumption: raw directories contains only generated files
+	    Files.removeFilesHierarchy(prj.getRawDirs());
+	    ExportTarget target = new AndroidExportTarget(prj);
 	    Release release = app.getRelease();
-	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()));
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), release.getLanguages());
 	    exporter.serialize(null);
 	}
 	return app;

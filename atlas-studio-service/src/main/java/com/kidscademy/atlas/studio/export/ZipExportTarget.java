@@ -8,8 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.search.KeywordIndex;
 
 import js.json.Json;
 import js.json.impl.JsonParserException;
@@ -37,6 +42,29 @@ public class ZipExportTarget implements ExportTarget {
     }
 
     @Override
+    public void writeObject(ExportObject object, String language) throws IOException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void writeObjectsList(Set<String> objectsList) throws IOException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void writeSearchIndex(List<KeywordIndex<Integer>> searchIndex, String language) throws IOException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void writeMedia(File sourceMediaFile, AtlasObject object, String mediaFileName) throws IOException {
+	// TODO Auto-generated method stub
+	
+    }
+
     public void write(Object object, String path, Type type) throws IOException, JsonParserException {
 	Params.notNull(object, "Null object");
 	Params.notNullOrEmpty(path, "File path");
@@ -54,7 +82,6 @@ public class ZipExportTarget implements ExportTarget {
 	}
     }
 
-    @Override
     public void write(File file, String path) throws IOException {
 	// test null file here in order to simplify invoker logic
 	if (file == null || !file.exists()) {

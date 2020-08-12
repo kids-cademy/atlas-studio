@@ -35,6 +35,19 @@
 		<spreading>1</spreading>
 	</atlascollection>
 
+	<atlascollection_languages>
+		<id>1</id>
+		<atlascollection_id>1</atlascollection_id>
+		<languages_order>0</languages_order>
+		<languages>EN</languages>
+	</atlascollection_languages>
+	<atlascollection_languages>
+		<id>2</id>
+		<atlascollection_id>1</atlascollection_id>
+		<languages_order>1</languages_order>
+		<languages>RO</languages>
+	</atlascollection_languages>
+	
 	<atlascollection_taxonomymeta>
 		<id>1</id>
 		<atlascollection_id>1</atlascollection_id>
@@ -445,4 +458,17 @@
 		<gitUserName>user</gitUserName>
 		<gitPassword>passwd</gitPassword>
 	</androidapp>
+
+	<translation>
+		<discriminator>0</discriminator>
+		<objectId>1</objectId>
+		<language>RO</language>
+		<text>Instrument</text>
+	</translation>
+	<translation>
+		<discriminator>2</discriminator>
+		<objectId>1</objectId>
+		<language>RO</language>
+		<text>Instrument muzical.</text>
+	</translation>
 </data-set>

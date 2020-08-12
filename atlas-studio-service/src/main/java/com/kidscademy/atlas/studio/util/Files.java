@@ -217,4 +217,11 @@ public final class Files extends js.util.Files {
     public static void copy(String templateResource, Map<String, String> variables, Writer writer) throws IOException {
 	Files.copy(Classes.getResourceAsReader(templateResource), new VariablesWriter(writer, variables));
     }
+
+    public static void removeFilesHierarchy(File[] dirs) throws IOException {
+	for (File dir : dirs) {
+	    removeFilesHierarchy(dir);
+	    dir.delete();
+	}
+    }
 }

@@ -7,7 +7,7 @@ import javax.persistence.Converter;
 
 import js.util.Strings;
 
-@Converter(autoApply = true)
+@Converter
 public class StringsArrayConverter implements AttributeConverter<String[], String> {
     @Override
     public String convertToDatabaseColumn(String[] strings) {

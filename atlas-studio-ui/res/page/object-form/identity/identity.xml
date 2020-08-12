@@ -5,9 +5,9 @@
 	<description>Identity field set from object form.</description>
 	<scripts>
 		<script>lib/js-lib/js-lib.js</script>
+		<script>script/com/kidscademy/StringsControl.js</script>
 		<script>script/com/kidscademy/form/HDateControl.js</script>
 		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/AliasesControl.js</script>
 		<script>script/com/kidscademy/form/IdentityFieldSet.js</script>
 	</scripts>
 </page>

@@ -3,6 +3,7 @@ package com.kidscademy.atlas.studio.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class AndroidProject {
     /** Strings resources XML file path, relative to project root. */
     private static final String PATH_STRINGS = "app/src/main/res/values/strings.xml";
 
+    private static final String DIR_MAIN = "app/src/main";
     private static final String DIR_ATLAS = "app/src/main/assets/atlas";
 
     private static final String PATH_APK_DEBUG = "app/build/outputs/apk/debug/app-debug.apk";
@@ -99,12 +101,26 @@ public class AndroidProject {
 	strings.serialize(new FileWriter(getStringValuesFile()), true);
     }
 
+    public File getMainDir() {
+	return new File(location, DIR_MAIN);
+    }
+
     public File getAtlasDir() {
 	return new File(location, DIR_ATLAS);
     }
 
     public File getAtlasObjectDir(String objectName) {
 	return new File(getAtlasDir(), objectName);
+    }
+
+    public File[] getRawDirs() {
+	File resDir = new File(getMainDir(), "res");
+	return resDir.listFiles(new FilenameFilter() {
+	    @Override
+	    public boolean accept(File dir, String name) {
+		return name.startsWith("raw");
+	    }
+	});
     }
 
     public File getApkDebugFile() {

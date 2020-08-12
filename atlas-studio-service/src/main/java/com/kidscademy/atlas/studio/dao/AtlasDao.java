@@ -30,6 +30,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TranslationKey;
 
 public interface AtlasDao {
     <T> T getObjectById(Class<T> type, int id);
@@ -236,4 +237,6 @@ public interface AtlasDao {
     AndroidApp getAndroidAppById(int appId);
 
     AndroidApp getAndroidAppByRelease(int releaseId);
+    
+    String getTranslation(TranslationKey key);
 }

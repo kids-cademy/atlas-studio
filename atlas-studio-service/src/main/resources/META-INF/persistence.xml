@@ -9,6 +9,7 @@
 		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsListConverter</class>
 
 		<!-- embeddables -->
 		<class>com.kidscademy.atlas.studio.model.Link</class>
@@ -42,6 +43,8 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
+		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
 		</properties>
@@ -52,6 +55,7 @@
 
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsListConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
@@ -72,6 +76,8 @@
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
+		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/atlas" />
@@ -90,6 +96,7 @@
 		<class>com.kidscademy.atlas.studio.dao.FileConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.UrlConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
+		<class>com.kidscademy.atlas.studio.dao.StringsListConverter</class>
 
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>
@@ -118,6 +125,8 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
+		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/atlas_test" />

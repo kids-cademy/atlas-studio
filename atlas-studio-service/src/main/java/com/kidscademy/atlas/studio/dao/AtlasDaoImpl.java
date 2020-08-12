@@ -32,6 +32,8 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.Translation;
+import com.kidscademy.atlas.studio.model.TranslationKey;
 
 import js.lang.BugError;
 import js.transaction.Immutable;
@@ -697,5 +699,11 @@ public class AtlasDaoImpl implements AtlasDao {
 	if (app != null) {
 	    em.remove(app);
 	}
+    }
+
+    @Override
+    public String getTranslation(TranslationKey key) {
+	Translation translation = em.find(Translation.class, key);
+	return translation != null ? translation.getText() : null;
     }
 }

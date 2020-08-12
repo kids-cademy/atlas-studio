@@ -38,6 +38,7 @@ import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.Translator;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
 import com.kidscademy.atlas.studio.search.KeywordTree;
@@ -784,7 +785,7 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public ExportObject getReaderObject(int objectId) {
 	AtlasObject object = atlasDao.getAtlasObject(objectId);
-	ExportObject exportObject = new ExportObject(object);
+	ExportObject exportObject = new ExportObject(object, Translator.getDefaultInstance());
 	for (AtlasItem related : atlasDao.getRelatedAtlasObjects(object.getCollection().getId(), object.getRelated())) {
 	    exportObject.addRelated(related);
 	}

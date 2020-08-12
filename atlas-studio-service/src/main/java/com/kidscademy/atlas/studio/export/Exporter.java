@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -15,7 +14,7 @@ import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Theme;
-import com.kidscademy.atlas.studio.search.KeywordIndex;
+import com.kidscademy.atlas.studio.model.Translator;
 import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;
@@ -23,16 +22,15 @@ import com.kidscademy.atlas.studio.tool.ImageProcessor;
 import com.kidscademy.atlas.studio.tool.ImageProcessorImpl;
 import com.kidscademy.atlas.studio.util.Files;
 
-import js.lang.GType;
 import js.tiny.container.net.EventStreamManager;
 import js.util.Classes;
-import js.util.Strings;
 
 public class Exporter {
     private final AtlasDao dao;
     private final ExportTarget target;
     private final Theme theme;
     private final List<ExportItem> items;
+    private final List<String> languages;
 
     /**
      * Exporter for application atlas content.
@@ -46,7 +44,7 @@ public class Exporter {
      * @param items
      *            release items.
      */
-    public Exporter(AtlasDao dao, ExportTarget target, Theme theme, List<AtlasItem> items) {
+    public Exporter(AtlasDao dao, ExportTarget target, Theme theme, List<AtlasItem> items, List<String> languages) {
 	this.dao = dao;
 	this.target = target;
 	this.items = new ArrayList<>(items.size());
@@ -54,23 +52,15 @@ public class Exporter {
 	for (AtlasItem item : items) {
 	    this.items.add(new ExportItem(item));
 	}
+	this.languages = languages;
     }
 
-    /**
-     * Exporter for preview reader.
-     * 
-     * @param dao
-     *            persistence layer,
-     * @param target
-     *            where to export, for now file system or ZIP file,
-     * @param items
-     *            release items.
-     */
-    public Exporter(AtlasDao dao, ExportTarget target, List<ExportItem> items) {
+    public Exporter(AtlasDao dao, ExportTarget target, List<ExportItem> items, List<String> languages) {
 	this.dao = dao;
 	this.target = target;
 	this.theme = Theme.CLASSIC;
 	this.items = items;
+	this.languages = languages;
     }
 
     /**
@@ -98,8 +88,6 @@ public class Exporter {
     }
 
     private void serialize(boolean mediaProcessing) throws NoSuchMethodException, IOException {
-	SearchIndexProcessor processor = new SearchIndexProcessor();
-
 	// uses linked hash map to preserve insertion order
 	Map<String, ExportItem> itemsMap = new LinkedHashMap<>(items.size());
 	for (int index = 0; index < items.size(); ++index) {
@@ -109,57 +97,53 @@ public class Exporter {
 	    itemsMap.put(item.getName(), item);
 	}
 
-	for (ExportItem item : items) {
-	    AtlasObject atlasObject = dao.getAtlasObject(item.getId());
-	    ExportObject exportObject = new ExportObject(theme, atlasObject);
-	    exportObject.setIndex(item.getIndex());
-	    processor.createDirectIndex(exportObject);
+	for (String language : languages) {
+	    SearchIndexProcessor indexProcessor = new SearchIndexProcessor();
+	    for (ExportItem item : items) {
+		AtlasObject atlasObject = dao.getAtlasObject(item.getId());
+		Translator translator = new Translator(dao, language);
 
-	    for (String relatedName : atlasObject.getRelated()) {
-		ExportItem relatedItem = itemsMap.get(relatedName);
-		if (relatedItem != null) {
-		    exportObject.addRelated(new ExportRelatedObject(relatedItem));
+		ExportObject exportObject = new ExportObject(atlasObject, translator, theme);
+		exportObject.setIndex(item.getIndex());
+		indexProcessor.createDirectIndex(exportObject);
+
+		for (String relatedName : atlasObject.getRelated()) {
+		    ExportItem relatedItem = itemsMap.get(relatedName);
+		    if (relatedItem != null) {
+			exportObject.addRelated(new ExportRelatedObject(relatedItem));
+		    }
+		}
+
+		target.writeObject(exportObject, language);
+
+		if (mediaProcessing) {
+		    target.writeMedia(mediaFile(atlasObject, atlasObject.getSampleName()), atlasObject,
+			    atlasObject.getSampleName());
+		    target.writeMedia(mediaFile(atlasObject, atlasObject.getWaveformName()), atlasObject,
+			    atlasObject.getWaveformName());
+
+		    target.writeMedia(mediaFile(atlasObject, "icon", 96, 96), atlasObject,
+			    imageFileName(atlasObject, "icon"));
+		    target.writeMedia(mediaFile(atlasObject, "trivia", 500, 0), atlasObject,
+			    imageFileName(atlasObject, "trivia"));
+		    target.writeMedia(mediaFile(atlasObject, "cover", 0, 500), atlasObject,
+			    imageFileName(atlasObject, "cover"));
+		    target.writeMedia(mediaFile(atlasObject, "featured", 560, 0), atlasObject,
+			    imageFileName(atlasObject, "featured"));
+		    target.writeMedia(mediaFile(atlasObject, "contextual", 920, 560), atlasObject,
+			    imageFileName(atlasObject, "contextual"));
 		}
 	    }
 
-	    target.write(exportObject, filePath(atlasObject, "object_en.json"), ExportObject.class);
-
-	    if (mediaProcessing) {
-		target.write(file(atlasObject, atlasObject.getSampleName()),
-			filePath(atlasObject, atlasObject.getSampleName()));
-		target.write(file(atlasObject, atlasObject.getWaveformName()),
-			filePath(atlasObject, atlasObject.getWaveformName()));
-
-		target.write(file(atlasObject, "icon", 96, 96), imagePath(atlasObject, "icon"));
-		target.write(file(atlasObject, "trivia", 500, 0), imagePath(atlasObject, "trivia"));
-		target.write(file(atlasObject, "cover", 0, 500), imagePath(atlasObject, "cover"));
-		target.write(file(atlasObject, "featured", 560, 0), imagePath(atlasObject, "featured"));
-		target.write(file(atlasObject, "contextual", 920, 560), imagePath(atlasObject, "contextual"));
-	    }
+	    target.writeSearchIndex(indexProcessor.updateSearchIndex(), language);
 	}
 
-	target.write(processor.updateSearchIndex(), "search-index.json",
-		new GType(List.class, new GType(KeywordIndex.class, Integer.class)));
-	target.write(itemsMap.keySet(), "objects-list.json", new GType(Set.class, String.class));
+	target.writeObjectsList(itemsMap.keySet());
     }
 
-    private static String filePath(AtlasObject object, String fileName) {
-	return Strings.concat(object.getName(), '/', fileName);
-    }
-
-    /**
-     * Target path.
-     * 
-     * @param object
-     * @param imageKey
-     * @return
-     */
-    private static String imagePath(AtlasObject object, String imageKey) {
+    private static String imageFileName(AtlasObject object, String imageKey) {
 	Image image = object.getImage(imageKey);
-	if (image == null) {
-	    return null;
-	}
-	return Strings.concat(object.getName(), '/', image.getFileName());
+	return image != null ? image.getFileName() : null;
     }
 
     /**
@@ -169,7 +153,7 @@ public class Exporter {
      * @param mediaFileName
      * @return
      */
-    private static File file(AtlasObject atlasObject, String mediaFileName) {
+    private static File mediaFile(AtlasObject atlasObject, String mediaFileName) {
 	if (mediaFileName == null) {
 	    return null;
 	}
@@ -186,7 +170,7 @@ public class Exporter {
      * @return
      * @throws IOException
      */
-    private static File file(AtlasObject object, String imageKey, int width, int height) throws IOException {
+    private static File mediaFile(AtlasObject object, String imageKey, int width, int height) throws IOException {
 	Image image = object.getImage(imageKey);
 	if (image == null) {
 	    return null;

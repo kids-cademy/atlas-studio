@@ -2,10 +2,13 @@ package com.kidscademy.atlas.studio.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.kidscademy.atlas.studio.CT;
+import com.kidscademy.atlas.studio.dao.StringsListConverter;
 
 import js.util.Strings;
 
@@ -36,6 +40,10 @@ public class Release implements GraphicObject {
     private String display;
     private String brief;
     private String definition;
+    
+    @Convert(converter = StringsListConverter.class)
+    private List<String> languages;
+
     private String graphicsBackground;
     private String publisher;
     private String edition;
@@ -111,6 +119,10 @@ public class Release implements GraphicObject {
 	return definition;
     }
 
+    public List<String> getLanguages() {
+        return languages;
+    }
+
     public void setGraphicsBackground(String graphicsBackground) {
 	this.graphicsBackground = graphicsBackground;
     }
@@ -174,6 +186,7 @@ public class Release implements GraphicObject {
 
     public static Release create() {
 	Release release = new Release();
+	release.languages = new ArrayList<>();
 	release.graphicsBackground = "0000D3";
 	release.publisher = "kids (a)cademy";
 	release.edition = "community edition";

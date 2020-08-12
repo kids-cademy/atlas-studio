@@ -1,6 +1,7 @@
 package com.kidscademy.atlas.studio.search;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.kidscademy.atlas.studio.export.ExportObject;
+
+import js.lang.GType;
 
 public class SearchIndexProcessor {
     private final List<DirectIndex<Integer>> directIndices = new ArrayList<>();
@@ -27,7 +30,7 @@ public class SearchIndexProcessor {
 	fields.addField("related");
 	fields.addField("aliases");
 	fields.addField("display");
-	
+
 	this.objectIndexer = new ObjectIndexer<>(fields);
     }
 
@@ -37,6 +40,10 @@ public class SearchIndexProcessor {
 	DirectIndex<Integer> directIndex = objectIndexer.scanObject(object, object.getIndex());
 	directIndices.add(directIndex);
 	return directIndex;
+    }
+
+    public Type getSearchIndexType() {
+	return new GType(List.class, new GType(KeywordIndex.class, Integer.class));
     }
 
     public List<KeywordIndex<Integer>> updateSearchIndex() throws IOException {

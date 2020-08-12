@@ -16,6 +16,7 @@
 		<script>script/com/kidscademy/RichTextControl.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/StringsControl.js</script>
 		<script>script/com/kidscademy/release/GraphicAssets.js</script>
 		<script>script/com/kidscademy/page/ReleaseForm.js</script>
 	</scripts>
