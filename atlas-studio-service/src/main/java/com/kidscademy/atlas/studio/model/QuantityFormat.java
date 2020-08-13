@@ -153,7 +153,7 @@ public class QuantityFormat implements Comparator<Variant> {
 	UNITS.put(PhysicalQuantity.LENGTH, LengthUnits.values());
 	UNITS.put(PhysicalQuantity.SPEED, SpeedUnits.values());
 	UNITS.put(PhysicalQuantity.POWER, PowerUnits.values());
-	UNITS.put(PhysicalQuantity.ELECTRC_CHARGE, ElectricChargeUnits.values());
+	UNITS.put(PhysicalQuantity.ELECTRIC_CHARGE, ElectricChargeUnits.values());
 	UNITS.put(PhysicalQuantity.FOOD_ENERGY, FoodEnergyUnits.values());
 	UNITS.put(PhysicalQuantity.DENSITY, DensityUnits.values());
 	UNITS.put(PhysicalQuantity.ACCELERATION, AccelerationUnits.values());
