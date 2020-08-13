@@ -13,6 +13,7 @@
 		<name>instrument</name>
 		<display>Instrument</display>
 		<definition>Musical instrument.</definition>
+		<languages>EN,RO</languages>
 		<featuresType>none</featuresType>
 		<theme>CLASSIC</theme>
 		<endDate>1</endDate>
@@ -26,6 +27,7 @@
 		<name>bird</name>
 		<display>Bird</display>
 		<definition>Wild bird.</definition>
+		<languages>EN</languages>
 		<featuresType>physical-traits</featuresType>
 		<theme>MODERN</theme>
 		<endDate>1</endDate>
@@ -34,25 +36,13 @@
 		<audioSample>1</audioSample>
 		<spreading>1</spreading>
 	</atlascollection>
-
-	<atlascollection_languages>
-		<id>1</id>
-		<atlascollection_id>1</atlascollection_id>
-		<languages_order>0</languages_order>
-		<languages>EN</languages>
-	</atlascollection_languages>
-	<atlascollection_languages>
-		<id>2</id>
-		<atlascollection_id>1</atlascollection_id>
-		<languages_order>1</languages_order>
-		<languages>RO</languages>
-	</atlascollection_languages>
 	
 	<atlascollection_taxonomymeta>
 		<id>1</id>
 		<atlascollection_id>1</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
 		<name>family</name>
+		<display>Family</display>
 		<values>KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE</values>
 	</atlascollection_taxonomymeta>
 
@@ -61,6 +51,7 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
 		<name>kingdom</name>
+		<display>Kingdom</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
@@ -68,6 +59,7 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>1</taxonomymeta_order>
 		<name>phylum</name>
+		<display>Phylum</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
@@ -75,6 +67,7 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>2</taxonomymeta_order>
 		<name>class</name>
+		<display>Class</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
@@ -82,6 +75,7 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>3</taxonomymeta_order>
 		<name>order</name>
+		<display>Order</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
@@ -89,6 +83,7 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>4</taxonomymeta_order>
 		<name>family</name>
+		<display>Family</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
@@ -96,12 +91,14 @@
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>5</taxonomymeta_order>
 		<name>genus</name>
+		<display>Genus</display>
 		<values></values>
 	</atlascollection_taxonomymeta>
 	<atlascollection_taxonomymeta>
 		<id>8</id>
 		<atlascollection_id>2</atlascollection_id>
 		<name>species</name>
+		<display>Species</display>
 		<taxonomymeta_order>6</taxonomymeta_order>
 		<values></values>
 	</atlascollection_taxonomymeta>
@@ -230,6 +227,7 @@
 		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>accordion</name>
 		<display>Accordion</display>
+		<aliases>Squeezebox</aliases>
 		<definition>Accordion definition.</definition>
 		<description>Accordion description.</description>
 		<sampleTitle>Sample</sampleTitle>
@@ -245,6 +243,7 @@
 		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>eagle</name>
 		<display>Eagle</display>
+		<aliases> </aliases>
 		<definition>Eagle definition.</definition>
 		<description>Eagle description.</description>
 		<sampleTitle>Sample</sampleTitle>
@@ -260,6 +259,7 @@
 		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>bandoneon</name>
 		<display>Bandoneon</display>
+		<aliases> </aliases>
 		<definition>Bandoneon definition.</definition>
 		<description>Bandonenon description.</description>
 		<sampleTitle>Sample</sampleTitle>
@@ -275,6 +275,7 @@
 		<timestamp>2019-01-30 12:30:00</timestamp>
 		<name>cimbalom</name>
 		<display>Cimbalom</display>
+		<aliases> </aliases>
 		<definition>Cimbalom definition.</definition>
 		<description>Cimbalom description.</description>
 		<sampleTitle>Sample</sampleTitle>
@@ -284,27 +285,20 @@
 		<startDateMask>0</startDateMask>
 	</atlasobject>
 
-	<atlasobject_aliases>
-		<id>1</id>
-		<atlasobject_id>1</atlasobject_id>
-		<aliases_order>0</aliases_order>
-		<aliases>Squeezebox</aliases>
-	</atlasobject_aliases>
-
-	<atlasobject_taxonomy>
+	<taxon>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
 		<taxonomy_ORDER>0</taxonomy_ORDER>
 		<name>Group</name>
 		<value>WOODEN</value>
-	</atlasobject_taxonomy>
-	<atlasobject_taxonomy>
+	</taxon>
+	<taxon>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
 		<taxonomy_ORDER>1</taxonomy_ORDER>
 		<name>Family</name>
 		<value>WOODWIND</value>
-	</atlasobject_taxonomy>
+	</taxon>
 
 	<atlasobject_images>
 		<id>1</id>
@@ -429,6 +423,7 @@
 		<display>Wild Birds</display>
 		<brief>Wild birds brief</brief>
 		<definition>Wild birds description.</definition>
+		<languages>EN</languages>
 		<graphicsBackground>FFFFFF</graphicsBackground>
 		<publisher>Published by kids (a)cademy</publisher>
 		<edition>community edition</edition>

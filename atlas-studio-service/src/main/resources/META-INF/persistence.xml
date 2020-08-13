@@ -30,6 +30,7 @@
 		<class>com.kidscademy.atlas.studio.model.Image</class>
 		<class>com.kidscademy.atlas.studio.model.MediaFile</class>
 
+		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
@@ -57,6 +58,7 @@
 		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.StringsListConverter</class>
 
+		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>
@@ -98,6 +100,7 @@
 		<class>com.kidscademy.atlas.studio.dao.StringsArrayConverter</class>
 		<class>com.kidscademy.atlas.studio.dao.StringsListConverter</class>
 
+		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>

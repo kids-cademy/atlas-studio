@@ -100,7 +100,8 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange 
     @MapKeyColumn(name = "imageKey")
     private Map<String, Image> images;
 
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "atlasobject_id")
     @OrderColumn
     private List<Taxon> taxonomy;
 
