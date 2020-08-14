@@ -37,71 +37,79 @@
 		<spreading>1</spreading>
 	</atlascollection>
 	
-	<atlascollection_taxonomymeta>
+	<taxonmeta>
 		<id>1</id>
 		<atlascollection_id>1</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
+		<name>group</name>
+		<display>Group</display>
+		<values></values>
+	</taxonmeta>
+	<taxonmeta>
+		<id>2</id>
+		<atlascollection_id>1</atlascollection_id>
+		<taxonomymeta_order>1</taxonomymeta_order>
 		<name>family</name>
 		<display>Family</display>
 		<values>KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE</values>
-	</atlascollection_taxonomymeta>
+	</taxonmeta>
 
-	<atlascollection_taxonomymeta>
-		<id>2</id>
+	<taxonmeta>
+		<id>3</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
 		<name>kingdom</name>
 		<display>Kingdom</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>3</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>4</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>1</taxonomymeta_order>
 		<name>phylum</name>
 		<display>Phylum</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>4</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>5</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>2</taxonomymeta_order>
 		<name>class</name>
 		<display>Class</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>5</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>6</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>3</taxonomymeta_order>
 		<name>order</name>
 		<display>Order</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>6</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>7</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>4</taxonomymeta_order>
 		<name>family</name>
 		<display>Family</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>7</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>8</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>5</taxonomymeta_order>
 		<name>genus</name>
 		<display>Genus</display>
 		<values></values>
-	</atlascollection_taxonomymeta>
-	<atlascollection_taxonomymeta>
-		<id>8</id>
+	</taxonmeta>
+	<taxonmeta>
+		<id>9</id>
 		<atlascollection_id>2</atlascollection_id>
 		<name>species</name>
 		<display>Species</display>
 		<taxonomymeta_order>6</taxonomymeta_order>
 		<values></values>
-	</atlascollection_taxonomymeta>
+	</taxonmeta>
 
 	<featuremeta>
 		<id>1</id>
@@ -288,15 +296,15 @@
 	<taxon>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
+		<meta_id>1</meta_id>
 		<taxonomy_ORDER>0</taxonomy_ORDER>
-		<name>Group</name>
 		<value>WOODEN</value>
 	</taxon>
 	<taxon>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
+		<meta_id>2</meta_id>
 		<taxonomy_ORDER>1</taxonomy_ORDER>
-		<name>Family</name>
 		<value>WOODWIND</value>
 	</taxon>
 

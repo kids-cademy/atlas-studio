@@ -219,6 +219,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 
 	_onClose() {
 		this._batchEdit = false;
+		this._taxonEditIndex = -1;
 		this._metaEditor.hide();
 		this._valueEditor.hide();
 		this._updateActions();
@@ -257,9 +258,9 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * Update editor controls with taxon object at current {@link #_taxonEditIndex} from  {@link #_taxonomy} array.
 	 */
 	_updateEditControls() {
-		$assert(this._taxonEditIndex !== -1, "com.kidscademy.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
+		$assert(this._taxonEditIndex !== -1, "com.kidscademy.form.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
 		const taxon = this._taxonomyView.getByIndex(this._taxonEditIndex).getUserData();
-		const taxonMeta = this._meta.getTaxonMeta(taxon.name);
+		const taxonMeta = this._meta.getTaxonMeta(taxon.meta.name);
 		this._valueEditor.setObject(taxonMeta, taxon);
 	}
 
@@ -267,7 +268,11 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	 * Store taxon value from editor on selected taxon from taxonomy view.
 	 */
 	_updateTaxonomyView() {
-		this._taxonomyView.getByIndex(this._taxonEditIndex).setObject(this._valueEditor.getObject());
+		$assert(this._taxonEditIndex !== -1, "com.kidscademy.form.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
+		const taxonView = this._taxonomyView.getByIndex(this._taxonEditIndex);
+		const taxon = taxonView.getUserData();
+		taxon.value = this._valueEditor.getValue();
+		taxonView.setObject(taxon);
 	}
 
 	/**
@@ -301,7 +306,7 @@ com.kidscademy.form.TaxonomyControl.Meta = class {
 	}
 
 	getTaxonomyTemplate() {
-		return this._taxonomyMeta.map(taxonMeta => { return { name: taxonMeta.name, value: null } });
+		return this._taxonomyMeta.map(taxonMeta => { return { meta: taxonMeta, value: null } });
 	}
 
 	getTaxonNames() {
@@ -358,11 +363,8 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 		this._valueControl.focus();
 	}
 
-	getObject() {
-		return {
-			name: this._nameLabel.getText(),
-			value: this._valueControl.getValue()
-		};
+	getValue() {
+		return this._valueControl.getValue();
 	}
 
 	_onPaste(ev) {

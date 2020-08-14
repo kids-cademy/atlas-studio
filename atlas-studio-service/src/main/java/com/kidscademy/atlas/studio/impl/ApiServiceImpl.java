@@ -379,13 +379,13 @@ public class ApiServiceImpl implements ApiService {
 	return atlasDao.getAtlasItem(object.getId());
     }
 
-    private static List<Taxon> loadTaxonomy(List<TaxonMeta> taxonomyMeta, Map<String, String> taxonomy) {
-	if (taxonomy.isEmpty()) {
+    private static List<Taxon> loadTaxonomy(List<TaxonMeta> taxonomyMeta, Map<String, String> taxonomyValues) {
+	if (taxonomyValues.isEmpty()) {
 	    return null;
 	}
-	List<Taxon> taxaList = new ArrayList<>();
+	List<Taxon> taxonomy = new ArrayList<>();
 	for (TaxonMeta taxonMeta : taxonomyMeta) {
-	    for (Map.Entry<String, String> taxon : taxonomy.entrySet()) {
+	    for (Map.Entry<String, String> taxon : taxonomyValues.entrySet()) {
 		if (!taxonMeta.getName().equals(taxon.getKey())) {
 		    continue;
 		}
@@ -394,10 +394,10 @@ public class ApiServiceImpl implements ApiService {
 			continue;
 		    }
 		}
-		taxaList.add(new Taxon(taxon.getKey(), taxon.getValue()));
+		taxonomy.add(new Taxon(taxonMeta, taxon.getValue()));
 		break;
 	    }
 	}
-	return taxaList;
+	return taxonomy;
     }
 }

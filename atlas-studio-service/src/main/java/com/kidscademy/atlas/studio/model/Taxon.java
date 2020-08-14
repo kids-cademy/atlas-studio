@@ -4,62 +4,53 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import js.lang.Displayable;
 import js.util.Strings;
 
 @Entity
-public class Taxon implements Displayable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Taxon
+{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    // @ManyToOne
-    // private TaxonMeta meta;
+  @ManyToOne
+  private TaxonMeta meta;
 
-    private String name;
-    private String value;
+  private String value;
 
-    public Taxon() {
+  public Taxon() {
 
-    }
+  }
 
-    public Taxon(String name) {
-	this.name = name;
-    }
+  public Taxon(TaxonMeta meta, String value) {
+    this.meta = meta;
+    this.value = value;
+  }
 
-    public Taxon(String name, String value) {
-	this.name = name;
-	this.value = value;
-    }
+  public String getName() {
+    return meta.getName();
+  }
 
-    public String getName() {
-	return name;
-    }
+  public String getDisplay() {
+    return meta.getDisplay();
+  }
 
-    public void setName(String name) {
-	this.name = name;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    public String getValue() {
-	return value;
-    }
+  public void setValue(String value) {
+    this.value = value;
+  }
 
-    public void setValue(String value) {
-	this.value = value;
-    }
+  public boolean isWildcard() {
+    return meta.getName() == null;
+  }
 
-    public boolean isWildcard() {
-	return name == null;
-    }
-
-    @Override
-    public String toDisplay() {
-	return Strings.concat(name, ' ', value);
-    }
-
-    @Override
-    public String toString() {
-	return Strings.toString(name, value);
-    }
+  @Override
+  public String toString() {
+    return Strings.toString(meta.getName(), value);
+  }
 }

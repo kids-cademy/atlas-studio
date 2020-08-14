@@ -56,16 +56,9 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 		for (let i = 0; i < this._defaultActions.length; ++i) {
 			const actionHandler = this._defaultActions[i];
 			const action = this.getByCss("li[data-name='%s']", actionHandler.name);
-			let accept = true;
-			if (ev.shiftKey) {
-				accept = accept && action.hasCssClass("shift");
-			}
-			if (ev.altKey) {
-				accept = accept && action.hasCssClass("alt");
-			}
-			if (ev.ctrlKey) {
-				accept = accept && action.hasCssClass("ctrl");
-			}
+			let accept = ev.shiftKey ? action.hasCssClass("shift") : !action.hasCssClass("shift");
+			accept = accept && (ev.altKey ? action.hasCssClass("alt") : !action.hasCssClass("alt"));
+			accept = accept && (ev.ctrlKey ? action.hasCssClass("ctrl") : !action.hasCssClass("ctrl"));
 			if (accept) {
 				return actionHandler;
 			}
