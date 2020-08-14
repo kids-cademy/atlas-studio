@@ -63,19 +63,24 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
     }
 
     _onDone() {
-        const taxon = {
-            name: this._taxonNameInput.getValue(),
-            display: this._taxonDisplayInput.getValue(),
-            values: this._normalizeValues(this._taxonValuesInput.getValue())
-        };
-
         if (this._currentRow == null) {
-            this._taxonomyMetaView.addObject(taxon);
+            const taxonMeta = {
+                name: this._taxonNameInput.getValue(),
+                display: this._taxonDisplayInput.getValue(),
+                values: this._normalizeValues(this._taxonValuesInput.getValue())
+            };
+
+            this._taxonomyMetaView.addObject(taxonMeta);
             this._onClose();
             return;
         }
 
-        this._currentRow.setObject(taxon);
+        const taxonMeta = this._currentRow.getUserData();
+        taxonMeta.name = this._taxonNameInput.getValue();
+        taxonMeta.display = this._taxonDisplayInput.getValue();
+        taxonMeta.values = this._normalizeValues(this._taxonValuesInput.getValue());
+
+        this._currentRow.setObject(taxonMeta);
         this._onClose();
     }
 

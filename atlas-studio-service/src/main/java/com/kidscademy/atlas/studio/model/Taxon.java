@@ -29,6 +29,14 @@ public class Taxon
     this.value = value;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public TaxonMeta getMeta() {
+    return meta;
+  }
+
   public String getName() {
     return meta.getName();
   }
