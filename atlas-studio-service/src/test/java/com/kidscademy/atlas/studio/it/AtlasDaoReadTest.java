@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -237,18 +238,18 @@ public class AtlasDaoReadTest {
 	assertThat(object.getCollection(), notNullValue());
 	assertThat(object.getCollection().getId(), equalTo(1));
 	assertThat(object.getCollection().getName(), equalTo("instrument"));
-	// assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
-	//
-	// assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
-	// assertThat(object.getCollection().getTaxonomyMeta().size(), equalTo(1));
-	// assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(),
-	// equalTo("family"));
-	// assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
-	// equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
-	//
-	// assertTrue(object.getCollection().getFlags().hasEndDate());
-	// assertTrue(object.getCollection().getFlags().hasConservationStatus());
-	// assertTrue(object.getCollection().getFlags().hasAudioSample());
+	assertThat(object.getCollection().getDisplay(), equalTo("Instrument"));
+	
+	assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
+	assertThat(object.getCollection().getTaxonomyMeta(), hasSize(1));
+	assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(),
+	equalTo("family"));
+	assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(),
+	equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
+	
+	assertTrue(object.getCollection().getFlags().hasEndDate());
+	assertTrue(object.getCollection().getFlags().hasConservationStatus());
+	assertTrue(object.getCollection().getFlags().hasAudioSample());
 
 	assertThat(object.getState(), equalTo(AtlasObject.State.DEVELOPMENT));
 	assertThat(object.getName(), equalTo("accordion"));

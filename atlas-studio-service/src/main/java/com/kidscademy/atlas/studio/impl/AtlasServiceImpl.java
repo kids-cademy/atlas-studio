@@ -280,8 +280,8 @@ public class AtlasServiceImpl implements AtlasService {
 	    Files.mediaFile(object, icon.getFileName(), "96x96").delete();
 	}
 	atlasDao.saveAtlasObject(object);
-	object.postLoad();
-	return object;
+	// need to reload object from database to ensure IDs are updated
+	return atlasDao.getAtlasObject(object.getId());
     }
 
     @Override

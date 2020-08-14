@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -252,6 +253,7 @@ public class AtlasServiceTest {
 	object.setSampleSrc(src("sample.mp3"));
 	object.setSampleInfo(info);
 
+	when(atlasDao.getAtlasObject(anyInt())).thenReturn(object);
 	object = service.saveAtlasObject(object);
 	info = object.getSampleInfo();
 
