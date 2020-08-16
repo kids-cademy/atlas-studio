@@ -40,7 +40,7 @@ public class Translator
   }
 
   public String getAtlasObjectDisplay(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, objectId, language));
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, objectId), language);
   }
 
   public List<String> getAtlasObjectAliases(int objectId) {
@@ -49,18 +49,18 @@ public class Translator
   }
 
   public String getAtlasObjectDefinition(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, objectId, language));
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, objectId), language);
   }
 
   public String getAtlasObjectDescription(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DESCRIPTION, objectId, language));
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DESCRIPTION, objectId), language);
   }
 
   public String getTaxonMetaDisplay(int taxonMetaId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_META_DISPLAY, taxonMetaId, language));
+    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_META_DISPLAY, taxonMetaId), language);
   }
 
   public String getTaxonValue(int taxonId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_VALUE, taxonId, language));
+    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_VALUE, taxonId), language);
   }
 }

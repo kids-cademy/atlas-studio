@@ -463,13 +463,13 @@
 	</androidapp>
 
 	<translation>
-		<discriminator>0</discriminator>
+		<discriminator>OBJECT_DISPLAY</discriminator>
 		<objectId>1</objectId>
 		<language>RO</language>
 		<text>Instrument</text>
 	</translation>
 	<translation>
-		<discriminator>2</discriminator>
+		<discriminator>OBJECT_DEFINITION</discriminator>
 		<objectId>1</objectId>
 		<language>RO</language>
 		<text>Instrument muzical.</text>
