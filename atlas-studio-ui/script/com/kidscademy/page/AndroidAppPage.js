@@ -27,6 +27,8 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._objectsList = this.getByCssClass("objects-list");
         this._objectsList.setContextMenu(contextMenu);
 
+        this._languageSelect = this._sidebar.getByCssClass("languages");
+
         this._console = this.getByClass(com.kidscademy.Console);
         this._load();
     }
@@ -51,9 +53,17 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
     _onAppLoaded(app) {
         this._app = app;
+
         this._releaseView.setObject(app);
+        this._languageSelect.setOptions(app.release.languages);
+        this._languageSelect.setValue(this.getContextAttr("preview-language"));
+
         this._objectsList.resetTimestamp();
         ReleaseService.getReleaseItems(app.release.id, items => this._objectsList.setObject(items));
+    }
+
+    _onUnload() {
+        this.setContextAttr("preview-language", this._languageSelect.getValue());
     }
 
     _onOpenRelease() {
@@ -118,7 +128,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
     _onPreviewObject(objectView) {
         const object = objectView.getUserData();
-        WinMain.assign("@link/reader", { object: object.id });
+        WinMain.assign("@link/reader", { object: object.id, language: this._languageSelect.getValue() });
     }
 
     _onOpenCollection(objectView) {

@@ -25,6 +25,8 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
         this._objectsList = this.getByName("objects-list");
         this._objectsList.setContextMenu(this._contextMenu);
 
+        this._languageSelect = this._sidebar.getByCssClass("languages");
+
         const release = WinMain.url.parameters.release;
         const releaseId = Number(release);
         if (isNaN(releaseId)) {
@@ -39,8 +41,15 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
         this._release = release;
         this._sidebar.setObject(release);
 
+        this._languageSelect.setOptions(release.languages);
+        this._languageSelect.setValue(this.getContextAttr("preview-language"));
+
         this._objectsList.resetTimestamp();
         ReleaseService.getReleaseItems(release.id, items => this._objectsList.setObject(items));
+    }
+
+    _onUnload() {
+        this.setContextAttr("preview-language", this._languageSelect.getValue());
     }
 
     _onEditRelease() {
@@ -79,7 +88,7 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
 
     _onPreviewObject(objectView) {
         const object = objectView.getUserData();
-        WinMain.assign("@link/reader", { object: object.id });
+        WinMain.assign("@link/reader", { object: object.id, language: this._languageSelect.getValue() });
     }
 
     _onOpenCollection(objectView) {

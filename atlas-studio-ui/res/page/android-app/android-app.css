@@ -38,6 +38,10 @@ body .body>.scroll-y {
 	color: green;
 }
 
+.android-app .release .object-view h1 select {
+	float: right;
+}
+
 .android-app .release .object-view p {
 	max-width: 800px;
 }

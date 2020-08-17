@@ -306,7 +306,7 @@ public interface AtlasService {
 
     String getWikiHowTitle(URL url);
 
-    ExportObject getReaderObject(int objectId);
+    ExportObject getReaderObject(int objectId, String language);
 
     Feature updateFeatureDisplay(Feature feature);
 }
