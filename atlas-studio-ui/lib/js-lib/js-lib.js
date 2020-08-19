@@ -3136,18 +3136,6 @@ js.dom.Control.prototype = {
 
 	CSS_INVALID : "invalid",
 
-	getName : function() {
-		var name = this.getAttr("name");
-		if (name === null) {
-			name = this.getAttr("data-name");
-		}
-		else {
-			$assert(!this._node.hasAttribute("data-name"), "js.dom.Control#getName", "Both <name> and <data-name> attributes present on control |%s|.", this);
-		}
-		$assert(name !== null, "js.dom.Control#getName", "Control |%s| has no name.", this);
-		return name;
-	},
-
 	setValue : function(value) {
 		this.removeCssClass(this.CSS_INVALID);
 
@@ -3156,7 +3144,7 @@ js.dom.Control.prototype = {
 			return this;
 		}
 
-		$assert(this.getAttr("type") === "hidden" || this.style.get("display") !== "none", "js.dom.Control#setValue", "Display is none.");
+		$assert(this.getAttr("type") === "hidden" || this.style.get("display") !== "none", "js.dom.Control#setValue", "Control |%s| has display none.", this);
 		if (value === null) {
 			return this._clean();
 		}
@@ -7534,8 +7522,8 @@ js.event.DomEvents.prototype = {
     addListener : function (type, listener, scope, capture) {
         $assert(type in js.event.Types, "js.event.DomEvents#addListener", "Unrecognized event type #%s.", type);
         $assert(js.lang.Types.isFunction(listener), "js.event.DomEvents#addListener", "Event listener is not a function.");
-        $assert(js.lang.Types.isObject(scope), "js.event.DomEvents#addListener", "Scope is not an object.");
-        $assert(js.lang.Types.isBoolean(capture), "js.event.DomEvents#addListener", "Capture flag is not a boolean value.");
+        $assert(typeof scope === "undefined" || js.lang.Types.isObject(scope), "js.event.DomEvents#addListener", "Scope is not an object.");
+        $assert(typeof scope === "undefined" || js.lang.Types.isBoolean(capture), "js.event.DomEvents#addListener", "Capture flag is not a boolean value.");
         if (!(type in js.event.Types)) {
             return;
         }

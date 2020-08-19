@@ -12,7 +12,6 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 		this._tabsView.on("dragstart", this._onTabsDragStart, this);
 		this._tabsView.on("dragover", this._onTabsDragOver, this);
 		this._tabsView.on("drop", this._onTabsDrop, this);
-		this._updateEditorIndex(-1);
 
 		this._editorControls = this.getByCssClass("editor-controls");
 		this._sectionNameInput = this.getByName("section-name");
