@@ -2,8 +2,19 @@
 	
 }
 
-.facts dt {
+.facts li {
 	cursor: pointer;
+}
+
+.facts li h1 {
+	margin-bottom: 0;
+	font-size: 1.8rem;
+}
+
+.facts li p {
+	margin-top: 0;
+	font-size: 1.6rem;
+	color: #006600;
 }
 
 .facts:not(.hidden) .list-view {

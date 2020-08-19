@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
@@ -22,9 +26,11 @@ import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.AtlasObjectTranslate;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
@@ -60,6 +66,7 @@ import js.lang.GType;
 import js.log.Log;
 import js.log.LogFactory;
 import js.rmi.BusinessException;
+import js.tiny.container.annotation.ContextParam;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.tiny.container.http.form.UploadedFile;
@@ -69,6 +76,9 @@ public class AtlasServiceImpl implements AtlasService
 {
   private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
 
+  @ContextParam("google.api.key")
+  private static String GOOGLE_API_KEY;
+
   private final AppContext context;
   private final Json json;
 
@@ -76,6 +86,8 @@ public class AtlasServiceImpl implements AtlasService
   private final AudioProcessor audioProcessor;
   private final ImageProcessor imageProcessor;
   private final BusinessRules businessRules;
+
+  private final Translate translate;
 
   private KeywordTree<KeywordIndex<Integer>> index;
 
@@ -100,6 +112,12 @@ public class AtlasServiceImpl implements AtlasService
     }
 
     this.index = new KeywordTree<>(searchIndex);
+
+    // google translate client library loads API KEY from system property GOOGLE_API_KEY
+    if(GOOGLE_API_KEY != null) {
+      System.setProperty("GOOGLE_API_KEY", GOOGLE_API_KEY);
+    }
+    this.translate = TranslateOptions.getDefaultInstance().getService();
   }
 
   @Override
@@ -793,9 +811,64 @@ public class AtlasServiceImpl implements AtlasService
 
   @Override
   public Feature updateFeatureDisplay(Feature feature) {
-    // reuse handler used to update feature display after loading object from
-    // database
+    // reuse handler used to update feature display after loading object from database
     feature.postLoad();
     return feature;
+  }
+
+  @Override
+  public AtlasObjectTranslate getAtlasObjectTranslate(int objectId, String language) {
+    AtlasObject object = atlasDao.getAtlasObject(objectId);
+    Translator translator = new Translator(atlasDao, language);
+    return new AtlasObjectTranslate(object, translator);
+  }
+
+  @Override
+  public void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslate translate) {
+    Translator translator = new Translator(atlasDao, language);
+    translator.saveAtlasObjectDisplay(objectId, translate.getDisplay());
+    translator.saveAtlasObjectAliases(objectId, translate.getAliases());
+    translator.saveAtlasObjectDefinition(objectId, translate.getDefinition());
+    translator.saveAtlasObjectDescription(objectId, translate.getDescription());
+    translator.saveAtlasObjectSampleTitle(objectId, translate.getSampleTitle());
+
+    for(Fact fact : translate.getFacts()) {
+      translator.saveFactTitle(fact.getId(), fact.getTitle());
+      translator.saveFactText(fact.getId(), fact.getText());
+    }
+  }
+
+  @Override
+  public AtlasObjectTranslate translateAtlasObject(int objectId, String language) {
+    AtlasObject object = atlasDao.getAtlasObject(objectId);
+    Translator translator = new Translator(atlasDao, language);
+
+    translator.saveAtlasObjectDisplay(objectId, translate(language, object.getDisplay(), translator.getAtlasObjectDisplay(objectId)));
+    translator.saveAtlasObjectAliases(objectId, translate(language, object.getAliases(), translator.getAtlasObjectAliases(objectId)));
+    translator.saveAtlasObjectDefinition(objectId, translate(language, object.getDefinition(), translator.getAtlasObjectDefinition(objectId)));
+    translator.saveAtlasObjectDescription(objectId, translate(language, object.getDescription(), translator.getAtlasObjectDescription(objectId)));
+    translator.saveAtlasObjectSampleTitle(objectId, translate(language, object.getSampleTitle(), translator.getAtlasObjectSampleTitle(objectId)));
+
+    for(Fact fact : object.getFacts()) {
+      translator.saveFactTitle(fact.getId(), translate(language, fact.getTitle(), translator.getFactTitle(fact.getId())));
+      translator.saveFactText(fact.getId(), translate(language, fact.getText(), translator.getFactText(fact.getId())));
+    }
+
+    return new AtlasObjectTranslate(object, translator);
+  }
+
+  private List<String> translate(String language, List<String> text, List<String> translated) {
+    return Strings.split(translate(language, Strings.join(text, ','), Strings.join(translated, ',')), ',');
+  }
+
+  private String translate(String language, String text, String translated) {
+    if(text == null) {
+      return null;
+    }
+    if(translated != null) {
+      return translated;
+    }
+    Translation translation = translate.translate(text, TranslateOption.sourceLanguage("EN"), TranslateOption.targetLanguage(language));
+    return translation.getTranslatedText();
   }
 }

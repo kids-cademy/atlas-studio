@@ -108,6 +108,11 @@ com.kidscademy.page.SearchPage = class extends com.kidscademy.Page {
 		WinMain.assign("@link/collection", { collection: object.collection.id });
 	}
 
+	_onTranslateObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/translate-object", { object: object.id });
+	}
+
 	// --------------------------------------------------------------------------------------------
 
 	_onItemClick(ev) {

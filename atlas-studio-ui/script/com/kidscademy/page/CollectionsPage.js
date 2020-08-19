@@ -14,6 +14,7 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._collectionsMenu.on("edit-collection", this._onEditCollection, this);
         this._collectionsMenu.on("remove-collection", this._onRemoveCollection, this);
         this._collectionsMenu.on("manage-objects", this._onManageObjects, this);
+        this._collectionsMenu.on("translate-objects", this._onTranslateObjects, this);
 
         this._collectionsView = this.getByCssClass("collections-view");
         this._collectionsView.setContextMenu(this._collectionsMenu);
@@ -33,6 +34,7 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._objectsMenu.on("edit-object", this._onEditObject, this);
         this._objectsMenu.on("preview-object", this._onPreviewObject, this);
         this._objectsMenu.on("open-collection", this._onOpenCollection, this);
+        this._objectsMenu.on("translate-object", this._onTranslateObject, this);
 
         this._objectsView = this.getByCssClass("objects-view");
         this._objectsView.setContextMenu(this._objectsMenu);
@@ -87,6 +89,16 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
     _onOpenCollection(objectView) {
         const object = objectView.getUserData();
         WinMain.assign("@link/collection", { collection: object.collection.id });
+    }
+
+    _onTranslateObjects(collectionView) {
+        const collection = collectionView.getUserData();
+        WinMain.assign("@link/translate", { collection: collection.id });
+    }
+
+    _onTranslateObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/translate-object", { object: object.id });
     }
 
     toString() {

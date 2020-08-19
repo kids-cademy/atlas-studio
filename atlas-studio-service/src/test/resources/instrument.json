@@ -31,10 +31,18 @@
 			"area": "NORTH"
 		}
 	],
-	"facts": {
-		"Banjo Fact #2": "Banjo fact #2 description.",
-		"Banjo Fact #1": "Banjo fact #1 description."
-	},
+	"facts": [
+		{
+			"id": 0,
+			"title": "Banjo Fact #2",
+			"text": "Banjo fact #2 description."
+		},
+		{
+			"id": 1,
+			"title": "Banjo Fact #1",
+			"text": "Banjo fact #1 description."
+		}
+	],
 	"links": [
 		{
 			"id": 0,

@@ -19,6 +19,7 @@ import com.google.cloud.translate.Translation;
 import js.util.Classes;
 import js.util.Strings;
 
+@Ignore
 public class GoogleTranslateTest
 {
   @BeforeClass

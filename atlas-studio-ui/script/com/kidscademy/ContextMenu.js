@@ -38,7 +38,7 @@ com.kidscademy.ContextMenu = class extends js.dom.Element {
 			_this.hide();
 			listener.call(scope || window, _this._contextView);
 		};
-		action.on("click", actionHandler);
+		action.on("click", actionHandler, this);
 	}
 
 	/**

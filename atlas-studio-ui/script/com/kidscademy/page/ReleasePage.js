@@ -18,6 +18,7 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
         this._contextMenu = this.getByCssClass("context-menu");
         this._contextMenu.on("edit-object", this._onEditObject, this);
         this._contextMenu.on("preview-object", this._onPreviewObject, this);
+        this._contextMenu.on("translate-object", this._onTranslateObject, this);
         this._contextMenu.on("open-collection", this._onOpenCollection, this);
         this._contextMenu.on("remove-object", this._onRemoveObject, this);
 
@@ -89,6 +90,11 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
     _onPreviewObject(objectView) {
         const object = objectView.getUserData();
         WinMain.assign("@link/reader", { object: object.id, language: this._languageSelect.getValue() });
+    }
+
+    _onTranslateObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/translate-object", { object: object.id, language: this._languageSelect.getValue() });
     }
 
     _onOpenCollection(objectView) {

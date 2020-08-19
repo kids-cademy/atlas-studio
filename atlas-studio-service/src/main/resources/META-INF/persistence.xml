@@ -34,6 +34,7 @@
 		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
+		<class>com.kidscademy.atlas.studio.model.Fact</class>
 		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
 		<class>com.kidscademy.atlas.studio.model.LinkSource</class>
 
@@ -63,6 +64,7 @@
 		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
+		<class>com.kidscademy.atlas.studio.model.Fact</class>
 		<class>com.kidscademy.atlas.studio.model.Link</class>
 		<class>com.kidscademy.atlas.studio.model.HDate</class>
 		<class>com.kidscademy.atlas.studio.model.Region</class>
@@ -120,6 +122,7 @@
 		<class>com.kidscademy.atlas.studio.model.Taxon</class>
 		<class>com.kidscademy.atlas.studio.model.FeatureMeta</class>
 		<class>com.kidscademy.atlas.studio.model.Feature</class>
+		<class>com.kidscademy.atlas.studio.model.Fact</class>
 		<class>com.kidscademy.atlas.studio.model.ExternalSource</class>
 		<class>com.kidscademy.atlas.studio.model.LinkSource</class>
 

@@ -296,10 +296,12 @@ public class AtlasDaoReadTest
     assertThat(object.getSpreading().get(0).getArea(), equalTo(Region.Area.CENTRAL));
 
     assertThat(object.getFacts(), notNullValue());
-    assertThat(object.getFacts().keySet(), not(empty()));
-    assertThat(object.getFacts().keySet(), hasSize(2));
-    assertThat(object.getFacts().get("Fact #1"), equalTo("Fact #1 description."));
-    assertThat(object.getFacts().get("Fact #2"), equalTo("Fact #2 description."));
+    assertThat(object.getFacts(), not(empty()));
+    assertThat(object.getFacts(), hasSize(2));
+    assertThat(object.getFacts().get(0).getTitle(), equalTo("Fact #1"));
+    assertThat(object.getFacts().get(0).getText(), equalTo("Fact #1 description."));
+    assertThat(object.getFacts().get(1).getTitle(), equalTo("Fact #2"));
+    assertThat(object.getFacts().get(1).getText(), equalTo("Fact #2 description."));
 
     assertThat(object.getFeatures(), notNullValue());
     assertThat(object.getFeatures(), not(empty()));

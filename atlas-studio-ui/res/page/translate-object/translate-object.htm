@@ -1,0 +1,118 @@
+<div class="translate-object" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<form class="form" data-class="com.kidscademy.Form">
+
+		<fieldset class="identity">
+			<div class="header container">
+				<h2>@string/identity</h2>
+			</div>
+
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>display</label><input name="display" />
+					</div>
+					<div class="controlset">
+						<label>aliases</label><input name="aliases" class="optional" data-class="com.kidscademy.StringsControl" />
+					</div>
+					<div class="controlset">
+						<label>definition</label>
+						<textarea name="definition" class="small"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset name="description" class="description" data-class="com.kidscademy.translate.DescriptionControl">
+			<div class="header container">
+				<h2>@string/description</h2>
+			</div>
+
+			<div class="content">
+				<div class="container">
+					<div class="text-editors" data-list=".">
+						<textarea class="large"></textarea>
+					</div>
+					<div class="tabs-view" data-list=".">
+						<span class="tab" data-text="."></span>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="media">
+			<div class="header container">
+				<h2>@string/media</h2>
+			</div>
+
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>sample title</label><input name="sample-title" class="optional" />
+					</div>
+					<div class="controlset">
+						<label>featured caption</label>
+						<textarea name="featured-caption" class="small"></textarea>
+					</div>
+					<div class="controlset">
+						<label>trivia caption</label>
+						<textarea name="trivia-caption" class="small"></textarea>
+					</div>
+					<div class="controlset">
+						<label>contextual caption</label>
+						<textarea name="contextual-caption" class="small"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset name="facts" class="facts" data-class="com.kidscademy.translate.FactsControl">
+			<div class="header container">
+				<h2>@String/facts</h2>
+			</div>
+
+			<div class="content">
+				<div class="container">
+					<ul class="facts-view" data-list=".">
+						<li data-id="id">
+							<h1 data-text="title"></h1>
+							<p data-text="text"></p>
+						</li>
+					</ul>
+
+					<div class="actions bar" data-class="com.kidscademy.Actions">
+						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/facts-done" />
+						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/facts-close" class="rfloat" />
+					</div>
+
+					<div class="editor hidden">
+						<div>
+							<div class="controlset">
+								<input name="term" maxlength="128" />
+							</div>
+							<div class="controlset">
+								<textarea name="definition" class="mini"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+	</form>
+</div>
+
+<div class="search" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+	<ul class="menu">
+		<li data-name="identity"><img src="@image/action/identity" /><span>Identity</span></li>
+		<li data-name="description"><img src="@image/action/description" /><span>Description</span></li>
+		<li data-name="media"><img src="@image/action/media" /><span>Media</span></li>
+		<li data-name="facts"><img src="@image/action/facts" /><span>Facts</span></li>
+	</ul>
+
+	<ul class="menu actions bottom">
+		<li data-name="preview"><img src="@image/action/preview" /><span>@string/object-preview</span></li>
+		<li data-name="save"><img src="@image/action/save" /><span>@string/object-save</span></li>
+		<li data-name="translate"><img src="@image/action/translate" /><span>@string/object-translate</span></li>
+		<li data-name="remove"><img src="@image/action/remove-all" /><span>@string/object-remove-translate</span></li>
+	</ul>
+</div>

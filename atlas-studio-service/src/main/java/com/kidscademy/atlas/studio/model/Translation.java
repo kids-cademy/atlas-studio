@@ -21,12 +21,20 @@ public class Translation
   private String language;
   private String text;
 
-  public String getLanguage() {
-    return language;
+  public void setDiscriminator(Discriminator discriminator) {
+    this.discriminator = discriminator;
+  }
+
+  public void setObjectId(int objectId) {
+    this.objectId = objectId;
   }
 
   public void setLanguage(String language) {
     this.language = language;
+  }
+
+  public String getLanguage() {
+    return language;
   }
 
   public void setText(String text) {

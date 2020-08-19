@@ -1,0 +1,60 @@
+.translate-object {
+	
+}
+
+.translate-object .description {
+	
+}
+
+.translate-object .description textarea {
+	border-bottom-left-radius: 0;
+}
+
+.translate-object .description:not (.hidden ) .list-view {
+	margin-top: 20px;
+}
+
+.translate-object .description .tabs {
+	vertical-align: top;
+}
+
+.translate-object .description .tab {
+	display: inline-block;
+	margin: 0;
+	padding: 10px;
+	background-color: #F0F0F0;
+	color: #A0A0A0;
+	border: solid 1px #BDBDBD;
+	border-radius: 0 0 6px 6px;
+	font-size: 1.8rem;
+	cursor: pointer;
+	user-select: none;
+}
+
+.translate-object .description .tab {
+
+}
+
+.translate-object .description .tab.active {
+	background-color: #FFFFFF;
+	color: @color/text;
+}
+
+.translate-object .facts li {
+	cursor: pointer;
+}
+
+.translate-object .facts li h1 {
+	margin-bottom: 0;
+	font-size: 1.8rem;
+}
+
+.translate-object .facts li p {
+	margin-top: 0;
+	font-size: 1.6rem;
+	color: #006600;
+}
+
+.translate-object .facts .editor {
+	margin-top: 20px;
+}

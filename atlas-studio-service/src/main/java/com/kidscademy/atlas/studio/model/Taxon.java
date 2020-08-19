@@ -6,10 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import js.lang.Displayable;
 import js.util.Strings;
 
 @Entity
-public class Taxon
+public class Taxon implements Displayable
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +56,11 @@ public class Taxon
 
   public boolean isWildcard() {
     return meta.getName() == null;
+  }
+
+  @Override
+  public String toDisplay() {
+    return Strings.concat(meta.getDisplay(), ' ', value);
   }
 
   @Override

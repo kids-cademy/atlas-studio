@@ -32,6 +32,7 @@ import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Flags;
@@ -352,9 +353,9 @@ public class AtlasDaoWriteTest
     links.add(new Link(new LinkSource(2, externalSource), new URL("https://www.youtube.com/watch?v=kXXhp_bZvck"), "Accordion"));
     object.setLinks(links);
 
-    Map<String, String> facts = new HashMap<>();
-    facts.put("Banjo Fact #1", "Banjo fact #1 description.");
-    facts.put("Banjo Fact #2", "Banjo fact #2 description.");
+    List<Fact> facts = new ArrayList<>();
+    facts.add(new Fact("Banjo Fact #1", "Banjo fact #1 description."));
+    facts.add(new Fact("Banjo Fact #2", "Banjo fact #2 description."));
     object.setFacts(facts);
 
     List<Feature> features = new ArrayList<>();
@@ -428,10 +429,12 @@ public class AtlasDaoWriteTest
     assertThat(expected.getSpreading().get(1).getArea(), equalTo(Region.Area.NORTH));
 
     assertThat(expected.getFacts(), notNullValue());
-    assertThat(expected.getFacts().keySet(), not(empty()));
-    assertThat(expected.getFacts().keySet(), hasSize(2));
-    assertThat(expected.getFacts().get("Banjo Fact #1"), equalTo("Banjo fact #1 description."));
-    assertThat(expected.getFacts().get("Banjo Fact #2"), equalTo("Banjo fact #2 description."));
+    assertThat(expected.getFacts(), not(empty()));
+    assertThat(expected.getFacts(), hasSize(2));
+    assertThat(expected.getFacts().get(0).getTitle(), equalTo("Banjo Fact #1"));
+    assertThat(expected.getFacts().get(0).getText(), equalTo("Banjo fact #1 description."));
+    assertThat(expected.getFacts().get(1).getTitle(), equalTo("Banjo Fact #2"));
+    assertThat(expected.getFacts().get(1).getText(), equalTo("Banjo fact #2 description."));
 
     assertThat(object.getFeatures(), notNullValue());
     assertThat(object.getFeatures(), not(empty()));

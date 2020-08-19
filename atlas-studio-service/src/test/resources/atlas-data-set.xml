@@ -355,18 +355,20 @@
 		<height>560</height>
 	</atlasobject_images>
 
-	<atlasobject_facts>
+	<fact>
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
-		<facts_key>Fact #1</facts_key>
-		<facts>Fact #1 description.</facts>
-	</atlasobject_facts>
-	<atlasobject_facts>
+		<facts_order>0</facts_order>
+		<title>Fact #1</title>
+		<text>Fact #1 description.</text>
+	</fact>
+	<fact>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
-		<facts_key>Fact #2</facts_key>
-		<facts>Fact #2 description.</facts>
-	</atlasobject_facts>
+		<facts_order>1</facts_order>
+		<title>Fact #2</title>
+		<text>Fact #2 description.</text>
+	</fact>
 
 	<feature>
 		<id>1</id>

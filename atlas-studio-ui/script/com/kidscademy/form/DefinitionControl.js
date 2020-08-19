@@ -30,12 +30,6 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 	// --------------------------------------------------------------------------------------------
 	// ACTION HANDLERS
 
-	/**
-	 * Import object definition from a provider link. 
-	 * 
-	 * Get from parent page all links that provides object definitions. Alert if there is none. 
-	 * If there are more than one link display them and let user choose one.
-	 */
 	_onImport() {
 		this._formPage.importFromLink("definition", definition => this._textarea.setValue(definition));
 	}
@@ -48,15 +42,6 @@ com.kidscademy.form.DefinitionControl = class extends com.kidscademy.form.FormCo
 		});
 	}
 
-	_onClose() {
-		this._linksSelect.close();
-	}
-
-	/**
-	 * Class string representation.
-	 * 
-	 * @return this class string representation.
-	 */
 	toString() {
 		return "com.kidscademy.form.DefinitionControl";
 	}

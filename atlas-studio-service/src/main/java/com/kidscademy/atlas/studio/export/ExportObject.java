@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
+import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
@@ -73,14 +73,21 @@ public class ExportObject
     this.name = object.getName();
 
     this.taxonomy = new ArrayList<>();
+    this.facts = new ArrayList<>();
     if(translator.isDefaultLanguage()) {
       this.language = "EN";
       this.display = object.getDisplay();
       this.aliases = object.getAliases();
       this.definition = object.getDefinition();
       this.description = exportDescription(object.getDescription());
+      this.sampleTitle = object.getSampleTitle();
+      
       for(Taxon taxon : object.getTaxonomy()) {
         this.taxonomy.add(new ExportTaxon(taxon.getDisplay(), taxon.getValue()));
+      }
+
+      for(Fact fact : object.getFacts()) {
+        this.facts.add(new ExportFact(fact.getTitle(), fact.getTitle()));
       }
     }
     else {
@@ -89,8 +96,14 @@ public class ExportObject
       this.aliases = translator.getAtlasObjectAliases(object.getId());
       this.definition = translator.getAtlasObjectDefinition(object.getId());
       this.description = exportDescription(translator.getAtlasObjectDescription(object.getId()));
+      this.sampleTitle = translator.getAtlasObjectSampleTitle(object.getId());
+      
       for(Taxon taxon : object.getTaxonomy()) {
         this.taxonomy.add(new ExportTaxon(translator.getTaxonMetaDisplay(taxon.getMeta().getId()), translator.getTaxonValue(taxon.getId())));
+      }
+
+      for(Fact fact : object.getFacts()) {
+        this.facts.add(new ExportFact(translator.getFactTitle(fact.getId()), translator.getFactText(fact.getId())));
       }
     }
 
@@ -107,15 +120,9 @@ public class ExportObject
     this.progenitor = object.getProgenitor();
     this.conservation = object.getConservation();
 
-    this.sampleTitle = object.getSampleTitle();
     this.samplePath = Util.path(object.getName(), object.getSampleName());
     this.waveformPath = Util.path(object.getName(), object.getWaveformName());
     this.waveformSrc = object.getWaveformSrc() != null ? object.getWaveformSrc().value() : null;
-
-    this.facts = new ArrayList<>();
-    for(Map.Entry<String, String> entry : object.getFacts().entrySet()) {
-      this.facts.add(new ExportFact(entry));
-    }
 
     this.features = new ArrayList<>();
     for(Feature feature : object.getFeatures()) {

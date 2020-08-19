@@ -163,7 +163,6 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 
 	_onClose() {
 		this._editorControls.hide();
-		this._linksSelect.close();
 	}
 
 	// --------------------------------------------------------------------------------------------

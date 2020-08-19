@@ -40,6 +40,7 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
         this._contextMenu.on("remove-object", this._onRemoveObject, this);
         this._contextMenu.on("move-object", this._onMoveObject, this);
         this._contextMenu.on("add-to-release", this._onAddToRelease, this);
+        this._contextMenu.on("translate-object", this._onTranslateObject, this);
 
 		this._loadingInfoView = this.getByCssClass("loading-info");
 		this._itemSelect = this.getByClass(com.kidscademy.ItemSelect);
@@ -131,6 +132,11 @@ com.kidscademy.page.CollectionPage = class extends com.kidscademy.Page {
 			this.removePageAttr(this._ATTR_OBJECT);
 			this._frameView.scrollIntoView(objectId);
 		}
+	}
+
+	_onTranslateObject(objectView) {
+        const object = objectView.getUserData();
+        WinMain.assign("@link/translate-object", { object: object.id });
 	}
 
 	// --------------------------------------------------------------------------------------------

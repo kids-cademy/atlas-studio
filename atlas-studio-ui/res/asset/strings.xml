@@ -7,6 +7,7 @@
 	<collection>collection</collection>
 	<meta>meta</meta>
 	<search>search</search>
+	<translate>translate</translate>
 	<apps>apps</apps>
 	<account>account</account>
 	<media>media</media>
@@ -111,6 +112,7 @@
 	<collection-export>Export Collection</collection-export>
 	<collection-import-wikipedia>Import Wikipedia Article</collection-import-wikipedia>
 	<collection-add-all-to-release>Add All To Release</collection-add-all-to-release>
+	<collection-translate-objects>Translate Objects</collection-translate-objects>
 
 	<external-source>External Source</external-source>
 	<external-source-create>Create External Source</external-source-create>
@@ -130,6 +132,8 @@
 	<object-release>Add To Release</object-release>
 	<object-preview>Preview Object</object-preview>
 	<object-save>Save</object-save>
+	<object-translate>Translate Object</object-translate>
+	<object-remove-translate>Remove Translation</object-remove-translate>
 	
 	<taxon-name>taxon name</taxon-name>
 	<taxon-display>taxon display</taxon-display>

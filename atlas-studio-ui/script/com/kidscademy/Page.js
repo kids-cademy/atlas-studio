@@ -26,9 +26,21 @@ com.kidscademy.Page = class extends js.ua.Page {
         WinMain.page = this;
 
         this._sidebar = this.getByClass(com.kidscademy.Sidebar);
+
+        // XP
+        this.findByCss("[data-persist]").forEach(element => {
+            const value = this.getPageAttr(element.getAttr("data-persist"));
+            if (value) {
+                element.setValue(value);
+            }
+        });
     }
 
     _onUnload() {
+        // XP
+        this.findByCss("[data-persist]").forEach(element => {
+            this.setPageAttr(element.getAttr("data-persist"), element.getValue());
+        });
     }
 
     onServerFail(er) {

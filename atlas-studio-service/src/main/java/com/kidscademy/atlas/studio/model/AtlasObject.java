@@ -149,8 +149,10 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
   @Transient
   private String samplePath;
 
-  @ElementCollection
-  private Map<String, String> facts;
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "atlasobject_id")
+  @OrderColumn
+  private List<Fact> facts;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "atlasobject_id")
@@ -402,11 +404,11 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
     this.spreading = spreading;
   }
 
-  public Map<String, String> getFacts() {
+  public List<Fact> getFacts() {
     return facts;
   }
 
-  public void setFacts(Map<String, String> facts) {
+  public void setFacts(List<Fact> facts) {
     this.facts = facts;
   }
 
@@ -565,7 +567,7 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
     object.aliases = Collections.emptyList();
     object.images = Collections.emptyMap();
     object.spreading = Collections.emptyList();
-    object.facts = Collections.emptyMap();
+    object.facts = Collections.emptyList();
     object.links = Collections.emptyList();
     object.related = Collections.emptyList();
     return object;

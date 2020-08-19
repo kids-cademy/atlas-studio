@@ -1,7 +1,5 @@
 package com.kidscademy.atlas.studio.export;
 
-import java.util.Map;
-
 import js.lang.Displayable;
 import js.util.Strings;
 
@@ -13,9 +11,9 @@ public class ExportFact implements Displayable
   public ExportFact() {
   }
 
-  public ExportFact(Map.Entry<String, String> fact) {
-    this.name = fact.getKey();
-    this.value = fact.getValue();
+  public ExportFact(String name, String value) {
+    this.name = name;
+    this.value = value;
   }
 
   @Override
