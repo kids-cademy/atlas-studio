@@ -232,7 +232,7 @@ com.kidscademy.form.DescriptionControl = class extends com.kidscademy.form.FormC
 
 	_addTextEditor(sectionName) {
 		this._tabsView.addObject(sectionName);
-		this._textEditors.addObject("");
+		this._textEditors.addObject(null);
 		return this._textEditors.getLastChild();
 	}
 
