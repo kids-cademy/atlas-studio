@@ -71,7 +71,7 @@ public class Translator
 
   private void saveTranslation(Discriminator discriminator, int objectId, String language, String text) {
     if(text == null || text.isEmpty()) {
-      dao.removeTranslation(new TranslationKey(discriminator, objectId), language);
+      dao.removeTranslation(new TranslationKey(discriminator, objectId, language));
       return;
     }
 
@@ -84,41 +84,41 @@ public class Translator
   }
 
   public String getAtlasObjectDisplay(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, objectId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, objectId, language));
   }
 
   private static final List<String> EMPTY_STRINGS = new ArrayList<>(0);
 
   public List<String> getAtlasObjectAliases(int objectId) {
-    String aliases = dao.getTranslation(new TranslationKey(Discriminator.OBJECT_ALIASES, objectId), language);
+    String aliases = dao.getTranslation(new TranslationKey(Discriminator.OBJECT_ALIASES, objectId, language));
     return aliases != null ? Strings.split(aliases, ',') : EMPTY_STRINGS;
   }
 
   public String getAtlasObjectSampleTitle(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_SAMPLE_TITLE, objectId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_SAMPLE_TITLE, objectId, language));
   }
 
   public String getAtlasObjectDefinition(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, objectId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, objectId, language));
   }
 
   public String getAtlasObjectDescription(int objectId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DESCRIPTION, objectId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DESCRIPTION, objectId, language));
   }
 
   public String getTaxonMetaDisplay(int taxonMetaId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_META_DISPLAY, taxonMetaId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_META_DISPLAY, taxonMetaId, language));
   }
 
   public String getTaxonValue(int taxonId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_VALUE, taxonId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_VALUE, taxonId, language));
   }
 
   public String getFactTitle(int factId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.FACT_TITLE, factId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.FACT_TITLE, factId, language));
   }
 
   public String getFactText(int factId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.FACT_TEXT, factId), language);
+    return dao.getTranslation(new TranslationKey(Discriminator.FACT_TEXT, factId, language));
   }
 }

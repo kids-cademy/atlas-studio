@@ -585,8 +585,8 @@ public class AtlasDaoReadTest
 
   @Test
   public void getTranslation() {
-    assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, 1), "RO"), equalTo("Instrument"));
-    assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, 1), "RO"), equalTo("Instrument muzical."));
+    assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DISPLAY, 1, "RO")), equalTo("Instrument"));
+    assertThat(dao.getTranslation(new TranslationKey(Discriminator.OBJECT_DEFINITION, 1, "RO")), equalTo("Instrument muzical."));
   }
 
   // ----------------------------------------------------------------------------------------------

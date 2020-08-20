@@ -12,13 +12,15 @@ public class TranslationKey implements Serializable
   @Enumerated(EnumType.STRING)
   private Discriminator discriminator;
   private int objectId;
+  private String language;
 
   public TranslationKey() {
   }
 
-  public TranslationKey(Discriminator discriminator, int objectId) {
+  public TranslationKey(Discriminator discriminator, int objectId, String language) {
     this.discriminator = discriminator;
     this.objectId = objectId;
+    this.language = language;
   }
 
   public Discriminator getDiscriminator() {
@@ -27,6 +29,10 @@ public class TranslationKey implements Serializable
 
   public int getObjectId() {
     return objectId;
+  }
+
+  public String getLanguage() {
+    return language;
   }
 
   public enum Discriminator

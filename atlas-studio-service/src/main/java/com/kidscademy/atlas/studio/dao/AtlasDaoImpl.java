@@ -655,9 +655,9 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
-  public String getTranslation(TranslationKey key, String language) {
-    List<Translation> result = em.createQuery("select t from Translation t where t.discriminator=:discriminator and t.objectId=:objectId and t.language=:language", Translation.class).setParameter("discriminator", key.getDiscriminator()).setParameter("objectId", key.getObjectId()).setParameter("language", language).getResultList();
-    return result.isEmpty() ? null : result.get(0).getText();
+  public String getTranslation(TranslationKey key) {
+    Translation translation = em.find(Translation.class, key);
+    return translation != null ? translation.getText() : null;
   }
 
   @Override
@@ -668,10 +668,10 @@ public class AtlasDaoImpl implements AtlasDao
 
   @Override
   @Mutable
-  public void removeTranslation(TranslationKey key, String language) {
-    List<Translation> result = em.createQuery("select t from Translation t where t.discriminator=:discriminator and t.objectId=:objectId and t.language=:language", Translation.class).setParameter("discriminator", key.getDiscriminator()).setParameter("objectId", key.getObjectId()).setParameter("language", language).getResultList();
-    if(!result.isEmpty()) {
-      em.remove(result.get(0));
+  public void removeTranslation(TranslationKey key) {
+    Translation translation = em.find(Translation.class, key);
+    if(translation != null) {
+      em.remove(translation);
     }
   }
 }

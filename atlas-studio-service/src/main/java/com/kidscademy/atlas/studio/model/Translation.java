@@ -17,8 +17,9 @@ public class Translation
   private Discriminator discriminator;
   @Id
   private int objectId;
-  
+  @Id
   private String language;
+  
   private String text;
 
   public void setDiscriminator(Discriminator discriminator) {

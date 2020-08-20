@@ -235,9 +235,9 @@ public interface AtlasDao
 
   AndroidApp getAndroidAppByRelease(int releaseId);
 
-  String getTranslation(TranslationKey key, String language);
+  String getTranslation(TranslationKey key);
   
   void saveTranslation(Translation translation);
   
-  void removeTranslation(TranslationKey key, String language);
+  void removeTranslation(TranslationKey key);
 }
