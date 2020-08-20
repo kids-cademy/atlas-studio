@@ -358,7 +358,7 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 			this._valueControl = this._valueSelect.show();
 		}
 
-		this._nameLabel.setValue(taxon.name);
+		this._nameLabel.setValue(taxon.meta.display);
 		this._valueControl.setValue(taxon.value);
 		this._valueControl.focus();
 	}
