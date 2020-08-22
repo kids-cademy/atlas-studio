@@ -121,11 +121,9 @@ public class Exporter
           target.writeMedia(mediaFile(atlasObject, "cover", 0, 500), atlasObject, imageFileName(atlasObject, "cover"));
           target.writeMedia(mediaFile(atlasObject, "featured", 560, 0), atlasObject, imageFileName(atlasObject, "featured"));
           target.writeMedia(mediaFile(atlasObject, "contextual", 920, 560), atlasObject, imageFileName(atlasObject, "contextual"));
-          
-          mediaProcessing = false;
         }
       }
-
+      mediaProcessing = false;
       target.writeSearchIndex(indexProcessor.updateSearchIndex(), language);
     }
 
