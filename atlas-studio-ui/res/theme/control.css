@@ -97,6 +97,10 @@ select {
 	font-size: 18px;
 }
 
+select[multiple] {
+	height: auto;
+}
+
 .gecko select {
 	xposition: relative;
 	xtop: -3px;
@@ -111,11 +115,13 @@ select.inline {
 }
 
 select option {
-	xheight: 28px;
-	xline-height: 22px;
 	padding: 2px 2px 2px 8px;
 	border: 0;
 	background-color: #F0F0F0;
+}
+
+select[multiple] option {
+	background-color: inherit;
 }
 
 textarea {

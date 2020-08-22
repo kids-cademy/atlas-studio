@@ -8,7 +8,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._timestamp = 0;
 
         this._sidebar.setTitle("Android App");
-        this._sidebar.on("open-release", this._onOpenRelease, this);
+        this._sidebar.on("release-manager", this._onReleaseManager, this);
         this._sidebar.on("release-settings", this._onReleaseSettings, this);
         this._sidebar.on("android-listing", this._onAndroidListing, this);
         this._sidebar.on("android-settings", this._onAndroidSettings, this);
@@ -55,7 +55,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this._app = app;
 
         this._releaseView.setObject(app);
-        this._languageSelect.setOptions(app.release.languages);
+        this._languageSelect.setOptions(app.languages);
         this._languageSelect.setValue(this.getPageAttr("preview-language"));
 
         this._objectsList.resetTimestamp();
@@ -66,7 +66,7 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
         this.setPageAttr("preview-language", this._languageSelect.getValue());
     }
 
-    _onOpenRelease() {
+    _onReleaseManager() {
         WinMain.assign("@link/release", { release: this._app.name });
     }
 

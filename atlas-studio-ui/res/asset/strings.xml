@@ -165,6 +165,7 @@
 	<quantity-population-density>POPULATION_DENSITY</quantity-population-density>
 	<quantity-currency>CURRENCY</quantity-currency>
 
+	<release-manager>Release Manager</release-manager>
 	<release-create>Create Release</release-create>
 	<release-edit>Edit Release</release-edit>
 	<release-settings>Release Settings</release-settings>
@@ -176,12 +177,12 @@
 
 	<android-application>Application</android-application>
 	<android-store-listing>Store Listing</android-store-listing>
-	<android-settings>Project Settings</android-settings>	
+	<android-settings>App Settings</android-settings>	
 	<android-clean-build>Clean Build</android-clean-build>
-	<android-build-apk>Build APK</android-build-apk>
-	<android-build-signed-apk>Build Signed APK</android-build-signed-apk>
+	<android-build-apk>Build App</android-build-apk>
+	<android-build-signed-apk>Build Signed App</android-build-signed-apk>
 	<android-build-bundle>Build Bundle</android-build-bundle>
-	<android-download-apk>Download APK</android-download-apk>
+	<android-download-apk>Download App</android-download-apk>
 	<android-download-bundle>Download Bundle</android-download-bundle>
 	<android-edit-release>Edit Release</android-edit-release>
 	<android-remove>Remove Android App</android-remove>

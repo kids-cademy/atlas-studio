@@ -9,6 +9,8 @@
 		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
 		<script>script/com/kidscademy/Sidebar.js</script>
 		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/Form.js</script>
+		<script>script/com/kidscademy/format/StringsFormat.js</script>
 		<script>script/com/kidscademy/page/AndroidSettingsPage.js</script>
 	</scripts>
 </page>

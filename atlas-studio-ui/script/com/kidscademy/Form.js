@@ -17,7 +17,13 @@ com.kidscademy.Form = class extends js.dom.Form {
 		super(ownerDoc, node);
 		this._textAreaControls = this.findByTag("textarea");
 	}
-	
+
+	click(controlName, clickListener, scope) {
+		const control = this.getByName(controlName);
+		$assert(control != null, "com.kidscademy.Form#on", `Control |${controlName}| not found.`);
+		control.on("click", clickListener, scope);
+	}
+
 	show() {
 		super.show();
 		this._textAreaControls.forEach(control => control.show());

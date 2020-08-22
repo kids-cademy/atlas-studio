@@ -8,6 +8,7 @@ com.kidscademy.page.AndroidSettingsPage = class extends com.kidscademy.Page {
         this._sidebar.on("android-app", this._onAndroidApp, this);
 
         this._form = this.getByTag("form");
+        this._languagesSelect = this._form.getByName("languages");
 
         const release = WinMain.url.parameters.release;
         if (release) {
@@ -27,6 +28,7 @@ com.kidscademy.page.AndroidSettingsPage = class extends com.kidscademy.Page {
 
     _onAppLoaded(app) {
         this._app = app;
+        this._languagesSelect.setOptions(app.release.languages);
         this._form.setObject(app);
     }
 
@@ -34,6 +36,11 @@ com.kidscademy.page.AndroidSettingsPage = class extends com.kidscademy.Page {
         if (this._form.isValid()) {
             ReleaseService.updateAndroidApp(this._form.getObject(this._app), () => WinMain.back());
         }
+    }
+
+    _onLanguagesClick(ev) {
+        this._languagesSelect.show();
+        this._languagesSelect.setObject(this._app.release.languages);
     }
 
     toString() {

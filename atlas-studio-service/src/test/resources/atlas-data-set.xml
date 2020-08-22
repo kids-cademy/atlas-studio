@@ -457,6 +457,7 @@
 		<timestamp>2020-03-25 21:14:32</timestamp>
 		<packageName>com.kidscademy.app</packageName>
 		<versionCode>1</versionCode>
+		<languages>EN</languages>
 		<gitRepository>http://github.com/app.git</gitRepository>
 		<gitUserName>user</gitUserName>
 		<gitPassword>passwd</gitPassword>

@@ -138,7 +138,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
 	    AndroidProject prj = new AndroidProject(app.getName());
 	    ExportTarget target = new AndroidExportTarget(prj);
-	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), release.getLanguages());
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), app.getLanguages());
 	    exporter.serialize(null, false);
 	}
 	return release;
@@ -521,7 +521,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	    Files.removeFilesHierarchy(prj.getRawDirs());
 	    ExportTarget target = new AndroidExportTarget(prj);
 	    Release release = app.getRelease();
-	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), release.getLanguages());
+	    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), app.getLanguages());
 	    exporter.serialize(null);
 	}
 	return app;
