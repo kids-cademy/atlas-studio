@@ -236,7 +236,7 @@ public class AtlasDaoImpl implements AtlasDao
     // update content timestamp for all releases containing this atlas object
     List<ReleaseParent> releases = em.createQuery("select p from ReleaseParent p join p.children c where c.id=:objectId", ReleaseParent.class).setParameter("objectId", object.getId()).getResultList();
     for(ReleaseParent release : releases) {
-      release.updateContentTimestamp();
+      release.updateTimestamp();
     }
   }
 
@@ -547,7 +547,7 @@ public class AtlasDaoImpl implements AtlasDao
   @Mutable
   public void addReleaseChild(int releaseId, int childId) {
     ReleaseParent release = em.find(ReleaseParent.class, releaseId);
-    release.updateContentTimestamp();
+    release.updateTimestamp();
     ReleaseChild child = em.find(ReleaseChild.class, childId);
     if(!release.getChildren().contains(child)) {
       release.getChildren().add(child);
@@ -563,7 +563,7 @@ public class AtlasDaoImpl implements AtlasDao
     // children and i need to remove them manually
     // anyway, i do not expect performance impact
     ReleaseParent release = em.find(ReleaseParent.class, releaseId);
-    release.updateContentTimestamp();
+    release.updateTimestamp();
     Iterator<ReleaseChild> it = children.iterator();
     while(it.hasNext()) {
       if(release.getChildren().contains(it.next())) {
@@ -578,7 +578,7 @@ public class AtlasDaoImpl implements AtlasDao
   @Mutable
   public void removeReleaseChildren(int releaseId) {
     ReleaseParent release = em.find(ReleaseParent.class, releaseId);
-    release.updateContentTimestamp();
+    release.updateTimestamp();
     release.getChildren().clear();
   }
 
@@ -586,7 +586,7 @@ public class AtlasDaoImpl implements AtlasDao
   @Mutable
   public void removeReleaseChild(int releaseId, int childId) {
     ReleaseParent release = em.find(ReleaseParent.class, releaseId);
-    release.updateContentTimestamp();
+    release.updateTimestamp();
     ReleaseChild child = em.find(ReleaseChild.class, childId);
     release.getChildren().remove(child);
   }

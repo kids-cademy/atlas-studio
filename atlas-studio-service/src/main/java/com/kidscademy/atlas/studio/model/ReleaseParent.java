@@ -14,30 +14,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "\"RELEASE\"")
-public class ReleaseParent {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class ReleaseParent
+{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    private Date contentTimestamp;
+  private Date timestamp;
 
-    @ManyToMany
-    @JoinTable(name = "release_atlasitem", joinColumns = @JoinColumn(name = "release_id"), inverseJoinColumns = @JoinColumn(name = "objects_id"))
-    private List<ReleaseChild> children;
+  @ManyToMany
+  @JoinTable(name = "release_atlasitem", joinColumns = @JoinColumn(name = "release_id"), inverseJoinColumns = @JoinColumn(name = "objects_id"))
+  private List<ReleaseChild> children;
 
-    public int getId() {
-	return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public Date getContentTimestamp() {
-	return contentTimestamp;
-    }
+  public Date getTimestamp() {
+    return timestamp;
+  }
 
-    public void updateContentTimestamp() {
-	this.contentTimestamp = new Date();
-    }
+  public void updateTimestamp() {
+    timestamp = new Date();
+  }
 
-    public List<ReleaseChild> getChildren() {
-	return children;
-    }
+  public List<ReleaseChild> getChildren() {
+    return children;
+  }
 }
