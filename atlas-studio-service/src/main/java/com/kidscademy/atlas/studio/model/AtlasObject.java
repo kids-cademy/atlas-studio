@@ -128,6 +128,8 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
    */
   private ConservationStatus conservation;
 
+  private Date sampleTimestamp;
+
   /**
    * Audio sample title is the name of the audio work from which sample is extracted.
    */
@@ -430,6 +432,14 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
 
   public boolean isPublished() {
     return state == State.PUBLISHED;
+  }
+
+  public Date getSampleTimestamp() {
+    return sampleTimestamp;
+  }
+
+  public void setSampleTimestamp(Date sampleTimestamp) {
+    this.sampleTimestamp = sampleTimestamp;
   }
 
   public String getSampleTitle() {

@@ -41,6 +41,7 @@ public class AndroidApp implements GraphicObject
   @OneToOne
   private Release release;
 
+  private Date buildTimestamp;
   private String packageName;
   private int versionCode;
   @Convert(converter = StringsListConverter.class)
@@ -95,6 +96,14 @@ public class AndroidApp implements GraphicObject
 
   public Release getRelease() {
     return release;
+  }
+
+  public void setBuildTimestamp() {
+    this.buildTimestamp = new Date();
+  }
+
+  public Date getBuildTimestamp() {
+    return buildTimestamp;
   }
 
   public String getPackageName() {

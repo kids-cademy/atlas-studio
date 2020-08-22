@@ -236,6 +236,7 @@
 		<aliases>Squeezebox</aliases>
 		<definition>Accordion definition.</definition>
 		<description>Accordion description.</description>
+		<sampleTimestamp>2019-01-30 12:30:00</sampleTimestamp>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
@@ -252,6 +253,7 @@
 		<aliases> </aliases>
 		<definition>Eagle definition.</definition>
 		<description>Eagle description.</description>
+		<sampleTimestamp>2019-01-30 12:30:00</sampleTimestamp>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
@@ -268,6 +270,7 @@
 		<aliases> </aliases>
 		<definition>Bandoneon definition.</definition>
 		<description>Bandonenon description.</description>
+		<sampleTimestamp>2019-01-30 12:30:00</sampleTimestamp>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
@@ -284,6 +287,7 @@
 		<aliases> </aliases>
 		<definition>Cimbalom definition.</definition>
 		<description>Cimbalom description.</description>
+		<sampleTimestamp>2019-01-30 12:30:00</sampleTimestamp>
 		<sampleTitle>Sample</sampleTitle>
 		<sampleName>sample.mp3</sampleName>
 		<waveformName>waveform.png</waveformName>
@@ -310,6 +314,7 @@
 		<id>1</id>
 		<atlasobject_id>1</atlasobject_id>
 		<imageKey>icon</imageKey>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
 		<source>https://upload.wikimedia.org/wikipedia/commons/f/f5/Paris_-_Accordion_Player_-_0956.jpg</source>
 		<fileName>icon.jpg</fileName>
@@ -321,6 +326,7 @@
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
 		<imageKey>cover</imageKey>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
 		<source>
 		</source>
@@ -333,6 +339,7 @@
 		<id>3</id>
 		<atlasobject_id>1</atlasobject_id>
 		<imageKey>featured</imageKey>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
 		<source>
 		</source>
@@ -345,6 +352,7 @@
 		<id>4</id>
 		<atlasobject_id>1</atlasobject_id>
 		<imageKey>contextual</imageKey>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<uploadDate>2019-03-10 21:11:00</uploadDate>
 		<source>https://upload.wikimedia.org/wikipedia/commons/f/f5/Paris_-_Accordion_Player_-_0956.jpg</source>
 		<fileName>image.jpg</fileName>
@@ -454,6 +462,7 @@
 		<id>1</id>
 		<release_id>1</release_id>
 		<timestamp>2020-03-25 21:14:32</timestamp>
+		<buildTimestamp>2019-01-30 12:30:00</buildTimestamp>
 		<packageName>com.kidscademy.app</packageName>
 		<versionCode>1</versionCode>
 		<languages>EN</languages>

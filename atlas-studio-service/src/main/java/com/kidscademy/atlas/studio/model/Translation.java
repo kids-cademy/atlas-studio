@@ -1,5 +1,7 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,7 +21,8 @@ public class Translation
   private int objectId;
   @Id
   private String language;
-  
+
+  private Date timestamp;
   private String text;
 
   public void setDiscriminator(Discriminator discriminator) {
@@ -38,6 +41,10 @@ public class Translation
     return language;
   }
 
+  public Date getTimestamp() {
+    return timestamp;
+  }
+
   public void setText(String text) {
     this.text = text;
   }
@@ -45,8 +52,9 @@ public class Translation
   public String getText() {
     return text;
   }
-  
-  public enum State {
+
+  public enum State
+  {
     /** Translation record is created on database with content loaded from translation service. */
     CREATED,
     /** */

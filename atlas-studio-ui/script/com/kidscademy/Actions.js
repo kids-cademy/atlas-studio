@@ -47,6 +47,8 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		this._previousAction = null;
 
 		this._args = new com.kidscademy.Actions.Args(this.getParent().getByCss(".actions.args"));
+
+		this._interceptor = null;
 	}
 
 	/**
@@ -82,6 +84,9 @@ com.kidscademy.Actions = class extends js.dom.Element {
 				const argsForm = actions._args.open(name);
 				containerHandler.call(container, argsForm != null ? argsForm : arguments[0]);
 				actions._previousAction = name;
+				if (actions._interceptor) {
+					actions._interceptor(name);
+				}
 			}.bind(container);
 
 			child.on("click", actionHandler, container);
@@ -115,6 +120,10 @@ com.kidscademy.Actions = class extends js.dom.Element {
 			this._container.on("keydown", this._onKey, this);
 		}
 		return this;
+	}
+
+	interceptor(listener) {
+		this._interceptor = listener;
 	}
 
 	disable(...names) {

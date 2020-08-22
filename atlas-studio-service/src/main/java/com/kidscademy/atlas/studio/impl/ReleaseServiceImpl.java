@@ -357,18 +357,27 @@ public class ReleaseServiceImpl implements ReleaseService
     AndroidApp app = updateAndroidAppContent(appId);
     // if is clean build set refresh dependencies flag - second argument, to true
     androidTools.buildAPK(app.getDir(), app.getProject().isCleanBuild());
+
+    app.setBuildTimestamp();
+    dao.saveAndroidApp(app);
   }
 
   @Override
   public void buildSignedAndroidApp(int appId) throws IOException {
     AndroidApp app = updateAndroidAppContent(appId);
     androidTools.buildSignedAPK(app);
+
+    app.setBuildTimestamp();
+    dao.saveAndroidApp(app);
   }
 
   @Override
   public void buildAndroidBundle(int appId) throws IOException {
     AndroidApp app = updateAndroidAppContent(appId);
     androidTools.buildBundle(app);
+
+    app.setBuildTimestamp();
+    dao.saveAndroidApp(app);
   }
 
   @Override

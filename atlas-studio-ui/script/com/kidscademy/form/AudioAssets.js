@@ -4,12 +4,15 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 	constructor(ownerDoc, node) {
 		super(ownerDoc, node);
 
+		this._sampleTimestampInput = this.getByName("sample-timestamp");
+
 		/**
 		 * Input control for sample title.
 		 * 
 		 * @type {js.dom.Control}
 		 */
 		this._sampleTitleInput = this.getByName("sample-title");
+		this._sampleTitleInput.on("change", this._updateTimestamp, this);
 
 		this._audioPlayer = this.getByClass(com.kidscademy.form.AudioPlayer);
 		this._audioPlayer.on("stop", this._onPlayerStop, this);
@@ -18,6 +21,7 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 		this._sampleInfoView = this.getByCssClass("sample-info");
 
 		this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+		this._actions.interceptor(this._updateTimestamp.bind(this));
 		this.getByCssClass("sample-file").on("change", this._onSampleUpload, this);
 	}
 
@@ -149,6 +153,10 @@ com.kidscademy.form.AudioAssets = class extends com.kidscademy.form.FormControl 
 
 	_onPlayerStop() {
 		this._playAction.setSrc("media/asset-action_play.svg");
+	}
+
+	_updateTimestamp() {
+		this._sampleTimestampInput.setValue(new Date());
 	}
 
 	/**
