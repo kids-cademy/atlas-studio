@@ -43,14 +43,18 @@ com.kidscademy.page.ReleasePage = class extends com.kidscademy.Page {
         this._sidebar.setObject(release);
 
         this._languageSelect.setOptions(release.languages);
-        this._languageSelect.setValue(this.getContextAttr("preview-language"));
+        this._languageSelect.setValue(this.getPageAttr(this._languageAttrName()));
 
         this._objectsList.resetTimestamp();
         ReleaseService.getReleaseItems(release.id, items => this._objectsList.setObject(items));
     }
 
     _onUnload() {
-        this.setContextAttr("preview-language", this._languageSelect.getValue());
+        this.setPageAttr(this._languageAttrName(), this._languageSelect.getValue());
+    }
+
+    _languageAttrName() {
+        return `release-${this._release.id}-language`;
     }
 
     _onEditRelease() {

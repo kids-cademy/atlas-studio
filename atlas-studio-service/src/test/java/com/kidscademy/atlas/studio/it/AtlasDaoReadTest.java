@@ -178,12 +178,6 @@ public class AtlasDaoReadTest
     AtlasCollection collection = dao.getCollectionById(1);
     assertThat(collection, notNullValue());
 
-    List<String> languages = collection.getLanguages();
-    assertThat(languages, notNullValue());
-    assertThat(languages, hasSize(2));
-    assertThat(languages.get(0), equalTo("EN"));
-    assertThat(languages.get(1), equalTo("RO"));
-
     assertCollectionTaxonomyMeta(collection.getTaxonomyMeta());
     assertCollectionFeaturesMeta(collection.getFeaturesMeta());
 

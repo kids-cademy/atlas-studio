@@ -79,7 +79,6 @@ public class AtlasDaoWriteTest
     collection.setName("mammals");
     collection.setDisplay("Mammals");
     collection.setDefinition("Wild mammals.");
-    collection.setLanguages("EN", "RO");
     collection.setFlags(new Flags());
     collection.setFeaturesType("none");
     collection.setTheme(Theme.MODERN);
@@ -122,12 +121,6 @@ public class AtlasDaoWriteTest
 
     collection = dao.getCollectionById(collection.getId());
     assertThat(collection, notNullValue());
-
-    List<String> languages = collection.getLanguages();
-    assertThat(languages, notNullValue());
-    assertThat(languages, hasSize(2));
-    assertThat(languages.get(0), equalTo("EN"));
-    assertThat(languages.get(1), equalTo("RO"));
 
     taxonomyMeta = collection.getTaxonomyMeta();
     assertThat(taxonomyMeta, notNullValue());
@@ -180,7 +173,6 @@ public class AtlasDaoWriteTest
     AtlasCollection collection = new AtlasCollection(3, "farm-animals");
     collection.setDisplay("Farm Animals");
     collection.setDefinition("Domesticated animals, both mammals and birds.");
-    collection.setLanguages("EN", "RO");
 
     List<DescriptionMeta> descriptionMeta = new ArrayList<>();
     descriptionMeta.add(new DescriptionMeta("description", "Morphological description."));

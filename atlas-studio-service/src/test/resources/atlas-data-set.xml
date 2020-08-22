@@ -13,7 +13,6 @@
 		<name>instrument</name>
 		<display>Instrument</display>
 		<definition>Musical instrument.</definition>
-		<languages>EN,RO</languages>
 		<featuresType>none</featuresType>
 		<theme>CLASSIC</theme>
 		<endDate>1</endDate>
@@ -27,7 +26,6 @@
 		<name>bird</name>
 		<display>Bird</display>
 		<definition>Wild bird.</definition>
-		<languages>EN</languages>
 		<featuresType>physical-traits</featuresType>
 		<theme>MODERN</theme>
 		<endDate>1</endDate>

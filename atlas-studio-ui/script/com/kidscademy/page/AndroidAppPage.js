@@ -56,14 +56,14 @@ com.kidscademy.page.AndroidAppPage = class extends com.kidscademy.Page {
 
         this._releaseView.setObject(app);
         this._languageSelect.setOptions(app.release.languages);
-        this._languageSelect.setValue(this.getContextAttr("preview-language"));
+        this._languageSelect.setValue(this.getPageAttr("preview-language"));
 
         this._objectsList.resetTimestamp();
         ReleaseService.getReleaseItems(app.release.id, items => this._objectsList.setObject(items));
     }
 
     _onUnload() {
-        this.setContextAttr("preview-language", this._languageSelect.getValue());
+        this.setPageAttr("preview-language", this._languageSelect.getValue());
     }
 
     _onOpenRelease() {
