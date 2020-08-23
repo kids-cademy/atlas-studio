@@ -3,8 +3,8 @@ package com.kidscademy.atlas.studio.export;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
@@ -12,12 +12,14 @@ import com.kidscademy.atlas.studio.search.KeywordIndex;
 public interface ExportTarget {
 
     void open(OutputStream stream);
-
+    
+    void commit() throws IOException;
+    
     void close() throws IOException;
 
-    void writeObject(ExportObject object, String language) throws IOException;
+    void writeObject(ExportObject object) throws IOException;
     
-    void writeObjectsList(Set<String> objectsList) throws IOException;
+    void writeObjectsList(Collection<String> objectsList) throws IOException;
     
     void writeSearchIndex(List<KeywordIndex<Integer>> searchIndex, String language) throws IOException;
     
@@ -35,4 +37,8 @@ public interface ExportTarget {
      * @throws IOException
      */
     void writeMedia(File sourceMediaFile, AtlasObject object, String mediaFileName) throws IOException;
+
+    void commitMedia(AtlasObject object, String mediaFileName) throws IOException;
+    
+    boolean isMediaFile(AtlasObject object, String mediaFileName);
 }

@@ -132,16 +132,6 @@ public class ReleaseServiceImpl implements ReleaseService
     }
 
     dao.saveRelease(release);
-
-    AndroidApp app = dao.getAndroidAppByRelease(release.getId());
-    if(app != null) {
-      updateAndroidProjectFiles(app);
-
-      AndroidProject prj = new AndroidProject(app.getName());
-      ExportTarget target = new AndroidExportTarget(prj);
-      Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), app.getLanguages());
-      exporter.serialize(null, false);
-    }
     return release;
   }
 
@@ -256,9 +246,7 @@ public class ReleaseServiceImpl implements ReleaseService
   }
 
   private static String normalizePath(String path) {
-    // tilde is used to avoid files like 'local.properties' to be processed by git
-    // push
-    // on android app template file is named '~local.properties'
+    // tilde is used to avoid files like 'local.properties' to be processed by git push on android app template file is named '~local.properties'
     return path.replaceAll("~", "");
   }
 
@@ -309,8 +297,7 @@ public class ReleaseServiceImpl implements ReleaseService
     {
       @Override
       protected Void execute() throws Throwable {
-        updateAndroidProjectFiles(app);
-        updateAndroidAppContent(app.getId());
+        updateAndroidProjectFiles(app.getId());
         if(createProject) {
           androidTools.initLocalGitRepository(app);
         }
@@ -354,7 +341,7 @@ public class ReleaseServiceImpl implements ReleaseService
 
   @Override
   public void buildAndroidApp(int appId) throws IOException {
-    AndroidApp app = updateAndroidAppContent(appId);
+    AndroidApp app = updateAndroidProjectFiles(appId);
     // if is clean build set refresh dependencies flag - second argument, to true
     androidTools.buildAPK(app.getDir(), app.getProject().isCleanBuild());
 
@@ -364,7 +351,7 @@ public class ReleaseServiceImpl implements ReleaseService
 
   @Override
   public void buildSignedAndroidApp(int appId) throws IOException {
-    AndroidApp app = updateAndroidAppContent(appId);
+    AndroidApp app = updateAndroidProjectFiles(appId);
     androidTools.buildSignedAPK(app);
 
     app.setBuildTimestamp();
@@ -373,7 +360,7 @@ public class ReleaseServiceImpl implements ReleaseService
 
   @Override
   public void buildAndroidBundle(int appId) throws IOException {
-    AndroidApp app = updateAndroidAppContent(appId);
+    AndroidApp app = updateAndroidProjectFiles(appId);
     androidTools.buildBundle(app);
 
     app.setBuildTimestamp();
@@ -468,61 +455,54 @@ public class ReleaseServiceImpl implements ReleaseService
     }
   }
 
-  private void updateAndroidProjectFiles(AndroidApp app) throws IOException {
-    Release release = app.getRelease();
-    File appDir = app.getDir();
-
-    Map<String, String> variables = new HashMap<>();
-    variables.put("update-date", new LongDate().format(new Date()));
-    variables.put("project", app.getName());
-    variables.put("package", app.getPackageName());
-    variables.put("theme", release.getTheme().androidTheme());
-    variables.put("version-code", Integer.toString(app.getVersionCode()));
-    variables.put("version-name", release.getVersion());
-    variables.put("app-name", app.getDisplay());
-    variables.put("app-logotype", release.getBrief());
-    variables.put("app-definition", app.getDefinition());
-    variables.put("publisher", release.getPublisher());
-    variables.put("edition", release.getEdition());
-    variables.put("license", release.getLicense());
-    variables.put("sdk-dir", androidTools.sdkDir());
-
-    BufferedReader layoutDescriptor = new BufferedReader(Classes.getResourceAsReader("/android-app/layout"));
-    String path = null;
-    while((path = layoutDescriptor.readLine()) != null) {
-      if(path.charAt(0) != '!') {
-        continue;
-      }
-      path = path.substring(1);
-      String templateResource = "/android-app/template/" + path;
-      Files.copy(templateResource, variables, new FileWriter(new File(appDir, normalizePath(path))));
-    }
-
-    copyToMarkdown(release.getReadme(), new File(appDir, "README.md"));
-
-    copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
-    copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
-    copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
-
-    copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
-    copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
-    copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
-  }
-
-  private AndroidApp updateAndroidAppContent(int appId) throws IllegalArgumentException, IOException {
+  private AndroidApp updateAndroidProjectFiles(int appId) throws IOException {
     AndroidApp app = dao.getAndroidAppById(appId);
-    // by convention project and application names are the same
-    AndroidProject prj = new AndroidProject(app.getName());
-    File atlasDir = prj.getAtlasDir();
-    if(atlasDir.lastModified() < app.getRelease().getTimestamp().getTime() || atlasDir.lastModified() < app.getTimestamp().getTime()) {
-      Files.removeFilesHierarchy(atlasDir);
-      // TODO: hard coded assumption: raw directories contains only generated files
-      Files.removeFilesHierarchy(prj.getRawDirs());
-      ExportTarget target = new AndroidExportTarget(prj);
-      Release release = app.getRelease();
-      Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), app.getLanguages());
-      exporter.serialize(null);
+    Release release = app.getRelease();
+
+    if(release.getTimestamp().after(app.getBuildTimestamp()) || app.getTimestamp().after(app.getBuildTimestamp())) {
+      Map<String, String> variables = new HashMap<>();
+      variables.put("update-date", new LongDate().format(new Date()));
+      variables.put("project", app.getName());
+      variables.put("package", app.getPackageName());
+      variables.put("theme", release.getTheme().androidTheme());
+      variables.put("version-code", Integer.toString(app.getVersionCode()));
+      variables.put("version-name", release.getVersion());
+      variables.put("app-name", app.getDisplay());
+      variables.put("app-logotype", release.getBrief());
+      variables.put("app-definition", app.getDefinition());
+      variables.put("publisher", release.getPublisher());
+      variables.put("edition", release.getEdition());
+      variables.put("license", release.getLicense());
+      variables.put("sdk-dir", androidTools.sdkDir());
+
+      File appDir = app.getDir();
+      BufferedReader layoutDescriptor = new BufferedReader(Classes.getResourceAsReader("/android-app/layout"));
+      String path = null;
+      while((path = layoutDescriptor.readLine()) != null) {
+        if(path.charAt(0) != '!') {
+          continue;
+        }
+        path = path.substring(1);
+        String templateResource = "/android-app/template/" + path;
+        Files.copy(templateResource, variables, new FileWriter(new File(appDir, normalizePath(path))));
+      }
+
+      copyToMarkdown(release.getReadme(), new File(appDir, "README.md"));
+
+      copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable/ic_app.png", 96, 96);
+      copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-hdpi/ic_app.png", 192, 192);
+      copyResizeImage(release, "icon", appDir, "app/src/main/res/drawable-xhdpi/ic_app.png", 384, 384);
+
+      copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable/cover_page.png", 240, 240);
+      copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-hdpi/cover_page.png", 480, 480);
+      copyResizeImage(release, "cover", appDir, "app/src/main/res/drawable-xhdpi/cover_page.png", 788, 788);
     }
+
+    ExportTarget target = new AndroidExportTarget(app.getProject());
+    Exporter exporter = new Exporter(dao, target, release.getTheme(), dao.getReleaseItems(release.getId()), app.getLanguages());
+    exporter.setBuildTimestamp(app.getBuildTimestamp());
+    exporter.serialize(null);
+
     return app;
   }
 }

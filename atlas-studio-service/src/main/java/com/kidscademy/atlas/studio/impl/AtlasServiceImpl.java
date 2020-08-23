@@ -802,7 +802,11 @@ public class AtlasServiceImpl implements AtlasService
   @Override
   public ExportObject getReaderObject(int objectId, String language) {
     AtlasObject object = atlasDao.getAtlasObject(objectId);
-    ExportObject exportObject = new ExportObject(object, new Translator(atlasDao, language));
+    ExportObject exportObject = new ExportObject(object);
+    if(!Translator.isDefaultLanguage(language)) {
+      Translator translator = new Translator(atlasDao, language);
+      exportObject.translate(translator);
+    }
     for(AtlasItem related : atlasDao.getRelatedAtlasObjects(object.getCollection().getId(), object.getRelated())) {
       exportObject.addRelated(related);
     }

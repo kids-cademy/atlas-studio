@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,8 @@ public class Exporter
   private final List<ExportItem> items;
   private final List<String> languages;
 
+  private Date buildTimestamp = new Date();
+
   /**
    * Exporter for application atlas content.
    * 
@@ -60,6 +64,10 @@ public class Exporter
     this.languages = languages;
   }
 
+  public void setBuildTimestamp(Date buildTimestamp) {
+    this.buildTimestamp = buildTimestamp;
+  }
+
   /**
    * If underlying target does not require stream, invoker should explicitly set it to null.
    * 
@@ -74,6 +82,7 @@ public class Exporter
     target.open(stream);
     try {
       serialize(mediaProcessing);
+      target.commit();
     }
     catch(NoSuchMethodException e) {
       throw new IOException(e);
@@ -92,42 +101,78 @@ public class Exporter
       item.setIconPath(Util.path(item.getName(), item.getIconName()));
       itemsMap.put(item.getName(), item);
     }
+    target.writeObjectsList(itemsMap.keySet());
 
-    for(String language : languages) {
-      SearchIndexProcessor indexProcessor = new SearchIndexProcessor();
-      for(ExportItem item : items) {
-        AtlasObject atlasObject = dao.getAtlasObject(item.getId());
-        Translator translator = new Translator(dao, language);
+    SearchIndexProcessor indexProcessor = new SearchIndexProcessor();
+    List<ExportObject> exportObjects = new ArrayList<>();
+    for(ExportItem item : items) {
+      AtlasObject atlasObject = dao.getAtlasObject(item.getId());
+      ExportObject exportObject = new ExportObject(atlasObject, theme);
+      exportObjects.add(exportObject);
 
-        ExportObject exportObject = new ExportObject(atlasObject, translator, theme);
-        exportObject.setIndex(item.getIndex());
-        indexProcessor.createDirectIndex(exportObject);
+      exportObject.setIndex(item.getIndex());
+      indexProcessor.createDirectIndex(exportObject);
 
-        for(String relatedName : atlasObject.getRelated()) {
-          ExportItem relatedItem = itemsMap.get(relatedName);
-          if(relatedItem != null) {
-            exportObject.addRelated(new ExportRelatedObject(relatedItem));
-          }
-        }
-
-        target.writeObject(exportObject, language);
-
-        if(mediaProcessing) {
-          target.writeMedia(mediaFile(atlasObject, atlasObject.getSampleName()), atlasObject, atlasObject.getSampleName());
-          target.writeMedia(mediaFile(atlasObject, atlasObject.getWaveformName()), atlasObject, atlasObject.getWaveformName());
-
-          target.writeMedia(mediaFile(atlasObject, "icon", 96, 96), atlasObject, imageFileName(atlasObject, "icon"));
-          target.writeMedia(mediaFile(atlasObject, "trivia", 500, 0), atlasObject, imageFileName(atlasObject, "trivia"));
-          target.writeMedia(mediaFile(atlasObject, "cover", 0, 500), atlasObject, imageFileName(atlasObject, "cover"));
-          target.writeMedia(mediaFile(atlasObject, "featured", 560, 0), atlasObject, imageFileName(atlasObject, "featured"));
-          target.writeMedia(mediaFile(atlasObject, "contextual", 920, 560), atlasObject, imageFileName(atlasObject, "contextual"));
+      for(String relatedName : atlasObject.getRelated()) {
+        ExportItem relatedItem = itemsMap.get(relatedName);
+        if(relatedItem != null) {
+          exportObject.addRelated(new ExportRelatedObject(relatedItem));
         }
       }
-      mediaProcessing = false;
+
+      target.writeObject(exportObject);
+
+      if(atlasObject.getSampleTimestamp().after(buildTimestamp) || !target.isMediaFile(atlasObject, atlasObject.getSampleName())) {
+        target.writeMedia(mediaFile(atlasObject, atlasObject.getSampleName()), atlasObject, atlasObject.getSampleName());
+        target.writeMedia(mediaFile(atlasObject, atlasObject.getWaveformName()), atlasObject, atlasObject.getWaveformName());
+      }
+      target.commitMedia(atlasObject, atlasObject.getSampleName());
+      target.commitMedia(atlasObject, atlasObject.getWaveformName());
+
+      for(Map.Entry<String, Image> entry : atlasObject.getImages().entrySet()) {
+        Image image = entry.getValue();
+        if(image.getTimestamp().after(buildTimestamp) || !target.isMediaFile(atlasObject, image.getFileName())) {
+          Dimension d = DIMENSIONS.get(entry.getKey());
+          target.writeMedia(mediaFile(atlasObject, entry.getKey(), d.width, d.height), atlasObject, imageFileName(atlasObject, entry.getKey()));
+        }
+        target.commitMedia(atlasObject, imageFileName(atlasObject, entry.getKey()));
+      }
+    }
+    target.writeSearchIndex(indexProcessor.updateSearchIndex(), Translator.DEFAULT_LANGUAGE);
+
+    for(String language : languages) {
+      if(Translator.isDefaultLanguage(language)) {
+        continue;
+      }
+      indexProcessor = new SearchIndexProcessor();
+      for(ExportObject exportObject : exportObjects) {
+        Translator translator = new Translator(dao, language);
+        exportObject.translate(translator);
+        indexProcessor.createDirectIndex(exportObject);
+        target.writeObject(exportObject);
+      }
       target.writeSearchIndex(indexProcessor.updateSearchIndex(), language);
     }
+  }
 
-    target.writeObjectsList(itemsMap.keySet());
+  private static class Dimension
+  {
+    int width;
+    int height;
+
+    Dimension(int width, int height) {
+      this.width = width;
+      this.height = height;
+    }
+  }
+
+  private static Map<String, Dimension> DIMENSIONS = new HashMap<>();
+  static {
+    DIMENSIONS.put("icon", new Dimension(96, 96));
+    DIMENSIONS.put("trivia", new Dimension(500, 0));
+    DIMENSIONS.put("cover", new Dimension(0, 500));
+    DIMENSIONS.put("featured", new Dimension(560, 0));
+    DIMENSIONS.put("contextual", new Dimension(920, 560));
   }
 
   private static String imageFileName(AtlasObject object, String imageKey) {

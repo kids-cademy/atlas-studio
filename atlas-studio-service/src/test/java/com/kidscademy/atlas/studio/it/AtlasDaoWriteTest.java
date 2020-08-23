@@ -1,5 +1,6 @@
 package com.kidscademy.atlas.studio.it;
 
+import static org.exparity.hamcrest.date.IsSameYear.sameYear;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -28,6 +29,7 @@ import org.junit.Test;
 
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dao.AtlasDaoImpl;
+import com.kidscademy.atlas.studio.model.AndroidApp;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
@@ -633,6 +635,22 @@ public class AtlasDaoWriteTest
     assertThat(release.getChildren(), notNullValue());
     assertThat(release.getChildren(), hasSize(1));
     assertThat(release.getChildren().get(0).getId(), equalTo(2));
+  }
+
+  @Test
+  public void saveAndroidApp() throws MalformedURLException {
+    AndroidApp app = AndroidApp.create(dao.getReleaseById(1));
+    app.setPackageName("com.kidscademy.atlas.test");
+    app.setLanguages("EN");
+    app.setGitRepository(new URL("https://github.com/kids-cademy/atlas.test.git"));
+    app.setGitUserName("username");
+    app.setGitPassword("password");
+    dao.saveAndroidApp(app);
+
+    app = dao.getAndroidAppById(app.getId());
+    assertThat(app, notNullValue());
+    assertThat(app.getBuildTimestamp(), notNullValue());
+    assertThat(app.getBuildTimestamp(), sameYear(1970));
   }
 
   // ----------------------------------------------------------------------------------------------

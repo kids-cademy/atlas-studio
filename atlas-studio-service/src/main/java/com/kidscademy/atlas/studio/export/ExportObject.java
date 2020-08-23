@@ -27,6 +27,9 @@ import js.util.Classes;
 @SuppressWarnings("unused")
 public class ExportObject
 {
+  // source atlas object is needed for export processing but is not serialized to target JSON
+  private transient AtlasObject atlasObject;
+
   private int index;
 
   private String name;
@@ -61,82 +64,80 @@ public class ExportObject
   public ExportObject() {
   }
 
-  public ExportObject(AtlasObject object) {
-    this(object, Translator.getDefaultInstance(), object.getCollection().getTheme());
+  public ExportObject(AtlasObject atlasObject) {
+    this(atlasObject, atlasObject.getCollection().getTheme());
   }
 
-  public ExportObject(AtlasObject object, Translator translator) {
-    this(object, translator, object.getCollection().getTheme());
-  }
+  public ExportObject(AtlasObject atlasObject, Theme theme) {
+    this.atlasObject = atlasObject;
+    this.name = atlasObject.getName();
 
-  public ExportObject(AtlasObject object, Translator translator, Theme theme) {
-    this.name = object.getName();
+    this.language = Translator.DEFAULT_LANGUAGE;
+    this.display = atlasObject.getDisplay();
+    this.aliases = atlasObject.getAliases();
+    this.definition = atlasObject.getDefinition();
+    this.description = exportDescription(atlasObject.getDescription());
+    this.sampleTitle = atlasObject.getSampleTitle();
 
     this.taxonomy = new ArrayList<>();
-    this.facts = new ArrayList<>();
-    if(translator.isDefaultLanguage()) {
-      this.language = "EN";
-      this.display = object.getDisplay();
-      this.aliases = object.getAliases();
-      this.definition = object.getDefinition();
-      this.description = exportDescription(object.getDescription());
-      this.sampleTitle = object.getSampleTitle();
-      
-      for(Taxon taxon : object.getTaxonomy()) {
-        this.taxonomy.add(new ExportTaxon(taxon.getDisplay(), taxon.getValue()));
-      }
-
-      for(Fact fact : object.getFacts()) {
-        this.facts.add(new ExportFact(fact.getTitle(), fact.getTitle()));
-      }
+    for(Taxon taxon : atlasObject.getTaxonomy()) {
+      this.taxonomy.add(new ExportTaxon(taxon.getDisplay(), taxon.getValue()));
     }
-    else {
-      this.language = translator.getLanguage();
-      this.display = translator.getAtlasObjectDisplay(object.getId());
-      this.aliases = translator.getAtlasObjectAliases(object.getId());
-      this.definition = translator.getAtlasObjectDefinition(object.getId());
-      this.description = exportDescription(translator.getAtlasObjectDescription(object.getId()));
-      this.sampleTitle = translator.getAtlasObjectSampleTitle(object.getId());
-      
-      for(Taxon taxon : object.getTaxonomy()) {
-        this.taxonomy.add(new ExportTaxon(translator.getTaxonMetaDisplay(taxon.getMeta().getId()), translator.getTaxonValue(taxon.getId())));
-      }
 
-      for(Fact fact : object.getFacts()) {
-        this.facts.add(new ExportFact(translator.getFactTitle(fact.getId()), translator.getFactText(fact.getId())));
-      }
+    this.facts = new ArrayList<>();
+    for(Fact fact : atlasObject.getFacts()) {
+      this.facts.add(new ExportFact(fact.getTitle(), fact.getTitle()));
     }
 
     this.images = new HashMap<>();
-    for(Map.Entry<String, Image> entry : object.getImages().entrySet()) {
-      this.images.put(entry.getKey(), new ExportImage(object, entry.getValue()));
+    for(Map.Entry<String, Image> entry : atlasObject.getImages().entrySet()) {
+      this.images.put(entry.getKey(), new ExportImage(atlasObject, entry.getValue()));
     }
 
-    this.lastUpdated = object.getTimestamp();
+    this.lastUpdated = atlasObject.getTimestamp();
 
-    this.spreading = object.getSpreading();
-    this.startDate = object.getStartDate();
-    this.endDate = object.getEndDate();
-    this.progenitor = object.getProgenitor();
-    this.conservation = object.getConservation();
+    this.spreading = atlasObject.getSpreading();
+    this.startDate = atlasObject.getStartDate();
+    this.endDate = atlasObject.getEndDate();
+    this.progenitor = atlasObject.getProgenitor();
+    this.conservation = atlasObject.getConservation();
 
-    this.samplePath = Util.path(object.getName(), object.getSampleName());
-    this.waveformPath = Util.path(object.getName(), object.getWaveformName());
-    this.waveformSrc = object.getWaveformSrc() != null ? object.getWaveformSrc().value() : null;
+    this.samplePath = Util.path(atlasObject.getName(), atlasObject.getSampleName());
+    this.waveformPath = Util.path(atlasObject.getName(), atlasObject.getWaveformName());
+    this.waveformSrc = atlasObject.getWaveformSrc() != null ? atlasObject.getWaveformSrc().value() : null;
 
     this.features = new ArrayList<>();
-    for(Feature feature : object.getFeatures()) {
+    for(Feature feature : atlasObject.getFeatures()) {
       this.features.add(new ExportFeature(feature));
     }
 
     this.related = new ArrayList<>();
 
     this.links = new ArrayList<>();
-    for(Link link : object.getLinks()) {
+    for(Link link : atlasObject.getLinks()) {
       this.links.add(new ExportLink(link));
     }
 
     this.theme = theme.cssStyle();
+  }
+
+  public void translate(Translator translator) {
+    language = translator.getLanguage();
+    display = translator.getAtlasObjectDisplay(atlasObject.getId());
+    aliases = translator.getAtlasObjectAliases(atlasObject.getId());
+    definition = translator.getAtlasObjectDefinition(atlasObject.getId());
+    description = exportDescription(translator.getAtlasObjectDescription(atlasObject.getId()));
+    sampleTitle = translator.getAtlasObjectSampleTitle(atlasObject.getId());
+
+    taxonomy.clear();
+    for(Taxon taxon : atlasObject.getTaxonomy()) {
+      taxonomy.add(new ExportTaxon(translator.getTaxonMetaDisplay(taxon.getMeta().getId()), translator.getTaxonValue(taxon.getId())));
+    }
+
+    facts.clear();
+    for(Fact fact : atlasObject.getFacts()) {
+      facts.add(new ExportFact(translator.getFactTitle(fact.getId()), translator.getFactText(fact.getId())));
+    }
   }
 
   public String getLanguage() {
