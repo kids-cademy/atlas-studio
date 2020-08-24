@@ -229,12 +229,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>js-lib</id>
-			<name>j(s)-lib maven</name>
-			<url>http://maven.js-lib.com/</url>
-		</repository>
-	</repositories>
 </project>
