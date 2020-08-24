@@ -463,31 +463,7 @@ public class AtlasDaoReadTest
 
   @Test
   public void getFeaturesMeta() {
-    List<FeatureMeta> featuresMeta = dao.getFeaturesMeta(Arrays.asList(1, 3));
-    assertThat(featuresMeta, notNullValue());
-    assertThat(featuresMeta, hasSize(2));
-
-    assertThat(featuresMeta.get(0).getId(), equalTo(4));
-    assertThat(featuresMeta.get(1).getId(), equalTo(2));
-
-    assertThat(featuresMeta.get(0).getName(), equalTo("weight"));
-    assertThat(featuresMeta.get(1).getName(), equalTo("width"));
-
-    FeatureMeta featureMeta = featuresMeta.get(0);
-    assertThat(featureMeta, notNullValue());
-    assertThat(featureMeta.getId(), equalTo(4));
-    assertThat(featureMeta.getName(), equalTo("weight"));
-    assertThat(featureMeta.getDisplay(), equalTo("Weight"));
-    assertThat(featureMeta.getDefinition(), equalTo("weight"));
-    assertThat(featureMeta.getQuantity(), equalTo(PhysicalQuantity.MASS));
-  }
-
-  /**
-   * If excludes list is empty returns all features meta from database, in name order.
-   */
-  @Test
-  public void getFeaturesMeta_EmptyExcludes() {
-    List<FeatureMeta> featuresMeta = dao.getFeaturesMeta(new ArrayList<Integer>());
+    List<FeatureMeta> featuresMeta = dao.getFeaturesMeta();
     assertThat(featuresMeta, notNullValue());
     assertThat(featuresMeta, hasSize(4));
 
@@ -512,25 +488,7 @@ public class AtlasDaoReadTest
 
   @Test
   public void searchFeaturesMeta() {
-    List<FeatureMeta> featuresMeta = dao.searchFeaturesMeta("eig", Arrays.asList(1));
-    assertThat(featuresMeta, notNullValue());
-    assertThat(featuresMeta, hasSize(1));
-
-    assertThat(featuresMeta.get(0).getId(), equalTo(4));
-    assertThat(featuresMeta.get(0).getName(), equalTo("weight"));
-
-    FeatureMeta featureMeta = featuresMeta.get(0);
-    assertThat(featureMeta, notNullValue());
-    assertThat(featureMeta.getId(), equalTo(4));
-    assertThat(featureMeta.getName(), equalTo("weight"));
-    assertThat(featureMeta.getDisplay(), equalTo("Weight"));
-    assertThat(featureMeta.getDefinition(), equalTo("weight"));
-    assertThat(featureMeta.getQuantity(), equalTo(PhysicalQuantity.MASS));
-  }
-
-  @Test
-  public void searchFeaturesMeta_EmptyExcludes() {
-    List<FeatureMeta> featuresMeta = dao.searchFeaturesMeta("eig", new ArrayList<Integer>());
+    List<FeatureMeta> featuresMeta = dao.searchFeaturesMeta("eig");
     assertThat(featuresMeta, notNullValue());
     assertThat(featuresMeta, hasSize(2));
 
@@ -550,11 +508,11 @@ public class AtlasDaoReadTest
   }
 
   /**
-   * If search criterion is null and excludes list is empty returns all features meta from database, in name order.
+   * If search criterion is null returns all features meta from database, in name order.
    */
   @Test
-  public void searchFeaturesMeta_NullSearchEmptyExcludes() {
-    List<FeatureMeta> featuresMeta = dao.searchFeaturesMeta(null, new ArrayList<Integer>());
+  public void searchFeaturesMeta_NullSearch() {
+    List<FeatureMeta> featuresMeta = dao.searchFeaturesMeta(null);
     assertThat(featuresMeta, notNullValue());
     assertThat(featuresMeta, hasSize(4));
 

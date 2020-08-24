@@ -159,9 +159,9 @@ public interface AtlasDao
 
   int getReleaseSize(int releaseId);
 
-  List<FeatureMeta> getFeaturesMeta(List<Integer> excludes);
+  List<FeatureMeta> getFeaturesMeta();
 
-  List<FeatureMeta> searchFeaturesMeta(String search, List<Integer> excludes);
+  List<FeatureMeta> searchFeaturesMeta(String search);
 
   List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);
 

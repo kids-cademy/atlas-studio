@@ -9,6 +9,7 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
         this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
         this._sidebar.on("create-feature-meta", this._onCreate, this);
+        this._sidebar.on("translate-features", this._onTranslateFeatures, this);
 
         this._contextMenu = this.getByCssClass("context-menu");
         this._contextMenu.on("edit", this._onEdit, this);
@@ -41,6 +42,10 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
 
     _onCreate() {
         WinMain.assign("@link/feature-meta-form");
+    }
+
+    _onTranslateFeatures() {
+        WinMain.assign("@link/features-translator");
     }
 
     _onEdit(featureMetaView) {

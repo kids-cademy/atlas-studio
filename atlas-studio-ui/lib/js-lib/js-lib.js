@@ -2743,10 +2743,45 @@ js.dom.Element.prototype = {
 		return data;
 	},
 
-	getListData : function() {
-		return this.getChildren().map(function(child) {
+	getListData : function(options) {
+		$assert(options != null, "js.dom.Element#getListData", "Null options not supported.");
+
+		if (typeof options === "function") {
+			var values = [];
+			this.getChildren().forEach(function(child) {
+				var value = options(child.getUserData());
+				if (typeof value !== "undefined") {
+					values.push(value);
+				}
+			})
+			return values;
+		}
+
+		var children = null;
+		if (typeof options === "undefined") {
+			children = this.getChildren();
+		}
+		else {
+			if (typeof options.tag !== "undefined") {
+				children = this.findByCss(":scope > " + options.tag);
+			}
+			else if (typeof options.css !== "undefined") {
+				children = this.findByCss(":scope > " + options.css);
+			}
+			else if (typeof options.cssClass !== "undefined") {
+				children = this.findByCss(":scope > ." + options.cssClass);
+			}
+			else if (typeof options.clazz !== "undefined") {
+				children = this.findByCss(":scope > [data-class='" + options.clazz.toString() + "']");
+			}
+			else if (typeof options.className !== "undefined") {
+				children = this.findByCss(":scope > [data-class='" + options.className + "']");
+			}
+		}
+
+		return children != null ? children.map(function(child) {
 			return child.getUserData();
-		});
+		}) : null;
 	},
 
 	bind : function(selectors, typeName) {

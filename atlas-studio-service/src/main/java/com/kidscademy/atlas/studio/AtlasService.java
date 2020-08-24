@@ -18,6 +18,7 @@ import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
@@ -114,7 +115,7 @@ public interface AtlasService
    * @param excludes optional excludes list, empty if not used.
    * @return
    */
-  List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes);
+  List<FeatureMeta> getFeaturesMeta(String search);
 
   FeatureMeta saveFeatureMeta(FeatureMeta featureMeta);
 
@@ -279,4 +280,10 @@ public interface AtlasService
   void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslate translate);
 
   AtlasObjectTranslate translateAtlasObject(int objectId, String language);
+  
+  List<FeatureMetaTranslation> getFeatureMetaTranslations(String search, String language);
+  
+  void translateAllFeaturesDisplay(List<Integer> featureMetaIds, String language);
+  
+  void saveFeatureMetaTranslations(List<FeatureMetaTranslation> translations, String language);
 }

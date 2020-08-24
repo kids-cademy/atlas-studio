@@ -33,6 +33,7 @@ import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
@@ -412,11 +413,11 @@ public class AtlasServiceImpl implements AtlasService
   }
 
   @Override
-  public List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes) {
+  public List<FeatureMeta> getFeaturesMeta(String search) {
     if(search != null) {
-      return atlasDao.searchFeaturesMeta(search, excludes);
+      return atlasDao.searchFeaturesMeta(search);
     }
-    return atlasDao.getFeaturesMeta(excludes);
+    return atlasDao.getFeaturesMeta();
   }
 
   @Override
@@ -861,6 +862,35 @@ public class AtlasServiceImpl implements AtlasService
     return new AtlasObjectTranslate(object, translator);
   }
 
+  @Override
+  public List<FeatureMetaTranslation> getFeatureMetaTranslations(String search, String language) {
+    List<FeatureMeta> featuresMeta = getFeaturesMeta(search);
+    List<FeatureMetaTranslation> translations = new ArrayList<>(featuresMeta.size());
+
+    Translator translator = new Translator(atlasDao, language);
+    for(FeatureMeta meta : featuresMeta) {
+      translations.add(new FeatureMetaTranslation(meta, translator.getFeatureDisplay(meta.getId())));
+    }
+    return translations;
+  }
+
+  @Override
+  public void translateAllFeaturesDisplay(List<Integer> featureMetaIds, String language) {
+    Translator translator = new Translator(atlasDao, language);
+    for(int featureMetaId : featureMetaIds) {
+      FeatureMeta object = atlasDao.getFeatureMetaById(featureMetaId);
+      translator.saveFeatureDisplay(featureMetaId, translate(language, object.getDisplay(), translator.getFeatureDisplay(featureMetaId)));
+    }
+  }
+
+  @Override
+  public void saveFeatureMetaTranslations(List<FeatureMetaTranslation> translations, String language) {
+    Translator translator = new Translator(atlasDao, language);
+    for(FeatureMetaTranslation translation : translations) {
+      translator.saveFeatureDisplay(translation.getId(), translation.getTranslation());
+    }
+  }
+
   private List<String> translate(String language, List<String> text, List<String> translated) {
     return Strings.split(translate(language, Strings.join(text, ','), Strings.join(translated, ',')), ',');
   }
@@ -872,7 +902,7 @@ public class AtlasServiceImpl implements AtlasService
     if(translated != null) {
       return translated;
     }
-    Translation translation = translate.translate(text, TranslateOption.sourceLanguage("EN"), TranslateOption.targetLanguage(language));
+    Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language));
     return translation.getTranslatedText();
   }
 }

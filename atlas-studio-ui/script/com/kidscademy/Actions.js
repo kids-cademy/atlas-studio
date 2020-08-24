@@ -206,8 +206,20 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		return this._previousAction;
 	}
 
+	on(controlName, eventType, listener, scope) {
+		const control = this.getByName(controlName);
+		$assert(control != null, "com.kidscademy.Actions#getValue", "Missing control |%s| from actions bar.", controlName);
+		control.on(eventType, listener, scope);
+	}
+
 	fire(name) {
 		this._actionHandlers[name]();
+	}
+
+	getValue(controlName) {
+		const control = this.getByName(controlName);
+		$assert(control != null, "com.kidscademy.Actions#getValue", "Missing control |%s| from actions bar.", controlName);
+		return control.getValue();
 	}
 
 	_onKey(ev) {

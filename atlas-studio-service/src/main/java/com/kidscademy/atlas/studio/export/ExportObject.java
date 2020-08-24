@@ -84,11 +84,6 @@ public class ExportObject
       this.taxonomy.add(new ExportTaxon(taxon.getDisplay(), taxon.getValue()));
     }
 
-    this.facts = new ArrayList<>();
-    for(Fact fact : atlasObject.getFacts()) {
-      this.facts.add(new ExportFact(fact.getTitle(), fact.getTitle()));
-    }
-
     this.images = new HashMap<>();
     for(Map.Entry<String, Image> entry : atlasObject.getImages().entrySet()) {
       this.images.put(entry.getKey(), new ExportImage(atlasObject, entry.getValue()));
@@ -109,6 +104,11 @@ public class ExportObject
     this.features = new ArrayList<>();
     for(Feature feature : atlasObject.getFeatures()) {
       this.features.add(new ExportFeature(feature));
+    }
+
+    this.facts = new ArrayList<>();
+    for(Fact fact : atlasObject.getFacts()) {
+      this.facts.add(new ExportFact(fact.getTitle(), fact.getTitle()));
     }
 
     this.related = new ArrayList<>();
@@ -132,6 +132,11 @@ public class ExportObject
     taxonomy.clear();
     for(Taxon taxon : atlasObject.getTaxonomy()) {
       taxonomy.add(new ExportTaxon(translator.getTaxonMetaDisplay(taxon.getMeta().getId()), translator.getTaxonValue(taxon.getId())));
+    }
+
+    features.clear();
+    for(Feature feature : atlasObject.getFeatures()) {
+      this.features.add(new ExportFeature(feature));
     }
 
     facts.clear();

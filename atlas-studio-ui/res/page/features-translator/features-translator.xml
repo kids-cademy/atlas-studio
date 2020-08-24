@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Features Translator</title>
+	<description>Translator form for features metadata, for now display property.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/ContextMenu.js</script>
+		<script>script/com/kidscademy/Actions.js</script>
+		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/TableView.js</script>
+		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/page/FeaturesTranslatorPage.js</script>
+	</scripts>
+</page>

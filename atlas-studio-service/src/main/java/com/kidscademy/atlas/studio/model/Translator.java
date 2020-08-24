@@ -69,6 +69,10 @@ public class Translator
     saveTranslation(Discriminator.FACT_TEXT, factId, language, text);
   }
 
+  public void saveFeatureDisplay(int featureMetaId, String display) {
+    saveTranslation(Discriminator.FEATURE_META_DISPLAY, featureMetaId, language, display);
+  }
+
   private void saveTranslation(Discriminator discriminator, int objectId, String language, String text) {
     if(text == null || text.isEmpty()) {
       dao.removeTranslation(new TranslationKey(discriminator, objectId, language));
@@ -120,5 +124,9 @@ public class Translator
 
   public String getFactText(int factId) {
     return dao.getTranslation(new TranslationKey(Discriminator.FACT_TEXT, factId, language));
+  }
+
+  public String getFeatureDisplay(int featureId) {
+    return dao.getTranslation(new TranslationKey(Discriminator.FEATURE_META_DISPLAY, featureId, language));
   }
 }

@@ -53,8 +53,10 @@
 	<related>Related</related>
 	<links>Links</links>
 	<link-sources>Link Sources</link-sources>
-
+	<translate-all>Translate All</translate-all>
 	<published-object>Published Object</published-object>
+	<save-changes>Save Changes</save-changes>
+	<cancel-changes>Cancel Changes</cancel-changes>
 
 	<alert-no-definition-provider>No provider link for object definition.</alert-no-definition-provider>
 	<alert-no-description-provider>No provider link for object description.</alert-no-description-provider>
@@ -66,6 +68,7 @@
 	<alert-inconsistent-db>Inconsistent database record! Force removing.</alert-inconsistent-db>
 	<alert-no-taxons>No more taxons available.</alert-no-taxons>
 	<alert-processing-done>Processing done.</alert-processing-done>
+	<alert-edited-translations>There are changed translations. Please save or cancel changes.</alert-edited-translations>
 	
 	<confirm-collection-remove>Please confirm atlas collection remove. Collection should be empty.</confirm-collection-remove>
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
@@ -124,6 +127,8 @@
 	<feature-meta-create>Create Feature Meta</feature-meta-create>
 	<feature-meta-edit>Edit Feature Meta</feature-meta-edit>
 	<feature-meta-remove>Remove Feature Meta</feature-meta-remove>
+	<feature-meta-translate>Translate Features Meta</feature-meta-translate>
+	<feature-meta-translator>Features Meta Translator</feature-meta-translator>
 	
 	<object-create>Create Object</object-create>
 	<object-edit>Edit Object</object-edit>
@@ -149,6 +154,7 @@
 	<feature-definition>Definition</feature-definition>
 	<feature-quantity>Quantity</feature-quantity>
 	<feature-units>Units</feature-units>
+	<feature-translation>Translation</feature-translation>
 	
 	<quantity-scalar>SCALAR</quantity-scalar>
 	<quantity-mass>MASS</quantity-mass>

@@ -11,6 +11,8 @@
 		password="kids_cademy"
 	/>
 
+	<Parameter name="js.tiny.container.dev.context" value="/atlas-studio-preview" />
+	
 	<Parameter name="android.sdk.dir" value="C://Users/DEV/AppData/Local/Android/Sdk/" />
 	<Parameter name="android.zipalign" value="C://Users/DEV/AppData/Local/Android/Sdk/build-tools/28.0.3/zipalign.exe" />
 	<Parameter name="android.apksigner" value="C://Users/DEV/AppData/Local/Android/Sdk/build-tools/28.0.3/apksigner.bat" />
@@ -33,5 +35,4 @@
 	<Parameter name="audio.tool.ffprobe" value="C://ffmpeg/ffprobe" />
 
 	<Parameter name="google.api.key" value="api.key" />
-	<Parameter name="google.search.context" value="search.context" />
 </Context>
