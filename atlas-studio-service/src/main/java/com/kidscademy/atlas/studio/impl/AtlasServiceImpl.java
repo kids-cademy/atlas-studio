@@ -173,12 +173,6 @@ public class AtlasServiceImpl implements AtlasService
 
   @Override
   public List<AtlasCollection> getCollections() {
-
-    for(Feature feature : atlasDao.getFeatures()) {
-      feature.updateDisplay();
-      atlasDao.saveFeature(feature);
-    }
-
     return atlasDao.getCollections();
   }
 
