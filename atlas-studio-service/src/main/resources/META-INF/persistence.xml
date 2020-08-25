@@ -46,7 +46,7 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
-		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		<class>com.kidscademy.atlas.studio.model.TranslationData</class>
 		
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
@@ -82,7 +82,7 @@
 
 		<class>com.kidscademy.atlas.studio.export.ExportItem</class>
 
-		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		<class>com.kidscademy.atlas.studio.model.TranslationData</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -134,7 +134,7 @@
 		<class>com.kidscademy.atlas.studio.model.ReleaseChild</class>
 		<class>com.kidscademy.atlas.studio.model.AndroidApp</class>
 
-		<class>com.kidscademy.atlas.studio.model.Translation</class>
+		<class>com.kidscademy.atlas.studio.model.TranslationData</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

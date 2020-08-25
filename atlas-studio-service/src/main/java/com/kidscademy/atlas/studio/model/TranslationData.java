@@ -7,12 +7,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Table;
 
 import com.kidscademy.atlas.studio.model.TranslationKey.Discriminator;
 
 @Entity
+@Table(name = "translation")
 @IdClass(TranslationKey.class)
-public class Translation
+public class TranslationData
 {
   @Id
   @Enumerated(EnumType.STRING)
@@ -24,6 +26,16 @@ public class Translation
 
   private Date timestamp;
   private String text;
+
+  public TranslationData() {
+  }
+
+  public TranslationData(Discriminator discriminator, int objectId, String language) {
+    this.discriminator = discriminator;
+    this.objectId = objectId;
+    this.language = language;
+    this.timestamp = new Date(2160000);
+  }
 
   public void setDiscriminator(Discriminator discriminator) {
     this.discriminator = discriminator;
@@ -39,6 +51,10 @@ public class Translation
 
   public String getLanguage() {
     return language;
+  }
+
+  public void setTimestamp(Date timestamp) {
+    this.timestamp = timestamp;
   }
 
   public Date getTimestamp() {

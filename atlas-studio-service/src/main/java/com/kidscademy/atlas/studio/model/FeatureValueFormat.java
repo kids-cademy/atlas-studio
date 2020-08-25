@@ -39,7 +39,7 @@ public class FeatureValueFormat {
 	}
     }
 
-    public String display() {
+  public String display() {
 	return display;
     }
 }

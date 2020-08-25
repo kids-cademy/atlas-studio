@@ -1,11 +1,13 @@
 package com.kidscademy.atlas.studio.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.PreUpdate;
 
 /**
  * Any measurable or observable characteristic of an object. A feature has a unique name, a value - or a range of values, and a physical quantity that is used
@@ -25,6 +27,8 @@ public class Feature
   @ManyToOne
   private FeatureMeta meta;
 
+  private Date timestamp;
+
   /**
    * Mandatory numeric value. If optional {@link #maximum} value is provided this value should be interpreted as minimum. This may be the case if this feature
    * represent a range.
@@ -36,36 +40,40 @@ public class Feature
    */
   private Double maximum;
 
-  /**
-   * Display is used on atlas studio user interface and is not strictly part of domain model.
-   */
-  @Transient
   private String display;
 
   public Feature() {
   }
 
-  /**
-   * Test constructor.
-   * 
-   * @param meta
-   * @param value
-   * @param maximum
-   */
   public Feature(FeatureMeta meta, double value, Double... maximum) {
+    this.timestamp = new Date();
     this.meta = meta;
     this.value = value;
     if(maximum.length == 1) {
       this.maximum = maximum[0];
     }
+    this.display = new FeatureValueFormat(this).display();
   }
 
-  public void postLoad() {
-    display = new FeatureValueFormat(this).display();
+  @PreUpdate
+  public void preUpdate() {
+    timestamp = new Date();
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public FeatureMeta getMeta() {
+    return meta;
   }
 
   public boolean isScalar() {
     return meta.getQuantity() == PhysicalQuantity.SCALAR;
+  }
+
+  public Date getTimestamp() {
+    return timestamp;
   }
 
   public double getValue() {
@@ -80,12 +88,17 @@ public class Feature
     return maximum != null;
   }
 
-  public String getName() {
-    return meta.getName();
+  public Feature updateDisplay() {
+    display = new FeatureValueFormat(this).display();
+    return this;
   }
 
   public String getDisplay() {
-    return meta.getDisplay();
+    return display;
+  }
+
+  public String getName() {
+    return meta.getName();
   }
 
   public PhysicalQuantity getQuantity() {

@@ -381,16 +381,20 @@
 		<atlasobject_id>1</atlasobject_id>
 		<features_order>0</features_order>
 		<meta_id>1</meta_id>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<value>5.3</value>
 		<maximum></maximum>
+		<display>5.3 grams</display>
 	</feature>
 	<feature>
 		<id>2</id>
 		<atlasobject_id>1</atlasobject_id>
 		<features_order>1</features_order>
 		<meta_id>2</meta_id>
+		<timestamp>2019-01-30 12:30:00</timestamp>
 		<value>1.00584</value>
 		<maximum>1.09728</maximum>
+		<display>1.00584 to 1.09728 meters</display>
 	</feature>
 
 	<atlasobject_links>

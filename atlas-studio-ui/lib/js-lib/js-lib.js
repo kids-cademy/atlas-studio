@@ -2744,7 +2744,7 @@ js.dom.Element.prototype = {
 	},
 
 	getListData : function(options) {
-		$assert(options != null, "js.dom.Element#getListData", "Null options not supported.");
+		$assert(typeof options === "undefined" || options != null, "js.dom.Element#getListData", "Null options not supported.");
 
 		if (typeof options === "function") {
 			var values = [];

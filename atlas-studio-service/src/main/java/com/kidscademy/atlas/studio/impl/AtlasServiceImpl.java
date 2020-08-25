@@ -19,6 +19,7 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
+import com.kidscademy.atlas.studio.CT;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
@@ -67,7 +68,6 @@ import js.lang.GType;
 import js.log.Log;
 import js.log.LogFactory;
 import js.rmi.BusinessException;
-import js.tiny.container.annotation.ContextParam;
 import js.tiny.container.core.AppContext;
 import js.tiny.container.http.form.Form;
 import js.tiny.container.http.form.UploadedFile;
@@ -76,9 +76,6 @@ import js.util.Params;
 public class AtlasServiceImpl implements AtlasService
 {
   private static final Log log = LogFactory.getLog(AtlasServiceImpl.class);
-
-  @ContextParam("google.api.key")
-  private static String GOOGLE_API_KEY;
 
   private final AppContext context;
   private final Json json;
@@ -115,8 +112,8 @@ public class AtlasServiceImpl implements AtlasService
     this.index = new KeywordTree<>(searchIndex);
 
     // google translate client library loads API KEY from system property GOOGLE_API_KEY
-    if(GOOGLE_API_KEY != null) {
-      System.setProperty("GOOGLE_API_KEY", GOOGLE_API_KEY);
+    if(CT.gooleApiKey() != null) {
+      System.setProperty("GOOGLE_API_KEY", CT.gooleApiKey());
     }
     this.translate = TranslateOptions.getDefaultInstance().getService();
   }
@@ -176,6 +173,12 @@ public class AtlasServiceImpl implements AtlasService
 
   @Override
   public List<AtlasCollection> getCollections() {
+
+    for(Feature feature : atlasDao.getFeatures()) {
+      feature.updateDisplay();
+      atlasDao.saveFeature(feature);
+    }
+
     return atlasDao.getCollections();
   }
 
@@ -816,9 +819,7 @@ public class AtlasServiceImpl implements AtlasService
 
   @Override
   public Feature updateFeatureDisplay(Feature feature) {
-    // reuse handler used to update feature display after loading object from database
-    feature.postLoad();
-    return feature;
+    return feature.updateDisplay();
   }
 
   @Override
@@ -869,7 +870,7 @@ public class AtlasServiceImpl implements AtlasService
 
     Translator translator = new Translator(atlasDao, language);
     for(FeatureMeta meta : featuresMeta) {
-      translations.add(new FeatureMetaTranslation(meta, translator.getFeatureDisplay(meta.getId())));
+      translations.add(new FeatureMetaTranslation(meta, translator.getFeatureMetaDisplay(meta.getId())));
     }
     return translations;
   }
@@ -879,7 +880,7 @@ public class AtlasServiceImpl implements AtlasService
     Translator translator = new Translator(atlasDao, language);
     for(int featureMetaId : featureMetaIds) {
       FeatureMeta object = atlasDao.getFeatureMetaById(featureMetaId);
-      translator.saveFeatureDisplay(featureMetaId, translate(language, object.getDisplay(), translator.getFeatureDisplay(featureMetaId)));
+      translator.saveFeatureMetaDisplay(featureMetaId, translate(language, object.getDisplay(), translator.getFeatureMetaDisplay(featureMetaId)));
     }
   }
 
@@ -887,7 +888,7 @@ public class AtlasServiceImpl implements AtlasService
   public void saveFeatureMetaTranslations(List<FeatureMetaTranslation> translations, String language) {
     Translator translator = new Translator(atlasDao, language);
     for(FeatureMetaTranslation translation : translations) {
-      translator.saveFeatureDisplay(translation.getId(), translation.getTranslation());
+      translator.saveFeatureMetaDisplay(translation.getId(), translation.getTranslation());
     }
   }
 

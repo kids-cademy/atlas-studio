@@ -155,26 +155,6 @@ public class Exporter
     }
   }
 
-  private static class Dimension
-  {
-    int width;
-    int height;
-
-    Dimension(int width, int height) {
-      this.width = width;
-      this.height = height;
-    }
-  }
-
-  private static Map<String, Dimension> DIMENSIONS = new HashMap<>();
-  static {
-    DIMENSIONS.put("icon", new Dimension(96, 96));
-    DIMENSIONS.put("trivia", new Dimension(500, 0));
-    DIMENSIONS.put("cover", new Dimension(0, 500));
-    DIMENSIONS.put("featured", new Dimension(560, 0));
-    DIMENSIONS.put("contextual", new Dimension(920, 560));
-  }
-
   private static String imageFileName(AtlasObject object, String imageKey) {
     Image image = object.getImage(imageKey);
     return image != null ? image.getFileName() : null;
@@ -223,5 +203,25 @@ public class Exporter
     targetFile.deleteOnExit();
     processor.resize(file, targetFile, width, height);
     return targetFile;
+  }
+
+  private static class Dimension
+  {
+    int width;
+    int height;
+
+    Dimension(int width, int height) {
+      this.width = width;
+      this.height = height;
+    }
+  }
+
+  private static Map<String, Dimension> DIMENSIONS = new HashMap<>();
+  static {
+    DIMENSIONS.put("icon", new Dimension(96, 96));
+    DIMENSIONS.put("trivia", new Dimension(500, 0));
+    DIMENSIONS.put("cover", new Dimension(0, 500));
+    DIMENSIONS.put("featured", new Dimension(560, 0));
+    DIMENSIONS.put("contextual", new Dimension(920, 560));
   }
 }

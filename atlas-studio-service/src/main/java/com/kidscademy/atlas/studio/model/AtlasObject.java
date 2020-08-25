@@ -251,10 +251,6 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
       picture.postLoad(this);
     }
 
-    for(Feature feature : features) {
-      feature.postLoad();
-    }
-
     for(Link link : links) {
       link.postLoad();
     }

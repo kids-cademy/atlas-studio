@@ -21,6 +21,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -31,7 +32,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
-import com.kidscademy.atlas.studio.model.Translation;
+import com.kidscademy.atlas.studio.model.TranslationData;
 import com.kidscademy.atlas.studio.model.TranslationKey;
 
 public interface AtlasDao
@@ -235,9 +236,15 @@ public interface AtlasDao
 
   AndroidApp getAndroidAppByRelease(int releaseId);
 
+  TranslationData getTranslationData(TranslationKey key);
+
   String getTranslation(TranslationKey key);
-  
-  void saveTranslation(Translation translation);
-  
+
+  void saveTranslation(TranslationData translation);
+
   void removeTranslation(TranslationKey key);
+
+  List<Feature> getFeatures();
+
+  void saveFeature(Feature feature);
 }

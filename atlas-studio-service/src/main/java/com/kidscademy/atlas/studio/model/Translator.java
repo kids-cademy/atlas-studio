@@ -1,8 +1,14 @@
 package com.kidscademy.atlas.studio.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+import com.kidscademy.atlas.studio.CT;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.model.TranslationKey.Discriminator;
 
@@ -20,17 +26,31 @@ public class Translator
     return DEFAULT_LANGUAGE.equals(language);
   }
 
+  private static Translate translate;
+  private static final Object translateLock = new Object();
+
   private final AtlasDao dao;
   private final String language;
 
   private Translator(String language) {
-    this.dao = null;
-    this.language = language;
+    this(null, language);
   }
 
   public Translator(AtlasDao dao, String language) {
     this.dao = dao;
     this.language = language;
+
+    if(translate == null) {
+      synchronized(translateLock) {
+        if(translate == null) {
+          // google translate client library loads API KEY from system property GOOGLE_API_KEY
+          if(CT.gooleApiKey() != null) {
+            System.setProperty("GOOGLE_API_KEY", CT.gooleApiKey());
+          }
+          translate = TranslateOptions.getDefaultInstance().getService();
+        }
+      }
+    }
   }
 
   public boolean isDefaultLanguage() {
@@ -69,7 +89,7 @@ public class Translator
     saveTranslation(Discriminator.FACT_TEXT, factId, language, text);
   }
 
-  public void saveFeatureDisplay(int featureMetaId, String display) {
+  public void saveFeatureMetaDisplay(int featureMetaId, String display) {
     saveTranslation(Discriminator.FEATURE_META_DISPLAY, featureMetaId, language, display);
   }
 
@@ -79,7 +99,7 @@ public class Translator
       return;
     }
 
-    Translation translation = new Translation();
+    TranslationData translation = new TranslationData();
     translation.setDiscriminator(discriminator);
     translation.setObjectId(objectId);
     translation.setLanguage(language);
@@ -126,7 +146,28 @@ public class Translator
     return dao.getTranslation(new TranslationKey(Discriminator.FACT_TEXT, factId, language));
   }
 
-  public String getFeatureDisplay(int featureId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.FEATURE_META_DISPLAY, featureId, language));
+  public String getFeatureMetaDisplay(int featureMetaId) {
+    return dao.getTranslation(new TranslationKey(Discriminator.FEATURE_META_DISPLAY, featureMetaId, language));
+  }
+
+  public String getFeatureValue(Feature feature) {
+    TranslationData translation = dao.getTranslationData(new TranslationKey(Discriminator.FEATURE_VALUE, feature.getId(), language));
+    if(translation == null) {
+      translation = new TranslationData(Discriminator.FEATURE_VALUE, feature.getId(), language);
+    }
+    if(translation.getTimestamp().before(feature.getTimestamp())) {
+      translation.setTimestamp(new Date());
+      translation.setText(translate(feature.getDisplay(), language));
+      dao.saveTranslation(translation);
+    }
+    return translation.getText();
+  }
+
+  private static String translate(String text, String language) {
+    if(text == null) {
+      return null;
+    }
+    Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language));
+    return translation.getTranslatedText();
   }
 }

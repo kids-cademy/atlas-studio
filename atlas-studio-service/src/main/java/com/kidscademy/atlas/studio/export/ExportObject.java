@@ -11,6 +11,7 @@ import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
 import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
+import com.kidscademy.atlas.studio.model.FeatureValueFormat;
 import com.kidscademy.atlas.studio.model.HDate;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -103,7 +104,7 @@ public class ExportObject
 
     this.features = new ArrayList<>();
     for(Feature feature : atlasObject.getFeatures()) {
-      this.features.add(new ExportFeature(feature));
+      this.features.add(new ExportFeature(feature.getMeta().getDisplay(), new FeatureValueFormat(feature).display()));
     }
 
     this.facts = new ArrayList<>();
@@ -131,12 +132,16 @@ public class ExportObject
 
     taxonomy.clear();
     for(Taxon taxon : atlasObject.getTaxonomy()) {
-      taxonomy.add(new ExportTaxon(translator.getTaxonMetaDisplay(taxon.getMeta().getId()), translator.getTaxonValue(taxon.getId())));
+      final String display = translator.getTaxonMetaDisplay(taxon.getMeta().getId());
+      final String value = translator.getTaxonValue(taxon.getId());
+      taxonomy.add(new ExportTaxon(display, value));
     }
 
     features.clear();
     for(Feature feature : atlasObject.getFeatures()) {
-      this.features.add(new ExportFeature(feature));
+      final String display = translator.getFeatureMetaDisplay(feature.getMeta().getId());
+      final String value = translator.getFeatureValue(feature);
+      this.features.add(new ExportFeature(display, value));
     }
 
     facts.clear();

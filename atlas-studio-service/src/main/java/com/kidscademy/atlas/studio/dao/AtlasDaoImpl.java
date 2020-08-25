@@ -22,6 +22,7 @@ import com.kidscademy.atlas.studio.model.AtlasObjectKey;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
+import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
@@ -33,7 +34,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
-import com.kidscademy.atlas.studio.model.Translation;
+import com.kidscademy.atlas.studio.model.TranslationData;
 import com.kidscademy.atlas.studio.model.TranslationKey;
 
 import js.lang.BugError;
@@ -649,23 +650,39 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
+  public TranslationData getTranslationData(TranslationKey key) {
+    return em.find(TranslationData.class, key);
+  }
+
+  @Override
   public String getTranslation(TranslationKey key) {
-    Translation translation = em.find(Translation.class, key);
+    TranslationData translation = em.find(TranslationData.class, key);
     return translation != null ? translation.getText() : null;
   }
 
   @Override
   @Mutable
-  public void saveTranslation(Translation translation) {
+  public void saveTranslation(TranslationData translation) {
     em.merge(translation);
   }
 
   @Override
   @Mutable
   public void removeTranslation(TranslationKey key) {
-    Translation translation = em.find(Translation.class, key);
+    TranslationData translation = em.find(TranslationData.class, key);
     if(translation != null) {
       em.remove(translation);
     }
+  }
+
+  @Override
+  public List<Feature> getFeatures() {
+    return em.createQuery("select f from Feature f", Feature.class).getResultList();
+  }
+
+  @Override
+  @Mutable
+  public void saveFeature(Feature feature) {
+    em.merge(feature);
   }
 }
