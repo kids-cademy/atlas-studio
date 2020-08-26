@@ -9,3 +9,7 @@
 .features-translator .edited {
 	color: red;
 }
+
+.features-translator .translation:focus {
+	color: @color/border-focus;		
+}

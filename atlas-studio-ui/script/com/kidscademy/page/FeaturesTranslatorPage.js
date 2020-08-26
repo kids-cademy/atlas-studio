@@ -15,7 +15,7 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
         this._tableView = this.getByCssClass("list-view");
 
         this._searchInput = this.getByName("search-input");
-        this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
+        this._actions = this.getByClass(com.kidscademy.Actions).key(this._searchInput).bind(this);
         this._actions.on("language", "change", this._load, this);
         this._load();
 
@@ -73,6 +73,7 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
         });
         if (ids.length === 0) {
             js.ua.System.alert("@string/alert-nothing-to-translate");
+            this._searchInput.focus();
             return;
         }
         js.ua.System.confirm($format("@string/confirm-translate-all-features-meta", ids.length), ok => {
@@ -83,18 +84,26 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
     }
 
     _onSaveChanges() {
-        const translations = this._tableView.findByCss(":scope > .edited").map(row => {
+        const features = this._tableView.findByCss(":scope > .edited").map(row => {
             const feature = row.getUserData();
             feature.translation = row.getByCssClass("translation").getText();
             return feature;
         });
-        AtlasService.saveFeatureMetaTranslations(translations, this._language(), () => {
+        if(features.length === 0) {
+            this._searchInput.focus();
+            return;
+        }
+        AtlasService.saveFeatureMetaTranslations(features, this._language(), () => {
             this._tableView.getChildren().removeCssClass("edited");
         });
     }
 
     _onCancelChanges() {
         const size = this._tableView.findByCss(":scope > .edited").size();
+        if (size === 0) {
+            this._searchInput.focus();
+            return;
+        }
         js.ua.System.confirm($format("@string/confirm-cancel-changes", size), ok => {
             if (ok) {
                 this._load({ alert: false });

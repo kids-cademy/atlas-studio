@@ -77,7 +77,7 @@
 
 	<border-image>@color/grey-400</border-image>
 	<border-input>@color/grey-400</border-input>
-	<border-focus>#76be76</border-focus>
+	<border-focus>#66a566</border-focus>
 	
 	<border>@color/grey-700</border>
 	<border-light>@color/grey-300</border-light>

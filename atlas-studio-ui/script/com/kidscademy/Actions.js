@@ -17,10 +17,25 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		super(ownerDoc, node);
 
 		/**
-		 * Parent container initialized by {@link #bind()} method.
+		 * Parent container initialized by {@link #bind(js.dom.Element)} method. Parent container contains handlers for actions.
 		 * @type {js.dom.Element}
 		 */
 		this._container = null;
+
+		/**
+		 * Input control used to receive key events when focused. It is used if there are actions with key(s) assigned and is initialized by {@link #key(js.dom.Element)}.
+		 * <p>
+		 * This field is optional. If is null, this actions handler uses {@link #_container} to bind keys events. 
+		 * Be aware that any input from container will have declared keys listeners; this may conflict with default input keys behaviour.
+		 * @type {js.dom.Element}
+		 */
+		this._keyInput = null;
+
+		/**
+		 * Callback invoked after every action handler execution. Callback gets the name of the currently executed action. It is initialized by {@link #interceptor(Function)}.
+		 * @type {Function}
+		 */
+		this._interceptor = null;
 
 		/**
 		 * Dictionary for action handler. Key is the action name and value is mouse click event listener.
@@ -47,13 +62,32 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		this._previousAction = null;
 
 		this._args = new com.kidscademy.Actions.Args(this.getParent().getByCss(".actions.args"));
+	}
 
-		this._interceptor = null;
+	/**
+	 * Register input control for key events. See {@link #_keyInput}.
+	 * @param {js.dom.Elemen} keyInput
+	 * @return {com.kidscademy.Actions} this object.
+	 */
+	key(keyInput) {
+		this._keyInput = keyInput;
+		return this;
+	}
+
+	/**
+	 * Register the interceptor invoked after every action execution. See {@link #_interceptor}.
+	 * @param {Function} interceptor interceptor function. 
+	 * @return {com.kidscademy.Actions} this object.
+	 */
+	interceptor(interceptor) {
+		this._interceptor = interceptor;
+		return this;
 	}
 
 	/**
 	 * Bind this actions controller to parent container and initialize actions controller internall state.
 	 * @param {js.dom.Element} container parent container.
+	 * @return {com.kidscademy.Actions} this object.
 	 */
 	bind(container) {
 		function handlerName(name) {
@@ -117,13 +151,9 @@ com.kidscademy.Actions = class extends js.dom.Element {
 		});
 
 		if (keyHandlers) {
-			this._container.on("keydown", this._onKey, this);
+			(this._keyInput || this._container).on("keydown", this._onKey, this);
 		}
 		return this;
-	}
-
-	interceptor(listener) {
-		this._interceptor = listener;
 	}
 
 	disable(...names) {

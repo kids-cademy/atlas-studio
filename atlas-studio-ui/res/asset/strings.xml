@@ -100,7 +100,7 @@
 	<confirm-all-features-meta-remove>Please confirm removing all features meta.\r\nWarning! ALL objects features from collection will be removed!</confirm-all-features-meta-remove>
 	<confirm-all-taxons-meta-remove>Please confirm removing all taxonomy meta.</confirm-all-taxons-meta-remove>
 	<confirm-translate-all-features-meta>Please confirm translating %d feature(s) meta.</confirm-translate-all-features-meta>
-	<confirm-cancel-changes>Please confirm canceling changes for %d items.</confirm-cancel-changes>
+	<confirm-cancel-changes>Please confirm canceling changes for %d item(s).</confirm-cancel-changes>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 

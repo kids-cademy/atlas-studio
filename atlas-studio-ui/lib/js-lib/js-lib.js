@@ -2081,7 +2081,7 @@ js.dom.Element = function(ownerDoc, node) {
 	$assert(this._format === null || js.lang.Types.isObject(this._format), "js.dom.Element#Element", "Formatter is not an object.");
 
 	this._config = {};
-	dataCfg = this.getAttr("data-cfg");
+	dataCfg = this.getAttr("data-cfg") || this.getAttr("data-config");
 	if (dataCfg !== null) {
 		pairs = js.util.Strings.parseNameValues(dataCfg);
 		for (i = 0; i < pairs.length; i++) {
@@ -2097,7 +2097,6 @@ js.dom.Element = function(ownerDoc, node) {
 			}
 			this._config[js.util.Strings.toScriptCase(pairs[i].name)] = value;
 		}
-		this.removeAttr("data-cfg");
 	}
 
 	this._domEvents = new js.event.DomEvents(this);
