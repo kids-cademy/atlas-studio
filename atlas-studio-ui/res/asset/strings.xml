@@ -69,6 +69,7 @@
 	<alert-no-taxons>No more taxons available.</alert-no-taxons>
 	<alert-processing-done>Processing done.</alert-processing-done>
 	<alert-edited-translations>There are changed translations. Please save or cancel changes.</alert-edited-translations>
+	<alert-nothing-to-translate>There is nothing to translate.</alert-nothing-to-translate>
 	
 	<confirm-collection-remove>Please confirm atlas collection remove. Collection should be empty.</confirm-collection-remove>
 	<confirm-object-remove>Please confirm atlas object remove.</confirm-object-remove>
@@ -98,6 +99,8 @@
 	<confirm-all-description-meta-remove>Please confirm removing all description meta sections.</confirm-all-description-meta-remove>
 	<confirm-all-features-meta-remove>Please confirm removing all features meta.\r\nWarning! ALL objects features from collection will be removed!</confirm-all-features-meta-remove>
 	<confirm-all-taxons-meta-remove>Please confirm removing all taxonomy meta.</confirm-all-taxons-meta-remove>
+	<confirm-translate-all-features-meta>Please confirm translating %d feature(s) meta.</confirm-translate-all-features-meta>
+	<confirm-cancel-changes>Please confirm canceling changes for %d items.</confirm-cancel-changes>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
 

@@ -283,7 +283,7 @@ public interface AtlasService
   
   List<FeatureMetaTranslation> getFeatureMetaTranslations(String search, String language);
   
-  void translateAllFeaturesDisplay(List<Integer> featureMetaIds, String language);
+  void translateAllFeaturesMetaDisplay(List<Integer> featureMetaIds, String language);
   
   void saveFeatureMetaTranslations(List<FeatureMetaTranslation> translations, String language);
 }

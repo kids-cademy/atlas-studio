@@ -71,7 +71,15 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
                 return feature.id;
             }
         });
-        AtlasService.translateAllFeaturesDisplay(ids, this._language(), this._load, this);
+        if (ids.length === 0) {
+            js.ua.System.alert("@string/alert-nothing-to-translate");
+            return;
+        }
+        js.ua.System.confirm($format("@string/confirm-translate-all-features-meta", ids.length), ok => {
+            if (ok) {
+                AtlasService.translateAllFeaturesMetaDisplay(ids, this._language(), this._load, this);
+            }
+        });
     }
 
     _onSaveChanges() {
@@ -86,7 +94,12 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
     }
 
     _onCancelChanges() {
-        this._load({ alert: false });
+        const size = this._tableView.findByCss(":scope > .edited").size();
+        js.ua.System.confirm($format("@string/confirm-cancel-changes", size), ok => {
+            if (ok) {
+                this._load({ alert: false });
+            }
+        });
     }
 
     // --------------------------------------------------------------------------------------------

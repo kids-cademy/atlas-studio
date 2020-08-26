@@ -870,7 +870,7 @@ public class AtlasServiceImpl implements AtlasService
   }
 
   @Override
-  public void translateAllFeaturesDisplay(List<Integer> featureMetaIds, String language) {
+  public void translateAllFeaturesMetaDisplay(List<Integer> featureMetaIds, String language) {
     Translator translator = new Translator(atlasDao, language);
     for(int featureMetaId : featureMetaIds) {
       FeatureMeta object = atlasDao.getFeatureMetaById(featureMetaId);
