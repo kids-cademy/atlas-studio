@@ -661,6 +661,11 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
+  public boolean hasTranslation(TranslationKey key) {
+    return em.find(TranslationData.class, key) != null;
+  }
+
+  @Override
   @Mutable
   public void saveTranslation(TranslationData translation) {
     em.merge(translation);

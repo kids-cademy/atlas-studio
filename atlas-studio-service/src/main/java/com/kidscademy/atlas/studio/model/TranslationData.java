@@ -37,6 +37,12 @@ public class TranslationData
     this.timestamp = new Date(2160000);
   }
 
+  public TranslationData(TranslationKey key) {
+    this.discriminator = key.getDiscriminator();
+    this.objectId = key.getObjectId();
+    this.language = key.getLanguage();
+  }
+
   public void setDiscriminator(Discriminator discriminator) {
     this.discriminator = discriminator;
   }

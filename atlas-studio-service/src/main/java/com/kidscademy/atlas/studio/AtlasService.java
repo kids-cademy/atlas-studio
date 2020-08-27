@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.kidscademy.atlas.studio.dto.AtlasObjectTranslation;
+import com.kidscademy.atlas.studio.dto.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.AtlasObjectTranslate;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
-import com.kidscademy.atlas.studio.model.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
@@ -275,11 +275,11 @@ public interface AtlasService
 
   Feature updateFeatureDisplay(Feature feature);
 
-  AtlasObjectTranslate getAtlasObjectTranslate(int objectId, String language);
+  AtlasObjectTranslation getAtlasObjectTranslate(int objectId, String language);
 
-  void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslate translate);
+  void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslation translate);
 
-  AtlasObjectTranslate translateAtlasObject(int objectId, String language);
+  AtlasObjectTranslation translateAtlasObject(int objectId, String language);
   
   List<FeatureMetaTranslation> getFeatureMetaTranslations(String search, String language);
   

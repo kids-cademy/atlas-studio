@@ -1,9 +1,13 @@
-package com.kidscademy.atlas.studio.model;
+package com.kidscademy.atlas.studio.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtlasObjectTranslate
+import com.kidscademy.atlas.studio.model.AtlasObject;
+import com.kidscademy.atlas.studio.model.Fact;
+import com.kidscademy.atlas.studio.model.Translator;
+
+public class AtlasObjectTranslation
 {
   private String display;
   private List<String> aliases;
@@ -17,11 +21,11 @@ public class AtlasObjectTranslate
   
   private List<Fact> facts;
 
-  public AtlasObjectTranslate() {
+  public AtlasObjectTranslation() {
 
   }
 
-  public AtlasObjectTranslate(AtlasObject object, Translator translator) {
+  public AtlasObjectTranslation(AtlasObject object, Translator translator) {
     this.display = translator.getAtlasObjectDisplay(object.getId());
     this.aliases = translator.getAtlasObjectAliases(object.getId());
     this.definition = translator.getAtlasObjectDefinition(object.getId());

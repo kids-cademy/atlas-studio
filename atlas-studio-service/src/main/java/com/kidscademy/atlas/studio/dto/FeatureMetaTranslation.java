@@ -1,4 +1,6 @@
-package com.kidscademy.atlas.studio.model;
+package com.kidscademy.atlas.studio.dto;
+
+import com.kidscademy.atlas.studio.model.FeatureMeta;
 
 public class FeatureMetaTranslation
 {

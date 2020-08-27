@@ -13,28 +13,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.cloud.translate.Translate;
-import com.google.cloud.translate.Translate.TranslateOption;
-import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
 import com.kidscademy.atlas.studio.AtlasService;
 import com.kidscademy.atlas.studio.BusinessRules;
-import com.kidscademy.atlas.studio.CT;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.dto.AtlasObjectTranslation;
+import com.kidscademy.atlas.studio.dto.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasLinks;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.AtlasObjectTranslate;
 import com.kidscademy.atlas.studio.model.AtlasRelated;
 import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.Fact;
 import com.kidscademy.atlas.studio.model.Feature;
 import com.kidscademy.atlas.studio.model.FeatureMeta;
-import com.kidscademy.atlas.studio.model.FeatureMetaTranslation;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.LinkSource;
@@ -85,8 +80,6 @@ public class AtlasServiceImpl implements AtlasService
   private final ImageProcessor imageProcessor;
   private final BusinessRules businessRules;
 
-  private final Translate translate;
-
   private KeywordTree<KeywordIndex<Integer>> index;
 
   public AtlasServiceImpl(AppContext context) throws IOException {
@@ -110,12 +103,6 @@ public class AtlasServiceImpl implements AtlasService
     }
 
     this.index = new KeywordTree<>(searchIndex);
-
-    // google translate client library loads API KEY from system property GOOGLE_API_KEY
-    if(CT.gooleApiKey() != null) {
-      System.setProperty("GOOGLE_API_KEY", CT.gooleApiKey());
-    }
-    this.translate = TranslateOptions.getDefaultInstance().getService();
   }
 
   @Override
@@ -817,14 +804,14 @@ public class AtlasServiceImpl implements AtlasService
   }
 
   @Override
-  public AtlasObjectTranslate getAtlasObjectTranslate(int objectId, String language) {
+  public AtlasObjectTranslation getAtlasObjectTranslate(int objectId, String language) {
     AtlasObject object = atlasDao.getAtlasObject(objectId);
     Translator translator = new Translator(atlasDao, language);
-    return new AtlasObjectTranslate(object, translator);
+    return new AtlasObjectTranslation(object, translator);
   }
 
   @Override
-  public void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslate translate) {
+  public void saveAtlasObjectTranslate(int objectId, String language, AtlasObjectTranslation translate) {
     Translator translator = new Translator(atlasDao, language);
     translator.saveAtlasObjectDisplay(objectId, translate.getDisplay());
     translator.saveAtlasObjectAliases(objectId, translate.getAliases());
@@ -839,22 +826,22 @@ public class AtlasServiceImpl implements AtlasService
   }
 
   @Override
-  public AtlasObjectTranslate translateAtlasObject(int objectId, String language) {
+  public AtlasObjectTranslation translateAtlasObject(int objectId, String language) {
     AtlasObject object = atlasDao.getAtlasObject(objectId);
     Translator translator = new Translator(atlasDao, language);
 
-    translator.saveAtlasObjectDisplay(objectId, translate(language, object.getDisplay(), translator.getAtlasObjectDisplay(objectId)));
-    translator.saveAtlasObjectAliases(objectId, translate(language, object.getAliases(), translator.getAtlasObjectAliases(objectId)));
-    translator.saveAtlasObjectDefinition(objectId, translate(language, object.getDefinition(), translator.getAtlasObjectDefinition(objectId)));
-    translator.saveAtlasObjectDescription(objectId, translate(language, object.getDescription(), translator.getAtlasObjectDescription(objectId)));
-    translator.saveAtlasObjectSampleTitle(objectId, translate(language, object.getSampleTitle(), translator.getAtlasObjectSampleTitle(objectId)));
+    translator.translateAtlasObjectDisplay(objectId, object.getDisplay());
+    translator.translateAtlasObjectAliases(objectId, object.getAliases());
+    translator.translateAtlasObjectDefinition(objectId, object.getDefinition());
+    translator.translateAtlasObjectDescription(objectId, object.getDescription());
+    translator.translateAtlasObjectSampleTitle(objectId, object.getSampleTitle());
 
     for(Fact fact : object.getFacts()) {
-      translator.saveFactTitle(fact.getId(), translate(language, fact.getTitle(), translator.getFactTitle(fact.getId())));
-      translator.saveFactText(fact.getId(), translate(language, fact.getText(), translator.getFactText(fact.getId())));
+      translator.translateFactTitle(fact.getId(), fact.getTitle());
+      translator.translateFactText(fact.getId(), fact.getText());
     }
 
-    return new AtlasObjectTranslate(object, translator);
+    return new AtlasObjectTranslation(object, translator);
   }
 
   @Override
@@ -873,8 +860,8 @@ public class AtlasServiceImpl implements AtlasService
   public void translateAllFeaturesMetaDisplay(List<Integer> featureMetaIds, String language) {
     Translator translator = new Translator(atlasDao, language);
     for(int featureMetaId : featureMetaIds) {
-      FeatureMeta object = atlasDao.getFeatureMetaById(featureMetaId);
-      translator.saveFeatureMetaDisplay(featureMetaId, translate(language, object.getDisplay(), translator.getFeatureMetaDisplay(featureMetaId)));
+      FeatureMeta featureMeta = atlasDao.getFeatureMetaById(featureMetaId);
+      translator.translateFeatureMetaDisplay(featureMeta.getId(), featureMeta.getDisplay());
     }
   }
 
@@ -884,20 +871,5 @@ public class AtlasServiceImpl implements AtlasService
     for(FeatureMetaTranslation translation : translations) {
       translator.saveFeatureMetaDisplay(translation.getId(), translation.getTranslation());
     }
-  }
-
-  private List<String> translate(String language, List<String> text, List<String> translated) {
-    return Strings.split(translate(language, Strings.join(text, ','), Strings.join(translated, ',')), ',');
-  }
-
-  private String translate(String language, String text, String translated) {
-    if(text == null) {
-      return null;
-    }
-    if(translated != null) {
-      return translated;
-    }
-    Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language));
-    return translation.getTranslatedText();
   }
 }

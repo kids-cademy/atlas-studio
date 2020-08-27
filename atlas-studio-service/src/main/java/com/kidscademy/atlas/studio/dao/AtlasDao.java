@@ -239,6 +239,8 @@ public interface AtlasDao
   TranslationData getTranslationData(TranslationKey key);
 
   String getTranslation(TranslationKey key);
+  
+  boolean hasTranslation(TranslationKey key);
 
   void saveTranslation(TranslationData translation);
 

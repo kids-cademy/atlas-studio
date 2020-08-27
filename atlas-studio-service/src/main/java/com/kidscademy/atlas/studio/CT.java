@@ -1,11 +1,15 @@
 package com.kidscademy.atlas.studio;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import js.tiny.container.annotation.ContextParam;
 
 public class CT
 {
+  public static final List<String> EMPTY_STRINGS = new ArrayList<>(0);
+
   @ContextParam("objects.repository.path")
   private static File REPOSITORY_DIR;
 
