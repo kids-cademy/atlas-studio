@@ -12,11 +12,11 @@ import java.util.Map;
 
 import com.kidscademy.atlas.studio.Application;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.impl.Translator;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Image;
 import com.kidscademy.atlas.studio.model.Theme;
-import com.kidscademy.atlas.studio.model.Translator;
 import com.kidscademy.atlas.studio.search.SearchIndexProcessor;
 import com.kidscademy.atlas.studio.tool.ConvertProcess;
 import com.kidscademy.atlas.studio.tool.IdentifyProcess;

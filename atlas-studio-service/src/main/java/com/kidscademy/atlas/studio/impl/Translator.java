@@ -1,4 +1,4 @@
-package com.kidscademy.atlas.studio.model;
+package com.kidscademy.atlas.studio.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -9,12 +9,24 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import com.kidscademy.atlas.studio.CT;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
+import com.kidscademy.atlas.studio.model.Feature;
+import com.kidscademy.atlas.studio.model.TranslationData;
+import com.kidscademy.atlas.studio.model.TranslationKey;
 import com.kidscademy.atlas.studio.model.TranslationKey.Discriminator;
+import com.kidscademy.atlas.studio.util.Strings;
 
-import js.util.Strings;
+import js.log.Log;
+import js.log.LogFactory;
 
+/**
+ * Container for translation related logic.
+ * 
+ * @author Iulian Rotaru
+ */
 public class Translator
 {
+  private static final Log log = LogFactory.getLog(Translator.class);
+
   public static final String DEFAULT_LANGUAGE = "EN";
 
   public static Translator getDefaultInstance() {
@@ -90,7 +102,7 @@ public class Translator
       saveTranslation(key, translate(Strings.join(aliases, ',')));
     }
   }
-  
+
   public void saveAtlasObjectAliases(int objectId, List<String> aliases) {
     saveTranslation(Discriminator.OBJECT_ALIASES, objectId, language, Strings.join(aliases, ','));
   }
@@ -255,6 +267,7 @@ public class Translator
     if(text == null) {
       return null;
     }
+    log.debug("Invoke translation service to |%s| with |%s|.", language, Strings.ellipsis(text, 40));
     Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language));
     return translation.getTranslatedText();
   }

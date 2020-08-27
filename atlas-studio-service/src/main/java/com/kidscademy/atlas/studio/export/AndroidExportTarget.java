@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.kidscademy.atlas.studio.impl.Translator;
 import com.kidscademy.atlas.studio.model.AndroidProject;
 import com.kidscademy.atlas.studio.model.AtlasObject;
-import com.kidscademy.atlas.studio.model.Translator;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
 
 import js.json.Json;

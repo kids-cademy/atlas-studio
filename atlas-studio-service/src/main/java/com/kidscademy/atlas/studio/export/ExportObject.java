@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kidscademy.atlas.studio.impl.Translator;
 import com.kidscademy.atlas.studio.model.AtlasItem;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.ConservationStatus;
@@ -18,7 +19,6 @@ import com.kidscademy.atlas.studio.model.Link;
 import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.Theme;
-import com.kidscademy.atlas.studio.model.Translator;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;

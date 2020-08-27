@@ -3,9 +3,9 @@ package com.kidscademy.atlas.studio.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kidscademy.atlas.studio.impl.Translator;
 import com.kidscademy.atlas.studio.model.AtlasObject;
 import com.kidscademy.atlas.studio.model.Fact;
-import com.kidscademy.atlas.studio.model.Translator;
 
 public class AtlasObjectTranslation
 {
