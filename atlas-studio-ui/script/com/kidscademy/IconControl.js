@@ -9,9 +9,8 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         this._image = {};
 
         this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
-        this._imageEditor.config({
-            aspectRatio: 1
-        });
+        this._imageEditor.config({ aspectRatio: 1 });
+		this._imageEditor.on("image-paste", this._onImagePaste, this);
 
         this._metaForm = this.getByClass(com.kidscademy.FormData);
 
@@ -98,6 +97,22 @@ com.kidscademy.IconControl = class extends js.dom.Control {
 
         AtlasService.uploadImageBySource(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
     }
+
+	_onImagePaste(imageFile) {
+        $assert(this._imageKind != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object class.");
+        $assert(this._object != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object.");
+		if (!this._metaForm.isValid()) {
+			return;
+		}
+
+		const formData = this._metaForm.getFormData();
+		formData.append("image-key", "ICON");
+        formData.append("image-kind", this._imageKind);
+        formData.append("object-id", this._object.id);
+		formData.append("media-file", imageFile);
+
+        AtlasService.uploadImage(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
+	}
 
     _onMetaForm() {
         this._metaForm.show(!this._metaForm.isVisible());
