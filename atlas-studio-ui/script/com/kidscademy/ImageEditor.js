@@ -47,6 +47,8 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
         this._actions.showOnly("add");
+        // register event for hidden input of type file to trigger image loading from host OS
+        this._actions.getByName("file-upload").on("change", this._onFileUpload, this);
 
         /**
          * Optional action arguments form.
@@ -55,7 +57,7 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         this._argsForm = null;
 
         this._events = this.getCustomEvents();
-        this._events.register("image-paste");
+        this._events.register("image-add", "image-upload", "image-save", "image-link", "image-meta", "image-remove");
     }
 
     config(config) {
@@ -77,20 +79,11 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         if (image != null) {
             this._preview.setImage(image);
         }
-        this._ownerDoc.on("paste", this._onPaste, this);
-    }
-
-    _onPaste(ev) {
-        const file = ev.clipboardData("image");
-        if (file == null) {
-            return;
-        }
-        ev.halt();
-        this._events.fire("image-paste", file);
+        this._ownerDoc.on("paste", this._onImagePaste, this);
     }
 
     close(image = null) {
-        this._ownerDoc.un("paste", this._onPaste);
+        this._ownerDoc.un("paste", this._onImagePaste);
         this._callback(image);
         this._callback = null;
         this._actions.showOnly("add");
@@ -109,6 +102,47 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
 
     isVisible() {
         return this._editor.isVisible();
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // IMAGE LIFE CYCLE HANDLERS
+
+    _onAdd() {
+		this._actions.showOnly("image-upload", "image-link", "close");
+        this._events.fire("image-add");
+    }
+
+    _onImageUpload(ev) {
+        this._events.fire("image-upload", ev);
+		this._actions.showOnly("add");
+    }
+
+    _onFileUpload(ev) {
+        const file = ev.target._node.files[0];
+        if (file) {
+            ev.halt();
+            this._events.fire("image-save", file);
+        }
+    }
+
+    _onImagePaste(ev) {
+        const file = ev.clipboardData("image");
+        if (file) {
+            ev.halt();
+            this._events.fire("image-save", file);
+        }
+    }
+
+    _onImageLink() {
+        this._events.fire("image-link");
+    }
+
+    _onMetaForm() {
+        this._events.fire("image-meta");
+    }
+
+    _onImageRemove() {
+        this._events.fire("image-remove");
     }
 
     // --------------------------------------------------------------------------------------------

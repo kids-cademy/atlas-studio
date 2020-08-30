@@ -5,6 +5,12 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		super(ownerDoc, node);
 
 		/**
+		 * Collection theme used to select images aspect ratio.
+		 * @type {String}
+		 */
+		this._theme = null;
+
+		/**
 		 * Custom list control for images.
 		 * @type {com.kidscademy.form.ImagesControl}
 		 */
@@ -23,12 +29,12 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		 * @type {com.kidscademy.ImageEditor}
 		 */
 		this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
-		this._imageEditor.on("image-paste", this._onImagePaste, this);
-
-		this._actions = this._imageEditor.getActions().bind(this);
-		this._actions.showOnly("add");
-		// register event for hidden input of type file to trigger image loading from host OS
-		this._actions.getByName("file-upload").on("change", this._onUploadFile, this);
+		this._imageEditor.on("image-add", this._onImageAdd, this);
+		this._imageEditor.on("image-upload", this._onImageUpload, this);
+		this._imageEditor.on("image-save", this._onImageSave, this);
+		this._imageEditor.on("image-link", this._onImageLink, this);
+		this._imageEditor.on("image-meta", this._onImageMeta, this);
+		this._imageEditor.on("image-remove", this._onImageRemove, this);
 	}
 
 	onCreate(formPage) {
@@ -37,10 +43,9 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	}
 
 	// --------------------------------------------------------------------------------------------
-	// ACTION HANDLERS
+	// IMAGE EDITOR EVENT HANDLERS
 
-	_onAdd() {
-		this._actions.showOnly("image-upload", "image-link", "close");
+	_onImageAdd() {
 		this._openImageEditor();
 		this._metaForm.open();
 		this._metaForm.enable("image-key");
@@ -48,12 +53,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	}
 
 	_onImageUpload(ev) {
-		const object = this._formPage.getObject();
-		if (!object.name) {
-			js.ua.System.alert("Missing object name.");
-			return;
-		}
-
 		if (!this._metaForm.isValid()) {
 			// stop bubbling and default behavior for click event
 			// by doing this, 'change' event for inner file input is not longer fired
@@ -67,38 +66,9 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		// and next _onUploadFile is executed
 
 		this._metaForm.hide();
-		this._actions.showOnly("add");
 	}
 
-	_onUploadFile(ev) {
-		const formData = this._metaForm.getFormData();
-		const object = this._formPage.getObject();
-
-		formData.append("image-kind", "OBJECT");
-		formData.append("object-id", object.id);
-		formData.append("media-file", ev.target._node.files[0]);
-
-		// upload while image editor is opened is used to actually replace current image
-		const method = this._imageEditor.isVisible() ? "replaceImage" : "uploadImage";
-		AtlasService[method](formData, image => this._openImageEditor(image));
-	}
-
-	_onImageLink(ev) {
-		if (!this._metaForm.mandatory("source").isValid()) {
-			ev.halt();
-			return;
-		}
-		const formData = this._metaForm.getFormData();
-		const object = this._formPage.getObject();
-
-		formData.append("image-kind", "OBJECT");
-		formData.append("object-id", object.id);
-
-		const method = this._imageEditor.isVisible() ? "replaceImageBySource" : "uploadImageBySource";
-		AtlasService[method](formData, image => this._openImageEditor(image));
-	}
-
-	_onImagePaste(imageFile) {
+	_onImageSave(imageFile) {
 		if (!this._metaForm.isValid()) {
 			return;
 		}
@@ -114,7 +84,21 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		AtlasService[method](formData, image => this._openImageEditor(image));
 	}
 
-	_onMetaForm() {
+	_onImageLink() {
+		if (!this._metaForm.mandatory("source").isValid()) {
+			return;
+		}
+		const formData = this._metaForm.getFormData();
+		const object = this._formPage.getObject();
+
+		formData.append("image-kind", "OBJECT");
+		formData.append("object-id", object.id);
+
+		const method = this._imageEditor.isVisible() ? "replaceImageBySource" : "uploadImageBySource";
+		AtlasService[method](formData, image => this._openImageEditor(image));
+	}
+
+	_onImageMeta() {
 		this._metaForm.show(!this._metaForm.isVisible());
 	}
 
@@ -132,7 +116,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	// --------------------------------------------------------------------------------------------
 
 	_onImageSelected(image) {
-		this._actions.show("image-remove");
 		this._metaForm.disable("image-key");
 		this._metaForm.setObject(image);
 		this._openImageEditor(image);
@@ -172,7 +155,6 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 	}
 
 	_onEditorDone(image) {
-		this._actions.showOnly("add");
 		this._metaForm.hide();
 		if (image != null) {
 			image.imageKey = this._metaForm.getValue("image-key");

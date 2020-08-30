@@ -8,20 +8,18 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         this._imageKind = null;
         this._image = {};
 
-        this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
-        this._imageEditor.config({ aspectRatio: 1 });
-		this._imageEditor.on("image-paste", this._onImagePaste, this);
-
-        this._metaForm = this.getByClass(com.kidscademy.FormData);
-
         this._imageView = this.getByClass(js.dom.ImageControl);
         this._imageView.on("click", this._onImageClick, this);
 
-        this._actions = this._imageEditor.getActions().bind(this);
-        this._actions.disable("image-remove");
-        this._actions.showOnly("add");
-        // register event for hidden input of type file to trigger image loading from host OS
-        this._actions.getByName("file-upload").on("change", this._onUploadFile, this);
+        this._metaForm = this.getByClass(com.kidscademy.FormData);
+
+        this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
+        this._imageEditor.config({ aspectRatio: 1 });
+        this._imageEditor.on("image-add", this._onImageAdd, this);
+        this._imageEditor.on("image-upload", this._onImageUpload, this);
+        this._imageEditor.on("image-save", this._onImageSave, this);
+        this._imageEditor.on("image-link", this._onImageLink, this);
+        this._imageEditor.on("image-meta", this._onImageMeta, this);
     }
 
     config(config) {
@@ -45,10 +43,9 @@ com.kidscademy.IconControl = class extends js.dom.Control {
     }
 
     // --------------------------------------------------------------------------------------------
-    // ACTION HANDLERS
+    // IMAGE EDITOR EVENT HANDLERS
 
-    _onAdd() {
-        this._actions.showOnly("image-upload", "image-link", "close");
+    _onImageAdd() {
         this._imageEditor.open(this._onEditorDone.bind(this));
         this._metaForm.open();
     }
@@ -69,15 +66,19 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         this._metaForm.hide();
     }
 
-    _onUploadFile(ev) {
-        $assert(this._imageKind != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object class.");
-        $assert(this._object != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object.");
+    _onImageSave(imageFile) {
+        $assert(this._imageKind != null, "com.kidscademy.IconControl#onImageSave", "Null parent object class.");
+        $assert(this._object != null, "com.kidscademy.IconControl#onImageSave", "Null parent object.");
+
+        if (!this._metaForm.isValid()) {
+            return;
+        }
 
         const formData = this._metaForm.getFormData();
         formData.append("image-key", "ICON");
         formData.append("image-kind", this._imageKind);
         formData.append("object-id", this._object.id);
-        formData.append("media-file", ev.target._node.files[0]);
+        formData.append("media-file", imageFile);
 
         AtlasService.uploadImage(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
     }
@@ -87,9 +88,9 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         $assert(this._object != null, "com.kidscademy.IconControl#onImageLink", "Null parent object.");
 
         if (!this._metaForm.isValid()) {
-            ev.halt();
             return;
         }
+
         const formData = this._metaForm.getFormData();
         formData.append("image-key", "ICON");
         formData.append("image-kind", this._imageKind);
@@ -98,23 +99,7 @@ com.kidscademy.IconControl = class extends js.dom.Control {
         AtlasService.uploadImageBySource(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
     }
 
-	_onImagePaste(imageFile) {
-        $assert(this._imageKind != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object class.");
-        $assert(this._object != null, "com.kidscademy.IconControl#onUploadFile", "Null parent object.");
-		if (!this._metaForm.isValid()) {
-			return;
-		}
-
-		const formData = this._metaForm.getFormData();
-		formData.append("image-key", "ICON");
-        formData.append("image-kind", this._imageKind);
-        formData.append("object-id", this._object.id);
-		formData.append("media-file", imageFile);
-
-        AtlasService.uploadImage(formData, image => this._imageEditor.open(this._onEditorDone.bind(this), image));
-	}
-
-    _onMetaForm() {
+    _onImageMeta() {
         this._metaForm.show(!this._metaForm.isVisible());
     }
 
@@ -127,7 +112,6 @@ com.kidscademy.IconControl = class extends js.dom.Control {
     }
 
     _onEditorDone(image) {
-        this._actions.showOnly("add");
         this._metaForm.hide();
         if (image != null) {
             this._imageView.setValue(image.src);
