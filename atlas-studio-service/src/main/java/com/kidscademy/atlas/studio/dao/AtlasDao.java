@@ -162,6 +162,8 @@ public interface AtlasDao
 
   List<FeatureMeta> getFeaturesMeta();
 
+  List<FeatureMeta> searchFeaturesMeta(String search, List<Integer> excludes);
+
   List<FeatureMeta> searchFeaturesMeta(String search);
 
   List<FeatureMeta> getCollectionFeaturesMeta(int collectionId);

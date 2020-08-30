@@ -396,11 +396,8 @@ public class AtlasServiceImpl implements AtlasService
   }
 
   @Override
-  public List<FeatureMeta> getFeaturesMeta(String search) {
-    if(search != null) {
-      return atlasDao.searchFeaturesMeta(search);
-    }
-    return atlasDao.getFeaturesMeta();
+  public List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes) {
+    return atlasDao.searchFeaturesMeta(search, excludes);
   }
 
   @Override
@@ -845,7 +842,7 @@ public class AtlasServiceImpl implements AtlasService
 
   @Override
   public List<FeatureMetaTranslation> getFeatureMetaTranslations(String search, String language) {
-    List<FeatureMeta> featuresMeta = getFeaturesMeta(search);
+    List<FeatureMeta> featuresMeta = atlasDao.searchFeaturesMeta(search);
     List<FeatureMetaTranslation> translations = new ArrayList<>(featuresMeta.size());
 
     Translator translator = new Translator(atlasDao, language);

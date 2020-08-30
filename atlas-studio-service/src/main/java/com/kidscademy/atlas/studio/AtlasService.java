@@ -115,7 +115,7 @@ public interface AtlasService
    * @param excludes optional excludes list, empty if not used.
    * @return
    */
-  List<FeatureMeta> getFeaturesMeta(String search);
+  List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes);
 
   FeatureMeta saveFeatureMeta(FeatureMeta featureMeta);
 

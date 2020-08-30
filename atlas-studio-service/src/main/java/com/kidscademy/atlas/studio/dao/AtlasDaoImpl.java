@@ -367,7 +367,22 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
+  public List<FeatureMeta> searchFeaturesMeta(String search, List<Integer> excludes) {
+    if(excludes.isEmpty()) {
+      return searchFeaturesMeta(search);
+    }
+    if(search == null) {
+      return em.createQuery("select f from FeatureMeta f where f.id not in :excludes order by f.name", FeatureMeta.class).setParameter("excludes", excludes).getResultList();
+    }
+    search = Strings.concat('%', search, '%');
+    return em.createQuery("select f from FeatureMeta f where f.name like :search and f.id not in :excludes order by f.name", FeatureMeta.class).setParameter("search", search).setParameter("excludes", excludes).getResultList();
+  }
+
+  @Override
   public List<FeatureMeta> searchFeaturesMeta(String search) {
+    if(search == null) {
+      return getFeaturesMeta();
+    }
     search = Strings.concat('%', search, '%');
     return em.createQuery("select f from FeatureMeta f where f.name like :search order by f.name", FeatureMeta.class).setParameter("search", search).getResultList();
   }
