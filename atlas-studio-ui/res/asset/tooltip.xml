@@ -27,6 +27,7 @@
 	<graphic-upload>upload image from local storage</graphic-upload>
 	<graphic-search>search for object image</graphic-search>
 	<graphic-link>upload object image from internet</graphic-link>
+	<graphic-paste>paste image content from system clipboard</graphic-paste>
 	<graphic-clone-to-icon>clone selected image to object icon</graphic-clone-to-icon>
 	<graphic-form>toggle meta-data form</graphic-form>
 	<graphic-trim>trim unused space from image</graphic-trim>

@@ -53,6 +53,9 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
          * @type {com.kidscademy.FormData}
          */
         this._argsForm = null;
+
+        this._events = this.getCustomEvents();
+        this._events.register("image-paste");
     }
 
     config(config) {
@@ -74,9 +77,20 @@ com.kidscademy.ImageEditor = class extends js.dom.Element {
         if (image != null) {
             this._preview.setImage(image);
         }
+        this._ownerDoc.on("paste", this._onPaste, this);
+    }
+
+    _onPaste(ev) {
+        const file = ev.clipboardData("image");
+        if (file == null) {
+            return;
+        }
+        ev.halt();
+        this._events.fire("image-paste", file);
     }
 
     close(image = null) {
+        this._ownerDoc.un("paste", this._onPaste);
         this._callback(image);
         this._callback = null;
         this._actions.showOnly("add");

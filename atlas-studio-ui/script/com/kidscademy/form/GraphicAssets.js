@@ -23,6 +23,7 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		 * @type {com.kidscademy.ImageEditor}
 		 */
 		this._imageEditor = this.getByClass(com.kidscademy.ImageEditor);
+		this._imageEditor.on("image-paste", this._onImagePaste, this);
 
 		this._actions = this._imageEditor.getActions().bind(this);
 		this._actions.showOnly("add");
@@ -94,6 +95,22 @@ com.kidscademy.form.GraphicAssets = class extends com.kidscademy.form.FormContro
 		formData.append("object-id", object.id);
 
 		const method = this._imageEditor.isVisible() ? "replaceImageBySource" : "uploadImageBySource";
+		AtlasService[method](formData, image => this._openImageEditor(image));
+	}
+
+	_onImagePaste(imageFile) {
+		if (!this._metaForm.isValid()) {
+			return;
+		}
+
+		const formData = this._metaForm.getFormData();
+		const object = this._formPage.getObject();
+
+		formData.append("image-kind", "OBJECT");
+		formData.append("object-id", object.id);
+		formData.append("media-file", imageFile);
+
+		const method = this._imageEditor.isVisible() ? "replaceImage" : "uploadImage";
 		AtlasService[method](formData, image => this._openImageEditor(image));
 	}
 
