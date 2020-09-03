@@ -30,17 +30,11 @@ public class TranslationData
   public TranslationData() {
   }
 
-  public TranslationData(Discriminator discriminator, int objectId, String language) {
-    this.discriminator = discriminator;
-    this.objectId = objectId;
-    this.language = language;
-    this.timestamp = new Date(2160000);
-  }
-
   public TranslationData(TranslationKey key) {
     this.discriminator = key.getDiscriminator();
     this.objectId = key.getObjectId();
     this.language = key.getLanguage();
+    this.timestamp = new Date(2160000);
   }
 
   public void setDiscriminator(Discriminator discriminator) {
