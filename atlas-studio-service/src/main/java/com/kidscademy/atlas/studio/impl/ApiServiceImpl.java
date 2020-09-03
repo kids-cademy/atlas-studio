@@ -378,7 +378,7 @@ public class ApiServiceImpl implements ApiService
     List<Taxon> taxonomy = new ArrayList<>();
     for(TaxonMeta taxonMeta : taxonomyMeta) {
       for(Map.Entry<String, String> taxon : taxonomyValues.entrySet()) {
-        if(!taxonMeta.getName().equals(taxon.getKey())) {
+        if(!taxonMeta.getUnit().equals(taxon.getKey())) {
           continue;
         }
         if(taxonMeta.getValues() != null) {

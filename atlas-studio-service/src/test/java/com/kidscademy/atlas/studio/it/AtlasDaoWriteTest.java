@@ -48,6 +48,7 @@ import com.kidscademy.atlas.studio.model.Region;
 import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.model.Theme;
 import com.kidscademy.atlas.studio.util.Files;
 
@@ -92,9 +93,9 @@ public class AtlasDaoWriteTest
     collection.setDescriptionMeta(descriptionMeta);
 
     List<TaxonMeta> taxonomyMeta = new ArrayList<>();
-    taxonomyMeta.add(new TaxonMeta("kingdom", "Animalia"));
-    taxonomyMeta.add(new TaxonMeta("phylum", "Chordata"));
-    taxonomyMeta.add(new TaxonMeta("class"));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("kingdom"), "Animalia"));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("phylum"), "Chordata"));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("class")));
     collection.setTaxonomyMeta(taxonomyMeta);
 
     List<FeatureMeta> featuresMeta = new ArrayList<>();
@@ -128,15 +129,15 @@ public class AtlasDaoWriteTest
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(3));
 
-    assertThat(taxonomyMeta.get(0).getName(), equalTo("kingdom"));
+    assertThat(taxonomyMeta.get(0).getUnit(), equalTo("kingdom"));
     assertThat(taxonomyMeta.get(0).getDisplay(), equalTo("Kingdom"));
     assertThat(taxonomyMeta.get(0).getValues(), equalTo("Animalia"));
 
-    assertThat(taxonomyMeta.get(1).getName(), equalTo("phylum"));
+    assertThat(taxonomyMeta.get(1).getUnit(), equalTo("phylum"));
     assertThat(taxonomyMeta.get(1).getDisplay(), equalTo("Phylum"));
     assertThat(taxonomyMeta.get(1).getValues(), equalTo("Chordata"));
 
-    assertThat(taxonomyMeta.get(2).getName(), equalTo("class"));
+    assertThat(taxonomyMeta.get(2).getUnit(), equalTo("class"));
     assertThat(taxonomyMeta.get(2).getDisplay(), equalTo("Class"));
     assertThat(taxonomyMeta.get(2).getValues(), nullValue());
 
@@ -183,9 +184,9 @@ public class AtlasDaoWriteTest
     collection.setDescriptionMeta(descriptionMeta);
 
     List<TaxonMeta> taxonomyMeta = new ArrayList<>();
-    taxonomyMeta.add(new TaxonMeta("kingdom", "Animalia"));
-    taxonomyMeta.add(new TaxonMeta("phylum", "Chordata"));
-    taxonomyMeta.add(new TaxonMeta("class"));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("kingdom"), "Animalia"));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("phylum"), "Chordata"));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("class")));
     collection.setTaxonomyMeta(taxonomyMeta);
 
     List<FeatureMeta> featuresMeta = new ArrayList<>();

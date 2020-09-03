@@ -39,7 +39,7 @@ public class Taxon implements Displayable
   }
 
   public String getName() {
-    return meta.getName();
+    return meta.getUnit();
   }
 
   public String getDisplay() {
@@ -55,7 +55,7 @@ public class Taxon implements Displayable
   }
 
   public boolean isWildcard() {
-    return meta.getName() == null;
+    return meta.getUnit() == null;
   }
 
   @Override
@@ -65,6 +65,6 @@ public class Taxon implements Displayable
 
   @Override
   public String toString() {
-    return Strings.toString(meta.getName(), value);
+    return Strings.toString(meta.getUnit(), value);
   }
 }

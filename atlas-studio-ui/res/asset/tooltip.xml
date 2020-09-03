@@ -72,6 +72,7 @@
 	<taxonomy-meta-clone>clone taxonomy meta from another collection</taxonomy-meta-clone>
 	<taxonomy-meta-done>accept taxonomy meta edits</taxonomy-meta-done>
 	<taxonomy-meta-remove>remove selected taxon meta value</taxonomy-meta-remove>
+	<taxonomy-meta-translate>translate taxonomy meta display</taxonomy-meta-translate>
 	<taxonomy-meta-remove-all>remove entire taxonomy meta</taxonomy-meta-remove-all>
 	<taxonomy-meta-close>close taxon meta editor without saving</taxonomy-meta-close>
 

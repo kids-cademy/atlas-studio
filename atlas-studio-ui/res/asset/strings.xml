@@ -38,6 +38,7 @@
 	<identity>Identity</identity>
 	<taxonomy>Taxonomy</taxonomy>
 	<taxonomy-meta>Taxonomy Meta</taxonomy-meta>
+	<taxonomy-meta-translate>Translate Taxonomy Meta</taxonomy-meta-translate>
 	<definition>Definition</definition>
 	<description>Description</description>
 	<description-meta>Description Meta</description-meta>

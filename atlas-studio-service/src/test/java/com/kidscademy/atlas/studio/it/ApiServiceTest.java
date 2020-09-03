@@ -33,6 +33,7 @@ import com.kidscademy.atlas.studio.model.DescriptionMeta;
 import com.kidscademy.atlas.studio.model.ExternalSource;
 import com.kidscademy.atlas.studio.model.LinkSource;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 
 import js.rmi.BusinessException;
 import js.tiny.container.core.AppContext;
@@ -142,15 +143,15 @@ public class ApiServiceTest {
 	return meta;
     }
 
-    private static List<TaxonMeta> taxonomyMeta() {
+    private List<TaxonMeta> taxonomyMeta() {
 	List<TaxonMeta> meta = new ArrayList<>();
-	meta.add(new TaxonMeta("kingdom"));
-	meta.add(new TaxonMeta("phylum"));
-	meta.add(new TaxonMeta("class"));
-	meta.add(new TaxonMeta("order"));
-	meta.add(new TaxonMeta("family"));
-	meta.add(new TaxonMeta("genus"));
-	meta.add(new TaxonMeta("species"));
+	meta.add(new TaxonMeta(new TaxonUnit("kingdom")));
+	meta.add(new TaxonMeta(new TaxonUnit("phylum")));
+	meta.add(new TaxonMeta(new TaxonUnit("class")));
+	meta.add(new TaxonMeta(new TaxonUnit("order")));
+	meta.add(new TaxonMeta(new TaxonUnit("family")));
+	meta.add(new TaxonMeta(new TaxonUnit("genus")));
+	meta.add(new TaxonMeta(new TaxonUnit("species")));
 	return meta;
     }
 }

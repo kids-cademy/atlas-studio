@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import js.tiny.container.annotation.TestConstructor;
-import js.util.Strings;
 
 @Entity
 public class TaxonMeta
@@ -16,8 +15,7 @@ public class TaxonMeta
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  private String name;
-  private String display;
+  private TaxonUnit unit;
 
   /**
    * Comma separated values allowed for this taxon or null if input is not constrained. User interface should use appropriate widgets: a select for list of
@@ -30,15 +28,13 @@ public class TaxonMeta
   }
 
   @TestConstructor
-  public TaxonMeta(String name) {
-    this.name = name;
-    this.display = Strings.toTitleCase(name);
+  public TaxonMeta(TaxonUnit unit) {
+    this.unit = unit;
   }
 
   @TestConstructor
-  public TaxonMeta(String name, String values) {
-    this.name = name;
-    this.display = Strings.toTitleCase(name);
+  public TaxonMeta(TaxonUnit unit, String values) {
+    this.unit = unit;
     this.values = values;
   }
 
@@ -46,12 +42,12 @@ public class TaxonMeta
     return id;
   }
 
-  public String getName() {
-    return name;
+  public String getUnit() {
+    return unit.getName();
   }
 
   public String getDisplay() {
-    return display;
+    return unit.getDisplay();
   }
 
   public String getValues() {

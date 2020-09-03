@@ -16,7 +16,7 @@ com.kidscademy.collection.TaxonomyMetaControl = class extends js.dom.Control {
 
         this._itemSelect = WinMain.page.getByClass(com.kidscademy.ItemSelect);
         this._actions = this.getByClass(com.kidscademy.Actions).bind(this);
-        this._actions.showOnly("add", "clone", "remove-all");
+        this._actions.showOnly("add", "clone", "translate", "remove-all");
     }
 
     setValue(taxonomyMeta) {

@@ -34,6 +34,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.model.TranslationData;
 import com.kidscademy.atlas.studio.model.TranslationKey;
 
@@ -193,7 +194,7 @@ public class AtlasDaoImpl implements AtlasDao
 
   @Override
   public List<AtlasItem> getCollectionItemsByTaxon(int collectionId, Taxon taxon) {
-    List<Integer> ids = em.createQuery("select o.id from AtlasObject o join o.taxonomy t where o.collection.id=:collectionId and t.meta.name=:taxonName and t.value=:taxonValue", Integer.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxon.getName()).setParameter("taxonValue", taxon.getValue()).getResultList();
+    List<Integer> ids = em.createQuery("select o.id from AtlasObject o join o.taxonomy t join t.meta m where o.collection.id=:collectionId and m.unit.name=:taxonName and t.value=:taxonValue", Integer.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxon.getName()).setParameter("taxonValue", taxon.getValue()).getResultList();
     return getAtlasItems(ids);
   }
 
@@ -415,7 +416,7 @@ public class AtlasDaoImpl implements AtlasDao
 
   @Override
   public TaxonMeta getTaxonMetaByName(int collectionId, String taxonName) throws NoResultException {
-    return em.createQuery("select t from AtlasCollection c join c.taxonomyMeta t where c.id=:collectionId and t.name=:taxonName", TaxonMeta.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxonName).getSingleResult();
+    return em.createQuery("select t from AtlasCollection c join c.taxonomyMeta t join t.unit u where c.id=:collectionId and u.name=:taxonName", TaxonMeta.class).setParameter("collectionId", collectionId).setParameter("taxonName", taxonName).getSingleResult();
   }
 
   @Override
@@ -704,5 +705,10 @@ public class AtlasDaoImpl implements AtlasDao
   @Mutable
   public void saveFeature(Feature feature) {
     em.merge(feature);
+  }
+
+  @Override
+  public TaxonUnit getTaxonUnit(String name) {
+    return em.find(TaxonUnit.class, name);
   }
 }

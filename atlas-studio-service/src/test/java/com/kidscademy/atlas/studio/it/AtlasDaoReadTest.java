@@ -48,6 +48,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.model.TranslationKey;
 import com.kidscademy.atlas.studio.model.TranslationKey.Discriminator;
 import com.kidscademy.atlas.studio.util.Files;
@@ -166,7 +167,7 @@ public class AtlasDaoReadTest
 
   @Test
   public void getCollectionItemsByTaxon() {
-    Taxon taxon = new Taxon(new TaxonMeta("Family"), "WOODWIND");
+    Taxon taxon = new Taxon(new TaxonMeta(new TaxonUnit("Family")), "WOODWIND");
     List<AtlasItem> items = dao.getCollectionItemsByTaxon(1, taxon);
     assertThat(items, notNullValue());
     assertThat(items, hasSize(1));
@@ -230,10 +231,10 @@ public class AtlasDaoReadTest
 
     assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
     assertThat(object.getCollection().getTaxonomyMeta(), hasSize(2));
-    assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("group"));
+    assertThat(object.getCollection().getTaxonomyMeta().get(0).getUnit(), equalTo("group"));
     assertThat(object.getCollection().getTaxonomyMeta().get(0).getDisplay(), equalTo("Group"));
     assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(), nullValue());
-    assertThat(object.getCollection().getTaxonomyMeta().get(1).getName(), equalTo("family"));
+    assertThat(object.getCollection().getTaxonomyMeta().get(1).getUnit(), equalTo("family"));
     assertThat(object.getCollection().getTaxonomyMeta().get(1).getDisplay(), equalTo("Family"));
     assertThat(object.getCollection().getTaxonomyMeta().get(1).getValues(), equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
 
@@ -547,11 +548,11 @@ public class AtlasDaoReadTest
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(2));
 
-    assertThat(taxonomyMeta.get(0).getName(), equalTo("group"));
+    assertThat(taxonomyMeta.get(0).getUnit(), equalTo("group"));
     assertThat(taxonomyMeta.get(0).getDisplay(), equalTo("Group"));
     assertThat(taxonomyMeta.get(0).getValues(), nullValue());
 
-    assertThat(taxonomyMeta.get(1).getName(), equalTo("family"));
+    assertThat(taxonomyMeta.get(1).getUnit(), equalTo("family"));
     assertThat(taxonomyMeta.get(1).getDisplay(), equalTo("Family"));
     assertThat(taxonomyMeta.get(1).getValues(), equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
   }

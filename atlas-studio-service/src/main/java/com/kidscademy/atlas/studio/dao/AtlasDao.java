@@ -32,6 +32,7 @@ import com.kidscademy.atlas.studio.model.ReleaseParent;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.model.TranslationData;
 import com.kidscademy.atlas.studio.model.TranslationKey;
 
@@ -172,6 +173,8 @@ public interface AtlasDao
 
   List<LinkSource> getCollectionLinkSources(int collectionId);
 
+  TaxonUnit getTaxonUnit(String name);
+
   /**
    * Retrieve existing collection taxon meta identified by its name. Named taxon meta should exit into database otherwise exception is thrown.
    * 
@@ -241,7 +244,7 @@ public interface AtlasDao
   TranslationData getTranslationData(TranslationKey key);
 
   String getTranslation(TranslationKey key);
-  
+
   boolean hasTranslation(TranslationKey key);
 
   void saveTranslation(TranslationData translation);

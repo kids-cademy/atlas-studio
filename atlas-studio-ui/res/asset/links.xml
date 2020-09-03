@@ -9,6 +9,7 @@
 	<translate>translate.htm</translate>
 	<translate-object>translate-object.htm</translate-object>
 	<features-translator>features-translator.htm</features-translator>
+	<taxonomy-translator>taxonomy-translator.htm</taxonomy-translator>
 	<search>search.htm</search>
 	<object-form>object-form.htm</object-form>
 	<media>media.htm</media>
