@@ -301,18 +301,6 @@ public class AtlasServiceTest {
 	assertThat(definition, equalTo("Wikipedia article about Sperm Whale"));
     }
 
-    @Test
-    public void getLinkDefinition_getYouTubeTitle() throws MalformedURLException {
-	URL link = new URL("https://www.youtube.com/watch?v=DT-TDegf-Xo");
-	String display = "Sperm Whale";
-	ExternalSource externalSource = new ExternalSource(1, "https://www.youtube.com/", "${API.getYouTubeTitle}.",
-		"");
-	String definition = externalSource.getLinkDefinition(link, display);
-
-	assertThat(definition, notNullValue());
-	assertThat(definition, equalTo("Sperm Whales Dealing : With The Unexpected - Wildlife Documentary."));
-    }
-
     // ----------------------------------------------------------------------------------------------
 
     private static AtlasItem atlasItem() {
