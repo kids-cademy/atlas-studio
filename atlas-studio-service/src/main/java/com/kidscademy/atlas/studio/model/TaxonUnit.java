@@ -1,7 +1,10 @@
 package com.kidscademy.atlas.studio.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import js.tiny.container.annotation.TestConstructor;
 import js.util.Strings;
@@ -11,27 +14,41 @@ import js.util.Strings;
  * display name used on user interface.
  * 
  * @author Iulian Rotaru
- *
  */
 @Entity
 public class TaxonUnit
 {
-  /** Unique, not null name used as primary key. By convention, name is always a single English noun with all letters lowercase. */
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+
+  /** Unique, not null name. By convention, name is always a single English noun with all letters lowercase. */
   private String name;
 
   /** Display name used on user interface, subject of translation. */
   private String display;
-  /** Taxonomic unit description. */
-  private String description;
+  /** Taxonomic unit short description. */
+  private String definition;
+
+  @Transient
+  private final String title = "Taxon Unit";
 
   public TaxonUnit() {
+  }
+
+  @TestConstructor
+  public TaxonUnit(int id) {
+    this.id = id;
   }
 
   @TestConstructor
   public TaxonUnit(String name) {
     this.name = name;
     this.display = Strings.toTitleCase(name);
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -42,7 +59,33 @@ public class TaxonUnit
     return display;
   }
 
-  public String getDescription() {
-    return description;
+  public String getDefinition() {
+    return definition;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if(this == obj) return true;
+    if(obj == null) return false;
+    if(getClass() != obj.getClass()) return false;
+    TaxonUnit other = (TaxonUnit)obj;
+    if(name == null) {
+      if(other.name != null) return false;
+    }
+    else if(!name.equals(other.name)) return false;
+    return true;
+  }
+
+  public static TaxonUnit create() {
+    TaxonUnit taxonUnit = new TaxonUnit();
+    return taxonUnit;
   }
 }

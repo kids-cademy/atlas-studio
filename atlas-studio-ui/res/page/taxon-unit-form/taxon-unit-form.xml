@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<version>1</version>
+	<title>Taxon Unit Form</title>
+	<description>Form for taxonomy unit.</description>
+	<scripts>
+		<script>lib/js-lib/js-lib.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
+		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script>script/com/kidscademy/Sidebar.js</script>
+		<script>script/com/kidscademy/Page.js</script>
+		<script>script/com/kidscademy/page/TaxonUnitForm.js</script>
+	</scripts>
+</page>

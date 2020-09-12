@@ -194,8 +194,19 @@ public class Translator
 
   // ----------------------------------------------------------------------------------------------
 
-  public String getTaxonMetaDisplay(int taxonMetaId) {
-    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_META_DISPLAY, taxonMetaId, language));
+  public String getTaxonUnitDisplay(int taxonUnitId) {
+    return dao.getTranslation(new TranslationKey(Discriminator.TAXON_UNIT_DISPLAY, taxonUnitId, language));
+  }
+
+  public void translateTaxonUnitDisplay(int taxonUnitId, String display) {
+    final TranslationKey key = new TranslationKey(Discriminator.TAXON_UNIT_DISPLAY, taxonUnitId, language);
+    if(!dao.hasTranslation(key)) {
+      saveTranslation(key, translate(display));
+    }
+  }
+
+  public void saveTaxonUnitDisplay(int taxonUnitId, String display) {
+    saveTranslation(Discriminator.TAXON_UNIT_DISPLAY, taxonUnitId, language, display);
   }
 
   // ----------------------------------------------------------------------------------------------
@@ -268,7 +279,12 @@ public class Translator
       return null;
     }
     log.debug("Invoke translation service to |%s| with |%s|.", language, Strings.ellipsis(text, 40));
-    Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language));
+    
+    // nmt : NMT - Neural Machine Translation
+    // base: PBMT - Phrase-Based Machine Translation
+    String model = "base";
+
+    Translation translation = translate.translate(text, TranslateOption.sourceLanguage(Translator.DEFAULT_LANGUAGE), TranslateOption.targetLanguage(language), TranslateOption.model(model));
     return translation.getTranslatedText();
   }
 }

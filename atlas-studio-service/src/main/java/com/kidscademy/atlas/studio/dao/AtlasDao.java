@@ -173,7 +173,25 @@ public interface AtlasDao
 
   List<LinkSource> getCollectionLinkSources(int collectionId);
 
-  TaxonUnit getTaxonUnit(String name);
+  TaxonUnit getTaxonUnit(int id);
+
+  void saveTaxonUnit(TaxonUnit taxonUnit);
+
+  void removeTaxonUnit(int id);
+
+  List<TaxonUnit> getTaxonUnits();
+
+  List<TaxonUnit> searchTaxonUnits(String search, List<Integer> excludes);
+
+  List<TaxonUnit> searchTaxonUnits(String search);
+
+  /**
+   * Retrieve taxon meta identified by its database ID or null if none found.
+   * 
+   * @param id taxon meta database ID.
+   * @return taxon meta instance, possible null.
+   */
+  TaxonMeta getTaxonMetaById(int id);
 
   /**
    * Retrieve existing collection taxon meta identified by its name. Named taxon meta should exit into database otherwise exception is thrown.

@@ -1,0 +1,30 @@
+<div class="taxon-units" data-class="com.kidscademy.TaxonUnits" xmlns:w="js-lib.com/wood">
+	<div class="form-bar with-actions">
+		<input name="search-input" />
+		<div class="actions inline" data-class="com.kidscademy.Actions">
+			<img name="search" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> 
+			<img name="reset" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
+		</div>
+	</div>
+
+	<div class="table-container">
+		<table class="table" data-class="com.kidscademy.TableView">
+			<thead>
+				<tr>
+					<th>@string/feature-name</th>
+					<th>@string/feature-display</th>
+					<th>@string/feature-definition</th>
+				</tr>
+			</thead>
+			<tbody class="list-view" data-list=".">
+				<tr class="taxon-unit-view" data-id="id">
+					<td data-text="name"></td>
+					<td data-text="display"></td>
+					<!-- nowrap directly on td does not work; workaround is the next double inner spans with flex and absolute display -->
+					<td class="single-line"><span><span data-text="definition"></span></span></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>

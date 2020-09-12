@@ -85,10 +85,10 @@
 								<th>@string/taxon-values</th>
 							</tr>
 						</thead>
-						<tbody class="taxonomy-view" data-list=".">
+						<tbody class="taxons-meta" data-list=".">
 							<tr class="item" draggable="true">
-								<td data-text="name"></td>
-								<td data-text="display"></td>
+								<td data-text="unit.name"></td>
+								<td data-text="unit.display"></td>
 								<td data-text="values" class="full-width"></td>
 							</tr>
 						</tbody>
@@ -99,23 +99,24 @@
 						<img name="clone" src="@image/action/clone" title="@tip/taxonomy-meta-clone" /> 
 						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-meta-done" /> 
 						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-meta-remove" />
-						<img name="translate" src="@image/action/translate" title="@tip/taxonomy-meta-translate" /> 
 						<span class="space"></span> 
 						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-meta-close" class="rfloat" />
 						<img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-meta-remove-all" class="rfloat" /> 
 					</div>
 
-					<div class="editor hidden">
+					<div class="editor taxon-form hidden">
 						<div class="controlset">
-							<label>@string/taxon-name</label><input class="taxon-name" />
+							<label>@string/taxon-name</label><input class="taxon-name" disabled="disabled" />
 						</div>
 						<div class="controlset">
-							<label>@string/taxon-display</label><input class="taxon-display" />
+							<label>@string/taxon-display</label><input class="taxon-display" disabled="disabled" />
 						</div>
 						<div class="controlset">
 							<label>@string/taxon-values</label><input class="taxon-values large" />
 						</div>
 					</div>
+
+					<div class="editor taxon-units hidden" w:compo="compo/taxon-units"></div>
 				</div>
 			</div>
 		</fieldset>

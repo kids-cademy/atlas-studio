@@ -1,21 +1,21 @@
 package com.kidscademy.atlas.studio.dto;
 
-import com.kidscademy.atlas.studio.model.FeatureMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 
-public class FeatureMetaTranslation
+public class TaxonUnitTranslation
 {
   private int id;
   private String name;
   private String display;
   private String translation;
 
-  public FeatureMetaTranslation() {
+  public TaxonUnitTranslation() {
   }
 
-  public FeatureMetaTranslation(FeatureMeta featureMeta, String translation) {
-    this.id = featureMeta.getId();
-    this.name = featureMeta.getName();
-    this.display = featureMeta.getDisplay();
+  public TaxonUnitTranslation(TaxonUnit taxonUnit, String translation) {
+    this.id = taxonUnit.getId();
+    this.name = taxonUnit.getName();
+    this.display = taxonUnit.getDisplay();
     this.translation = translation;
   }
 

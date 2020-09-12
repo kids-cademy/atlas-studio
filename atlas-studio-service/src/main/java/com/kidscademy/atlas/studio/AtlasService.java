@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.kidscademy.atlas.studio.dto.AtlasObjectTranslation;
 import com.kidscademy.atlas.studio.dto.FeatureMetaTranslation;
+import com.kidscademy.atlas.studio.dto.TaxonUnitTranslation;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
@@ -27,6 +28,7 @@ import com.kidscademy.atlas.studio.model.Option;
 import com.kidscademy.atlas.studio.model.PhysicalQuantity;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.tool.AudioSampleInfo;
 
 import js.rmi.BusinessException;
@@ -122,6 +124,16 @@ public interface AtlasService
   void removeFeatureMeta(int featureMetaId);
 
   List<Option> getQuantityUnits(PhysicalQuantity quantity);
+
+  TaxonUnit getTaxonUnit(int id);
+
+  TaxonUnit createTaxonUnit();
+
+  void saveTaxonUnit(TaxonUnit taxonUnit);
+
+  void removeTaxonUnit(int id);
+  
+  List<TaxonUnit> getTaxonUnits(String search, List<Integer> excludes);
 
   // ----------------------------------------------------------------------------------------------
   // OBJECT IMAGE SERVICES
@@ -286,4 +298,10 @@ public interface AtlasService
   void translateAllFeaturesMetaDisplay(List<Integer> featureMetaIds, String language);
   
   void saveFeatureMetaTranslations(List<FeatureMetaTranslation> translations, String language);
+  
+  List<TaxonUnitTranslation> getTaxonUnitTranslations(String search, String language);
+  
+  void translateAllTaxonUnitsDisplay(List<Integer> taxonUnitIds, String language);
+  
+  void saveTaxonUnitTranslations(List<TaxonUnitTranslation> translations, String language);
 }

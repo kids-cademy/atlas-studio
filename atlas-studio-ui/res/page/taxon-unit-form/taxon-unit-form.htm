@@ -1,6 +1,27 @@
 <div w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div w:compo="compo/list-view"></div>
-	<div w:compo="page/external-sources/context-menu"></div>
+	<form class="form">
+		<fieldset>
+			<div class="content">
+				<div class="container">
+					<div class="controlset">
+						<label>@string/feature-name</label><input name="name" />
+					</div>
+					<div class="controlset">
+						<label>@string/feature-display</label><input name="display" />
+					</div>
+					<div class="controlset">
+						<label>@string/feature-definition</label>
+						<textarea name="definition" class="small optional"></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="container buttons-bar">
+		<button name="save">@string/save</button>
+		<button name="cancel">@string/cancel</button>
+	</div>
 </div>
 
 <div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
@@ -9,8 +30,5 @@
 		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
 		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
 		<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
-	</ul>
-	<ul class="menu">
-		<li data-name="create-external-source"><img src="@image/action/add" /><span>@string/external-source-create</span></li>
 	</ul>
 </div>

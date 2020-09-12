@@ -39,7 +39,7 @@ public class Taxon implements Displayable
   }
 
   public String getName() {
-    return meta.getUnit();
+    return meta.getName();
   }
 
   public String getDisplay() {

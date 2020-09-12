@@ -1,0 +1,15 @@
+.taxon-units-translator {
+	
+}
+
+.taxon-units-translator .table {
+	margin: 20px;
+}
+
+.taxon-units-translator .edited {
+	color: red;
+}
+
+.taxon-units-translator .translation:focus {
+	color: @color/border-focus;		
+}

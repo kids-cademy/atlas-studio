@@ -1,0 +1,12 @@
+.taxon-units.large .optional {
+	display: table-cell;	
+}
+
+.taxon-units .table-container {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.taxon-units.large .table-container {
+	padding: 20px;
+}

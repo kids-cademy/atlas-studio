@@ -132,8 +132,11 @@ public class ExportObject
 
     taxonomy.clear();
     for(Taxon taxon : atlasObject.getTaxonomy()) {
-      final String display = translator.getTaxonMetaDisplay(taxon.getMeta().getId());
-      final String value = translator.getTaxonValue(taxon.getId());
+      final String display = translator.getTaxonUnitDisplay(taxon.getMeta().getUnit().getId());
+      String value = translator.getTaxonValue(taxon.getId());
+      if(value == null) {
+        value = taxon.getValue();
+      }
       taxonomy.add(new ExportTaxon(display, value));
     }
 

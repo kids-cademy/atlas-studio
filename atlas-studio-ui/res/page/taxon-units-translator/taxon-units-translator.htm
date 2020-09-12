@@ -1,4 +1,4 @@
-<div class="taxonomy-translator" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+<div class="taxon-units-translator" w:template="template/page#content" xmlns:w="js-lib.com/wood">
 	<div class="form-bar with-actions">
 		<input name="search-input" />
 		<div class="actions inline" data-class="com.kidscademy.Actions">
@@ -28,4 +28,18 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
+	<ul class="menu">
+		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+		<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
+	</ul>
+	<ul class="menu">
+		<li data-name="translate-all"><img src="@image/action/translate" /><span>@string/translate-all</span></li>
+		<li data-name="save-changes"><img src="@image/action/save" /><span>@string/save-changes</span></li>
+		<li data-name="cancel-changes"><img src="@image/action/cancel" /><span>@string/cancel-changes</span></li>
+	</ul>
 </div>

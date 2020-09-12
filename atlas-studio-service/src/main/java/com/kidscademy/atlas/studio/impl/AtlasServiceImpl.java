@@ -18,6 +18,7 @@ import com.kidscademy.atlas.studio.BusinessRules;
 import com.kidscademy.atlas.studio.dao.AtlasDao;
 import com.kidscademy.atlas.studio.dto.AtlasObjectTranslation;
 import com.kidscademy.atlas.studio.dto.FeatureMetaTranslation;
+import com.kidscademy.atlas.studio.dto.TaxonUnitTranslation;
 import com.kidscademy.atlas.studio.export.ExportObject;
 import com.kidscademy.atlas.studio.model.AtlasCollection;
 import com.kidscademy.atlas.studio.model.AtlasImages;
@@ -41,6 +42,7 @@ import com.kidscademy.atlas.studio.model.RepositoryObject;
 import com.kidscademy.atlas.studio.model.SearchFilter;
 import com.kidscademy.atlas.studio.model.Taxon;
 import com.kidscademy.atlas.studio.model.TaxonMeta;
+import com.kidscademy.atlas.studio.model.TaxonUnit;
 import com.kidscademy.atlas.studio.search.DirectIndex;
 import com.kidscademy.atlas.studio.search.KeywordIndex;
 import com.kidscademy.atlas.studio.search.KeywordTree;
@@ -398,6 +400,31 @@ public class AtlasServiceImpl implements AtlasService
   @Override
   public List<FeatureMeta> getFeaturesMeta(String search, List<Integer> excludes) {
     return atlasDao.searchFeaturesMeta(search, excludes);
+  }
+
+  @Override
+  public TaxonUnit getTaxonUnit(int id) {
+    return atlasDao.getTaxonUnit(id);
+  }
+
+  @Override
+  public TaxonUnit createTaxonUnit() {
+    return TaxonUnit.create();
+  }
+
+  @Override
+  public void saveTaxonUnit(TaxonUnit taxonUnit) {
+    atlasDao.saveTaxonUnit(taxonUnit);
+  }
+
+  @Override
+  public void removeTaxonUnit(int id) {
+    atlasDao.removeTaxonUnit(id);
+  }
+
+  @Override
+  public List<TaxonUnit> getTaxonUnits(String search, List<Integer> excludes) {
+    return atlasDao.searchTaxonUnits(search, excludes);
   }
 
   @Override
@@ -846,8 +873,8 @@ public class AtlasServiceImpl implements AtlasService
     List<FeatureMetaTranslation> translations = new ArrayList<>(featuresMeta.size());
 
     Translator translator = new Translator(atlasDao, language);
-    for(FeatureMeta meta : featuresMeta) {
-      translations.add(new FeatureMetaTranslation(meta, translator.getFeatureMetaDisplay(meta.getId())));
+    for(FeatureMeta featureMeta : featuresMeta) {
+      translations.add(new FeatureMetaTranslation(featureMeta, translator.getFeatureMetaDisplay(featureMeta.getId())));
     }
     return translations;
   }
@@ -866,6 +893,35 @@ public class AtlasServiceImpl implements AtlasService
     Translator translator = new Translator(atlasDao, language);
     for(FeatureMetaTranslation translation : translations) {
       translator.saveFeatureMetaDisplay(translation.getId(), translation.getTranslation());
+    }
+  }
+
+  @Override
+  public List<TaxonUnitTranslation> getTaxonUnitTranslations(String search, String language) {
+    List<TaxonUnit> taxonUnits = atlasDao.searchTaxonUnits(search);
+    List<TaxonUnitTranslation> translations = new ArrayList<>(taxonUnits.size());
+
+    Translator translator = new Translator(atlasDao, language);
+    for(TaxonUnit taxonUnit : taxonUnits) {
+      translations.add(new TaxonUnitTranslation(taxonUnit, translator.getTaxonUnitDisplay(taxonUnit.getId())));
+    }
+    return translations;
+  }
+
+  @Override
+  public void translateAllTaxonUnitsDisplay(List<Integer> taxonUnitIds, String language) {
+    Translator translator = new Translator(atlasDao, language);
+    for(int taxonUnitId : taxonUnitIds) {
+      TaxonUnit taxonUnit = atlasDao.getTaxonUnit(taxonUnitId);
+      translator.translateTaxonUnitDisplay(taxonUnit.getId(), taxonUnit.getDisplay());
+    }
+  }
+
+  @Override
+  public void saveTaxonUnitTranslations(List<TaxonUnitTranslation> translations, String language) {
+    Translator translator = new Translator(atlasDao, language);
+    for(TaxonUnitTranslation translation : translations) {
+      translator.saveTaxonUnitDisplay(translation.getId(), translation.getTranslation());
     }
   }
 }

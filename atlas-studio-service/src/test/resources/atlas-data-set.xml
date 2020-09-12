@@ -36,34 +36,42 @@
 	</atlascollection>
 
 	<taxonunit>
+		<id>1</id>
 		<name>kingdom</name>
 		<display>Kingdom</display>
 	</taxonunit>
 	<taxonunit>
+		<id>2</id>
 		<name>phylum</name>
 		<display>Phylum</display>
 	</taxonunit>
 	<taxonunit>
+		<id>3</id>
 		<name>class</name>
 		<display>Class</display>
 	</taxonunit>
 	<taxonunit>
+		<id>4</id>
 		<name>order</name>
 		<display>Order</display>
 	</taxonunit>
 	<taxonunit>
+		<id>5</id>
 		<name>family</name>
 		<display>Family</display>
 	</taxonunit>
 	<taxonunit>
+		<id>6</id>
 		<name>genus</name>
 		<display>Genus</display>
 	</taxonunit>
 	<taxonunit>
+		<id>7</id>
 		<name>species</name>
 		<display>Species</display>
 	</taxonunit>
 	<taxonunit>
+		<id>8</id>
 		<name>group</name>
 		<display>Group</display>
 	</taxonunit>
@@ -72,14 +80,14 @@
 		<id>1</id>
 		<atlascollection_id>1</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
-		<unit_name>group</unit_name>
+		<unit_id>8</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>2</id>
 		<atlascollection_id>1</atlascollection_id>
 		<taxonomymeta_order>1</taxonomymeta_order>
-		<unit_name>family</unit_name>
+		<unit_id>5</unit_id>
 		<values>KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE</values>
 	</taxonmeta>
 
@@ -87,49 +95,49 @@
 		<id>3</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>0</taxonomymeta_order>
-		<unit_name>kingdom</unit_name>
+		<unit_id>1</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>4</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>1</taxonomymeta_order>
-		<unit_name>phylum</unit_name>
+		<unit_id>2</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>5</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>2</taxonomymeta_order>
-		<unit_name>class</unit_name>
+		<unit_id>3</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>6</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>3</taxonomymeta_order>
-		<unit_name>order</unit_name>
+		<unit_id>4</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>7</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>4</taxonomymeta_order>
-		<unit_name>family</unit_name>
+		<unit_id>5</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>8</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>5</taxonomymeta_order>
-		<unit_name>genus</unit_name>
+		<unit_id>6</unit_id>
 		<values></values>
 	</taxonmeta>
 	<taxonmeta>
 		<id>9</id>
 		<atlascollection_id>2</atlascollection_id>
 		<taxonomymeta_order>6</taxonomymeta_order>
-		<unit_name>species</unit_name>
+		<unit_id>7</unit_id>
 		<values></values>
 	</taxonmeta>
 

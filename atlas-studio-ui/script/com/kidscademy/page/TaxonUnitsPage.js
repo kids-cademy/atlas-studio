@@ -1,22 +1,22 @@
 $package("com.kidscademy.page");
 
-com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
+com.kidscademy.page.TaxonUnitsPage = class extends com.kidscademy.Page {
     constructor() {
         super();
 
-        this._sidebar.setTitle("@string/features-meta");
+        this._sidebar.setTitle("@string/taxon-units");
         this._sidebar.on("collections", this._onCollections, this);
         this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
         this._sidebar.on("taxon-units", this._onTaxonUnits, this);
-        this._sidebar.on("create-feature-meta", this._onCreate, this);
-        this._sidebar.on("translate-features", this._onTranslateFeatures, this);
+        this._sidebar.on("create-taxon-unit", this._onCreateTaxonUnit, this);
+        this._sidebar.on("translate-taxon-units", this._onTranslateTaxonUnits, this);
 
         this._contextMenu = this.getByCssClass("context-menu");
-        this._contextMenu.on("edit", this._onEdit, this);
-        this._contextMenu.on("remove", this._onRemove, this);
+        this._contextMenu.on("edit", this._onEditTaxonUnit, this);
+        this._contextMenu.on("remove", this._onRemoveTaxonUnit, this);
 
-        this._tableView = this.getByCssClass("features-list");
+        this._tableView = this.getByCssClass("taxon-units-list");
         this._tableView.on("click", this._onClick, this);
         this._tableView.on("contextmenu", this._onContextMenu, this);
 
@@ -45,24 +45,24 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
         WinMain.assign("@link/taxon-units");
     }
 
-    _onCreate() {
-        WinMain.assign("@link/feature-meta-form");
+    _onCreateTaxonUnit() {
+        WinMain.assign("@link/taxon-unit-form");
     }
 
-    _onTranslateFeatures() {
-        WinMain.assign("@link/features-translator");
+    _onTranslateTaxonUnits() {
+        WinMain.assign("@link/taxon-units-translator");
     }
 
-    _onEdit(featureMetaView) {
-        const featureMeta = featureMetaView.getUserData();
-        WinMain.assign("@link/feature-meta-form", { feature: featureMeta.id });
+    _onEditTaxonUnit(taxonUnitView) {
+        const taxonUnit = taxonUnitView.getUserData();
+        WinMain.assign("@link/taxon-unit-form", { taxon: taxonUnit.id });
     }
 
-    _onRemove(featureMetaView) {
-        js.ua.System.confirm("@string/confirm-feature-meta-remove", ok => {
+    _onRemoveTaxonUnit(taxonUnitView) {
+        js.ua.System.confirm("@string/confirm-taxon-unit-remove", ok => {
             if (ok) {
-                const featureMeta = featureMetaView.getUserData();
-                AtlasService.removeFeatureMeta(featureMeta.id, () => featureMetaView.remove());
+                const taxonUnit = taxonUnitView.getUserData();
+                AtlasService.removeTaxonUnit(taxonUnit.id, () => taxonUnitView.remove());
             }
         });
     }
@@ -82,28 +82,28 @@ com.kidscademy.page.FeaturesMetaPage = class extends com.kidscademy.Page {
     // --------------------------------------------------------------------------------------------
 
     _onClick(ev) {
-        const featureMetaView = ev.target.getParentByCssClass("feature-meta-view");
-        if (featureMetaView != null) {
+        const taxonUnitView = ev.target.getParentByCssClass("taxon-unit-view");
+        if (taxonUnitView != null) {
             if (this._contextMenu != null) {
                 const action = this._contextMenu.getDefaultAction(ev);
                 if (action != null) {
-                    action.listener.call(action.scope, featureMetaView);
+                    action.listener.call(action.scope, taxonUnitView);
                 }
             }
         }
     }
 
     _onContextMenu(ev) {
-        const featureMetaView = ev.target.getParentByCssClass("feature-meta-view");
-        if (featureMetaView != null) {
+        const taxonUnitView = ev.target.getParentByCssClass("taxon-unit-view");
+        if (taxonUnitView != null) {
             ev.halt();
-            this._contextMenu.open(featureMetaView);
+            this._contextMenu.open(taxonUnitView);
         }
     }
 
     toString() {
-        return "com.kidscademy.page.FeaturesMetaPage";
+        return "com.kidscademy.page.TaxonUnitsPage";
     }
 };
 
-WinMain.createPage(com.kidscademy.page.FeaturesMetaPage);
+WinMain.createPage(com.kidscademy.page.TaxonUnitsPage);

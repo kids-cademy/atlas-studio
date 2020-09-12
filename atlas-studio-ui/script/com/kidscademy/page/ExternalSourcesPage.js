@@ -8,6 +8,7 @@ com.kidscademy.page.ExternalSourcesPage = class extends com.kidscademy.Page {
         this._sidebar.on("collections", this._onCollections, this);
         this._sidebar.on("external-sources", this._onExternalSources, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
+        this._sidebar.on("taxon-units", this._onTaxonUnits, this);
         this._sidebar.on("create-external-source", this._onCreateExternalSource, this);
 
         this._contextMenu = this.getByCssClass("context-menu");
@@ -31,6 +32,10 @@ com.kidscademy.page.ExternalSourcesPage = class extends com.kidscademy.Page {
 
     _onFeaturesMeta() {
         WinMain.assign("@link/features-meta");
+    }
+
+    _onTaxonUnits() {
+        WinMain.assign("@link/taxon-units");
     }
     
     _onCreateExternalSource() {

@@ -1,6 +1,6 @@
-<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div w:compo="compo/list-view"></div>
-	<div w:compo="page/external-sources/context-menu"></div>
+<div class="taxon-units" w:template="template/page#content" xmlns:w="js-lib.com/wood">
+	<div class="taxon-units-list large" w:compo="compo/taxon-units"></div>
+	<div w:compo="page/taxon-units/context-menu"></div>
 </div>
 
 <div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
@@ -11,6 +11,7 @@
 		<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
 	</ul>
 	<ul class="menu">
-		<li data-name="create-external-source"><img src="@image/action/add" /><span>@string/external-source-create</span></li>
+		<li data-name="create-taxon-unit"><img src="@image/action/add" /><span>@string/taxon-unit-create</span></li>
+		<li data-name="translate-taxon-units"><img src="@image/action/translate" /><span>@string/taxon-unit-translate</span></li>
 	</ul>
 </div>

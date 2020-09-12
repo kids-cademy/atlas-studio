@@ -389,6 +389,32 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
+  public List<TaxonUnit> getTaxonUnits() {
+    return em.createQuery("select t from TaxonUnit t order by t.name", TaxonUnit.class).getResultList();
+  }
+
+  @Override
+  public List<TaxonUnit> searchTaxonUnits(String search, List<Integer> excludes) {
+    if(excludes.isEmpty()) {
+      return searchTaxonUnits(search);
+    }
+    if(search == null) {
+      return em.createQuery("select t from TaxonUnit t where t.id not in :excludes order by t.name", TaxonUnit.class).setParameter("excludes", excludes).getResultList();
+    }
+    search = Strings.concat('%', search, '%');
+    return em.createQuery("select t from TaxonUnit t where t.name like :search and t.id not in :excludes order by t.name", TaxonUnit.class).setParameter("search", search).setParameter("excludes", excludes).getResultList();
+  }
+
+  @Override
+  public List<TaxonUnit> searchTaxonUnits(String search) {
+    if(search == null) {
+      return getTaxonUnits();
+    }
+    search = Strings.concat('%', search, '%');
+    return em.createQuery("select t from TaxonUnit t where t.name like :search order by t.name", TaxonUnit.class).setParameter("search", search).getResultList();
+  }
+
+  @Override
   public List<TaxonMeta> getCollectionTaxonomyMeta(int collectionId) {
     return em.find(AtlasCollection.class, collectionId).getTaxonomyMeta();
   }
@@ -412,6 +438,11 @@ public class AtlasDaoImpl implements AtlasDao
     // collectionId).getResultList();
 
     return em.find(AtlasCollection.class, collectionId).getFeaturesMeta();
+  }
+
+  @Override
+  public TaxonMeta getTaxonMetaById(int id) {
+    return em.find(TaxonMeta.class, id);
   }
 
   @Override
@@ -708,7 +739,22 @@ public class AtlasDaoImpl implements AtlasDao
   }
 
   @Override
-  public TaxonUnit getTaxonUnit(String name) {
-    return em.find(TaxonUnit.class, name);
+  public TaxonUnit getTaxonUnit(int id) {
+    return em.find(TaxonUnit.class, id);
+  }
+
+  @Override
+  @Mutable
+  public void saveTaxonUnit(TaxonUnit taxonUnit) {
+    em.merge(taxonUnit);
+  }
+
+  @Override
+  @Mutable
+  public void removeTaxonUnit(int id) {
+    TaxonUnit taxonUnit = em.find(TaxonUnit.class, id);
+    if(taxonUnit != null) {
+      em.remove(taxonUnit);
+    }
   }
 }

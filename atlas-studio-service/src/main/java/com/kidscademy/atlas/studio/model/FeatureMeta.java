@@ -10,76 +10,72 @@ import javax.persistence.Id;
 import js.tiny.container.annotation.TestConstructor;
 
 @Entity
-public class FeatureMeta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class FeatureMeta
+{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Enumerated(EnumType.STRING)
-    private PhysicalQuantity quantity;
-    
-    private String name;
-    private String display;
-    private String definition;
+  @Enumerated(EnumType.STRING)
+  private PhysicalQuantity quantity;
 
-    public FeatureMeta() {
-    }
-    
-    @TestConstructor
-    public FeatureMeta(int id, PhysicalQuantity quantity, String name, String display, String definition) {
-	super();
-	this.id = id;
-	this.quantity = quantity;
-	this.name = name;
-	this.display = display;
-	this.definition = definition;
-    }
+  private String name;
+  private String display;
+  private String definition;
 
+  public FeatureMeta() {
+  }
 
-    public int getId() {
-	return id;
-    }
+  @TestConstructor
+  public FeatureMeta(int id, PhysicalQuantity quantity, String name, String display, String definition) {
+    super();
+    this.id = id;
+    this.quantity = quantity;
+    this.name = name;
+    this.display = display;
+    this.definition = definition;
+  }
 
-    public String getName() {
-	return name;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public PhysicalQuantity getQuantity() {
-	return quantity;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getDisplay() {
-        return display;
-    }
+  public PhysicalQuantity getQuantity() {
+    return quantity;
+  }
 
-    public String getDefinition() {
-	return definition;
-    }
+  public String getDisplay() {
+    return display;
+  }
 
-    public static FeatureMeta create() {
-	FeatureMeta featureMeta = new FeatureMeta();
-	return featureMeta;
-    }
+  public String getDefinition() {
+    return definition;
+  }
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + id;
-	return result;
-    }
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + id;
+    return result;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	FeatureMeta other = (FeatureMeta) obj;
-	if (id != other.id)
-	    return false;
-	return true;
-    }
+  @Override
+  public boolean equals(Object obj) {
+    if(this == obj) return true;
+    if(obj == null) return false;
+    if(getClass() != obj.getClass()) return false;
+    FeatureMeta other = (FeatureMeta)obj;
+    if(id != other.id) return false;
+    return true;
+  }
+
+  public static FeatureMeta create() {
+    FeatureMeta featureMeta = new FeatureMeta();
+    return featureMeta;
+  }
 }

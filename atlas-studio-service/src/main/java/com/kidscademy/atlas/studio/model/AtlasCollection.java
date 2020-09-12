@@ -49,7 +49,7 @@ public class AtlasCollection implements Key, GraphicObject
   private String display;
   private String definition;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "atlascollection_id")
   @OrderColumn
   private List<TaxonMeta> taxonomyMeta;

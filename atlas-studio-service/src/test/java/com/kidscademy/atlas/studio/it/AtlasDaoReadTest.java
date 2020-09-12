@@ -231,10 +231,10 @@ public class AtlasDaoReadTest
 
     assertThat(object.getCollection().getTaxonomyMeta(), notNullValue());
     assertThat(object.getCollection().getTaxonomyMeta(), hasSize(2));
-    assertThat(object.getCollection().getTaxonomyMeta().get(0).getUnit(), equalTo("group"));
+    assertThat(object.getCollection().getTaxonomyMeta().get(0).getName(), equalTo("group"));
     assertThat(object.getCollection().getTaxonomyMeta().get(0).getDisplay(), equalTo("Group"));
     assertThat(object.getCollection().getTaxonomyMeta().get(0).getValues(), nullValue());
-    assertThat(object.getCollection().getTaxonomyMeta().get(1).getUnit(), equalTo("family"));
+    assertThat(object.getCollection().getTaxonomyMeta().get(1).getName(), equalTo("family"));
     assertThat(object.getCollection().getTaxonomyMeta().get(1).getDisplay(), equalTo("Family"));
     assertThat(object.getCollection().getTaxonomyMeta().get(1).getValues(), equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
 
@@ -548,11 +548,11 @@ public class AtlasDaoReadTest
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(2));
 
-    assertThat(taxonomyMeta.get(0).getUnit(), equalTo("group"));
+    assertThat(taxonomyMeta.get(0).getName(), equalTo("group"));
     assertThat(taxonomyMeta.get(0).getDisplay(), equalTo("Group"));
     assertThat(taxonomyMeta.get(0).getValues(), nullValue());
 
-    assertThat(taxonomyMeta.get(1).getUnit(), equalTo("family"));
+    assertThat(taxonomyMeta.get(1).getName(), equalTo("family"));
     assertThat(taxonomyMeta.get(1).getDisplay(), equalTo("Family"));
     assertThat(taxonomyMeta.get(1).getValues(), equalTo("KEYBOARD,PERCUSSION,WOODWIND,BRASS,STRINGS,LAMELLOPHONE"));
   }

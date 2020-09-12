@@ -8,6 +8,7 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
         this._sidebar.on("collections", this._onCollections, this);
         this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
+        this._sidebar.on("taxon-units", this._onTaxonUnits, this);
         this._sidebar.on("create-collection", this._onCreateCollection, this);
 
         this._collectionsMenu = this.getByCssClass("collections-menu");
@@ -59,6 +60,10 @@ com.kidscademy.page.CollectionsPage = class extends com.kidscademy.Page {
 
     _onFeaturesMeta() {
         WinMain.assign("@link/features-meta");
+    }
+
+    _onTaxonUnits() {
+        WinMain.assign("@link/taxon-units");
     }
 
     _onCreateCollection() {

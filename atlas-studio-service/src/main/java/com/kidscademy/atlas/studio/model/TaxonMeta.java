@@ -42,7 +42,11 @@ public class TaxonMeta
     return id;
   }
 
-  public String getUnit() {
+  public TaxonUnit getUnit() {
+    return unit;
+  }
+
+  public String getName() {
     return unit.getName();
   }
 

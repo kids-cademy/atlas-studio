@@ -95,12 +95,14 @@
 	<confirm-app-remove>Please confirm application remove.</confirm-app-remove>
 	<confirm-remove-from-release>Please confirm object remove from release.</confirm-remove-from-release>
 	<confirm-feature-meta-remove>Please confirm feature meta remove.</confirm-feature-meta-remove>
+	<confirm-taxon-unit-remove>Please confirm taxon unit remove.</confirm-taxon-unit-remove>
 	<confirm-external-source-remove>Please confirm external source remove.</confirm-external-source-remove>
 	<confirm-all-link-sources-remove>Please confirm removing all link sources.</confirm-all-link-sources-remove>
 	<confirm-all-description-meta-remove>Please confirm removing all description meta sections.</confirm-all-description-meta-remove>
 	<confirm-all-features-meta-remove>Please confirm removing all features meta.\r\nWarning! ALL objects features from collection will be removed!</confirm-all-features-meta-remove>
 	<confirm-all-taxons-meta-remove>Please confirm removing all taxonomy meta.</confirm-all-taxons-meta-remove>
 	<confirm-translate-all-features-meta>Please confirm translating %d feature(s) meta.</confirm-translate-all-features-meta>
+	<confirm-translate-all-taxon-units>Please confirm translating %d taxon unit(s).</confirm-translate-all-taxon-units>
 	<confirm-cancel-changes>Please confirm canceling changes for %d item(s).</confirm-cancel-changes>
 	
 	<prompt-wikipedia-url>Please enter URL for wikipedia article.</prompt-wikipedia-url>
@@ -110,6 +112,7 @@
 	<workspace-external-sources>External Sources</workspace-external-sources>
 	<workspace-register-external-source>Register External Source</workspace-register-external-source>
 	<workspace-features-meta>Features Meta</workspace-features-meta>
+	<workspace-taxon-units>Taxon Units</workspace-taxon-units>
 
 	<collection-open>Open Collection</collection-open>
 	<collection-create>Create Collection</collection-create>
@@ -133,6 +136,14 @@
 	<feature-meta-remove>Remove Feature Meta</feature-meta-remove>
 	<feature-meta-translate>Translate Features Meta</feature-meta-translate>
 	<feature-meta-translator>Features Meta Translator</feature-meta-translator>
+
+	<taxon-unit>Taxon Unit</taxon-unit>
+	<taxon-units>Taxon Units</taxon-units>
+	<taxon-unit-create>Create Taxon Unit</taxon-unit-create>
+	<taxon-unit-edit>Edit Taxon Unit</taxon-unit-edit>
+	<taxon-unit-remove>Remove Taxon Unit</taxon-unit-remove>
+	<taxon-unit-translate>Translate Taxon Units</taxon-unit-translate>
+	<taxon-unit-translator>Taxon Units Translator</taxon-unit-translator>
 	
 	<object-create>Create Object</object-create>
 	<object-edit>Edit Object</object-edit>

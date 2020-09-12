@@ -93,9 +93,9 @@ public class AtlasDaoWriteTest
     collection.setDescriptionMeta(descriptionMeta);
 
     List<TaxonMeta> taxonomyMeta = new ArrayList<>();
-    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("kingdom"), "Animalia"));
-    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("phylum"), "Chordata"));
-    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit("class")));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit(1), "Animalia"));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit(2), "Chordata"));
+    taxonomyMeta.add(new TaxonMeta(dao.getTaxonUnit(3)));
     collection.setTaxonomyMeta(taxonomyMeta);
 
     List<FeatureMeta> featuresMeta = new ArrayList<>();
@@ -129,15 +129,15 @@ public class AtlasDaoWriteTest
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(3));
 
-    assertThat(taxonomyMeta.get(0).getUnit(), equalTo("kingdom"));
+    assertThat(taxonomyMeta.get(0).getName(), equalTo("kingdom"));
     assertThat(taxonomyMeta.get(0).getDisplay(), equalTo("Kingdom"));
     assertThat(taxonomyMeta.get(0).getValues(), equalTo("Animalia"));
 
-    assertThat(taxonomyMeta.get(1).getUnit(), equalTo("phylum"));
+    assertThat(taxonomyMeta.get(1).getName(), equalTo("phylum"));
     assertThat(taxonomyMeta.get(1).getDisplay(), equalTo("Phylum"));
     assertThat(taxonomyMeta.get(1).getValues(), equalTo("Chordata"));
 
-    assertThat(taxonomyMeta.get(2).getUnit(), equalTo("class"));
+    assertThat(taxonomyMeta.get(2).getName(), equalTo("class"));
     assertThat(taxonomyMeta.get(2).getDisplay(), equalTo("Class"));
     assertThat(taxonomyMeta.get(2).getValues(), nullValue());
 
@@ -184,9 +184,9 @@ public class AtlasDaoWriteTest
     collection.setDescriptionMeta(descriptionMeta);
 
     List<TaxonMeta> taxonomyMeta = new ArrayList<>();
-    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("kingdom"), "Animalia"));
-    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("phylum"), "Chordata"));
-    taxonomyMeta.add(new TaxonMeta(new TaxonUnit("class")));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit(1), "Animalia"));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit(2), "Chordata"));
+    taxonomyMeta.add(new TaxonMeta(new TaxonUnit(3)));
     collection.setTaxonomyMeta(taxonomyMeta);
 
     List<FeatureMeta> featuresMeta = new ArrayList<>();
@@ -221,6 +221,28 @@ public class AtlasDaoWriteTest
     dao.saveAtlasCollection(collection);
   }
 
+  @Test
+  public void saveAtlasCollection_RemoveTaxonMeta() {
+    AtlasCollection collection = dao.getCollectionById(1);
+    assertThat(collection, notNullValue());
+    
+    List<TaxonMeta> taxonomyMeta = collection.getTaxonomyMeta();
+    assertThat(taxonomyMeta, notNullValue());
+    assertThat(taxonomyMeta, hasSize(2));
+
+    TaxonMeta taxonMeta = taxonomyMeta.get(0);
+    taxonomyMeta.remove(0);
+    dao.saveAtlasCollection(collection);
+    assertThat(dao.getTaxonMetaById(taxonMeta.getId()), nullValue());
+
+    collection = dao.getCollectionById(1);
+    assertThat(collection, notNullValue());
+    
+    taxonomyMeta = collection.getTaxonomyMeta();
+    assertThat(taxonomyMeta, notNullValue());
+    assertThat(taxonomyMeta, hasSize(1));
+  }
+  
   @Test
   public void removeAtlasCollection() {
     dao.removeAtlasObject(1);

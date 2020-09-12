@@ -1,10 +1,10 @@
 $package("com.kidscademy.page");
 
-com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
+com.kidscademy.page.TaxonUnitsTranslatorPage = class extends com.kidscademy.Page {
     constructor() {
         super();
 
-        this._sidebar.setTitle("@string/feature-meta-translator");
+        this._sidebar.setTitle("@string/taxon-unit-translator");
         this._sidebar.on("collections", this._onCollections, this);
         this._sidebar.on("external-sources", this._onLinksMeta, this);
         this._sidebar.on("features-meta", this._onFeaturesMeta, this);
@@ -43,7 +43,7 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
                 search = null;
             }
         }
-        AtlasService.getFeatureMetaTranslations(search, this._language(), this._onTranslationsLoaded, this);
+        AtlasService.getTaxonUnitTranslations(search, this._language(), this._onTranslationsLoaded, this);
     }
 
     _onTranslationsLoaded(translations) {
@@ -81,24 +81,24 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
             this._searchInput.focus();
             return;
         }
-        js.ua.System.confirm($format("@string/confirm-translate-all-features-meta", ids.length), ok => {
+        js.ua.System.confirm($format("@string/confirm-translate-all-taxon-units", ids.length), ok => {
             if (ok) {
-                AtlasService.translateAllFeaturesMetaDisplay(ids, this._language(), this._load, this);
+                AtlasService.translateAllTaxonUnitsDisplay(ids, this._language(), this._load, this);
             }
         });
     }
 
     _onSaveChanges() {
-        const features = this._tableView.findByCss(":scope > .edited").map(row => {
-            const feature = row.getUserData();
-            feature.translation = row.getByCssClass("translation").getText();
-            return feature;
+        const taxonUnits = this._tableView.findByCss(":scope > .edited").map(row => {
+            const taxonUnit = row.getUserData();
+            taxonUnit.translation = row.getByCssClass("translation").getText();
+            return taxonUnit;
         });
-        if(features.length === 0) {
+        if(taxonUnits.length === 0) {
             this._searchInput.focus();
             return;
         }
-        AtlasService.saveFeatureMetaTranslations(features, this._language(), () => {
+        AtlasService.saveTaxonUnitTranslations(taxonUnits, this._language(), () => {
             this._tableView.getChildren().removeCssClass("edited");
         });
     }
@@ -135,8 +135,8 @@ com.kidscademy.page.FeaturesTranslatorPage = class extends com.kidscademy.Page {
     }
 
     toString() {
-        return "com.kidscademy.page.FeaturesTranslatorPage";
+        return "com.kidscademy.page.TaxonUnitsTranslatorPage";
     }
 };
 
-WinMain.createPage(com.kidscademy.page.FeaturesTranslatorPage);
+WinMain.createPage(com.kidscademy.page.TaxonUnitsTranslatorPage);
