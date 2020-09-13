@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 /**
@@ -46,7 +47,6 @@ public class Feature
   }
 
   public Feature(FeatureMeta meta, double value, Double... maximum) {
-    this.timestamp = new Date();
     this.meta = meta;
     this.value = value;
     if(maximum.length == 1) {
@@ -56,7 +56,8 @@ public class Feature
   }
 
   @PreUpdate
-  public void preUpdate() {
+  @PrePersist
+  public void preSave() {
     timestamp = new Date();
   }
 

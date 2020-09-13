@@ -225,7 +225,7 @@ public class AtlasDaoWriteTest
   public void saveAtlasCollection_RemoveTaxonMeta() {
     AtlasCollection collection = dao.getCollectionById(1);
     assertThat(collection, notNullValue());
-    
+
     List<TaxonMeta> taxonomyMeta = collection.getTaxonomyMeta();
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(2));
@@ -237,12 +237,12 @@ public class AtlasDaoWriteTest
 
     collection = dao.getCollectionById(1);
     assertThat(collection, notNullValue());
-    
+
     taxonomyMeta = collection.getTaxonomyMeta();
     assertThat(taxonomyMeta, notNullValue());
     assertThat(taxonomyMeta, hasSize(1));
   }
-  
+
   @Test
   public void removeAtlasCollection() {
     dao.removeAtlasObject(1);
@@ -484,6 +484,26 @@ public class AtlasDaoWriteTest
     assertThat(expected.getRelated(), not(empty()));
     assertThat(expected.getRelated(), hasSize(1));
     assertThat(expected.getRelated().get(0), equalTo("accordion"));
+  }
+
+  @Test
+  public void saveAtlasObject_AddFeature() {
+    AtlasObject object = dao.getAtlasObject(1);
+    assertThat(object.getFeatures(), notNullValue());
+    assertThat(object.getFeatures(), hasSize(2));
+    assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
+    assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
+
+    Feature feature = new Feature(dao.getFeatureMetaById(3), 0, 0.1);
+    object.getFeatures().add(feature);
+    dao.saveAtlasObject(object);
+
+    object = dao.getAtlasObject(1);
+    assertThat(object.getFeatures(), notNullValue());
+    assertThat(object.getFeatures(), hasSize(3));
+    assertThat(object.getFeatures().get(0).getName(), equalTo("height"));
+    assertThat(object.getFeatures().get(1).getName(), equalTo("width"));
+    assertThat(object.getFeatures().get(2).getName(), equalTo("length"));
   }
 
   @Test
