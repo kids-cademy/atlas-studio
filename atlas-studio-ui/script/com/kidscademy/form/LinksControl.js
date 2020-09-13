@@ -85,7 +85,14 @@ com.kidscademy.form.LinksControl = class extends com.kidscademy.form.FormControl
 		}
 
 		const collectionId = this._formPage.getCollection().id;
-		const formData = this._formData.getObject();
+		const formData = this._formData.getObject({
+			url: null,
+			definition: null,
+			display: null,
+			linkSource: {
+				apis: null
+			}
+		});
 
 		if (this._editLink == null) {
 			// edit link is not set therefore we are in append mode
