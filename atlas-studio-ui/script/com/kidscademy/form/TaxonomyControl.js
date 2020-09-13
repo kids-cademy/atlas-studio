@@ -260,7 +260,7 @@ com.kidscademy.form.TaxonomyControl = class extends com.kidscademy.form.FormCont
 	_updateEditControls() {
 		$assert(this._taxonEditIndex !== -1, "com.kidscademy.form.TaxonomyControl#_updateEditControls", "Illegal state. No taxon view selected for edit.");
 		const taxon = this._taxonomyView.getByIndex(this._taxonEditIndex).getUserData();
-		const taxonMeta = this._meta.getTaxonMeta(taxon.meta.name);
+		const taxonMeta = this._meta.getTaxonMeta(taxon.meta.unit.name);
 		this._valueEditor.setObject(taxonMeta, taxon);
 	}
 
@@ -310,11 +310,11 @@ com.kidscademy.form.TaxonomyControl.Meta = class {
 	}
 
 	getTaxonNames() {
-		return this._taxonomyMeta.map(taxonMeta => taxonMeta.name);
+		return this._taxonomyMeta.map(taxonMeta => taxonMeta.unit.name);
 	}
 
 	getTaxonMeta(taxonName) {
-		const taxonMeta = this._taxonomyMeta.find(taxonMeta => taxonMeta.name === taxonName);
+		const taxonMeta = this._taxonomyMeta.find(taxonMeta => taxonMeta.unit.name === taxonName);
 		$assert(typeof taxonMeta !== "undefined", "com.kidscademy.form.TaxonomyControl.Meta#getTaxonMeta", "Taxon name |%s| not found", taxonName);
 		return taxonMeta;
 	}
@@ -358,7 +358,7 @@ com.kidscademy.form.TaxonomyControl.ValueEditor = class extends js.dom.Element {
 			this._valueControl = this._valueSelect.show();
 		}
 
-		this._nameLabel.setValue(taxon.meta.display);
+		this._nameLabel.setValue(taxon.meta.unit.display);
 		this._valueControl.setValue(taxon.value);
 		this._valueControl.focus();
 	}
