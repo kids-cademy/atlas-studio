@@ -17,7 +17,7 @@
 
 	<properties>
 		<app.name>atlas-studio</app.name>
-		
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -44,4 +44,12 @@
 			<url>http://maven.js-lib.com/</url>
 		</repository>
 	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>js-lib</id>
+			<name>j(s)-lib maven</name>
+			<url>http://maven.js-lib.com/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
