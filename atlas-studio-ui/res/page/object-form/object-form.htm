@@ -1,38 +1,40 @@
-<div class="object-form" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form" data-class="com.kidscademy.Form">
-		<fieldset id="identity" w:compo="page/object-form/identity"></fieldset>
-		<fieldset id="taxonomy" name="taxonomy" w:compo="page/object-form/taxonomy"></fieldset>
-		<fieldset id="definition" w:compo="page/object-form/definition"></fieldset>
-		<fieldset id="description" w:compo="page/object-form/description"></fieldset>
-		<fieldset id="graphic-assets" w:compo="page/object-form/graphic-assets"></fieldset>
-		<fieldset id="audio-assets" w:compo="page/object-form/audio-assets"></fieldset>
-		<fieldset id="facts" name="facts" w:compo="page/object-form/facts"></fieldset>
-		<fieldset id="features" name="features" w:compo="page/object-form/features"></fieldset>
-		<fieldset id="spreading" name="spreading" w:compo="page/object-form/spreading"></fieldset>
-		<fieldset id="related" name="related" w:compo="page/object-form/related"></fieldset>
-		<fieldset id="links" name="links" w:compo="page/object-form/links"></fieldset>
-	</form>
+<code w:template="res/template/page#content" xmlns:w="js-lib.com/wood">
+	<div class="object-form" w:content="content">
+		<form class="form" data-class="com.kidscademy.Form">
+			<fieldset id="identity" w:compo="res/page/object-form/identity"></fieldset>
+			<fieldset id="taxonomy" name="taxonomy" w:compo="res/page/object-form/taxonomy"></fieldset>
+			<fieldset id="definition" w:compo="res/page/object-form/definition"></fieldset>
+			<fieldset id="description" w:compo="res/page/object-form/description"></fieldset>
+			<fieldset id="graphic-assets" w:compo="res/page/object-form/graphic-assets"></fieldset>
+			<fieldset id="audio-assets" w:compo="res/page/object-form/audio-assets"></fieldset>
+			<fieldset id="facts" name="facts" w:compo="res/page/object-form/facts"></fieldset>
+			<fieldset id="features" name="features" w:compo="res/page/object-form/features"></fieldset>
+			<fieldset id="spreading" name="spreading" w:compo="res/page/object-form/spreading"></fieldset>
+			<fieldset id="related" name="related" w:compo="res/page/object-form/related"></fieldset>
+			<fieldset id="links" name="links" w:compo="res/page/object-form/links"></fieldset>
+		</form>
 
-	<div w:compo="compo/item-select"></div>
-</div>
+		<div w:compo="res/compo/item-select"></div>
+	</div>
 
-<div class="object-form" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu quick-links">
-		<li data-name="identity"><img src="@image/action/identity" /><span>@string/identity</span><span class="state"></span></li>
-		<li data-name="taxonomy"><img src="@image/action/taxonomy" /><span>@string/taxonomy</span><span class="state"></span></li>
-		<li data-name="definition"><img src="@image/action/definition" /><span>@string/definition</span><span class="state"></span></li>
-		<li data-name="description"><img src="@image/action/description" /><span>@string/description</span><span class="state"></span></li>
-		<li data-name="graphic-assets"><img src="@image/action/graphic-asset" /><span>@string/graphic-assets</span><span class="state"></span></li>
-		<li data-name="audio-assets"><img src="@image/action/audio-asset" /><span>@string/audio-assets</span><span class="state"></span></li>
-		<li data-name="facts"><img src="@image/action/facts" /><span>@string/facts</span><span class="state"></span></li>
-		<li data-name="features"><img src="@image/action/features" /><span>@string/features</span><span class="state"></span></li>
-		<li data-name="spreading"><img src="@image/action/spreading" /><span>@string/spreading</span><span class="state"></span></li>
-		<li data-name="related"><img src="@image/action/related" /><span>@string/related</span><span class="state"></span></li>
-		<li data-name="links"><img src="@image/action/link" /><span>@string/links</span><span class="state"></span></li>
-	</ul>
+	<div class="object-form" w:content="sidemenu">
+		<ul class="menu quick-links">
+			<li data-name="identity"><img src="@image/action/identity" /><span>@string/identity</span><span class="state"></span></li>
+			<li data-name="taxonomy"><img src="@image/action/taxonomy" /><span>@string/taxonomy</span><span class="state"></span></li>
+			<li data-name="definition"><img src="@image/action/definition" /><span>@string/definition</span><span class="state"></span></li>
+			<li data-name="description"><img src="@image/action/description" /><span>@string/description</span><span class="state"></span></li>
+			<li data-name="graphic-assets"><img src="@image/action/graphic-asset" /><span>@string/graphic-assets</span><span class="state"></span></li>
+			<li data-name="audio-assets"><img src="@image/action/audio-asset" /><span>@string/audio-assets</span><span class="state"></span></li>
+			<li data-name="facts"><img src="@image/action/facts" /><span>@string/facts</span><span class="state"></span></li>
+			<li data-name="features"><img src="@image/action/features" /><span>@string/features</span><span class="state"></span></li>
+			<li data-name="spreading"><img src="@image/action/spreading" /><span>@string/spreading</span><span class="state"></span></li>
+			<li data-name="related"><img src="@image/action/related" /><span>@string/related</span><span class="state"></span></li>
+			<li data-name="links"><img src="@image/action/link" /><span>@string/links</span><span class="state"></span></li>
+		</ul>
 
-	<ul class="menu actions bottom">
-		<li data-name="preview"><img src="@image/action/preview" /><span>@string/object-preview</span></li>
-		<li data-name="save"><img src="@image/action/save" /><span>@string/object-save</span></li>
-	</ul>
-</div>
+		<ul class="menu actions bottom">
+			<li data-name="preview"><img src="@image/action/preview" /><span>@string/object-preview</span></li>
+			<li data-name="save"><img src="@image/action/save" /><span>@string/object-save</span></li>
+		</ul>
+	</div>
+</code>

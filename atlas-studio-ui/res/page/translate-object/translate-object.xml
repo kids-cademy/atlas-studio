@@ -4,21 +4,21 @@
 	<title>Translate Object</title>
 	<description>Translate object display name, definition, description and facts.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/StringsControl.js</script>
-		<script>script/com/kidscademy/Form.js</script>
-		<script>script/com/kidscademy/ItemSelect.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/ContextMenu.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/Htm2Md.js</script>
-		<script>script/com/kidscademy/Md2Htm.js</script>
-		<script>script/com/kidscademy/translate/DescriptionControl.js</script>
-		<script>script/com/kidscademy/translate/FactsControl.js</script>
-		<script>script/com/kidscademy/page/TranslateObjectPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ReleaseService.js" defer="true"></script>
+		<script src="script/com/kidscademy/StringsControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/Form.js" defer="true"></script>
+		<script src="script/com/kidscademy/ItemSelect.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/ContextMenu.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/Htm2Md.js" defer="true"></script>
+		<script src="script/com/kidscademy/Md2Htm.js" defer="true"></script>
+		<script src="script/com/kidscademy/translate/DescriptionControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/translate/FactsControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/TranslateObjectPage.js" defer="true"></script>
 	</scripts>
 </page>

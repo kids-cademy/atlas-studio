@@ -4,13 +4,13 @@
 	<title>External Source Form</title>
 	<description>Form for external source metadata.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ApiService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/util/Strings.js</script>
-		<script>script/com/kidscademy/IconControl.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/page/ExternalSourceForm.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ApiService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/util/Strings.js" defer="true"></script>
+		<script src="script/com/kidscademy/IconControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/ExternalSourceForm.js" defer="true"></script>
 	</scripts>
 </page>

@@ -4,10 +4,10 @@
 	<title>Object Identity</title>
 	<description>Identity field set from object form.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/StringsControl.js</script>
-		<script>script/com/kidscademy/form/HDateControl.js</script>
-		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/IdentityFieldSet.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/StringsControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/HDateControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FormControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/IdentityFieldSet.js" defer="true"></script>
 	</scripts>
 </page>

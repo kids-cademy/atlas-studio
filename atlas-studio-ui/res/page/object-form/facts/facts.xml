@@ -4,9 +4,9 @@
 	<title>Object Facts</title>
 	<description>Facts field set from object form.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/FactsControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FormControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FactsControl.js" defer="true"></script>
 	</scripts>
 </page>

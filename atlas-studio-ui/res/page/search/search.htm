@@ -1,34 +1,32 @@
-<div class="search" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<section>
-		<form class="form-bar with-actions">
-			<input name="search-input" />
-			<div class="actions inline" data-class="com.kidscademy.Actions">
-				<img name="search-submit" data-key="ENTER" src="@image/action/search" class="action" title="@tip/search-submit" />
-				<img name="search-reset" data-key="ESCAPE,DELETE" src="@image/action/close" class="action" title="@tip/search-reset" />
-				<span class="space"></span>
-				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
-				<img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" />
-				<img name="details-view" src="@image/action/details-view" title="@tip/search-reset" />
-				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
+<code w:template="res/template/page#content" xmlns:w="js-lib.com/wood">
+	<div class="search" w:content="content">
+		<section>
+			<form class="form-bar with-actions">
+				<input name="search-input" />
+				<div class="actions inline" data-class="com.kidscademy.Actions">
+					<img name="search-submit" data-key="ENTER" src="@image/action/search" class="action" title="@tip/search-submit" /> <img name="search-reset" data-key="ESCAPE,DELETE" src="@image/action/close" class="action" title="@tip/search-reset" /> <span class="space"></span> <img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" /> <img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" /> <img name="details-view" src="@image/action/details-view" title="@tip/search-reset" /> <img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
+				</div>
+			</form>
+			<div class="buttons-bar hidden">
+				<button name="search-button">submit</button>
 			</div>
-		</form>
-		<div class="buttons-bar hidden">
-			<button name="search-button">submit</button>
-		</div>
-	</section>
-	
-	<section class="content">
-		<h1 class="loading-info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
-		<ul class="search-result" w:compo="compo/list-control"></ul>
-	</section>
+		</section>
 
-	<div w:compo="page/search/context-menu"></div>
-	<div w:compo="compo/item-select"></div>
-</div>
+		<section class="content">
+			<h1 class="loading-info hidden" data-object=".">
+				Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.
+			</h1>
+			<ul class="search-result" w:compo="res/compo/list-control"></ul>
+		</section>
 
-<div class="search" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="update-index"><img src="@image/action/update-index" /><span>Update Index</span></li>
-		<li data-name="add-all-to-release"><img src="@image/action/add-to-release" /><span>@string/collection-add-all-to-release</span></li>
-	</ul>
-</div>
+		<div w:compo="res/page/search/context-menu"></div>
+		<div w:compo="res/compo/item-select"></div>
+	</div>
+
+	<div class="search" w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="update-index"><img src="@image/action/update-index" /><span>Update Index</span></li>
+			<li data-name="add-all-to-release"><img src="@image/action/add-to-release" /><span>@string/collection-add-all-to-release</span></li>
+		</ul>
+	</div>
+</code>

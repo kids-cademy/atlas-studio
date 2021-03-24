@@ -4,10 +4,10 @@
 	<title>Object Spreading</title>
 	<description>Spreading field set from object form.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/format/RegionFormat.js</script>
-		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/SpreadingControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/format/RegionFormat.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FormControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/SpreadingControl.js" defer="true"></script>
 	</scripts>
 </page>

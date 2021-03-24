@@ -1,248 +1,229 @@
-<div class="collection-form" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form" data-class="com.kidscademy.Form">
-		<fieldset id="identity">
-			<div class="header container">
-				<h2>@string/identity</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>name</label><input name="name" />
-					</div>
-					<div class="controlset">
-						<label>display</label><input name="display" />
-					</div>
-					<div class="controlset">
-						<label>definition</label><textarea name="definition" class="small"></textarea>
-					</div>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="collection-form" w:content="content">
+		<form class="form" data-class="com.kidscademy.Form">
+			<fieldset id="identity">
+				<div class="header container">
+					<h2>@string/identity</h2>
 				</div>
-			</div>
-		</fieldset>
-
-		<fieldset id="icon">
-			<div class="header container">
-				<h2>@string/icon</h2>
-			</div>
-			<div class="content">
-				<div data-name="icon-src" class="container" w:compo="compo/icon-control"></div>
-			</div>
-		</fieldset>
-
-		<fieldset id="description-meta">
-			<div class="header container">
-				<h2>@string/description-meta</h2>
-			</div>
-			<div class="content">
-				<div data-name="description-meta" class="container" data-class="com.kidscademy.collection.DescriptionMetaControl">
-					<table class="table full-width" data-class="com.kidscademy.TableView">
-						<thead>
-							<tr>
-								<th>@string/section-name</th>
-								<th>@string/section-definition</th>
-							</tr>
-						</thead>
-						<tbody class="view" data-list=".">
-							<tr class="item" draggable="true">
-								<td data-text="name"></td>
-								<td data-text="definition" class="full-width"></td>
-							</tr>
-						</tbody>
-					</table>
-
-					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/collection-description-add" /> 
-						<img name="clone" src="@image/action/clone" title="@tip/collection-description-clone" /> 
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/collection-description-done" /> 
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/collection-description-remove" /> 
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/collection-description-close" class="rfloat" />
-						<img name="remove-all" src="@image/action/remove-all" title="@tip/collection-description-remove-all" class="rfloat" /> 
-					</div>
-
-					<div class="editor hidden" data-class="com.kidscademy.FormData">
+				<div class="content">
+					<div class="container">
 						<div class="controlset">
-							<label>@string/section-name</label><input name="name" />
+							<label>name</label><input name="name" />
 						</div>
 						<div class="controlset">
-							<label>@string/section-definition</label>
+							<label>display</label><input name="display" />
+						</div>
+						<div class="controlset">
+							<label>definition</label>
 							<textarea name="definition" class="small"></textarea>
 						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
+			</fieldset>
 
-		<fieldset id="taxonomy-meta">
-			<div class="header container">
-				<h2>@string/taxonomy-meta</h2>
-			</div>
-			<div class="content">
-				<div data-name="taxonomy-meta" class="container" data-class="com.kidscademy.collection.TaxonomyMetaControl">
-					<table class="table full-width" data-class="com.kidscademy.TableView">
-						<thead>
-							<tr>
-								<th>@string/taxon-name</th>
-								<th>@string/taxon-display</th>
-								<th>@string/taxon-values</th>
-							</tr>
-						</thead>
-						<tbody class="taxons-meta" data-list=".">
-							<tr class="item" draggable="true">
-								<td data-text="unit.name"></td>
-								<td data-text="unit.display"></td>
-								<td data-text="values" class="full-width"></td>
-							</tr>
-						</tbody>
-					</table>
+			<fieldset id="icon">
+				<div class="header container">
+					<h2>@string/icon</h2>
+				</div>
+				<div class="content">
+					<div data-name="icon-src" class="container" w:compo="res/compo/icon-control"></div>
+				</div>
+			</fieldset>
 
-					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/taxonomy-meta-add" /> 
-						<img name="clone" src="@image/action/clone" title="@tip/taxonomy-meta-clone" /> 
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-meta-done" /> 
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-meta-remove" />
-						<span class="space"></span> 
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-meta-close" class="rfloat" />
-						<img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-meta-remove-all" class="rfloat" /> 
+			<fieldset id="description-meta">
+				<div class="header container">
+					<h2>@string/description-meta</h2>
+				</div>
+				<div class="content">
+					<div data-name="description-meta" class="container" data-class="com.kidscademy.collection.DescriptionMetaControl">
+						<table class="table full-width" data-class="com.kidscademy.TableView">
+							<thead>
+								<tr>
+									<th>@string/section-name</th>
+									<th>@string/section-definition</th>
+								</tr>
+							</thead>
+							<tbody class="view" data-list=".">
+								<tr class="item" draggable="true">
+									<td data-text="name"></td>
+									<td data-text="definition" class="full-width"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="actions bar" data-class="com.kidscademy.Actions">
+							<img name="add" src="@image/action/add" title="@tip/collection-description-add" /> <img name="clone" src="@image/action/clone" title="@tip/collection-description-clone" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/collection-description-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/collection-description-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/collection-description-close" class="rfloat" /> <img name="remove-all" src="@image/action/remove-all" title="@tip/collection-description-remove-all" class="rfloat" />
+						</div>
+
+						<div class="editor hidden" data-class="com.kidscademy.FormData">
+							<div class="controlset">
+								<label>@string/section-name</label><input name="name" />
+							</div>
+							<div class="controlset">
+								<label>@string/section-definition</label>
+								<textarea name="definition" class="small"></textarea>
+							</div>
+						</div>
 					</div>
+				</div>
+			</fieldset>
 
-					<div class="editor taxon-form hidden">
+			<fieldset id="taxonomy-meta">
+				<div class="header container">
+					<h2>@string/taxonomy-meta</h2>
+				</div>
+				<div class="content">
+					<div data-name="taxonomy-meta" class="container" data-class="com.kidscademy.collection.TaxonomyMetaControl">
+						<table class="table full-width" data-class="com.kidscademy.TableView">
+							<thead>
+								<tr>
+									<th>@string/taxon-name</th>
+									<th>@string/taxon-display</th>
+									<th>@string/taxon-values</th>
+								</tr>
+							</thead>
+							<tbody class="taxons-meta" data-list=".">
+								<tr class="item" draggable="true">
+									<td data-text="unit.name"></td>
+									<td data-text="unit.display"></td>
+									<td data-text="values" class="full-width"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="actions bar" data-class="com.kidscademy.Actions">
+							<img name="add" src="@image/action/add" title="@tip/taxonomy-meta-add" /> <img name="clone" src="@image/action/clone" title="@tip/taxonomy-meta-clone" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/taxonomy-meta-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/taxonomy-meta-remove" /> <span class="space"></span> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/taxonomy-meta-close" class="rfloat" /> <img name="remove-all" src="@image/action/remove-all" title="@tip/taxonomy-meta-remove-all" class="rfloat" />
+						</div>
+
+						<div class="editor taxon-form hidden">
+							<div class="controlset">
+								<label>@string/taxon-name</label><input class="taxon-name" disabled="disabled" />
+							</div>
+							<div class="controlset">
+								<label>@string/taxon-display</label><input class="taxon-display" disabled="disabled" />
+							</div>
+							<div class="controlset">
+								<label>@string/taxon-values</label><input class="taxon-values large" />
+							</div>
+						</div>
+
+						<div class="editor taxon-units hidden" w:compo="res/compo/taxon-units"></div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset id="features-meta">
+				<div class="header container">
+					<h2>@string/features-meta</h2>
+				</div>
+				<div class="content">
+					<div data-name="features-meta" class="container optional" data-class="com.kidscademy.collection.FeaturesMetaControl">
+						<table class="features draggable" w:compo="res/compo/features-meta-table"></table>
+
+						<div class="actions bar" data-class="com.kidscademy.Actions">
+							<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> <img name="add-all" src="@image/action/add-all" title="@tip/features-meta-add-all" /> <img name="clone" src="@image/action/clone" title="@tip/features-meta-clone" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" /> <img name="remove-all" src="@image/action/remove-all" title="@tip/features-meta-remove-all" class="rfloat" />
+						</div>
+
+						<div class="editor hidden" w:compo="res/compo/features-meta"></div>
+					</div>
+				</div>
+			</fieldset>
+
+
+			<fieldset id="link-sources">
+				<div class="header container">
+					<h2>@string/link-sources</h2>
+				</div>
+
+				<div class="content">
+					<div data-name="link-sources" class="container" data-class="com.kidscademy.collection.LinkSourcesControl">
+						<ul class="link-sources" w:compo="res/compo/icons-list"></ul>
+
+						<div class="actions bar" data-class="com.kidscademy.Actions">
+							<img name="add" src="@image/action/add" title="@tip/link-sources-add" /> <img name="clone" src="@image/action/clone" title="@tip/link-sources-clone" /> <img name="browse" src="@image/action/browse" title="@tip/link-sources-browse" /> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/link-sources-done" /> <img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/link-sources-remove" /> <img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/link-sources-close" class="rfloat" /> <img name="remove-all" src="@image/action/remove-all" title="@tip/link-sources-remove-all" class="rfloat" />
+						</div>
+
+						<div class="editor hidden" data-class="com.kidscademy.FrameView">
+							<div class="link-form" data-class="com.kidscademy.FormData">
+								<div class="controlset">
+									<label>home</label> <input name="external-source.home" disabled="disabled" />
+								</div>
+								<div class="controlset">
+									<label>domain</label> <input name="external-source.domain" disabled="disabled" />
+								</div>
+								<div class="controlset">
+									<label>display</label> <input name="external-source.display" disabled="disabled" />
+								</div>
+								<div class="controlset">
+									<label>definition template</label> <input name="external-source.definition" disabled="disabled" />
+								</div>
+								<div class="controlset apis-select">
+									<table data-name="apis" w:compo="res/compo/apis-select"></table>
+								</div>
+							</div>
+
+							<ul class="candidates hidden" w:compo="res/compo/icons-list"></ul>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset id="settings">
+				<div class="header container">
+					<h2>@string/settings</h2>
+				</div>
+				<div class="content">
+					<div class="container">
 						<div class="controlset">
-							<label>@string/taxon-name</label><input class="taxon-name" disabled="disabled" />
+							<label>features type</label><select name="features-type" w:compo="res/compo/features-type-select"></select>
 						</div>
 						<div class="controlset">
-							<label>@string/taxon-display</label><input class="taxon-display" disabled="disabled" />
+							<label>theme</label><select name="theme" w:compo="res/compo/theme-select"></select>
+						</div>
+						<hr class="divider" />
+						<div class="controlset">
+							<label>end date</label><input name="flags.end-date" type="checkbox" />
 						</div>
 						<div class="controlset">
-							<label>@string/taxon-values</label><input class="taxon-values large" />
+							<label>progenitor</label><input name="flags.progenitor" type="checkbox" />
+						</div>
+						<div class="controlset">
+							<label>conservation status</label><input name="flags.conservation-status" type="checkbox" />
+						</div>
+						<div class="controlset">
+							<label>audio sample</label><input name="flags.audio-sample" type="checkbox" />
+						</div>
+						<div class="controlset">
+							<label>spreading</label><input name="flags.spreading" type="checkbox" />
 						</div>
 					</div>
-
-					<div class="editor taxon-units hidden" w:compo="compo/taxon-units"></div>
 				</div>
-			</div>
-		</fieldset>
+			</fieldset>
+		</form>
 
-		<fieldset id="features-meta">
-			<div class="header container">
-				<h2>@string/features-meta</h2>
-			</div>
-			<div class="content">
-				<div data-name="features-meta" class="container optional" data-class="com.kidscademy.collection.FeaturesMetaControl">
-					<table class="features draggable" w:compo="compo/features-meta-table"></table>
+		<div w:compo="res/compo/item-select"></div>
+	</div>
 
-					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/features-meta-add" /> 
-						<img name="add-all" src="@image/action/add-all" title="@tip/features-meta-add-all" /> 
-						<img name="clone" src="@image/action/clone" title="@tip/features-meta-clone" /> 
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/features-meta-remove" /> 
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/features-meta-close" class="rfloat" />
-						<img name="remove-all" src="@image/action/remove-all" title="@tip/features-meta-remove-all" class="rfloat" /> 
-					</div>
+	<div class="collection-form" w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+			<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+			<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+		</ul>
 
-					<div class="editor hidden" w:compo="compo/features-meta"></div>
-				</div>
-			</div>
-		</fieldset>
+		<ul class="menu quick-links">
+			<li data-name="identity"><img src="@image/action/identity" /><span>@string/identity</span><span class="state"></span></li>
+			<li data-name="icon"><img src="@image/action/icon" /><span>@string/icon</span><span class="state"></span></li>
+			<li data-name="description-meta"><img src="@image/action/description" /><span>@string/description-meta</span><span class="state"></span></li>
+			<li data-name="taxonomy-meta"><img src="@image/action/taxonomy" /><span>@string/taxonomy-meta</span><span class="state"></span></li>
+			<li data-name="features-meta"><img src="@image/action/features" /><span>@string/features-meta</span><span class="state"></span></li>
+			<li data-name="link-sources"><img src="@image/action/link" /><span>@string/link-sources</span><span class="state"></span></li>
+			<li data-name="settings"><img src="@image/action/definition" /><span>@string/settings</span><span class="state"></span></li>
+		</ul>
 
-
-		<fieldset id="link-sources">
-			<div class="header container">
-				<h2>@string/link-sources</h2>
-			</div>
-			
-			<div class="content">
-				<div data-name="link-sources" class="container" data-class="com.kidscademy.collection.LinkSourcesControl">
-					<ul class="link-sources" w:compo="compo/icons-list"></ul>
-
-					<div class="actions bar" data-class="com.kidscademy.Actions">
-						<img name="add" src="@image/action/add" title="@tip/link-sources-add" />
-						<img name="clone" src="@image/action/clone" title="@tip/link-sources-clone" /> 
-						<img name="browse" src="@image/action/browse" title="@tip/link-sources-browse" /> 
-						<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/link-sources-done" /> 
-						<img name="remove" data-key="CTRL+DELETE" src="@image/action/remove" title="@tip/link-sources-remove" /> 
-						<img name="close" data-key="ESCAPE" src="@image/action/close" title="@tip/link-sources-close" class="rfloat" />
-						<img name="remove-all" src="@image/action/remove-all" title="@tip/link-sources-remove-all" class="rfloat" /> 
-					</div>
-					
-					<div class="editor hidden" data-class="com.kidscademy.FrameView">
-						<div class="link-form" data-class="com.kidscademy.FormData">
-							<div class="controlset">
-								<label>home</label> <input name="external-source.home" disabled="disabled" />
-							</div>
-							<div class="controlset">
-								<label>domain</label> <input name="external-source.domain" disabled="disabled" />
-							</div>
-							<div class="controlset">
-								<label>display</label> <input name="external-source.display" disabled="disabled" />
-							</div>
-							<div class="controlset">
-								<label>definition template</label> <input name="external-source.definition" disabled="disabled" />
-							</div>
-							<div class="controlset apis-select">
-								<table data-name="apis" w:compo="compo/apis-select"></table>
-							</div>
-						</div>
-
-						<ul class="candidates hidden" w:compo="compo/icons-list"></ul>
-					</div>
-				</div>
-			</div>
-		</fieldset>
-
-		<fieldset id="settings">
-			<div class="header container">
-				<h2>@string/settings</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>features type</label><select name="features-type" w:compo="compo/features-type-select"></select>
-					</div>
-					<div class="controlset">
-						<label>theme</label><select name="theme" w:compo="compo/theme-select"></select>
-					</div>
-					<hr class="divider" />
-					<div class="controlset">
-						<label>end date</label><input name="flags.end-date" type="checkbox" />
-					</div>
-					<div class="controlset">
-						<label>progenitor</label><input name="flags.progenitor" type="checkbox" />
-					</div>
-					<div class="controlset">
-						<label>conservation status</label><input name="flags.conservation-status" type="checkbox" />
-					</div>
-					<div class="controlset">
-						<label>audio sample</label><input name="flags.audio-sample" type="checkbox" />
-					</div>
-					<div class="controlset">
-						<label>spreading</label><input name="flags.spreading" type="checkbox" />
-					</div>
-				</div>
-			</div>
-		</fieldset>
-	</form>
-
-	<div w:compo="compo/item-select"></div>
-</div>
-
-<div class="collection-form" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
-		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
-		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
-	</ul>
-
-	<ul class="menu quick-links">
-		<li data-name="identity"><img src="@image/action/identity" /><span>@string/identity</span><span class="state"></span></li>
-		<li data-name="icon"><img src="@image/action/icon" /><span>@string/icon</span><span class="state"></span></li>
-		<li data-name="description-meta"><img src="@image/action/description" /><span>@string/description-meta</span><span class="state"></span></li>
-		<li data-name="taxonomy-meta"><img src="@image/action/taxonomy" /><span>@string/taxonomy-meta</span><span class="state"></span></li>
-		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/features-meta</span><span class="state"></span></li>
-		<li data-name="link-sources"><img src="@image/action/link" /><span>@string/link-sources</span><span class="state"></span></li>
-		<li data-name="settings"><img src="@image/action/definition" /><span>@string/settings</span><span class="state"></span></li>
-	</ul>
-
-	<ul class="menu actions bottom">
-		<li data-name="save"><img src="@image/action/save" /><span>@string/save</span></li>
-		<li data-name="cancel"><img src="@image/action/cancel" /><span>@string/cancel</span></li>
-	</ul>
-</div>
+		<ul class="menu actions bottom">
+			<li data-name="save"><img src="@image/action/save" /><span>@string/save</span></li>
+			<li data-name="cancel"><img src="@image/action/cancel" /><span>@string/cancel</span></li>
+		</ul>
+	</div>
+</code>

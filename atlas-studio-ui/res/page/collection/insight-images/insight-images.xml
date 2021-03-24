@@ -4,7 +4,7 @@
 	<title>Insight Images</title>
 	<description>List of collection objects with their images.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
 	</scripts>
 </page>

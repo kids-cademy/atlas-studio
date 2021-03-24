@@ -1,17 +1,19 @@
-<div class="features-meta" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div class="features-list large" w:compo="compo/features-meta"></div>
-	<div w:compo="page/features-meta/context-menu"></div>
-</div>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="features-meta" w:content="content">
+		<div class="features-list large" w:compo="res/compo/features-meta"></div>
+		<div w:compo="res/page/features-meta/context-menu"></div>
+	</div>
 
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
-		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
-		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
-		<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
-	</ul>
-	<ul class="menu">
-		<li data-name="create-feature-meta"><img src="@image/action/add" /><span>@string/feature-meta-create</span></li>
-		<li data-name="translate-features"><img src="@image/action/translate" /><span>@string/feature-meta-translate</span></li>
-	</ul>
-</div>
+	<div w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+			<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+			<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+			<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
+		</ul>
+		<ul class="menu">
+			<li data-name="create-feature-meta"><img src="@image/action/add" /><span>@string/feature-meta-create</span></li>
+			<li data-name="translate-features"><img src="@image/action/translate" /><span>@string/feature-meta-translate</span></li>
+		</ul>
+	</div>
+</code>

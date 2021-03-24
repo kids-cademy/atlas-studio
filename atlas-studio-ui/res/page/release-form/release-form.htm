@@ -1,127 +1,121 @@
-<div class="release-form" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form">
-		<fieldset>
-			<div class="header container">
-				<h2>Identity</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>name</label><input name="name" />
-					</div>
-					<div class="controlset">
-						<label>display</label><input name="display" />
-					</div>
-					<div class="controlset">
-						<label>brief</label><input name="brief" />
-					</div>
-					<div class="controlset">
-						<label>definition</label><textarea name="definition" class="small"></textarea>
-					</div>
-					<div class="controlset">
-						<label>languages</label><input name="languages" data-class="com.kidscademy.StringsControl" />
-					</div>
-				</div>
-			</div>
-		</fieldset>
-
-		<div class="edit-sections">
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="release-form" w:content="content">
+		<form class="form">
 			<fieldset>
 				<div class="header container">
-					<h2>Graphic Assets</h2>
+					<h2>Identity</h2>
 				</div>
 				<div class="content">
 					<div class="container">
-						<div class="view images-list">
-							<img name="images.icon" class="thumbnail optional" data-class="js.dom.ImageControl" /> 
-							<img name="images.feature" class="thumbnail optional" data-class="js.dom.ImageControl" /> 
-							<img name="images.cover" class="thumbnail optional" data-class="js.dom.ImageControl" />
+						<div class="controlset">
+							<label>name</label><input name="name" />
 						</div>
+						<div class="controlset">
+							<label>display</label><input name="display" />
+						</div>
+						<div class="controlset">
+							<label>brief</label><input name="brief" />
+						</div>
+						<div class="controlset">
+							<label>definition</label>
+							<textarea name="definition" class="small"></textarea>
+						</div>
+						<div class="controlset">
+							<label>languages</label><input name="languages" data-class="com.kidscademy.StringsControl" />
+						</div>
+					</div>
+				</div>
+			</fieldset>
 
-						<div data-name="graphicsBackground" data-class="com.kidscademy.release.GraphicAssets">
-							<div class="actions bar exclude" data-class="com.kidscademy.Actions">
-								<img name="edit" src="@image/action/edit" title="@tip/graphic-form" /> 
-								<span data-name="upload" class="upload-icon"> 
-									<img src="@image/action/upload" /> 
-									<input name="upload-file" type="file" title="@tip/graphic-upload" accept="image/*" />
-								</span> 
-								<img name="link" src="@image/action/link" title="@tip/graphic-link" /> 
-								<span class="separator"></span> 
-								<img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/graphic-done" /> 
-								<img name="close" data-key="CTRL+ESCAPE" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
+			<div class="edit-sections">
+				<fieldset>
+					<div class="header container">
+						<h2>Graphic Assets</h2>
+					</div>
+					<div class="content">
+						<div class="container">
+							<div class="view images-list">
+								<img name="images.icon" class="thumbnail optional" data-class="js.dom.ImageControl" /> <img name="images.feature" class="thumbnail optional" data-class="js.dom.ImageControl" /> <img name="images.cover" class="thumbnail optional" data-class="js.dom.ImageControl" />
 							</div>
 
-							<div class="editor hidden" data-class="com.kidscademy.FormData">
-								<div class="controlset">
-									<label>background</label> <input name="background" class="small" />
+							<div data-name="graphicsBackground" data-class="com.kidscademy.release.GraphicAssets">
+								<div class="actions bar exclude" data-class="com.kidscademy.Actions">
+									<img name="edit" src="@image/action/edit" title="@tip/graphic-form" /> <span data-name="upload" class="upload-icon"> <img src="@image/action/upload" /> <input name="upload-file" type="file" title="@tip/graphic-upload" accept="image/*" />
+									</span> <img name="link" src="@image/action/link" title="@tip/graphic-link" /> <span class="separator"></span> <img name="done" data-key="CTRL+ENTER" src="@image/action/done" title="@tip/graphic-done" /> <img name="close" data-key="CTRL+ESCAPE" src="@image/action/close" title="@tip/graphic-close" class="rfloat" />
 								</div>
-								<div class="controlset">
-									<label>source</label> <input name="source" class="large optional" />
+
+								<div class="editor hidden" data-class="com.kidscademy.FormData">
+									<div class="controlset">
+										<label>background</label> <input name="background" class="small" />
+									</div>
+									<div class="controlset">
+										<label>source</label> <input name="source" class="large optional" />
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</fieldset>
+				</fieldset>
 
-			<fieldset>
-				<div class="header container">
-					<h2>Properties</h2>
-				</div>
-				<div class="content">
-					<div class="container">
-						<div class="controlset">
-							<label>publisher</label><input name="publisher" />
-						</div>
-						<div class="controlset">
-							<label>edition</label><input name="edition" />
-						</div>
-						<div class="controlset">
-							<label>theme</label><select name="theme" w:compo="compo/theme-select"></select>
-						</div>
-						<div class="controlset">
-							<label>version</label><input name="version" />
-						</div>
-						<div class="controlset">
-							<label>license</label><input name="license" />
+				<fieldset>
+					<div class="header container">
+						<h2>Properties</h2>
+					</div>
+					<div class="content">
+						<div class="container">
+							<div class="controlset">
+								<label>publisher</label><input name="publisher" />
+							</div>
+							<div class="controlset">
+								<label>edition</label><input name="edition" />
+							</div>
+							<div class="controlset">
+								<label>theme</label><select name="theme" w:compo="res/compo/theme-select"></select>
+							</div>
+							<div class="controlset">
+								<label>version</label><input name="version" />
+							</div>
+							<div class="controlset">
+								<label>license</label><input name="license" />
+							</div>
 						</div>
 					</div>
-				</div>
-			</fieldset>
+				</fieldset>
 
-			<fieldset>
-				<div class="header container">
-					<h2>README</h2>
-				</div>
-				<div class="content">
-					<div class="container">
-						<textarea name="readme" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+				<fieldset>
+					<div class="header container">
+						<h2>README</h2>
 					</div>
-				</div>
-			</fieldset>
+					<div class="content">
+						<div class="container">
+							<textarea name="readme" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+						</div>
+					</div>
+				</fieldset>
 
-			<fieldset>
-				<div class="header container">
-					<h2>PRIVACY</h2>
-				</div>
-				<div class="content">
-					<div class="container">
-						<textarea name="privacy" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+				<fieldset>
+					<div class="header container">
+						<h2>PRIVACY</h2>
 					</div>
-				</div>
-			</fieldset>
+					<div class="content">
+						<div class="container">
+							<textarea name="privacy" class="console large" data-class="com.kidscademy.RichTextControl"></textarea>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+
+		<div class="container buttons-bar">
+			<button name="save">@string/save</button>
+			<button name="cancel">@string/cancel</button>
 		</div>
-	</form>
-
-	<div class="container buttons-bar">
-		<button name="save">@string/save</button>
-		<button name="cancel">@string/cancel</button>
 	</div>
-</div>
 
-<div class="release-form" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="release-objects"><img src="@image/action/icons-view" /><span>@string/release-objects</span></li>
-		<li data-name="android-app"><img src="@image/action/android" /><span>@string/release-android-app</span></li>
-	</ul>
-</div>
+	<div class="release-form" w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="release-objects"><img src="@image/action/icons-view" /><span>@string/release-objects</span></li>
+			<li data-name="android-app"><img src="@image/action/android" /><span>@string/release-android-app</span></li>
+		</ul>
+	</div>
+</code>

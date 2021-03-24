@@ -4,9 +4,9 @@
 	<title>Features Meta</title>
 	<description>Display a table of registered features meta with search by name substring.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/FeaturesMeta.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/FeaturesMeta.js" defer="true"></script>
 	</scripts>
 </page>

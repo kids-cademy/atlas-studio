@@ -4,23 +4,23 @@
 	<title>Collection Form</title>
 	<description>Collection form from editor workspace.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/Form.js</script>
-		<script>script/com/kidscademy/FormData.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/IconControl.js</script>
-		<script>script/com/kidscademy/TableView.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/ItemSelect.js</script>
-		<script>script/com/kidscademy/FrameView.js</script>
-		<script>script/com/kidscademy/StringsControl.js</script>
-		<script>script/com/kidscademy/collection/DescriptionMetaControl.js</script>
-		<script>script/com/kidscademy/collection/TaxonomyMetaControl.js</script>
-		<script>script/com/kidscademy/collection/FeaturesMetaControl.js</script>
-		<script>script/com/kidscademy/collection/LinkSourcesControl.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/page/CollectionForm.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Form.js" defer="true"></script>
+		<script src="script/com/kidscademy/FormData.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/IconControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/TableView.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/ItemSelect.js" defer="true"></script>
+		<script src="script/com/kidscademy/FrameView.js" defer="true"></script>
+		<script src="script/com/kidscademy/StringsControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/collection/DescriptionMetaControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/collection/TaxonomyMetaControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/collection/FeaturesMetaControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/collection/LinkSourcesControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/CollectionForm.js" defer="true"></script>
 	</scripts>
 </page>

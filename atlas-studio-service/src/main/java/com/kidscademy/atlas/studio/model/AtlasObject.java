@@ -245,8 +245,7 @@ public class AtlasObject implements GraphicObject, RepositoryObject, HDateRange
    */
   @PostLoad
   public void postLoad() {
-    // database contains only media file names; convert to root-relative URLs, aka
-    // SRC
+    // database contains only media file names; convert to root-relative URLs, aka SRC
     for(Image picture : images.values()) {
       picture.postLoad(this);
     }

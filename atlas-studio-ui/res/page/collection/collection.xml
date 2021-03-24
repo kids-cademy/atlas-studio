@@ -4,22 +4,22 @@
 	<title>Collection</title>
 	<description>Collection view.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ApiService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/Negator.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/FrameView.js</script>
-		<script>script/com/kidscademy/ContextMenu.js</script>
-		<script>script/com/kidscademy/ObjectsContextMenu.js</script>
-		<script>script/com/kidscademy/ItemSelect.js</script>
-		<script>script/com/kidscademy/PageHeader.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/View.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/collection/InsightListView.js</script>
-		<script>script/com/kidscademy/page/CollectionPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ApiService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ReleaseService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Negator.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/FrameView.js" defer="true"></script>
+		<script src="script/com/kidscademy/ContextMenu.js" defer="true"></script>
+		<script src="script/com/kidscademy/ObjectsContextMenu.js" defer="true"></script>
+		<script src="script/com/kidscademy/ItemSelect.js" defer="true"></script>
+		<script src="script/com/kidscademy/PageHeader.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/View.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/collection/InsightListView.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/CollectionPage.js" defer="true"></script>
 	</scripts>
 </page>

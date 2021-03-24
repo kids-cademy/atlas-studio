@@ -4,8 +4,8 @@
 	<title>APIs Select</title>
 	<description>Pseudo control to select a list of APIs from those provided by ApiService.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ApiService.js</script>
-		<script>script/com/kidscademy/ApisSelect.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ApiService.js" defer="true"></script>
+		<script src="script/com/kidscademy/ApisSelect.js" defer="true"></script>
 	</scripts>
 </page>

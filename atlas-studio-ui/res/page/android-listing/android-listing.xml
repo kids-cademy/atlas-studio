@@ -4,12 +4,12 @@
 	<title>Android Listing</title>
 	<description>Android application listing for atlas release publishing on Google Play.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/util/Sound.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/page/AndroidListingPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ReleaseService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/util/Sound.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/AndroidListingPage.js" defer="true"></script>
 	</scripts>
 </page>

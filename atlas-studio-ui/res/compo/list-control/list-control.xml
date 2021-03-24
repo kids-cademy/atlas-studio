@@ -4,8 +4,8 @@
 	<title>List Control</title>
 	<description>Low level objects list view with multiple layouts.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/ListControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/ListControl.js" defer="true"></script>
 	</scripts>
 </page>

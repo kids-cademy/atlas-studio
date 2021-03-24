@@ -1,66 +1,68 @@
-<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form class="form">
-		<fieldset>
-			<div class="header container">
-				<h2>Identity</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>home</label><input name="home" />
-					</div>
-					<div class="controlset">
-						<label>domain</label><input name="domain" />
-					</div>
-					<div class="controlset">
-						<label>display</label><input name="display" />
-					</div>
-					<div class="controlset">
-						<label>definition template</label><input name="definition-template" />
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div w:content="content">
+		<form class="form">
+			<fieldset>
+				<div class="header container">
+					<h2>Identity</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>home</label><input name="home" />
+						</div>
+						<div class="controlset">
+							<label>domain</label><input name="domain" />
+						</div>
+						<div class="controlset">
+							<label>display</label><input name="display" />
+						</div>
+						<div class="controlset">
+							<label>definition template</label><input name="definition-template" />
+						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
-		
-		<fieldset class="icon-section">
-			<div class="header container">
-				<h2>Icon</h2>
-			</div>
-			<div class="content">
-				<div data-name="icon-src" class="container" w:compo="compo/icon-control"></div>
-			</div>
-		</fieldset>
-		
-		<fieldset>
-			<div class="header container">
-				<h2>Import APIs</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<table class="table body">
-						<tbody class="table-view apis-list" data-list=".">
-							<tr class="api-view">
-								<td><input type="checkbox" /></td>
-								<td data-text="name" class="name"></td>
-								<td data-text="description"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>	
-		</fieldset>
-	</form>
+			</fieldset>
 
-	<div class="container buttons-bar">
-		<button name="save">@string/save</button>
-		<button name="cancel">@string/cancel</button>
+			<fieldset class="icon-section">
+				<div class="header container">
+					<h2>Icon</h2>
+				</div>
+				<div class="content">
+					<div data-name="icon-src" class="container" w:compo="res/compo/icon-control"></div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<div class="header container">
+					<h2>Import APIs</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<table class="table body">
+							<tbody class="table-view apis-list" data-list=".">
+								<tr class="api-view">
+									<td><input type="checkbox" /></td>
+									<td data-text="name" class="name"></td>
+									<td data-text="description"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="container buttons-bar">
+			<button name="save">@string/save</button>
+			<button name="cancel">@string/cancel</button>
+		</div>
 	</div>
-</div>
 
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
-		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
-		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
-	</ul>
-</div>
+	<div w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+			<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+			<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+		</ul>
+	</div>
+</code>

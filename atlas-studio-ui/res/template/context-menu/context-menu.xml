@@ -4,7 +4,7 @@
 	<title>Context Menu</title>
 	<description>Template for context menu.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/ContextMenu.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/ContextMenu.js" defer="true"></script>
 	</scripts>
 </page>

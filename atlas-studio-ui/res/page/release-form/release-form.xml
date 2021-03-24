@@ -4,20 +4,20 @@
 	<title>Release Form</title>
 	<description>Releaseform.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/FormData.js</script>
-		<script>script/com/kidscademy/IconControl.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/Htm2Md.js</script>
-		<script>script/com/kidscademy/Md2Htm.js</script>
-		<script>script/com/kidscademy/RichTextControl.js</script>
-		<script>script/com/kidscademy/Sidebar.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/StringsControl.js</script>
-		<script>script/com/kidscademy/release/GraphicAssets.js</script>
-		<script>script/com/kidscademy/page/ReleaseForm.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ReleaseService.js" defer="true"></script>
+		<script src="script/com/kidscademy/FormData.js" defer="true"></script>
+		<script src="script/com/kidscademy/IconControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/Htm2Md.js" defer="true"></script>
+		<script src="script/com/kidscademy/Md2Htm.js" defer="true"></script>
+		<script src="script/com/kidscademy/RichTextControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/Sidebar.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/StringsControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/release/GraphicAssets.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/ReleaseForm.js" defer="true"></script>
 	</scripts>
 </page>

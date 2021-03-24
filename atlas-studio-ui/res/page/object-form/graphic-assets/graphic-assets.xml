@@ -4,15 +4,15 @@
 	<title>Graphics Assets</title>
 	<description>Graphic assets field set from object form.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/FormData.js</script>
-		<script>script/com/kidscademy/ImageEditor.js</script>
-		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/ImagesControl.js</script>
-		<script>script/com/kidscademy/form/CaptionControl.js</script>
-		<script>script/com/kidscademy/form/CropMask.js</script>
-		<script>script/com/kidscademy/form/GraphicAssets.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/FormData.js" defer="true"></script>
+		<script src="script/com/kidscademy/ImageEditor.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FormControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/ImagesControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/CaptionControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/CropMask.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/GraphicAssets.js" defer="true"></script>
 	</scripts>
 </page>

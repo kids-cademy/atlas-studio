@@ -4,6 +4,6 @@
 	<title>Atlas Reader</title>
 	<description>Atlas object reader, intro section.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
 	</scripts>
 </page>

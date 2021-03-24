@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2020-09-21T05:42:01.824Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/13.4.5 Chrome/83.0.4103.122 Electron/9.1.0 Safari/537.36" etag="OphcLv4ScgyJB_rxjThO" version="13.4.5" type="device">
+  <diagram id="xpAg29yrCUkf0yuo0pqa" name="Page-4">
+    <mxGraphModel dx="1855" dy="822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="iIyg3hFnl11Q9pBf_x2Q-0" />
+        <mxCell id="iIyg3hFnl11Q9pBf_x2Q-1" parent="iIyg3hFnl11Q9pBf_x2Q-0" />
+        <mxCell id="iIyg3hFnl11Q9pBf_x2Q-2" value="WikipediaAPI" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-1">
+          <mxGeometry x="160" y="120" width="400" height="156" as="geometry" />
+        </mxCell>
+        <object label="+ getDefinitions(word: String): List&lt;WordDefinition&gt;" method="GET" path="definitions/{word}" id="iIyg3hFnl11Q9pBf_x2Q-3">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-2">
+            <mxGeometry y="26" width="400" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="+ getLifeForm(name: String): LifeForm" method="GET" path="life/{name}" id="iIyg3hFnl11Q9pBf_x2Q-4">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-2">
+            <mxGeometry y="52" width="400" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="+ getLifeTaxonomy(name: String): LinkedHashMap&lt;String, String&gt;" method="GET" path="/life/taxonomy/{name}" id="iIyg3hFnl11Q9pBf_x2Q-5">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-2">
+            <mxGeometry y="78" width="400" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="+ getEdiblePlant(name: String): EdiblePlant" method="GET" path="edible/{name}" id="iIyg3hFnl11Q9pBf_x2Q-6">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-2">
+            <mxGeometry y="104" width="400" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="+ getEdibleNutrients(name: String): LinkedHashMap&lt;String, Double&gt;" method="GET" path="edible/nutrients/{name}" id="iIyg3hFnl11Q9pBf_x2Q-7">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iIyg3hFnl11Q9pBf_x2Q-2">
+            <mxGeometry y="130" width="400" height="26" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

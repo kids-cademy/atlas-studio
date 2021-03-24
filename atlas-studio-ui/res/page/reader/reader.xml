@@ -4,16 +4,16 @@
 	<title>Reader</title>
 	<description>Atlas object reader, mainly for objects preview.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/ColumnText.js</script>
-		<script>script/com/kidscademy/TextColumn.js</script>
-		<script>script/com/kidscademy/format/HDateFormat.js</script>
-		<script>script/com/kidscademy/format/RegionFormat.js</script>
-		<script>script/com/kidscademy/reader/RelatedView.js</script>
-		<script>script/com/kidscademy/reader/FactsView.js</script>
-		<script>script/com/kidscademy/Page.js</script>
-		<script>script/com/kidscademy/page/ReaderPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/ColumnText.js" defer="true"></script>
+		<script src="script/com/kidscademy/TextColumn.js" defer="true"></script>
+		<script src="script/com/kidscademy/format/HDateFormat.js" defer="true"></script>
+		<script src="script/com/kidscademy/format/RegionFormat.js" defer="true"></script>
+		<script src="script/com/kidscademy/reader/RelatedView.js" defer="true"></script>
+		<script src="script/com/kidscademy/reader/FactsView.js" defer="true"></script>
+		<script src="script/com/kidscademy/Page.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/ReaderPage.js" defer="true"></script>
 	</scripts>
 </page>

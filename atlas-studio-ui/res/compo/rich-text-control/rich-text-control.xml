@@ -4,9 +4,9 @@
 	<title>Rich Text Control</title>
 	<description>Rich text control formated as markdown.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/Htm2Md.js</script>
-		<script>script/com/kidscademy/Md2Htm.js</script>
-		<script>script/com/kidscademy/RichTextControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/Htm2Md.js" defer="true"></script>
+		<script src="script/com/kidscademy/Md2Htm.js" defer="true"></script>
+		<script src="script/com/kidscademy/RichTextControl.js" defer="true"></script>
 	</scripts>
 </page>

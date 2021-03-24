@@ -1,79 +1,70 @@
-<div w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<form>
-		<fieldset>
-			<div class="header container">
-				<h2>Product</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>title</label><input name="title" disabled="disabled" />
-						<span class="actions">
-							<img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-						</span>	
-					</div>
-					<div class="controlset">
-						<label>short description</label><input name="short-description" disabled="disabled" />
-						<span class="actions">
-							<img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-						</span>
-					</div>
-					<div class="controlset">
-						<label>full description</label><textarea name="full-description" class="large" disabled="disabled"></textarea>
-						<span class="actions">
-							<img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-						</span>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div w:content="content">
+		<form>
+			<fieldset>
+				<div class="header container">
+					<h2>Product</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>title</label><input name="title" disabled="disabled" /> <span class="actions"> <img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+							</span>
+						</div>
+						<div class="controlset">
+							<label>short description</label><input name="short-description" disabled="disabled" /> <span class="actions"> <img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+							</span>
+						</div>
+						<div class="controlset">
+							<label>full description</label>
+							<textarea name="full-description" class="large" disabled="disabled"></textarea>
+							<span class="actions"> <img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
-		<fieldset>
-			<div class="header container">
-				<h2>Contact</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>website</label><input name="website" disabled="disabled" />
-						<span class="actions">
-							<img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-						</span>	
-					</div>
-					<div class="controlset">
-						<label>email</label><input name="email" disabled="disabled" />
-						<span class="actions">
-							<img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-						</span>	
+			</fieldset>
+			<fieldset>
+				<div class="header container">
+					<h2>Contact</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>website</label><input name="website" disabled="disabled" /> <span class="actions"> <img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+							</span>
+						</div>
+						<div class="controlset">
+							<label>email</label><input name="email" disabled="disabled" /> <span class="actions"> <img name="copy" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
-		<fieldset>
-			<div class="header container">
-				<h2>Privacy</h2>
-			</div>
-			<div class="content">
-				<div class="container">
-					<div class="controlset">
-						<label>privacy</label><input name="privacy" disabled="disabled" />
-						<span class="actions">
-							<img name="copy" class="action-for-input" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" />
-							<img name="browse" src="@image/action/browse" title="@tip/link-browse" />
-						</span>	 
+			</fieldset>
+			<fieldset>
+				<div class="header container">
+					<h2>Privacy</h2>
+				</div>
+				<div class="content">
+					<div class="container">
+						<div class="controlset">
+							<label>privacy</label><input name="privacy" disabled="disabled" /> <span class="actions"> <img name="copy" class="action-for-input" src="@image/action/copy-to-clipboard" title="@tip/identity-copy-name" /> <img name="browse" src="@image/action/browse" title="@tip/link-browse" />
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</fieldset>
-	</form>
-</div>
+			</fieldset>
+		</form>
+	</div>
 
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="edit-release"><img src="@image/action/edit" /><span>@string/release-edit</span></li>
-		<li data-name="android-app"><img src="@image/action/android" /><span>@string/release-android-app</span></li>
-	</ul>
-	<ul class="menu">
-		<li><a data-name="download-apk" type="application/octet-stream"><img src="@image/action/download" /><span>@string/android-download-apk</span></a></li>
-		<li><a data-name="download-bundle" type="application/octet-stream"><img src="@image/action/download" /><span>@string/android-download-bundle</span></a></li>
-	</ul>
-</div>
+	<div w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="edit-release"><img src="@image/action/edit" /><span>@string/release-edit</span></li>
+			<li data-name="android-app"><img src="@image/action/android" /><span>@string/release-android-app</span></li>
+		</ul>
+		<ul class="menu">
+			<li><a data-name="download-apk" type="application/octet-stream"><img src="@image/action/download" /><span>@string/android-download-apk</span></a></li>
+			<li><a data-name="download-bundle" type="application/octet-stream"><img src="@image/action/download" /><span>@string/android-download-bundle</span></a></li>
+		</ul>
+	</div>
+</code>

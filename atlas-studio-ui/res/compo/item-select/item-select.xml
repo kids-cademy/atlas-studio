@@ -4,8 +4,8 @@
 	<title>Item Select</title>
 	<description>Dialog to select an item from a list.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/ItemSelect.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/ItemSelect.js" defer="true"></script>
 	</scripts>
 </page>

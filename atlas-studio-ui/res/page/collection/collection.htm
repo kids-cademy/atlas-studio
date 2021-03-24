@@ -1,48 +1,40 @@
-<div class="collection" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div>
-		<form class="filter-form form-bar with-actions">
-			<div w:compo="compo/negator" data-name="negate"></div>
-			<select w:compo="compo/object-state-select" name="state"></select>
-			<div class="actions inline"  data-class="com.kidscademy.Actions">
-				<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" />
-				<img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" />
-				<span class="space"></span>
-				<img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" />
-				<img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" />
-				<img name="details-view" src="@image/action/details-view" title="@tip/search-reset" />
-				<img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" />
-				<span class="space"></span>
-				<img name="images-view" src="@image/action/images-view" title="@tip/search-reset" />
-				<img name="related-view" src="@image/action/related" title="@tip/search-reset" />
-				<img name="links-view" src="@image/action/link" title="@tip/search-reset" />
-				<span class="space"></span>
-				<img src="@image/action/sort-by-alpha" title="@tip/search-reset" />
-				<img src="@image/action/sort" title="@tip/search-reset" />
-			</div>
-		</form>
-	</div>
-
-	<div class="content">
-		<h1 class="loading-info hidden" data-object=".">Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.</h1>
-		<div data-class="com.kidscademy.FrameView">
-			<ul w:compo="compo/list-control"></ul>
-			<ul w:compo="page/collection/insight-images" class="hidden"></ul>
-			<ul w:compo="page/collection/insight-links" class="hidden"></ul>
-			<ul w:compo="page/collection/insight-related" class="hidden"></ul>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="collection" w:content="content">
+		<div>
+			<form class="filter-form form-bar with-actions">
+				<div w:compo="res/compo/negator" data-name="negate"></div>
+				<select w:compo="res/compo/object-state-select" name="state"></select>
+				<div class="actions inline" data-class="com.kidscademy.Actions">
+					<img name="load-items" data-key="ENTER" src="@image/action/search" title="@tip/search-submit" /> <img name="reset-filter" data-key="ESCAPE,DELETE" src="@image/action/close" title="@tip/search-reset" /> <span class="space"></span> <img name="icons-view" src="@image/action/icons-view" title="@tip/search-reset" /> <img name="tiles-view" src="@image/action/tiles-view" title="@tip/search-reset" /> <img name="details-view" src="@image/action/details-view" title="@tip/search-reset" /> <img name="cards-view" src="@image/action/cards-view" title="@tip/search-reset" /> <span class="space"></span> <img name="images-view" src="@image/action/images-view" title="@tip/search-reset" /> <img name="related-view" src="@image/action/related" title="@tip/search-reset" /> <img name="links-view" src="@image/action/link" title="@tip/search-reset" /> <span class="space"></span> <img src="@image/action/sort-by-alpha" title="@tip/search-reset" /> <img src="@image/action/sort"
+						title="@tip/search-reset" />
+				</div>
+			</form>
 		</div>
+
+		<div class="content">
+			<h1 class="loading-info hidden" data-object=".">
+				Found <span data-text="objects-count"></span> objects in <span data-text="ellapsed-time"></span> milliseconds.
+			</h1>
+			<div data-class="com.kidscademy.FrameView">
+				<ul w:compo="res/compo/list-control"></ul>
+				<ul w:compo="res/page/collection/insight-images" class="hidden"></ul>
+				<ul w:compo="res/page/collection/insight-links" class="hidden"></ul>
+				<ul w:compo="res/page/collection/insight-related" class="hidden"></ul>
+			</div>
+		</div>
+
+		<div w:compo="res/page/collection/context-menu"></div>
+		<div w:compo="res/compo/item-select"></div>
 	</div>
 
-	<div w:compo="page/collection/context-menu"></div>
-	<div w:compo="compo/item-select"></div>
-</div>
-
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="create-object"><img src="@image/action/add" /><span>@string/object-create</span></li>
-		<li data-name="import-wikipedia"><img src="@image/action/upload" /><span>@string/collection-import-wikipedia</span></li>
-		<li data-name="add-all-to-release"><img src="@image/action/add-to-release" /><span>@string/collection-add-all-to-release</span></li>
-		<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
-		<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/collection-export</span></a></li>
-		<li data-name="remove-collection"><img src="@image/action/remove" /><span>@string/collection-remove</span></li>
-	</ul>
-</div>
+	<div w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="create-object"><img src="@image/action/add" /><span>@string/object-create</span></li>
+			<li data-name="import-wikipedia"><img src="@image/action/upload" /><span>@string/collection-import-wikipedia</span></li>
+			<li data-name="add-all-to-release"><img src="@image/action/add-to-release" /><span>@string/collection-add-all-to-release</span></li>
+			<li data-name="edit-collection"><img src="@image/action/edit" /><span>@string/collection-edit</span></li>
+			<li><a class="export" download="atlas.zip"><img src="@image/action/download" /><span>@string/collection-export</span></a></li>
+			<li data-name="remove-collection"><img src="@image/action/remove" /><span>@string/collection-remove</span></li>
+		</ul>
+	</div>
+</code>

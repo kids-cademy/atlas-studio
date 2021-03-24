@@ -4,10 +4,10 @@
 	<title>List View</title>
 	<description>Objects list view with search and multiple layouts. Search experimental and is not yet implemented.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/ListControl.js</script>
-		<script>script/com/kidscademy/ListView.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/ListControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/ListView.js" defer="true"></script>
 	</scripts>
 </page>

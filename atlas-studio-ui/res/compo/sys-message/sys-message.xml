@@ -4,7 +4,7 @@
 	<title>System Message</title>
 	<description>System message bar displayed on page top.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>script/com/kidscademy/SysMessage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/SysMessage.js" defer="true"></script>
 	</scripts>
 </page>

@@ -4,9 +4,9 @@
 	<title>Login</title>
 	<description>Atlas Studio authentication, registration and password recovery.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AdminService.js</script>
-		<script>script/com/kidscademy/CollapsibleSection.js</script>
-		<script>script/com/kidscademy/page/LoginPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AdminService.js" defer="true"></script>
+		<script src="script/com/kidscademy/CollapsibleSection.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/LoginPage.js" defer="true"></script>
 	</scripts>
 </page>

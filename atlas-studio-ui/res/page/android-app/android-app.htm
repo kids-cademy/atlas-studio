@@ -1,84 +1,85 @@
-<div class="android-app" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div class="release">
-		<div class="scroll-y">
-			<div class="object-view">
-				<img class="iconx" data-src="icon-src" width="@dimen/icon-size-large" height="@dimen/icon-size-large" />
-				<h1 class="display" data-text="display"></h1>
-				<p class="definition" data-text="release.definition"></p>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="android-app" w:content="content">
+		<div class="release">
+			<div class="scroll-y">
+				<div class="object-view">
+					<img class="iconx" data-src="icon-src" width="@dimen/icon-size-large" height="@dimen/icon-size-large" />
+					<h1 class="display" data-text="display"></h1>
+					<p class="definition" data-text="release.definition"></p>
+				</div>
+
+				<table class="properties">
+					<tr>
+						<td>@string/android-app-name</td>
+						<td data-text="name"></td>
+					</tr>
+					<tr>
+						<td>@string/android-package-name</td>
+						<td data-text="package-name"></td>
+					</tr>
+					<tr>
+						<td>@string/android-version-code</td>
+						<td data-text="version-code"></td>
+					</tr>
+					<tr>
+						<td>@string/android-publisher</td>
+						<td data-text="release.publisher"></td>
+					</tr>
+					<tr>
+						<td>@string/android-edition</td>
+						<td data-text="release.edition"></td>
+					</tr>
+					<tr>
+						<td>@string/android-theme</td>
+						<td data-text="release.theme"></td>
+					</tr>
+					<tr>
+						<td>@string/android-languages</td>
+						<td data-text="languages" data-format="com.kidscademy.format.StringsFormat"></td>
+					</tr>
+					<tr>
+						<td>@string/android-version</td>
+						<td data-text="release.version"></td>
+					</tr>
+					<tr>
+						<td>@string/android-license</td>
+						<td data-text="release.license"></td>
+					</tr>
+				</table>
+
+				<div class="objects-list no-search" w:compo="res/compo/list-view"></div>
 			</div>
-
-			<table class="properties">
-				<tr>
-					<td>@string/android-app-name</td>
-					<td data-text="name"></td>
-				</tr>
-				<tr>
-					<td>@string/android-package-name</td>
-					<td data-text="package-name"></td>
-				</tr>
-				<tr>
-					<td>@string/android-version-code</td>
-					<td data-text="version-code"></td>
-				</tr>
-				<tr>
-					<td>@string/android-publisher</td>
-					<td data-text="release.publisher"></td>
-				</tr>
-				<tr>
-					<td>@string/android-edition</td>
-					<td data-text="release.edition"></td>
-				</tr>
-				<tr>
-					<td>@string/android-theme</td>
-					<td data-text="release.theme"></td>
-				</tr>
-				<tr>
-					<td>@string/android-languages</td>
-					<td data-text="languages" data-format="com.kidscademy.format.StringsFormat"></td>
-				</tr>
-				<tr>
-					<td>@string/android-version</td>
-					<td data-text="release.version"></td>
-				</tr>
-				<tr>
-					<td>@string/android-license</td>
-					<td data-text="release.license"></td>
-				</tr>
-			</table>
-
-			<div class="objects-list no-search" w:compo="compo/list-view"></div>
 		</div>
+
+		<div class="console hidden" data-class="com.kidscademy.Console">
+			<div class="actions" data-class="com.kidscademy.Actions">
+				<img name="clear" src="@image/action/remove" title="@tip/taxonomy-close" /> <img name="close" src="@image/action/close" title="@tip/taxonomy-close" />
+			</div>
+			<div class="screen"></div>
+		</div>
+
+		<div w:compo="res/page/android-app/context-menu"></div>
 	</div>
 
-	<div class="console hidden" data-class="com.kidscademy.Console">
-		<div class="actions" data-class="com.kidscademy.Actions">
-			<img name="clear" src="@image/action/remove" title="@tip/taxonomy-close" />
-			<img name="close" src="@image/action/close" title="@tip/taxonomy-close" />
-		</div>
-		<div class="screen"></div>
+	<div w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="release-manager"><img src="@image/action/edit" /><span>@string/release-manager</span></li>
+			<li data-name="release-settings"><img src="@image/action/release-settings" /><span>@string/release-settings</span></li>
+			<li data-name="android-listing"><img src="@image/action/google-play" /><span>@string/android-store-listing</span></li>
+			<li data-name="android-settings"><img src="@image/action/settings" /><span>@string/android-settings</span></li>
+		</ul>
+		<ul class="menu">
+			<li data-name="clean-build"><img src="@image/action/clean-build" /><span>@string/android-clean-build</span></li>
+			<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
+			<li data-name="build-signed-apk"><img src="@image/action/build-signed-apk" /><span>@string/android-build-signed-apk</span></li>
+			<li data-name="build-bundle"><img src="@image/action/build-bundle" /><span>@string/android-build-bundle</span></li>
+		</ul>
+		<ul class="menu">
+			<li data-name="toggle-console"><img src="@image/action/console" /><span>@string/android-toggle-console</span></li>
+		</ul>
+
+		<ul class="menu">
+			<li><select class="languages"></select></li>
+		</ul>
 	</div>
-
-	<div w:compo="page/android-app/context-menu"></div>
-</div>
-
-<div w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="release-manager"><img src="@image/action/edit" /><span>@string/release-manager</span></li>
-		<li data-name="release-settings"><img src="@image/action/release-settings" /><span>@string/release-settings</span></li>
-		<li data-name="android-listing"><img src="@image/action/google-play" /><span>@string/android-store-listing</span></li>
-		<li data-name="android-settings"><img src="@image/action/settings" /><span>@string/android-settings</span></li>
-	</ul>
-	<ul class="menu">
-		<li data-name="clean-build"><img src="@image/action/clean-build" /><span>@string/android-clean-build</span></li>
-		<li data-name="build-apk"><img src="@image/action/build-apk" /><span>@string/android-build-apk</span></li>
-		<li data-name="build-signed-apk"><img src="@image/action/build-signed-apk" /><span>@string/android-build-signed-apk</span></li>
-		<li data-name="build-bundle"><img src="@image/action/build-bundle" /><span>@string/android-build-bundle</span></li>
-	</ul>
-	<ul class="menu">
-		<li data-name="toggle-console"><img src="@image/action/console" /><span>@string/android-toggle-console</span></li>
-	</ul>
-	
-	<ul class="menu">
-		<li><select class="languages"></select></li>
-	</ul>	
-</div>
+</code>

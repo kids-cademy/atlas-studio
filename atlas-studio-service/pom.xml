@@ -6,7 +6,6 @@
 		<version>0.6.0</version>
 	</parent>
 	<artifactId>atlas-studio-service</artifactId>
-	<packaging>${packaging}</packaging>
 
 	<name>Back-end Services</name>
 
@@ -127,12 +126,6 @@
 			<groupId>com.js-lib</groupId>
 			<artifactId>js-eclipselink</artifactId>
 			<version>1.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.js-lib</groupId>
-			<artifactId>wood</artifactId>
-			<version>1.0.3-alpha</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

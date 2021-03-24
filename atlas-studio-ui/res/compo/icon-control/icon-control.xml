@@ -4,14 +4,14 @@
 	<title>Icon Control</title>
 	<description>Icon editor with basic operations like crop, flip and rotate.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ImageService.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/FormData.js</script>
-		<script>script/com/kidscademy/ImageView.js</script>
-		<script>script/com/kidscademy/CropMask.js</script>
-		<script>script/com/kidscademy/ImageEditor.js</script>
-		<script>script/com/kidscademy/IconControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ImageService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/FormData.js" defer="true"></script>
+		<script src="script/com/kidscademy/ImageView.js" defer="true"></script>
+		<script src="script/com/kidscademy/CropMask.js" defer="true"></script>
+		<script src="script/com/kidscademy/ImageEditor.js" defer="true"></script>
+		<script src="script/com/kidscademy/IconControl.js" defer="true"></script>
 	</scripts>
 </page>

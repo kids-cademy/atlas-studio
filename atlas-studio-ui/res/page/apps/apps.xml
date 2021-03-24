@@ -4,8 +4,8 @@
 	<title>Apps</title>
 	<description>Atlas applications download manager.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/ReleaseService.js</script>
-		<script>script/com/kidscademy/page/AppsPage.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/ReleaseService.js" defer="true"></script>
+		<script src="script/com/kidscademy/page/AppsPage.js" defer="true"></script>
 	</scripts>
 </page>

@@ -4,9 +4,9 @@
 	<title>Captcha Component</title>
 	<description>Custom CAPTCHA with revealed with checkbox.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>lib/captcha/captcha.js</script>
-		<script>script/com/kidscademy/Checkbox.js</script>
-		<script>script/com/kidscademy/CheckboxCaptcha.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="lib/captcha/captcha.js" defer="true"></script>
+		<script src="script/com/kidscademy/Checkbox.js" defer="true"></script>
+		<script src="script/com/kidscademy/CheckboxCaptcha.js" defer="defer"></script>
 	</scripts>
 </page>

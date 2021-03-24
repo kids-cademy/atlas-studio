@@ -1,28 +1,30 @@
-<div class="collections" w:template="template/page#content" xmlns:w="js-lib.com/wood">
-	<div class="collections-view" w:compo="compo/list-view"></div>
+<code w:template="res/template/page" xmlns:w="js-lib.com/wood">
+	<div class="collections" w:content="content">
+		<div class="collections-view" w:compo="res/compo/list-view"></div>
 
-	<section class="drafts-section hidden">
-		<h1 class="divider">Draft Atlas Objects</h1>
-		<ul class="drafts-view" w:compo="compo/slave-list-view"></ul>
-	</section>
+		<section class="drafts-section hidden">
+			<h1 class="divider">Draft Atlas Objects</h1>
+			<ul class="drafts-view" w:compo="res/compo/slave-list-view"></ul>
+		</section>
 
-	<h1 class="divider">Recently Updated Atlas Objects</h1>
-	<ul class="objects-view" w:compo="compo/slave-list-view"></ul>
+		<h1 class="divider">Recently Updated Atlas Objects</h1>
+		<ul class="objects-view" w:compo="res/compo/slave-list-view"></ul>
 
-	<div class="collections-menu" w:compo="page/collections/collections-menu"></div>
-	<div class="drafts-menu" w:compo="page/collections/drafts-menu"></div>
-	<div class="objects-menu" w:compo="page/collections/objects-menu"></div>
-	<div w:compo="compo/item-select"></div>
-</div>
+		<div class="collections-menu" w:compo="res/page/collections/collections-menu"></div>
+		<div class="drafts-menu" w:compo="res/page/collections/drafts-menu"></div>
+		<div class="objects-menu" w:compo="res/page/collections/objects-menu"></div>
+		<div w:compo="res/compo/item-select"></div>
+	</div>
 
-<div class="collections" w:template="template/page#sidemenu" xmlns:w="js-lib.com/wood">
-	<ul class="menu">
-		<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
-		<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
-		<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
-		<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
-	</ul>
-	<ul class="menu">
-		<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
-	</ul>
-</div>
+	<div class="collections" w:content="sidemenu">
+		<ul class="menu">
+			<li data-name="collections"><img src="@image/action/collections" /><span>@string/workspace-collections</span></li>
+			<li data-name="external-sources"><img src="@image/action/link" /><span>@string/workspace-external-sources</span></li>
+			<li data-name="features-meta"><img src="@image/action/features" /><span>@string/workspace-features-meta</span></li>
+			<li data-name="taxon-units"><img src="@image/action/taxonomy" /><span>@string/workspace-taxon-units</span></li>
+		</ul>
+		<ul class="menu">
+			<li data-name="create-collection"><img src="@image/action/add" /><span>@string/collection-create</span></li>
+		</ul>
+	</div>
+</code>

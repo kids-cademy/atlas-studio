@@ -4,11 +4,11 @@
 	<title>Related Object</title>
 	<description>Related field set from object form.</description>
 	<scripts>
-		<script>lib/js-lib/js-lib.js</script>
-		<script>gen/com/kidscademy/atlas/studio/AtlasService.js</script>
-		<script>script/com/kidscademy/Actions.js</script>
-		<script>script/com/kidscademy/form/FormControl.js</script>
-		<script>script/com/kidscademy/form/ActionBarSelect.js</script>
-		<script>script/com/kidscademy/form/RelatedControl.js</script>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/FormControl.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/ActionBarSelect.js" defer="true"></script>
+		<script src="script/com/kidscademy/form/RelatedControl.js" defer="true"></script>
 	</scripts>
 </page>
