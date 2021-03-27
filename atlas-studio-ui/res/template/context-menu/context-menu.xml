@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
-	<version>1</version>
+<template>
 	<title>Context Menu</title>
 	<description>Template for context menu.</description>
 	<scripts>
 		<script src="lib/js-lib/js-lib.js" defer="true"></script>
 		<script src="script/com/kidscademy/ContextMenu.js" defer="true"></script>
 	</scripts>
-</page>
+</template>
