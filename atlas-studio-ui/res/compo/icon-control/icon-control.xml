@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Icon Control</title>
 	<description>Icon editor with basic operations like crop, flip and rotate.</description>
@@ -14,4 +14,4 @@
 		<script src="script/com/kidscademy/ImageEditor.js" defer="true"></script>
 		<script src="script/com/kidscademy/IconControl.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

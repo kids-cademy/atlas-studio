@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Features Meta Table</title>
 	<description>Table view for features meta.</description>
@@ -8,4 +8,4 @@
 		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
 		<script src="script/com/kidscademy/TableView.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

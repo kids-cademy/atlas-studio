@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Taxon Units</title>
 	<description>Display a table of registered taxonomy units with search by name substring.</description>
@@ -10,4 +10,4 @@
 		<script src="script/com/kidscademy/TableView.js" defer="true"></script>
 		<script src="script/com/kidscademy/TaxonUnits.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

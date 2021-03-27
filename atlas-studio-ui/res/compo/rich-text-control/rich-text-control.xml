@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Rich Text Control</title>
 	<description>Rich text control formated as markdown.</description>
@@ -9,4 +9,4 @@
 		<script src="script/com/kidscademy/Md2Htm.js" defer="true"></script>
 		<script src="script/com/kidscademy/RichTextControl.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

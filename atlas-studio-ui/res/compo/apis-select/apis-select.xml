@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>APIs Select</title>
 	<description>Pseudo control to select a list of APIs from those provided by ApiService.</description>
@@ -8,4 +8,4 @@
 		<script src="gen/com/kidscademy/atlas/studio/ApiService.js" defer="true"></script>
 		<script src="script/com/kidscademy/ApisSelect.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

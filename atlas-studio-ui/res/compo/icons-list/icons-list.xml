@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Icons List</title>
 	<description>List of icons is a simplified specialization of the list-control component.</description>
@@ -7,4 +7,4 @@
 		<script src="lib/js-lib/js-lib.js" defer="true"></script>
 		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

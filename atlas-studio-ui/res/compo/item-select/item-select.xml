@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Item Select</title>
 	<description>Dialog to select an item from a list.</description>
@@ -8,4 +8,4 @@
 		<script src="gen/com/kidscademy/atlas/studio/AtlasService.js" defer="true"></script>
 		<script src="script/com/kidscademy/ItemSelect.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>

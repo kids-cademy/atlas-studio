@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Captcha Component</title>
 	<description>Custom CAPTCHA with revealed with checkbox.</description>
@@ -9,4 +9,4 @@
 		<script src="script/com/kidscademy/Checkbox.js" defer="true"></script>
 		<script src="script/com/kidscademy/CheckboxCaptcha.js" defer="defer"></script>
 	</scripts>
-</page>
+</compo>

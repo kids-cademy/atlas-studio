@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Features Meta</title>
 	<description>Display a table of registered features meta with search by name substring.</description>
@@ -9,4 +9,4 @@
 		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
 		<script src="script/com/kidscademy/FeaturesMeta.js" defer="true"></script>
 	</scripts>
-</page>
+</compo>
