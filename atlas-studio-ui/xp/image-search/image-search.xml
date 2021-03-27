@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<page>
+<compo>
 	<version>1</version>
 	<title>Image Search</title>
 	<description>Image search for atlas graphic assets.</description>
@@ -8,4 +8,4 @@
 		<script src="script/com/kidscademy/Actions.js"></script>
 		<script src="xp/ImageSearch.js"></script>
 	</scripts>
-</page>
+</compo>
