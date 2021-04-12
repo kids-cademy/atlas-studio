@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kidscademy</groupId>
 	<artifactId>atlas-studio</artifactId>
-	<version>0.6.0</version>
+	<version>0.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Atlas Studio</name>
@@ -44,7 +44,6 @@
 			<url>http://maven.js-lib.com/</url>
 		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>js-lib</id>

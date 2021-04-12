@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.kidscademy</groupId>
 		<artifactId>atlas-studio</artifactId>
-		<version>0.6.0</version>
+		<version>0.6.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>atlas-studio-ui</artifactId>
 	<packaging>wood</packaging>
@@ -11,7 +11,7 @@
 	<name>User Interface</name>
 
 	<properties>
-		<wood.version>1.1.8</wood.version>
+		<wood.version>1.1.6-SNAPSHOT</wood.version>
 	</properties>
 
 	<build>
