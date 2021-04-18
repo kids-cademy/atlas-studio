@@ -1,4 +1,4 @@
-<fieldset class="audio-assets" data-class="com.kidscademy.form.AudioAssets">
+<fieldset class="audio-assets" data-class="com.kidscademy.form.AudioAssets" xmlns:w="js-lib.com/wood">
 	<div class="header container">
 		<h2>@string/audio-assets</h2>
 		<div class="section-icon padding">
@@ -38,7 +38,7 @@
 				</dl>
 			</div>
 			
-			<div class="actions bar" data-class="com.kidscademy.Actions">
+			<div class="bar" w:template="res/template/actions">
 				<span data-name="upload" class="upload-icon">
 					<img src="@image/action/upload" />
 					<input class="sample-file" type="file" accept="audio/*" title="@tip/audio-upload" />

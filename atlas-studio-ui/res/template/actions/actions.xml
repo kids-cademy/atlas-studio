@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compo>
+	<version>1</version>
+	<title>Actions</title>
+	<description>Actions...</description>
+	<scripts>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+		<script src="script/com/kidscademy/Actions.js" defer="true"></script>
+	</scripts>
+</compo>

@@ -2,4 +2,7 @@
 <template>
 	<title>Page Template</title>
 	<description>Template for atlas studio pages.</description>
+	<scripts>
+		<script src="lib/js-lib/js-lib.js" defer="true"></script>
+	</scripts>
 </template>
